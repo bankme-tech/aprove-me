@@ -28,8 +28,11 @@
   - [Nível 9 - Cloud](#nível-9---cloud)
   - [Nível 10 - Infra as a Code](#nível-10---infra-as-a-code)
 - [🖥️ Front-end](#️-front-end)
-  - [Nível 1](#nível-1)
-  - [Nível 2](#nível-2)
+  - [Nível 1 - Cadastro](#nível-1---cadastro)
+  - [Nível 2 - Conectando na API](#nível-2---conectando-na-api)
+  - [Nível 3 - Listando](#nível-3---listando)
+  - [Nível 4 - Autenticação](#nível-4---autenticação-1)
+  - [Nível 5 - Testes](#nível-5---testes)
 
 ## ❤️ Bem vindos 
 
@@ -84,7 +87,7 @@ Os recebíveis são representações digitais de um documento que simula uma dí
 | CAMPO        | TIPO          | DESCRIÇÃO                                 |
 |--------------|---------------|-------------------------------------------|
 | id           | string (UUID) | É a identificação de um recebível.        |
-| valor        | float         | É o valor do recebível.                   |
+| value        | float         | É o valor do recebível.                   |
 | emissionDate | date          | É a data de emissão do recebível.         |
 | assignor     | int           | Representa a identificação de um cedente. |
 
@@ -132,6 +135,12 @@ Crie 2 novas rotas:
 `GET /integrations/assignor/:id`
 
 Para que seja possível retornar pagáveis e cedentes de forma independete.
+
+Inclua também rotas para as outras operações:
+
+- Edição;
+- Exclusão;
+- Cadastro;
 
 ### Nível 3 - Testes
 
@@ -208,6 +217,42 @@ Crie uma estrutura em terraforma que monte a infra-estrutura desejada.
 
 ## 🖥️ Front-end
 
-### Nível 1
+### Nível 1 - Cadastro
 
-### Nível 2
+Crie uma interface na qual é possível cadastrar os pagáveis.
+
+É importante que sua interface previna o cadastro de campos vazios, ou que não estejam nas regras definidas anteriormente.
+
+Exiba o pagável cadastrado em uma nova tela.
+
+### Nível 2 - Conectando na API
+
+Conecte a seu Front-end a API que foi criada, e faça o cadastro de um pagável refletir na sua API.
+
+Faça também uma tela para cadastro do cedente.
+
+Altere o cadastro inicial para que o campo `assignor` seja um `combobox` no qual seja possível selecionar um cedente.
+
+### Nível 3 - Listando
+
+Agora faça um sistema de listagens de pagáveis. Mostrando apenas: `id`, `value` e `emissionDate`.
+
+Para cada ítem da lista, coloque um link que mostra os detalhes do pagável.
+
+Além disso, coloque opções de editar e excluir.
+
+Nessa página de detalhes, inclua um novo link para exibir os dados do cedente.
+
+Todos os dados devem vir da API.
+
+### Nível 4 - Autenticação
+
+Implemente agora o sistema de login e senha para poder acessar as suas rotas de forma autenticada.
+
+Armazene o token no `localStorage` do seu navegador.
+
+Caso o token expire, redirecione o usuário para a página de login.
+
+### Nível 5 - Testes
+
+Crie testes para sua aplicação Front-end.
