@@ -25,6 +25,8 @@
   - [Nível 6 - Infra e Doc](#nível-6---infra-e-doc)
   - [Nível 7 - Lotes](#nível-7---lotes)
   - [Nível 8 - Resiliência](#nível-8---resiliência)
+  - [Nível 9 - Cloud](#nível-9---cloud)
+  - [Nível 10 - Infra as a Code](#nível-10---infra-as-a-code)
 - [🖥️ Front-end](#️-front-end)
   - [Nível 1](#nível-1)
   - [Nível 2](#nível-2)
@@ -195,6 +197,14 @@ Crie um consumidor para esta fila que deverá pegar pagável por pagável, criar
 ### Nível 8 - Resiliência
 
 Caso não seja possível processar algum ítem do lote, coloque-o novamente na fila. Isso deve ocorrer por até 4 vezes. Depois, esse ítem deve ir para uma "Fila Morta" e um e-mail deve ser disparado para o time de operações.
+
+### Nível 9 - Cloud
+
+Crie uma pipeline de deploy da aplicação em alguma estrutura de Cloud. (AWS, Google, Azure...)
+
+### Nível 10 - Infra as a Code
+
+Crie uma estrutura em terraforma que monte a infra-estrutura desejada.
 
 ## 🖥️ Front-end
 
