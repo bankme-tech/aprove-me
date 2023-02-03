@@ -22,7 +22,7 @@
   - [Nível 3 - Testes](#nível-3---testes)
   - [Nível 4 - Autenticação](#nível-4---autenticação)
   - [Nível 5 - Gerenciamento de permissões](#nível-5---gerenciamento-de-permissões)
-  - [Nível 6 - Infra](#nível-6---infra)
+  - [Nível 6 - Infra e Doc](#nível-6---infra-e-doc)
   - [Nível 7 - Lotes](#nível-7---lotes)
   - [Nível 8 - Resiliência](#nível-8---resiliência)
 - [🖥️ Front-end](#️-front-end)
@@ -75,7 +75,7 @@ Um cliente da Bankme solicitou uma nova funcionalidade, relacionada a recebívei
 
 Todos os dias esse cliente movimenta vários recebíveis, e nosso time de operações estava ficando maluco tendo que cadastrar tudo isso de forma manual!
 
-Os recebíveis são representações digitais de um documento que representa um valor a ser recebido. E para bankme, é importante ter essas informações como parte do fluxo comercial que temos com este cliente.
+Os recebíveis são representações digitais de um documento que simula uma dívida a ser recebida. E para Bankme, é importante ter essas informações como parte do fluxo comercial que temos com este cliente.
 
 ### Estrutura de um recebível
 
@@ -119,20 +119,21 @@ Se todos os dados estiverem validados. Apenas retorne todos os dados em um forma
 
 Utilize o Prisma, para incluir um novo banco de dados SQLite.
 
-Crie as estrutura de acordo com o que foi definido.
+Crie a estrutura de acordo com o que foi definido.
 
 Caso os dados estejam válidos, cadastre-os.
 
 Crie 2 novas rotas:
 
 `GET /integrations/payable/:id`
+
 `GET /integrations/assignor/:id`
 
 Para que seja possível retornar pagáveis e cedentes de forma independete.
 
 ### Nível 3 - Testes
 
-Crie testes unitários para as regras aplicadas.
+Crie testes unitários para cada arquivo da aplicação. Para cada nova implementação a seguir, também deve-se criar os testes.
 
 ### Nível 4 - Autenticação
 
@@ -149,7 +150,7 @@ Para isso, crie uma nova rota:
 }
 ```
 
-Com essas credenciais o endpoint deverá retornar um JWT com o tempo de expiraçào de 1 minuto.
+Com essas credenciais o endpoint deverá retornar um JWT com o tempo de expiração de 1 minuto.
 
 Reescreva as regras de todas as outras rotas para que o JWT seja enviado como parâmetro do `Header` da requisição.
 
@@ -163,9 +164,17 @@ Crie um novo cadastro de permissões. Esse cadastro deve armazenar: `login` e `p
 
 Refatore o endpoint de autenticação para que sempre se gere JWTs se login e senha estiverem cadastrados no Banco de Dados.
 
-### Nível 6 - Infra
+### Nível 6 - Infra e Doc
 
-Crie um Dockerfile para sua API, e faço rodar em um container.
+Crie um `Dockerfile` para sua API.
+
+Crie um `docker-compose.yaml` para iniciar o seu projeto.
+
+Documente tudo o que foi feito até aqui:
+
+- Como preparar o ambiente;
+- Como instalar as dependência;
+- Como rodar o projeto;
 
 ### Nível 7 - Lotes
 
