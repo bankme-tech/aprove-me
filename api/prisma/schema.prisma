@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// The generator below is used to generate the ERD diagram
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
