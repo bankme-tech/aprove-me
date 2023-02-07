@@ -14,3 +14,33 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  login    String @unique
+  password String
+  name     String
+
+  @@map("admin")
+}
+
+model Assignor {
+  id         Int          @id @default(autoincrement())
+  document   String       @unique
+  email      String
+  phone      String
+  name       String
+  Receivable Receivable[]
+
+  @@map("assignor")
+}
+
+model Receivable {
+  id            String   @id @default(uuid())
+  value         Float
+  emission_date DateTime
+  assignor      Assignor @relation(fields: [assignorID], references: [id])
+  assignorID    Int
+
+  @@map("receivable")
+}
