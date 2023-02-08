@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
 :root {
-  --primary-dark: #473af8;
+  --primary-dark: #2d2688;
   --primary-light: #7573f7;
 }
 
@@ -15,15 +15,15 @@
   }
 
   body {
-    @apply font-[Poppins]  text-[#23232b] bg-[#e6e6e6];
+    @apply font-[Poppins]  text-[#23232b] bg-[#f0efef];
   }
 
   li {
-    @apply p-4 text-sm;
+    @apply p-4 font-bold text-[var(--primary-dark)];
   }
 
   button {
-    @apply px-4 py-2 border bg-gradient-to-r from-[var(--primary-dark)] to-[var(--primary-light)] text-white rounded-md;
+    @apply px-8 border bg-gradient-to-r from-[var(--primary-dark)] to-[var(--primary-light)] text-white rounded-md;
   }
 
   h2 {
