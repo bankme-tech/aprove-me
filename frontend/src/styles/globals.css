@@ -15,7 +15,7 @@
   }
 
   body {
-    @apply font-[Poppins]  text-[#23232b] bg-[#d7dcec];
+    @apply font-[Poppins]  text-[#23232b] bg-[#e6e6e6];
   }
 
   li {
