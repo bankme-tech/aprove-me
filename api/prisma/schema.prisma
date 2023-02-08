@@ -25,12 +25,12 @@ model Admin {
 }
 
 model Assignor {
-  id         Int          @id @default(autoincrement())
-  document   String       @unique
-  email      String
-  phone      String
-  name       String
-  Receivable Receivable[]
+  id          Int          @id @default(autoincrement())
+  document    String       @unique
+  email       String
+  phone       String
+  name        String
+  receivables Receivable[]
 
   @@map("assignor")
 }
