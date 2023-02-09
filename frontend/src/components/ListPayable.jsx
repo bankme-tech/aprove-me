@@ -20,7 +20,6 @@ const ListPayable = () => {
     fetch("http://localhost:3003/integrations/assignor")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "data");
         setPayables(data);
         setLoading(false);
       });
@@ -32,7 +31,6 @@ const ListPayable = () => {
 
   return (
     <div className="flex justify-center items-center flex-wrap">
-      {console.log(payables, "payables")}
       {payables.map((payable) => (
         <div key={payable.id}>
           <div class="flex justify-center m-10">

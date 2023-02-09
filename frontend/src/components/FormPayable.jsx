@@ -3,7 +3,7 @@ import Router from "next/router";
 
 const FormPayable = (data) => {
   const assignorID = data.data.id;
-  console.log(assignorID, "assingnorID");
+  
   // Handles the submit event on form submit.
   const handleSubmit = async (event) => {
     // Stop the form from submitting and refreshing the page.
