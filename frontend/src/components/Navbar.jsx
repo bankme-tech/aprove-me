@@ -17,22 +17,6 @@ const NavBar = () => {
         <div className="p-3 ml-6">
           <Image src="/logo.png" alt="logo" width={40} height={40} />
         </div>
-        <div>
-          <ul className="hidden md:flex">
-            <Link href="/">
-              <li className=" ml-10 text-sm hover:border-b">Home</li>
-            </Link>
-            <Link href="/">
-              <li className="ml-10 text-sm hover:border-b">List</li>
-            </Link>
-            <div className="ml-10 mr-10 flex items-center justify-center text-sm hover:border-b">
-              <button className="py-2">Add</button>
-            </div>
-          </ul>
-          <div onClick={handleNav} className="md:hidden">
-            <AiOutlineMenu size={25} />
-          </div>
-        </div>
       </div>
       <div
         className={!nav ? "md:hidden fixed left-0 top-0 w-full h-screen " : ""}
@@ -55,20 +39,6 @@ const NavBar = () => {
               >
                 <AiOutlineClose size={20} />
               </div>
-            </div>
-
-            <div className="py-4 flex flex-col">
-              <ul>
-                <Link href="/">
-                  <li className="py-4 text-sm">Home</li>
-                </Link>
-                <Link href="/">
-                  <li className="py-4 text-sm ">List</li>
-                </Link>
-                <Link href="/">
-                  <li className="py-4 text-sm">Add</li>
-                </Link>
-              </ul>
             </div>
           </div>
         </div>
