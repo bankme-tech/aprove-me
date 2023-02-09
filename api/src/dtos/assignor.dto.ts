@@ -1,5 +1,5 @@
 export type AssignorDTO = {
-    id?: number;
+    id?: string;
     document: string;
     email: string;
     phone: string;

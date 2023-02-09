@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
-import { AssignorDTO } from './assignor.dto';
+import { AssignorDTO } from '../../dtos/assignor.dto';
+
 
 @Injectable()
 export class AssignorService {
@@ -20,19 +21,20 @@ export class AssignorService {
     const assignor = await this.prisma.assignor.create({
       data,
     });
-
+ 
     return assignor;
   }
 
   async findAll() {
-    try {
-      return await this.prisma.assignor.findMany();
-    } catch (error) {
-      return error;
-    }
+   const assignors = await this.prisma.assignor.findMany({
+      include: {
+        receivables: true,
+      },
+    });
+    return assignors;
   }
 
-  async update(id: number, data: AssignorDTO) {
+  async update(id: string, data: AssignorDTO) {
     const assignotExists = await this.prisma.assignor.findUnique({
       where: {
         id,
@@ -51,7 +53,7 @@ export class AssignorService {
     });
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     const assignotExists = await this.prisma.assignor.findUnique({
       where: {
         id,
