@@ -1,8 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
+import {
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+} from "@material-tailwind/react";
+import ModalFormPayable from "./ModalFormPayable";
 
 const ListPayable = () => {
+  const [open, setOpen] = useState(1);
   const [payables, setPayables] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const handleOpen = (value) => {
+    setOpen(open === value ? 0 : value);
+  };
 
   useEffect(() => {
     fetch("http://localhost:3003/integrations/assignor")
@@ -37,17 +48,29 @@ const ListPayable = () => {
                 </li>
               </ul>
 
-              <div class="flex justify-center">
-                <ul class="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
-                  {payable.receivables.map((receivable) => (
-                    <li class="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg">
-                      Valor: R${receivable.value} || || Data de emissão:{" "}
-                      {receivable.emission_date}{" "}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <button className="py-2">Adicionar novo recebível</button>
+              <Fragment>
+                <Accordion open={open === 1}>
+                  <AccordionHeader
+                    className="text-[var(--primary-dark)]"
+                    onClick={() => handleOpen(1)}
+                  >
+                    Lista de recebíveis
+                  </AccordionHeader>
+                  <AccordionBody>
+                    <div class="flex justify-center">
+                      <ul class="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
+                        {payable.receivables.map((receivable) => (
+                          <li class="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg">
+                            Valor: R${receivable.value} || || Data de emissão:{" "}
+                            {receivable.emission_date}{" "}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </AccordionBody>
+                </Accordion>
+              </Fragment>
+              <ModalFormPayable assingnorID={"teste"} />
             </div>
           </div>
         </div>

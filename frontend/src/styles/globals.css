@@ -19,7 +19,7 @@
   }
 
   li {
-    @apply p-4 font-bold text-[var(--primary-dark)];
+    @apply p-4 font-bold;
   }
 
   button {
