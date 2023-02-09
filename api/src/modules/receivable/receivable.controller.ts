@@ -18,4 +18,9 @@ export class ReceivableController {
   async create(@Param('assignorID') assignorID: string, @Body() data: ReceivableDTO) {
     return this.receivableService.create(assignorID, data);
   }
+
+  @Delete('payable/:id')
+  async delete(@Param('id') id: string) {
+    return this.receivableService.delete(id);
+  }
 }

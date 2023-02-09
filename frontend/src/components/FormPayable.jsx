@@ -65,7 +65,7 @@ const FormPayable = (data) => {
             name="value"
             required
           />
-          <button className="py-2 m-2">Cadastre um novo recebível</button>
+          <button className="py-2 m-2 w-full">Cadastre um novo recebível</button>
         </form>
       </div>
     </div>

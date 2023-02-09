@@ -31,4 +31,24 @@ export class ReceivableService {
 
     return receivable;
   }
+
+  async delete(id: string) {
+    const receivable = await this.prisma.receivable.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!receivable) {
+      throw new Error('Receivable not found');
+    }
+
+    const deletedReceivable = await this.prisma.receivable.delete({
+      where: {
+        id,
+      },
+    });
+
+    return deletedReceivable;
+  }
 }
