@@ -19,26 +19,35 @@ const ListPayable = () => {
   }
 
   return (
-    <div>
-      <p>Payables</p>
+    <div className="flex justify-center items-center flex-wrap">
       {console.log(payables, "payables")}
       {payables.map((payable) => (
         <div key={payable.id}>
-          <div class="flex justify-center">
+          <div class="flex justify-center m-10">
             <div class="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
               <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
                 {payable.name} - {payable.document}
               </h5>
-            <ul>
-                <li>Email: {payable.email}</li>
-                <li>phone: {payable.phone}</li>
-            </ul>
-              <button
-                type="button"
-                class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-              >
-                Button
-              </button>
+              <ul>
+                <li>
+                  Nome: {payable.name} - Documento: {payable.document}
+                </li>
+                <li>
+                  Telefone: {payable.phone} || Email: {payable.email}
+                </li>
+              </ul>
+
+              <div class="flex justify-center">
+                <ul class="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
+                  {payable.receivables.map((receivable) => (
+                    <li class="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg">
+                      Valor: R${receivable.value} || || Data de emissão:{" "}
+                      {receivable.emission_date}{" "}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button className="py-2">Adicionar novo recebível</button>
             </div>
           </div>
         </div>
