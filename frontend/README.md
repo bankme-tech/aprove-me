@@ -8,6 +8,7 @@ Install the below tools/packages
 | :---------: | :----------------: | :-------: | :---------------- |
 | 1           | Node.js            | >= 16.17.0  | [Install NodeJS](https://nodejs.org/en/download/) |
 | 2           | yarn               | >= 1.22.0 | [Install Yarn](https://yarnpkg.com/)      |
+
 #### System setup
 1. Clone the repo with `git clone [REPO_URL]` command
 2. Switch to the project's root directory in terminal
@@ -19,12 +20,6 @@ Install the below tools/packages
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The desktop executable development version will open
-#### Note
-I'm using a library complete uniform UI for ReactJS and React Native, is being developed but there are enough components to help with the app/web page. 
-[React Bulk](https://github.com/caioedut/react-bulk) 
-
-
-In the project directory, you can run:
 
 ### `yarn start`
 
