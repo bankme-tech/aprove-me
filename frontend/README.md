@@ -1,38 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend Bankme
 
-## Getting Started
+### Software prerequisites
 
-First, run the development server:
+Install the below tools/packages
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+| Serial No   | Software           | Version   | Installation site |
+| :---------: | :----------------: | :-------: | :---------------- |
+| 1           | Node.js            | >= 16.17.0  | [Install NodeJS](https://nodejs.org/en/download/) |
+| 2           | yarn               | >= 1.22.0 | [Install Yarn](https://yarnpkg.com/)      |
+#### System setup
+1. Clone the repo with `git clone [REPO_URL]` command
+2. Switch to the project's root directory in terminal
+3. Install the dependencies by running `yarn`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Setup
+### `yarn dev`
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Runs the app in the development mode.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The desktop executable development version will open
+#### Note
+I'm using a library complete uniform UI for ReactJS and React Native, is being developed but there are enough components to help with the app/web page. 
+[React Bulk](https://github.com/caioedut/react-bulk) 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+In the project directory, you can run:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### `yarn start`
 
-## Learn More
+Runs the app in the development mode.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-To learn more about Next.js, take a look at the following resources:
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+### `yarn build`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## Deploy on Vercel
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
