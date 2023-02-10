@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, InputNumber } from 'antd';
-import dayjs from 'dayjs';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+import { Button, Form, Input } from 'antd';
 
 import { useNavigate } from "react-router-dom";
 
