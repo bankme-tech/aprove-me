@@ -16,7 +16,8 @@
     "react-calendar": "^4.0.0",
     "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.43.1"
+    "react-hook-form": "^7.43.1",
+    "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

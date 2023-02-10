@@ -5,6 +5,8 @@ import { AssignorRepository } from './repositories/assignor-repository';
 import { PayableRepository } from './repositories/payable-repository';
 import { PrismaAssignorRepository } from './repositories/prisma/prisma-assignor-repository';
 import { PrismaPayableRepository } from './repositories/prisma/prisma-payable-repository';
+import cors from 'cors';
+
 
 @Module({
   imports: [],
