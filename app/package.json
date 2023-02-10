@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
     "@types/react-datepicker": "^4.8.0",
     "antd": "^5.2.0",
     "dayjs": "^1.11.7",
