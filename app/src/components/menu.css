@@ -1,0 +1,20 @@
+.root {
+    flex-grow: 1,
+}
+
+.menuButton {
+    color: white;
+    opacity:   0.5 !important;
+}
+
+.title {
+    flex-grow: 1;
+    color: red
+}
+
+.root {
+    width: '100%';
+    position: 'fixed';
+    bottom: 0;
+    left: 0
+}
