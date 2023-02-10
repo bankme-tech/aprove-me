@@ -1,7 +1,21 @@
+import React from 'react';
+import LoginForm from './components/login/loginForm';
+import Payables from './components/payable/payable';
 
 function App() {
+  const handleSubmit = (username: string, password: string) => {
+    console.log('Username: ', username);
+    console.log('Password: ', password);
+  };
 
-  return <h1>Hello world</h1>
+  return (
+    <div>
+      {/* <LoginForm /> */}
+      <Payables  />
+
+    </div>
+  );
 }
 
-export default App
+
+export default App;

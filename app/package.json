@@ -9,8 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/react-datepicker": "^4.8.0",
+    "antd": "^5.2.0",
+    "dayjs": "^1.11.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-calendar": "^4.0.0",
+    "react-datepicker": "^4.10.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
