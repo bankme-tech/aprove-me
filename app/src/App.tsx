@@ -1,9 +1,9 @@
-import LoginForm from './components/login/loginForm';
-import AddPayable from './components/payable/payable';
-import PayableList from './components/payableList/payableList';
+
 import React, { FC } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AddAssignor from './components/assignor/assignor';
+import AddAssignor from './pages/assignor/assignor';
+import AddPayable from './pages/payable/payable';
+import PayableList from './pages/payableList/payableList';
 const App: FC = () => {
   return (
     <BrowserRouter>
