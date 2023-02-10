@@ -10,21 +10,25 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 
-const PayableList: FC = () => {
-    interface Payable {
-        id: string;
-        value: number;
-        emissionDate: string;
+const AssignorList: FC = () => {
+
+    interface Assignor {
+        id: string,
+        document: string;
+        email: string;
+        phone: string;
+        name: string;
     }
 
-    const [payables, setPayables] = useState<Payable[]>([]);
+
+    const [assignors, setAssingors] = useState<Assignor[]>([]);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('http://localhost:3000/integrations/payableAll');
+                const response = await fetch('http://localhost:3000/integrations/assignorAll');
                 const data = await response.json();
-                setPayables(data);
+                setAssingors(data);
             } catch (error) {
                 console.error(error);
             }
@@ -34,12 +38,12 @@ const PayableList: FC = () => {
     }, []);
 
     async function handleDelete(id: string) {
-        const response = await fetch(`http://localhost:3000/integrations/payable/${id}`, {
+        const response = await fetch(`http://localhost:3000/integrations/assignor/${id}`, {
             method: 'DELETE'
         });
         if (response.ok) {
-            const newPayables = payables.filter(payable => payable.id !== id);
-            setPayables(newPayables);
+            const newPayables = assignors.filter(assignor => assignor.id !== id);
+            setAssingors(newPayables);
         } else {
             alert('Ocorreu um erro ao realizar a exclusão')
         }
@@ -51,22 +55,27 @@ const PayableList: FC = () => {
                 <TableHead>
                     <TableRow>
                         <TableCell>Id</TableCell>
-                        <TableCell>Value</TableCell>
-                        <TableCell>Emission Date</TableCell>
+                        <TableCell>Nome</TableCell>
+                        <TableCell>Documento</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Telefone</TableCell>
                         <TableCell>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {payables.map((payable) => (
-                        <TableRow key={payable.id}>
-                            <TableCell component="th" scope="row">{payable.id}</TableCell>
-                            <TableCell component="th" scope="row">{payable.value}</TableCell>
-                            <TableCell component="th" scope="row">{payable.emissionDate}</TableCell>
+                    {assignors.map((assignor) => (
+                        <TableRow key={assignor.id}>
+                            <TableCell component="th" scope="row">{assignor.id}</TableCell>
+                            <TableCell component="th" scope="row">{assignor.name}</TableCell>
+                            <TableCell component="th" scope="row">{assignor.document}</TableCell>
+                            <TableCell component="th" scope="row">{assignor.email}</TableCell>
+                            <TableCell component="th" scope="row">{assignor.phone}</TableCell>
+
                             <TableCell>
                                 <Button
                                     variant="contained"
                                     color="secondary"
-                                    onClick={() => handleDelete(payable.id)}
+                                    onClick={() => handleDelete(assignor.id)}
                                 >
                                     Delete
                                 </Button>
@@ -79,4 +88,4 @@ const PayableList: FC = () => {
     );
 };
 
-export default PayableList;
+export default AssignorList;

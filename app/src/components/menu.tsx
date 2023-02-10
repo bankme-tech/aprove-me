@@ -26,6 +26,9 @@ const Menu: FC = () => {
       <Link to="/list" className={classes.menuButton}>
         Pagáveis
       </Link>
+      <Link to="/Assignor" className={classes.menuButton}>
+        Cedentes
+      </Link>
       <Link to="/" className={classes.menuButton}>
         Cadastrar Pagáveis
       </Link>
