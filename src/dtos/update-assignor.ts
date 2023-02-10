@@ -1,9 +1,6 @@
 import { IsNotEmpty, Length } from "class-validator";
 
 export class UpdateAssignor {
-    @IsNotEmpty({ message: 'The field id should not be empty.' })
-    id: number;
-
     @IsNotEmpty({ message: 'The field document should not be empty.' })
     @Length(14, 30)
     document: string;
