@@ -1,6 +1,7 @@
 import { IsNotEmpty, Length } from "class-validator";
 
 export class UpdatePayable {
+    
       @IsNotEmpty({
         message: 'The field value should not be empty.'
     })

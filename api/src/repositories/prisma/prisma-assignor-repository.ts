@@ -32,7 +32,7 @@ export class PrismaAssignorRepository implements AssignorRepository {
         return await this.prisma.assignor.findMany();
     }
 
-    async updateAssignor(id: number, body: UpdateAssignor) {
+    async updateAssignor(id: string, body: UpdateAssignor) {
         return this.prisma.assignor.update({
             where: { id: Number(id) },
             data: body,

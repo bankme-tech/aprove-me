@@ -8,7 +8,7 @@ export declare class PrismaAssignorRepository implements AssignorRepository {
     addAssignor(data: CreateAssignorBody): Promise<import(".prisma/client").Assignor>;
     getAssignor(id: number): Promise<import(".prisma/client").Assignor>;
     getAssignorAll(): Promise<import(".prisma/client").Assignor[]>;
-    updateAssignor(id: number, body: UpdateAssignor): Promise<import(".prisma/client").Assignor>;
+    updateAssignor(id: string, body: UpdateAssignor): Promise<import(".prisma/client").Assignor>;
     deleteAssignor(id: string): Promise<{
         message: string;
     }>;

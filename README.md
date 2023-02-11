@@ -19,6 +19,7 @@
 <li>Fazendo o uso do Prisma e do banco de dados SQLite realizei a criação das tabelas "payable" e "assignor" com os dados solicitados;</li>
 <li>Utilizei o class-validator para realizar a limitação dos campos solicitados;</li>
 <li>Realizei a criação das chamadas de busca, edição, cadastro e exclusão para cada tabela.</li>
+<li>Desenvolvido testes unitários do "assignor-repository" e "payable-repository".</li>
 
 
 </ul>
@@ -40,7 +41,10 @@
 <ul dir="auto">
 <li>Melhorias no front-end, buscando criar um design mais amigável que facilitaria o uso na plataforma</li>
 <li>Organização na estrutura do projeto, para melhorar a manutenção</li>
+<li>Finalizar/ adicionar e melhorar os testes unitários</li>
 <li>Melhorar a estrutura do banco, tornando as tabelas relacionadas entre si</li>
+<li>Ao invés de excluir os dados, apenas inativar, mantendo assim as informações para resgate se necessário</li>
+<li>Adicionar confirmação de exclusão</li>
 
 </ul>
 

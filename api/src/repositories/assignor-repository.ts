@@ -8,7 +8,7 @@ export abstract class AssignorRepository{
 
     abstract getAssignorAll();   
     
-    abstract updateAssignor(id: number, body: UpdateAssignor);
+    abstract updateAssignor(id: string, body: UpdateAssignor);
     
     abstract deleteAssignor(id: string);
 
