@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1675993424129" clover="3.2.0">
-  <project timestamp="1675993424129" name="All files">
-    <metrics statements="112" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="29" coveredmethods="0" elements="141" coveredelements="0" complexity="0" loc="112" ncloc="112" packages="5" files="13" classes="13"/>
+<coverage generated="1676090373597" clover="3.2.0">
+  <project timestamp="1676090373598" name="All files">
+    <metrics statements="113" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="29" coveredmethods="0" elements="142" coveredelements="0" complexity="0" loc="113" ncloc="113" packages="5" files="13" classes="13"/>
     <package name="src">
-      <metrics statements="48" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="0"/>
-      <file name="app.module.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\app.module.ts">
+      <metrics statements="49" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="0"/>
+      <file name="app.module.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\app.module.ts">
         <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
@@ -13,9 +13,9 @@
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
       </file>
-      <file name="integrations.controller.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\integrations.controller.ts">
+      <file name="integrations.controller.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\integrations.controller.ts">
         <metrics statements="33" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="12" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
@@ -51,20 +51,21 @@
         <line num="69" count="0" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
       </file>
-      <file name="main.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\main.ts">
-        <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="main.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\main.ts">
+        <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.database">
       <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
-      <file name="prisma.service.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\database\prisma.service.ts">
+      <file name="prisma.service.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\database\prisma.service.ts">
         <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
@@ -76,7 +77,7 @@
     </package>
     <package name="src.dtos">
       <metrics statements="30" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="create-assignor-body.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\dtos\create-assignor-body.ts">
+      <file name="create-assignor-body.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\dtos\create-assignor-body.ts">
         <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
@@ -85,7 +86,7 @@
         <line num="13" count="0" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
       </file>
-      <file name="create-payable-assignor-body.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\dtos\create-payable-assignor-body.ts">
+      <file name="create-payable-assignor-body.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\dtos\create-payable-assignor-body.ts">
         <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
@@ -96,7 +97,7 @@
         <line num="20" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
       </file>
-      <file name="create-payable-body.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\dtos\create-payable-body.ts">
+      <file name="create-payable-body.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\dtos\create-payable-body.ts">
         <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
@@ -104,7 +105,7 @@
         <line num="10" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
       </file>
-      <file name="update-assignor.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\dtos\update-assignor.ts">
+      <file name="update-assignor.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\dtos\update-assignor.ts">
         <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
@@ -113,7 +114,7 @@
         <line num="12" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
       </file>
-      <file name="update-payable.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\dtos\update-payable.ts">
+      <file name="update-payable.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\dtos\update-payable.ts">
         <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
@@ -124,18 +125,18 @@
     </package>
     <package name="src.repositories">
       <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="assignor-repository.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\repositories\assignor-repository.ts">
+      <file name="assignor-repository.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\repositories\assignor-repository.ts">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
       </file>
-      <file name="payable-repository.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\repositories\payable-repository.ts">
+      <file name="payable-repository.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\repositories\payable-repository.ts">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.repositories.prisma">
       <metrics statements="26" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="0"/>
-      <file name="prisma-assignor-repository.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\repositories\prisma\prisma-assignor-repository.ts">
+      <file name="prisma-assignor-repository.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\repositories\prisma\prisma-assignor-repository.ts">
         <metrics statements="12" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
@@ -150,7 +151,7 @@
         <line num="47" count="0" type="stmt"/>
         <line num="51" count="0" type="stmt"/>
       </file>
-      <file name="prisma-payable-repository.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\src\repositories\prisma\prisma-payable-repository.ts">
+      <file name="prisma-payable-repository.ts" path="C:\Users\Regina Sobral\Documents\Projects\aprove-me\api\src\repositories\prisma\prisma-payable-repository.ts">
         <metrics statements="14" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>

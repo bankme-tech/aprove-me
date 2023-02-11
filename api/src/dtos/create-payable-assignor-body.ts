@@ -1,6 +1,8 @@
 import { IsNotEmpty, Length } from "class-validator";
 
 export class CreatePayableAssignorBody {
+
+    
     @IsNotEmpty({ message: 'The field document should not be empty.' })
     @Length(14, 30)
     document: string;
