@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, InputNumber } from 'antd';
-import dayjs from 'dayjs';
+import { Button, Form } from 'antd';
+import { useNavigate, useParams } from "react-router-dom";
+import { InputNumber } from 'antd';
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
 import { FormControl, Select, MenuItem } from '@material-ui/core';
+import "react-datepicker/dist/react-datepicker.css";
 
-import { useNavigate } from "react-router-dom";
+interface Assignor {
+    document: string;
+    email: string;
+    phone: string;
+    name: string;
+}
+interface Params {
+    document: string;
+}
 
-const AddPayable: React.FC = () => {
+
+const editPayable: React.FC = () => {
     const navigate = useNavigate();
+    const { id } = useParams<{ id: string }>();
+
     interface Assignor {
         id: number,
         document: string;
@@ -28,6 +40,12 @@ const AddPayable: React.FC = () => {
         emissionDate: new Date(),
         assignor: 0
     });
+    const handleAssignorChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        console.log('sadasd ' + event.target.value)
+        setSelectedAssignor(event.target.value as number);
+    };
+
+    const [selectedDate, setSelectedDate] = useState<Date>(payable.emissionDate);
     const [assignors, setAssignors] = useState<Assignor[]>([]);
     const [selectedAssignor, setSelectedAssignor] = useState<number | null>(null);
 
@@ -36,10 +54,30 @@ const AddPayable: React.FC = () => {
             .then(response => response.json())
             .then(data => {
                 setAssignors(data);
+
             });
+
+
+
+        async function fetchData() {
+            try {
+                const response = await fetch(`http://localhost:3000/integrations/payable/${id}`);
+                const data = await response.json();
+                setPayable(data);
+                setSelectedAssignor(data.assignor)
+            } catch (error) {
+                alert(error);
+            }
+        }
+
+        fetchData();
     }, []);
 
-    const [selectedDate, setSelectedDate] = useState<Date>(payable.emissionDate);
+    const onEmissionDateChange = (date: Date) => {
+        setSelectedDate(date);
+        onPayableChange('emissionDate', date.toDateString());
+    };
+
 
     const onPayableChange = (field: string, value: string | number) => {
         setPayable({
@@ -49,49 +87,43 @@ const AddPayable: React.FC = () => {
     };
 
 
-    const onEmissionDateChange = (date: Date) => {
-        setSelectedDate(date);
-        onPayableChange('emissionDate', date.toDateString());
-    };
 
-    const handleAssignorChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setSelectedAssignor(event.target.value as number);
-    };
-
-    const onSubmit = () => {
-        setPayable({
+    async function onSubmit() {
+    
+        const updatedPayable = {
             ...payable,
-            assignor: selectedAssignor ?? 0
-        });
+            assignor: (selectedAssignor ?? 0)
+          };
 
-        if (!payable.value || !payable.emissionDate || !payable.assignor) {
+        if (!updatedPayable.value || !updatedPayable.emissionDate || !updatedPayable.assignor) {
             alert("Todos os campos são obrigatórios");
             return;
         }
 
-        fetch("http://localhost:3000/integrations/addPayable", {
-            method: "POST",
+
+        fetch(`http://localhost:3000/integrations/payable/${id}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(payable)
+            body: JSON.stringify(updatedPayable)
         })
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Ocorreu um erro");
                 }
                 alert("Cadastro realizado com sucesso");
-                navigate("/list");
-            })
-            .then(data => {
-                console.log(data);
+
+                // navigate("/list");
             })
             .catch(error => {
                 alert("Ocorreu um erro:" + error.message);
+                console.log(error.message)
             });
     };
 
     return (
+
         <Form onFinish={onSubmit}>
             <Form.Item label="Valor">
                 <InputNumber
@@ -121,11 +153,11 @@ const AddPayable: React.FC = () => {
 
             <Form.Item>
                 <Button type="primary" htmlType="submit">
-                    Cadastrar
+                    Atualizar
                 </Button>
             </Form.Item>
         </Form>
     );
 };
 
-export default AddPayable;
+export default editPayable;

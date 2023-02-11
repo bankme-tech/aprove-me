@@ -8,9 +8,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 const AssignorList: FC = () => {
+    const navigate = useNavigate();
 
     interface Assignor {
         id: string,
@@ -49,6 +51,10 @@ const AssignorList: FC = () => {
         }
     };
 
+    async function handleEdit(id: string) {
+        navigate(`/EditAssignor/${id}`);
+    }
+
     return (
         <TableContainer component={Paper}>
             <Table className="table">
@@ -74,10 +80,18 @@ const AssignorList: FC = () => {
                             <TableCell>
                                 <Button
                                     variant="contained"
+                                    color="primary"
+                                    onClick={() => handleEdit(assignor.id)
+                                    }
+                                >
+                                    Editar
+                                </Button>
+                                <Button
+                                    variant="contained"
                                     color="secondary"
                                     onClick={() => handleDelete(assignor.id)}
                                 >
-                                    Delete
+                                    Excluir
                                 </Button>
                             </TableCell>
                         </TableRow>

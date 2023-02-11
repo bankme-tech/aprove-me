@@ -27,6 +27,7 @@
 <ul dir="auto">
 <li>Desenvolvida interface para realização do cadastro de pagáveis e cedente</li>
 <li>Criada listagem dos pagáveis e cedente</li>
+<li>Criada edição e exclusão dos pagáveis e cedente</li>
 <li>Realizada conexão com a api para busca, cadastro e exclusão</li>
 <li>Feita busca dos "assignor" para seleção no cadastro de pagaveis</li>
 

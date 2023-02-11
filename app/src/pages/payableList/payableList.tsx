@@ -8,9 +8,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 const PayableList: FC = () => {
+    const navigate = useNavigate();
     interface Payable {
         id: string;
         value: number;
@@ -45,6 +47,11 @@ const PayableList: FC = () => {
         }
     };
 
+    async function handleEdit(id: string) {
+        navigate(`/EditPayable/${id}`);
+    }
+
+
     return (
         <TableContainer component={Paper}>
             <Table className="table">
@@ -65,10 +72,18 @@ const PayableList: FC = () => {
                             <TableCell>
                                 <Button
                                     variant="contained"
+                                    color="primary"
+                                    onClick={() => handleEdit(payable.id)
+                                    }
+                                >
+                                    Editar
+                                </Button>
+                                <Button
+                                    variant="contained"
                                     color="secondary"
                                     onClick={() => handleDelete(payable.id)}
                                 >
-                                    Delete
+                                    Excluir
                                 </Button>
                             </TableCell>
                         </TableRow>
