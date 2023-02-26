@@ -17,4 +17,16 @@ export class AuthService {
       data,
     });
   }
+
+  async verifyExistentUser(email: string): Promise<boolean> {
+    const result = await this.prisma.user.findUnique({
+      where: { email: email },
+    });
+    if (result) {
+      console.log('Usuário já existe....!');
+      return true;
+    }
+
+    return false;
+  }
 }
