@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { MessagesHelper } from '../helpers/messages.helper';
 
-export class RegsiterDto {
+export class RegisterDto {
   @IsNotEmpty({ message: MessagesHelper.REGISTER_NAME_NOT_FOUND })
   @MinLength(2, { message: MessagesHelper.REGISTER_NAME_NOT_FOUND })
   name: string;
