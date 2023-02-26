@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { User, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { LoginDto } from './dtos/login.dto';
+import { RegisterDto } from './dtos/register.dto';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable()
 export class AuthService {
@@ -11,10 +13,17 @@ export class AuthService {
     return dto;
   }
 
-  async register(data: Prisma.UserCreateInput): Promise<User> {
-    console.log('data', data);
+  async register(dto: RegisterDto): Promise<User> {
+    console.log('dto', dto);
+
+    dto.password = CryptoJS.AES.encrypt(
+      dto.password,
+      process.env.USER_CYPHER_SECRET_KEY,
+    ).toString();
+    console.log('Senha Encriptada', dto.password);
+
     return this.prisma.user.create({
-      data,
+      data: dto,
     });
   }
 
