@@ -62,6 +62,19 @@ PS.: Entidades do DB estão criadas, portanto, basta criar a regra de negócio. 
 <strong>Tratamento de exceções no CRUD Payables</strong>
 ![image](https://user-images.githubusercontent.com/90586912/221611768-1e37b48d-e55c-4536-8176-d7d7ae662f77.png)
 </br>
+![image](https://user-images.githubusercontent.com/90586912/221621231-bff5f5fb-6291-41db-a8e0-8d42c3dcae20.png)
+</br>
+
+## Assignors - CRUD
+PS.: Entidades do DB estão criadas, portanto, basta criar a regra de negócio. </br>
+1- Criar o DTO (Adicionando validação de quantidade máx. de caracteres) </br>
+2- Criar o Helper </br>
+3- Criar o Service  </br>
+4- Criar o Controller </br>
+5- Criar o Module e importar no main module </br>
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221621498-30a77b56-f8af-4a78-9ea5-d7de78659842.png)
+</br>
 
 
 
