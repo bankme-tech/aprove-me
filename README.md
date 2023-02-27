@@ -57,7 +57,11 @@ PS.: Entidades do DB estão criadas, portanto, basta criar a regra de negócio. 
 2- Criar o Helper </br>
 3- Criar o Service  </br>
 4- Criar o Controller </br>
-5- Criar Module </br>
+5- Criar o Module e importar no main module </br>
+</br>
+<strong>Tratamento de exceções no CRUD Payables</strong>
+![image](https://user-images.githubusercontent.com/90586912/221611768-1e37b48d-e55c-4536-8176-d7d7ae662f77.png)
+</br>
 
 
 
