@@ -5,10 +5,14 @@ import { LoginDto } from './dtos/login.dto';
 import { RegisterDto } from './dtos/register.dto';
 import * as CryptoJS from 'crypto-js';
 import { MessagesHelper } from './helpers/messages.helper';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async login(dto: LoginDto) {
     const user = await this.prisma.user.findUnique({
@@ -18,9 +22,25 @@ export class AuthService {
       throw new BadRequestException(
         MessagesHelper.AUTH_PASSWORD_OR_LOGIN_NOT_FOUND,
       );
-    }
-    if (user.password === dto.password) {
-      //Gerar o token e passar o dto como parâmetro
+    } else {
+      const bytes = CryptoJS.AES.decrypt(
+        user.password,
+        process.env.USER_CYPHER_SECRET_KEY,
+      );
+      const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+      console.log('Senha Decriptada', decryptedPassword);
+
+      if (decryptedPassword === dto.password) {
+        const payload = { email: user.email, sub: user.id };
+        return {
+          email: user.email,
+          name: user.name,
+          token: this.jwtService.sign(payload, {
+            secret: process.env.JWT_SECRET_KEY,
+          }),
+        };
+      }
+      return null;
     }
   }
 
