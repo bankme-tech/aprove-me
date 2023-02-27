@@ -29,7 +29,7 @@
 </br> 
 2- Instalação do Prisma, desenvolvimento do relacionamento e criação do DB SQLite (Envs, Schema, Models e Service) </br>
 3- Criando Messagers, DTO, Regra de Negócio e Adicionando ao Auth Controller os recursos de Cadastro de um user através do Prisma </br>
-3.1- Adicionando o Service do Prisma no Auth Module como um provider para o Service do Auth conseguir utilizar o Prisma.
+3.1- Adicionando o Service do Prisma no Auth Module como um provider para o Service do Auth conseguir utilizar o Prisma. </br>
 </br>
 ![image](https://user-images.githubusercontent.com/90586912/221436166-82ead0bd-f20f-49cc-91fe-ac2db6e85ec3.png)
 </br>
@@ -37,11 +37,27 @@
 </br>
 4- Criando função para validar se o usuário já está cadastrado </br>
 5- Criptografando a senha com CryptoJS </br>
+</br>
 ![image](https://user-images.githubusercontent.com/90586912/221438054-ed9a7894-a15c-479f-b4f2-1d66cb6cc493.png) </br>
 </br>
-6- Adicionar validação através do Token JWT </br>
+6- Criando a Estratégia de Authentication & Adicionando validação através do Token JWT (expiração de 60s) </br>
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221452894-01854b34-958d-419b-8da5-92158bc34b5c.png)
+</br>
+7- Customizando as rotas privadas usando os Guards e adicionando o Decorator de validação do Guard no module principal </br>
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221457257-abfc61c3-e266-4d67-bc9e-487a888ad8eb.png)
+</br>
+PS.: agora toda a aplicação está segura por padrão, e somente com o uso do Decorator customizado ("IsPublic") uma rota se tornará publica. Portanto, caso não seja pública, será necessário o JWT para validar o acesso à rota. </br>
+</br>
 
-
+## Payables - CRUD
+PS.: Entidades do DB estão criadas, portanto, basta criar a regra de negócio. </br>
+1- Criar o DTO </br>
+2- Criar o Helper </br>
+3- Criar o Service  </br>
+4- Criar o Controller </br>
+5- Criar Module </br>
 
 
 
