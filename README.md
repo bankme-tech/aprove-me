@@ -6,16 +6,48 @@
 </h1>
 
 <h2>🔵  Resumo sobre o projeto</h2>
-<p>Texto.</p>
+<p>Projeto desenvolvido Next.js utilizando a abstração de autenticação fornecida pelo NextAuth, e estilizando com TailwindCSS. No backend, esse client consome uma API feita em Nest.js com estratégia de autenticação utilizando JWT, a qual possui um microservice responsável por processar lotes de conteúdos utilizando filas através do RabbitMQ, por fim, realizando toda a persistência de dados usando uma instância SQLite. Além disso, a infrasetrutura é provisionada utilizando Docker e Terraform, hospedando o servidor em uma instância da EC2 da AWS. O deploy automatizando é feito através de uma pipeline integrada com GithubActions.</p>
 
 </br>
 <h2>💙  Aprendizados</h2>
-<p>Texto.</p>
+<p>Fiquei surpreso como o Nest.js é extramente poderoso, seja para um "simples CRUD" e até mesmo criar microserviços. Além disso, tive a oportunidade de aprender sobre mensagerias e filas, e compreender na prática (pelo menos a base) de como é feita a escalabilidade de um serviço. Por fim, gostaria de destacar que foi extremamente bacana explorar diversos serviços da AWS, desde o Cognito (que acabei trocando depois) até o EC2, pois infraestrutura é algo que gosto bastante :D </p>
 
 </br>
 <h2> 👨🏽‍💻 Documentação Complementar FRONTEND</h2>
 <p>Abaixo pode ser verificado o raciocínio para a criação da frontend</p>
 
+<strong>Desenvolvi o frontend utilizando Next.js + Typescript, Taliwind CSS e Chakra UI. </strong>
+[Necessário Node v16.8.0 ou superior] 
+
+## Parte 1 - Construindo as interfaces de autenticação. </br> 
+
+A princípio iria utilizar React, mas quando fui utilizar o react-router acabei comparando com o roteamento do Next.js e observando grandes vantagens, não só no roteamento (com as rotas baseadas nos arquivos), como pelo fato de poder adotar SSR. Portanto, resolvi utilizar o Next.js para obter, também, uma boa performance e por consquência boa experiência do usuário. </br> 
+
+Comecei definindo quais seriam as formas de estilizar meu site de forma rápida e eficaz. Por isso escolhi utilizar os components do ChakraUI juntamente com a estilização do Tailwind CSS. </br> 
+
+</br> 
+
+<strong>Next Auth</strong> </br> 
+Escolhi essa biblioteca para construir um eficiente sistema de Autenticação no frontend no lado do servidor (SSR), visto que essa lib irá cuidar da abstração da autenticação, com diversas funcionalidades de segurança nativas, além de ser simples de implementar. </br>
+
+Agora crio e configuro meu provider de credenciais. </br>
+
+Em seguida adiciono o SessionProvider no root (app.tsx) para validar a autenticação de um user, bem como obter suas informações após o login. </br>
+
+Por fim crio o layout de autenticação (utilizando Formik para o form) e consumo a função de login através do provider. </br>
+
+Para finalizar o processo de autenticação apenas utilizo um validador de sessão (no lado do servidor) para redirecionar os usuários logados automaticamente para a page "home", bem como redirecionar usuários não autenticados para tela de login (protegendo a aplicação com rotas privadas). </br>
+
+</br>
+
+## Parte 2 - Construindo o CRUD (payable e assignor). </br> 
+
+Utilizei TailwindCSS para fazer o desenvolvimento do grid e modal.
+
+
+## Parte 2.1 - Consumo de API. </br> 
+
+Utilizei a lib Axios.
 
 
 
