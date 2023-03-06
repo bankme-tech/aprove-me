@@ -5,254 +5,189 @@
   Aprova-me
 </h1>
 
-## Sumário
+<h2>🔵  Resumo sobre o projeto</h2>
+<p>Projeto desenvolvido Next.js utilizando a abstração de autenticação fornecida pelo NextAuth, e estilizando com TailwindCSS. No backend, esse client consome uma API feita em Nest.js com estratégia de autenticação utilizando JWT, a qual possui um microservice responsável por processar lotes de conteúdos utilizando filas através do RabbitMQ, por fim, realizando toda a persistência de dados usando uma instância SQLite. Além disso, a infrasetrutura é provisionada utilizando Docker e Terraform, hospedando o servidor em uma instância da EC2 da AWS. O deploy automatizando é feito através de uma pipeline integrada com GithubActions.</p>
 
-- [Sumário](#sumário)
-- [❤️ Bem vindos](#️-bem-vindos)
-- [🚀 Vamos nessa!](#-vamos-nessa)
-  - [Dicas](#dicas)
-  - [Como você deverá desenvolver?](#como-você-deverá-desenvolver)
-  - [Qual o tempo para entregar?](#qual-o-tempo-para-entregar)
-- [💻 O Problema](#-o-problema)
-  - [Estrutura de um recebível](#estrutura-de-um-recebível)
-  - [Estrutrua de um cedente](#estrutrua-de-um-cedente)
-- [💾 Back-end](#-back-end)
-  - [Nível 1 - Validação](#nível-1---validação)
-  - [Nível 2 - Persistência](#nível-2---persistência)
-  - [Nível 3 - Testes](#nível-3---testes)
-  - [Nível 4 - Autenticação](#nível-4---autenticação)
-  - [Nível 5 - Gerenciamento de permissões](#nível-5---gerenciamento-de-permissões)
-  - [Nível 6 - Infra e Doc](#nível-6---infra-e-doc)
-  - [Nível 7 - Lotes](#nível-7---lotes)
-  - [Nível 8 - Resiliência](#nível-8---resiliência)
-  - [Nível 9 - Cloud](#nível-9---cloud)
-  - [Nível 10 - Infra as a Code](#nível-10---infra-as-a-code)
-- [🖥️ Front-end](#️-front-end)
-  - [Nível 1 - Cadastro](#nível-1---cadastro)
-  - [Nível 2 - Conectando na API](#nível-2---conectando-na-api)
-  - [Nível 3 - Listando](#nível-3---listando)
-  - [Nível 4 - Autenticação](#nível-4---autenticação-1)
-  - [Nível 5 - Testes](#nível-5---testes)
+</br>
+<h2>💙  Aprendizados</h2>
+<p>Fiquei surpreso como o Nest.js é extramente poderoso, seja para um "simples CRUD" e até mesmo criar microserviços. Além disso, tive a oportunidade de aprender sobre mensagerias e filas, e compreender na prática (pelo menos a base) de como é feita a escalabilidade de um serviço. Por fim, gostaria de destacar que foi extremamente bacana explorar diversos serviços da AWS, desde o Cognito (que acabei trocando depois) até o EC2, pois infraestrutura é algo que gosto bastante :D </p>
 
-## ❤️ Bem vindos 
+</br>
+<h2> 👨🏽‍💻 Documentação Complementar FRONTEND</h2>
+<p>Abaixo pode ser verificado o raciocínio para a criação da frontend</p>
 
-Olá, tudo certo?
+<strong>Desenvolvi o frontend utilizando Next.js + Typescript, Taliwind CSS e Chakra UI. </strong>
+[Necessário Node v16.8.0 ou superior] 
 
-Seja bem vindo ao teste de seleção para novos desenvolvedores na Bankme!
+## Parte 1 - Construindo as interfaces de autenticação. </br> 
 
-Estamos honrados que você tenha chegado até aqui!
+A princípio iria utilizar React, mas quando fui utilizar o react-router acabei comparando com o roteamento do Next.js e observando grandes vantagens, não só no roteamento (com as rotas baseadas nos arquivos), como pelo fato de poder adotar SSR. Portanto, resolvi utilizar o Next.js para obter, também, uma boa performance e por consquência boa experiência do usuário. </br> 
 
-Prepare aquele ☕️ , e venha conosco codar e se divertir!
+Comecei definindo quais seriam as formas de estilizar meu site de forma rápida e eficaz. Por isso escolhi utilizar os components do ChakraUI juntamente com a estilização do Tailwind CSS. </br> 
 
-## 🚀 Vamos nessa!
+</br> 
 
-Este é um teste para analisarmos como você desempenha ao entender, traduzir, resolver e entregar um código que resolve um problema.
+<strong>Next Auth</strong> </br> 
+Escolhi essa biblioteca para construir um eficiente sistema de Autenticação no frontend no lado do servidor (SSR), visto que essa lib irá cuidar da abstração da autenticação, com diversas funcionalidades de segurança nativas, além de ser simples de implementar. </br>
 
-### Dicas
+Agora crio e configuro meu provider de credenciais. </br>
 
-- Documente;
-- Pergunte;
-- Mostre a sua linha de reciocínio;
-- Trabalhe bem o seu README.md;
+Em seguida adiciono o SessionProvider no root (app.tsx) para validar a autenticação de um user, bem como obter suas informações após o login. </br>
 
-### Como você deverá desenvolver?
+Por fim crio o layout de autenticação (utilizando Formik para o form) e consumo a função de login através do provider. </br>
 
-1. Faça um clone deste projeto em seu GitHub pessoal;
-2. Realize as implementações de acordo com cada um dos níveis;
-3. Faça pequenos commits;
-4. Depois de sentir que fez o seu máximo, faça um PR para o repositório original.
+Para finalizar o processo de autenticação apenas utilizo um validador de sessão (no lado do servidor) para redirecionar os usuários logados automaticamente para a page "home", bem como redirecionar usuários não autenticados para tela de login (protegendo a aplicação com rotas privadas). </br>
 
-**IMPORTANTE!**
+</br>
+
+## Parte 2 - Construindo o CRUD (payable e assignor). </br> 
 
-Não significa que você precisa implementar todos os níveis para ser aprovado no processo!
+Utilizei TailwindCSS para fazer o desenvolvimento do grid e modal.
 
-Faça até onde se sentir confortável.
 
-### Qual o tempo para entregar?
+## Parte 2.1 - Consumo de API. </br> 
 
-Você terá **48 horas** a partir do envio do link deste repositório.
+Utilizei a lib Axios.
 
-Mas não desista! Envie até onde conseguir.
 
-## 💻 O Problema
 
-Um cliente da Bankme solicitou uma nova funcionalidade, relacionada a recebíveis.
+</br>
+</br>
+</br>
+</br>
 
-Todos os dias esse cliente movimenta vários recebíveis, e nosso time de operações estava ficando maluco tendo que cadastrar tudo isso de forma manual!
 
-Os recebíveis são representações digitais de um documento que simula uma dívida a ser recebida. E para Bankme, é importante ter essas informações como parte do fluxo comercial que temos com este cliente.
 
-### Estrutura de um recebível
+</br>
+<h2> 🧑🏽‍💻 Documentação Complementar BACKEND</h2>
+<p>Abaixo pode ser verificado o raciocínio para a criação da api e também da infraestrutura, bem como os testes realizados utilizando o postman/logs.</p>
 
-| CAMPO        | TIPO          | DESCRIÇÃO                                 |
-|--------------|---------------|-------------------------------------------|
-| id           | string (UUID) | É a identificação de um recebível.        |
-| value        | float         | É o valor do recebível.                   |
-| emissionDate | date          | É a data de emissão do recebível.         |
-| assignor     | int           | Representa a identificação de um cedente. |
 
-### Estrutrua de um cedente
+## Auth (Autenticação de um Bankmer)
 
-| CAMPO    | TIPO        | DESCRIÇÃO                             |
-|----------|-------------|---------------------------------------|
-| document | string(30)  | É o documento CPF ou CNPJ do cedente. |
-| email    | string(140) | É o email do cedente.                 |
-| phone    | string(20)  | É o telefone do cedente.              |
-| name     | string(140) | É a nome ou razão social do cedente.  |
+<strong>Login</strong> </br> 
+1- Instalação das Classes de Validação </br>
+2- Redefinição dos loggers da aplicação </br>
+3- Adição da função de CORS (segurança para comunicação entre domínios) </br>
+4- Habilitando transformação dos dados recebidos pelo Payload </br>
+5- Definindo prefixo global da API </br>
+6- Teste do servidor rodando através do Postman </br>
 
-## 💾 Back-end
+![image](https://user-images.githubusercontent.com/90586912/221385143-8b4bb54c-2449-41ee-9c53-666b5808bc56.png) </br>
 
-### Nível 1 - Validação
+7- Criação das mensagens de validação (helpers). </br>
+8- Criação dos DTOs utilizando Decorators de validação de Email e de Senha. </br>
+9- Criação do Service de Authentication e definição da da regra de negócio para Login. </br>
+10- Criação do Controller de Authentication. </br>
+11- Criação do Module de Authentication e importação dentro do Modulo principal da API. </br>
 
-Implemente uma API utilizando NestJS que receba dados de um recebível e de um cedente.
+![image](https://user-images.githubusercontent.com/90586912/221418106-715b8c75-70ad-4041-ba91-fe82abf61aba.png)
+</br> 
+</br> 
+![image](https://user-images.githubusercontent.com/90586912/221418130-2722f614-0e28-45da-9907-bd5d8af3fbef.png)
+</br> 
 
-A rota para este cadastro é:
+<strong>Cadastro</strong> </br> 
+1- Instalação do Prisma e criação do DB SQLite (Envs, Schema, Models e Service) </br>
+</br> 
+![image](https://user-images.githubusercontent.com/90586912/221434463-18f443d6-2def-4cdd-822d-dafb8fe2a1fb.png) </br> 
+</br> 
+2- Instalação do Prisma, desenvolvimento do relacionamento e criação do DB SQLite (Envs, Schema, Models e Service) </br>
+3- Criando Messagers, DTO, Regra de Negócio e Adicionando ao Auth Controller os recursos de Cadastro de um user através do Prisma </br>
+3.1- Adicionando o Service do Prisma no Auth Module como um provider para o Service do Auth conseguir utilizar o Prisma. </br>
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221436166-82ead0bd-f20f-49cc-91fe-ac2db6e85ec3.png)
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221436501-f90a74cf-4797-402b-b819-9621d5f305d8.png)
+</br>
+4- Criando função para validar se o usuário já está cadastrado </br>
+5- Criptografando a senha com CryptoJS </br>
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221438054-ed9a7894-a15c-479f-b4f2-1d66cb6cc493.png) </br>
+</br>
+6- Criando a Estratégia de Authentication & Adicionando validação através do Token JWT (expiração de 60s) </br>
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221452894-01854b34-958d-419b-8da5-92158bc34b5c.png)
+</br>
+7- Customizando as rotas privadas usando os Guards e adicionando o Decorator de validação do Guard no module principal </br>
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221457257-abfc61c3-e266-4d67-bc9e-487a888ad8eb.png)
+</br>
+PS.: agora toda a aplicação está segura por padrão, e somente com o uso do Decorator customizado ("IsPublic") uma rota se tornará publica. Portanto, caso não seja pública, será necessário o JWT para validar o acesso à rota. </br>
+</br>
+
+## Payables - CRUD
+PS.: Entidades do DB estão criadas, portanto, basta criar a regra de negócio. </br>
+1- Criar o DTO </br>
+2- Criar o Helper </br>
+3- Criar o Service  </br>
+4- Criar o Controller </br>
+5- Criar o Module e importar no main module </br>
+</br>
+<strong>Tratamento de exceções no CRUD Payables</strong>
+![image](https://user-images.githubusercontent.com/90586912/221611768-1e37b48d-e55c-4536-8176-d7d7ae662f77.png)
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221621231-bff5f5fb-6291-41db-a8e0-8d42c3dcae20.png)
+</br>
+
+## Assignors - CRUD
+PS.: Entidades do DB estão criadas, portanto, basta criar a regra de negócio. </br>
+1- Criar o DTO (Adicionando validação de quantidade máx. de caracteres) </br>
+2- Criar o Helper </br>
+3- Criar o Service  </br>
+4- Criar o Controller </br>
+5- Criar o Module e importar no main module </br>
+</br>
+![image](https://user-images.githubusercontent.com/90586912/221621498-30a77b56-f8af-4a78-9ea5-d7de78659842.png)
+</br>
+
+<h1>Infra</h1>
+
+## Docker
+Iniciei criando os arquivos Dockerfile e dockerignore para conseguir criar a imagem da API. </br>
+
+Em seguida crio o docker-compose.yml e faço uma nova imagem. </br>
+<strong>OBS:</strong> o SQLite é um DB local, porém, a sua instância é criada dentro da imagem do Docker. </br>
+</br>
+
+![image](https://user-images.githubusercontent.com/90586912/222936202-173914e9-e760-4ef2-9b26-68cbbd1f57bf.png)
+</br>
+
+## Construção do IaC utilizando Terraform
+Começo instalando a dependência de microservices do nestjs. </br>
+Criação da instância utilizando terraform (IaC) através do arquivo main.tf. </br>
+Para criar essa instância, foi criado um novo grupo de segurança, definindo regras de entrada e saída para HTTP, HTTPS e SSH.  </br>
+
+</br>
+
+![image](https://user-images.githubusercontent.com/90586912/222992287-64b48917-06b3-46f4-bb78-d58932863e21.png)</br>
+</br>
+
+## Gerar um Pipeline de Deploy (EC2 & Github Actions)
+Uma vez já criada a instância do EC2, agora configuro o github através de um arquivo yml. </br>
+Nesse momento, visando segurança e boas práticas, crio os secrets dentro do Github Actions Secrets. </br>
+
+
+</br>
+
+</br>
+
+
+<h1>Filas e Microservice</h1>
+
+## Criação do Microservice e Processamento de Pagáveis usando Fila
+Começo instalando a dependência de microservices do nestjs. </br>
+Instalo o RabbitMQ na API e faço as configurações necessárias para integrá-lo ao serviço "payables". </br>
+Altero meu Docker Compose para gerar 3 imagens: RabbitMQ, Payable Microservice e API. </br>
+Por fim, crio a rota "/payables/batch" para conseguir processar os arquivos através da fila </br>
+
+</br>
+
+![image](https://user-images.githubusercontent.com/90586912/222968233-92f7de4a-c8cd-4bfa-a8b4-01f16bc93527.png)
+</br>
+
+</br>
+
+![image](https://user-images.githubusercontent.com/90586912/222992406-8db1b1e6-fb24-4f7d-a267-2e63dbbb5b46.png)
+</br>
 
-`POST /integrations/payable`
-
-Essa rota deverá receber todas as informações. É importante garantir a validação destes dados:
-
-1. Nenhum campo pode ser nulo;
-2. Os ids devem ser do tipo UUID;
-3. As strings não podem ter caracteres a mais do que foi definido em sua estrutura;
-
-Se algum campo não estiver preenchido corretamente, deve-se retornar uma mensagem para o usuário mostrando qual o problema foi encontrado em qual campo.
-
-Se todos os dados estiverem validados. Apenas retorne todos os dados em um formato JSON.
-
-### Nível 2 - Persistência
-
-Utilize o Prisma, para incluir um novo banco de dados SQLite.
-
-Crie a estrutura de acordo com o que foi definido.
-
-Caso os dados estejam válidos, cadastre-os.
-
-Crie 2 novas rotas:
-
-`GET /integrations/payable/:id`
-
-`GET /integrations/assignor/:id`
-
-Para que seja possível retornar pagáveis e cedentes de forma independete.
-
-Inclua também rotas para as outras operações:
-
-- Edição;
-- Exclusão;
-- Cadastro;
-
-### Nível 3 - Testes
-
-Crie testes unitários para cada arquivo da aplicação. Para cada nova implementação a seguir, também deve-se criar os testes.
-
-### Nível 4 - Autenticação
-
-Inclua um sistema de autenticação em todas as rotas.
-
-Para isso, crie uma nova rota:
-
-`POST /integrations/auth` que deve receber:
-
-```json
-{
-  "login": "aprovame",
-  "password": "aprovame"
-}
-```
-
-Com essas credenciais o endpoint deverá retornar um JWT com o tempo de expiração de 1 minuto.
-
-Reescreva as regras de todas as outras rotas para que o JWT seja enviado como parâmetro do `Header` da requisição.
-
-Se o JWT estiver válido, então os dados devem ser mostrados, caso contrário, deve-se mostrar uma mensagem de "Não autorizado".
-
-### Nível 5 - Gerenciamento de permissões
-
-Agora, crie um sistema de gerenciamento de permissões.
-
-Crie um novo cadastro de permissões. Esse cadastro deve armazenar: `login` e `password`.
-
-Refatore o endpoint de autenticação para que sempre se gere JWTs se login e senha estiverem cadastrados no Banco de Dados.
-
-### Nível 6 - Infra e Doc
-
-Crie um `Dockerfile` para sua API.
-
-Crie um `docker-compose.yaml` para iniciar o seu projeto.
-
-Documente tudo o que foi feito até aqui:
-
-- Como preparar o ambiente;
-- Como instalar as dependência;
-- Como rodar o projeto;
-
-### Nível 7 - Lotes
-
-Crie um novo recurso de processamento de pagáveis por lotes.
-
-A ideia é que o cliente possa enviar um GRANDE número de pagáveis de uma única vez. E isso, não poderá ser processado de forma síncrona.
-
-Crie um novo endpoint:
-
-`POST integrations/payable/batch`
-
-Neste endpoint deve ser possível receber lotes de até 10.000 pagáveis.
-
-Ao receber todos os pagáveis, deve-se postá-los em uma fila.
-
-Crie um consumidor para esta fila que deverá pegar pagável por pagável, criar seu registro no banco de dados, e ao final do processamento do lote enviar um e-mail de lote processado, com o número de sucesso e falhas.
-
-### Nível 8 - Resiliência
-
-Caso não seja possível processar algum ítem do lote, coloque-o novamente na fila. Isso deve ocorrer por até 4 vezes. Depois, esse ítem deve ir para uma "Fila Morta" e um e-mail deve ser disparado para o time de operações.
-
-### Nível 9 - Cloud
-
-Crie uma pipeline de deploy da aplicação em alguma estrutura de Cloud. (AWS, Google, Azure...)
-
-### Nível 10 - Infra as a Code
-
-Crie uma estrutura em terraforma que monte a infra-estrutura desejada.
-
-## 🖥️ Front-end
-
-### Nível 1 - Cadastro
-
-Crie uma interface na qual é possível cadastrar os pagáveis.
-
-É importante que sua interface previna o cadastro de campos vazios, ou que não estejam nas regras definidas anteriormente.
-
-Exiba o pagável cadastrado em uma nova tela.
-
-### Nível 2 - Conectando na API
-
-Conecte a seu Front-end a API que foi criada, e faça o cadastro de um pagável refletir na sua API.
-
-Faça também uma tela para cadastro do cedente.
-
-Altere o cadastro inicial para que o campo `assignor` seja um `combobox` no qual seja possível selecionar um cedente.
-
-### Nível 3 - Listando
-
-Agora faça um sistema de listagens de pagáveis. Mostrando apenas: `id`, `value` e `emissionDate`.
-
-Para cada ítem da lista, coloque um link que mostra os detalhes do pagável.
-
-Além disso, coloque opções de editar e excluir.
-
-Nessa página de detalhes, inclua um novo link para exibir os dados do cedente.
-
-Todos os dados devem vir da API.
-
-### Nível 4 - Autenticação
-
-Implemente agora o sistema de login e senha para poder acessar as suas rotas de forma autenticada.
-
-Armazene o token no `localStorage` do seu navegador.
-
-Caso o token expire, redirecione o usuário para a página de login.
-
-### Nível 5 - Testes
-
-Crie testes para sua aplicação Front-end.
