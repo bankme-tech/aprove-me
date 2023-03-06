@@ -1,0 +1,32 @@
+version: '3'
+
+services: 
+  app: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command: npm run start:dev
+    env_file:
+      - .env
+    ports: 
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  payables: 
+    build: 
+      context: .
+      dockerfile: ./src/payables/Dockerfile
+    env_file:
+      - ./src/payables/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - '5672:5672'
