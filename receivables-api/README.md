@@ -1,4 +1,6 @@
+## API de Validação de Recebíveis e Cedentes
 
+Esta API foi desenvolvida utilizando o framework NestJS e tem como objetivo receber dados de um recebível, realizando a validação desses dados. A rota para cadastro dos dados é /integrations/payable e deve ser enviada via método POST.
 
 ## Executando a API
 
