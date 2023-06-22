@@ -1,24 +1,29 @@
 import { IsEmail, IsNotEmpty, IsString, Length, Matches, Max } from "class-validator";
+import { validationConstants } from "../../../constants/validation";
+import { regexConstants } from "src/constants/regex";
 
-// TODO - values to constant folder
 export class CreateAssignorDto {
     @IsNotEmpty()
     @IsString()
-    @Length(3, 30)
+    @Length(validationConstants.user.document.min, validationConstants.user.document.max)
     document: string;
 
     @IsNotEmpty()
     @IsEmail()
-    @Length(3, 140)
+    @Length(validationConstants.user.email.min, validationConstants.user.email.max)
     email: string;
 
     @IsNotEmpty()
-    @Length(3, 20)
+    @Length(validationConstants.user.phone.min, validationConstants.user.phone.max)
+    @Matches( regexConstants.user.validatePhone, {
+        message: validationConstants.user.phone.message,
+    })
     phone: string;
 
     @IsNotEmpty()
-    @Matches(/^(?=.*\s)[A-Za-zÀ-ÖØ-öø-ÿ\s']+$/, { 
-        message: 'Name must be with at least two words with valid characters.',
+    @Length(validationConstants.user.name.min, validationConstants.user.name.max)
+    @Matches(regexConstants.user.validationName, { 
+        message: validationConstants.user.name.message
     })
     name: string;
 }
