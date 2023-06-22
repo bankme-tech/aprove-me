@@ -13,11 +13,12 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "pretest": "jest --clearCache",
+    "test": "jest --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --runInBand",
+    "test:unit": "yarn test --watch --coverage",
+    "test:staged": "yarn test --findRelatedTests",
+    "test:ci": "yarn test --coverage"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -65,7 +66,12 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "**/*.(t|j)s",
+      "<rootDir>/src/**/*.ts",
+      "!<rootDir>/src/**/*.module.ts",
+      "!<rootDir>/src/**/entities/*.ts",
+      "!<rootDir>/src/**/*.dto.ts",
+      "!**/test/**"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
