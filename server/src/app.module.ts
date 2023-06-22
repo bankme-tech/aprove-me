@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AssignorModule } from './modules/assignor/assignor.module';
+import { PayableModule } from './modules/payable/payable.module';
 
 @Module({
-  imports: [AssignorModule],
+  imports: [AssignorModule, PayableModule],
   controllers: [],
   providers: [],
 })

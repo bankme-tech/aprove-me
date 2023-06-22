@@ -3,13 +3,13 @@ import { Injectable } from "@nestjs/common";
 const fakeDb = []
 
 @Injectable()
-export class AssignorRepository {
+export class PayableRepository {
     async create(data): Promise<any> {
         fakeDb.push(data)
         return data
     }
 
     async findOne(args): Promise<any> {
-        return fakeDb.find(assignor => assignor.email === args.where.email)
+        return fakeDb.find(payable => payable.id === args.where.id)
     }
 }

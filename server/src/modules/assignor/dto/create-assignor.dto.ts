@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString, Length, Matches, Max } from "class-validator";
 import { validationConstants } from "../../../constants/validation";
-import { regexConstants } from "src/constants/regex";
+import { regexConstants } from "../../../constants/regex";
 
 export class CreateAssignorDto {
     @IsNotEmpty()

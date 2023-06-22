@@ -6,7 +6,7 @@ import { UpdateAssignorDto } from './dto/update-assignor.dto';
 @Controller('assignor')
 export class AssignorController {
   constructor(private readonly assignorService: AssignorService) {}
-
+ 
   @Post()
   create(
     @Body() data: CreateAssignorDto
