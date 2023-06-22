@@ -1,5 +1,15 @@
+import { IsDateString, IsNotEmpty, IsNumber, IsUUID } from "class-validator";
+
 export class CreatePayableDto {
+    @IsNotEmpty()
+    @IsNumber()
     valueInCents: number;
-    emissionDate: string;
+
+    @IsNotEmpty()
+    @IsDateString()
+    emissionDate: string; 
+
+    @IsNotEmpty()
+    // @IsUUID() // TODO - TESTAR QUANDO ESTIVER GERANDO UUID CORRETAMENTE
     assignor: string;
 }
