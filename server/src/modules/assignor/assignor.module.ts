@@ -9,6 +9,7 @@ import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
 @Module({
   imports: [PrismaModule],
   controllers: [AssignorController],
-  providers: [AssignorService, AssignorRepository, BcryptAdapter]
+  providers: [AssignorService, AssignorRepository, BcryptAdapter],
+  exports: [AssignorService]
 })
 export class AssignorModule {}

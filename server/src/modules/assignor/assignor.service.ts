@@ -69,6 +69,15 @@ export class AssignorService {
     })
   }
 
+  async findOneByEmail({ email }: { email: string }) {
+    return await this.assignorRepository.findOneByEmail({
+      where: {
+        email,
+        deletedAt: null
+      }
+    })
+  }
+
   async findAll({ filters, page, itemsPerPage }: ListDto) {
     const condition = buildFindAllFilters({filters})
 
