@@ -8,6 +8,15 @@ import { PayableRepository } from '../../data/repositories/payable-repository/pa
 interface CreateDto {
   data: CreatePayableDto
 }
+interface ListDto {
+  filters: any;
+  page: number;
+  itemsPerPage: number;
+}
+interface UpdateDto {
+  id: string; 
+  data: UpdatePayableDto
+}
 
 @Injectable()
 export class PayableService {
@@ -35,19 +44,56 @@ export class PayableService {
     })
   }
 
-  findAll() {
-    return `This action returns all payable`;
+  async findOne({ id }: { id: string }) {
+    return await this.payableRepository.findOne({
+      where: {
+        id
+      }
+    })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} payable`;
+  async findAll({ filters, page, itemsPerPage }: ListDto) {
+    const { assignorId } = filters
+
+    return await this.payableRepository.findAll({
+      where: { assignorId }, // TODO
+      take: itemsPerPage,
+      skip: (page - 1) * itemsPerPage,
+    })
   }
 
-  update(id: number, updatePayableDto: UpdatePayableDto) {
-    return `This action updates a #${id} payable`;
+  async update({ id, data }: UpdateDto) {
+    const {
+      valueInCents
+    } = data
+
+    const checkIfPayableExists = await this.payableRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    if(!checkIfPayableExists) {
+      throw new UnauthorizedException('Payable not found')
+    }
+
+    return await this.payableRepository.update(id, {
+      valueInCents
+    })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} payable`;
+  async remove({ id }:{ id: string }) {
+    // TODO - ADD REMOVED AT ON CONDITION
+    const checkIfPayableExists = await this.payableRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    if(!checkIfPayableExists) {
+      throw new UnauthorizedException('Payable not found')
+    }
+
+    await this.payableRepository.remove(id)
   }
 }

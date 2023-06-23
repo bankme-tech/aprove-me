@@ -19,17 +19,21 @@ describe('PayableService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        PayableService,
+        PayableService, 
         {
           provide: PayableRepository,
           useValue: {
-            create: jest.fn().mockResolvedValue(makeFakePayable())
+            create: jest.fn().mockResolvedValue(makeFakePayable()),
+            findOne: jest.fn().mockResolvedValue(makeFakePayable()),
+            findAll: jest.fn().mockResolvedValue([makeFakePayable(), makeFakePayable()]),
+            update: jest.fn().mockResolvedValue(makeFakePayable()),
+            remove: jest.fn()
           }
         },
         {
           provide: AssignorRepository,
-          useValue: {
-            findOne: jest.fn().mockResolvedValue({id: 'any_id'})
+          useValue: { 
+            findOne: jest.fn().mockResolvedValue({id: 'any_id'}) 
           }
         }
       ],
@@ -105,6 +109,139 @@ describe('PayableService', () => {
       })
 
       expect(result).toEqual(makeFakePayable())
+    });
+  });
+
+  describe('findOne', () => {
+    it('should call repository with correct values', async () => {
+      const findOneSpy = jest.spyOn(payableRepository, 'findOne')
+      await sut.findOne({id: 'any_id'})
+      expect(findOneSpy).toHaveBeenCalledWith({
+        where: {
+          id: 'any_id'
+        }
+      })
+    });
+
+    it('should return a entity on success', async () => {
+      const result = await sut.findOne({id: 'any_id'})
+      expect(result).toEqual(makeFakePayable())
+    });
+  });
+
+  describe('findAll', () => {
+    it('should call repository with correct values', async () => {
+      const findAllSpy = jest.spyOn(payableRepository, 'findAll')
+      await sut.findAll({filters: {}, page: 1, itemsPerPage: 10})
+      expect(findAllSpy).toHaveBeenCalledWith({
+        where: {},
+        take: 10,
+        skip: 0
+      })
+    });
+
+    it('should call repository with correct values and filters', async () => {
+      const findAllSpy = jest.spyOn(payableRepository, 'findAll')
+      await sut.findAll({filters: {assignorId: 'any_assignor_id'}, page: 3, itemsPerPage: 10})
+      expect(findAllSpy).toHaveBeenCalledWith({
+        where: {assignorId: 'any_assignor_id'},
+        take: 10,
+        skip: 20
+      })
+    });
+
+    it('should return a entity on success', async () => {
+      const result = await sut.findAll({filters: {}, page: 1, itemsPerPage: 10})
+      expect(result).toEqual([makeFakePayable(), makeFakePayable()])
+    });
+  });
+
+  describe('update', () => {
+    it('should call repository.findOne with correct values', async () => {
+      const findOneSpy = jest.spyOn(payableRepository, 'findOne')
+
+      await sut.update({
+        id: 'any_id',
+        data: {
+          valueInCents: 10000
+        }
+      })
+
+      expect(findOneSpy).toHaveBeenCalledWith({
+        where: {
+          id: 'any_id',
+        }
+      })
+    });
+
+    it('should throw if payable already exists', async () => {
+      jest.spyOn(payableRepository, 'findOne').mockResolvedValueOnce(null)
+
+      const promise = sut.update({
+        id: 'any_id',
+        data: {
+          valueInCents: 10000
+        }
+      })
+
+      await expect(promise).rejects.toThrowError(new UnauthorizedException('Payable not found'))
+    });
+
+    it('should call repository with correct values', async () => {
+      const updateSpy = jest.spyOn(payableRepository, 'update')
+      await sut.update({
+        id: 'any_id',
+        data: {
+          valueInCents: 10000
+        }
+      })
+      expect(updateSpy).toHaveBeenCalledWith('any_id',{
+        valueInCents: 10000
+      })
+    });
+
+    it('should return a entity on success', async () => {
+      const result = await sut.update({
+        id: 'any_id',
+        data: {
+          valueInCents: 10000
+        }
+      })
+      expect(result).toEqual(makeFakePayable())
+    });
+  });
+
+  describe('remove', () => {
+    it('should call repository.findOne with correct values', async () => {
+      const findOneSpy = jest.spyOn(payableRepository, 'findOne')
+
+      await sut.remove({
+        id: 'any_id'
+      })
+
+      expect(findOneSpy).toHaveBeenCalledWith({
+        where: {
+          id: 'any_id',
+        }
+      })
+    });
+
+    it('should throw if payable already exists', async () => {
+      jest.spyOn(payableRepository, 'findOne').mockResolvedValueOnce(null)
+
+      const promise = sut.remove({
+        id: 'any_id'
+      })
+
+      await expect(promise).rejects.toThrowError(new UnauthorizedException('Payable not found'))
+    });
+
+    it('should call repository with correct values', async () => {
+      const removeSpy = jest.spyOn(payableRepository, 'remove')
+      await sut.remove({
+        id: 'any_id'
+      })
+      expect(removeSpy).toHaveBeenCalledWith('any_id')
     });
   });
 });
