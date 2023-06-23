@@ -6,6 +6,15 @@ import { AssignorRepository } from '../../data/repositories/assignor-repository/
 interface CreateDto {
   data: CreateAssignorDto
 }
+interface ListDto {
+  filters: any;
+  page: number;
+  itemsPerPage: number;
+}
+interface UpdateDto {
+  id: string; 
+  data: UpdateAssignorDto
+}
 
 @Injectable()
 export class AssignorService {
@@ -40,15 +49,59 @@ export class AssignorService {
     })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} assignor`;
+  async findOne({ id }: { id: string }) {
+    return await this.assignorRepository.findOne({
+      where: {
+        id
+      }
+    })
   }
 
-  update(id: number, updateAssignorDto: UpdateAssignorDto) {
-    return `This action updates a #${id} assignor`;
+  async findAll({ filters, page, itemsPerPage }: ListDto) {
+
+    const { email, name } = filters
+
+    return await this.assignorRepository.findAll({
+      where: { email, name }, // TODO - IMPROVE FILTER
+      take: itemsPerPage,
+      skip: (page - 1) * itemsPerPage,
+    })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} assignor`;
+  async update({ id, data }: UpdateDto) {
+    const {
+      name, 
+      phone
+    } = data
+
+    const checkIfAssignorExists = await this.assignorRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    if(!checkIfAssignorExists) {
+      throw new UnauthorizedException('Assignor not found')
+    }
+
+    return await this.assignorRepository.update(id, {
+      name, 
+      phone
+    })
+  }
+
+  async remove({ id }:{ id: string }) {
+    // TODO - ADD REMOVED AT ON CONDITION
+    const checkIfAssignorExists = await this.assignorRepository.findOne({
+      where: {
+        id
+      }
+    })
+
+    if(!checkIfAssignorExists) {
+      throw new UnauthorizedException('Assignor not found')
+    }
+
+    await this.assignorRepository.remove(id)
   }
 }

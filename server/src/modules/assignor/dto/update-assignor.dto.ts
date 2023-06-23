@@ -1,4 +1,20 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateAssignorDto } from './create-assignor.dto';
+import { IsOptional, Length, Matches } from "class-validator";
 
-export class UpdateAssignorDto extends PartialType(CreateAssignorDto) {}
+import { regexConstants } from "../../../constants/regex";
+import { validationConstants } from "../../../constants/validation";
+
+export class UpdateAssignorDto {
+    @IsOptional()
+    @Length(validationConstants.user.phone.min, validationConstants.user.phone.max)
+    @Matches( regexConstants.user.validatePhone, {
+        message: validationConstants.user.phone.message,
+    })
+    phone?: string;
+
+    @IsOptional()
+    @Length(validationConstants.user.name.min, validationConstants.user.name.max)
+    @Matches(regexConstants.user.validationName, { 
+        message: validationConstants.user.name.message
+    })
+    name?: string;
+}

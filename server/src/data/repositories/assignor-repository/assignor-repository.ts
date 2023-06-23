@@ -12,6 +12,30 @@ export class AssignorRepository {
     }
 
     async findOne(args): Promise<any> {
-        return await this.prisma.assignor.findFirst(args)
+        return await this.prisma.assignor.findFirstOrThrow(args)
+    }
+
+    async findAll(args): Promise<any[]> {
+        return await this.prisma.assignor.findMany(args)
+    }
+
+    async update(id, data): Promise<any> {
+        return await this.prisma.assignor.update({
+            where: {
+                id
+            },
+            data
+        })
+    }
+
+    async remove(id): Promise<any> {
+        return await this.prisma.assignor.update({
+            where: {
+                id
+            },
+            data: {
+                // add deletedAt condition                
+            }
+        })
     }
 }
