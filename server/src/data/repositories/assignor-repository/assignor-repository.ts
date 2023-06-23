@@ -1,13 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../../../infra/prisma/prisma.service";
 
-const excludeKeys = (assignor: any, keys: string[]) => {
-  if (!assignor) return assignor;
+const excludeKeys = (entity: any, keys: string[]) => {
   keys.forEach((key) => {
-    delete assignor[key];
+    delete entity[key];
   });
 
-  return assignor;
+  return entity;
 };
 
 @Injectable()

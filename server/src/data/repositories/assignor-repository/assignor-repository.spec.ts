@@ -4,12 +4,18 @@ import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 // jest.useFakeTimers({ now: new Date(2022, 11, 15, 0) });
 
+
 const makeFakeAssignor = () => ({
     id: 'any_id',
     document: 'any_document',
     email: 'any_email',
     phone: 'any_phone',
-    name: 'any_name',
+    name: 'any_name'    
+})
+
+const makeFakeAssignorInDb = () => ({
+    ...makeFakeAssignor(),
+    password: 'any_password'
 })
 
 describe('AssignorRepository', () => {
@@ -24,10 +30,10 @@ describe('AssignorRepository', () => {
                     provide: PrismaService,
                     useValue: {
                         assignor: {
-                            create: jest.fn().mockResolvedValue(makeFakeAssignor()),
-                            findFirst: jest.fn().mockResolvedValue(makeFakeAssignor()),
-                            update: jest.fn().mockResolvedValue(makeFakeAssignor()),
-                            findMany: jest.fn().mockResolvedValue([makeFakeAssignor(), makeFakeAssignor()]),
+                            create: jest.fn().mockResolvedValue(makeFakeAssignorInDb()),
+                            findFirst: jest.fn().mockResolvedValue(makeFakeAssignorInDb()),
+                            update: jest.fn().mockResolvedValue(makeFakeAssignorInDb()),
+                            findMany: jest.fn().mockResolvedValue([makeFakeAssignorInDb(), makeFakeAssignorInDb()]),
                         },
                     },
                 },

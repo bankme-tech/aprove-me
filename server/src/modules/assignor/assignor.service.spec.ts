@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AssignorService } from './assignor.service';
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
 import { UnauthorizedException } from '@nestjs/common';
+import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
 
 const makeFakeAssignor = () => ({
   id: 'any_id',
@@ -28,6 +29,12 @@ describe('AssignorService', () => {
             update: jest.fn().mockResolvedValue(makeFakeAssignor()),
             remove: jest.fn()
           }
+        },
+        {
+          provide: BcryptAdapter,
+          useValue: {
+            hash: jest.fn().mockResolvedValue('hashed_password')
+          }
         }
       ],
     }).compile();
@@ -50,6 +57,7 @@ describe('AssignorService', () => {
           email: 'any_email',
           phone: 'any_phone',
           name: 'any_name',
+          password: 'any_password'
         }
       })
 
@@ -70,6 +78,7 @@ describe('AssignorService', () => {
           email: 'any_email',
           phone: 'any_phone',
           name: 'any_name',
+          password: 'any_password'
         }
       })
 
@@ -85,7 +94,8 @@ describe('AssignorService', () => {
           document: 'any_document',
           email: 'any_email',
           phone: 'any_phone',
-          name: 'any_name',
+          name: 'any_name', 
+          password: 'any_password'
         }
       })
 
@@ -94,6 +104,7 @@ describe('AssignorService', () => {
         email: 'any_email',
         phone: 'any_phone',
         name: 'any_name',
+        password: 'hashed_password',
         createdBy: 'any',
         updatedBy: 'any'
       })
@@ -108,6 +119,7 @@ describe('AssignorService', () => {
           email: 'any_email',
           phone: 'any_phone',
           name: 'any_name',
+          password: 'any_password'
         }
       })
 

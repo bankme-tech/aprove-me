@@ -48,6 +48,7 @@ describe('AssignorController', () => {
         email: 'any_email',
         phone: 'any_phone',
         name: 'any_name',
+        password: 'any_password'
       })
 
       expect(createSpy).toHaveBeenCalledWith({
@@ -56,6 +57,7 @@ describe('AssignorController', () => {
           email: 'any_email',
           phone: 'any_phone',
           name: 'any_name',
+          password: 'any_password'
         }
       })
     });
@@ -66,6 +68,7 @@ describe('AssignorController', () => {
         email: 'any_email',
         phone: 'any_phone',
         name: 'any_name',
+        password: 'any_password'
       })
 
       expect(response).toEqual({
