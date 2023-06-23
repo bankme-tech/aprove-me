@@ -4,7 +4,10 @@ import { PayableModule } from './modules/payable/payable.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [AssignorModule, PayableModule, AuthModule],
+  imports: [
+    AssignorModule, 
+    PayableModule, 
+    AuthModule],
   controllers: [],
   providers: [],
 })

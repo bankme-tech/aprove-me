@@ -6,10 +6,22 @@ import { AssignorModule } from '../assignor/assignor.module';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
+import { JwtModule } from '@nestjs/jwt';
+import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
+import { PrismaModule } from 'src/infra/prisma/prisma.module';
 
 @Module({
-  imports: [AssignorModule, PassportModule],
+  imports: [
+    PrismaModule,
+    AssignorModule, 
+    PassportModule,
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60s' },
+    }),
+  ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, BcryptAdapter]
+  providers: [AuthService, LocalStrategy, BcryptAdapter, AssignorRepository]
 })
 export class AuthModule {}

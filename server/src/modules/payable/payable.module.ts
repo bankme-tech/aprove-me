@@ -9,6 +9,10 @@ import { PrismaModule } from '../../infra/prisma/prisma.module';
 @Module({
   imports: [PrismaModule],
   controllers: [PayableController],
-  providers: [PayableService, PayableRepository, AssignorRepository]
+  providers: [
+    PayableService, 
+    PayableRepository, 
+    AssignorRepository,
+  ]
 })
 export class PayableModule {}

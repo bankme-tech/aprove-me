@@ -9,10 +9,11 @@ export class AuthController {
 
   @Post('/login')
   @UseGuards(LocalAuthGuard)
-  login (
+  async login (
     @Body() body: LoginDto,
     @Request() request
   ) {
-    // return this.authService.login()
+    const { access_token } = await this.authService.login(request.user);
+    return { access_token }
   }
 }
