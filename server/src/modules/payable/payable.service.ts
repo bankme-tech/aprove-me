@@ -18,11 +18,11 @@ export class PayableService {
   ) {}
 
   async create({ data }: CreateDto) {
-    const { assignor, emissionDate, valueInCents } = data
+    const { assignorId, emissionDate, valueInCents } = data
 
     const checkIfAssignorExists = await this.assignorRepository.findOne({
       where: {
-        id: assignor
+        id: assignorId
       }
     })
 
@@ -31,7 +31,7 @@ export class PayableService {
     }
 
     return await this.payableRepository.create({
-      assignor, emissionDate, valueInCents
+      assignorId, emissionDate, valueInCents
     })
   }
 

@@ -11,5 +11,5 @@ export class CreatePayableDto {
 
     @IsNotEmpty()
     // @IsUUID() // TODO - TESTAR QUANDO ESTIVER GERANDO UUID CORRETAMENTE
-    assignor: string;
+    assignorId: string;
 }

@@ -15,7 +15,7 @@ describe('PayableController', () => {
           useValue: {
             create: jest.fn().mockResolvedValue({
               id: 'any_id',
-              assignor: 'any_assignor_id',
+              assignorId: 'any_assignor_id',
               emissionDate: 'any_emission_date',
               valueInCents: 10000
             })
@@ -38,14 +38,14 @@ describe('PayableController', () => {
       const createSpy = jest.spyOn(payableService, 'create')
 
       await sut.create({
-        assignor: 'any_assignor_id',
+        assignorId: 'any_assignor_id',
         emissionDate: 'any_emission_date',
         valueInCents: 10000
       })
 
       expect(createSpy).toHaveBeenCalledWith({
         data: {
-          assignor: 'any_assignor_id',
+          assignorId: 'any_assignor_id',
           emissionDate: 'any_emission_date',
           valueInCents: 10000
         }
@@ -55,14 +55,14 @@ describe('PayableController', () => {
 
     it('should return a payable entity on success', async () => {
       const response = await sut.create({
-        assignor: 'any_assignor_id',
+        assignorId: 'any_assignor_id',
         emissionDate: 'any_emission_date',
         valueInCents: 10000
       })
 
       expect(response).toEqual({
         id: 'any_id',
-        assignor: 'any_assignor_id',
+        assignorId: 'any_assignor_id',
         emissionDate: 'any_emission_date',
         valueInCents: 10000
       })

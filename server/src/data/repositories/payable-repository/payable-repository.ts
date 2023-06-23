@@ -1,15 +1,17 @@
 import { Injectable } from "@nestjs/common";
-
-const fakeDb = []
+import { PrismaService } from "../../../infra/prisma/prisma.service";
 
 @Injectable()
 export class PayableRepository {
+    constructor (
+        private readonly prisma: PrismaService
+    ) {}
+
     async create(data): Promise<any> {
-        fakeDb.push(data)
-        return data
+        return await this.prisma.payable.create({ data })
     }
 
     async findOne(args): Promise<any> {
-        return fakeDb.find(payable => payable.id === args.where.id)
+        return await this.prisma.payable.findFirst(args)
     }
 }

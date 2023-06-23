@@ -6,7 +6,7 @@ import { UnauthorizedException } from '@nestjs/common';
 
 const makeFakePayable = () => ({
   id: 'any_id',
-  assignor: 'any_assignor_id',
+  assignorId: 'any_assignor_id',
   emissionDate: 'any_emission_date',
   valueInCents: 10000
 })
@@ -50,7 +50,7 @@ describe('PayableService', () => {
 
       await sut.create({
         data: {
-          assignor: 'any_assignor_id',
+          assignorId: 'any_assignor_id',
           emissionDate: 'any_emission_date',
           valueInCents: 10000
         }
@@ -68,7 +68,7 @@ describe('PayableService', () => {
 
       const promise = sut.create({
         data: {
-          assignor: 'any_assignor_id',
+          assignorId: 'any_assignor_id',
           emissionDate: 'any_emission_date',
           valueInCents: 10000
         }
@@ -82,14 +82,14 @@ describe('PayableService', () => {
 
       await sut.create({
         data: {
-          assignor: 'any_assignor_id',
+          assignorId: 'any_assignor_id',
           emissionDate: 'any_emission_date',
           valueInCents: 10000
         }
       })
 
       expect(createSpy).toHaveBeenCalledWith({
-        assignor: 'any_assignor_id',
+        assignorId: 'any_assignor_id',
         emissionDate: 'any_emission_date',
         valueInCents: 10000
       })
@@ -98,7 +98,7 @@ describe('PayableService', () => {
     it('should return a payable entity on success', async () => {
       const result = await sut.create({
         data: {
-          assignor: 'any_assignor_id',
+          assignorId: 'any_assignor_id',
           emissionDate: 'any_emission_date',
           valueInCents: 10000
         }
