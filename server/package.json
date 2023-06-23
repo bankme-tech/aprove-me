@@ -78,6 +78,7 @@
       "<rootDir>/src/**/*.ts",
       "!<rootDir>/src/**/*.module.ts",
       "!<rootDir>/src/**/entities/*.ts",
+      "!<rootDir>/src/**/infra/*.ts",
       "!<rootDir>/src/**/*.dto.ts",
       "!**/test/**"
     ],

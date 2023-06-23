@@ -12,7 +12,7 @@ export class PayableRepository {
     }
 
     async findOne(args): Promise<any> {
-        return await this.prisma.payable.findFirst(args)
+        return await this.prisma.payable.findFirstOrThrow(args)
     }
 
     async findAll(args): Promise<any[]> {
