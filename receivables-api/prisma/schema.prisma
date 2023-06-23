@@ -24,3 +24,9 @@ model Assignor {
   phone    String
   name     String
 }
+
+model User {
+  id       Int      @id @default(autoincrement())
+  login    String
+  senha    String
+}

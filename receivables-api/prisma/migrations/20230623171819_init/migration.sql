@@ -14,3 +14,10 @@ CREATE TABLE "Assignor" (
     "phone" TEXT NOT NULL,
     "name" TEXT NOT NULL
 );
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "login" TEXT NOT NULL,
+    "senha" TEXT NOT NULL
+);

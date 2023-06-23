@@ -63,6 +63,10 @@ Arquivos:
 assignor.controller.spec.ts
 
 payable.controller.spec.ts
+
+auth.controller.spec.ts
+
+user.controller.spec.ts
 ```
 
 Executanto teste:
@@ -103,4 +107,36 @@ Token deve ser substituido pelo token gerado, exemplo:
 
 ```bash
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFwcm92YW1lIiwiaWF0IjoxNjg3NTMyMDQ2LCJleHAiOjE2ODc1MzIxMDZ9.MjTn-kmiOygd7HkfKPnZnylh_swuImeoDCUoIvpK7lo
+```
+
+## Gerenciamento de permissões
+
+Utilize a rota para criar o cadastro :
+
+```bash
+POST integrations/register
+```
+
+Exemplo de cadastro:
+
+```bash
+{
+  "login": "login123",
+  "senha": "senha123"
+}
+```
+
+Agora, utilize a rota:
+
+```bash
+POST integrations/auth
+```
+
+Agora teste o cadastro:
+
+```bash
+{
+  "login": "login123",
+  "password": "senha123"
+}
 ```
