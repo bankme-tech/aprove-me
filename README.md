@@ -63,6 +63,8 @@ Arquivos:
 assignor.controller.spec.ts
 
 payable.controller.spec.ts
+
+auth.controller.spec.ts
 ```
 
 Executanto teste:
