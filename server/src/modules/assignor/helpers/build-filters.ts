@@ -1,3 +1,5 @@
+import { Filters } from "../dto/list-assignor.dto";
+
 interface FormatFiltersDto {
   key: string;
   value: any;
@@ -18,7 +20,7 @@ export const formatFilter = ({
 };
 
 
-export const buildFindAllFilters = ({ filters }: { filters: any }) => {
+export const buildFindAllFilters = ({ filters }: { filters: Filters }) => {
   const { id, name, email } = filters;
   
   let condition = { deletedAt: null };

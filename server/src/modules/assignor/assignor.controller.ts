@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Param, Delete, Query, Put } from '@nestjs/
 import { AssignorService } from './assignor.service';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
+import { ListAssignorRequestDto } from './dto/list-assignor.dto';
 
 @Controller('assignor')
 export class AssignorController {
@@ -25,7 +26,7 @@ export class AssignorController {
 
   @Get()
   findAll(
-    @Query() query
+    @Query() query: ListAssignorRequestDto
   ) {
     let { page = 1, itemsPerPage = 10 } = query
     const { email, name } = query

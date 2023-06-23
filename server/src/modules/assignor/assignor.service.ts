@@ -3,12 +3,13 @@ import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
 import { buildFindAllFilters } from './helpers/build-filters';
+import { Filters } from './dto/list-assignor.dto';
 
 interface CreateDto {
   data: CreateAssignorDto
 }
 interface ListDto {
-  filters: any;
+  filters: Filters;
   page: number;
   itemsPerPage: number;
 }
