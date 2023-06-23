@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
+import { buildFindAllFilters } from './helpers/build-filters';
 
 interface CreateDto {
   data: CreateAssignorDto
@@ -58,11 +59,10 @@ export class AssignorService {
   }
 
   async findAll({ filters, page, itemsPerPage }: ListDto) {
-
-    const { email, name } = filters
+    const condition = buildFindAllFilters({filters})
 
     return await this.assignorRepository.findAll({
-      where: { email, name }, // TODO - IMPROVE FILTER
+      where: condition,
       take: itemsPerPage,
       skip: (page - 1) * itemsPerPage,
     })

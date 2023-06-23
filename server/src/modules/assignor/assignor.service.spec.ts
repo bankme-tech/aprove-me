@@ -140,7 +140,9 @@ describe('AssignorService', () => {
       const findAllSpy = jest.spyOn(assignorRepository, 'findAll')
       await sut.findAll({filters: {}, page: 1, itemsPerPage: 10})
       expect(findAllSpy).toHaveBeenCalledWith({
-        where: {},
+        where: {
+          deletedAt: null
+        },
         take: 10,
         skip: 0
       })
@@ -150,7 +152,13 @@ describe('AssignorService', () => {
       const findAllSpy = jest.spyOn(assignorRepository, 'findAll')
       await sut.findAll({filters: {name: 'any_name'}, page: 3, itemsPerPage: 10})
       expect(findAllSpy).toHaveBeenCalledWith({
-        where: {name: 'any_name'},
+        where: { 
+          deletedAt: null,
+          name: {
+            contains: 'any_name',
+            mode: 'insensitive',
+          } 
+        },
         take: 10,
         skip: 20
       })

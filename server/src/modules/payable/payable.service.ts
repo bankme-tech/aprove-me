@@ -56,7 +56,7 @@ export class PayableService {
     const { assignorId } = filters
 
     return await this.payableRepository.findAll({
-      where: { assignorId }, // TODO
+      where: { assignorId },
       take: itemsPerPage,
       skip: (page - 1) * itemsPerPage,
     })
