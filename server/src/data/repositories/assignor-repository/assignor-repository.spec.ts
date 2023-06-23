@@ -25,7 +25,7 @@ describe('AssignorRepository', () => {
                     useValue: {
                         assignor: {
                             create: jest.fn().mockResolvedValue(makeFakeAssignor()),
-                            findFirstOrThrow: jest.fn().mockResolvedValue(makeFakeAssignor()),
+                            findFirst: jest.fn().mockResolvedValue(makeFakeAssignor()),
                             update: jest.fn().mockResolvedValue(makeFakeAssignor()),
                             findMany: jest.fn().mockResolvedValue([makeFakeAssignor(), makeFakeAssignor()]),
                         },
@@ -76,7 +76,7 @@ describe('AssignorRepository', () => {
 
     describe('findOne', () => {
         it('should call prisma.assignor.findFirst with correct values', async () => {
-            const findSpy = jest.spyOn(prismaService.assignor, 'findFirstOrThrow');
+            const findSpy = jest.spyOn(prismaService.assignor, 'findFirst');
             await sut.findOne({
                 where: {
                     id: 'any_id'

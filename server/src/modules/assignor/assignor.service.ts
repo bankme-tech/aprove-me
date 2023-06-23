@@ -48,7 +48,9 @@ export class AssignorService {
       document, 
       email, 
       name, 
-      phone
+      phone,
+      createdBy: 'any',
+      updatedBy: 'any'
     })
   }
 

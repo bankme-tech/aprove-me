@@ -23,7 +23,7 @@ export class AssignorController {
       id
     });
   }
-
+ 
   @Get()
   findAll(
     @Query() query: ListAssignorRequestDto

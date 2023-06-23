@@ -22,7 +22,7 @@ describe('PayableRepository', () => {
                     useValue: {
                         payable: {
                             create: jest.fn().mockResolvedValue(makeFakePayable()),
-                            findFirstOrThrow: jest.fn().mockResolvedValue(makeFakePayable()),
+                            findFirst: jest.fn().mockResolvedValue(makeFakePayable()),
                             update: jest.fn().mockResolvedValue(makeFakePayable()),
                             findMany: jest.fn().mockResolvedValue([makeFakePayable(), makeFakePayable()]),
                         },
@@ -69,8 +69,8 @@ describe('PayableRepository', () => {
     });
 
     describe('findOne', () => {
-        it('should call prisma.payable.findFirstOrThrow with correct values', async () => {
-            const findSpy = jest.spyOn(prismaService.payable, 'findFirstOrThrow');
+        it('should call prisma.payable.findFirst with correct values', async () => {
+            const findSpy = jest.spyOn(prismaService.payable, 'findFirst');
             await sut.findOne({
                 where: {
                     id: 'any_id'

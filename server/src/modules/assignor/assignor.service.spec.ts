@@ -93,7 +93,9 @@ describe('AssignorService', () => {
         document: 'any_document',
         email: 'any_email',
         phone: 'any_phone',
-        name: 'any_name'
+        name: 'any_name',
+        createdBy: 'any',
+        updatedBy: 'any'
       })
     });
 

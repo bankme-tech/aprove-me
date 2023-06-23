@@ -12,7 +12,7 @@ export class AssignorRepository {
     }
 
     async findOne(args): Promise<any> {
-        return await this.prisma.assignor.findFirstOrThrow(args)
+        return await this.prisma.assignor.findFirst(args)
     }
 
     async findAll(args): Promise<any[]> {

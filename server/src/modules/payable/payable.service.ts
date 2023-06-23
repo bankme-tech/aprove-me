@@ -41,7 +41,11 @@ export class PayableService {
     }
 
     return await this.payableRepository.create({
-      assignorId, emissionDate, valueInCents
+      assignorId, 
+      emissionDate, 
+      valueInCents,
+      createdBy: 'any',
+      updatedBy: 'any'
     })
   }
 
