@@ -52,3 +52,23 @@ Exemplo de teste para o assignor:
   "name": "John Doe"
 }
 ```
+
+## Testes Unitários
+
+Os testes unitários foram feitos para validar todo o processo de rotas da aplicação.
+
+Arquivos:
+
+```bash
+assignor.controller.spec.ts
+
+payable.controller.spec.ts
+```
+
+Executanto teste:
+
+```bash
+{
+  npm test
+}
+```
