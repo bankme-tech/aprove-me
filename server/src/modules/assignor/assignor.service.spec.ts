@@ -25,6 +25,7 @@ describe('AssignorService', () => {
           useValue: {
             create: jest.fn().mockResolvedValue(makeFakeAssignor()),
             findOne: jest.fn().mockResolvedValue(makeFakeAssignor()),
+            findOneByEmail: jest.fn().mockResolvedValue({...makeFakeAssignor(), password: 'encripted_password'}),
             findAll: jest.fn().mockResolvedValue([makeFakeAssignor(), makeFakeAssignor()]),
             update: jest.fn().mockResolvedValue(makeFakeAssignor()),
             remove: jest.fn()
@@ -148,6 +149,24 @@ describe('AssignorService', () => {
     it('should return a entity on success', async () => {
       const result = await sut.findOne({id: 'any_id'})
       expect(result).toEqual(makeFakeAssignor())
+    });
+  });
+
+  describe('findOneByEmail', () => {
+    it('should call repository with correct values', async () => {
+      const findOneSpy = jest.spyOn(assignorRepository, 'findOneByEmail')
+      await sut.findOneByEmail({email: 'any_email@mail.com'})
+      expect(findOneSpy).toHaveBeenCalledWith({
+        where: {
+          email: 'any_email@mail.com',
+          deletedAt: null
+        }
+      })
+    });
+
+    it('should return a entity on success', async () => {
+      const result = await sut.findOneByEmail({email: 'any_email@mail.com'})
+      expect(result).toEqual({...makeFakeAssignor(), password: 'encripted_password'})
     });
   });
 
