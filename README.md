@@ -72,3 +72,35 @@ Executanto teste:
   npm test
 }
 ```
+
+## Autenticação
+
+Inclua um sistema de autenticação em todas as rotas.
+
+```bash
+POST /integrations/auth
+```
+
+Com:
+
+```bash
+{
+  "login": "aprovame",
+  "password": "aprovame"
+}
+
+```
+
+Duração da validação é 1m depois é necessario fazer de novo.
+
+Para fazer a validação é necessario passar no Header:
+
+```bash
+Authorization: Bearer <token>
+```
+
+Token deve ser substituido pelo token gerado, exemplo:
+
+```bash
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFwcm92YW1lIiwiaWF0IjoxNjg3NTMyMDQ2LCJleHAiOjE2ODc1MzIxMDZ9.MjTn-kmiOygd7HkfKPnZnylh_swuImeoDCUoIvpK7lo
+```

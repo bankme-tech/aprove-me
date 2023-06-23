@@ -9,12 +9,15 @@ import {
   Post,
   ValidationPipe,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { AssignorDto } from '../dto/assignor.dto';
 import { AssignorEntity } from '../assignor.entity';
 import { AssignorService } from '../service/assignor.service';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 
 @Controller('integrations/assignor')
+@UseGuards(JwtAuthGuard)
 export class AssignorController {
   constructor(private readonly assignorService: AssignorService) {}
 
