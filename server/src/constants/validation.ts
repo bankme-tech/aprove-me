@@ -18,6 +18,9 @@ export const validationConstants = {
     document: {
         min: 3,
         max: 30,
+    },
+    password: {
+      message: 'The password must contain uppercase, lowercase, numbers with size between 8 and 250 characters.',
     }
   },
   default: {}

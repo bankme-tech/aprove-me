@@ -16,13 +16,14 @@ model Assignor {
   document  String
   phone     String
   name      String
+  password  String
 
   createdAt DateTime  @default(now()) @map("created_at")
-  createdBy String       @map("created_by")
+  createdBy String    @map("created_by")
   updatedAt DateTime  @updatedAt @map("updated_at")
-  updatedBy String       @map("updated_by")
+  updatedBy String    @map("updated_by")
   deletedAt DateTime? @map("deleted_at")
-  deletedBy String?      @map("deleted_by")
+  deletedBy String?   @map("deleted_by")
   
   payable   Payable[]
 }

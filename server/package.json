@@ -13,12 +13,10 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-
     "prisma:build": "npx prisma migrate dev && npx prisma generate dev",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:generate": "npx prisma generate dev",
     "prisma:deploy": "npx prisma migrate deploy",
-
     "pretest": "jest --clearCache",
     "test": "jest --silent --noStackTrace --runInBand",
     "test:verbose": "jest --runInBand",
@@ -32,6 +30,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.16.1",
+    "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "reflect-metadata": "^0.1.13",

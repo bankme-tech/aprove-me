@@ -26,4 +26,10 @@ export class CreateAssignorDto {
         message: validationConstants.user.name.message
     })
     name: string;
+
+    @IsNotEmpty()
+    @Matches(regexConstants.user.validationPassword, {
+        message: validationConstants.user.password.message, 
+    })
+    password: string;
 }

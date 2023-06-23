@@ -4,6 +4,7 @@ import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
 import { buildFindAllFilters } from './helpers/build-filters';
 import { Filters } from './dto/list-assignor.dto';
+import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
 
 interface CreateDto {
   data: CreateAssignorDto
@@ -22,7 +23,8 @@ interface UpdateDto {
 export class AssignorService {
 
   constructor (
-    private readonly assignorRepository: AssignorRepository
+    private readonly assignorRepository: AssignorRepository,
+    private readonly bcryptAdapter: BcryptAdapter
   ) {}
 
   async create({ data }: CreateDto) {
@@ -30,7 +32,8 @@ export class AssignorService {
       document, 
       email, 
       name, 
-      phone
+      phone,
+      password
     } = data
 
     const checkIfAssignorAlreadyExists = await this.assignorRepository.findOne({
@@ -44,11 +47,14 @@ export class AssignorService {
       throw new UnauthorizedException('Assignor already exist')
     }
 
+    
+    const hashedPassword = await this.bcryptAdapter.hash(password);
     return await this.assignorRepository.create({
       document, 
       email, 
       name, 
       phone,
+      password: hashedPassword,
       createdBy: 'any',
       updatedBy: 'any'
     })

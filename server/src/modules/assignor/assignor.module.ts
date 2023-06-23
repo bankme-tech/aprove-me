@@ -4,10 +4,11 @@ import { AssignorController } from './assignor.controller';
 
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
 import { PrismaModule } from '../../infra/prisma/prisma.module';
+import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
 
 @Module({
   imports: [PrismaModule],
   controllers: [AssignorController],
-  providers: [AssignorService, AssignorRepository]
+  providers: [AssignorService, AssignorRepository, BcryptAdapter]
 })
 export class AssignorModule {}
