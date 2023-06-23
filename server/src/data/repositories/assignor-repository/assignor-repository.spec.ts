@@ -161,7 +161,9 @@ describe('AssignorRepository', () => {
 
             expect(updateSpy).toHaveBeenCalledWith({
                 where: { id: 'any_id' },
-                data: {},
+                data: {
+                    deletedAt: expect.any(Date)
+                },
             });
         });
     });

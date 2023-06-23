@@ -34,7 +34,7 @@ export class PayableRepository {
                 id
             },
             data: {
-                // add deletedAt condition                
+                deletedAt: new Date()
             }
         })
     }

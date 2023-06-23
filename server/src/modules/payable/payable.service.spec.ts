@@ -62,7 +62,8 @@ describe('PayableService', () => {
 
       expect(findOneSpy).toHaveBeenCalledWith({
         where: {
-          id: 'any_assignor_id'
+          id: 'any_assignor_id',
+          deletedAt: null
         }
       })
     });
@@ -118,7 +119,8 @@ describe('PayableService', () => {
       await sut.findOne({id: 'any_id'})
       expect(findOneSpy).toHaveBeenCalledWith({
         where: {
-          id: 'any_id'
+          id: 'any_id',
+          deletedAt: null
         }
       })
     });
@@ -134,7 +136,9 @@ describe('PayableService', () => {
       const findAllSpy = jest.spyOn(payableRepository, 'findAll')
       await sut.findAll({filters: {}, page: 1, itemsPerPage: 10})
       expect(findAllSpy).toHaveBeenCalledWith({
-        where: {},
+        where: {
+          deletedAt: null
+        },
         take: 10,
         skip: 0
       })
@@ -144,7 +148,7 @@ describe('PayableService', () => {
       const findAllSpy = jest.spyOn(payableRepository, 'findAll')
       await sut.findAll({filters: {assignorId: 'any_assignor_id'}, page: 3, itemsPerPage: 10})
       expect(findAllSpy).toHaveBeenCalledWith({
-        where: {assignorId: 'any_assignor_id'},
+        where: { assignorId: 'any_assignor_id', deletedAt: null},
         take: 10,
         skip: 20
       })
@@ -170,6 +174,7 @@ describe('PayableService', () => {
       expect(findOneSpy).toHaveBeenCalledWith({
         where: {
           id: 'any_id',
+          deletedAt: null
         }
       })
     });
@@ -222,6 +227,7 @@ describe('PayableService', () => {
       expect(findOneSpy).toHaveBeenCalledWith({
         where: {
           id: 'any_id',
+          deletedAt: null
         }
       })
     });

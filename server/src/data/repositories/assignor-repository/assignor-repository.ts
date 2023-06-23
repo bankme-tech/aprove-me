@@ -34,7 +34,7 @@ export class AssignorRepository {
                 id
             },
             data: {
-                // add deletedAt condition                
+                deletedAt: new Date()
             }
         })
     }

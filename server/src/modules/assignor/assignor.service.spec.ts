@@ -55,7 +55,8 @@ describe('AssignorService', () => {
 
       expect(findOneSpy).toHaveBeenCalledWith({
         where: {
-          email: 'any_email'
+          email: 'any_email',
+          deletedAt: null
         }
       })
     });
@@ -124,7 +125,8 @@ describe('AssignorService', () => {
       await sut.findOne({id: 'any_id'})
       expect(findOneSpy).toHaveBeenCalledWith({
         where: {
-          id: 'any_id'
+          id: 'any_id',
+          deletedAt: null
         }
       })
     });
@@ -185,6 +187,7 @@ describe('AssignorService', () => {
       expect(findOneSpy).toHaveBeenCalledWith({
         where: {
           id: 'any_id',
+          deletedAt: null
         }
       })
     });
@@ -241,6 +244,7 @@ describe('AssignorService', () => {
       expect(findOneSpy).toHaveBeenCalledWith({
         where: {
           id: 'any_id',
+          deletedAt: null
         }
       })
     });

@@ -11,19 +11,33 @@ datasource db {
 }
 
 model Assignor {
-  id        String  @default(uuid()) @id
-  email     String  @unique
+  id        String    @default(uuid()) @id
+  email     String    @unique
   document  String
   phone     String
   name      String
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  createdBy String       @map("created_by")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedBy String       @map("updated_by")
+  deletedAt DateTime? @map("deleted_at")
+  deletedBy String?      @map("deleted_by")
   
   payable   Payable[]
 }
 
 model Payable {
-  id                String      @default(uuid()) @id
-  valueInCents      Int
-  emissionDate      DateTime
-  assignorId        String
-  assignor          Assignor    @relation(fields: [assignorId], references: [id])
+  id                  String      @default(uuid()) @id
+  valueInCents        Int
+  emissionDate        DateTime
+  assignorId          String
+  assignor            Assignor    @relation(fields: [assignorId], references: [id])
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  createdBy String    @map("created_by")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedBy String    @map("updated_by")
+  deletedAt DateTime? @map("deleted_at")
+  deletedBy String?   @map("deleted_by")
 }

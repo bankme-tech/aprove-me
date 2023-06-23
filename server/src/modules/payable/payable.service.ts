@@ -31,7 +31,8 @@ export class PayableService {
 
     const checkIfAssignorExists = await this.assignorRepository.findOne({
       where: {
-        id: assignorId
+        id: assignorId,
+        deletedAt: null
       }
     })
 
@@ -47,7 +48,8 @@ export class PayableService {
   async findOne({ id }: { id: string }) {
     return await this.payableRepository.findOne({
       where: {
-        id
+        id,
+        deletedAt: null
       }
     })
   }
@@ -56,7 +58,10 @@ export class PayableService {
     const { assignorId } = filters
 
     return await this.payableRepository.findAll({
-      where: { assignorId },
+      where: { 
+        ... (assignorId ? {assignorId} : {}),
+        deletedAt: null 
+      },
       take: itemsPerPage,
       skip: (page - 1) * itemsPerPage,
     })
@@ -69,7 +74,8 @@ export class PayableService {
 
     const checkIfPayableExists = await this.payableRepository.findOne({
       where: {
-        id
+        id,
+        deletedAt: null
       }
     })
 
@@ -83,10 +89,10 @@ export class PayableService {
   }
 
   async remove({ id }:{ id: string }) {
-    // TODO - ADD REMOVED AT ON CONDITION
     const checkIfPayableExists = await this.payableRepository.findOne({
       where: {
-        id
+        id,
+        deletedAt: null
       }
     })
 

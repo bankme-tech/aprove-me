@@ -35,7 +35,8 @@ export class AssignorService {
 
     const checkIfAssignorAlreadyExists = await this.assignorRepository.findOne({
       where: {
-        email
+        email,
+        deletedAt: null
       }
     })
 
@@ -54,7 +55,8 @@ export class AssignorService {
   async findOne({ id }: { id: string }) {
     return await this.assignorRepository.findOne({
       where: {
-        id
+        id,
+        deletedAt: null
       }
     })
   }
@@ -77,7 +79,8 @@ export class AssignorService {
 
     const checkIfAssignorExists = await this.assignorRepository.findOne({
       where: {
-        id
+        id,
+        deletedAt: null
       }
     })
 
@@ -92,10 +95,10 @@ export class AssignorService {
   }
 
   async remove({ id }:{ id: string }) {
-    // TODO - ADD REMOVED AT ON CONDITION
     const checkIfAssignorExists = await this.assignorRepository.findOne({
       where: {
-        id
+        id,
+        deletedAt: null
       }
     })
 
