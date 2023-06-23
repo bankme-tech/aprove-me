@@ -15,18 +15,6 @@ DELETE /integrations/payable/:id
 DELETE /integrations/assignor/:id
 ```
 
-## Executando a API
-
-Certifique-se de ter o Node.js instalado em seu sistema.
-Clone este repositório
-
-```bash
-$ npm install
-$ npm run start
-```
-
-A API estará disponível localmente em http://localhost:3000.
-
 ## Teste Rest API
 
 Exemplo de teste para o payable:
@@ -140,3 +128,33 @@ Agora teste o cadastro:
   "password": "senha123"
 }
 ```
+
+## Infra e Doc
+
+Itens criados:
+
+```bash
+{
+  .dockerignore
+  Dockerfile
+  docker-compose.yaml
+}
+```
+
+Utilização do Docker:
+Dentro de /aprove-me
+
+```bash
+/aprove-me
+```
+
+Build e compose:
+
+```bash
+$ docker build --pull --rm -f "receivables-api\Dockerfile" -t aproveme:latest "receivables-api"
+
+
+$ docker compose -f "receivables-api\docker-compose.yml" up -d --build
+```
+
+A API estará disponível localmente em http://localhost:3000.
