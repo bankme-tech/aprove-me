@@ -1,0 +1,57 @@
+trigger:
+  branches:
+    include:
+      - Nivel-9-backend
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install
+      npm run test
+    displayName: 'Run tests with Jest'
+
+  - script: |
+      npm run build
+    displayName: 'Build application'
+
+    - task: SonarQubePrepare@4
+  inputs:
+    SonarQube: 
+    scannerMode: 'CLI'
+    cliProjectKey: 
+    cliProjectName: 
+    cliSources: 'src'
+  displayName: 'SonarQube'
+
+- script: |
+    npm run sonarqube
+  displayName: 'Run SonarQube'
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+    displayName: 'Archive application'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      ArtifactName: 'drop'
+    displayName: 'Publish artifact'
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription:
+      appName:
+      package: '$(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip'
+      deploymentMethod: 'auto'
+    displayName: 'Deploy to Azure Web App'
