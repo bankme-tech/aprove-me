@@ -21,6 +21,9 @@ export const validationConstants = {
     },
     password: {
       message: 'The password must contain uppercase, lowercase, numbers with size between 8 and 250 characters.',
+    },
+    username: {
+      message: 'Invalid characters. Username must be contains letters, numbers and underscore',
     }
   },
   default: {}

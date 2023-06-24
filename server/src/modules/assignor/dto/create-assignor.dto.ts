@@ -28,6 +28,12 @@ export class CreateAssignorDto {
     name: string;
 
     @IsNotEmpty()
+    @Matches(regexConstants.user.validationUsername, {
+        message: validationConstants.user.username.message, 
+    })
+    username: string;
+
+    @IsNotEmpty()
     @Matches(regexConstants.user.validationPassword, {
         message: validationConstants.user.password.message, 
     })

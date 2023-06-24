@@ -2,15 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AssignorRepository } from './assignor-repository';
 import { PrismaService } from '../../../infra/prisma/prisma.service';
 
-// jest.useFakeTimers({ now: new Date(2022, 11, 15, 0) });
-
-
 const makeFakeAssignor = () => ({
     id: 'any_id',
     document: 'any_document',
     email: 'any_email',
     phone: 'any_phone',
-    name: 'any_name'    
+    name: 'any_name',
+    username: 'any_username'  
 })
 
 const makeFakeAssignorInDb = () => ({
@@ -55,7 +53,8 @@ describe('AssignorRepository', () => {
                 document: 'any_document',
                 email: 'any_email',
                 phone: 'any_phone',
-                name: 'any_name'
+                name: 'any_name',
+                username: 'any_username'
             });
 
             expect(createSpy).toHaveBeenCalledWith({
@@ -63,7 +62,8 @@ describe('AssignorRepository', () => {
                     document: 'any_document',
                     email: 'any_email',
                     phone: 'any_phone',
-                    name: 'any_name'
+                    name: 'any_name',
+                    username: 'any_username'
                 },
             });
         });
@@ -73,7 +73,8 @@ describe('AssignorRepository', () => {
                 document: 'any_document',
                 email: 'any_email',
                 phone: 'any_phone',
-                name: 'any_name'
+                name: 'any_name',
+                username: 'any_username'
             });
 
             expect(result).toEqual(makeFakeAssignor());
@@ -85,13 +86,15 @@ describe('AssignorRepository', () => {
             const findSpy = jest.spyOn(prismaService.assignor, 'findFirst');
             await sut.findOne({
                 where: {
-                    id: 'any_id'
+                    id: 'any_id',
+                    deletedAt: null
                 }
             });
 
             expect(findSpy).toHaveBeenCalledWith({
                 where: {
-                    id: 'any_id'
+                    id: 'any_id',
+                    deletedAt: null
                 }
             });
         });
@@ -100,6 +103,36 @@ describe('AssignorRepository', () => {
             const result = await sut.findOne({ where: { id: 2, deletedAt: null } });
 
             expect(result).toEqual(makeFakeAssignor());
+        });
+    });
+
+    describe('findOneByEmail', () => {
+        it('should call prisma.assignor.findFirst with correct values', async () => {
+            const findSpy = jest.spyOn(prismaService.assignor, 'findFirst');
+            await sut.findOneByEmail({
+                where: {
+                    email: 'any_email@mail.com',
+                    deletedAt: null
+                }
+            });
+
+            expect(findSpy).toHaveBeenCalledWith({
+                where: {
+                    email: 'any_email@mail.com',
+                    deletedAt: null
+                }
+            });
+        });
+
+        it('should return an assignor on success', async () => {
+            const result = await sut.findOneByEmail({
+                where: {
+                    email: 'any_email@mail.com',
+                    deletedAt: null
+                }
+            });
+
+            expect(result).toEqual(makeFakeAssignorInDb());
         });
     });
 

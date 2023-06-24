@@ -33,6 +33,7 @@ export class AssignorService {
       email, 
       name, 
       phone,
+      username,
       password
     } = data
 
@@ -47,6 +48,16 @@ export class AssignorService {
       throw new UnauthorizedException('Assignor already exist')
     }
 
+    const checkIfUserNameAlreadyInUse = await this.assignorRepository.findOne({
+      where: {
+        username,
+        deletedAt: null
+      }
+    })
+
+    if(checkIfUserNameAlreadyInUse) {
+      throw new UnauthorizedException('Username already in use')
+    }
     
     const hashedPassword = await this.bcryptAdapter.hash(password);
     return await this.assignorRepository.create({
@@ -54,6 +65,7 @@ export class AssignorService {
       email, 
       name, 
       phone,
+      username,
       password: hashedPassword,
       createdBy: 'any',
       updatedBy: 'any'

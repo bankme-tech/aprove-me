@@ -10,6 +10,7 @@ const makeFakeAssignor = () => ({
   email: 'any_email',
   phone: 'any_phone',
   name: 'any_name',
+  username: 'any_username',
 })
 
 describe('AssignorService', () => {
@@ -51,6 +52,7 @@ describe('AssignorService', () => {
   describe('create', () => {
     it('should call repository.findOne with correct values', async () => {
       const findOneSpy = jest.spyOn(assignorRepository, 'findOne').mockResolvedValueOnce(null)
+      jest.spyOn(assignorRepository, 'findOne').mockResolvedValueOnce(null)
 
       await sut.create({
         data: {
@@ -58,6 +60,7 @@ describe('AssignorService', () => {
           email: 'any_email',
           phone: 'any_phone',
           name: 'any_name',
+          username: 'any_username',
           password: 'any_password'
         }
       })
@@ -79,6 +82,7 @@ describe('AssignorService', () => {
           email: 'any_email',
           phone: 'any_phone',
           name: 'any_name',
+          username: 'any_username',
           password: 'any_password'
         }
       })
@@ -86,8 +90,27 @@ describe('AssignorService', () => {
       await expect(promise).rejects.toThrowError(new UnauthorizedException('Assignor already exist'))
     });
 
+    it('should throw if username already exists', async () => {
+      jest.spyOn(assignorRepository, 'findOne').mockResolvedValueOnce(null)
+      jest.spyOn(assignorRepository, 'findOne').mockResolvedValueOnce({ id: 'any_id' })
+
+      const promise = sut.create({
+        data: {
+          document: 'any_document',
+          email: 'any_email',
+          phone: 'any_phone',
+          name: 'any_name',
+          username: 'any_username',
+          password: 'any_password'
+        }
+      })
+
+      await expect(promise).rejects.toThrowError(new UnauthorizedException('Username already in use'))
+    });
+
     it('should call repository.create with correct values', async () => {
       const createSpy = jest.spyOn(assignorRepository, 'create')
+      jest.spyOn(assignorRepository, 'findOne').mockResolvedValueOnce(null)
       jest.spyOn(assignorRepository, 'findOne').mockResolvedValueOnce(null)
 
       await sut.create({
@@ -96,6 +119,7 @@ describe('AssignorService', () => {
           email: 'any_email',
           phone: 'any_phone',
           name: 'any_name', 
+          username: 'any_username',
           password: 'any_password'
         }
       })
@@ -105,6 +129,7 @@ describe('AssignorService', () => {
         email: 'any_email',
         phone: 'any_phone',
         name: 'any_name',
+        username: 'any_username',
         password: 'hashed_password',
         createdBy: 'any',
         updatedBy: 'any'
@@ -113,6 +138,7 @@ describe('AssignorService', () => {
 
     it('should return a assignor entity on success', async () => {
       jest.spyOn(assignorRepository, 'findOne').mockResolvedValueOnce(null)
+      jest.spyOn(assignorRepository, 'findOne').mockResolvedValueOnce(null)
 
       const result = await sut.create({
         data: {
@@ -120,6 +146,7 @@ describe('AssignorService', () => {
           email: 'any_email',
           phone: 'any_phone',
           name: 'any_name',
+          username: 'any_username',
           password: 'any_password'
         }
       })
@@ -130,6 +157,7 @@ describe('AssignorService', () => {
         email: 'any_email',
         phone: 'any_phone',
         name: 'any_name',
+        username: 'any_username',
       })
     });
   });

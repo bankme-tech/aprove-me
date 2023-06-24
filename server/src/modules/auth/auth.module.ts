@@ -8,7 +8,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
 import { JwtModule } from '@nestjs/jwt';
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
-import { PrismaModule } from 'src/infra/prisma/prisma.module';
+import { PrismaModule } from '../../infra/prisma/prisma.module';
 
 @Module({
   imports: [

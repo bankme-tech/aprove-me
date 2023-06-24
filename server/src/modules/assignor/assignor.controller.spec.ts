@@ -8,6 +8,7 @@ const makeFakeAssignor = () => ({
   email: 'any_email',
   phone: 'any_phone',
   name: 'any_name',
+  username: 'any_username',
 })
 
 describe('AssignorController', () => {
@@ -48,6 +49,7 @@ describe('AssignorController', () => {
         email: 'any_email',
         phone: 'any_phone',
         name: 'any_name',
+        username: 'any_username',
         password: 'any_password'
       })
 
@@ -57,6 +59,7 @@ describe('AssignorController', () => {
           email: 'any_email',
           phone: 'any_phone',
           name: 'any_name',
+          username: 'any_username',
           password: 'any_password'
         }
       })
@@ -68,6 +71,7 @@ describe('AssignorController', () => {
         email: 'any_email',
         phone: 'any_phone',
         name: 'any_name',
+        username: 'any_username',
         password: 'any_password'
       })
 
@@ -77,6 +81,7 @@ describe('AssignorController', () => {
         email: 'any_email',
         phone: 'any_phone',
         name: 'any_name',
+        username: 'any_username',
       })
     });
   });
