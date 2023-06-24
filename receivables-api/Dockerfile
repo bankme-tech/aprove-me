@@ -11,6 +11,8 @@ RUN npm install
 
 COPY . .
 
+RUN npm test
+
 RUN npm run build
 
 EXPOSE 3000

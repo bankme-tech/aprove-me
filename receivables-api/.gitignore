@@ -2,6 +2,10 @@
 /dist
 /node_modules
 
+# compiled output
+/prisma/dev.db
+/prisma/migrations
+
 # Logs
 logs
 *.log
