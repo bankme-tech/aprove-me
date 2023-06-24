@@ -16,6 +16,8 @@ model Assignor {
   document  String
   phone     String
   name      String
+  
+  username  String
   password  String
 
   createdAt DateTime  @default(now()) @map("created_at")

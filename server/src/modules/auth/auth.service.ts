@@ -12,8 +12,10 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const assignor = await this.assignorService.findOneByEmail({ email });
+  async validateUser(username: string, password: string): Promise<any> {
+    const assignor = await this.assignorService.findOneByUsername({ username });
+
+    if(!assignor) return null
 
     const isPasswordMatching = await this.bcryptAdapter.compare(
       password,

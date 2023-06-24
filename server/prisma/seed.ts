@@ -10,6 +10,7 @@ async function main() {
             phone: '11999999999',
             document: '12345678910',
             name: 'Admin',
+            username: 'admin_username',
             password: await bcrypt.hash('admin', 10),
             createdBy: 'admin',
             updatedBy: 'admin'

@@ -81,10 +81,10 @@ export class AssignorService {
     })
   }
 
-  async findOneByEmail({ email }: { email: string }) {
-    return await this.assignorRepository.findOneByEmail({
+  async findOneByUsername({ username }: { username: string }) {
+    return await this.assignorRepository.findOneByUsername({
       where: {
-        email,
+        username,
         deletedAt: null
       }
     })

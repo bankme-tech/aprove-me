@@ -33,7 +33,7 @@ describe('AuthController', () => {
 
       await sut.login(
         {
-          email: 'any_email@mail.com',
+          username: 'any_username',
           password: 'any_password'
         }, 
         {
@@ -49,7 +49,7 @@ describe('AuthController', () => {
     it('should return a token on success', async () => {
       const response = await sut.login(
         {
-          email: 'any_email@mail.com',
+          username: 'any_username',
           password: 'any_password'
         }, 
         {

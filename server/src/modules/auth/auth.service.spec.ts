@@ -22,7 +22,7 @@ describe('AuthService', () => {
         {
           provide: AssignorService,
           useValue: {
-            findOneByEmail: jest.fn().mockResolvedValue({...makeFakeAssignor(), password: 'encrypted_password'})
+            findOneByUsername: jest.fn().mockResolvedValue({...makeFakeAssignor(), password: 'encrypted_password'})
           }
         },
         {
@@ -52,26 +52,32 @@ describe('AuthService', () => {
 
   describe('validateUser', () => {
     it('should call service with correct values', async () => {
-      const findOneSpy = jest.spyOn(assignorService, 'findOneByEmail')
+      const findOneSpy = jest.spyOn(assignorService, 'findOneByUsername')
 
-      await sut.validateUser('any_email@mail.com', 'any_password')
-      expect(findOneSpy).toHaveBeenCalledWith({ email: 'any_email@mail.com' })
+      await sut.validateUser('any_username', 'any_password')
+      expect(findOneSpy).toHaveBeenCalledWith({ username: 'any_username' })
+    });
+
+    it('should throw if assignor does not exists', async () => {
+      jest.spyOn(assignorService, 'findOneByUsername').mockResolvedValueOnce(null)
+      const result = await sut.validateUser('any_username', 'any_password')
+      expect(result).toBeNull()
     });
 
     it('should call bcrypt with correct values', async () => {
       const compareSpy = jest.spyOn(bcryptAdapter, 'compare')
-      await sut.validateUser('any_email@mail.com', 'any_password')
+      await sut.validateUser('any_username', 'any_password')
       expect(compareSpy).toHaveBeenCalledWith('any_password', 'encrypted_password')
     });
 
     it('should return null if passwords does not match', async () => {
       jest.spyOn(bcryptAdapter, 'compare').mockResolvedValueOnce(false)
-      const result = await sut.validateUser('any_email@mail.com', 'any_password')
+      const result = await sut.validateUser('any_username', 'any_password')
       expect(result).toBeNull()
     });
 
     it('should return a assignor entity without password on success', async () => {
-      const result = await sut.validateUser('any_email@mail.com', 'any_password')
+      const result = await sut.validateUser('any_username', 'any_password')
       expect(result).toEqual(makeFakeAssignor())
     });
   });

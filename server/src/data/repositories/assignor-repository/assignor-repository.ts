@@ -27,7 +27,7 @@ export class AssignorRepository {
         return excludeKeys(assignor, ['password']);
     }
 
-    async findOneByEmail(args): Promise<any> {
+    async findOneByUsername(args): Promise<any> {
         return await this.prisma.assignor.findFirst(args)
     }
 

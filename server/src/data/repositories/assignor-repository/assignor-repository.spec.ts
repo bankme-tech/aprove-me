@@ -99,6 +99,12 @@ describe('AssignorRepository', () => {
             });
         });
 
+        it('should return null if any entity was found', async () => {
+            jest.spyOn(prismaService.assignor, 'findFirst').mockResolvedValueOnce(null)
+            const result = await sut.findOne({ where: { id: 2, deletedAt: null } });
+            expect(result).toEqual(null);
+        });
+
         it('should return an assignor on success', async () => {
             const result = await sut.findOne({ where: { id: 2, deletedAt: null } });
 
@@ -106,28 +112,28 @@ describe('AssignorRepository', () => {
         });
     });
 
-    describe('findOneByEmail', () => {
+    describe('findOneByUsername', () => {
         it('should call prisma.assignor.findFirst with correct values', async () => {
             const findSpy = jest.spyOn(prismaService.assignor, 'findFirst');
-            await sut.findOneByEmail({
+            await sut.findOneByUsername({
                 where: {
-                    email: 'any_email@mail.com',
+                    username: 'any_username',
                     deletedAt: null
                 }
             });
 
             expect(findSpy).toHaveBeenCalledWith({
                 where: {
-                    email: 'any_email@mail.com',
+                    username: 'any_username',
                     deletedAt: null
                 }
             });
         });
 
         it('should return an assignor on success', async () => {
-            const result = await sut.findOneByEmail({
+            const result = await sut.findOneByUsername({
                 where: {
-                    email: 'any_email@mail.com',
+                    username: 'any_username',
                     deletedAt: null
                 }
             });
