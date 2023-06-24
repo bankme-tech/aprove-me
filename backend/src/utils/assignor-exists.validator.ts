@@ -6,7 +6,7 @@ import {
     ValidatorConstraintInterface,
     ValidationArguments,
   } from 'class-validator';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @ValidatorConstraint({ name: 'ExistsRule', async: true })
 @Injectable()

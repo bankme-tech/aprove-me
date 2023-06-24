@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AssignorExistsConstraint } from './assignor-exist.validator';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { AssignorExistsConstraint } from './assignor-exists.validator';
+import { PrismaService } from '../prisma/prisma.service';
 
 
 @Module({
