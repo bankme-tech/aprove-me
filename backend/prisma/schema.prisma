@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       String  @id @default(uuid())
+  login    String  @unique
+  password String
+}
+
+model Payable {
+  id           String   @id @default(uuid())
+  value        Float
+  emissionDate DateTime @default(now())
+  assignorId   String
+  assignor     Assignor @relation(fields: [assignorId], references: [id])
+}
+
+//Native type VarChar (Ex: "@db.VarChar(30)") is not supported for sqlite connector.
+model Assignor {
+  id       String   @id @default(uuid())
+  document String   
+  email    String   
+  phone    String 
+  name     String    
+  payables Payable[]
+}
