@@ -1,32 +1,48 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAssignorDto } from './dto/create-assignor.dto';
-import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Assignor, Prisma } from '@prisma/client';
 
 @Injectable()
 export class AssignorsService {
-  constructor(private prisma: PrismaService) {}
-  
+  constructor(private prisma: PrismaService) { }
+
   create(data: Prisma.AssignorCreateInput): Promise<Assignor> {
     return this.prisma.assignor.create({
       data,
     });
   }
 
-  findAll() {
-    return `This action returns all assignors`;
+  async findAll() {
+    return this.prisma.assignor.findMany({
+      include: {
+        payables: true,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} assignor`;
+  async findOne(assignorWhereUniqueInput: Prisma.AssignorWhereUniqueInput): Promise<Assignor | null> {
+    return this.prisma.assignor.findUnique({
+      where: assignorWhereUniqueInput,
+      include: {
+        payables: true,
+      },
+    });
   }
 
-  update(id: number, updateAssignorDto: UpdateAssignorDto) {
-    return `This action updates a #${id} assignor`;
+  async update(params: {
+    where: Prisma.AssignorWhereUniqueInput;
+    data: Prisma.AssignorUpdateInput;
+  }) {
+    const { where, data } = params;
+    return this.prisma.assignor.update({
+      data,
+      where,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} assignor`;
+  async remove(where: Prisma.AssignorWhereUniqueInput): Promise<Assignor> {
+    return this.prisma.assignor.delete({
+      where,
+    });
   }
 }
