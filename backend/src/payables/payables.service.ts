@@ -1,32 +1,64 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePayableDto } from './dto/create-payable.dto';
-import { UpdatePayableDto } from './dto/update-payable.dto';
 import { Payable, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class PayablesService {
-  constructor(private prisma: PrismaService) {}
-  
+  constructor(private prisma: PrismaService) { }
+
   create(data: Prisma.PayableCreateInput): Promise<Payable> {
     return this.prisma.payable.create({
-      data,
+      data
     });
   }
 
-  findAll() {
-    return `This action returns all payables`;
+  async findAll() {
+    return this.prisma.payable.findMany({
+      include: {
+        assignor: true
+      }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} payable`;
+  async findOne(payableWhereUniqueInput: Prisma.PayableWhereUniqueInput): Promise<Payable | null> {
+    return await this.prisma.payable.findUnique({
+      where: payableWhereUniqueInput,
+      include: {
+        assignor: true
+      }
+    });
   }
 
-  update(id: number, updatePayableDto: UpdatePayableDto) {
-    return `This action updates a #${id} payable`;
+  async update(params: {
+    where: Prisma.PayableWhereUniqueInput;
+    data: Prisma.PayableUpdateInput;
+  }): Promise<Payable> {
+    const { where, data } = params;
+    return this.prisma.payable.update({
+      data,
+      where,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} payable`;
+  async remove(where: Prisma.PayableWhereUniqueInput): Promise<Payable> {
+    const payable = await this.prisma.payable.findFirst({
+      where,
+    });
+    if (payable) {
+      return this.prisma.payable.delete({
+        where,
+      });
+    }
+    return    
+  }
+
+  async checkIfExists(where: Prisma.PayableWhereUniqueInput): Promise<boolean> {
+    const payable = await this.prisma.payable.findFirst({
+      where,
+    });
+    if (payable) {
+      return true
+    }
+    return  false  
   }
 }

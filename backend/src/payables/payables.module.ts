@@ -7,4 +7,4 @@ import { PrismaService } from 'src/prisma/prisma.service';
   controllers: [PayablesController],
   providers: [PayablesService, PrismaService]
 })
-export class PayablesModule {}
+export class PayablesModule { }

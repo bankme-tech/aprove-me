@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, HttpException } from '@nestjs/common';
 import { PayablesService } from './payables.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
@@ -24,17 +24,31 @@ export class PayablesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.payablesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const payable = await this.payablesService.findOne({id});
+    
+    if (payable) {
+      return payable;      
+    }
+
+    throw new HttpException('Not found', HttpStatus.NOT_FOUND);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
-    return this.payablesService.update(+id, updatePayableDto);
+    return this.payablesService.update({
+      where: { id },
+      data: updatePayableDto,
+    });
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.payablesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const payableExist = await this.payablesService.checkIfExists({ id });
+    if (payableExist) {
+      return this.payablesService.remove({ id });
+      
+    }
+    throw new HttpException('Not found', HttpStatus.NOT_FOUND);
   }
 }
