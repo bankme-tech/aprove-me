@@ -12,6 +12,9 @@ export class CreatePayableDto {
     @IsNotEmpty()
     // @IsUUID() // TODO - TESTAR QUANDO ESTIVER GERANDO UUID CORRETAMENTE
     assignorId: string;
+
+    error?: boolean
+    job_failed?: boolean;
 }
 
 export interface BatchCreatePayableDto {

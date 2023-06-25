@@ -7,20 +7,25 @@ import { AssignorRepository } from '../../data/repositories/assignor-repository/
 import { PrismaModule } from '../../infra/prisma/prisma.module';
 import { BullModule } from '@nestjs/bull';
 import { PayableConsumer } from './payable.consumer';
+import { MailerService } from 'infra/mailer/mailer';
+import { AssignorModule } from 'modules/assignor/assignor.module';
 
 @Module({
   imports: [
     PrismaModule,
-    BullModule.registerQueue({
-      name: 'payable',
-    })
+    BullModule.registerQueue(
+      { name: 'payable' },
+      { name: 'dead-payable' }
+    ),
+    AssignorModule
   ],
   controllers: [PayableController],
   providers: [
     PayableService, 
     PayableRepository, 
     AssignorRepository,
-    PayableConsumer
+    PayableConsumer,
+    MailerService
   ]
 })
 export class PayableModule {}

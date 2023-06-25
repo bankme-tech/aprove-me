@@ -5,6 +5,7 @@ import { AssignorRepository } from '../../data/repositories/assignor-repository/
 import { buildFindAllFilters } from './helpers/build-filters';
 import { Filters } from './dto/list-assignor.dto';
 import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
+import { MailerService } from 'infra/mailer/mailer';
 
 interface CreateDto {
   data: CreateAssignorDto
@@ -24,7 +25,8 @@ export class AssignorService {
 
   constructor (
     private readonly assignorRepository: AssignorRepository,
-    private readonly bcryptAdapter: BcryptAdapter
+    private readonly bcryptAdapter: BcryptAdapter,
+    private readonly mailer: MailerService
   ) {}
 
   async create({ data }: CreateDto) {
@@ -136,5 +138,16 @@ export class AssignorService {
     }
 
     await this.assignorRepository.remove(id)
+  }
+
+  async sendEmailToId({ id }:{ id: string }) {
+    const assignor = await this.assignorRepository.findOne({
+      where: {
+        id,
+        deletedAt: null
+      }
+    })
+    
+    await this.mailer.sendEmail({ to: assignor.email })
   }
 }

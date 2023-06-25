@@ -6,6 +6,7 @@ import { AssignorRepository } from '../../data/repositories/assignor-repository/
 import { PrismaModule } from '../../infra/prisma/prisma.module';
 import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
+import { MailerService } from '../../infra/mailer/mailer';
 
 @Module({
   imports: [PrismaModule],
@@ -14,7 +15,8 @@ import { JwtStrategy } from '../auth/strategies/jwt.strategy';
     AssignorService, 
     AssignorRepository, 
     BcryptAdapter,
-    JwtStrategy
+    JwtStrategy,
+    MailerService
   ],
   exports: [AssignorService]
 })
