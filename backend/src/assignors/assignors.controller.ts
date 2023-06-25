@@ -21,7 +21,8 @@ export class AssignorsController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<AssignorModel>{
-    const assignor =  this.assignorsService.findOne({id});
+    const assignor = await this.assignorsService.findOne({id});
+    
     if (assignor) {
       return assignor
     }
