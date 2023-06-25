@@ -1,9 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, UseGuards } from '@nestjs/common';
 import { PayableService } from './payable.service';
-import { CreatePayableDto } from './dto/create-payable.dto';
+import { BatchCreatePayableDto, CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { AuthGuard } from '@nestjs/passport';
-
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('payable')
@@ -15,6 +14,13 @@ export class PayableController {
     return this.payableService.create({
       data
     });
+  }
+
+  @Post('/batch')
+  async createBatch(
+    @Body() data: BatchCreatePayableDto
+  ) {
+    return await this.payableService.createBatch({ payables: data.payables })
   }
 
   

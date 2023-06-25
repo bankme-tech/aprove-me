@@ -13,3 +13,7 @@ export class CreatePayableDto {
     // @IsUUID() // TODO - TESTAR QUANDO ESTIVER GERANDO UUID CORRETAMENTE
     assignorId: string;
 }
+
+export interface BatchCreatePayableDto {
+    payables: CreatePayableDto[]
+}

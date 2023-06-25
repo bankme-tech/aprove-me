@@ -18,6 +18,13 @@ interface UpdateDto {
   data: UpdatePayableDto
 }
 
+const sleep = async ms => {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+}
+
+
 @Injectable()
 export class PayableService {
   
@@ -26,7 +33,22 @@ export class PayableService {
     private readonly assignorRepository: AssignorRepository
   ) {}
 
+  async createBatch({ payables }: { payables: CreatePayableDto[] }) {
+    console.time('all')
+    for (const payable of payables) {
+      console.time('each')
+      await this.create({ data: payable })
+      console.timeEnd('each')
+    }
+    console.timeEnd('all')
+    
+    return {
+      success: true
+    }
+  }
+
   async create({ data }: CreateDto) {
+    await sleep(1000) // TODO - REMOVE
     const { assignorId, emissionDate, valueInCents } = data
 
     const checkIfAssignorExists = await this.assignorRepository.findOne({
