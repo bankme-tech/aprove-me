@@ -100,7 +100,7 @@ export class PayableService {
 
     return await this.payableRepository.findAll({
       where: { 
-        ... (assignorId ? {assignorId} : {}),
+        ... (assignorId ? { assignorId } : {}),
         deletedAt: null 
       },
       take: itemsPerPage,

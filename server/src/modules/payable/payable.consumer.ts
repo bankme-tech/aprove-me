@@ -24,10 +24,10 @@ export class PayableConsumer {
         let attempts = 1
         let max_attempts = 3
 
-        for (const payable of payables) {           
+        for (const payable of payables) {
             while (attempts <= max_attempts) {
                 try {
-                    await this.payableService.create({ data: payable })                    
+                    await this.payableService.create({ data: payable })
                     break;
                 } catch (error) {
                     attempts += 1
