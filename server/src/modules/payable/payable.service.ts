@@ -4,6 +4,8 @@ import { UpdatePayableDto } from './dto/update-payable.dto';
 
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
 import { PayableRepository } from '../../data/repositories/payable-repository/payable-repository';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 interface CreateDto {
   data: CreatePayableDto
@@ -30,18 +32,15 @@ export class PayableService {
   
   constructor (
     private readonly payableRepository: PayableRepository,
-    private readonly assignorRepository: AssignorRepository
+    private readonly assignorRepository: AssignorRepository,
+    
+    @InjectQueue('payable')
+    private readonly payableQueue: Queue
   ) {}
 
-  async createBatch({ payables }: { payables: CreatePayableDto[] }) {
-    console.time('all')
-    for (const payable of payables) {
-      console.time('each')
-      await this.create({ data: payable })
-      console.timeEnd('each')
-    }
-    console.timeEnd('all')
-    
+  async batchCreate({ payables }: { payables: CreatePayableDto[] }) {
+    await this.payableQueue.add('batch-create', payables)
+
     return {
       success: true
     }

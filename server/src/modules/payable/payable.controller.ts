@@ -17,10 +17,10 @@ export class PayableController {
   }
 
   @Post('/batch')
-  async createBatch(
+  async batchCreate(
     @Body() data: BatchCreatePayableDto
   ) {
-    return await this.payableService.createBatch({ payables: data.payables })
+    return await this.payableService.batchCreate({ payables: data.payables })
   }
 
   
