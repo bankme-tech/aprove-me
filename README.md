@@ -197,3 +197,7 @@ Ambas aplicações iniciadas já será possivel a utilização do ambiente.
 Adcionado uma lista para mostrar todos os pagáveis do banco de dados, permitindo ver detalhes do cedente e excluir do banco de dados.
 
 Atualização de API para retornar todos os pagáveis.
+
+## Autenticação
+
+Sisteama de login e senha e verificação de rotas para usuarios logados.

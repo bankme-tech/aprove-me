@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Assignor = () => {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [document, setDocument] = useState("");
@@ -21,6 +23,19 @@ const Assignor = () => {
     setNameError("");
     return true;
   };
+
+  useEffect(() => {
+    const tokenExpirationTime = localStorage.getItem("tokenExpirationTime");
+    if (tokenExpirationTime) {
+      const expirationTime = new Date(tokenExpirationTime);
+      const currentTime = new Date();
+
+      if (currentTime > expirationTime) {
+        // Redireciona para o login
+        router.push("/login");
+      }
+    }
+  }, [router]);
 
   const validateDocument = () => {
     const cpfCnpjPattern = /^\d{11}$|^\d{14}$/;

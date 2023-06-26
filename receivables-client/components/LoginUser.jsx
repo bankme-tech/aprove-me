@@ -20,8 +20,13 @@ const Login = () => {
       const data = await response.json();
       const { token } = data;
 
-      // Armazena o token no localStorage
+      // Define a data de expiração do token para 1 minuto a partir do momento atual
+      const tokenExpirationTime = new Date();
+      tokenExpirationTime.setMinutes(tokenExpirationTime.getMinutes() + 1);
+
+      // Armazena o token e o tokenExpirationTime no localStorage
       localStorage.setItem("token", token);
+      localStorage.setItem("tokenExpirationTime", tokenExpirationTime);
     }
   };
 

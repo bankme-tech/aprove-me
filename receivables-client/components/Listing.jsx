@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Task from "./Task";
 
 const Listing = () => {
   const [tasks, setTasks] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +21,19 @@ const Listing = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const tokenExpirationTime = localStorage.getItem("tokenExpirationTime");
+    if (tokenExpirationTime) {
+      const expirationTime = new Date(tokenExpirationTime);
+      const currentTime = new Date();
+
+      if (currentTime > expirationTime) {
+        // Redireciona para o login
+        router.push("/login");
+      }
+    }
+  }, [router]);
 
   const handleDelete = async (id) => {
     try {

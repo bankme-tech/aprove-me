@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useRouter } from "next/router";
 
 const Payable = () => {
+  const router = useRouter();
   const [id, setId] = useState("");
   const [valor, setValor] = useState("");
   const [data, setData] = useState(new Date());
@@ -18,6 +20,19 @@ const Payable = () => {
       /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return uuidv4Pattern.test(uuid);
   };
+
+  useEffect(() => {
+    const tokenExpirationTime = localStorage.getItem("tokenExpirationTime");
+    if (tokenExpirationTime) {
+      const expirationTime = new Date(tokenExpirationTime);
+      const currentTime = new Date();
+
+      if (currentTime > expirationTime) {
+        // Redireciona para o login
+        router.push("/login");
+      }
+    }
+  }, [router]);
 
   useEffect(() => {
     const fetchCedentes = async () => {
