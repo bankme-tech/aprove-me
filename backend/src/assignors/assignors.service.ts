@@ -45,4 +45,17 @@ export class AssignorsService {
       where,
     });
   }
+
+  async checkIfExists(where: Prisma.PayableWhereUniqueInput): Promise<boolean> {
+    const assinor = await this.prisma.assignor.findFirst({
+      where,
+      select: {
+        id: true
+      }
+    });
+    if (assinor) {
+      return true
+    }
+    return false
+  }
 }
