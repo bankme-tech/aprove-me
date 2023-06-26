@@ -19,7 +19,7 @@ CREATE TABLE "Assignor" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "document" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "phone" BOOLEAN,
+    "phone" TEXT NOT NULL,
     "name" TEXT NOT NULL
 );
 
