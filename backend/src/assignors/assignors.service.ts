@@ -12,7 +12,7 @@ export class AssignorsService {
     });
   }
 
-  async findAll() {
+  findAll() {
     return this.prisma.assignor.findMany({
       include: {
         payables: true,
@@ -20,7 +20,7 @@ export class AssignorsService {
     });
   }
 
-  async findOne(assignorWhereUniqueInput: Prisma.AssignorWhereUniqueInput): Promise<Assignor | null> {
+  findOne(assignorWhereUniqueInput: Prisma.AssignorWhereUniqueInput): Promise<Assignor | null> {
     return this.prisma.assignor.findUnique({
       where: assignorWhereUniqueInput,
       include: {
@@ -29,7 +29,7 @@ export class AssignorsService {
     });
   }
 
-  async update(params: {
+  update(params: {
     where: Prisma.AssignorWhereUniqueInput;
     data: Prisma.AssignorUpdateInput;
   }) {

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpS
 import { AssignorsService } from './assignors.service';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
-import {  Assignor as AssignorModel } from '@prisma/client';
+import { Assignor as AssignorModel } from '@prisma/client';
 
 @Controller('integrations/assignor')
 export class AssignorsController {
@@ -22,7 +22,7 @@ export class AssignorsController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<AssignorModel> {
     const assignor = await this.assignorsService.findOne({ id });
-    
+
     if (assignor) {
       return assignor
     }
