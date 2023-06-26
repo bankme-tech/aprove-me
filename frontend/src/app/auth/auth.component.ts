@@ -21,7 +21,6 @@ export class AuthComponent {
     private router: Router
   ) { }
   onSubmit(): void {
-    console.log(this.form.value);
     this.apiService
       .signUp(this.form.value)
       .subscribe((data: any) => {
