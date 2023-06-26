@@ -1,11 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,  HttpStatus, HttpException } from '@nestjs/common';
 import { PayablesService } from './payables.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
+import { BatchProducerService } from './jobs/batch-producer.service';
 
 @Controller('integrations/payable')
 export class PayablesController {
-  constructor(private readonly payablesService: PayablesService) {}
+  constructor(
+    private readonly payablesService: PayablesService,
+    private batchProducerService: BatchProducerService
+    ) {}
 
   @Post()
   async create(@Body() payableData: CreatePayableDto) {
@@ -50,5 +54,13 @@ export class PayablesController {
       
     }
     throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+  }
+
+  @Post('batch')
+  batch(@Body() payableData: CreatePayableDto[]) {
+    for (const payable of payableData) {
+      this.batchProducerService.createPayable(payable)
+    }
+    return 'Processando'
   }
 }
