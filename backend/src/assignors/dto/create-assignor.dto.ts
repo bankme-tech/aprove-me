@@ -3,6 +3,7 @@ import { IsEmail, IsNumberString, IsString, MaxLength } from "class-validator";
 export class CreateAssignorDto {
     @IsString()
     @MaxLength(30)
+    @IsNumberString()
     document: string;
     
     @IsEmail()
