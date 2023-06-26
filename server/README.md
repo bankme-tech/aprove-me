@@ -6,6 +6,7 @@ Desafio feito para bankme!
 
 ## Resources
 
+The resources collection is on the root of project.
 #### Assignor
 [post] /assignor
 [get] /assignor
