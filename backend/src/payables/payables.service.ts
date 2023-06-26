@@ -55,6 +55,9 @@ export class PayablesService {
   async checkIfExists(where: Prisma.PayableWhereUniqueInput): Promise<boolean> {
     const payable = await this.prisma.payable.findFirst({
       where,
+      select: {
+        id:true
+      }
     });
     if (payable) {
       return true
