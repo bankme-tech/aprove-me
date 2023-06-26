@@ -181,3 +181,13 @@ Os campos do componete Payable são valiados, permitindo o envio do formulario a
 Cadastro de pagável com a API e adição tela de cadastro de cedente dentro do Banco de Dados.
 
 Alteração no componente para que o campo assignor seja um combobox e mostre o id de cada assignor presente no banco de dados, atualização na api para retornar todos os assignor em uma única requisição.
+
+Como utilizar fazer a conecção da api?
+
+Faça o compose da API no docker ou utilize as funções internar para iniciar a aplicação no ambiente local, utilizando a rota:
+
+```bash
+http://localhost:3001/
+```
+
+Ambas aplicações iniciadas já será possivel a utilização do ambiente.
