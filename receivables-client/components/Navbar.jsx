@@ -50,6 +50,12 @@ const Navbar = () => {
               <Link href="/cedente">CEDENTE</Link>
             </li>
             <li className="ml-10 text-sm uppercase hover:border-b font-bold text-blue-500">
+              <Link href="/login">LOGIN</Link>
+            </li>
+            <li className="ml-10 text-sm uppercase hover:border-b font-bold text-blue-500">
+              <Link href="/register">REGISTER</Link>
+            </li>
+            <li className="ml-10 text-sm uppercase hover:border-b font-bold text-blue-500">
               <Link href="/listagem">LISTAGEM</Link>
             </li>
             <li className="ml-10 text-sm uppercase hover:border-b font-bold text-blue-500 pr-8">
@@ -102,6 +108,22 @@ const Navbar = () => {
                   className="py-4 text-sm font-bold text-blue-500"
                 >
                   Home
+                </li>
+              </Link>
+              <Link href="/login">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 text-sm font-bold text-blue-500"
+                >
+                  LOGIN
+                </li>
+              </Link>
+              <Link href="/register">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 text-sm font-bold text-blue-500"
+                >
+                  REGISTER
                 </li>
               </Link>
               <Link href="/cedente">

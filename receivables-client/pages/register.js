@@ -1,16 +1,16 @@
 import Head from 'next/head'
 
-import Assignor from '../components/Assignor'
+import RegisterUser from '../components/RegisterUser'
 
 
-export default function Cedente() {
+export default function Register() {
     return (
         <div>
             <Head>
                 <title>Aprova-me</title>
                 <link rel="icon" href="/assets/logo-bankme.png" />
             </Head>
-            <Assignor />
+            <RegisterUser />
         </div>
     )
 }

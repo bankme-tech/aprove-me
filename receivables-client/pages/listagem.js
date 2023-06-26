@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Listing from '../components/Listing'
 
 
-export default function Home() {
+export default function Listagem() {
     return (
         <div>
             <Head>
