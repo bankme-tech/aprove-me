@@ -63,7 +63,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"document\": \"12345678910\",\r\n\t\"email\": \"login@mail.com\",\r\n\t\"phone\": \"11999999999\",\r\n\t\"name\": \"User Name\",\r\n\t\"password\": \"@Login123\"\r\n}",
+							"raw": "{\r\n\t\"document\": \"12345678910\",\r\n\t\"email\": \"login@mail.com\",\r\n\t\"phone\": \"11999999999\",\r\n\t\"name\": \"User Name\",\r\n\t\"username\": \"username\",\r\n\t\"password\": \"@Login123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
