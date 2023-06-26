@@ -1,0 +1,50 @@
+<mat-tab-group >
+    <mat-tab label="Login"> 
+        <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <table cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>Username</mat-label>
+                            <input matInput formControlName="login">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>Password</mat-label>
+                            <input type="password" formControlName="password" matInput>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+            <button mat-button>Log In</button>
+        </form>    
+    </mat-tab>
+    <mat-tab label="Sign Up">
+        <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <table cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>Username</mat-label>
+                            <input matInput formControlName="login">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>Password</mat-label>
+                            <input type="password" formControlName="password" matInput>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+            <button mat-button>Sign Up</button>
+        </form>
+    </mat-tab>
+</mat-tab-group>
