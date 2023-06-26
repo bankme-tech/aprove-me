@@ -32,9 +32,12 @@ export class PayableService {
   ) {}
 
   async batchCreate({ payables }: { payables: CreatePayableDto[] }) {
-
-    const reference = payables[0].assignorId
-    const checkNumberOfDiferentAssignors = payables.filter(payable => payable.assignorId !== reference)
+    const checkNumberOfDiferentAssignors = payables.filter((item, index, self) => {
+      return index === self.findIndex((t) => (
+        t.assignorId === item.assignorId
+      ));
+    });
+    
     
     if(checkNumberOfDiferentAssignors.length > 1) {
       throw new BadRequestException('Batch operation is only permitted to the same assignor')
@@ -42,7 +45,7 @@ export class PayableService {
 
     const assignor = await this.assignorRepository.findOne({
       where: {
-        id: reference
+        id: checkNumberOfDiferentAssignors[0].assignorId
       }
     })
 

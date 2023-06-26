@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PayableService } from './payable.service';
 import { PayableRepository } from '../../data/repositories/payable-repository/payable-repository';
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
-import { UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { BullModule, getQueueToken } from '@nestjs/bull';
 
 
@@ -61,7 +61,96 @@ describe('PayableService', () => {
     expect(sut).toBeDefined();
   });
 
+  describe('batchCreate', () => {
+    it('should throw if different assignors are provided', async () => {
+      const promise = sut.batchCreate({ 
+        payables: [
+          makeFakePayable(), 
+          {...makeFakePayable(), assignorId: 'different_assignor_id'}, 
+          makeFakePayable()
+        ]
+      })
+      await expect(promise).rejects.toThrowError(new BadRequestException('Batch operation is only permitted to the same assignor'))
+    });
+
+    it('should call repository with correct values', async () => {
+      const findOneSpy = jest.spyOn(assignorRepository, 'findOne')
+      
+      await sut.batchCreate({ 
+        payables: [
+          makeFakePayable(), 
+          makeFakePayable(), 
+          makeFakePayable()
+        ]
+      })
+
+      expect(findOneSpy).toHaveBeenCalledWith({
+        where: {
+          id: makeFakePayable().assignorId
+        }
+      })
+    });
+
+    it('should throw if assignor not found', async () => {
+      jest.spyOn(assignorRepository, 'findOne').mockResolvedValueOnce(null)
+      
+      const promise = sut.batchCreate({ 
+        payables: [
+          makeFakePayable(), 
+          makeFakePayable(), 
+          makeFakePayable()
+        ]
+      })
+
+      await expect(promise).rejects.toThrowError(new NotFoundException('Assignor not found, operation canceled'))
+    });
+
+    it('should call payable.queue with correct values', async () => {
+      await sut.batchCreate({ 
+        payables: [
+          makeFakePayable(), 
+          makeFakePayable(), 
+          makeFakePayable()
+        ]
+      })
+
+      expect(exampleQueueMock.add).toHaveBeenCalledWith('batch-create', [
+        makeFakePayable(), 
+        makeFakePayable(), 
+        makeFakePayable()
+      ], { attempts: 3 })
+    });
+
+    it('should return success on success', async () => {
+      const response = await sut.batchCreate({ 
+        payables: [
+          makeFakePayable(), 
+          makeFakePayable(), 
+          makeFakePayable()
+        ]
+      })
+
+      expect(response).toEqual({
+        success: true
+      })
+    });
+  });
+
   describe('create', () => {
+
+    it('should throw if error is forced by param', async () => {
+      const promise = sut.create({
+        data: {
+          assignorId: 'any_assignor_id',
+          emissionDate: 'any_emission_date',
+          valueInCents: 10000,
+          error: true
+        }
+      })
+
+      await expect(promise).rejects.toThrowError(new Error('Forced Error'))
+    });
+
     it('should call repository.findOne with correct values', async () => {
       const findOneSpy = jest.spyOn(assignorRepository, 'findOne')
 
