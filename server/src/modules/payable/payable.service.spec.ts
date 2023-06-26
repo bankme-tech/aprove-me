@@ -199,7 +199,7 @@ describe('PayableService', () => {
         assignorId: 'any_assignor_id',
         emissionDate: 'any_emission_date',
         valueInCents: 10000,
-        createdBy: 'any',// TODO REMOVER
+        createdBy: 'any',
         updatedBy: 'any'
       })
     });

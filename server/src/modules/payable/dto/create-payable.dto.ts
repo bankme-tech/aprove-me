@@ -10,7 +10,6 @@ export class CreatePayableDto {
     emissionDate: string; 
 
     @IsNotEmpty()
-    // @IsUUID() // TODO - TESTAR QUANDO ESTIVER GERANDO UUID CORRETAMENTE
     assignorId: string;
 
     error?: boolean
