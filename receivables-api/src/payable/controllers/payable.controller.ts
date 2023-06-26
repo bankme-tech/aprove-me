@@ -83,4 +83,12 @@ export class PayableController {
       );
     }
   }
+  @Get()
+  async getAllPayables(): Promise<PayableEntity[]> {
+    try {
+      return await this.payableService.getAllPayables();
+    } catch (error) {
+      throw new NotFoundException('Não foi possível obter os recebíveis.');
+    }
+  }
 }

@@ -25,4 +25,8 @@ export class PayableService {
   async deletePayable(id: string): Promise<Payable> {
     return this.prisma.payable.delete({ where: { id } });
   }
+
+  async getAllPayables(): Promise<Payable[]> {
+    return this.prisma.payable.findMany();
+  }
 }
