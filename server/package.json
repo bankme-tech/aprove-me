@@ -22,9 +22,9 @@
     "pretest": "jest --clearCache",
     "test": "jest --silent --noStackTrace --runInBand",
     "test:verbose": "jest --runInBand",
-    "test:unit": "npm test --watch --coverage",
-    "test:staged": "npm test --findRelatedTests",
-    "test:ci": "npm test --coverage"
+    "test:unit": "npm test -- --watch --coverage",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage"
   },
   "dependencies": {
     "@nestjs/bull": "^10.0.0",

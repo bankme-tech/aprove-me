@@ -14,9 +14,10 @@ const makeFakeAssignor = () => ({
   username: 'any_username',
 })
 
-describe('AssignorService', () => {
+describe('AssignorService', () => { 
   let sut: AssignorService;
   let assignorRepository: AssignorRepository;
+  let mailerService: MailerService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -50,6 +51,7 @@ describe('AssignorService', () => {
 
     sut = module.get<AssignorService>(AssignorService);
     assignorRepository = module.get<AssignorRepository>(AssignorRepository);
+    mailerService = module.get<MailerService>(MailerService);
   });
 
   it('should be defined', () => {
@@ -333,6 +335,25 @@ describe('AssignorService', () => {
         id: 'any_id'
       })
       expect(removeSpy).toHaveBeenCalledWith('any_id')
+    });
+  });
+  
+  describe('sendEmailToId', () => {
+    it('should call repository with correct values', async () => {
+      const findOneSpy = jest.spyOn(assignorRepository, 'findOne')
+      await sut.sendEmailToId({id: 'any_id'})
+      expect(findOneSpy).toHaveBeenCalledWith({
+        where: {
+          id: 'any_id',
+          deletedAt: null
+        }
+      })
+    });
+
+    it('should call mailer with correct email', async () => {
+      const mailerSpy = jest.spyOn(mailerService, 'sendEmail')
+      await sut.sendEmailToId({id: 'any_id'})
+      expect(mailerSpy).toHaveBeenCalledWith({ to: makeFakeAssignor().email })
     });
   });
 });
