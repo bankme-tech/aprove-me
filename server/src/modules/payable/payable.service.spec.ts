@@ -13,7 +13,7 @@ const makeFakePayable = () => ({
   valueInCents: 10000
 })
 
-const exampleQueueMock = { add: jest.fn() };
+const queueMock = { add: jest.fn() };
 
 describe('PayableService', () => {
   let sut: PayableService;
@@ -49,7 +49,7 @@ describe('PayableService', () => {
       ],
     })
     .overrideProvider(getQueueToken('payable'))
-    .useValue(exampleQueueMock)
+    .useValue(queueMock)
     .compile();
 
     sut = module.get<PayableService>(PayableService);
@@ -114,7 +114,7 @@ describe('PayableService', () => {
         ]
       })
 
-      expect(exampleQueueMock.add).toHaveBeenCalledWith('batch-create', [
+      expect(queueMock.add).toHaveBeenCalledWith('batch-create', [
         makeFakePayable(), 
         makeFakePayable(), 
         makeFakePayable()
