@@ -46,6 +46,9 @@ const Navbar = () => {
             <li className="ml-10 text-sm uppercase hover:border-b font-bold text-blue-500">
               <Link href="/">Home</Link>
             </li>
+            <li className="ml-10 text-sm uppercase hover:border-b font-bold text-blue-500">
+              <Link href="/cedente">CEDENTE</Link>
+            </li>
             <li className="ml-10 text-sm uppercase hover:border-b font-bold text-blue-500 pr-8">
               <Link href="/">PAGAVEIS</Link>
             </li>
@@ -96,6 +99,14 @@ const Navbar = () => {
                   className="py-4 text-sm font-bold text-blue-500"
                 >
                   Home
+                </li>
+              </Link>
+              <Link href="/cedente">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 text-sm font-bold text-blue-500"
+                >
+                  cedente
                 </li>
               </Link>
               <Link href="/#about">

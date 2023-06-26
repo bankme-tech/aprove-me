@@ -17,7 +17,6 @@ import { PayableService } from '../service/payable.service';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 
 @Controller('integrations/payable')
-@UseGuards(JwtAuthGuard)
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 

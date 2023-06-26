@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,12 +11,33 @@ const Payable = () => {
   const [valorError, setValorError] = useState("");
   const [cedenteError, setCedenteError] = useState("");
   const [submitError, setSubmitError] = useState("");
+  const [cedentes, setCedentes] = useState([]);
 
   const isValidUUID = (uuid) => {
     const uuidv4Pattern =
       /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return uuidv4Pattern.test(uuid);
   };
+
+  useEffect(() => {
+    const fetchCedentes = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3001/integrations/assignor/"
+        );
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          setCedentes(data);
+        } else {
+          console.error("A resposta da API não é um array:", data);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar os cedentes:", error);
+      }
+    };
+
+    fetchCedentes();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -132,16 +153,19 @@ const Payable = () => {
 
               <div className="flex flex-col py-2">
                 <label className="uppercase text-sm py-2">Cedente</label>
-                <input
+                <select
                   className="border-2 rounded-lg p-3 flex border-gray-300"
-                  type="text"
                   name="cedente"
                   value={cedente}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, "");
-                    setCedente(value);
-                  }}
-                />
+                  onChange={(e) => setCedente(e.target.value)}
+                >
+                  <option value="">Selecione o cedente</option>
+                  {cedentes.map((cedente) => (
+                    <option key={cedente.id} value={cedente.id}>
+                      {cedente.id}
+                    </option>
+                  ))}
+                </select>
                 {cedenteError && <p className="text-red-500">{cedenteError}</p>}
               </div>
 

@@ -28,4 +28,8 @@ export class AssignorService {
   async deleteAssignor(id: number): Promise<Assignor> {
     return this.prisma.assignor.delete({ where: { id } });
   }
+
+  async getAllAssignors(): Promise<Assignor[]> {
+    return this.prisma.assignor.findMany();
+  }
 }

@@ -17,7 +17,6 @@ import { AssignorService } from '../service/assignor.service';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 
 @Controller('integrations/assignor')
-@UseGuards(JwtAuthGuard)
 export class AssignorController {
   constructor(private readonly assignorService: AssignorService) {}
 
@@ -87,6 +86,14 @@ export class AssignorController {
       throw new NotFoundException(
         'Não foi possível excluir o cedente. Verifique o ID e tente novamente.',
       );
+    }
+  }
+  @Get()
+  async getAllAssignors(): Promise<AssignorEntity[]> {
+    try {
+      return await this.assignorService.getAllAssignors();
+    } catch (error) {
+      throw new NotFoundException('Não foi possível obter os cedentes.');
     }
   }
 }
