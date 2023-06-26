@@ -9,19 +9,19 @@ export class AssignorsController {
   constructor(private readonly assignorsService: AssignorsService) { }
 
   @Post()
-  async create(@Body() assignorData: CreateAssignorDto) {
+  create(@Body() assignorData: CreateAssignorDto): Promise<AssignorModel> {
     const { document, email, phone, name } = assignorData;
     return this.assignorsService.create({ document, email, phone, name });
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<AssignorModel[]> {
     return this.assignorsService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<AssignorModel>{
-    const assignor = await this.assignorsService.findOne({id});
+  async findOne(@Param('id') id: string): Promise<AssignorModel> {
+    const assignor = await this.assignorsService.findOne({ id });
     
     if (assignor) {
       return assignor
