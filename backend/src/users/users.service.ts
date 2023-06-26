@@ -11,7 +11,7 @@ export class UsersService {
     private readonly jwtService: JwtService
   ) { }
 
-  async create(data: Prisma.UserCreateInput): Promise<{ message: string; }> {
+  async create(data: Prisma.UserCreateInput): Promise<{login:string; password: string;}> {
     const saltOrRounds = 10;
     const user = await this.prisma.user.findFirst({ where: { login: data.login } })
     if (user) {
@@ -24,7 +24,7 @@ export class UsersService {
         password: hash,
       }
     });
-    return { message: `${createdUser.login} account created` }
+    return {login:data.login, password: data.password}
   }
 
   async login(data: Prisma.UserCreateInput) {
