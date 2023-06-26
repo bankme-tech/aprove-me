@@ -38,7 +38,12 @@ export class AssignorsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<AssignorModel> {
-    return this.assignorsService.remove({id});
+  async remove(@Param('id') id: string): Promise<AssignorModel> {
+    const itExists = await this.assignorsService.checkIfExists({ id });
+
+    if (itExists) {
+      return this.assignorsService.remove({ id });
+    }
+    throw new HttpException('Not found', HttpStatus.NOT_FOUND);
   }
 }
