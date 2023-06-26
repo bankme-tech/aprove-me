@@ -1,6 +1,6 @@
 <mat-tab-group >
     <mat-tab label="Login"> 
-        <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
 
             <table cellspacing="0">
                 <tr>
@@ -24,7 +24,7 @@
         </form>    
     </mat-tab>
     <mat-tab label="Sign Up">
-        <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form class="form" [formGroup]="signUpForm" (ngSubmit)="signUp()">
 
             <table cellspacing="0">
                 <tr>

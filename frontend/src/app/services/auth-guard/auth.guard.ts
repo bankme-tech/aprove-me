@@ -7,16 +7,15 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   const user = jwtService.getLogin()
   const isExpired = jwtService.isTokenExpired()  
+  console.log({user,isExpired});
   
   if (jwtService.getLogin()) {
     if (jwtService.isTokenExpired()) {
-      inject(Router).navigate([''])
-      return false 
+      return false;      
     } else {
-      return true;
+      return true 
     }
   } else {
     return false 
   }
-  return true
 }

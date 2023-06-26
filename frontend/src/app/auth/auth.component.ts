@@ -10,7 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent {
-  form = new FormGroup({
+  signUpForm = new FormGroup({
+    login: new FormControl(''),
+    password: new FormControl(''),
+  });
+  loginForm = new FormGroup({
     login: new FormControl(''),
     password: new FormControl(''),
   });
@@ -20,9 +24,21 @@ export class AuthComponent {
     private jwtService: JwtService,
     private router: Router
   ) { }
-  onSubmit(): void {
+
+  signUp(): void {
     this.apiService
-      .signUp(this.form.value)
+      .signUp(this.signUpForm.value)
+      .subscribe((data: any) => {
+        if (data?.access_token) {
+          this.jwtService.setToken(data.access_token);
+          this.router.navigate(['payables'])          
+        }
+      });
+  }
+
+  login(): void {
+    this.apiService
+      .login(this.loginForm.value)
       .subscribe((data: any) => {
         if (data?.access_token) {
           this.jwtService.setToken(data.access_token);

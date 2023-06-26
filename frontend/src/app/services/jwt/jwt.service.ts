@@ -29,8 +29,9 @@ export class JwtService {
   }
 
   decodeToken() {
-    if (this.jwtToken) {
-     this.decodedToken = jwt_decode(this.jwtToken);
+    const token = this.localStorage.get('jwt')
+    if (token) {
+     this.decodedToken = jwt_decode(token);
     }
     
   }
@@ -46,6 +47,7 @@ export class JwtService {
 
   getExpiryTime() {
     this.decodeToken();
+    
     return this.decodedToken ? this.decodedToken['exp'] : null;
   }
 
@@ -55,9 +57,8 @@ export class JwtService {
     
     if (expiryTime) {
       const calc = ((1000 * expiryTime) - (new Date()).getTime()) ;
-      console.log(calc);
       
-      return calc < 60000
+      return calc < 5000
     } else {
       return false;
     }
