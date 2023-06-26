@@ -1,15 +1,43 @@
 import { Injectable } from "@nestjs/common";
-import { sleep } from "../../utils/sleep";
+
+import { MailService } from '@sendgrid/mail';
+import { sleep } from "utils/sleep";
+const sgMail = require('@sendgrid/mail');
 
 interface SendEmailDto {
     to: string;
+    from?: string;
+    templateId: string;
+    params: any;
 }
 
 
 @Injectable()
 export class MailerService {
-    async sendEmail ({ to }: SendEmailDto) {
-        await sleep(3000) // forced delay to simulate sending of email
-        console.log(`sending email to: ${to}`)
+
+    private readonly sendGridMailInstance: MailService;
+
+    constructor() {
+        this.sendGridMailInstance = sgMail;
+        this.sendGridMailInstance.setApiKey(process.env.SENDGRID_API_KEY);
+    }
+
+    async sendEmail({ to, from, templateId, params }: SendEmailDto) {
+        try {
+            console.log(`[Mailer] Sending email to ${to}`)
+            
+            const defaultSender = 'thiagofialho39@gmail.com';
+            return await this.sendGridMailInstance.send({
+                to,
+                from: from || defaultSender,
+                templateId,
+                dynamicTemplateData: {
+                    ...params,
+                },
+            });            
+        } catch (error) {
+            await sleep(1000)
+            console.log(`[fake-Mailer] Sending email to ${to}`)
+        }
     }
 }

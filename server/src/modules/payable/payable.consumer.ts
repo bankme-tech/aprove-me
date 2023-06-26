@@ -5,6 +5,7 @@ import { PayableService } from './payable.service';
 import { MailerService } from '../../infra/mailer/mailer';
 import { AssignorService } from '../../modules/assignor/assignor.service';
 import { sleep } from '../../utils/sleep';
+import { emailTemplates } from '../../infra/mailer/templates';
 
 @Processor('payable')
 export class PayableConsumer {
@@ -57,10 +58,24 @@ export class PayableConsumer {
             const failed_items = job.data.filter(item => item.job_failed)
             if(failed_items.length) {
                 await this.deadPayableQueue.add('batch-create-failed', failed_items)
-                await this.mailer.sendEmail({ to: 'operacoes@bankme.com' })
+                
+                // await this.mailer.sendEmail({ to: 'suport@bankme.com', templateId: emailTemplates['suportEmail'], params: {} })
+                await this.assignorService.sendEmailToId({ 
+                    id: job.data[0].assignorId, 
+                    templateId: emailTemplates['suportEmail'], 
+                    params: {} 
+                })
             }
 
-            await this.assignorService.sendEmailToId({ id: job.data[0].assignorId })
+            await this.assignorService.sendEmailToId({ 
+                id: job.data[0].assignorId, 
+                templateId: emailTemplates['createPayableEmail'], 
+                params: {
+                    total_items, 
+                    created_items: total_items - failed_items.length,
+                    failed_items: failed_items.length
+                } 
+            })
         }
     }
 }

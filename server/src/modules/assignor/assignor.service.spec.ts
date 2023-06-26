@@ -341,7 +341,7 @@ describe('AssignorService', () => {
   describe('sendEmailToId', () => {
     it('should call repository with correct values', async () => {
       const findOneSpy = jest.spyOn(assignorRepository, 'findOne')
-      await sut.sendEmailToId({id: 'any_id'})
+      await sut.sendEmailToId({id: 'any_id', templateId: 'any_template_id', params: {}})
       expect(findOneSpy).toHaveBeenCalledWith({
         where: {
           id: 'any_id',
@@ -352,8 +352,8 @@ describe('AssignorService', () => {
 
     it('should call mailer with correct email', async () => {
       const mailerSpy = jest.spyOn(mailerService, 'sendEmail')
-      await sut.sendEmailToId({id: 'any_id'})
-      expect(mailerSpy).toHaveBeenCalledWith({ to: makeFakeAssignor().email })
+      await sut.sendEmailToId({id: 'any_id', templateId: 'any_template_id', params: {}})
+      expect(mailerSpy).toHaveBeenCalledWith({ to: makeFakeAssignor().email, templateId: 'any_template_id', params: {} })
     });
   });
 });

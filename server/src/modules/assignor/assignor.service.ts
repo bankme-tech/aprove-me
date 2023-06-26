@@ -140,7 +140,7 @@ export class AssignorService {
     await this.assignorRepository.remove(id)
   }
 
-  async sendEmailToId({ id }:{ id: string }) {
+  async sendEmailToId({ id, templateId,params  }:{ id: string, templateId: string, params: any }) {
     const assignor = await this.assignorRepository.findOne({
       where: {
         id,
@@ -148,6 +148,6 @@ export class AssignorService {
       }
     })
     
-    await this.mailer.sendEmail({ to: assignor.email })
+    await this.mailer.sendEmail({ to: assignor.email, templateId, params })
   }
 }
