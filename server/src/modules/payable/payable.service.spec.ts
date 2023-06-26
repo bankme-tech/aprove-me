@@ -3,6 +3,8 @@ import { PayableService } from './payable.service';
 import { PayableRepository } from '../../data/repositories/payable-repository/payable-repository';
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
 import { UnauthorizedException } from '@nestjs/common';
+import { BullModule, getQueueToken } from '@nestjs/bull';
+
 
 const makeFakePayable = () => ({
   id: 'any_id',
@@ -11,17 +13,25 @@ const makeFakePayable = () => ({
   valueInCents: 10000
 })
 
+const exampleQueueMock = { add: jest.fn() };
+
 describe('PayableService', () => {
   let sut: PayableService;
   let payableRepository: PayableRepository;
   let assignorRepository: AssignorRepository;
 
   beforeEach(async () => {
+    
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        BullModule.registerQueue({
+          name: 'payable',
+        }),
+      ],
       providers: [
         PayableService, 
         {
-          provide: PayableRepository,
+          provide: PayableRepository, 
           useValue: {
             create: jest.fn().mockResolvedValue(makeFakePayable()),
             findOne: jest.fn().mockResolvedValue(makeFakePayable()),
@@ -37,7 +47,10 @@ describe('PayableService', () => {
           }
         }
       ],
-    }).compile();
+    })
+    .overrideProvider(getQueueToken('payable'))
+    .useValue(exampleQueueMock)
+    .compile();
 
     sut = module.get<PayableService>(PayableService);
     payableRepository = module.get<PayableRepository>(PayableRepository);

@@ -5,7 +5,7 @@ import { AssignorRepository } from '../../data/repositories/assignor-repository/
 import { buildFindAllFilters } from './helpers/build-filters';
 import { Filters } from './dto/list-assignor.dto';
 import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
-import { MailerService } from 'infra/mailer/mailer';
+import { MailerService } from '../../infra/mailer/mailer';
 
 interface CreateDto {
   data: CreateAssignorDto

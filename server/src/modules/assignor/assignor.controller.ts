@@ -3,7 +3,7 @@ import { AssignorService } from './assignor.service';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { ListAssignorRequestDto } from './dto/list-assignor.dto';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard } from '@nestjs/passport'; 
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('assignor')

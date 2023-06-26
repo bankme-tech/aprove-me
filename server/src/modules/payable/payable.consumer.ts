@@ -3,7 +3,7 @@ import { Job, Queue } from 'bull';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { PayableService } from './payable.service';
 import { MailerService } from '../../infra/mailer/mailer';
-import { AssignorService } from 'modules/assignor/assignor.service';
+import { AssignorService } from '../../modules/assignor/assignor.service';
 import { sleep } from '../../utils/sleep';
 
 @Processor('payable')

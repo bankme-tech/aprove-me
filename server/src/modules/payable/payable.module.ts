@@ -7,8 +7,8 @@ import { AssignorRepository } from '../../data/repositories/assignor-repository/
 import { PrismaModule } from '../../infra/prisma/prisma.module';
 import { BullModule } from '@nestjs/bull';
 import { PayableConsumer } from './payable.consumer';
-import { MailerService } from 'infra/mailer/mailer';
-import { AssignorModule } from 'modules/assignor/assignor.module';
+import { MailerService } from '../../infra/mailer/mailer';
+import { AssignorModule } from '../../modules/assignor/assignor.module';
 
 @Module({
   imports: [

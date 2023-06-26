@@ -3,6 +3,7 @@ import { AssignorService } from './assignor.service';
 import { AssignorRepository } from '../../data/repositories/assignor-repository/assignor-repository';
 import { UnauthorizedException } from '@nestjs/common';
 import { BcryptAdapter } from '../../infra/bcrypt/bcrypt-adapter';
+import { MailerService } from '../../infra/mailer/mailer';
 
 const makeFakeAssignor = () => ({
   id: 'any_id',
@@ -19,7 +20,7 @@ describe('AssignorService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
+      providers: [ 
         AssignorService,
         {
           provide: AssignorRepository,
@@ -36,6 +37,12 @@ describe('AssignorService', () => {
           provide: BcryptAdapter,
           useValue: {
             hash: jest.fn().mockResolvedValue('hashed_password')
+          }
+        },
+        {
+          provide: MailerService,
+          useValue: {
+            sendEmail: jest.fn()
           }
         }
       ],
