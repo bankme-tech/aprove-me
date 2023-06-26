@@ -74,28 +74,5 @@
   },
   "prisma": {
     "seed": "node prisma/seed.js"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s",
-      "<rootDir>/src/**/*.ts",
-      "!<rootDir>/src/**/*.module.ts",
-      "!<rootDir>/src/**/entities/*.ts",
-      "!<rootDir>/src/**/infra/*.ts",
-      "!<rootDir>/src/**/*.dto.ts",
-      "!**/test/**"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
   }
 }

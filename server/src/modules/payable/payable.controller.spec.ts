@@ -21,6 +21,7 @@ describe('PayableController', () => {
           provide: PayableService,
           useValue: {
             create: jest.fn().mockResolvedValue(makeFakePayable()),
+            batchCreate: jest.fn().mockResolvedValue({success: true}),
             findOne: jest.fn().mockResolvedValue(makeFakePayable()),
             findAll: jest.fn().mockResolvedValue([makeFakePayable(), makeFakePayable()]),
             update: jest.fn().mockResolvedValue(makeFakePayable()),
@@ -36,6 +37,43 @@ describe('PayableController', () => {
 
   it('should be defined', () => {
     expect(sut).toBeDefined();
+  });
+
+  describe('batchCreate', () => {
+    it('should call service.batchCreate with correct values', async () => {
+
+      const batchCreateSpy = jest.spyOn(payableService, 'batchCreate')
+
+      await sut.batchCreate({
+        payables: [
+          makeFakePayable(),
+          makeFakePayable(),
+          makeFakePayable(),
+        ]
+      })
+
+      expect(batchCreateSpy).toHaveBeenCalledWith({
+        payables: [
+          makeFakePayable(),
+          makeFakePayable(),
+          makeFakePayable(),
+        ]
+      })
+    });
+
+    it('should return success on success', async () => {
+      const response = await sut.batchCreate({
+        payables: [
+          makeFakePayable(),
+          makeFakePayable(),
+          makeFakePayable(),
+        ]
+      })
+
+      expect(response).toEqual({
+        success: true
+      })
+    });
   });
 
   describe('create', () => {
