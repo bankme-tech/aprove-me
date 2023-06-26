@@ -1,26 +1,55 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import { Prisma, User } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    private prisma: PrismaService,
+    private readonly jwtService: JwtService
+  ) { }
+
+  async create(data: Prisma.UserCreateInput): Promise<{ message: string; }> {
+    const saltOrRounds = 10;
+    const user = await this.prisma.user.findFirst({ where: { login: data.login } })
+    if (user) {
+      throw new BadRequestException('User already exists')
+    }
+    const hash = await bcrypt.hash(data.password, saltOrRounds);
+    const createdUser = await this.prisma.user.create({
+      data: {
+        login: data.login,
+        password: hash,
+      }
+    });
+    return { message: `${createdUser.login} account created` }
   }
 
-  findAll() {
-    return `This action returns all users`;
-  }
+  async login(data: Prisma.UserCreateInput) {
+    const user = await this.prisma.user.findUnique({
+      where: { login: data.login },
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+    if (!user) {
+      throw new NotFoundException();
+    }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+    const isMatch = await bcrypt.compare(data.password, user.password);
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    if (!isMatch) {
+      throw new UnauthorizedException();
+    }
+
+    const payload = { sub: user.id, login: user.login };
+
+    return {
+      access_token: this.jwtService.sign(payload, {
+        expiresIn: '60s',
+        secret: process.env.JWT_SECRET
+      }),
+    };
+
   }
 }
