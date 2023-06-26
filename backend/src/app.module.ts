@@ -8,7 +8,13 @@ import { AssignorsModule } from './assignors/assignors.module';
 import { UtilsModule } from './utils/utils.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), UsersModule, PayablesModule, AssignorsModule, UtilsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    UsersModule,
+    PayablesModule,
+    AssignorsModule,
+    UtilsModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
