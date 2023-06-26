@@ -1,6 +1,8 @@
 # Base image
 FROM node:18-alpine
 
+ENV DATABASE_URL "file:./dev.db"
+
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -12,8 +14,7 @@ RUN npm install
 
 # Bundle app source
 COPY . .
-RUN npx prisma generate
-RUN npx prisma migrate deploy
+RUN npx prisma migrate dev --name init
 
 # Creates a "dist" folder with the production build
 RUN npm run build

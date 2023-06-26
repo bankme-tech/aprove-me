@@ -1,28 +1,23 @@
 version: "3"
 services:
-  # nginx:
-  #   depends_on:
-  #     - backend
-  #     - frontend
-  #   restart: always
-  #   build:
-  #     context: ./nginx
-  #   ports:
-  #     - "3050:80"
   backend:
     build:
       context: ./backend
       dockerfile: ./Dockerfile.development
     env_file:
-      - ./.env
-    # volumes:
-    #   - /app/node_modules
-    #   - ./backend:/app
+      - ./backend/.env.docker.development
+    ports:
+      - 3000:3000
   frontend:
     stdin_open: true
     build:
       context: ./frontend
       dockerfile: ./Dockerfile.development
-    volumes:
-      - /app/node_modules
-      - ./frontend:/app
+    ports:
+      - 4200:4200
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+
