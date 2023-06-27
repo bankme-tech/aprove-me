@@ -10,10 +10,13 @@ const SignIn = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const cleanErrorMessage = () => {
+    return errorMessage && setErrorMessage('')
+  }
 
   const handleLogin = async () => {
     setIsLoading(true)
-    setErrorMessage('')
+    cleanErrorMessage()
     try {
       const response = await axios.post(apiBaseUrl + '/auth', { username, password });
 
