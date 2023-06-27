@@ -2,7 +2,7 @@
   <img src="./assets/logo-bankme.png" alt="Logo Bankme" width="91" height="108">
 </p>
 <h1 align="center">
-  Aprova-me
+  Aprove-me
 </h1>
 
 ## Sumário
