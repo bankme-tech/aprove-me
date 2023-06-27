@@ -3,12 +3,15 @@ import axios from "axios";
 import { useState } from "react";
 import { apiBaseUrl } from "../../constants";
 import IsLoading from "../isLoading";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const cleanErrorMessage = () => {
     return errorMessage && setErrorMessage('')
@@ -21,7 +24,10 @@ const SignIn = () => {
       const response = await axios.post(apiBaseUrl + '/auth', { username, password });
 
       const { access_token } = response.data;
+
       localStorage.setItem('access_token', access_token);
+      
+      navigate("/pagaveis")
     } catch (error: any) {
       const isInvalidLogin = error?.response?.status === 401
       setErrorMessage(isInvalidLogin ? "Usuário ou senha inválidos." : "Erro ao tentar efetuar o login.");
