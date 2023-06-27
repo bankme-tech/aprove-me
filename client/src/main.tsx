@@ -8,7 +8,7 @@ import {
 
 
 import App from './App.tsx'
-import Payables from './routes/payables/index.tsx';
+import Payables from './components/payables/index.tsx';
 import ErrorPage from './components/ErrorPage/index.tsx';
 
 const router = createBrowserRouter([

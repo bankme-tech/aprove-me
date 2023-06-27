@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
 import { useState } from "react";
-import { apiBaseUrl } from "../../constants";
 import IsLoading from "../isLoading";
 import { useNavigate } from "react-router-dom";
+import  { signIn } from "../../api";
 
 const SignIn = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,12 +20,12 @@ const SignIn = () => {
     setIsLoading(true)
     cleanErrorMessage()
     try {
-      const response = await axios.post(apiBaseUrl + '/auth', { username, password });
+      const response = await signIn({ username, password });
 
       const { access_token } = response.data;
 
       localStorage.setItem('access_token', access_token);
-      
+
       navigate("/pagaveis")
     } catch (error: any) {
       const isInvalidLogin = error?.response?.status === 401
