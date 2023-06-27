@@ -1,0 +1,13 @@
+# Dificuldades que enfrentei durante a criação do projeto:
+
+##  Back end
+
+- Implementação de mocks através do jest. A intenção era de se mockar as consultas e escritas ao banco de dados com PrismaClient para que fosse possível obter uma função jest e com isso testar o fluxo unitário de cada função, mas tive problemas com esse mock e decidi implementar um mockFactory mais pra frente no projeto, mas infelizmente não tive tempo.
+
+- Tive alguns problemas com a interpretação do problema principal e alguns níveis, tanto de back quanto de front. Como por exemplo entender se a rota payable seria referente a uma nova tabela chamada pagáveis ou se era referente a própria tabela de recebíveis. Outro caso foi em um dos níveis do Front End ser necessário a listagem de pagáveis para o usuário, mas não havia um nível com relação ao back end que tivesse esse endpoint como tarefa para que fosse assimilado no futuro.
+
+- A falta de exibição de uma tela ou alguns exemplos de input/output também aumentaram um pouco mais o tempo de execução do teste devido a ter mais livre interpretação e por consequência mais tempo para se criar um fluxo de tarefas.
+
+Consideração final: Como comentei são alguns pontos que eu acredito que dificultaram o processo de execução do teste do meu lado, achei interessante também passar um pouco da minha perspectiva nesse sentido. Infelizmente não foi o melhor que consegui construir e também na melhor velocidade, mas de qualquer forma agradeço a oportunidade de executar o teste e aceito todo o feedback que tiverem!
+
+Obrigado 😁
