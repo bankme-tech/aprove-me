@@ -22,7 +22,7 @@ const SignIn = () => {
     try {
       const response = await signIn({ username, password });
 
-      const { access_token } = response.data;
+      const { access_token } = response;
 
       localStorage.setItem('access_token', access_token);
 

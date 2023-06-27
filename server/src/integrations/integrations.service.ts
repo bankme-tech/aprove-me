@@ -29,6 +29,10 @@ export class IntegrationsService {
     });
   }
 
+  async getAllPayable(): Promise<ReceivableDto[]> {
+    return await dbConnection.receivable.findMany();
+  }
+
   async getAssignor(id: string): Promise<AssignorDto> {
     return await dbConnection.assignor.findUnique({
       where: { id },

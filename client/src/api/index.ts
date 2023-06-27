@@ -1,5 +1,4 @@
 import axios from "axios";
-import { redirect } from "react-router-dom";
 import { apiBaseUrl } from "../constants";
 
 const api = axios.create({
@@ -16,16 +15,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// api.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.response.status === 401) {
-//       redirect("/");
-//     }
-//     return Promise.reject(error);
-//   }
-// );
-
 export const signIn = async ({
   username,
   password,
@@ -33,16 +22,20 @@ export const signIn = async ({
   username: string;
   password: string;
 }) => {
-  return api.post("/auth", { username, password });
+  const response = await api.post("/auth", { username, password });
+
+  return response.data;
 };
 
-type Payable = {
+export type Payable = {
   id: string;
   value: number;
   emissionDate: string;
   assignorId: string;
 };
 
-export const getPayables = async (id: string): Promise<Payable> => {
-  return api.get(`integrations/payable/${id}`);
+export const getAllPayables = async (): Promise<Payable[]> => {
+  const response = await api.get("integrations/payable");
+
+  return response.data;
 };

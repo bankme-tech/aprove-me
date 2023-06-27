@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PayableItem } from "./payableItem";
-import { getPayables } from "../../api";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
+import { Payable, getAllPayables } from "../../api";
+import {  useNavigate } from "react-router-dom";
 
 type dataProps = {
     id: string;
@@ -11,17 +11,15 @@ type dataProps = {
 }
   
 const Payables = () => {
-    const [payablesData, setPayablesData] = useState([]);
-    const navigate = useNavigate()
+    const [payablesData, setPayablesData] = useState<Payable[]>([]);
+    const navigate = useNavigate()    
 
   useEffect(() => {
     const fetchPayables = async () => {
       try {
+        const response = await getAllPayables()
 
-        const id = '550e8400-e29b-41d4-a716-446655440350'
-        const response = await getPayables(id)
-
-        setPayablesData([response.data]); //TODO: switch to getAll endpoint or adapt the same one but not sending ID
+        setPayablesData(response);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.error('Error when fetching payables: ', error);
@@ -32,7 +30,7 @@ const Payables = () => {
     };
 
     fetchPayables();
-  }, []);
+  }, [navigate]);
 
 
 

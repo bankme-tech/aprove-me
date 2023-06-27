@@ -29,9 +29,15 @@ export class IntegrationsController {
     return this.integrationsService.createPayable(payable);
   }
 
+  @Get('payable')
+  @UseGuards(AuthMiddleware)
+  async getAllPayable(): Promise<ReceivableDto[]> {
+    return this.integrationsService.getAllPayable();
+  }
+
   @Get('payable/:id')
   @UseGuards(AuthMiddleware)
-  async getPayable(@Param('id') id: string): Promise<ReceivableDto> {
+  async getPayable(@Param('id') id?: string): Promise<ReceivableDto> {
     return this.integrationsService.getPayable(id);
   }
 
