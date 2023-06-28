@@ -11,16 +11,28 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
-import { PayablesComponent } from './payables/payables.component';
-
+import { AuthInterceptor } from './services/interceptors/auth/auth.interceptor';
+import { ListPayablesComponent } from './payables/list-payables/list-payables.component';
+import { CreatePayablesComponent } from './payables/create-payables/create-payables.component';
+import { EditPayablesComponent } from './payables/edit-payables/edit-payables.component';
+import { ErrorCatchingInterceptor } from './services/interceptors/error-catching/error-catching.interceptor';
+import { MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
+import { ShowPayableComponent } from './payables/show-payable/show-payable.component';
+import {MatSelectModule} from '@angular/material/select';
+import { CreateAssignorsComponent } from './assignors/create-assignors/create-assignors.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    PayablesComponent
+    ListPayablesComponent,
+    CreatePayablesComponent,
+    EditPayablesComponent,
+    ShowPayableComponent,
+    CreateAssignorsComponent
   ],
   imports: [
     BrowserModule,
@@ -29,13 +41,23 @@ import { PayablesComponent } from './payables/payables.component';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule, MatButtonModule,
+    ReactiveFormsModule, 
+    MatButtonModule,
     MatDividerModule,
     MatIconModule,
     HttpClientModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSnackBarModule,
+    MatSelectModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorCatchingInterceptor,
+      multi: true
+   }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

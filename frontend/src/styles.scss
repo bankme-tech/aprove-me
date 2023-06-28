@@ -14,3 +14,9 @@ body {
 body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.mat-mdc-snack-bar-container {
+    &.error-snackbar {
+      --mdc-snackbar-container-color: #ff6f5c;
+    }
+  }
