@@ -14,6 +14,9 @@ export class AssignorExistsConstraint implements ValidatorConstraintInterface {
   constructor(private prisma: PrismaService) {}
 
   async validate(value: string, args: ValidationArguments) {
+    if (!value) {
+      return false
+    }
     const result = await this.prisma.assignor.findUnique({
         where: { id: value },
 
