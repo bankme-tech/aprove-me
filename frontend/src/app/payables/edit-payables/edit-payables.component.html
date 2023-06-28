@@ -1,1 +1,25 @@
-<p>edit-payables works!</p>
+<form class="form" [formGroup]="payableForm" (ngSubmit)="onSubmit()">
+    <table cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>Value</mat-label>
+                    <input type="number" matInput formControlName="value" required>
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>Assignor</mat-label>
+                    <mat-select formControlName="assignorId">
+                        <mat-option *ngFor="let assignor of assignors" [value]="assignor.id">
+                            {{assignor.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+    <button type="submit" mat-button>Update</button>
+</form>
