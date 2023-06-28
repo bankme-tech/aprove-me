@@ -4,17 +4,21 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
 import { Observable } from 'rxjs';
 
 export interface IPayable {
-  id:string;
+  id?:string;
   value:number;
-  assignor: IAssignor;
-  emissionDate: string;
+  assignor?: IAssignor;
+  assignorId?: string;
+  emissionDate?: string;
 }
+
 export interface IAssignor {
-  id:string;
+  id?:string;
   document:string;
   phone: string;
   name: string;
+  email:string;
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -51,8 +55,8 @@ export class ApiService {
     return this.http.delete<IPayable>(this.baseUrl + '/payable/'+ id);
   }
 
-  getAssignors() : Observable<IPayable[]> {
-    return this.http.get<IPayable[]>(this.baseUrl + '/assignor');
+  getAssignors() : Observable<IAssignor[]> {
+    return this.http.get<IAssignor[]>(this.baseUrl + '/assignor');
   }
 
   getAssignor(id:string) : Observable<IAssignor> {
