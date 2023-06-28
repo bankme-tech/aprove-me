@@ -60,7 +60,7 @@ Este é um teste para analisarmos como você desempenha ao entender, traduzir, r
 1. Faça um clone deste projeto em seu GitHub pessoal;
 2. Realize as implementações de acordo com cada um dos níveis;
 3. Faça pequenos commits;
-4. Depois de sentir que fez o seu máximo, faça um PR para o repositório original.
+4. Depois de sentir que fez o seu máximo, faça um PR para o repositório original. (Para conseguir fazer isso, não se esqueça de fazer um Fork antes de iniciar tudo!)
 
 **IMPORTANTE!**
 
