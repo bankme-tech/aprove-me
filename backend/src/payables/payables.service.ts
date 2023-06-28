@@ -14,8 +14,10 @@ export class PayablesService {
 
   async findAll() {
     return this.prisma.payable.findMany({
-      include: {
-        assignor: true
+      select: {
+        id: true,
+        value: true,
+        emissionDate: true
       }
     });
   }
