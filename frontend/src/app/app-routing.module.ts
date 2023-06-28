@@ -7,6 +7,7 @@ import { ShowPayableComponent } from './payables/show-payable/show-payable.compo
 import { CreatePayablesComponent } from './payables/create-payables/create-payables.component';
 import { EditPayablesComponent } from './payables/edit-payables/edit-payables.component';
 import { CreateAssignorsComponent } from './assignors/create-assignors/create-assignors.component';
+import { ShowAssignorComponent } from './assignors/show-assignor/show-assignor.component';
 
 const routes: Routes = [
   { path: '', component: AuthComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'payables/edit/:id', component: EditPayablesComponent,canActivate:[authGuard] },
   { path: 'payables/edit/:id', component: ShowPayableComponent,canActivate:[authGuard] },
   { path: 'assignors/create', component: CreateAssignorsComponent,canActivate:[authGuard] },
+  { path: 'assignors/:id', component: ShowAssignorComponent,canActivate:[authGuard] },
 ];
 
 @NgModule({
