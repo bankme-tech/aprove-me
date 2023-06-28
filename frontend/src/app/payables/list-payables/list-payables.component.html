@@ -1,0 +1,12 @@
+
+<button mat-raised-button color="primary" (click)="addPayable()" >Add payable</button>
+<button mat-raised-button color="primary" (click)="addAssignor()" >Add assignor</button>
+
+<ul *ngFor="let payable of payables">
+    <li>
+        <button mat-raised-button color="primary" (click)="details(payable)" >Details</button>
+        <button mat-raised-button color="primary" (click)="delete(payable)">Delete</button> 
+        <button mat-raised-button color="primary" (click)="edit(payable)">Edit</button>
+        {{payable?.id?.at(0)}}{{payable?.id?.at(1)}}{{payable?.id?.at(2)}}... | {{payable.value}} | {{payable.emissionDate}}
+    </li>
+</ul>
