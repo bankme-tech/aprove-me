@@ -26,13 +26,13 @@ export class CreatePayablesComponent {
   }
 
   start() {
-    this.api.getAssignors().subscribe((assignors:IAssignor[]) => {
+    this.api.getAssignors().subscribe((assignors: IAssignor[]) => {
       this.assignors = assignors
     })
   }
 
   onSubmit(): void {
-    const {value, assignorId} = this.payableForm.value
+    const { value, assignorId } = this.payableForm.value
 
     if (this.payableForm.invalid) {
       return
@@ -45,7 +45,7 @@ export class CreatePayablesComponent {
     this.api
       .createPayable(payload)
       .subscribe((item: IPayable) => {
-        this.snack.open('Payable created')
+        this.snack.open('Payable created', 'Close')
         this.router.navigate(['/payables'])
       });
   }

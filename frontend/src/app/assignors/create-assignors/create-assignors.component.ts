@@ -34,23 +34,23 @@ export class CreateAssignorsComponent {
     private api: ApiService,
     private router: Router,
     private snack: MatSnackBar
-  ) {  }
+  ) { }
 
   onSubmit(): void {
     if (this.assignorForm.invalid) {
       return
     }
 
-    const {document, email, phone, name } = this.assignorForm.value
+    const { document, email, phone, name } = this.assignorForm.value
 
     if (!document || !email || !phone || !name) {
       return
     }
-    const payload: IAssignor = {document, email, phone, name }
+    const payload: IAssignor = { document, email, phone, name }
     this.api
       .createAssignor(payload)
       .subscribe((item: IAssignor) => {
-        this.snack.open('Assignor created')
+        this.snack.open('Assignor created', 'Close')
         this.router.navigate(['/payables'])
       });
   }

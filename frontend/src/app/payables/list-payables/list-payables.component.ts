@@ -21,26 +21,26 @@ export class ListPayablesComponent {
     })
   }
 
-  addPayable():void {
+  addPayable(): void {
     this.router.navigate([`/payables/create`]);
   }
 
-  addAssignor():void {
+  addAssignor(): void {
     this.router.navigate([`/assignors/create`]);
   }
 
-  details(p:IPayable):void {
+  details(p: IPayable): void {
     this.router.navigate([`/payables/${p.id}`]);
   }
 
-  delete(p:IPayable):void {
+  delete(p: IPayable): void {
     this.api.deletePayable(p?.id || '').subscribe((payable: IPayable) => {
-      this.snack.open(`Payable ${payable.id} removed`)
-      this.payables = this.payables.filter( item => item.id !== payable.id)
+      this.snack.open(`Payable ${payable.id} removed`, 'Close')
+      this.payables = this.payables.filter(item => item.id !== payable.id)
     })
   }
 
-  edit(p:IPayable):void {
+  edit(p: IPayable): void {
     this.router.navigate([`/payables/edit/${p.id}`]);
   }
 
