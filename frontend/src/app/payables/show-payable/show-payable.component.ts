@@ -39,5 +39,8 @@ export class ShowPayableComponent {
       }
     })
   }
+  showAssignor() {
+    this.router.navigate(['assignors/'+ this.payable.assignorId])
+  }
 
 }

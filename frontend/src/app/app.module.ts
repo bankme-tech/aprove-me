@@ -22,6 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShowPayableComponent } from './payables/show-payable/show-payable.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CreateAssignorsComponent } from './assignors/create-assignors/create-assignors.component';
+import { ShowAssignorComponent } from './assignors/show-assignor/show-assignor.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CreateAssignorsComponent } from './assignors/create-assignors/create-as
     CreatePayablesComponent,
     EditPayablesComponent,
     ShowPayableComponent,
-    CreateAssignorsComponent
+    CreateAssignorsComponent,
+    ShowAssignorComponent
   ],
   imports: [
     BrowserModule,
