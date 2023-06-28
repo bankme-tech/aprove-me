@@ -1,21 +1,24 @@
 import { inject } from '@angular/core';
-import { ActivatedRoute, CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 import { JwtService } from '../jwt/jwt.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const jwtService = inject(JwtService)
+  const localStorage = inject(LocalStorageService)
+  const router = inject(Router)
 
-  const user = jwtService.getLogin()
-  const isExpired = jwtService.isTokenExpired()  
-  console.log({user,isExpired});
+  const jwt = localStorage.get('jwt') || ''
   
-  if (jwtService.getLogin()) {
-    if (jwtService.isTokenExpired()) {
-      return false;      
-    } else {
-      return true 
-    }
-  } else {
-    return false 
+  if (!jwt ) {
+    router.navigateByUrl('/');    
   }
+
+  const isExpired = jwtService.isTokenExpired(jwt);
+  
+  if (isExpired) {
+    router.navigateByUrl('/');
+  }
+
+  return true
 }
