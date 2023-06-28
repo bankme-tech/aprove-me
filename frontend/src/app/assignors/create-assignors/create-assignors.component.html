@@ -1,0 +1,37 @@
+<form class="form" [formGroup]="assignorForm" (ngSubmit)="onSubmit()">
+    <table cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>Document</mat-label>
+                    <input type="text" matInput formControlName="document" required maxlength="30">
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>email</mat-label>
+                    <input type="email" matInput formControlName="email" required maxlength="150">
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>Phone</mat-label>
+                    <input type="tel" matInput formControlName="phone" required maxlength="20" required>
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>Name</mat-label>
+                    <input type="text" matInput formControlName="name" required maxlength="20" required>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+    <button type="submit" mat-button>Create</button>
+</form>

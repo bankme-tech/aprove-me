@@ -18,10 +18,9 @@ import { ListPayablesComponent } from './payables/list-payables/list-payables.co
 import { CreatePayablesComponent } from './payables/create-payables/create-payables.component';
 import { EditPayablesComponent } from './payables/edit-payables/edit-payables.component';
 import { ErrorCatchingInterceptor } from './services/interceptors/error-catching/error-catching.interceptor';
-import { MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatCardModule} from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShowPayableComponent } from './payables/show-payable/show-payable.component';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { CreateAssignorsComponent } from './assignors/create-assignors/create-assignors.component';
 
 @NgModule({
@@ -41,7 +40,7 @@ import { CreateAssignorsComponent } from './assignors/create-assignors/create-as
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
@@ -52,11 +51,7 @@ import { CreateAssignorsComponent } from './assignors/create-assignors/create-as
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorCatchingInterceptor,
-      multi: true
-   }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
