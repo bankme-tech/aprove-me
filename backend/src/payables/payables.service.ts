@@ -25,9 +25,9 @@ export class PayablesService {
   async findOne(payableWhereUniqueInput: Prisma.PayableWhereUniqueInput): Promise<Payable | null> {
     return await this.prisma.payable.findUnique({
       where: payableWhereUniqueInput,
-      include: {
-        assignor: true
-      }
+      // include: {
+      //   assignor: true
+      // }
     });
   }
 
