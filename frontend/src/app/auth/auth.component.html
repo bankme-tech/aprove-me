@@ -1,5 +1,5 @@
-<mat-tab-group >
-    <mat-tab label="Login"> 
+<mat-tab-group>
+    <mat-tab label="Login">
         <form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
 
             <table cellspacing="0">
@@ -7,7 +7,7 @@
                     <td>
                         <mat-form-field>
                             <mat-label>Username</mat-label>
-                            <input matInput formControlName="login">
+                            <input matInput formControlName="login" required>
                         </mat-form-field>
                     </td>
                 </tr>
@@ -15,23 +15,22 @@
                     <td>
                         <mat-form-field>
                             <mat-label>Password</mat-label>
-                            <input type="password" formControlName="password" matInput>
+                            <input type="password" formControlName="password" matInput required>
                         </mat-form-field>
                     </td>
                 </tr>
             </table>
-            <button mat-button>Log In</button>
-        </form>    
+            <button type="submit" mat-button>Log In</button>
+        </form>
     </mat-tab>
     <mat-tab label="Sign Up">
         <form class="form" [formGroup]="signUpForm" (ngSubmit)="signUp()">
-
             <table cellspacing="0">
                 <tr>
                     <td>
                         <mat-form-field>
                             <mat-label>Username</mat-label>
-                            <input matInput formControlName="login">
+                            <input matInput formControlName="login" required>
                         </mat-form-field>
                     </td>
                 </tr>
@@ -39,12 +38,12 @@
                     <td>
                         <mat-form-field>
                             <mat-label>Password</mat-label>
-                            <input type="password" formControlName="password" matInput>
+                            <input type="password" formControlName="password" matInput required>
                         </mat-form-field>
                     </td>
                 </tr>
             </table>
-            <button mat-button>Sign Up</button>
+            <button type="submit" mat-button>Sign Up</button>
         </form>
     </mat-tab>
 </mat-tab-group>

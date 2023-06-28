@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api/api.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { JwtService } from '../services/jwt/jwt.service';
 import { Router } from '@angular/router';
 
@@ -11,12 +11,12 @@ import { Router } from '@angular/router';
 })
 export class AuthComponent {
   signUpForm = new FormGroup({
-    login: new FormControl(''),
-    password: new FormControl(''),
+    login: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
   loginForm = new FormGroup({
-    login: new FormControl(''),
-    password: new FormControl(''),
+    login: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -26,6 +26,9 @@ export class AuthComponent {
   ) { }
 
   signUp(): void {
+    if (this.signUpForm.invalid) {
+      return
+    }
     this.apiService
       .signUp(this.signUpForm.value)
       .subscribe((data: any) => {
@@ -37,6 +40,9 @@ export class AuthComponent {
   }
 
   login(): void {
+    if (this.loginForm.invalid) {
+      return
+    }
     this.apiService
       .login(this.loginForm.value)
       .subscribe((data: any) => {
