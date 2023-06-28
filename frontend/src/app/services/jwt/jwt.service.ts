@@ -7,7 +7,6 @@ interface IDecodedToken {
   login?: string;
   iat?: number;
   exp?: number;
-
 }
 
 @Injectable({
@@ -28,32 +27,28 @@ export class JwtService {
     }
   }
 
-  decodeToken() {
-    const token = this.localStorage.get('jwt')
-    if (token) {
-     this.decodedToken = jwt_decode(token);
-    }
-    
+  decodeToken(token:string): {exp: number;user:string;login:string} {
+     return jwt_decode(token);    
   }
 
   getDecodeToken() {
     return jwt_decode(this.jwtToken);
   }
 
-  getLogin() {
-    this.decodeToken();    
-    return this.decodedToken ? this.decodedToken['login'] : null;
+  getLogin(token:string) {
+    const decodedToken = this.decodeToken(token);
+      
+    return decodedToken ? decodedToken?.login : null;
   }
 
-  getExpiryTime() {
-    this.decodeToken();
+  getExpiryTime(token:string) {
+    const decodedToken = this.decodeToken(token);
     
-    return this.decodedToken ? this.decodedToken['exp'] : null;
+    return decodedToken ? decodedToken['exp'] : null;
   }
 
-  isTokenExpired(): boolean {
-    const expiryTime = this.getExpiryTime();
-    console.log('expiryTime',expiryTime);
+  isTokenExpired(token:string): boolean {
+    const expiryTime = this.getExpiryTime(token);
     
     if (expiryTime) {
       const calc = ((1000 * expiryTime) - (new Date()).getTime()) ;
