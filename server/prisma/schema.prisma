@@ -1,0 +1,31 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Receivable {
+  id           String   @id @default(uuid())
+  value        Float
+  emissionDate DateTime
+  assignor     Assignor @relation(fields: [assignorId], references: [id])
+  assignorId   String
+}
+
+model Assignor {
+  id          String       @id @default(uuid())
+  document    String
+  email       String
+  phone       String
+  name        String
+  receivables Receivable[]
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String
+  password String
+}
