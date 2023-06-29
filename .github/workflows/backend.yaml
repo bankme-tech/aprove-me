@@ -1,0 +1,29 @@
+name: ci-backend-workflow
+on: 
+  push:
+    branches:
+      - main
+jobs:
+    check-application:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '18.x'
+            - run: cd ./backend && npm run test
+    # deploy:
+    #     name: Deploy to EC2 on main
+    #     runs-on: ubuntu-latest
+    
+    #     steps:
+    #       - name: Checkout the files
+    #         uses: actions/checkout@v2
+    
+    #       - name: Deploy to Server 1
+    #         uses: easingthemes/ssh-deploy@main
+    #         env:
+    #           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+    #           REMOTE_HOST: ${{ secrets.HOST_DNS }}
+    #           REMOTE_USER: ${{ secrets.USERNAME }}
+    #           TARGET: ${{ secrets.TARGET_DIR }}
