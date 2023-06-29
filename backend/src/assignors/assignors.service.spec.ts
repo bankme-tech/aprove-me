@@ -19,7 +19,7 @@ describe('AssignorsService', () => {
   });
   
 
-  it('should create a Assignor',async () => {
+  it('should create an Assignor',async () => {
     const expectedResponse = {
       document: faker.helpers.replaceSymbolWithNumber('###########'),
       email: faker.internet.email(),

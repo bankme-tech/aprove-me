@@ -2,7 +2,6 @@ import { InjectQueue, OnGlobalQueueCompleted, OnGlobalQueueResumed, OnQueueActiv
 import { CreatePayableDto } from '../dto/create-payable.dto';
 import { PayablesService } from '../payables.service';
 import { Job, Queue } from 'bull';
-import { log } from 'console';
 
 @Processor('batchQueue')
 export class BatchConsumerService {

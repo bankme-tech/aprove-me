@@ -3,8 +3,9 @@ import { PayablesController } from './payables.controller';
 import { PayablesService } from './payables.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { Assignor, Payable } from '@prisma/client';
-import { resourceLimits } from 'worker_threads';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { BatchProducerService } from './jobs/batch-producer.service';
+import { BullModule, getQueueToken } from '@nestjs/bull';
 
 describe('PayablesController', () => {
   let payablesController: PayablesController;
@@ -22,15 +23,25 @@ describe('PayablesController', () => {
     phone: 'test',
     name: 'test',
   };
+  let batchQueue = { 
+    add: jest.fn(),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        BullModule.registerQueue({name:'batchQueue'}),
+      ],
       controllers: [PayablesController],
       providers: [
         PayablesService,
-        PrismaService
+        PrismaService,
+        BatchProducerService
       ],
-    }).compile();
+    }).overrideProvider(getQueueToken('batchQueue'))
+    .useValue(batchQueue)
+    .compile();
+    
 
     payablesController = module.get<PayablesController>(PayablesController);
     payablesService = module.get<PayablesService>(PayablesService);

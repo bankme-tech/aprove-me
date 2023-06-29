@@ -52,7 +52,7 @@ describe('PayablesService', () => {
     const resp = await payablesService.findAll();
 
     expect(Object.keys(resp[0]))
-      .toStrictEqual(["id", "value", "emissionDate", "assignorId", "assignor"])
+      .toStrictEqual(["id", "value", "emissionDate"])
   });
 
   it('should show a Payable', async () => {
