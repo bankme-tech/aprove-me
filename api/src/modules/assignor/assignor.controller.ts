@@ -1,4 +1,13 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CreateAssignorDTO } from './dto/create-assignor.dto';
 import { IAssignor } from './interfaces/assignor.interface';
 import { AssignorService } from './assignor.service';
@@ -13,5 +22,28 @@ export class AssignorController {
   @Post()
   create(@Body() assignor: CreateAssignorDTO): Promise<IAssignor> {
     return this.assignorService.create(assignor);
+  }
+
+  @Patch('/:id')
+  update(
+    @Param('id') id: string,
+    @Body() assignor: Partial<IAssignor>,
+  ): Promise<IAssignor> {
+    return this.assignorService.update(id, assignor);
+  }
+
+  @Delete('/:id')
+  delete(@Param('id') id: string): Promise<void> {
+    return this.assignorService.delete(id);
+  }
+
+  @Get()
+  findAll(): Promise<IAssignor[]> {
+    return this.assignorService.findAll();
+  }
+
+  @Get('/:id')
+  findById(@Param('id') id: string): Promise<IAssignor> {
+    return this.assignorService.findById(id);
   }
 }

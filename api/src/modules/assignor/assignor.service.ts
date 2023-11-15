@@ -16,4 +16,20 @@ export class AssignorService implements IAssignorService {
   async create(assignor: CreateAssignorDTO): Promise<IAssignor> {
     return this.assignorRepository.create({ ...assignor, id: randomUUID() });
   }
+
+  async findAll(): Promise<IAssignor[]> {
+    return this.assignorRepository.findAll();
+  }
+
+  async findById(id: string): Promise<IAssignor> {
+    return this.assignorRepository.findById(id);
+  }
+
+  async update(id: string, assignor: Partial<IAssignor>): Promise<IAssignor> {
+    return this.assignorRepository.update({ id, ...assignor });
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.assignorRepository.delete(id);
+  }
 }
