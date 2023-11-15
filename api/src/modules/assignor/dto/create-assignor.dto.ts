@@ -1,8 +1,6 @@
 import { IsNotEmpty, IsString, Max } from 'class-validator';
 
 export class CreateAssignorDTO {
-  id: string;
-
   @IsString()
   @Max(140)
   @IsNotEmpty()
