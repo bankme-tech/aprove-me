@@ -1,0 +1,86 @@
+import { TestingModule, Test } from '@nestjs/testing';
+import { mock } from 'jest-mock-extended';
+import { PayableRepository } from '../../../infra/database/prisma/payable.repository';
+import { IPayableRepository } from '../interfaces/payable.repository.interface';
+import { PayableService } from '../payable.service';
+import { createPayableMock } from './mock/create-payable.mock';
+
+describe('PayableService', () => {
+  let service: PayableService;
+  const payableRepositoryMock = mock<IPayableRepository>();
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        PayableService,
+        { provide: PayableRepository, useValue: payableRepositoryMock },
+      ],
+    }).compile();
+
+    service = module.get<PayableService>(PayableService);
+  });
+
+  describe('findAll()', () => {
+    it('should call PayableRepository with success and correct params', () => {
+      // ACT
+      service.findAll();
+
+      // ASSERT
+      expect(payableRepositoryMock.findAll).toHaveBeenCalled();
+    });
+  });
+
+  describe('findById()', () => {
+    it('should call PayableRepository with success and correct params', () => {
+      // ACT
+      service.findById('id');
+
+      // ASSERT
+      expect(payableRepositoryMock.findById).toHaveBeenCalledWith('id');
+    });
+  });
+
+  describe('create()', () => {
+    it('should call PayableRepository with success and correct params', () => {
+      // ARRANGE
+      const payable = createPayableMock;
+
+      // ACT
+      service.create(payable);
+
+      // ASSERT
+      expect(payableRepositoryMock.create).toHaveBeenCalledWith({
+        id: payable.id,
+        value: payable.value,
+        emissionDate: new Date(payable.emissionDate),
+        assignorId: payable.assignor,
+      });
+    });
+  });
+
+  describe('update()', () => {
+    it('should call PayableRepository with success and correct params', () => {
+      // ARRANGE
+      const payable = createPayableMock;
+
+      // ACT
+      service.update('id', payable);
+
+      // ASSERT
+      expect(payableRepositoryMock.update).toHaveBeenCalledWith({
+        id: 'id',
+        ...payable,
+      });
+    });
+  });
+
+  describe('delete()', () => {
+    it('should call PayableRepository with success and correct params', () => {
+      // ACT
+      service.delete('id');
+
+      // ASSERT
+      expect(payableRepositoryMock.delete).toHaveBeenCalledWith('id');
+    });
+  });
+});
