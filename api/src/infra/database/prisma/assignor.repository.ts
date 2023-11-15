@@ -1,6 +1,6 @@
-import { IAssignorRepository } from 'src/modules/assignor/interfaces/assignor.repository.interface';
+import { IAssignorRepository } from '../../../modules/assignor/interfaces/assignor.repository.interface';
 import { PrismaService } from './prisma.service';
-import { IAssignor } from 'src/modules/assignor/interfaces/assignor.interface';
+import { IAssignor } from '../../../modules/assignor/interfaces/assignor.interface';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

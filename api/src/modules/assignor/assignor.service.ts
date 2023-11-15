@@ -2,9 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IAssignorService } from './interfaces/assignor-service.interface';
 import { CreateAssignorDTO } from './dto/create-assignor.dto';
 import { IAssignor } from './interfaces/assignor.interface';
-import { AssignorRepository } from 'src/infra/database/prisma/assignor.repository';
+
 import { IAssignorRepository } from './interfaces/assignor.repository.interface';
 import { randomUUID } from 'crypto';
+import { AssignorRepository } from '../../infra/database/prisma/assignor.repository';
 
 @Injectable()
 export class AssignorService implements IAssignorService {

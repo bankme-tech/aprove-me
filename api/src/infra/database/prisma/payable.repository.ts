@@ -1,5 +1,5 @@
-import { IPayable } from 'src/modules/payable/interfaces/payable.interface';
-import { IPayableRepository } from 'src/modules/payable/interfaces/payable.repository.interface';
+import { IPayable } from '../../../modules/payable/interfaces/payable.interface';
+import { IPayableRepository } from '../../../modules/payable/interfaces/payable.repository.interface';
 import { PrismaService } from './prisma.service';
 import { Injectable } from '@nestjs/common';
 

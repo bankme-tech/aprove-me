@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PayableController } from './payable.controller';
-import { PrismaModule } from 'src/infra/database/prisma/prisma.module';
+import { PrismaModule } from '../../infra/database/prisma/prisma.module';
 import { PayableService } from './payable.service';
 
 @Module({
