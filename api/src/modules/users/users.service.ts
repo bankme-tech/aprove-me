@@ -1,18 +1,17 @@
-import { Injectable } from '@nestjs/common';
-
-export type User = any;
+import { Inject, Injectable } from '@nestjs/common';
+import { IUserRepository } from './interface/users-repository.interface';
+import { IUser } from './interface/user.interface';
+import { IUsersService } from './interface/users-service.interface';
+import { UsersRepository } from 'src/infra/database/prisma/users.repository';
 
 @Injectable()
-export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'aprovame',
-      password: '$2b$10$V7H3MnmpVnpyIwOuL.pOx.qjOYt0BkbDVnqscHA5VJSm1lqogtIz2',
-    },
-  ];
+export class UsersService implements IUsersService {
+  constructor(
+    @Inject(UsersRepository)
+    private readonly userRepository: IUserRepository,
+  ) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
+  async findByUsername(username: string): Promise<IUser | undefined> {
+    return this.userRepository.findByUsername(username);
   }
 }
