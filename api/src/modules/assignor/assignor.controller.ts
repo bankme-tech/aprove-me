@@ -7,11 +7,13 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateAssignorDTO } from './dto/create-assignor.dto';
 import { IAssignor } from './interfaces/assignor.interface';
 import { AssignorService } from './assignor.service';
 import { IAssignorService } from './interfaces/assignor-service.interface';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('integrations/assignor')
 export class AssignorController {
