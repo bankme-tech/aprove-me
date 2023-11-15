@@ -75,7 +75,8 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s",
       "!**/*.module.ts",
-      "!main.ts"
+      "!main.ts",
+      "!infra/database/prisma/prisma.service.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
