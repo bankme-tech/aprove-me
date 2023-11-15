@@ -6,9 +6,10 @@ import { AssignorModule } from './modules/assignor/assignor.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './modules/auth/auth.guard';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
-  imports: [PayableModule, AssignorModule, AuthModule],
+  imports: [PayableModule, AssignorModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [
     AppService,
