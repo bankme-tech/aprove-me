@@ -1,4 +1,4 @@
-import { IsDateString, IsInt, IsNumber, IsUUID } from 'class-validator';
+import { IsDateString, IsNumber, IsUUID } from 'class-validator';
 
 export class CreatePayableDTO {
   @IsUUID()
@@ -10,6 +10,6 @@ export class CreatePayableDTO {
   @IsDateString()
   emissionDate: Date;
 
-  @IsInt()
-  assignor: number;
+  @IsUUID()
+  assignor: string;
 }

@@ -1,5 +1,5 @@
 export interface IAssignor {
-  id: number;
+  id: string;
   name: string;
   document: string;
   email: string;
