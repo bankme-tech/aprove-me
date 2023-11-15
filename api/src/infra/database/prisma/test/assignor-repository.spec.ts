@@ -1,11 +1,8 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import { randomUUID } from 'crypto';
-import { DeepMockProxy, mock, mockDeep } from 'jest-mock-extended';
-import { IAssignor } from '../../../../modules/assignor/interfaces/assignor.interface';
 import { createAssignorMock } from '../../../../modules/assignor/test/mock/create-assignor.mock';
 import { AssignorRepository } from '../assignor.repository';
 import { PrismaService } from '../prisma.service';
-import { PrismaClient } from '@prisma/client';
 import { PrismaServiceMock } from './mock/prisma-service.mock';
 
 describe('AssignorRepository', () => {

@@ -7,14 +7,12 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 import { CreatePayableDTO } from './dto/create-payable.dto';
 import { IPayableService } from './interfaces/payable.service.interface';
 import { PayableService } from './payable.service';
 import { UpdatePayableDTO } from './dto/update-payable.dto';
 import { IPayable } from './interfaces/payable.interface';
-import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('integrations/payable')
 export class PayableController {
