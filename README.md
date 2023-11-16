@@ -70,7 +70,9 @@ Faça até onde se sentir confortável.
 
 ### Qual o tempo para entregar?
 
-Você terá **48 horas** a partir do envio do link deste repositório.
+Nós temos um período para fechar a vaga em questão. Então, quanto antes você enviar, mais cuidado podemos ter na revisão do seu teste.
+
+Mas sabemos que o dia a dia é corrido, faça de forma que fique confortável para você!
 
 Mas não desista! Envie até onde conseguir.
 
