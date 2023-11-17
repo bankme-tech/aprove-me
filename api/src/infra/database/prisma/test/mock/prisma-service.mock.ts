@@ -14,4 +14,8 @@ export class PrismaServiceMock {
     update: jest.fn(),
     delete: jest.fn(),
   };
+
+  public user = {
+    findUnique: jest.fn(),
+  };
 }
