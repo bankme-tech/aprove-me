@@ -4,16 +4,19 @@ import { PayableRepository } from '../../../infra/database/prisma/payable.reposi
 import { IPayableRepository } from '../interfaces/payable.repository.interface';
 import { PayableService } from '../payable.service';
 import { createPayableMock } from './mock/create-payable.mock';
+import { Queue } from 'bull';
 
 describe('PayableService', () => {
   let service: PayableService;
   const payableRepositoryMock = mock<IPayableRepository>();
+  const queueMock = mock<Queue>();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PayableService,
         { provide: PayableRepository, useValue: payableRepositoryMock },
+        { provide: 'BullQueue_create_payable', useValue: queueMock },
       ],
     }).compile();
 
@@ -81,6 +84,21 @@ describe('PayableService', () => {
 
       // ASSERT
       expect(payableRepositoryMock.delete).toHaveBeenCalledWith('id');
+    });
+  });
+
+  describe('batch', () => {
+    it('should call PayableProcessor with success and correct params', () => {
+      // ARRANGE
+      const payables = [createPayableMock];
+
+      // ACT
+      service.batch(payables);
+
+      // ASSERT
+      expect(queueMock.add).toHaveBeenCalledWith('payables', [
+        createPayableMock,
+      ]);
     });
   });
 });
