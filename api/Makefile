@@ -2,13 +2,21 @@ setup-env:
 	cp .env.example .env
 .PHONY: setup-env
 
+redis:
+	docker-compose up -d redis
+.PHONY: worker
+
 api:
-	docker-compose -p app-compose up -d app
+	docker-compose up -d recebiveis-backend
 .PHONY: api
 
+stop:
+	docker-compose stop
+.PHONY: stop
+
 down:
-	docker-compose -p app-compose down
+	docker-compose down
 .PHONY: down
 
-all: api
+all: api redis
 .PHONY: all

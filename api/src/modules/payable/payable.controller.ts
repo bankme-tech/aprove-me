@@ -47,4 +47,9 @@ export class PayableController {
   delete(@Param('id') id: string): Promise<void> {
     return this.payableService.delete(id);
   }
+
+  @Post('/batch')
+  async batch(@Body() payables: CreatePayableDTO[]): Promise<void> {
+    await this.payableService.batch(payables);
+  }
 }

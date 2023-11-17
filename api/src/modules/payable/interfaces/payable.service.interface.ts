@@ -8,4 +8,5 @@ export interface IPayableService {
   create(payable: CreatePayableDTO): Promise<CreatePayableDTO>;
   update(id: string, payable: UpdatePayableDTO): Promise<IPayable>;
   delete(id: string): Promise<void>;
+  batch(payables: CreatePayableDTO[]): Promise<void>;
 }

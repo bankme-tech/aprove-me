@@ -5,11 +5,14 @@ import { IPayableService } from './interfaces/payable.service.interface';
 import { PayableRepository } from '../../infra/database/prisma/payable.repository';
 import { IPayable } from './interfaces/payable.interface';
 import { UpdatePayableDTO } from './dto/update-payable.dto';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 export class PayableService implements IPayableService {
   constructor(
     @Inject(PayableRepository)
     private readonly payableRepository: IPayableRepository,
+    @InjectQueue('create_payable') private workerQueue: Queue,
   ) {}
 
   async findAll(): Promise<IPayable[]> {
@@ -37,5 +40,9 @@ export class PayableService implements IPayableService {
 
   async delete(id: string): Promise<void> {
     await this.payableRepository.delete(id);
+  }
+
+  async batch(payables: CreatePayableDTO[]): Promise<void> {
+    await this.workerQueue.add('payables', payables);
   }
 }

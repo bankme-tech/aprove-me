@@ -1,14 +1,30 @@
 version: '3.8'
 
 services:
-  app:
-    image: node:20.7.0-alpine
-    container_name: app
-    working_dir: /app
+  redis:
+    image: 'bitnami/redis:6.2.14'
+    container_name: redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379
+    networks:
+      - recebiveis-api
+        
+  recebiveis-backend:
+    image: node:20.9
+    container_name: recebiveis-backend
+    working_dir: /api
     command: sh -c "npm run start:dev"
     build:
       context: .
     ports:
-      - '${PORT:-3000}:3000'
+      - '3000:3000'
     volumes:
-      - .:/app
+      - .:/api
+    networks:
+      - recebiveis-api
+
+networks:
+  recebiveis-api:
+    name: recebiveis-api

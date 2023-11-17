@@ -1,17 +1,11 @@
-FROM node:20.7.0-alpine
+FROM node:20.9
 
-WORKDIR /app
+WORKDIR /api
 
-COPY package.json ./
-COPY tsconfig.json ./
-COPY prisma ./prisma
-COPY .env ./
-COPY . .
-
+COPY --chown=node:node package*.json ./
 RUN npm ci
+COPY --chown=node:node . .
 RUN npx prisma generate
 RUN npm run prisma:migrate
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+USER node
