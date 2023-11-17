@@ -1,0 +1,9 @@
+version: '3'
+services:
+  backend:
+    image: backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./backend/.env
+  
