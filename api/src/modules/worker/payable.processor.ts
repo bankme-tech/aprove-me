@@ -17,10 +17,11 @@ export class PayableProcessor {
     let failureCount = 0;
 
     for (const payable of msg.data) {
-      try {
-        await this.payableService.create(payable);
+      const processedPayable = await this.payableService.create(payable);
+
+      if (processedPayable) {
         successCount++;
-      } catch (error) {
+      } else {
         failureCount++;
       }
     }
