@@ -17,7 +17,7 @@ model Payable {
   assignorId   Int
   assignor     Assignor @relation(fields: [assignorId], references: [id])
 
-  @@map("payable")
+  @@map("payables")
 }
 
 model Assignor {
@@ -28,5 +28,23 @@ model Assignor {
   name     String
   payables Payable[]
 
-  @@map("assignor")
+  @@map("assignors")
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  login    String    @unique
+  password String
+  session  Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
+  token  String
+
+  @@map("session")
 }
