@@ -3,7 +3,10 @@ import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { Payable } from '@prisma/client';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('integrations/payable')
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
