@@ -1,67 +1,81 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Bankme
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Welcome to the project to implement the receivables functionality for the Bankme customer! This project uses the NestJS framework to build the API and Prisma as an ORM to interact with the SQLite database.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<hr>
 
-## Description
+# ℹ️ About
+The Bankme client, handling several receivables daily, requested a solution to automate the manual recording of this information. Receivables are digital representations of documents that simulate debts to be received. The basic structure includes information about the receivable and the assignor.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🛠 Structure of a Receivable
+- id: string (UUID) - Identification of the receivable.
+- value: float - Value of the receivable.
+- emissionDate: date - Date of issue of the receivable.
+- assignor: int - Identification of the assignor.
 
-## Installation
+## 🛠 Structure of an Assignor
+- document: string(30) - CPF or CNPJ of the transferor.
+- email: string(140) - Email of the transferor.
+- phone: string(20) - Transferor's phone number.
+- name: string(140) - Name or company name of the transferor.
 
-```bash
-$ npm install
-```
+# 🌐 Technologies
+<div align="rigth">
+  <img align="center" alt="Ts" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
+  <img align="center" alt="Nest" src="https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white">
+  <img align="center" alt="nodejs" src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
+  <img align="center" alt="Prisma" src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white">
+  <img align="center" alt="Wa-Jest" src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white">
+  <img align="center" alt="SQLite" src="https://img.shields.io/badge/SQLite-316192?style=for-the-badge&logo=sqlite&logoColor=white">
+</div> 
 
-## Running the app
+# ⚙️ How to Run
 
-```bash
-# development
-$ npm run start
+To run this application, follow these steps:
 
-# watch mode
-$ npm run start:dev
+1. Clone the repository to your local machine.
 
-# production mode
-$ npm run start:prod
-```
+   ```bash
+   git clone https://github.com/natividadesusana/aprove-me.git
+   ```
 
-## Test
+2. Install project dependencies:
 
-```bash
-# unit tests
-$ npm run test
+   ```bash
+   npm install
+   ```
+   
+3. Configure environment variables:
+   - Make a copy of the `.env.example` file and configure the environment variable for development as `.env.development`.
 
-# e2e tests
-$ npm run test:e2e
+4. Generate and apply migrations to the project:
 
-# test coverage
-$ npm run test:cov
-```
+       npx prisma migrate dev
 
-## Support
+5. Start the application:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+        npm start
+   
 
-## License
+# 🖇 Testing
 
-Nest is [MIT licensed](LICENSE).
+Run the command below to check the tests:
+
+    npm run test
+    
+
+# 🐳 Docker
+
+- Docker
+- Docker Compose
+
+Commands to run:
+
+1. Create a Docker image:
+
+        docker build -t backend .
+
+2. Start the services defined in the "docker-compose.yml" file in Docker containers.
+
+        docker-compose up
+   
