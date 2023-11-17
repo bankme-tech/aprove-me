@@ -3,9 +3,10 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { IUsersService } from '../users/interface/users-service.interface';
+import { IAuthService } from './interfaces/auth.service.interface';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
   constructor(
     private jwtService: JwtService,
     @Inject(UsersService) private usersService: IUsersService,
