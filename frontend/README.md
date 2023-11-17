@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Bankme 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the Bankme Frontend project! This ReactJS application is designed to complement the Bankme receivables functionality, providing a user-friendly interface for managing receivables and assignors.
 
-## Available Scripts
+<hr>
 
-In the project directory, you can run:
+# ℹ️ About
+The Bankme client, handling several receivables daily, requested a solution to automate the manual recording of this information. Receivables are digital representations of documents that simulate debts to be received. The basic structure includes information about the receivable and the assignor.
 
-### `npm start`
+### 📌 [Click for Demo Recording](https://github.com/natividadesusana/aprove-me/files/13394819/Gravacao.de.Tela.2023-11-17.as.13.45.10.zip)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<img width="800" alt="Captura de Tela 2023-11-17 às 14 27 00" src="https://github.com/natividadesusana/aprove-me/assets/95102911/da95f36c-e2af-4027-8926-4ba6aa7c4b03">
+<img width="800" alt="Captura de Tela 2023-11-17 às 14 27 35" src="https://github.com/natividadesusana/aprove-me/assets/95102911/cab9ab18-8798-413b-8fcc-c40e80232eb2">
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# 🌐 Technologies
+<div>
+  <img align="center" alt="React" src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white">
+  <img align="center" alt="Ts" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
+  <img align="center" alt="Axios" src="https://img.shields.io/badge/Axios-0082C9?style=for-the-badge&logo=axios&logoColor=white">
+</div>
 
-### `npm test`
+# ⚙️ How to Run
+To run this application, follow these steps:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository to your local machine.
 
-### `npm run build`
+      git clone https://github.com/natividadesusana/aprove-me.git
+      
+2. Navigate to the frontend directory:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    cd frontend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Install project dependencies:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    npm install
 
-### `npm run eject`
+4. Configure environment variables:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Make a copy of the .env.example file and configure the necessary environment variables for development as .env.development.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. Start the application:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+       npm start
