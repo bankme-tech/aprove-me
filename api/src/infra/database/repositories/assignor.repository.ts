@@ -1,5 +1,5 @@
 import { IAssignorRepository } from '../../../modules/assignor/interfaces/assignor.repository.interface';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { IAssignor } from '../../../modules/assignor/interfaces/assignor.interface';
 import { Injectable } from '@nestjs/common';
 

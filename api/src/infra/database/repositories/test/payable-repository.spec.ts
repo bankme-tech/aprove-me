@@ -1,6 +1,6 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import { randomUUID } from 'crypto';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { PrismaServiceMock } from './mock/prisma-service.mock';
 import { PayableRepository } from '../payable.repository';
 import { IPayable } from 'src/modules/payable/interfaces/payable.interface';

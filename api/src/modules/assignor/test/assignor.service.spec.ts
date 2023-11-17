@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AssignorService } from '../assignor.service';
 import { IAssignorRepository } from '../interfaces/assignor.repository.interface';
 import { mock } from 'jest-mock-extended';
-import { AssignorRepository } from '../../../infra/database/prisma/assignor.repository';
+import { AssignorRepository } from '../../../infra/database/repositories/assignor.repository';
 import { createAssignorMock } from './mock/create-assignor.mock';
 import { randomUUID } from 'crypto';
 import { IAssignor } from '../interfaces/assignor.interface';

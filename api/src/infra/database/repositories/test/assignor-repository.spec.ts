@@ -2,7 +2,7 @@ import { TestingModule, Test } from '@nestjs/testing';
 import { randomUUID } from 'crypto';
 import { createAssignorMock } from '../../../../modules/assignor/test/mock/create-assignor.mock';
 import { AssignorRepository } from '../assignor.repository';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { PrismaServiceMock } from './mock/prisma-service.mock';
 
 describe('AssignorRepository', () => {

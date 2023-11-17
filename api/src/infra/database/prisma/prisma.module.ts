@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { PayableRepository } from './payable.repository';
-import { AssignorRepository } from './assignor.repository';
-import { UsersRepository } from './users.repository';
+import { PayableRepository } from '../repositories/payable.repository';
+import { AssignorRepository } from '../repositories/assignor.repository';
+import { UsersRepository } from '../repositories/users.repository';
 
 @Module({
   providers: [

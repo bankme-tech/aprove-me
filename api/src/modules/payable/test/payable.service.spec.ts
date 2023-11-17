@@ -1,6 +1,6 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import { mock } from 'jest-mock-extended';
-import { PayableRepository } from '../../../infra/database/prisma/payable.repository';
+import { PayableRepository } from '../../../infra/database/repositories/payable.repository';
 import { IPayableRepository } from '../interfaces/payable.repository.interface';
 import { PayableService } from '../payable.service';
 import { createPayableMock } from './mock/create-payable.mock';

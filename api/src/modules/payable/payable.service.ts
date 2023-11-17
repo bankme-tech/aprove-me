@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { CreatePayableDTO } from './dto/create-payable.dto';
 import { IPayableRepository } from './interfaces/payable.repository.interface';
 import { IPayableService } from './interfaces/payable.service.interface';
-import { PayableRepository } from '../../infra/database/prisma/payable.repository';
+import { PayableRepository } from '../../infra/database/repositories/payable.repository';
 import { IPayable } from './interfaces/payable.interface';
 import { UpdatePayableDTO } from './dto/update-payable.dto';
 import { InjectQueue } from '@nestjs/bull';

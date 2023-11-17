@@ -5,7 +5,7 @@ import { IAssignor } from './interfaces/assignor.interface';
 
 import { IAssignorRepository } from './interfaces/assignor.repository.interface';
 import { randomUUID } from 'crypto';
-import { AssignorRepository } from '../../infra/database/prisma/assignor.repository';
+import { AssignorRepository } from '../../infra/database/repositories/assignor.repository';
 
 @Injectable()
 export class AssignorService implements IAssignorService {
