@@ -78,4 +78,16 @@ describe('PayableController', () => {
       expect(payableServiceMock.delete).toHaveBeenCalledWith('id');
     });
   });
+
+  describe('batch', () => {
+    it('should call PayableService with success and correct params', () => {
+      // ACT
+      controller.batch([createPayableMock]);
+
+      // ASSERT
+      expect(payableServiceMock.batch).toHaveBeenCalledWith([
+        createPayableMock,
+      ]);
+    });
+  });
 });
