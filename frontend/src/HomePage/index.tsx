@@ -7,7 +7,7 @@ import { PayableData } from "../types/PayableData";
 import { NetworkError } from "../types//NetworkError";
 import Header from "../components/Header";
 import PayableCreationModal from "../components/PayableCreationModal";
-import * as apiServices from "../services/userService";
+import * as apiServices from "../services/apiServices";
 import AssignorCreationModal from "../components/AssignorCreationModal";
 import { AssignorData } from "../types/AssignorData";
 
