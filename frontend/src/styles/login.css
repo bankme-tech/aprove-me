@@ -1,0 +1,26 @@
+.login {
+  background-color: rgba(0, 95, 255, 1);
+  display: block;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.username-input, .password-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: Nunito Sans,sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.h2, h2 {
+  color: white;
+  font-family: Nunito Sans,sans-serif;
+  font-style: normal;
+  font-weight: 700;
+}
