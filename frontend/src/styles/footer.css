@@ -1,0 +1,14 @@
+.footer {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  background-color: #0025a1;
+  font-family: Nunito Sans,sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  color: white;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-bottom: 50px;
+}
