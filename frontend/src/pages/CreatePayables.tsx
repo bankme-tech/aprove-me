@@ -2,27 +2,31 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/payable-table.css';
 
-const PAYABLES_URL = 'localhost:3000/integrations/payable';
-const ASSIGNOR_URL = 'localhost:3000/integrations/assignor';
-
-interface Assignor {
-  id: string;
-  name: string;
-}
+const PAYABLES_URL = 'http://localhost:3001/integrations/payable';
+const ASSIGNOR_URL = 'http://localhost:3001/integrations/assignor';
 
 interface Payable {
   id: string;
   value: number;
   emissionDate: Date;
-  assignor: Assignor;
+  assignor: string;
 }
+
+interface Assignor {
+  id: string;
+  name: string;
+  document: string;
+  email: string;
+  phone: string;
+}
+
 
 const CreatePayable: React.FC = () => {
   const [newPayable, setNewPayable] = useState<Payable>({
     id: '',
     value: 0,
     emissionDate: new Date(),
-    assignor: {id: '0', name: ''},
+    assignor: '',
   });
   const [assignors, setAssignors] = useState<Assignor[]>([]);
   const [payables, setPayables] = useState<Payable[]>([]);
@@ -61,7 +65,7 @@ const CreatePayable: React.FC = () => {
       id: '',
       value: 0,
       emissionDate: new Date(),
-      assignor: {id: '0', name: ''},
+      assignor: '',
     })
   }
 
@@ -135,17 +139,13 @@ const CreatePayable: React.FC = () => {
           <label>
             Cedente:
             <select
-              value={newPayable.assignor.id}
+              value={newPayable.assignor}
               onChange={(e) => setNewPayable((prevPayable) => ({
                 ...prevPayable,
-                assignor: {
-                  ...prevPayable.assignor,
-                  id: e.target.value,
-                  name: assignors.find((assignor) => assignor.id === e.target.value)?.name || '',
-                },
+                assignor: e.target.value
               }))}
             >
-              <option value="" disabled>
+              <option value="" defaultChecked={true}>
                 Selecione o Cedente
               </option>
               {assignors.map((assignor) => (
@@ -168,7 +168,6 @@ const CreatePayable: React.FC = () => {
               <th>ID</th>
               <th>Valor</th>
               <th>Data de Emissão</th>
-              <th>Cedente</th>
             </tr>
           </thead>
           <tbody>
@@ -177,7 +176,6 @@ const CreatePayable: React.FC = () => {
                 <td>{payable.id}</td>
                 <td>{payable.value}</td>
                 <td>{new Date(payable.emissionDate).toLocaleDateString()}</td>
-                <td>{payable.assignor.name}</td>
               </tr>
             ))}
           </tbody>

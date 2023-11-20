@@ -15,7 +15,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     e.preventDefault();
     onLogin({ username, password });
 
-    navigate('/create');
+    navigate('/payable/create');
   };
 
   return (
