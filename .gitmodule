@@ -1,0 +1,3 @@
+[submodule "backend"]
+	path = backend-bankme
+	url = https://github.com/Daaaiii/backend-bankme.git
