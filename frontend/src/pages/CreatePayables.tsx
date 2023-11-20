@@ -3,23 +3,29 @@ import axios from 'axios';
 import '../styles/payable-table.css';
 
 const PAYABLES_URL = 'localhost:3000/integrations/payable';
+const ASSIGNOR_URL = 'localhost:3000/integrations/assignor';
 
-interface Pagamento {
+interface Assignor {
+  id: string;
+  name: string;
+}
+
+interface Payable {
   id: string;
   value: number;
   emissionDate: Date;
-  assignor: number;
+  assignor: Assignor;
 }
 
 const CreatePayable: React.FC = () => {
-  const [newPayable, setNewPayable] = useState<Pagamento>({
+  const [newPayable, setNewPayable] = useState<Payable>({
     id: '',
     value: 0,
     emissionDate: new Date(),
-    assignor: 0,
+    assignor: {id: '0', name: ''},
   });
-
-  const [payables, setPayables] = useState<Pagamento[]>([]);
+  const [assignors, setAssignors] = useState<Assignor[]>([]);
+  const [payables, setPayables] = useState<Payable[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -37,18 +43,15 @@ const CreatePayable: React.FC = () => {
         const response = await axios.post(PAYABLES_URL, newPayable);
 
         if (response.status === 201) {
-          console.log('Pagável cadastrado com sucesso:', response.data);
           _setDefaultPayable()
           fetchPayables();
         } else {
-          console.error('Erro ao cadastrar pagável:', response.data);
           alert('Erro ao cadastrar pagável. Por favor, tente novamente.');
         }
       } else {
         alert('Por favor, preencha todos os campos obrigatórios.');
       }
     } catch (error) {
-      console.error('Erro ao cadastrar pagável:', error);
       alert('Erro ao cadastrar pagável. Por favor, tente novamente.');
     }
   };
@@ -58,7 +61,7 @@ const CreatePayable: React.FC = () => {
       id: '',
       value: 0,
       emissionDate: new Date(),
-      assignor: 0,
+      assignor: {id: '0', name: ''},
     })
   }
 
@@ -73,8 +76,19 @@ const CreatePayable: React.FC = () => {
     }
   };
 
+  const fetchAssignors = async () => {
+    try {
+      const response = await axios.get(ASSIGNOR_URL);
+
+      setAssignors(response.data);
+    } catch (error) {
+      alert('Erro ao obter lista de cedentes. Por favor, tente novamente.');
+    }
+  }
+
   useEffect(() => {
     fetchPayables();
+    fetchAssignors();
   }, []);
 
   return (
@@ -120,13 +134,26 @@ const CreatePayable: React.FC = () => {
         <div>
           <label>
             Cedente:
-            <input
-              type="number"
-              name="assignor"
-              value={newPayable.assignor}
-              onChange={handleInputChange}
-              required
-            />
+            <select
+              value={newPayable.assignor.id}
+              onChange={(e) => setNewPayable((prevPayable) => ({
+                ...prevPayable,
+                assignor: {
+                  ...prevPayable.assignor,
+                  id: e.target.value,
+                  name: assignors.find((assignor) => assignor.id === e.target.value)?.name || '',
+                },
+              }))}
+            >
+              <option value="" disabled>
+                Selecione o Cedente
+              </option>
+              {assignors.map((assignor) => (
+                <option key={assignor.id} value={assignor.id}>
+                  {assignor.name}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
         <div>
@@ -150,7 +177,7 @@ const CreatePayable: React.FC = () => {
                 <td>{payable.id}</td>
                 <td>{payable.value}</td>
                 <td>{new Date(payable.emissionDate).toLocaleDateString()}</td>
-                <td>{payable.assignor}</td>
+                <td>{payable.assignor.name}</td>
               </tr>
             ))}
           </tbody>
