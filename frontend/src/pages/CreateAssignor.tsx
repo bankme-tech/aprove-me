@@ -1,16 +1,25 @@
 // src/components/CadastroCedente.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
+const ASSIGNOR_URL = 'http://localhost:3001/integrations/assignor';
 
 interface Cedente {
-  id: number;
-  nome: string;
+  id?: number;
+  name: string;
+  email: string;
+  document: string;
+  phone: string
 }
 
 const CreateAssignor: React.FC = () => {
   const [newAssignor, setNewAssingor] = useState<Cedente>({
-    id: 0,
-    nome: '',
+    name: '',
+    email: '',
+    document: '',
+    phone: '',
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,11 +34,12 @@ const CreateAssignor: React.FC = () => {
     event.preventDefault();
 
     try {
-      if (newAssignor.nome) {
-        const response = await axios.post('sua_api_backend/cedentes', newAssignor);
+      if (newAssignor.name) {
+        const response = await axios.post(ASSIGNOR_URL, newAssignor);
 
         if (response.status === 201) {
           console.log('Cedente cadastrado com sucesso:', response.data);
+          _setDefaultAssignor()
         } else {
           console.error('Erro ao cadastrar cedente:', response.data);
           alert('Erro ao cadastrar cedente. Por favor, tente novamente.');
@@ -43,8 +53,18 @@ const CreateAssignor: React.FC = () => {
     }
   };
 
+  const _setDefaultAssignor = () => {
+    setNewAssingor({
+      name: '',
+      email: '',
+      document: '',
+      phone: '',
+    });
+  }
+
   return (
     <div>
+      <Header />
       <h2>Cadastro de Cedente</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -52,17 +72,54 @@ const CreateAssignor: React.FC = () => {
             Nome do Cedente:
             <input
               type="text"
-              name="nome"
-              value={newAssignor.nome}
+              name="name"
+              value={newAssignor.name}
               onChange={handleInputChange}
               required
             />
           </label>
+          <div>
+            <label>
+              Email:
+              <input
+                type="text"
+                name="email"
+                value={newAssignor.email}
+                onChange={handleInputChange}
+                required
+                />
+            </label>
+          </div>
+          <div>
+            <label>
+              Documento:
+              <input
+                type="text"
+                name="document"
+                value={newAssignor.document}
+                onChange={handleInputChange}
+                required
+                />
+            </label>
+          </div>
+          <div>
+            <label>
+              Telefone:
+              <input
+                type="text"
+                name="phone"
+                value={newAssignor.phone}
+                onChange={handleInputChange}
+                required
+              />
+            </label>
+          </div>
         </div>
         <div>
           <button type="submit">Cadastrar Cedente</button>
         </div>
       </form>
+      <Footer />
     </div>
   );
 };
