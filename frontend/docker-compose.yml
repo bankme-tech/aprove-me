@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  recebiveis-frontend:
+    container_name: recebiveis-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/frontend
+    networks:
+      - recebiveis-api
+
+networks:
+  recebiveis-api:
+    name: recebiveis-api
+    external: true
