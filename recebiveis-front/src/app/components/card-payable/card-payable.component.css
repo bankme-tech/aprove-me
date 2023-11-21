@@ -1,0 +1,43 @@
+/* .payable-card {
+    margin-bottom: 16px;
+    width: 100%;
+    height: 50px;
+  }
+  
+  .payable-properties {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  mat-card-content {
+    padding: 16px;
+  }
+  
+  mat-card-actions {
+    padding: 8px;
+  }
+  
+  span {
+    font-size: 14px;
+  }
+   */
+
+   .payable-properties {
+    display: flex;
+    justify-content: space-evenly;
+    height: 2em;
+    align-items: center;
+
+  }
+
+  .payable-properties mat-divider {
+    align-self: stretch;
+
+  }
+  .actions-container {
+    padding-right: 8px;
+    display: flex;
+    align-items: flex-end;
+
+  }
+  

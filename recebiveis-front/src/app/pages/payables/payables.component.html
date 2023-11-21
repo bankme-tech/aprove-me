@@ -1,0 +1,14 @@
+<div class="payables-list-container" *ngIf="(payables$ | async) as payables">
+
+    <div class="sort-buttons">
+        <button mat-button (click)="setSortOption('value')">Ordenar por Valor</button>
+        <button mat-button (click)="setSortOption('emissionDate')">Ordenar por Data</button>
+        <button mat-button (click)="setSortOption('assignorId')">Ordenar por ID do Cedente</button>
+    </div>
+    <div *ngIf="(payables$ | async) as payables">
+        <h1 style="padding-top: 20px;"> Lista de recebíveis cadastrados</h1>
+        <div style="padding: 4px;" *ngFor="let payable of payables | sortPayables:sortOption">
+            <app-card-payable [payable]="payable" />
+        </div>
+    </div>
+</div>

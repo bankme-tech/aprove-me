@@ -1,1 +1,6 @@
-<app-form-payable></app-form-payable>
+<div>
+    <h1>Registro de novo item</h1>
+    <app-form-payable *ngIf="currentRoute()=='payable'"
+        (createPayableEvent)="handleCriarPayable($event)"></app-form-payable>
+    <app-form-assignor *ngIf="currentRoute()=='assignor'"></app-form-assignor>
+</div>

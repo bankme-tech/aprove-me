@@ -33,7 +33,7 @@ export class CardLoginComponent {
         localStorage.setItem('accessToken', jwt);
 
         const redirectUrl =
-          this.route.snapshot.queryParams['redirectUrl'] || '/register';
+          this.route.snapshot.queryParams['redirectUrl'] || '/payables';
 
         this.router.navigate([redirectUrl]);
       },

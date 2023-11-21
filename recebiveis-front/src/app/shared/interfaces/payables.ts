@@ -1,10 +1,11 @@
-export interface Payables {
+export interface Payable {
+    id:string;
     value : string;
     emissionDate: Date;
-    assagnorId : string
+    assignorId : string;
 }
 
-export interface Assagnor {
+export interface Assignor {
     id: any;
     document : string;
     name: string;
@@ -13,8 +14,8 @@ export interface Assagnor {
 }
 
 export interface PayableRequest{
-    payable : Payables,
-    assaignedTo?: Assagnor
+    payable : Payable,
+    assaignedTo?: Assignor
 }
 
 export interface Credentials {

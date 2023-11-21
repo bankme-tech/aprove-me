@@ -1,8 +1,36 @@
-
-input.example-right-align::-webkit-inner-spin-button {
+input.payable-right-align::-webkit-inner-spin-button {
     display: none;
 }
 
-.example-right-align {
+.payable-right-align {
     text-align: right;
+}
+
+.payable-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+
+    .payable-form {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .payable-form mat-form-field {
+        width: 20em;
+    }
+
+    .create-button {
+        align-self: flex-end;
+        margin-top: 30px;
+    }
+
+    h2 {
+        align-self: flex-start;
+        margin-bottom: 16px;
+    }
 }

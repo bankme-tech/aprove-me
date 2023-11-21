@@ -1,0 +1,6 @@
+.payables-list-container {
+    padding-top: 5em;
+    width: 70%; /* 100% - 2 * 15% */
+    margin: 0 auto; /* Define margens laterais automáticas para centralizar o conteúdo */
+  }
+  

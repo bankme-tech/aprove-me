@@ -1,16 +1,16 @@
 <div class="payable-container">
-    <h2>Cadastrar recebível</h2>
-    <form [formGroup]="payable">
+    <h2>Recebível</h2>
+    <form [formGroup]="payable" class="payable-form">
     <mat-form-field floatLabel="always">
         <mat-label>Montante</mat-label>
-        <input formControlName="value" matInput type="number" class="example-right-align" placeholder="0" required>
+        <input formControlName="value" matInput type="number" class="payable-right-align" placeholder="0" required>
         <span matTextPrefix>R$&nbsp;</span>
         <mat-error *ngIf="payable.get('value')?.hasError('required')">
             This field is required
           </mat-error>
   </mat-form-field>
 
-  <mat-form-field class="example-form-field">
+  <mat-form-field>
     <mat-label>Data de Emissão</mat-label>
     <input matInput formControlName="emissionDate" [matDatepicker]="datepicker" required>
     <mat-error *ngIf="payable.get('emissionDate')?.hasError('required')">
@@ -35,6 +35,6 @@
     </mat-select>
 
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="criarPayable()" [disabled]="!payable.valid">Criar</button>
+  <button class="create-button" mat-raised-button color="primary" (click)="createPayable()" [disabled]="!payable.valid">Criar</button>
   </form>
 </div>

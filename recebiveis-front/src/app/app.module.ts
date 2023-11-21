@@ -12,6 +12,10 @@ import { CardLoginComponent } from './components/card-login/card-login.component
 import { RegisterComponent } from './pages/register/register.component';
 import { FormPayableComponent } from './components/form-payable/form-payable.component';
 import { AuthInterceptorService } from './helpers/auth/auth-interceptor.service';
+import { FormAssignorComponent } from './components/form-assignor/form-assignor.component';
+import { PayablesComponent } from './pages/payables/payables.component';
+import { CardPayableComponent } from './components/card-payable/card-payable.component';
+import { PayablePipe } from './helpers/pipes/payable.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { AuthInterceptorService } from './helpers/auth/auth-interceptor.service'
     LoginComponent,
     CardLoginComponent,
     RegisterComponent,
-    FormPayableComponent
+    FormPayableComponent,
+    FormAssignorComponent,
+    PayablesComponent,
+    CardPayableComponent,
+    PayablePipe
   ],
   imports: [
     BrowserModule,

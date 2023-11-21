@@ -14,10 +14,10 @@ import { AssignorService } from 'src/app/services/assignor.service';
   styleUrls: ['./form-payable.component.css'],
 })
 export class FormPayableComponent {
-  @Output() criarPayableEvent = new EventEmitter<FormGroup>();
-  criarPayable() {
+  @Output() createPayableEvent = new EventEmitter<FormGroup>();
+  createPayable() {
     if (this.payable.valid) {
-      this.criarPayableEvent.emit(this.payable);
+      this.createPayableEvent.emit(this.payable);
     }
   }
   assignors$ = this.assignorService.listAssignorIdName();
@@ -25,8 +25,8 @@ export class FormPayableComponent {
   constructor(private assignorService: AssignorService) {}
 
   payable: FormGroup = new FormGroup({
-    emissionDate: new FormControl(''),
+    emissionDate: new FormControl('', Validators.required),
     assagnorId: new FormControl('', Validators.required),
-    value: new FormControl(''),
+    value: new FormControl('', Validators.required),
   });
 }

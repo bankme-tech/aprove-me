@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
 @NgModule({
   declarations: [],
   imports: [
@@ -16,6 +18,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
+    MatCardModule,
+    MatDividerModule
   ],
   exports: [
     MatFormFieldModule,
@@ -25,6 +29,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatSelectModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatCardModule,
+    MatDividerModule
     
   ],
 })
