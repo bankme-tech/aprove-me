@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import CreatePayable from './pages/CreatePayables';
 import CreateAssignor from './pages/CreateAssignor';
 import GetPayables from './pages/GetPayables';
+import ListAssignor from './pages/ListAssignor';
 
 
 const App: React.FC = () => {
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Route path="payable/create" element={<CreatePayable />}/>
         <Route path="payable/list" element={<GetPayables/>} />
         <Route path="assignor/create" element={<CreateAssignor />}/>
+        <Route path="assignor/list" element={<ListAssignor />}/>
       </Routes>
     </BrowserRouter>
   );

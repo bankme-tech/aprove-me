@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/payable-table.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const PAYABLES_URL = 'http://localhost:3001/integrations/payable';
 const ASSIGNOR_URL = 'http://localhost:3001/integrations/assignor';
@@ -97,6 +99,7 @@ const CreatePayable: React.FC = () => {
 
   return (
     <div>
+      <Header />
       <h2>Cadastro de Pagável</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -181,6 +184,7 @@ const CreatePayable: React.FC = () => {
           </tbody>
         </table>
       </div>
+      <Footer />
     </div>
   );
 };
