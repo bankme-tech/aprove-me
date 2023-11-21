@@ -17,6 +17,6 @@ export interface PayableRequest{
 }
 
 export interface Credentials {
-    login: string;
-    password: string;
+    login: string | null;
+    password: string | null;
 }
