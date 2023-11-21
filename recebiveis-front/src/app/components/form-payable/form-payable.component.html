@@ -1,1 +1,40 @@
-<p>form-payable works!</p>
+<div class="payable-container">
+    <h2>Cadastrar recebível</h2>
+    <form [formGroup]="payable">
+    <mat-form-field floatLabel="always">
+        <mat-label>Montante</mat-label>
+        <input formControlName="value" matInput type="number" class="example-right-align" placeholder="0" required>
+        <span matTextPrefix>R$&nbsp;</span>
+        <mat-error *ngIf="payable.get('value')?.hasError('required')">
+            This field is required
+          </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-form-field">
+    <mat-label>Data de Emissão</mat-label>
+    <input matInput formControlName="emissionDate" [matDatepicker]="datepicker" required>
+    <mat-error *ngIf="payable.get('emissionDate')?.hasError('required')">
+        This field is required
+      </mat-error>
+    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker>
+      <mat-datepicker-actions>
+        <button mat-button matDatepickerCancel>Cancel</button>
+        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+      </mat-datepicker-actions>
+    </mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="(assignors$ | async) as assignors">
+    <mat-label>Cedente</mat-label>
+    <mat-select formControlName="assagnorId" required >
+        <mat-error *ngIf="payable.get('assagnorId')?.hasError('required')">
+            This field is required
+          </mat-error>
+        <mat-option *ngFor="let assignor of assignors" value="assignor.id" >{{assignor.name}}</mat-option>
+    </mat-select>
+
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="criarPayable()" [disabled]="!payable.valid">Criar</button>
+  </form>
+</div>

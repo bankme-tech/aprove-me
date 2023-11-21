@@ -5,6 +5,7 @@ export interface Payables {
 }
 
 export interface Assagnor {
+    id: any;
     document : string;
     name: string;
     phone: string;
