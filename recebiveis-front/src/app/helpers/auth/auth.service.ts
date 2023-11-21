@@ -15,11 +15,19 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: Credentials ): Observable<auth> {
+    console.log(credentials)
     return this.http.post<auth>(this.apiUrl, credentials);
+    
   }
 
   isLoggedIn() :boolean {
-    const jwt = JSON.parse(localStorage.getItem('accessToken')!);
+    try {
+      const jwt = JSON.parse(localStorage.getItem('accessToken')!);
     return jwt ? true : false
+      
+    } catch (error) {
+      return false
+    }
+    
   }
 }

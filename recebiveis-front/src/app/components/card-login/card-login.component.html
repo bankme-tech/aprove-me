@@ -1,14 +1,14 @@
 <div class="login-card">
     <h2>Login</h2>
-    <form >
+    <form [formGroup]="loginModel">
         <mat-form-field appearance="outline">
             <mat-label>login</mat-label>
-            <input matInput required>
+            <input formControlName="login" matInput  required>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Entre com seu password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" required>
+            <input formControlName="password" matInput form [type]="hide ? 'password' : 'text'" required>
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
