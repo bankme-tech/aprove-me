@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 
 const ASSIGNOR_URL = 'http://localhost:3001/integrations/assignor';
 
-interface Cedente {
+interface Assignor {
   id?: number;
   name: string;
   email: string;
@@ -15,7 +15,7 @@ interface Cedente {
 }
 
 const CreateAssignor: React.FC = () => {
-  const [newAssignor, setNewAssingor] = useState<Cedente>({
+  const [newAssignor, setNewAssingor] = useState<Assignor>({
     name: '',
     email: '',
     document: '',

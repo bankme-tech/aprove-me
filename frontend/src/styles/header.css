@@ -1,6 +1,30 @@
 .header {
   top: 0;
-  position: fixed;
   background-color: white;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Nunito Sans,sans-serif;
+  color: #212529;
+  padding-left: 50px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+  flex: 1;
+  text-align: center;
+  padding-right: 30px;
+  font-family: Nunito Sans,sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #212529;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+nav:hover {
+  background-color: #f8f9fa;
 }
