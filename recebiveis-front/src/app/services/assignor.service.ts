@@ -20,4 +20,9 @@ export class AssignorService {
       )
     );
   }
+
+  createAssignor(assignor: Assignor): Observable<Assignor> {
+    return this.http.post<Assignor>(this.apiUrl, assignor);
+  }
+
 }
