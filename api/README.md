@@ -185,16 +185,157 @@ src
 Os cURLs abaixo podem ser utilizados em ferramentas como o Postman para testar diretamente o Backend sem necessidade de subir ou ter o Frontend.
 
 <details>
+<summary><strong>Autenticação</strong></summary><br>
+
+```bash
+curl --location --request POST 'localhost:3001/integrations/auth' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "aprovame",
+    "password": "aprovame"
+}'
+```
+</details><br>
+
+<details>
 <summary><strong>Recebíveis (Payable)</strong></summary><br>
-</details>
+  <details>
+    <summary>Criar recebível</summary>
+
+    ```bash
+    curl --location --request POST 'localhost:3001/integrations/payable' \
+    --header 'Authorization: Bearer {{token}}' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "id": "312fab91-c0b9-444c-9b46-c6f24e83bdeb",
+        "value": 12.93,
+        "emissionDate": "2023-08-30",
+        "assignor": "ec5c7b91-4ae4-4470-bbc4-d042c16f006d"
+    }'
+    ```
+  </details>
+
+  <details>
+    <summary>Consultar recebíveis</summary>
+
+    ```bash
+    curl --location --request GET 'localhost:3001/integrations/payable' \
+    --header 'Authorization: Bearer {{token}}'
+    ```
+  </details>
+  
+  <details>
+    <summary>Alterar informações de um recebível</summary>
+
+    ```bash
+    curl --location --request PATCH 'localhost:3001/integrations/payable' \
+    --header 'Authorization: Bearer {{token}}' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "id": "ca77a4cb-93fd-4f5f-abc2-ab047b76005d",
+        "value": 12.93,
+        "emissionDate": "2023-08-30",
+        "assignor": "ec5c7b91-4ae4-4470-bbc4-d042c16f006d"
+    }'
+    ```
+  </details>
+
+  <details>
+    <summary>Excluir um recebível</summary>
+
+    ```bash
+    curl --location --request DELETE 'localhost:3001/integrations/payable/ef08f049-4431-4642-85e2-3e44d2f4397e' \
+    --header 'Authorization: Bearer {{token}}'
+    ```
+  </details>
+
+  <details>
+    <summary>Criar diversos recevíveis (batch)</summary>
+
+    ```bash
+    curl --location --request POST 'localhost:3001/integrations/payable/batch' \
+    --header 'Authorization: Bearer {{token}}' \
+    --header 'Content-Type: application/json' \
+    --data-raw '[
+        {
+            "id": "dd877394-6860-4115-a386-65cfba0fa58b",
+            "value": 193,
+            "emissionDate": "2023-08-30",
+            "assignor": "808f2acf-c404-4b5e-a70c-708120fb9673"
+        },
+        {
+            "id": "fafb7cf4-bf7a-44ea-a04e-b459ecd8bc6e",
+            "value": 18.00,
+            "emissionDate": "2023-08-31",
+            "assignor": "808f2acf-c404-4b5e-a70c-708120fb9673"
+        }
+    ]'
+    ```
+  </details>
+</details><br>
 
 <details>
 <summary><strong>Cedentes (Assignor)</strong></summary><br>
+<details>
+  <summary>Criar um cedente</summary>
+
+  ```bash
+  curl --location --request POST 'localhost:3001/integrations/assignor' \
+  --header 'Authorization: Bearer {{token}}' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+      "name": "Any name",
+      "document": "any document",
+      "email": "anyemail@email.com",
+      "phone": "any phone"
+  }'
+  ```
 </details>
 
 <details>
-<summary><strong>Usuários (User)</strong></summary><br>
+  <summary>Consultar os cedentes</summary>
+
+  ```bash
+  curl --location --request GET 'localhost:3001/integrations/assignor' \
+  --header 'Authorization: Bearer {{token}}'
+  ```
 </details>
+
+<details>
+  <summary>Alterar informações de um cedente</summary>
+
+  ```bash
+  curl --location --request PATCH 'localhost:3001/integrations/assignor' \
+  --header 'Authorization: Bearer {{token}}' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+      "name": "Any name",
+      "document": "any document",
+      "email": "anyemail@email.com",
+      "phone": "any phone"
+  }'
+  ```
+</details>
+
+<details>
+  <summary>Excluir um cedente</summary>
+
+  ```bash
+  curl --location --request DELETE 'localhost:3001/integrations/assignor/ef08f049-4431-4642-85e2-3e44d2f4397e' \
+  --header 'Authorization: Bearer {{token}}'
+  ```
+</details>
+</details><br>
+
+<details>
+<summary><strong>Usuários (User)</strong></summary><br>
+  <details>
+    <summary>Criar usuário</summary>
+  </details>
+  <details>
+    <summary>Consultar usuários</summary>
+  </details>
+</details><br>
 
 ## Testes
 
