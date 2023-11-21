@@ -41,17 +41,31 @@ export class PayableController {
         }
 
         // Verifica se nenhum campo está vazio
-        if (!payable.id
-            || !payable.value
-            || !payable.emissionDate
-            || !payable.assignor
-            || !payable.assignor.document
-            || !payable.assignor.email
-            || !payable.assignor.phone
-            || !payable.assignor.name) {
-            throw new HttpException('Todos os campos são obrigatórios', HttpStatus.BAD_REQUEST);
+        if (!payable.id) {
+            throw new HttpException('O id do recebível é obrigatório', HttpStatus.BAD_REQUEST);
         }
-
+        if (!payable.value) {
+            throw new HttpException('O valor do recebível é obrigatório', HttpStatus.BAD_REQUEST);
+        }
+        if (!payable.emissionDate) {
+            throw new HttpException('A data de emissão do recebível é obrigatória', HttpStatus.BAD_REQUEST);
+        }
+        if (!payable.assignor) {
+            throw new HttpException('O cedente é obrigatório', HttpStatus.BAD_REQUEST);
+        }
+        if (!payable.assignor.document) {
+            throw new HttpException('O documento do cedente é obrigatório', HttpStatus.BAD_REQUEST);
+        }
+        if (!payable.assignor.email) {
+            throw new HttpException('O email do cedente é obrigatório', HttpStatus.BAD_REQUEST);
+        }
+        if (!payable.assignor.phone) {
+            throw new HttpException('O telefone do cedente é obrigatório', HttpStatus.BAD_REQUEST);
+        }
+        if (!payable.assignor.name) {
+            throw new HttpException('O nome do cedente é obrigatório', HttpStatus.BAD_REQUEST);
+        }
+        
         return this.payableRepository.create(payable);
     }
 }
