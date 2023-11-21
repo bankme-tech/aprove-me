@@ -5,10 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatCardModule} from '@angular/material/card';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 @NgModule({
   declarations: [],
   imports: [
@@ -19,7 +20,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatIconModule,
     MatSelectModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    MatExpansionModule,
   ],
   exports: [
     MatFormFieldModule,
@@ -30,8 +32,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatNativeDateModule,
     MatDatepickerModule,
     MatCardModule,
-    MatDividerModule
-    
+    MatDividerModule,
+    MatExpansionModule,
   ],
 })
 export class MaterialModule {}

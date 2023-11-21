@@ -1,0 +1,27 @@
+.payable-details-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.payable-details-title {
+    align-self: flex-start;
+    margin: 2em 8em;
+}
+
+.payable-details-actions {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.payable-details {
+    margin-top: 2em;
+}
+
+
+.assignor-details {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}

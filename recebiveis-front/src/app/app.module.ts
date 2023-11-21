@@ -18,6 +18,7 @@ import { CardPayableComponent } from './components/card-payable/card-payable.com
 import { PayablePipe } from './helpers/pipes/payable.pipe';
 import { PayablesDetailsComponent } from './pages/payables-details/payables-details.component';
 import { CardAssignorDetailsComponent } from './components/card-assignor-details/card-assignor-details.component';
+import { CardPayableDetailsComponent } from './components/card-payable-details/card-payable-details.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CardAssignorDetailsComponent } from './components/card-assignor-details
     CardPayableComponent,
     PayablePipe,
     PayablesDetailsComponent,
-    CardAssignorDetailsComponent
+    CardAssignorDetailsComponent,
+    CardPayableDetailsComponent
   ],
   imports: [
     BrowserModule,

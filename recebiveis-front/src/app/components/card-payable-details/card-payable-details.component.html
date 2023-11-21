@@ -1,0 +1,22 @@
+<mat-card class="card-payable-details">
+    <mat-card-header>
+        <div mat-card-avatar class="card-header-image"></div>
+        <mat-card-title>
+            Recebível
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p class="payable-property">
+            <span class="payable-label">Valor:</span>
+            <span class="payable-value">{{ formatValue(payable!.value) }} R$</span>
+        </p>
+        <p class="payable-property">
+            <span class="payable-label">Data de Emissão:</span>
+            <span class="payable-value">{{ payable.emissionDate |  date:'dd/MM/yyyy' }}</span>
+        </p>
+        <p class="payable-property">
+            <span class="payable-label">ID do Cedente:</span>
+            <span class="payable-value">{{ payable.assignorId }}</span>
+        </p>
+    </mat-card-content>
+</mat-card>

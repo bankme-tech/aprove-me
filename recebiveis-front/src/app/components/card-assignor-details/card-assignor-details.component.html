@@ -1,7 +1,25 @@
-<div *ngIf="assignorDetails">
-    <p>Nome do Cedente: {{ assignorDetails.name }}</p>
-    <p>Documento do Cedente: {{ assignorDetails.document }}</p>
-    <p>Email do Cedente: {{ assignorDetails.email }}</p>
-    <p>Telefone do Cedente: {{ assignorDetails.phone }}</p>
-    <!-- Adicione outros campos conforme necessário -->
-  </div>
+<mat-card class="card-assignor-details">
+    <mat-card-header>
+        <mat-card-title-group>
+            <mat-card-title>Cedente</mat-card-title>
+            <mat-card-subtitle>{{ assignorDetails?.name }}</mat-card-subtitle>
+            <img mat-card-sm-image
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbbe-jzdGhGANOjlE2RYdBk0N08wbWSbEPB9InVNyzv-RFTaHT90QjZMDMLai0RfAOZUQ&usqp=CAU"
+                alt="cedente-icon">
+        </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content style="padding-top: 2em;">
+        <p class="assignor-property">
+            <span class="assignor-label">Documento:</span>
+            <span class="assignor-value">{{ assignorDetails?.document }}</span>
+        </p>
+        <p class="assignor-property">
+            <span class="assignor-label">Telefone:</span>
+            <span class="assignor-value">{{ assignorDetails?.phone }}</span>
+        </p>
+        <p class="assignor-property">
+            <span class="assignor-label">E-mail:</span>
+            <span class="assignor-value">{{ assignorDetails?.email }}</span>
+        </p>
+    </mat-card-content>
+</mat-card>
