@@ -16,6 +16,8 @@ import { FormAssignorComponent } from './components/form-assignor/form-assignor.
 import { PayablesComponent } from './pages/payables/payables.component';
 import { CardPayableComponent } from './components/card-payable/card-payable.component';
 import { PayablePipe } from './helpers/pipes/payable.pipe';
+import { PayablesDetailsComponent } from './pages/payables-details/payables-details.component';
+import { CardAssignorDetailsComponent } from './components/card-assignor-details/card-assignor-details.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { PayablePipe } from './helpers/pipes/payable.pipe';
     FormAssignorComponent,
     PayablesComponent,
     CardPayableComponent,
-    PayablePipe
+    PayablePipe,
+    PayablesDetailsComponent,
+    CardAssignorDetailsComponent
   ],
   imports: [
     BrowserModule,

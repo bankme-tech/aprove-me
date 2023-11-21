@@ -16,7 +16,10 @@ export class AssignorService {
   listAssignorIdName(): Observable<{ id: string; name: string }[]> {
     return this.getAssignors().pipe(
       map((assignors) =>
-        assignors.map((assignor: Assignor) => ({ id: assignor.id, name: assignor.name }))
+        assignors.map((assignor: Assignor) => ({
+          id: assignor.id,
+          name: assignor.name,
+        }))
       )
     );
   }
@@ -25,4 +28,8 @@ export class AssignorService {
     return this.http.post<Assignor>(this.apiUrl, assignor);
   }
 
+  getAssignorDetails(assignorId: string): Observable<any> {
+    const url = `${this.apiUrl}/${assignorId}`;
+    return this.http.get<any>(url);
+  }
 }

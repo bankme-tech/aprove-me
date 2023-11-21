@@ -6,6 +6,10 @@
                 [vertical]="true" />
             <span><strong>ID do Cedente:</strong> {{ payable?.assignorId }}</span><mat-divider
             [vertical]="true" />
+            <span>
+                <a mat-button color="primary" [routerLink]="['/payable-details', payable?.id]">Detalhes</a>
+              </span><mat-divider
+            [vertical]="true" />
             <div class="actions-container">
                 <button mat-icon-button color="primary"
                     (click)="editPayable()"><mat-icon>more_vert</mat-icon></button>

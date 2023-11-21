@@ -7,6 +7,9 @@ import { Payable } from '../shared/interfaces/payables';
   providedIn: 'root',
 })
 export class PayableService {
+  getPayableDetails(id: string | null): Observable<Payable> {
+    return this.http.get<Payable>(`${this.apiUrl}/${id}`)
+  }
   private apiUrl = 'http://localhost:3001/integrations/payable';
   constructor(private http: HttpClient) {}
 

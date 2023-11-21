@@ -1,0 +1,16 @@
+<!-- payable-details.component.html -->
+<h2>Detalhes do Pagável</h2>
+<div *ngIf="payable$ | async as payable">
+    <p>ID: {{ payable.id }}</p>
+    <p>Valor: R$ {{ payable.value }}</p>
+    <p>Data de Emissão: {{ payable.emissionDate | date: 'short' }}</p>
+    <p>ID do Cedente: {{ payable.assignorId }}</p>
+
+    <button mat-button color="primary" (click)="toggleAssignorDetails()">Mostrar Detalhes do Cedente</button>
+
+    <div *ngIf="showAssignorDetails">
+      <h3>Detalhes do Cedente</h3>
+      <app-card-assignor-details [assignorDetails]="assignorDetails$ | async"></app-card-assignor-details>
+    </div>
+</div>
+
