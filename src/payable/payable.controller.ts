@@ -27,17 +27,29 @@ export class PayableController {
         }
 
         // Verifica se as strings têm o tamanho máximo permitido
-        if (payable.assignor.document.length > 30) {
+        if (payable.assignor?.document?.length > 30) {
             throw new HttpException('O documento do cedente deve ter no máximo 30 caracteres', HttpStatus.BAD_REQUEST);
         }
-        if (payable.assignor.email.length > 140) {
+        if (payable.assignor?.email?.length > 140) {
             throw new HttpException('O email do cedente deve ter no máximo 140 caracteres', HttpStatus.BAD_REQUEST);
         }
-        if (payable.assignor.phone.length > 20) {
+        if (payable.assignor?.phone?.length > 20) {
             throw new HttpException('O telefone do cedente deve ter no máximo 20 caracteres', HttpStatus.BAD_REQUEST);
         }
-        if (payable.assignor.name.length > 140) {
+        if (payable.assignor?.name?.length > 140) {
             throw new HttpException('O nome do cedente deve ter no máximo 140 caracteres', HttpStatus.BAD_REQUEST);
+        }
+
+        // Verifica se nenhum campo está vazio
+        if (!payable.id
+            || !payable.value
+            || !payable.emissionDate
+            || !payable.assignor
+            || !payable.assignor.document
+            || !payable.assignor.email
+            || !payable.assignor.phone
+            || !payable.assignor.name) {
+            throw new HttpException('Todos os campos são obrigatórios', HttpStatus.BAD_REQUEST);
         }
 
         return this.payableRepository.create(payable);
