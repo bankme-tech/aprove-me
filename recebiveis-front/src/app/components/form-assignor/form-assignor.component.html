@@ -1,0 +1,44 @@
+<div class="assignor-contanier">
+    <h2>Assignor</h2><br />
+    <form [formGroup]="assignor" class="assignor-form">
+
+        <mat-form-field>
+            <mat-label> Nome: </mat-label>
+            <input matInput placeholder="Ex. Joao Damacendo Alcantara" formControlName="name" required>
+            <mat-error *ngIf="assignor.get('name')?.hasError('required')">
+                Campo obrigatório
+              </mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label> Documento </mat-label>
+            <input matInput formControlName="document" required>
+            <mat-error *ngIf="assignor.get('document')?.hasError('required')">
+                Campo obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label> Telefone </mat-label>
+            <input matInput formControlName="phone"  placeholder="ex.: (11) 91111-1111" required>
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-error *ngIf="assignor.get('phone')?.hasError('required')">
+                Campo obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label> Email </mat-label>
+            <input matInput formControlName="email"  placeholder="ex.: email@domino.com" required>
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="assignor.get('email')?.hasError('email')">
+                Deve ser um email válido
+            </mat-error>
+        </mat-form-field>
+
+
+        <button class="create-button" mat-raised-button color="primary" (click)="createAssignor()"
+            [disabled]="!assignor.valid"> Criar </button>
+    </form>
+</div>

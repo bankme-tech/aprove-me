@@ -1,0 +1,33 @@
+.assignor-contanier {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+
+    .assignor-form {
+        width: 30em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: azure;
+        padding-top: 2em;
+
+
+    }
+
+    .assignor-form mat-form-field {
+        width: 25em;
+    }
+
+    h2 {
+        align-self: flex-start;
+        margin-bottom: 16px;
+    }
+
+
+    .create-button {
+        align-self: flex-start;
+        margin-top: 30px;
+    }
+}
