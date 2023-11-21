@@ -23,14 +23,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       <div className='login'>
         <label>
           <div className='username-input'>
-            <h2>Username:</h2>
+            <h3>Username:</h3>
             <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
           </div>
         </label>
         <br />
         <label>
           <div className='password-input'>
-            <h2>Password:</h2>
+            <h3>Password:</h3>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
         </label>

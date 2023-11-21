@@ -18,9 +18,10 @@
   line-height: 24px;
 }
 
-.h2, h2 {
+.h3, h3 {
   color: white;
   font-family: Nunito Sans,sans-serif;
   font-style: normal;
   font-weight: 700;
+  padding-right: 20px;
 }
