@@ -30,4 +30,8 @@ export class AuthService {
     }
     
   }
+
+  getAccessToken(): string | null {
+    return JSON.parse(localStorage.getItem('accessToken')!)
+  }
 }
