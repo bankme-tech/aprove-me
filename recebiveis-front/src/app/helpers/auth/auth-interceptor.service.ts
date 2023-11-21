@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor{
-  constructor(private authS : AuthService, private router: Router,) {}
+  constructor(private authS : AuthService, private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authS.getAccessToken();
@@ -23,13 +23,10 @@ export class AuthInterceptorService implements HttpInterceptor{
       });
     }
 
-    console.log(request)
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && error.error.message === 'Unauthorized') {
-          // Token expirado, redireciona para a tela de login
-          // Limpar dados de autenticação se necessário
           this.router.navigate(['/sign-in']);
         }
         const err = new Error('Unauthorized'); throwError(() => err)

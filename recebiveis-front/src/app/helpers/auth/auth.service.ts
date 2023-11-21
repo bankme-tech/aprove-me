@@ -9,15 +9,13 @@ interface auth {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3001/auth/login'; // Substitua pela sua URL de autenticação
+  private apiUrl = 'http://localhost:3001/auth/login';
 
 
   constructor(private http: HttpClient) {}
 
   login(credentials: Credentials ): Observable<auth> {
-    console.log(credentials)
-    return this.http.post<auth>(this.apiUrl, credentials);
-    
+    return this.http.post<auth>(this.apiUrl, credentials); 
   }
 
   isLoggedIn() :boolean {
