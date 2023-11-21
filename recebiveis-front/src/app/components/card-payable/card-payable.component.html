@@ -1,18 +1,21 @@
 <mat-card class="payable-card">
     <mat-card-content>
         <div class="payable-properties">
-            <span><strong style="padding-left: 8px;">Valor:</strong> {{ payable?.value }}</span><mat-divider [vertical]="true" />
-            <span><strong>Data de Emissão:</strong> {{ payable?.emissionDate | date: 'short' }}</span><mat-divider
+            <span><strong style="padding-left: 8px;">Valor:</strong> {{ formatValue(payable.value) }} R$</span><mat-divider [vertical]="true" />
+            <span><strong>Data de Emissão:</strong> {{ payable.emissionDate | date: 'short' }}</span><mat-divider
                 [vertical]="true" />
-            <span><strong>ID do Cedente:</strong> {{ payable?.assignorId }}</span><mat-divider
+            <span><strong>ID do Cedente:</strong> {{ payable.assignorId }}</span><mat-divider
             [vertical]="true" />
             <span>
-                <a mat-button color="primary" [routerLink]="['/payable-details', payable?.id]">Detalhes</a>
+                <a mat-button color="primary" [routerLink]="['/payable-details', payable.id]">Detalhes</a>
               </span><mat-divider
             [vertical]="true" />
             <div class="actions-container">
                 <button mat-icon-button color="primary"
-                    (click)="editPayable()"><mat-icon>more_vert</mat-icon></button>
+                    (click)="action('edit')"><mat-icon>edit</mat-icon></button>
+
+                <button mat-icon-button color="warn"
+                    (click)="action('remove')"><mat-icon>delete</mat-icon></button>
             </div>
         </div>
     </mat-card-content>

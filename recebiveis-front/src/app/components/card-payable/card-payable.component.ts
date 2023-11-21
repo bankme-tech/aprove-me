@@ -7,9 +7,20 @@ import { Payable } from 'src/app/shared/interfaces/payables';
   styleUrls: ['./card-payable.component.css'],
 })
 export class CardPayableComponent {
-  editPayable() {
-    this.editPayableEvent.emit(this.payable);
+
+  @Input() payable!: Payable;
+  @Output() editPayableEvent = new EventEmitter<{action: string, id: string}>();
+
+  formatValue(value: string): string {
+    const numberValue = parseInt(value, 10)
+
+    if (typeof numberValue !== 'number') {
+      return 'N/A'; 
+    }
+    return numberValue.toFixed(2);
   }
-  @Input() payable: Payable | undefined 
-  @Output() editPayableEvent = new EventEmitter<Payable>();
+
+  action(action: string) {
+    this.editPayableEvent.emit({action , id : this.payable.id});
+  }
 }
