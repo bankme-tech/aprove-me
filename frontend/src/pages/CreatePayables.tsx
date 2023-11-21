@@ -3,25 +3,11 @@ import axios from 'axios';
 import '../styles/payable-table.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Assignor from '../interfaces/assignor.interface';
+import Payable from '../interfaces/payable.interface';
 
 const PAYABLES_URL = 'http://localhost:3001/integrations/payable';
 const ASSIGNOR_URL = 'http://localhost:3001/integrations/assignor';
-
-interface Payable {
-  id: string;
-  value: number;
-  emissionDate: Date;
-  assignor: string;
-}
-
-interface Assignor {
-  id: string;
-  name: string;
-  document: string;
-  email: string;
-  phone: string;
-}
-
 
 const CreatePayable: React.FC = () => {
   const [newPayable, setNewPayable] = useState<Payable>({

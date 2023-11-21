@@ -3,16 +3,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Assignor from '../interfaces/assignor.interface';
 
 const ASSIGNOR_URL = 'http://localhost:3001/integrations/assignor';
-
-interface Assignor {
-  id?: number;
-  name: string;
-  email: string;
-  document: string;
-  phone: string
-}
 
 const CreateAssignor: React.FC = () => {
   const [newAssignor, setNewAssingor] = useState<Assignor>({

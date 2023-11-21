@@ -2,14 +2,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
-
-interface Assignor {
-  id: string;
-  name: string;
-  document: string;
-  email: string;
-  phone: string;
-}
+import Assignor from "../interfaces/assignor.interface";
 
 const ListAssignor = () => {
 
