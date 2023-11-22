@@ -1,80 +1,102 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
+import {useState} from "react";
 import {useForm} from "react-hook-form";
 
+
 export default function Integrations() {
+	const payableForm = useForm<PayableFormData>();
+	const assignorForm = useForm();
+	interface PayableFormData {
+		value: string;
+		assignorId: string;
+	}
 
-    const payableForm = useForm();
-  const assignorForm = useForm();
+	const onSubmitPayable = async (data: string) => {
+		const authToken = localStorage.getItem("token");
+		if (!authToken) {
+			console.error("Token de autenticação não encontrado.");
+			return;
+		}
+		const {value, assignorId} = data;
+		const numericValue = parseFloat(value);
 
-	const onSubmitPayable = async (data:any) => {
-        alert(JSON.stringify(data));
-        
 		try {
 			const apiUrl =
 				"https://bankme-api-5n7gl.ondigitalocean.app/integrations/payable";
-			const authToken = localStorage.getItem("token");
 
-				const response = await axios.post(apiUrl, {
+			const response = await axios.post(
+				apiUrl,
+				{value: numericValue, assignorId},
+				{
 					headers: {
 						Authorization: `Bearer ${authToken}`,
 					},
-				});
-            openSuccessModal();
+				}
+			);
+			openSuccessModal();
 			setTimeout(() => {
 				closeSuccessModal();
 			}, 1000);
 		} catch (error: any) {
-			console.log(error.message);
-            if (error.response) {
-				if (error.response.data) {
-					openErrorModal(`${error.response.data.message}`);
+			console.error(error);
+
+			if (error.response) {
+				if (error.response.data && error.response.data.message) {
+					openErrorModal(error.response.data.message);
 				} else {
 					openErrorModal(
-						"Erro ao processar a solicitação. Tente novamente mais tarde."
+						"Erro interno do servidor. Tente novamente mais tarde."
 					);
 				}
 				setTimeout(() => {
 					closeErrorModal();
-				}, 1000);
+				}, 2000);
 			}
 		}
 	};
 	const onSubmitAssignor = async (data: any) => {
-        alert(JSON.stringify(data));
+		const authToken = localStorage.getItem("token");
+
+		if (!authToken) {
+			console.error("Token de autenticação não encontrado.");
+			return;
+		}
+
 		try {
 			const apiUrl =
 				"https://bankme-api-5n7gl.ondigitalocean.app/integrations/assignor";
-				const authToken = localStorage.getItem("token");
 
-				const response = await axios.post(apiUrl, {
-					headers: {
-						Authorization: `Bearer ${authToken}`,
-					},
-				});
-            openSuccessModal();
+			const response = await axios.post(apiUrl, data, {
+				headers: {
+					Authorization: `Bearer ${authToken}`,
+				},
+			});
+			console.log(response.data);
+			openSuccessModal();
 			setTimeout(() => {
 				closeSuccessModal();
 			}, 1000);
 		} catch (error: any) {
-			console.log(error.message);
-            if (error.response) {
-				if (error.response.data) {
-					openErrorModal(`${error.response.data.message}`);
+			console.error(error.message.data);
+
+			if (error.response) {
+				if (error.response.data && error.response.data.message) {
+					openErrorModal(error.response.data.message);
 				} else {
 					openErrorModal(
-						"Erro ao processar a solicitação. Tente novamente mais tarde."
+						"Erro interno do servidor. Tente novamente mais tarde."
 					);
 				}
+
 				setTimeout(() => {
 					closeErrorModal();
-				}, 1000);
+				}, 2000);
 			}
 		}
 	};
 
-    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+	const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
 	const openSuccessModal = () => {
 		setIsSuccessModalOpen(true);
@@ -96,6 +118,8 @@ export default function Integrations() {
 		setErrorMessage("");
 	};
 
+	
+
 	return (
 		<div className=" bg-white relative  flex h-screen w-full items-center justify-evenly p-4 m-4 rounded-md">
 			<div className="border-solid w-1/3 rounded-md border-blue-600 shadow-md border-2 p-12">
@@ -108,7 +132,6 @@ export default function Integrations() {
 				>
 					<label className="font-bold text-blue-600 text-lg ">Valor</label>
 					<input
-						type="string"
 						placeholder="Insira aqui o valor"
 						{...payableForm.register("value", {
 							required: true,
@@ -124,19 +147,20 @@ export default function Integrations() {
 					<input
 						type="text"
 						placeholder="Insira aqui a id do cedente"
-						{...payableForm.register("assignor", {
+						{...payableForm.register("assignorId", {
 							required: true,
 						})}
 						className="outline-blue-500 p-1"
 					/>
-					{payableForm.formState.errors?.assignor?.type === "required" && (
+					{payableForm.formState.errors?.assignorId?.type === "required" && (
 						<p className="error-message text-red-600 text-sm">
 							Por favor, insira a id do cedente.
 						</p>
 					)}
 					<button
 						className="bg-base-green px-4 py-2 rounded-md font-bold text-blue-600 "
-						type="submit" disabled={false}
+						type="submit"
+						disabled={false}
 					>
 						Cadastrar
 					</button>
@@ -187,7 +211,7 @@ export default function Integrations() {
 						placeholder="Insira aqui o telefone do cedente"
 						{...assignorForm.register("phone", {
 							required: true,
-                            pattern: /^[0-9]+$/,
+							pattern: /^[0-9]+$/,
 						})}
 						className="outline-blue-500 p-1"
 					/>
@@ -212,12 +236,13 @@ export default function Integrations() {
 					)}
 					<button
 						className="bg-base-green px-4 py-2 rounded-md font-bold text-blue-600 "
-						type="submit" disabled={false}
+						type="submit"
+						disabled={false}
 					>
 						Cadastrar
 					</button>
 				</form>
-                {isSuccessModalOpen && (
+				{isSuccessModalOpen && (
 					<div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
 						<div className="bg-white p-8 rounded-md">
 							<p className="text-base-green text-lg font-semibold">

@@ -2,6 +2,7 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import Image from "next/image";
+
 interface Payable {
 	id: string;
 	value: string;
