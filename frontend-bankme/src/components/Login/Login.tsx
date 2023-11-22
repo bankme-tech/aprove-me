@@ -2,9 +2,9 @@
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
+import isTokenExpired, { getToken } from "../../authService/authService";
 
 const LoginModal = () => {
 	const router = useRouter();
@@ -78,16 +78,7 @@ const LoginModal = () => {
 			}
 		}
 	};
-	const isTokenExpired = () => {
-		const token = localStorage.getItem("token");
-		if (token) {
-			const decodedToken = jwtDecode(token);
-			const currentTimestamp = Math.floor(Date.now() / 1000);
-			return decodedToken.exp < currentTimestamp;
-		}
-
-		return true;
-	};
+	
 
 	useEffect(() => {
 		if (isTokenExpired()) {
@@ -192,3 +183,5 @@ const LoginModal = () => {
 };
 
 export default LoginModal;
+
+

@@ -1,8 +1,8 @@
-import {jwtDecode} from "jwt-decode"
+import {jwtDecode} from "jwt-decode";
 
 const TOKEN_KEY = "token";
 
-export function login(token) {
+export function login(token: string) {
 	localStorage.setItem(TOKEN_KEY, token);
 }
 
@@ -17,17 +17,36 @@ export function getToken() {
 export function isAuthenticated() {
 	const token = getToken();
 
-	return token && !isTokenExpired(token);
+	return token && !isTokenExpired();
 }
 
-function isTokenExpired(token) {
-	localStorage.getItem("token");
+export default function isTokenExpired() {
+	const token = getToken();
 	if (token) {
-		const decodedToken = jwtDecode(token);
-        console.log(decodedToken)
+		interface DecodedToken {
+			exp: number;
+		}
+		localStorage.getItem("token");
+
+		const decodedToken: DecodedToken = jwtDecode(token);
 		const currentTimestamp = Math.floor(Date.now() / 1000);
 		return decodedToken.exp < currentTimestamp;
 	}
 
 	return true;
+}
+
+export function getIdByToken() {
+	const token = getToken();
+	if (token) {
+		interface DecodedTokenID {
+			id: string;
+		}
+		localStorage.getItem("token");
+
+		const decodedToken: DecodedTokenID = jwtDecode(token);
+
+		return decodedToken.id;
+	}
+	return null;
 }

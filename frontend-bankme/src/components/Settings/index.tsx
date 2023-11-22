@@ -2,6 +2,7 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import Image from "next/image";
+import { getIdByToken } from "../../authService/authService";
 
 interface User {
 	id: string;
@@ -17,8 +18,9 @@ export default function User() {
 
 	useEffect(() => {
 		const fetchUser = async () => {
+			const id = getIdByToken()
 			try {
-				const apiUrl = `https://bankme-api-5n7gl.ondigitalocean.app/user/`;
+				const apiUrl = `https://bankme-api-5n7gl.ondigitalocean.app/user/${id}`;
 
 				const authToken = localStorage.getItem("token");
 
@@ -31,9 +33,11 @@ export default function User() {
 					setIsErrorModalOpen(true);
 					setErrorMessage("Não há nenhum cedente cadastrado.");
 				}
-				//TODO: ajustar para pegar a id do usuário logado
-				setUsers(response.data[0]);
+
+			
+				setUsers(response.data);
 			} catch (error) {
+				console.error()
 				setIsErrorModalOpen(true);
 				setErrorMessage(
 					"Erro ao processar a solicitação. Tente novamente mais tarde."
