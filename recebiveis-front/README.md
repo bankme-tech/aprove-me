@@ -1,33 +1,90 @@
 # RecebiveisFront
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.
+Assim como a API `Recebiveis-api2` foi seguida uma sequência de niveis a serem solucionados.
 
 
-1- criaçao de dockerfile
+🖥️ Front-end
+- ✅ Nível 1 - Cadastro
+     -
+     - ✅ Criar Formulário de Cadastro de Recebivel
+     - ✅ Usar ValidaÇao de campos para previnir Badrequest.
+     - ✅ Criar pagina para exibir recebivel com detalhes, incluindo Cedente.
 
-2- instalaçao de angular material
+- ✅ Nível 2 - Conectando na API
+    -
+    -   ✅ Persistencia de dados de recebivel no backend.
+    -   ✅ Cadastro de Cedente
+    -   ✅ Uso de reatividade para carregar todos os cedentes disponiveis em um seletor dropdown
+
+- ✅ Nível 3 - Listando
+    -
+    - ✅ Page com listagens de pagáveis. Mostrando apenas: `id`, `value` e `emissionDate`.
+    - ✅ Para cada ítem da lista, coloque um link que mostra os detalhes do pagável.
+    - ✅ Criaçao de açoes de editar e excluir para cada elemento. (feito com reuso dos forumarios)
 
 
-## Development server
+- ✅ Nível 4 - Autenticação
+    -
+    - ✅ Tela de login
+    - ✅ Rotas autenticadas, com uso de guard e jwt.
+    - ✅ Mecanismo para retornar a tela de login caso o token expire e perca a sessao.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- ⬜  Nível 5 - Testes
+    -
+    - Fica pra próxima. ainda faço om storybook. ❤️
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Desenvolvimento
 
-## Build
+Foi feito o uso de diversas tecnicas de desenvolvimento.  
+para criaçao dos componentes  de forma mais estilizada foi usado o system disgn [Angular Material](https://material.angular.io/). 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+O aplicativo foi desenvolvido para ter 4 paginas, listagem de recebiveis, cadastro, detalhes e login.
 
-## Running unit tests
+Com exceçao da rota de login, todas as outras telas estao protegidas, e caso tente-se burlar essa etapa, automaticamente a tela é redirecionada para login novamente.  Para isso foi feito uso de um interceptor que sempre valida se existe um token para a requisiçao em questao. caso contrario o usuario é sempre redirecionado para o `login`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+<img src="image.png" alt="Alt text" width="600" height="400">
 
-## Running end-to-end tests
+## Formularios de cadastro
+Foram Criados dois Formularios para serem usado na tela de cadastro, Assignor e Payable. Os mesmos formularios sao usados para editar.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Gerenciamento do eventos
+Para evitar gerenciamento de Observables, adotei a abordagem de usar pipe `Async` se,pre que possivel, dessa forma  a própria pagina é responsável por se inscrever e desiscrever nos eventos de requisiçao de dados ao backend. [saiba mais](https://warcontent.com/angular-async-pipe/).
 
-## Further help
+Um exemplo é o link de cadastrar que só é exibido caso uma chamada para verificar o token retorne ok.
+`authed$` é um evento assincrono gerenciado pela propria view.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+```html
+<button *ngIf="(authed$ | async)" mat-button [matMenuTriggerFor]="beforeMenu">Cadastrar</button>
+```
+
+
+## Instalação
+
+```bash
+# Instala todos os modulos necessarios. 
+ $ npm install
+
+# Rodar em desenvolvimento
+ $ npx ng serve
+```
+
+Abra um navegador da web e acesse `http://localhost:4200`
+
+## Docker 
+
+Caso deseje rodar em container, foi criado um `DockerFile` com uma imagem do node e outra do nginx, por questão puramente de performance. Basta rodar esses comandos no mesmo logal do arquivo.
+
+```bash
+# Cria a imagem
+$ docker build -t front-recebiveis
+
+# Inicia a plicaçao
+$ docker run -p 8080:80 front-recebiveis
+
+```
+
+Neste caso a porta 8080 do host será mapeada para a porta 80 do contêiner.
+Abra um navegador da web e acesse `http://localhost:8080`
+
