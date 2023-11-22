@@ -8,11 +8,13 @@ import { PayablesDetailsComponent } from './pages/payables-details/payables-deta
 
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
-  { path: 'sign-in', component: LoginComponent },
+  { path: 'sign-in', component: LoginComponent,data: { title: 'Login' }, },
+
   {
     path: 'register',
     component: RegisterComponent,
     canActivate: [AuthGuard],
+    data: { title: 'Cadastro' },
     children: [
       { path: '', redirectTo: 'payable', pathMatch: 'full' },
       { path: 'payable', component: RegisterComponent },
@@ -23,6 +25,7 @@ const routes: Routes = [
   {
     path: 'payables',
     component: PayablesComponent,
+    data: { title: 'Lista de Recebíveis' },
     canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
@@ -31,6 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'payable-details/:id',
+    data: { title: 'Detalhes' },
     component: PayablesDetailsComponent,
     canActivate: [AuthGuard],
   },
