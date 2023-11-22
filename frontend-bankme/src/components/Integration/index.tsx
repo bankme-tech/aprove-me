@@ -2,7 +2,7 @@
 import axios from "axios";
 import {useState} from "react";
 import {useForm} from "react-hook-form";
-import {getIdByToken, getNameByToken} from "../../authService/authService";
+import { getNameByToken} from "../../authService/authService";
 
 export default function Integrations() {
 	const payableForm = useForm<PayableFormData>();
@@ -12,7 +12,7 @@ export default function Integrations() {
 		assignorId: string;
 	}
 
-	const onSubmitPayable = async (data: string) => {
+	const onSubmitPayable = async (data: PayableFormData) => {
 		const authToken = localStorage.getItem("token");
 		if (!authToken) {
 			console.error("Token de autenticação não encontrado.");
