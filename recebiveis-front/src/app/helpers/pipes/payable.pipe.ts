@@ -11,8 +11,6 @@ export class PayablePipe implements PipeTransform {
       return payables;
     }
 
-    console.log(payables)
-
     return payables.slice().sort((a, b) => {
       if (a[sortOption] < b[sortOption]) return -1;
       if (a[sortOption] > b[sortOption]) return 1;

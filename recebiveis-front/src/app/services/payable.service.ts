@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { Payable } from '../shared/interfaces/payables';
+import { CreatedPayable, Payable, PayableRequest } from '../shared/interfaces/payables';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PayableService {
+  
   private apiUrl = 'http://localhost:3001/integrations/payable';
   constructor(private http: HttpClient) {}
 
@@ -18,5 +19,14 @@ export class PayableService {
   }
   deletePayable(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+  update(payable: Payable) :  Observable<Payable> {
+    console.log(payable)
+   return this.http.patch<Payable>(`${this.apiUrl}/${payable.id}`, payable);
+  }
+  create(pr: PayableRequest): Observable<CreatedPayable> {
+    const payable = pr.payable;
+    const assignor = pr.assignedTo;
+    return this.http.post<CreatedPayable>(this.apiUrl, {payable , assignor});
   }
 }
