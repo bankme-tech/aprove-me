@@ -8,7 +8,7 @@
     <mat-card-content>
         <p class="payable-property">
             <span class="payable-label">Valor:</span>
-            <span class="payable-value">{{ formatValue(payable!.value) }} R$</span>
+            <span class="payable-value">{{ payable.value | currency:'BRL':'symbol':'1.2-2' }}</span>
         </p>
         <p class="payable-property">
             <span class="payable-label">Data de Emissão:</span>

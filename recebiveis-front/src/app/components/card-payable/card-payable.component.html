@@ -1,8 +1,8 @@
 <mat-card class="payable-card">
     <mat-card-content>
         <div class="payable-properties">
-            <span><strong style="padding-left: 8px;">Valor:</strong> {{ formatValue(payable.value) }} R$</span><mat-divider [vertical]="true" />
-            <span><strong>Data de Emissão:</strong> {{ payable.emissionDate | date: 'short' }}</span><mat-divider
+            <span><strong style="padding-left: 8px;">Valor:</strong> {{ payable.value | currency:'BRL':'symbol':'1.2-2' }} </span><mat-divider [vertical]="true" />
+            <span><strong>Data de Emissão:</strong> {{ payable.emissionDate |  date:'dd/MM/yyyy' }}</span><mat-divider
                 [vertical]="true" />
             <span><strong>ID do Cedente:</strong> {{ payable.assignorId }}</span><mat-divider
             [vertical]="true" />

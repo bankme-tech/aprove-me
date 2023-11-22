@@ -3,7 +3,7 @@
   <form [formGroup]="payable" class="payable-form">
     <mat-form-field floatLabel="always">
       <mat-label>Montante</mat-label>
-      <input formControlName="value" matInput type="number" class="payable-right-align" placeholder="0" required>
+      <input formControlName="value" [value]="payable.value| currency:'BRL':'symbol':'1.2-2'" matInput type="number" class="payable-right-align" placeholder="0" required>
       <span matTextSuffix>R$&nbsp;</span>
       <mat-error *ngIf="payable.get('value')?.hasError('required')">
         This field is required
