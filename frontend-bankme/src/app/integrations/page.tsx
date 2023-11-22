@@ -1,13 +1,11 @@
-'use client'
-
-import {useRouter} from "next/navigation";
 import Sidebar from "../../components/Sidebar";
+import Integration from "../../components/Integration";
 
 export default function Integrations() {
-	const router = useRouter();
 	return (
 		<main className=" flex">
 			<Sidebar></Sidebar>
+			<Integration ></Integration>
 		</main>
 	);
 }
