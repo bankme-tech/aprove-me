@@ -36,6 +36,8 @@ $ npm run start:prod
 ```
 O servidor será inicializado em [http://localhost:3000](http://localhost:3000)
 
+## Resultado
+![Alt text](public/frontend-bankme.gif)
 <!-- ## Rodando o app com Docker
 
 ```bash
@@ -67,6 +69,8 @@ $ npm run test:cov
 2) Adicionar funcionalidades para editar perfil do usuário.
 
 3) Adicionar filtros e paginação para os pagáveis e também para os cedentes.
+
+4) Responsividade.
 
 
 ## Stay in touch
