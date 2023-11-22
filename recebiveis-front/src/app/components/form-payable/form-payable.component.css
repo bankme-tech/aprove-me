@@ -8,13 +8,12 @@ input.payable-right-align::-webkit-inner-spin-button {
 
 .payable-container {
     display: flex;
-    justify-content: center;
     align-items: center;
     height: 100vh;
     flex-direction: column;
 
     .payable-form {
-        width: 300px;
+        
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -22,6 +21,12 @@ input.payable-right-align::-webkit-inner-spin-button {
 
     .payable-form mat-form-field {
         width: 20em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: azure;
+        padding-top: 2em;
+        
     }
 
     .create-button {

@@ -15,7 +15,11 @@ export interface Assignor {
 
 export interface PayableRequest{
     payable : Payable,
-    assaignedTo?: Assignor
+    assignedTo?: Assignor
+}
+
+export interface CreatedPayable{
+    createdPayable : Payable
 }
 
 export interface Credentials {

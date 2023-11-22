@@ -1,0 +1,28 @@
+/* navbar.component.css */
+.navbar {
+    height: 3em;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
+    height: 100%;
+    background-color: aliceblue;
+  }
+  
+  .logo {
+    
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
+    height: 100%;
+  }
+  
+  .spacer {
+    flex: 1;
+  }
+  
