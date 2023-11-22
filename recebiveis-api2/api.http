@@ -1,0 +1,83 @@
+#PAYABLE CRUD
+
+POST http://localhost:3001/integrations/payable
+content-type: application/json
+
+{
+  "payable": {
+    "value": 100.00,
+    "emissionDate": "2023-11-17T10:30:00.000Z",
+    "assignorId": "6ea9949b-9cd5-4630-9b76-5d922cf59fdc"
+  },
+  "assignor": {
+    "document": "12345678901",
+    "email": "cedente@email.com",
+    "phone": "(11) 91234-1234",
+    "name": "Cedente Company"
+  }
+}
+###
+
+GET http://localhost:3001/integrations/payable
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjNzUyYjNiYy1mMGFkLTRmMjItYjFlNi05MDRhNTEwMDNjZDMiLCJpYXQiOjE3MDA0NTM4MjYsImV4cCI6MTcwMDQ1Mzg4Nn0.d1mrOi5sFrKAstuRNNZk6qN9AuENdrEcDQeu-asskgs
+
+###
+# [find by id] replace the id for a valid uuid
+GET http://localhost:3001/integrations/payable/ebc1fdca-c3d0-45b9-b6b1-6c12e6b98e36
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjNzUyYjNiYy1mMGFkLTRmMjItYjFlNi05MDRhNTEwMDNjZDMiLCJpYXQiOjE3MDA0NTQzMTYsImV4cCI6MTcwMDQ1NDM3Nn0.OPOajLJ_iCHg8C9BCpjmQ6wHxTxZ_f2VtyvDvrsGxLs
+
+###
+
+# replace the id for a valid uuid
+PATCH http://localhost:3001/integrations/payable/ebc1fdca-c3d0-45b9-b6b1-6c12e6b98e36
+content-type: application/json
+
+{
+    "value": 50,
+    "emissionDate": "2023-11-17T10:30:00.000Z",
+    "assignorId" : "6ea9949b-9cd5-4630-9b76-5d922cf59fdc"
+}
+
+###
+DELETE http://localhost:3001/integrations/payable/d176551a-8ac4-49b0-94bb-f4ff0ba44a93
+###
+# ASSIGNOR CRUD
+POST http://localhost:3001/integrations/assignor
+content-type: application/json
+
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjNzUyYjNiYy1mMGFkLTRmMjItYjFlNi05MDRhNTEwMDNjZDMiLCJpYXQiOjE3MDA0NDIwMDEsImV4cCI6MTcwMDQ0MjA2MX0.sAKhl1wRx7vrV8Ph4aaqP0gYKOMDe-V8fdFQrVs_dH8
+
+{
+
+    "document": "123415678911",
+    "email": "cedente23@email.com",
+    "phone": "(11) 91234-1234",
+    "name": "Cedente Company"
+
+}
+###
+GET http://localhost:3001/integrations/assignor
+###
+# [find by id] replace the id for a valid uuid
+GET http://localhost:3001/integrations/assignor/4cf82a54-5078-4fd9-9312-f4b384a5fea9
+###
+# replace the id for a valid uuid
+PATCH http://localhost:3001/integrations/assignor/6ea9949b-9cd5-4630-9b76-5d922cf59fdc
+content-type: application/json
+
+{
+    "document": "12345678901",
+    "email": "cedente@email.com",
+    "phone": "(11) 91234-1234",
+    "name": "Cedente Company edited"
+}
+
+###
+DELETE http://localhost:3001/integrations/assignor/4cf82a54-5078-4fd9-9312-f4b384a5fea9
+###
+POST http://localhost:3001/auth/login
+content-type: application/json
+{
+  "login": "tiago",
+  "password": "senhatiago"
+}
