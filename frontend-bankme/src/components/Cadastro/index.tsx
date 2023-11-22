@@ -1,8 +1,11 @@
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import axios from "axios";
+interface CadastroModalProps {
+	closeModal: () => void;
+}
 
-const CadastroModal = ({closeModal}) => {
+const CadastroModal: React.FC<CadastroModalProps> = ({closeModal}) => {
 	const {
 		register,
 		handleSubmit,
@@ -32,7 +35,7 @@ const CadastroModal = ({closeModal}) => {
 	const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 
-	const openErrorModal = (message:string) => {
+	const openErrorModal = (message: string) => {
 		setErrorMessage(message);
 		setIsErrorModalOpen(true);
 	};
@@ -44,8 +47,7 @@ const CadastroModal = ({closeModal}) => {
 
 	const onSubmit = async (data: unknown) => {
 		try {
-			const apiUrl =
-				"https://bankme-api-5n7gl.ondigitalocean.app/user";
+			const apiUrl = "https://bankme-api-5n7gl.ondigitalocean.app/user";
 			const response = await axios.post(apiUrl, data);
 
 			openSuccessModal();
@@ -54,7 +56,7 @@ const CadastroModal = ({closeModal}) => {
 				closeModal();
 			}, 3000);
 		} catch (error: any) {
-            console.log(error.message)
+			console.log(error.message);
 			if (error.response) {
 				if (error.response.data.statusCode === 401) {
 					openErrorModal(`${error.response.data.message}`);
@@ -69,7 +71,6 @@ const CadastroModal = ({closeModal}) => {
 			}
 		}
 	};
-
 
 	return (
 		<div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
@@ -99,7 +100,7 @@ const CadastroModal = ({closeModal}) => {
 							Nome é obrigatório.
 						</p>
 					)}
-				
+
 					<label className="font-bold text-gray-700 text-lg ">Email</label>
 					<input
 						type="text"
