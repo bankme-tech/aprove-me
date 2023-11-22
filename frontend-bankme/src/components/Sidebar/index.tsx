@@ -8,6 +8,9 @@ export default function Sidebar() {
   const onClickIntegration = () => {
     router.push("/integrations");
   };
+  const onClickCedentes = () => {
+    router.push("/integrations/cedentes");
+  };
   const onClickPagaveis = () => {
     router.push("/integrations/pagaveis");
   };
@@ -28,6 +31,10 @@ export default function Sidebar() {
           <Image alt="icon" src="/pen-to-square-solid.svg" width={20} height={20} />
           <span className="ml-2">Cadastrar</span>
         </button> 
+        <button className="mb-2 p-5 flex items-center justify-start rounded-md bg-gray-300 hover:bg-blue-600 shadow-gray-400 shadow-md" onClick={onClickCedentes}>
+          <Image alt="icon" src="/file-lines-solid.svg" width={20} height={20} />
+          <span className="ml-2">Cedentes</span>
+        </button>
         <button className="mb-2 p-5 flex items-center justify-start rounded-md bg-gray-300 hover:bg-blue-600 shadow-gray-400 shadow-md" onClick={onClickPagaveis}>
           <Image alt="icon" src="/file-lines-solid.svg" width={20} height={20} />
           <span className="ml-2">Pagáveis</span>
