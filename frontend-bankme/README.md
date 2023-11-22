@@ -72,6 +72,8 @@ $ npm run test:cov
 
 4) Responsividade.
 
+5) Separar as chamadas a api em um service.
+
 
 ## Stay in touch
 
