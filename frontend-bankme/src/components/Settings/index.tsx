@@ -10,7 +10,7 @@ interface User {
 }
 
 export default function User() {
-	const [user, setUsers] = useState<User[]>([]);
+	const [user, setUsers] = useState<User>();
 	const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
@@ -81,7 +81,7 @@ export default function User() {
 			)}
 
 			<nav className="w-full flex  items-start justify-start p-4 rounded-xl">
-				{user && (
+				{user ? (
 					<ul
 						key={user.id}
 						className="w-full flex flex-col justify-evenly text-gray-700 font-bold gap-10 "
@@ -99,6 +99,8 @@ export default function User() {
 							<p>{user.login}</p>
 						</li>
 					</ul>
+				) : (
+					<p>Carregando...</p>
 				)}
 			</nav>
 			<div className="w-full flex  items-center justify-start p-6 rounded-xl gap-20">
@@ -114,7 +116,8 @@ export default function User() {
 
 				<button
 					className="flex gap-4 font-bold border-solid border-2 border-blue-600 p-4 rounded-md"
-					onClick={() => handleDelete(user.id)}
+					onClick={() => user && handleDelete(user.id)}
+					disabled={!user}
 				>
 					<Image
 						src="/trash-can-solid.svg"
