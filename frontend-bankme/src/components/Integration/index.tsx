@@ -14,7 +14,13 @@ export default function Integrations() {
 		try {
 			const apiUrl =
 				"https://bankme-api-5n7gl.ondigitalocean.app/integrations/payable";
-			const response = await axios.post(apiUrl, data);
+			const authToken = localStorage.getItem("token");
+
+				const response = await axios.post(apiUrl, {
+					headers: {
+						Authorization: `Bearer ${authToken}`,
+					},
+				});
             openSuccessModal();
 			setTimeout(() => {
 				closeSuccessModal();
@@ -40,7 +46,13 @@ export default function Integrations() {
 		try {
 			const apiUrl =
 				"https://bankme-api-5n7gl.ondigitalocean.app/integrations/assignor";
-			const response = await axios.post(apiUrl, data);
+				const authToken = localStorage.getItem("token");
+
+				const response = await axios.post(apiUrl, {
+					headers: {
+						Authorization: `Bearer ${authToken}`,
+					},
+				});
             openSuccessModal();
 			setTimeout(() => {
 				closeSuccessModal();
