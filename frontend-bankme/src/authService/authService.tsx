@@ -2,6 +2,7 @@ import {jwtDecode} from "jwt-decode";
 
 const TOKEN_KEY = "token";
 
+
 export function login(token: string) {
 	localStorage.setItem(TOKEN_KEY, token);
 }
