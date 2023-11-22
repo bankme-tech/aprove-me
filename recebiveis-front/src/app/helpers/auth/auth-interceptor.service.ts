@@ -13,9 +13,9 @@ export class AuthInterceptorService implements HttpInterceptor{
   constructor(private authS : AuthService, private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.authS.getAccessToken();
+    const token = this.authS.getAccessToken() || '';
 
-    if (token) {
+    if (token!!) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
@@ -30,6 +30,7 @@ export class AuthInterceptorService implements HttpInterceptor{
           this.router.navigate(['/sign-in']);
         }
         const err = new Error('Unauthorized'); throwError(() => err)
+        localStorage.clear();
         return throwError(() => error);
       })
     );

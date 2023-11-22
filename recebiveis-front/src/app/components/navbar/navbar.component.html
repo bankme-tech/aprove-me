@@ -1,0 +1,23 @@
+<mat-toolbar color="primary" class="navbar">
+    <div class="logo-container logo-image">
+        <img src='https://bankme.tech/hs-fs/hubfs/BANKME%20AZUL%20NOVO-4.png?width=1920&height=1080&name=BANKME%20AZUL%20NOVO-4.png'
+            alt="Logo" class="logo" />
+    </div>
+
+    <div class="spacer">{{pageTitle}}</div>
+
+    <button mat-button *ngIf="!(authed$ | async)" (click)="handleLogin()">Login</button>
+    
+
+    <button *ngIf="(authed$ | async)" mat-button [matMenuTriggerFor]="beforeMenu">Cadastrar</button>
+   
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button mat-menu-item routerLink="/register/assignor">Cedente</button>
+      <button mat-menu-item routerLink="/register/payable">Recebível</button>
+    </mat-menu>
+    <button *ngIf="(authed$ | async)" mat-button routerLink="payables">Recebiveis</button>
+    <button mat-button *ngIf="(authed$ | async)" (click)="handleLogout()">Logout</button>
+
+
+
+</mat-toolbar>

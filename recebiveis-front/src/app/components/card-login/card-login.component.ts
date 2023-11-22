@@ -18,29 +18,22 @@ export class CardLoginComponent {
   hide = true;
   constructor(
     private authService: AuthService,
-    private router: Router,
     private route: ActivatedRoute
   ) {}
+
   login() {
     const credentials: Credentials = {
       login: this.loginModel.value.login || '',
       password: this.loginModel.value.password || '',
     };
-
+  
     this.authService.login(credentials).subscribe({
-      next: (response) => {
-        const jwt = JSON.stringify(response.accessToken);
-        localStorage.setItem('accessToken', jwt);
-
-        const redirectUrl =
-          this.route.snapshot.queryParams['redirectUrl'] || '/payables';
-
-        this.router.navigate([redirectUrl]);
+      next: () => {
+        this.authService.handleLoginSuccess(this.route);
       },
-      error: (error) => {
-        window.alert('Wrong access!');
-        console.error('Erro ao fazer login:', error);
-     },
+      error: () => {
+        window.alert('Credenciais erradas!');
+      },
     });
   }
 }

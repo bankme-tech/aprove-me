@@ -19,6 +19,7 @@ import { PayablePipe } from './helpers/pipes/payable.pipe';
 import { PayablesDetailsComponent } from './pages/payables-details/payables-details.component';
 import { CardAssignorDetailsComponent } from './components/card-assignor-details/card-assignor-details.component';
 import { CardPayableDetailsComponent } from './components/card-payable-details/card-payable-details.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CardPayableDetailsComponent } from './components/card-payable-details/c
     PayablePipe,
     PayablesDetailsComponent,
     CardAssignorDetailsComponent,
-    CardPayableDetailsComponent
+    CardPayableDetailsComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
