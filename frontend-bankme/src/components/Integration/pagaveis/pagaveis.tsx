@@ -2,7 +2,7 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import Image from "next/image";
-
+//TODO: atualizar formato da dada recebida
 interface Payable {
 	id: string;
 	value: string;
