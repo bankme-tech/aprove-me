@@ -2,18 +2,18 @@
 
 Esta API foi criada para atender aos requisitos do processo seletivo da bankme, com diferentes niveis de maturidade. 
 
-```
-[x] Nível 1 - Validação.
-[x] Nível 2 - Persistência
-[ ] Nível 3 - Testes
-[x] Nível 4 - Autenticação
-[x] Nível 5 - Gerenciamento de permissões
-[x] Nível 6 - Infra e Doc
-[ ] Nível 7 - Lotes
-[ ] Nível 8 - Resiliência
-[ ] Nível 9 - Cloud
-[ ] Nível 10 - Infra as a Code
-```
+
+- [x] Nível 1 - Validação.
+- [x] Nível 2 - Persistência
+- [ ] Nível 3 - Testes
+- [x] Nível 4 - Autenticação
+- [x] Nível 5 - Gerenciamento de permissões
+- [x] Nível 6 - Infra e Doc
+- [ ] Nível 7 - Lotes
+- [ ] Nível 8 - Resiliência
+- [ ] Nível 9 - Cloud
+- [ ] Nível 10 - Infra as a Code
+
 [Click aqui para mais detalhes](https://github.com/TiagoGIM/aprove-me#readme)
 
 #### Nível 1 VALIDAÇÃO
