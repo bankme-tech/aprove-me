@@ -50,3 +50,17 @@ export function getIdByToken() {
 	}
 	return null;
 }
+export function getNameByToken() {
+	const token = getToken();
+	if (token) {
+		interface DecodedTokenID {
+			name: string;
+		}
+		localStorage.getItem("token");
+
+		const decodedToken: DecodedTokenID = jwtDecode(token);
+
+		return decodedToken.name;
+	}
+	return null;
+}
