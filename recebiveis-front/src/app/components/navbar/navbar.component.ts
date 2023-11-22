@@ -14,9 +14,9 @@ export class NavbarComponent {
 
   authed$ = this.authS.isAuthenticated();
 
-  handleLogin() {
-    this.router.navigate(['/sign-in']);
-  }
+  // handleLogin() {
+  //   this.router.navigate(['/sign-in']);
+  // }
   handleLogout(){
     this.authS.logout();
   }
