@@ -5,16 +5,16 @@ import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
   const router = useRouter();
-  const onClickIntegration = (event: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickIntegration = () => {
     router.push("/integrations");
   };
-  const onClickPagaveis = (event:any) => {
+  const onClickPagaveis = () => {
     router.push("/integrations/pagaveis");
   };
-  const onClickSettings = (event: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickSettings = () => {
     router.push("/settings");
   };
-  const onClickLogout = (event: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickLogout = () => {
     router.push("/");
   };
   
