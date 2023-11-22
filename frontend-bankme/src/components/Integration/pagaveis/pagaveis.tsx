@@ -1,9 +1,15 @@
 "use client";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import Image from "next/image";
+interface Payable {
+	id: string;
+	value: string;
+	emissionDate: string;
+}
 
 export default function Payable() {
-	const [payables, setPayables] = useState([]);
+	const [payables, setPayables] = useState<Payable[]>([]);
 	const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 
@@ -14,7 +20,6 @@ export default function Payable() {
 					"https://bankme-api-5n7gl.ondigitalocean.app/integrations/payable";
 
 				const authToken = localStorage.getItem("token");
-
 
 				const response = await axios.get(apiUrl, {
 					headers: {
@@ -53,7 +58,7 @@ export default function Payable() {
 					<li>Excluir</li>
 				</ul>
 			</nav>
-			<div className="w-full flex  flex-col items-start justify-start p-4 divide-y divide-gray-300 ">
+			<div className="w-full flex  flex-col justify-start p-4 divide-y divide-gray-300 ">
 				{payables.map((payable) => (
 					<ul
 						key={payable.id}
@@ -62,14 +67,41 @@ export default function Payable() {
 						<li>{payable.id}</li>
 						<li>{payable.value}</li>
 						<li>{payable.emissionDate}</li>
+						<li>
+							<button>
+								<Image
+									src="/pencil-solid.svg"
+									width={20}
+									height={20}
+									alt="pencil"
+								></Image>
+							</button>
+						</li>
+						<li>
+							<button>
+								<Image
+									src="/trash-can-solid.svg"
+									width={20}
+									height={20}
+									alt="pencil"
+								></Image>
+							</button>
+						</li>
 					</ul>
 				))}
 			</div>
 			{isErrorModalOpen && (
 				<div className="error-modal fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-black bg-opacity-50">
 					<div className="flex flex-col bg-white font-bold p-8 rounded-md items-end ">
-						<p className="text-gray-600 mb-4 font-bold text-2xl">{errorMessage}</p>
-						<button className="w-1/6 bg-gray-300 rounded-md px-3 py-2 mt-6" onClick={() => setIsErrorModalOpen(false)}>Fechar</button>
+						<p className="text-gray-600 mb-4 font-bold text-2xl">
+							{errorMessage}
+						</p>
+						<button
+							className="w-1/6 bg-gray-300 rounded-md px-3 py-2 mt-6"
+							onClick={() => setIsErrorModalOpen(false)}
+						>
+							Fechar
+						</button>
 					</div>
 				</div>
 			)}
