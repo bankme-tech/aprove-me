@@ -4,7 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-	"dev:backend": "turbo dev --filter=@bankme/backend",
+	"dev:backend": "turbo run start:dev --filter=@bankme/backend",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
