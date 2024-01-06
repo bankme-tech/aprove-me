@@ -16,7 +16,9 @@ model Payable {
 	value Float
 	emissionDate DateTime
 
-	assignor Assignor?
+	assignor_id String @unique
+
+	assignor Assignor @relation(fields: [assignor_id], references: [id], onDelete: Cascade)
 }
 
 model Assignor {
@@ -27,7 +29,5 @@ model Assignor {
 	phone String
 	name String
 
-	payable_id String @unique
-
-	payable Payable @relation(fields: [payable_id], references: [id], onDelete: Cascade)
+	payable Payable[]
 }
