@@ -5,8 +5,11 @@ import { Module } from '@nestjs/common';
 import { AppService } from './app/app.service';
 import { AppController } from './app/app.controller';
 
+// Domains
+import { PayableModule } from './payable/payable.module';
+
 @Module({
-  imports: [],
+  imports: [PayableModule],
   controllers: [AppController],
   providers: [AppService],
 })
