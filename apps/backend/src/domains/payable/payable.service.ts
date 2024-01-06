@@ -20,6 +20,16 @@ export class PayableService {
           },
         },
       },
+
+      include: {
+        assignor: true,
+      },
+    });
+  }
+
+  show(id: string) {
+    return this.prisma.payable.findUnique({
+      where: { id },
     });
   }
 }
