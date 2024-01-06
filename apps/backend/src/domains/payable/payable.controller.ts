@@ -1,18 +1,18 @@
 import { Body, Controller, Get, Post, UsePipes } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { ZodValidationPipe } from 'src/pipes/zod.validation.pipe';
-import { CreateCatDto, createCatSchema } from './payable.schema';
+import { CreatePayableDto, createPayableSchema } from './payable.schema';
 
 @Controller('integrations/payable')
 export class PayableController {
-  constructor(private readonly appService: PayableService) {}
+  constructor(private readonly service: PayableService) {}
 
   @Get()
   index() {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(createCatSchema))
-  store(@Body() data: CreateCatDto) {
-    return data;
+  @UsePipes(new ZodValidationPipe(createPayableSchema))
+  store(@Body() data: CreatePayableDto) {
+    return this.service.store(data);
   }
 }
