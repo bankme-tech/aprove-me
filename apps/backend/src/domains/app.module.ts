@@ -7,9 +7,10 @@ import { AppController } from './app/app.controller';
 
 // Domains
 import { PayableModule } from './payable/payable.module';
+import { AssignorModule } from './assignor/assignor.module';
 
 @Module({
-  imports: [PayableModule],
+  imports: [PayableModule, AssignorModule],
   controllers: [AppController],
   providers: [AppService],
 })
