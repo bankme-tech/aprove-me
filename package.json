@@ -1,0 +1,8 @@
+{
+  "name": "bankme",
+  "version": "0.1.0",
+  "repository": "https://github.com/darklight9811/bankme.git",
+  "author": "Rafael Correa <rafael.chaves98@hotmail.com>",
+  "license": "BSD-3-Clause",
+  "private": true
+}
