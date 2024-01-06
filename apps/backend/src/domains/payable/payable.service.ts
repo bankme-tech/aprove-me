@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePayableDto } from './payable.schema';
+import { CreatePayableWithAssignorDto } from './payable.schema';
 import { PrismaService } from 'src/services/prisma.service';
 import { PaginationSchema } from 'src/schemas/pagination.schema';
 
@@ -28,7 +28,7 @@ export class PayableService {
     ]);
   }
 
-  store(data: CreatePayableDto) {
+  store(data: CreatePayableWithAssignorDto) {
     return this.prisma.payable.create({
       data: {
         emissionDate: data.emissionDate,
@@ -53,5 +53,30 @@ export class PayableService {
     return this.prisma.payable.findUnique({
       where: { id },
     });
+  }
+
+  update(id: string, data: CreatePayableWithAssignorDto) {
+    return this.prisma.payable.update({
+      data: {
+        emissionDate: data.emissionDate,
+        value: data.value,
+      },
+
+      where: {
+        id,
+      },
+    });
+  }
+
+  async delete(id: string) {
+    try {
+      const data = await this.prisma.payable.delete({
+        where: { id },
+      });
+
+      return data;
+    } catch (e) {
+      return undefined;
+    }
   }
 }

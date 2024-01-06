@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createPayableSchema = z
+export const createPayableWithAssignorSchema = z
   .object({
     value: z.number(),
     emissionDate: z.string().datetime(),
@@ -15,4 +15,6 @@ export const createPayableSchema = z
   })
   .required();
 
-export type CreatePayableDto = z.infer<typeof createPayableSchema>;
+export type CreatePayableWithAssignorDto = z.infer<
+  typeof createPayableWithAssignorSchema
+>;
