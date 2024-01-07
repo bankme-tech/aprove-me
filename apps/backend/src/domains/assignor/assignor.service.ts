@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePayableWithAssignorDto } from './payable.schema';
 import { PrismaService } from 'src/services/prisma.service';
 import { PaginationSchema } from 'src/schemas/pagination.schema';
+import { CreateAssignorSchema } from 'src/schemas/assignor.schema';
 
 @Injectable()
-export class PayableService {
+export class AssignorService {
   constructor(private prisma: PrismaService) {}
 
   index(pagination: PaginationSchema) {
     return Promise.all([
-      this.prisma.payable.findMany({
+      this.prisma.assignor.findMany({
         take: pagination.limit,
         skip: (pagination.page - 1) * pagination.limit,
       }),
-      this.prisma.payable
+      this.prisma.assignor
         .aggregate({
           _count: { id: true },
           take: pagination.limit,
@@ -28,23 +28,13 @@ export class PayableService {
     ]);
   }
 
-  store(data: CreatePayableWithAssignorDto) {
-    return this.prisma.payable.create({
+  store(data: CreateAssignorSchema) {
+    return this.prisma.assignor.create({
       data: {
-        emissionDate: data.emissionDate,
-        value: data.value,
-        assignor: {
-          create: {
-            document: data.assignor.document,
-            email: data.assignor.email,
-            name: data.assignor.name,
-            phone: data.assignor.phone,
-          },
-        },
-      },
-
-      include: {
-        assignor: true,
+        document: data.document,
+        email: data.email,
+        name: data.name,
+        phone: data.phone,
       },
     });
   }
@@ -55,12 +45,9 @@ export class PayableService {
     });
   }
 
-  update(id: string, data: CreatePayableWithAssignorDto) {
-    return this.prisma.payable.update({
-      data: {
-        emissionDate: data.emissionDate,
-        value: data.value,
-      },
+  update(id: string, data: CreateAssignorSchema) {
+    return this.prisma.assignor.update({
+      data,
 
       where: {
         id,

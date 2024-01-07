@@ -10,25 +10,21 @@ import {
   Res,
   UsePipes,
 } from '@nestjs/common';
-import { PayableService } from './payable.service';
+import { AssignorService } from './assignor.service';
 import { ZodValidationPipe } from 'src/pipes/zod.validation.pipe';
-import {
-  CreatePayableWithAssignorDto,
-  createPayableWithAssignorSchema,
-} from './payable.schema';
 import { Response } from 'express';
 import {
   PaginationSchema,
   paginationSchema,
 } from 'src/schemas/pagination.schema';
 import {
-  CreatePayableSchema,
-  createPayableSchema,
-} from 'src/schemas/payable.schema';
+  CreateAssignorSchema,
+  createAssignorSchema,
+} from 'src/schemas/assignor.schema';
 
-@Controller('integrations/payable')
-export class PayableController {
-  constructor(private readonly service: PayableService) {}
+@Controller('integrations/assignor')
+export class AssignorController {
+  constructor(private readonly service: AssignorService) {}
 
   @Get()
   @UsePipes(new ZodValidationPipe(paginationSchema))
@@ -43,8 +39,8 @@ export class PayableController {
 
   @Post()
   async store(
-    @Body(new ZodValidationPipe(createPayableWithAssignorSchema))
-    payload: CreatePayableWithAssignorDto,
+    @Body(new ZodValidationPipe(createAssignorSchema))
+    payload: CreateAssignorSchema,
   ) {
     const data = await this.service.store(payload);
 
@@ -63,8 +59,8 @@ export class PayableController {
   @Patch(':id')
   async update(
     @Param() params: { id: string },
-    @Body(new ZodValidationPipe(createPayableSchema.partial()))
-    payload: CreatePayableSchema,
+    @Body(new ZodValidationPipe(createAssignorSchema.partial()))
+    payload: CreateAssignorSchema,
     @Res() res: Response,
   ) {
     const data = await this.service.update(params.id, payload);
