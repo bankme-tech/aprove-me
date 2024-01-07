@@ -1,69 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/services/prisma.service';
-import { PaginationSchema } from 'src/schemas/pagination.schema';
-import { CreateAssignorSchema } from 'src/schemas/assignor.schema';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private jwt: JwtService) {}
 
-  index(pagination: PaginationSchema) {
-    return Promise.all([
-      this.prisma.assignor.findMany({
-        take: pagination.limit,
-        skip: (pagination.page - 1) * pagination.limit,
-      }),
-      this.prisma.assignor
-        .aggregate({
-          _count: { id: true },
-          take: pagination.limit,
-          skip: (pagination.page - 1) * pagination.limit,
-        })
-        .then((response) => ({
-          page: pagination.page,
-          pages: Math.ceil(response._count.id / pagination.limit),
-          total: response._count.id,
-          limit: pagination.limit,
-        })),
-    ]);
+  async signIn(login: string, password: string) {
+    return login === 'aprovame' && password === 'aprovame';
   }
 
-  store(data: CreateAssignorSchema) {
-    return this.prisma.assignor.create({
-      data: {
-        document: data.document,
-        email: data.email,
-        name: data.name,
-        phone: data.phone,
-      },
-    });
-  }
-
-  show(id: string) {
-    return this.prisma.payable.findUnique({
-      where: { id },
-    });
-  }
-
-  update(id: string, data: CreateAssignorSchema) {
-    return this.prisma.assignor.update({
-      data,
-
-      where: {
-        id,
-      },
-    });
-  }
-
-  async delete(id: string) {
-    try {
-      const data = await this.prisma.payable.delete({
-        where: { id },
-      });
-
-      return data;
-    } catch (e) {
-      return undefined;
-    }
+  token(payload: Record<string, unknown>) {
+    return this.jwt.signAsync(payload, { secret: process.env.API_TOKEN });
   }
 }
