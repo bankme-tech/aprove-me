@@ -2,10 +2,12 @@
   "name": "my-turborepo",
   "private": true,
   "scripts": {
+	"backend": "cd ./apps/backend && yarn",
     "build": "turbo build",
     "dev": "turbo dev",
 	"dev:backend": "turbo run start:dev --filter=@bankme/backend",
     "lint": "turbo lint",
+	"db:push": "yarn backend prisma db push",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
