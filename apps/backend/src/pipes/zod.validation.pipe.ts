@@ -15,6 +15,7 @@ export class ZodValidationPipe implements PipeTransform {
             code: entry.message === 'Required' ? 'required' : entry.code,
             maximum: (entry as unknown as { maximum: number }).maximum,
             field: entry.path.join('.'),
+            message: entry.message,
           })),
         );
       }

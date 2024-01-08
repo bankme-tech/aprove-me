@@ -23,7 +23,24 @@ export class AuthController {
     }
 
     return {
-      token: await this.service.token({ user: payload.login }),
+      token: await this.service.token(validated),
+      data: validated,
+    };
+  }
+
+  @Post('signup')
+  @Public()
+  async signup(
+    @Body(new ZodValidationPipe(signInSchema)) payload: SignInSchema,
+  ) {
+    const validated = await this.service.signUp(
+      payload.login,
+      payload.password,
+    );
+
+    return {
+      token: await this.service.token(validated),
+      data: validated,
     };
   }
 }
