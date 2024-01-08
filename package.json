@@ -6,6 +6,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
 	"dev:backend": "turbo run start:dev --filter=@bankme/backend",
+	"dev:frontend": "turbo run dev --filter=@bankme/frontend",
     "lint": "turbo lint",
 	"db:push": "yarn backend prisma db push",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
