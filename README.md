@@ -41,7 +41,7 @@ API_TOKEN="8eb0d5eb8a45e4a4ac60b284d317383e91c9d372e3b67b154155c0a1b183c5deb2e5d
 
 #### frontend
 ```
-API_URL=http://localhost:3000
+API_URL=http://localhost:5000
 ```
 
 ### Banco de dados
@@ -50,7 +50,7 @@ Por padrão estamos usando sqlite, para montar o banco, rode: `yarn db:push`.
 
 ### Backend
 
-Agora para rodar o backend em modo de desenvolvimento, você pode rodar: `yarn dev:backend`. Isso vai utilizar a porta 3000, você pode verificar se está tudo funcionando abrindo no seu navegador: `http://localhost:3000`, você deverá ver uma mensagem semelhante a essa:
+Agora para rodar o backend em modo de desenvolvimento, você pode rodar: `yarn dev:backend`. Isso vai utilizar a porta 5000, você pode verificar se está tudo funcionando abrindo no seu navegador: `http://localhost:5000`, você deverá ver uma mensagem semelhante a essa:
 
 ``` json
 {
@@ -61,7 +61,7 @@ Agora para rodar o backend em modo de desenvolvimento, você pode rodar: `yarn d
 
 ### Frontend
 
-Em um novo terminal, rode: `yarn dev:frontend`. Ele irá abrir na porta 3001, você pode verificar entrando no navegador: `http://localhost:3001`.
+Em um novo terminal, rode: `yarn dev:frontend`. Ele irá abrir na porta 3000, você pode verificar entrando no navegador: `http://localhost:3000`.
 
 ## Tarefas
 
@@ -81,5 +81,5 @@ Em um novo terminal, rode: `yarn dev:frontend`. Ele irá abrir na porta 3001, vo
 - [ ] 1 - Cadastro
 - [ ] 2 - Conectando na API
 - [ ] 3 - Listando
-- [ ] 4 - Autenticação
+- [x] 4 - Autenticação
 - [ ] 5 - Testes
