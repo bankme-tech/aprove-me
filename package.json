@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
 	"backend": "cd ./apps/backend && yarn",
+	"frontend": "cd ./apps/frontend && yarn",
     "build": "turbo build",
     "dev": "turbo dev",
 	"dev:backend": "turbo run start:dev --filter=@bankme/backend",
