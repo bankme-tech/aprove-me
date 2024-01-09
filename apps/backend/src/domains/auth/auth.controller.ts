@@ -1,4 +1,11 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ZodValidationPipe } from 'src/pipes/zod.validation.pipe';
 import { signInSchema, SignInSchema } from './auth.schema';
@@ -7,6 +14,11 @@ import { Public } from 'src/decorators/public.decorator';
 @Controller('integrations/auth')
 export class AuthController {
   constructor(private readonly service: AuthService) {}
+
+  @Get()
+  async current(@Request() req) {
+    return { data: req.user };
+  }
 
   @Post()
   @Public()
