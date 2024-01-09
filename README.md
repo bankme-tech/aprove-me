@@ -28,6 +28,22 @@ Para baixar o projeto, escolha a pasta que vai coloca-lo e rode: `https://github
 
 Para baixar as dependencias, simplesmente rode `yarn` ou `npm i` no diretório raiz. Isso vai instalar todas as dependencias dos projetos também.
 
+### Variaveis de ambiente
+
+Você precisará criar dois arquivos para armazenar as variaveis. Uma para o frontend (`/apps/frontend`), outra para o backend (`/apps/backend`). É só criar um arquivo .env em cada um dos diretórios e preencher com:
+
+#### backend
+```
+DATABASE_URL="file:./dev.db"
+API_TOKEN="8eb0d5eb8a45e4a4ac60b284d317383e91c9d372e3b67b154155c0a1b183c5deb2e5d6dceb6366704828c494951925"
+```
+> O Valor do API_TOKEN poderá ser modificado para dar mais segurança
+
+#### frontend
+```
+API_URL=http://localhost:3000
+```
+
 ### Banco de dados
 
 Por padrão estamos usando sqlite, para montar o banco, rode: `yarn db:push`.
