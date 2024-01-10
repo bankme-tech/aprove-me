@@ -17,13 +17,13 @@ export default function Field (props: Props) {
 	const errors = context.errors.filter(t => t.field === props.name)
 
 	return (
-		<fieldset className="space-y-2 mb-4">
+		<fieldset className="space-y-2 mb-4 flex flex-col">
 			{
 				props.label &&
 				<Label htmlFor={props.name}>{props.label}</Label>
 			}
 			{props.render({ value: context.data[props.name] || "", name: props.name, id: props.name, onChange (data) {
-				if (data?.target.value) context.setValue(props.name, data.target.value)
+				if (data?.target?.value) context.setValue(props.name, data.target.value)
 				else context.setValue(props.name, data)
 			} })}
 
