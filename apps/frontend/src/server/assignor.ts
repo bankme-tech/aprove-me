@@ -14,9 +14,11 @@ type Assignor = {
 	name: string;
 }
 
-export const index = action(async (): Promise<Pagination<Assignor>> => {
-	return api("/integrations/assignor").then(t => t.json())
-})
+export const index = async (params: Partial<Pagination> & { q?: string }): Promise<Pagination<Assignor>> => {
+	const query = new URLSearchParams(params as Record<string, string>)
+
+	return api("/integrations/assignor?" + query.toString()).then(t => t.json())
+}
 
 export const store = action(async (form) => {
 	const name = form.get("name")
