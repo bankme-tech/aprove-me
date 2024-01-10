@@ -1,5 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import Dashtitle from "@/components/ui/dashtitle";
+import DateDisplay from "@/components/ui/date-display";
 import { Pagination } from "@/components/ui/pagination";
 import { index } from "@/server/payable";
 import { Edit, Trash } from "lucide-react";
@@ -21,7 +22,7 @@ export default async function Page () {
 							<li key={entry.id} className="flex justify-between">
 								<Link href={`/payables/${entry.id}`} className="w-full">
 									<h3 className="text-xl">{entry.value}</h3>
-									<h5 className="text-xs">{entry.emissionDate}</h5>
+									<h5 className="text-xs"><DateDisplay date={entry.emissionDate} /></h5>
 								</Link>
 
 								<div className="flex gap-2">
