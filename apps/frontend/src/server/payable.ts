@@ -47,16 +47,16 @@ export const show = async (id: string): Promise<{data: Payable}> => {
 
 export const update = action(async (form) => {
 	const id = form.get("id")
-	const value = form.get("value")
-	const emissionDate = form.get("emissionDate")
-	const assignor = form.get("assignor")
+	const value = parseFloat(form.get("value")?.toString()!)
+	const emissionDate = new Date(form.get("emissionDate")?.toString()!).toISOString()
+	const assignor_id = form.get("assignor_id")
 
 	const response = await api(`/integrations/payable/${id}`, {
 		method: "PATCH",
 		body: JSON.stringify({
 			value,
 			emissionDate,
-			assignor,
+			assignor_id,
 		})
 	}).then(t => t.json())
 	

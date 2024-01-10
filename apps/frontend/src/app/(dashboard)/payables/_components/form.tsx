@@ -11,6 +11,7 @@ import { useState } from "react";
 type Props = {
 	action(data: FormData): Promise<any>;
 	data?: Record<string, unknown>;
+	override?: boolean;
 
 	children: React.ReactNode;
 }
@@ -40,7 +41,7 @@ export default function PayableForm(props: Props) {
 				render={(field) => <Input {...field} type="date" />}
 			/>
 			<Field
-				name="assignor"
+				name={props.override ? "assignor_id" : "assignor"}
 				label="Cedente"
 				render={(field) => (
 					<Combobox
