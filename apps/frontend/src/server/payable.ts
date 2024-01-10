@@ -8,10 +8,8 @@ import { redirect } from "next/navigation";
 
 type Payable = {
 	id: string;
-	document: string;
-	email: string;
-	phone: string;
-	name: string;
+	value: string;
+	emissionDate: string;
 }
 
 export const index = action(async (): Promise<Pagination<Payable>> => {
