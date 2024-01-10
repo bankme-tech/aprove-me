@@ -48,3 +48,21 @@ export const store = action(async (form) => {
 export const show = async (id: string): Promise<{data: Assignor}> => {
 	return api(`/integrations/assignor/${id}`).then(t => t.json())
 }
+
+export const remove = action(async (form) => {
+	const id = form.get("id")
+
+	const response = await api(`/integrations/assignor/${id}`, {
+		method: "delete",
+	}).then(t => t.json())
+	
+	if (response.error || response.message === "Unauthorized") {
+		if (typeof response.message === "string")
+			return { errors: [{ message: response.message }] }
+		else
+			return { errors: response.message }
+	}
+
+	revalidatePath("/assignors")
+	redirect("/assignors")
+})
