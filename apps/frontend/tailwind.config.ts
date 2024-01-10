@@ -79,7 +79,13 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+	  require("tailwindcss-animate"),
+	  function ({ addVariant }: { addVariant (...args: string[]): void }) {
+		  addVariant("child", "& > *")
+		  addVariant("child-hover", "&:hover > *")
+	  },
+  ],
 } satisfies Config
 
 export default config

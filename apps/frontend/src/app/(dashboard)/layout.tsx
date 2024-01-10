@@ -32,7 +32,7 @@ export default async function Layout ({ children }: { children: React.ReactNode 
 				/>
 			</aside>
 
-			<div className="w-full">
+			<div className="w-full flex flex-col">
 				<nav className="flex justify-between py-2 px-4">
 					<div />
 
@@ -57,7 +57,7 @@ export default async function Layout ({ children }: { children: React.ReactNode 
 					</DropdownMenu>
 				</nav>
 
-				<main className="child:animate-fade-in">{children}</main>
+				<main className="child:animate-fade-in grow flex">{children}</main>
 			</div>
 		</div>
 	)
