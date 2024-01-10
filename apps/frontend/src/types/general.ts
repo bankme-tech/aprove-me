@@ -1,5 +1,5 @@
 export type Pagination<Data = unknown> = {
-	data: Data;
+	data: Data[];
 	page: number;
 	limit: number;
 	pages: number;

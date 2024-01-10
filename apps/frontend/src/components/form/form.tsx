@@ -19,7 +19,6 @@ export default function Form (props: Props) {
 	const [data, setdata] = useState(props.data || {})
 
 	function setValue (key: string, value: unknown) {
-		console.log(key, value)
 		setdata(prev => ({
 			...prev,
 			[key]: value,
