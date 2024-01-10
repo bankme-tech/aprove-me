@@ -63,6 +63,7 @@ export class AssignorController {
     payload: CreateAssignorSchema,
     @Res() res: Response,
   ) {
+    console.log(params);
     const data = await this.service.update(params.id, payload);
 
     if (!data) return res.status(404).json({});
