@@ -57,7 +57,7 @@ export default async function Layout ({ children }: { children: React.ReactNode 
 					</DropdownMenu>
 				</nav>
 
-				<main className="child:animate-fade-in grow flex">{children}</main>
+				<main className="child:animate-fade-in grow flex flex-col p-4">{children}</main>
 			</div>
 		</div>
 	)

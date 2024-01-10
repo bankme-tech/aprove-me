@@ -74,7 +74,7 @@ Em um novo terminal, rode: `yarn dev:frontend`. Ele irá abrir na porta 3000, vo
 - [ ]  6 - Infra e doc
 - [ ]  7 - lotes
 - [ ]  8 - resiliência
-- [ ]  9 - cloud
+- [x]  9 - cloud
 - [ ] 10 - infra as a code
 
 ### Frontend
