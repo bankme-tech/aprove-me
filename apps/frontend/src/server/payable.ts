@@ -17,8 +17,8 @@ export const index = action(async (): Promise<Pagination<Payable>> => {
 })
 
 export const store = action(async (form) => {
-	const value = form.get("value")
-	const emissionDate = form.get("emissionDate")
+	const value = parseFloat(form.get("value")?.toString()!)
+	const emissionDate = new Date(form.get("emissionDate")?.toString()!).toISOString()
 	const assignor = form.get("assignor")
 
 	const response = await api("/integrations/payable", {

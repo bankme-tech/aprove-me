@@ -1,6 +1,6 @@
 import Dashtitle from "@/components/ui/dashtitle";
 import { Button } from "@/components/ui/button";
-import { store } from "@/server/assignor";
+import { store } from "@/server/payable";
 import PayableForm from "../_components/form";
 
 export default function Page () {

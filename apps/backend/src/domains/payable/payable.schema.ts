@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const createPayableWithAssignorSchema = z
   .object({
-    value: z.number(),
+    value: z.coerce.number(),
     emissionDate: z.string().datetime(),
     assignor: z
       .object({
@@ -11,7 +11,7 @@ export const createPayableWithAssignorSchema = z
         phone: z.string().max(20),
         name: z.string().max(140),
       })
-      .required(),
+      .or(z.string()),
   })
   .required();
 
