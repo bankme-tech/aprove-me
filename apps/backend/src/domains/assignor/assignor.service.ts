@@ -40,7 +40,7 @@ export class AssignorService {
   }
 
   show(id: string) {
-    return this.prisma.payable.findUnique({
+    return this.prisma.assignor.findUnique({
       where: { id },
     });
   }
@@ -57,7 +57,7 @@ export class AssignorService {
 
   async delete(id: string) {
     try {
-      const data = await this.prisma.payable.delete({
+      const data = await this.prisma.assignor.delete({
         where: { id },
       });
 
