@@ -13,7 +13,7 @@ export default async function Layout ({ children }: { children: React.ReactNode 
 	return (
 		<div className="flex h-screen">
 			<aside className="bg-[#005FFF] text-white p-4 max-w-xs w-full relative child:animate-fade-in overflow-hidden max-h-screen">
-				<h2 className="text-2xl mb-4">Bankme</h2>
+				<Link href="/" className="text-2xl mb-6 relative flex">Bankme</Link>
 
 				<ul className="flex flex-col gap-4">
 					<li>
