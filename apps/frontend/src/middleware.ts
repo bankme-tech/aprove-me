@@ -11,7 +11,7 @@ export default async function middleware (request: NextRequest) {
 
 	if (!token) return NextResponse.redirect(new URL("/login", request.url))
 
-	const user = await api("integrations/auth").then(t => t.json())
+	const user = await api("/integrations/auth").then(t => t.json())
 
 	if (!user?.data?.id) return NextResponse.redirect(new URL("/login", request.url))
 
