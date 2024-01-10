@@ -12,12 +12,22 @@ export class AssignorService {
       this.prisma.assignor.findMany({
         take: pagination.limit,
         skip: (pagination.page - 1) * pagination.limit,
+        where: {
+          name: {
+            contains: pagination.q,
+          },
+        },
       }),
       this.prisma.assignor
         .aggregate({
           _count: { id: true },
           take: pagination.limit,
           skip: (pagination.page - 1) * pagination.limit,
+          where: {
+            name: {
+              contains: pagination.q,
+            },
+          },
         })
         .then((response) => ({
           page: pagination.page,
