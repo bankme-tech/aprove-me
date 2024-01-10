@@ -18,7 +18,7 @@ export default function Dashtitle (props: Props) {
 	// -------------------------------------------------
 	return (
 		<>
-			<h1 className="text-2xl font-bold flex items-center">
+			<h1 className="text-2xl font-bold flex items-center mb-4">
 				{
 					props.back &&
 					<Link href={props.back}><ChevronLeft size="28" /></Link>

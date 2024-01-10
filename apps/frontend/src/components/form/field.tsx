@@ -13,7 +13,6 @@ type Props = {
 
 export default function Field (props: Props) {
 	const context = useContext(formContext)
-	const [value, setvalue] = useState("")
 
 	const errors = context.errors.filter(t => t.field === props.name)
 
@@ -23,9 +22,9 @@ export default function Field (props: Props) {
 				props.label &&
 				<Label htmlFor={props.name}>{props.label}</Label>
 			}
-			{props.render({ value, name: props.name, id: props.name, onChange (data) {
-				if (data?.target.value) setvalue(data.target.value)
-				else setvalue(data)
+			{props.render({ value: context.data[props.name] || "", name: props.name, id: props.name, onChange (data) {
+				if (data?.target.value) context.setValue(props.name, data.target.value)
+				else context.setValue(props.name, data)
 			} })}
 
 			{props.description && <p className="text-sm text-muted-foreground">{props.description}</p>}
