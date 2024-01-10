@@ -78,8 +78,8 @@ Em um novo terminal, rode: `yarn dev:frontend`. Ele irá abrir na porta 3000, vo
 - [ ] 10 - infra as a code
 
 ### Frontend
-- [ ] 1 - Cadastro
-- [ ] 2 - Conectando na API
-- [ ] 3 - Listando
+- [x] 1 - Cadastro
+- [x] 2 - Conectando na API
+- [x] 3 - Listando
 - [x] 4 - Autenticação
 - [ ] 5 - Testes
