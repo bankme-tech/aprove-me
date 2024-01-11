@@ -29,16 +29,32 @@ export class PayableService {
   }
 
   store(data: CreatePayableWithAssignorDto) {
+    const { assignor } = data;
+
+    if (typeof assignor === 'string') {
+      return this.prisma.payable.create({
+        data: {
+          emissionDate: data.emissionDate,
+          value: data.value,
+          assignor: {
+            connect: {
+              id: assignor,
+            },
+          },
+        },
+      });
+    }
+
     return this.prisma.payable.create({
       data: {
         emissionDate: data.emissionDate,
         value: data.value,
         assignor: {
           create: {
-            document: data.assignor.document,
-            email: data.assignor.email,
-            name: data.assignor.name,
-            phone: data.assignor.phone,
+            document: assignor.document,
+            email: assignor.email,
+            name: assignor.name,
+            phone: assignor.phone,
           },
         },
       },

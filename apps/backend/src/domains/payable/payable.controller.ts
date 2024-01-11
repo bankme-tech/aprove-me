@@ -55,7 +55,7 @@ export class PayableController {
   async show(@Param() params: { id: string }, @Res() res: Response) {
     const data = await this.service.show(params.id);
 
-    if (!data) return res.status(404).json();
+    if (!data) return res.status(404).json({});
 
     return res.json({ data });
   }
@@ -69,7 +69,7 @@ export class PayableController {
   ) {
     const data = await this.service.update(params.id, payload);
 
-    if (!data) return res.status(404).json();
+    if (!data) return res.status(404).json({});
 
     return res.json({ data });
   }
@@ -78,7 +78,7 @@ export class PayableController {
   async delete(@Param() params: { id: string }, @Res() res: Response) {
     const data = await this.service.delete(params.id);
 
-    if (!data) return res.status(404).json();
+    if (!data) return res.status(404).json({});
 
     return res.json({ data });
   }

@@ -28,13 +28,29 @@ Para baixar o projeto, escolha a pasta que vai coloca-lo e rode: `https://github
 
 Para baixar as dependencias, simplesmente rode `yarn` ou `npm i` no diretório raiz. Isso vai instalar todas as dependencias dos projetos também.
 
+### Variaveis de ambiente
+
+Você precisará criar dois arquivos para armazenar as variaveis. Uma para o frontend (`/apps/frontend`), outra para o backend (`/apps/backend`). É só criar um arquivo .env em cada um dos diretórios e preencher com:
+
+#### backend
+```
+DATABASE_URL="file:./dev.db"
+API_TOKEN="8eb0d5eb8a45e4a4ac60b284d317383e91c9d372e3b67b154155c0a1b183c5deb2e5d6dceb6366704828c494951925"
+```
+> O Valor do API_TOKEN poderá ser modificado para dar mais segurança
+
+#### frontend
+```
+API_URL=http://localhost:5000
+```
+
 ### Banco de dados
 
 Por padrão estamos usando sqlite, para montar o banco, rode: `yarn db:push`.
 
 ### Backend
 
-Agora para rodar o backend em modo de desenvolvimento, você pode rodar: `yarn dev:backend`. Isso vai utilizar a porta 3000, você pode verificar se está tudo funcionando abrindo no seu navegador: `http://localhost:3000`, você deverá ver uma mensagem semelhante a essa:
+Agora para rodar o backend em modo de desenvolvimento, você pode rodar: `yarn dev:backend`. Isso vai utilizar a porta 5000, você pode verificar se está tudo funcionando abrindo no seu navegador: `http://localhost:5000`, você deverá ver uma mensagem semelhante a essa:
 
 ``` json
 {
@@ -45,7 +61,7 @@ Agora para rodar o backend em modo de desenvolvimento, você pode rodar: `yarn d
 
 ### Frontend
 
-Em um novo terminal, rode: `yarn dev:frontend`. Ele irá abrir na porta 3001, você pode verificar entrando no navegador: `http://localhost:3001`.
+Em um novo terminal, rode: `yarn dev:frontend`. Ele irá abrir na porta 3000, você pode verificar entrando no navegador: `http://localhost:3000`.
 
 ## Tarefas
 
@@ -58,12 +74,12 @@ Em um novo terminal, rode: `yarn dev:frontend`. Ele irá abrir na porta 3001, vo
 - [ ]  6 - Infra e doc
 - [ ]  7 - lotes
 - [ ]  8 - resiliência
-- [ ]  9 - cloud
+- [x]  9 - cloud
 - [ ] 10 - infra as a code
 
 ### Frontend
-- [ ] 1 - Cadastro
-- [ ] 2 - Conectando na API
-- [ ] 3 - Listando
-- [ ] 4 - Autenticação
+- [x] 1 - Cadastro
+- [x] 2 - Conectando na API
+- [x] 3 - Listando
+- [x] 4 - Autenticação
 - [ ] 5 - Testes

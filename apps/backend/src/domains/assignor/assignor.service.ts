@@ -12,12 +12,22 @@ export class AssignorService {
       this.prisma.assignor.findMany({
         take: pagination.limit,
         skip: (pagination.page - 1) * pagination.limit,
+        where: {
+          name: {
+            contains: pagination.q,
+          },
+        },
       }),
       this.prisma.assignor
         .aggregate({
           _count: { id: true },
           take: pagination.limit,
           skip: (pagination.page - 1) * pagination.limit,
+          where: {
+            name: {
+              contains: pagination.q,
+            },
+          },
         })
         .then((response) => ({
           page: pagination.page,
@@ -40,7 +50,7 @@ export class AssignorService {
   }
 
   show(id: string) {
-    return this.prisma.payable.findUnique({
+    return this.prisma.assignor.findUnique({
       where: { id },
     });
   }
@@ -57,7 +67,7 @@ export class AssignorService {
 
   async delete(id: string) {
     try {
-      const data = await this.prisma.payable.delete({
+      const data = await this.prisma.assignor.delete({
         where: { id },
       });
 
