@@ -6,22 +6,25 @@ import Providers from './_components/providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Bankme',
-  description: 'Teste para aplicação na vaga de desenvolvedor na Bankme',
+	title: 'Bankme',
+	description: 'Teste para aplicação na vaga de desenvolvedor na Bankme',
+	icons: {
+		icon: "/img/logo.png",
+	},
 }
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode
 }) {
-  return (
-    <html lang="pt-BR">
-      <body className={inter.className}>
-		<Providers>
-			{children}
-		</Providers>
-	  </body>
-    </html>
-  )
+	return (
+		<html lang="pt-BR">
+			<body className={inter.className}>
+				<Providers>
+					{children}
+				</Providers>
+			</body>
+		</html>
+	)
 }
