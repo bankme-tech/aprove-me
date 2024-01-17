@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePayableWithAssignorDto } from './payable.schema';
-import { PrismaService } from 'src/services/prisma.service';
-import { PaginationSchema } from 'src/schemas/pagination.schema';
+import { PrismaService } from '../../services/prisma.service';
+import { PaginationSchema } from '../../schemas/pagination.schema';
 
 @Injectable()
 export class PayableService {
@@ -28,11 +28,11 @@ export class PayableService {
     ]);
   }
 
-  store(data: CreatePayableWithAssignorDto) {
+  async store(data: CreatePayableWithAssignorDto) {
     const { assignor } = data;
 
     if (typeof assignor === 'string') {
-      return this.prisma.payable.create({
+      const response = await this.prisma.payable.create({
         data: {
           emissionDate: data.emissionDate,
           value: data.value,
@@ -43,9 +43,11 @@ export class PayableService {
           },
         },
       });
+
+      return response;
     }
 
-    return this.prisma.payable.create({
+    const response = await this.prisma.payable.create({
       data: {
         emissionDate: data.emissionDate,
         value: data.value,
@@ -63,16 +65,20 @@ export class PayableService {
         assignor: true,
       },
     });
+
+    return response;
   }
 
-  show(id: string) {
-    return this.prisma.payable.findUnique({
+  async show(id: string) {
+    const response = await this.prisma.payable.findUnique({
       where: { id },
     });
+
+    return response;
   }
 
-  update(id: string, data: CreatePayableWithAssignorDto) {
-    return this.prisma.payable.update({
+  async update(id: string, data: CreatePayableWithAssignorDto) {
+    const response = await this.prisma.payable.update({
       data: {
         emissionDate: data.emissionDate,
         value: data.value,
@@ -82,6 +88,8 @@ export class PayableService {
         id,
       },
     });
+
+    return response;
   }
 
   async delete(id: string) {
