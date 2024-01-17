@@ -7,8 +7,8 @@ import { CreateAssignorSchema } from '../../schemas/assignor.schema';
 export class AssignorService {
   constructor(private prisma: PrismaService) {}
 
-  index(pagination: PaginationSchema) {
-    return Promise.all([
+  async index(pagination: PaginationSchema) {
+    const response = await Promise.all([
       this.prisma.assignor.findMany({
         take: pagination.limit,
         skip: (pagination.page - 1) * pagination.limit,
@@ -36,6 +36,8 @@ export class AssignorService {
           limit: pagination.limit,
         })),
     ]);
+
+    return response;
   }
 
   async store(data: CreateAssignorSchema) {
