@@ -101,4 +101,33 @@ describe('AssignorController', () => {
       ).rejects.toThrow();
     });
   });
+
+  describe('update', () => {
+    it('it should update and return the assignor', async () => {
+      const id = '123';
+      const data = {
+        document: '123123',
+        email: 'email@john.doe',
+        phone: '1231321',
+        name: 'John Doe',
+      };
+
+      jest
+        .spyOn(assignorService, 'update')
+        .mockImplementation(async () => ({ id, ...data }));
+
+      const response = await assignorController.update({ id }, data);
+
+      expect(response).toStrictEqual({ data: { id, ...data } });
+    });
+
+    it('it should throw if not found the assignor', async () => {
+      // @ts-expect-error Prisma is not showing nullables properly
+      jest.spyOn(assignorService, 'update').mockImplementation(async () => {});
+
+      await expect(() =>
+        assignorController.update({ id: '123' }, {}),
+      ).rejects.toThrow();
+    });
+  });
 });

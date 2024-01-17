@@ -59,14 +59,16 @@ export class AssignorService {
     return response;
   }
 
-  update(id: string, data: CreateAssignorSchema) {
-    return this.prisma.assignor.update({
+  async update(id: string, data: CreateAssignorSchema) {
+    const response = await this.prisma.assignor.update({
       data,
 
       where: {
         id,
       },
     });
+
+    return response;
   }
 
   async delete(id: string) {
