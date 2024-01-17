@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/services/prisma.service';
-import { PaginationSchema } from 'src/schemas/pagination.schema';
-import { CreateAssignorSchema } from 'src/schemas/assignor.schema';
+import { PrismaService } from '../../services/prisma.service';
+import { PaginationSchema } from '../../schemas/pagination.schema';
+import { CreateAssignorSchema } from '../../schemas/assignor.schema';
 
 @Injectable()
 export class AssignorService {
@@ -38,8 +38,8 @@ export class AssignorService {
     ]);
   }
 
-  store(data: CreateAssignorSchema) {
-    return this.prisma.assignor.create({
+  async store(data: CreateAssignorSchema) {
+    const response = await this.prisma.assignor.create({
       data: {
         document: data.document,
         email: data.email,
@@ -47,12 +47,16 @@ export class AssignorService {
         phone: data.phone,
       },
     });
+
+    return response;
   }
 
-  show(id: string) {
-    return this.prisma.assignor.findUnique({
+  async show(id: string) {
+    const response = await this.prisma.assignor.findUnique({
       where: { id },
     });
+
+    return response;
   }
 
   update(id: string, data: CreateAssignorSchema) {
