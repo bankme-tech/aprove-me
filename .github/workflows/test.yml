@@ -28,3 +28,5 @@ jobs:
         cache: 'yarn'
     - run: yarn
     - run: yarn backend test
+      env:
+        API_TOKEN: ${{ env.API_TOKEN }}
