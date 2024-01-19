@@ -5,6 +5,7 @@ import { PrismaService } from '../../services/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 
 describe('AuthService', () => {
+  let jwtService: JwtService;
   let authService: AuthService;
   let prismaService: PrismaService;
 
@@ -13,17 +14,21 @@ describe('AuthService', () => {
       providers: [AuthService, PrismaService, JwtService],
     }).compile();
 
+    jwtService = moduleRef.get<JwtService>(JwtService);
     authService = moduleRef.get<AuthService>(AuthService);
     prismaService = moduleRef.get<PrismaService>(PrismaService);
   });
 
   describe('token', () => {
     it('it should return a jwt token', async () => {
+      const token = 'asdasdasd';
       const payload = { name: 'John Doe' };
+
+      jest.spyOn(jwtService, 'signAsync').mockImplementation(async () => token);
 
       const response = await authService.token(payload);
 
-      expect(typeof response).toStrictEqual('string');
+      expect(response).toStrictEqual(token);
     });
   });
 
