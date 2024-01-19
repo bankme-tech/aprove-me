@@ -44,7 +44,7 @@ export class AuthService {
     };
   }
 
-  token(payload: Record<string, unknown>) {
+  token(payload: Record<string, unknown> = {}) {
     return this.jwt.signAsync(payload, { secret: process.env.API_TOKEN });
   }
 }
