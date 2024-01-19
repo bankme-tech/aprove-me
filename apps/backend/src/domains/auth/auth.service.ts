@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcryptjs';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/services/prisma.service';
+import { PrismaService } from '../../services/prisma.service';
 
 @Injectable()
 export class AuthService {
@@ -44,7 +44,7 @@ export class AuthService {
     };
   }
 
-  token(payload: Record<string, unknown>) {
+  token(payload: Record<string, unknown> = {}) {
     return this.jwt.signAsync(payload, { secret: process.env.API_TOKEN });
   }
 }

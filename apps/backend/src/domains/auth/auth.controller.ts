@@ -7,9 +7,9 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ZodValidationPipe } from 'src/pipes/zod.validation.pipe';
+import { ZodValidationPipe } from '../../pipes/zod.validation.pipe';
 import { signInSchema, SignInSchema } from './auth.schema';
-import { Public } from 'src/decorators/public.decorator';
+import { Public } from '../../decorators/public.decorator';
 
 @Controller('integrations/auth')
 export class AuthController {

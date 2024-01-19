@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/services/prisma.service';
-import { PaginationSchema } from 'src/schemas/pagination.schema';
-import { CreateAssignorSchema } from 'src/schemas/assignor.schema';
+import { PrismaService } from '../../services/prisma.service';
+import { PaginationSchema } from '../../schemas/pagination.schema';
+import { CreateAssignorSchema } from '../../schemas/assignor.schema';
 
 @Injectable()
 export class AssignorService {
   constructor(private prisma: PrismaService) {}
 
-  index(pagination: PaginationSchema) {
-    return Promise.all([
+  async index(pagination: PaginationSchema) {
+    const response = await Promise.all([
       this.prisma.assignor.findMany({
         take: pagination.limit,
         skip: (pagination.page - 1) * pagination.limit,
@@ -36,10 +36,12 @@ export class AssignorService {
           limit: pagination.limit,
         })),
     ]);
+
+    return response;
   }
 
-  store(data: CreateAssignorSchema) {
-    return this.prisma.assignor.create({
+  async store(data: CreateAssignorSchema) {
+    const response = await this.prisma.assignor.create({
       data: {
         document: data.document,
         email: data.email,
@@ -47,22 +49,28 @@ export class AssignorService {
         phone: data.phone,
       },
     });
+
+    return response;
   }
 
-  show(id: string) {
-    return this.prisma.assignor.findUnique({
+  async show(id: string) {
+    const response = await this.prisma.assignor.findUnique({
       where: { id },
     });
+
+    return response;
   }
 
-  update(id: string, data: CreateAssignorSchema) {
-    return this.prisma.assignor.update({
+  async update(id: string, data: CreateAssignorSchema) {
+    const response = await this.prisma.assignor.update({
       data,
 
       where: {
         id,
       },
     });
+
+    return response;
   }
 
   async delete(id: string) {

@@ -68,7 +68,7 @@ Em um novo terminal, rode: `yarn dev:frontend`. Ele irá abrir na porta 3000, vo
 ### Backend
 - [x]  1 - Validação
 - [x]  2 - Persistência
-- [ ]  3 - Testes
+- [x]  3 - Testes
 - [x]  4 - Autenticação
 - [x]  5 - Gerenciamento de permissões
 - [ ]  6 - Infra e doc
