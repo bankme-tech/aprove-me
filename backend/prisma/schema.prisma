@@ -10,14 +10,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Assignor {
+model Payable {
   id           String   @id @default(uuid())
   value        Float
   emissionDate DateTime
   assignor     Int
 }
 
-model Payable {
+model Assignor {
   document String @id
   email    String
   phone    String
