@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
 import { AssignorService } from "./assignor.service";
 import { Assignor } from "./assignor.model";
 
@@ -11,18 +11,28 @@ export class AssignorController {
         return this.assignorService.getAllAssignors();
     }
 
-    @Get(':id')
-    getAssignor(@Param('id') id: string) {
-        return this.assignorService.getAssignorById(id);
+    @Get(':document')
+    getAssignor(@Param('document') document: string) {
+        return this.assignorService.getAssignorByDocument(document);
     }
 
     @Post()
-    saveAssignor(
+    createAssignor(
         @Body() assignor: Assignor
     ) {
         const {document, email, phone, name} = assignor;
 
-        this.assignorService.saveAssignor(new Assignor(document, email, phone, name));
+        this.assignorService.createAssignor(new Assignor(document, email, phone, name));
+        return;
+    }
+
+    @Patch()
+    updateAssignor(
+        @Body() assignor: Assignor
+    ) {
+        const {document, email, phone, name} = assignor;
+
+        this.assignorService.updateAssignor(new Assignor(document, email, phone, name));
         return;
     }
 }
