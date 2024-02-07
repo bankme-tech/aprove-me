@@ -22,7 +22,12 @@ export class PayableController {
     ) {
         const { value, emissionDate, assignorId } = payable;
 
-        return await this.payableService.createPayable(new Payable(null, value, emissionDate, null, assignorId));
+        const newPayable = new Payable();
+        newPayable.value = value;
+        newPayable.emissionDate = emissionDate;
+        newPayable.assignorId = assignorId;
+
+        return await this.payableService.createPayable(newPayable);
     }
 
     @Patch()
@@ -31,7 +36,13 @@ export class PayableController {
     ) {
         const { id, value, emissionDate, assignorId } = payable;
 
-        return await this.payableService.updatePayable(new Payable(id, value, emissionDate, null, assignorId));
+        const newPayable = new Payable();
+        newPayable.id = id;
+        newPayable.value = value;
+        newPayable.emissionDate = emissionDate;
+        newPayable.assignorId = assignorId;
+
+        return await this.payableService.updatePayable(newPayable);
     }
 
     @Delete(':id')

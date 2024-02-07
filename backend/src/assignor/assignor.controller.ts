@@ -22,7 +22,13 @@ export class AssignorController {
     ) {
         const { document, email, phone, name } = assignor;
 
-        return await this.assignorService.createAssignor(new Assignor(null, document, email, phone, name, null));
+        const newAssignor = new Assignor();
+        newAssignor.document = document;
+        newAssignor.email = email;
+        newAssignor.phone = phone;
+        newAssignor.name = name;
+
+        return await this.assignorService.createAssignor(newAssignor);
     }
 
     @Patch()
@@ -31,7 +37,14 @@ export class AssignorController {
     ) {
         const { id, document, email, phone, name} = assignor;
 
-        return await this.assignorService.updateAssignor(new Assignor(id, document, email, phone, name, null));
+        const newAssignor = new Assignor();
+        newAssignor.id = id;
+        newAssignor.document = document;
+        newAssignor.email = email;
+        newAssignor.phone = phone;
+        newAssignor.name = name;
+
+        return await this.assignorService.updateAssignor(newAssignor);
     }
 
     @Delete(':id')
