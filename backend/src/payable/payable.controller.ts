@@ -13,7 +13,7 @@ export class PayableController {
 
     @Get(':id')
     async getPayable(@Param('id') id: string) {
-        return await this.payableService.getPayableByDocument(id);
+        return await this.payableService.getPayableById(id);
     }
 
     @Post()
@@ -36,7 +36,7 @@ export class PayableController {
 
     @Delete(':id')
     async deletePayable(@Param('id') id: string) {
-        return await this.payableService.deletePayableByDocument(id);
+        return await this.payableService.deletePayableById(id);
     }
 
 }

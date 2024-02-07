@@ -10,7 +10,7 @@ export class PayableService {
         return await this.prisma.payable.findMany({});
     }
 
-    async getPayableByDocument(id: string) {
+    async getPayableById(id: string) {
         return await this.prisma.payable.findUnique({
             where: {
                 id: id
@@ -41,7 +41,7 @@ export class PayableService {
         })
     }
 
-    async deletePayableByDocument(id: string) {
+    async deletePayableById(id: string) {
         return await this.prisma.payable.delete({
             where: {
                 id: id
