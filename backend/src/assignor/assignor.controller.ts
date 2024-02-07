@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/commo
 import { AssignorService } from "./assignor.service";
 import { Assignor } from "./assignor.model";
 
-@Controller('assignor')
+@Controller()
 export class AssignorController {
     constructor(private readonly assignorService: AssignorService) { }
 
