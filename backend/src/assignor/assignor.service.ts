@@ -6,20 +6,20 @@ import { PrismaService } from "src/prisma.service";
 export class AssignorService {
     constructor(private readonly prisma: PrismaService) { }
 
-    getAllAssignors() {
-        return this.prisma.assignor.findMany({});
+    async getAllAssignors() {
+        return await this.prisma.assignor.findMany({});
     }
 
-    getAssignorByDocument(document: string) {
-        return this.prisma.assignor.findFirst({
+    async getAssignorByDocument(document: string) {
+        return await this.prisma.assignor.findFirst({
             where: {
                 document: document
             }
         });
     }
 
-    createAssignor(assignor: Assignor) {
-        return this.prisma.assignor.create({
+    async createAssignor(assignor: Assignor) {
+        const data = await this.prisma.assignor.create({
             data: {
                 document: assignor.document,
                 email: assignor.email,
@@ -29,8 +29,8 @@ export class AssignorService {
         })
     }
 
-    updateAssignor(assignor: Assignor) {
-        return this.prisma.assignor.update({
+    async updateAssignor(assignor: Assignor) {
+        return await this.prisma.assignor.update({
             data: {
                 document: assignor.document,
                 email: assignor.email,
