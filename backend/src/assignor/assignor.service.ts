@@ -10,7 +10,7 @@ export class AssignorService {
         return await this.prisma.assignor.findMany({});
     }
 
-    async getAssignorById(id: number) {
+    async getAssignorById(id: string) {
         return await this.prisma.assignor.findFirst({
             where: {
                 id: id
@@ -44,7 +44,7 @@ export class AssignorService {
         })
     }
 
-    async deleteAssignorById(id: number) {
+    async deleteAssignorById(id: string) {
         return await this.prisma.assignor.delete({
             where: {
                 id: id

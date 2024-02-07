@@ -6,6 +6,6 @@ export class Payable {
         public value: number,
         public emissionDate: Date,
         public assignor: Assignor,
-        public assignorId: number,
+        public assignorId: string,
     ) { }
 }
