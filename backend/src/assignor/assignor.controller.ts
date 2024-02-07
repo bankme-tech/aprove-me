@@ -13,7 +13,7 @@ export class AssignorController {
 
     @Get(':id')
     async getAssignor(@Param('id') id: number) {
-        return await this.assignorService.getAssignorById(id);
+        return await this.assignorService.getAssignorById(Number(id));
     }
 
     @Post()
@@ -36,6 +36,6 @@ export class AssignorController {
 
     @Delete(':id')
     async deleteAssignor(@Param('id') id: number) {
-        return await this.assignorService.deleteAssignorById(id);
+        return await this.assignorService.deleteAssignorById(Number(id));
     }
 }
