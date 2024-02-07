@@ -15,14 +15,14 @@ model Payable {
   value        Float
   emissionDate DateTime
   assignor     Assignor @relation(fields: [assignorId], references: [id])
-  assignorId   Int
+  assignorId   String
 }
 
 model Assignor {
-  id       Int       @id @default(autoincrement())
+  id       String       @id @default(uuid())
   document String
   email    String
   phone    String
   name     String
-  Payable  Payable[]
+  payable  Payable[]
 }
