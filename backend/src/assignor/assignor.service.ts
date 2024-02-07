@@ -10,10 +10,10 @@ export class AssignorService {
         return await this.prisma.assignor.findMany({});
     }
 
-    async getAssignorByDocument(document: string) {
+    async getAssignorById(id: number) {
         return await this.prisma.assignor.findFirst({
             where: {
-                document: document
+                id: id
             }
         });
     }
@@ -32,21 +32,22 @@ export class AssignorService {
     async updateAssignor(assignor: Assignor) {
         return await this.prisma.assignor.update({
             data: {
+                id: assignor.id,
                 document: assignor.document,
                 email: assignor.email,
                 name: assignor.name,
                 phone: assignor.phone,
             },
             where: {
-                document: assignor.document
+                id: assignor.id
             }
         })
     }
 
-    async deleteAssignorByDocument(document: string) {
+    async deleteAssignorById(id: number) {
         return await this.prisma.assignor.delete({
             where: {
-                document: document
+                id: id
             }
         });
     }

@@ -20,18 +20,18 @@ export class PayableController {
     async createPayable(
         @Body() payable: Payable
     ) {
-        const { value, emissionDate, assignor } = payable;
+        const { value, emissionDate, assignorId } = payable;
 
-        return await this.payableService.createPayable(new Payable(null, value, emissionDate, assignor));
+        return await this.payableService.createPayable(new Payable(null, value, emissionDate, null, assignorId));
     }
 
     @Patch()
     async updatePayable(
         @Body() payable: Payable
     ) {
-        const { id, value, emissionDate, assignor } = payable;
+        const { id, value, emissionDate, assignorId } = payable;
 
-        return await this.payableService.updatePayable(new Payable(id, value, emissionDate, assignor));
+        return await this.payableService.updatePayable(new Payable(id, value, emissionDate, null, assignorId));
     }
 
     @Delete(':id')

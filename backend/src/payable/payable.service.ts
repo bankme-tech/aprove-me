@@ -23,7 +23,7 @@ export class PayableService {
             data: {
                 value: payable.value,
                 emissionDate: payable.emissionDate,
-                assignor: payable.assignor
+                assignorId: payable.assignorId
             }
         })
     }
@@ -33,7 +33,7 @@ export class PayableService {
             data: {
                 value: payable.value,
                 emissionDate: payable.emissionDate,
-                assignor: payable.assignor
+                assignorId: payable.assignorId
             },
             where: {
                 id: payable.id

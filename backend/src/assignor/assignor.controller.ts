@@ -11,9 +11,9 @@ export class AssignorController {
         return await this.assignorService.getAllAssignors();
     }
 
-    @Get(':document')
-    async getAssignor(@Param('document') document: string) {
-        return await this.assignorService.getAssignorByDocument(document);
+    @Get(':id')
+    async getAssignor(@Param('id') id: number) {
+        return await this.assignorService.getAssignorById(id);
     }
 
     @Post()
@@ -22,20 +22,20 @@ export class AssignorController {
     ) {
         const { document, email, phone, name } = assignor;
 
-        return await this.assignorService.createAssignor(new Assignor(document, email, phone, name));
+        return await this.assignorService.createAssignor(new Assignor(null, document, email, phone, name, null));
     }
 
     @Patch()
     async updateAssignor(
         @Body() assignor: Assignor
     ) {
-        const { document, email, phone, name } = assignor;
+        const { id, document, email, phone, name} = assignor;
 
-        return await this.assignorService.updateAssignor(new Assignor(document, email, phone, name));
+        return await this.assignorService.updateAssignor(new Assignor(id, document, email, phone, name, null));
     }
 
-    @Delete(':document')
-    async deleteAssignor(@Param('document') document: string) {
-        return await this.assignorService.deleteAssignorByDocument(document);
+    @Delete(':id')
+    async deleteAssignor(@Param('id') id: number) {
+        return await this.assignorService.deleteAssignorById(id);
     }
 }
