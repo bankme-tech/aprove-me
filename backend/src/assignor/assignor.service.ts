@@ -19,7 +19,7 @@ export class AssignorService {
     }
 
     async createAssignor(assignor: Assignor) {
-        const data = await this.prisma.assignor.create({
+        return await this.prisma.assignor.create({
             data: {
                 document: assignor.document,
                 email: assignor.email,
@@ -41,5 +41,13 @@ export class AssignorService {
                 document: assignor.document
             }
         })
+    }
+
+    async deleteAssignorByDocument(document: string) {
+        return await this.prisma.assignor.delete({
+            where: {
+                document: document
+            }
+        });
     }
 }
