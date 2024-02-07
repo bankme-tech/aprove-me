@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { AssignorService } from "./assignor.service";
 import { Assignor } from "./assignor.model";
 
@@ -7,32 +7,35 @@ export class AssignorController {
     constructor(private readonly assignorService: AssignorService) { }
 
     @Get()
-    getAssignors() {
-        return this.assignorService.getAllAssignors();
+    async getAssignors() {
+        return await this.assignorService.getAllAssignors();
     }
 
     @Get(':document')
-    getAssignor(@Param('document') document: string) {
-        return this.assignorService.getAssignorByDocument(document);
+    async getAssignor(@Param('document') document: string) {
+        return await this.assignorService.getAssignorByDocument(document);
     }
 
     @Post()
-    createAssignor(
+    async createAssignor(
         @Body() assignor: Assignor
     ) {
-        const {document, email, phone, name} = assignor;
+        const { document, email, phone, name } = assignor;
 
-        this.assignorService.createAssignor(new Assignor(document, email, phone, name));
-        return;
+        return await this.assignorService.createAssignor(new Assignor(document, email, phone, name));
     }
 
     @Patch()
-    updateAssignor(
+    async updateAssignor(
         @Body() assignor: Assignor
     ) {
-        const {document, email, phone, name} = assignor;
+        const { document, email, phone, name } = assignor;
 
-        this.assignorService.updateAssignor(new Assignor(document, email, phone, name));
-        return;
+        return await this.assignorService.updateAssignor(new Assignor(document, email, phone, name));
+    }
+
+    @Delete(':document')
+    async deleteAssignor(@Param('document') document: string) {
+        return await this.assignorService.deleteAssignorByDocument(document);
     }
 }
