@@ -2,6 +2,8 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { AssignorController } from "./assignor.controller";
 import { AssignorService } from "./assignor.service";
 import { Assignor } from "./assignor.model";
+import { CanActivate } from "@nestjs/common";
+import { AuthGuard } from "../auth/auth.guard";
 
 const assignor = new Assignor();
 assignor.id = '123';
@@ -16,6 +18,8 @@ describe("AssignorController", () => {
     let assignorController: AssignorController;
 
     beforeEach(async () => {
+        const mockGuard: CanActivate = { canActivate: jest.fn(() => true) };
+
         const module: TestingModule = await Test.createTestingModule({
             controllers: [AssignorController],
             providers: [
@@ -30,7 +34,10 @@ describe("AssignorController", () => {
                     }
                 }
             ]
-        }).compile();
+        })
+        .overrideGuard(AuthGuard)
+        .useValue(mockGuard)
+        .compile();
 
         assignorController = module.get<AssignorController>(AssignorController);
     });
@@ -82,7 +89,7 @@ describe("AssignorController", () => {
             expect(result).toEqual(assignor);
         });
     });
-    
+
     describe("deleteAssignor", () => {
         it("should return one assignor with the same param id sent successfully", async () => {
             const id = '123';
