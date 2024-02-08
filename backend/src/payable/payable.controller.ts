@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
 import { PayableService } from "./payable.service";
 import { Payable } from "./payable.model";
-import { AuthGuard } from "src/auth/auth.guard";
-import { RoleGuard } from "src/role/role.guard";
-import { Roles } from "src/role/role.decorator";
-import { Role } from "src/role/role.enum";
+import { AuthGuard } from "../auth/auth.guard";
+import { RoleGuard } from "../role/role.guard";
+import { Roles } from "../role/role.decorator";
+import { Role } from "../role/role.enum";
 
 @Controller()
 export class PayableController {

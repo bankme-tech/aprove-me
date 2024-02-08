@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Request, UseGuards } from "@nestjs/common";
 import { AssignorService } from "./assignor.service";
 import { Assignor } from "./assignor.model";
-import { AuthGuard } from "src/auth/auth.guard";
-import { Roles } from "src/role/role.decorator";
-import { Role } from "src/role/role.enum";
-import { RoleGuard } from "src/role/role.guard";
+import { AuthGuard } from "../auth/auth.guard";
+import { Roles } from "../role/role.decorator";
+import { Role } from "../role/role.enum";
+import { RoleGuard } from "../role/role.guard";
 
 @Controller()
 export class AssignorController {
