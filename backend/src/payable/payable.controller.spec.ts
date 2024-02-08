@@ -2,6 +2,8 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { PayableController } from "./payable.controller";
 import { Payable } from "./payable.model";
 import { PayableService } from "./payable.service";
+import { CanActivate } from "@nestjs/common";
+import { AuthGuard } from "../auth/auth.guard";
 
 const emissionDate = new Date();
 
@@ -17,6 +19,8 @@ describe("PayableController", () => {
     let payableController: PayableController;
 
     beforeEach(async () => {
+        const mockGuard: CanActivate = { canActivate: jest.fn(() => true) };
+
         const module: TestingModule = await Test.createTestingModule({
             controllers: [PayableController],
             providers: [
@@ -31,7 +35,10 @@ describe("PayableController", () => {
                     }
                 }
             ]
-        }).compile();
+        })
+            .overrideGuard(AuthGuard)
+            .useValue(mockGuard)
+            .compile();
 
         payableController = module.get<PayableController>(PayableController);
     });
