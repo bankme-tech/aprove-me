@@ -74,6 +74,14 @@ describe("AssignorController", () => {
             expect(result.name).toBe(newAssignor.name);
         });
     });
+
+    describe("updateAssignor", () => {
+        it("should return the same assignor sent successfully", async () => {
+            const result = await assignorController.updateAssignor(assignor);
+
+            expect(result).toEqual(assignor);
+        });
+    });
     
     describe("deleteAssignor", () => {
         it("should return one assignor with the same param id sent successfully", async () => {
