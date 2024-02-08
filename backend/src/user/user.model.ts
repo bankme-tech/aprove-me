@@ -1,4 +1,5 @@
 import { IsNotEmpty } from "class-validator";
+import { Role } from "src/role/role.enum";
 
 export class User {
     public id: string;
@@ -10,4 +11,6 @@ export class User {
 
     @IsNotEmpty()
     public password: string;
+
+    public roles: Role[]
 }
