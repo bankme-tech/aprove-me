@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.model';
+import { Role } from 'src/role/role.enum';
 
 @Injectable()
 export class UserService {
@@ -9,6 +10,7 @@ export class UserService {
     const user = new User();
     user.login = 'aprovame';
     user.password = 'aprovame';
+    user.roles = [Role.User];
 
     this.users.push(user);
   }
