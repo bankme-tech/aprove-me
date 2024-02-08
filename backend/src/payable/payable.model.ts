@@ -15,4 +15,6 @@ export class Payable {
     
     @IsNotEmpty()
     public assignorId: string
+
+    public deleted: boolean
 }

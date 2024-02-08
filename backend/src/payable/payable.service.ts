@@ -7,13 +7,18 @@ export class PayableService {
     constructor(private readonly prisma: PrismaService) { }
 
     async getAllPayables() {
-        return await this.prisma.payable.findMany({});
+        return await this.prisma.payable.findMany({
+            where: {
+                deleted: false
+            }
+        });
     }
 
     async getPayableById(id: string) {
         return await this.prisma.payable.findUnique({
             where: {
-                id: id
+                id: id,
+                deleted: false
             }
         });
     }
@@ -36,7 +41,8 @@ export class PayableService {
                 assignorId: payable.assignorId
             },
             where: {
-                id: payable.id
+                id: payable.id,
+                deleted: false
             }
         })
     }

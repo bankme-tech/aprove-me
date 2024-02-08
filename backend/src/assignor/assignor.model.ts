@@ -21,4 +21,6 @@ export class Assignor {
     public name: string
 
     public payable: Payable[]
+
+    public deleted: boolean
 }

@@ -1,19 +1,24 @@
 import { Injectable } from "@nestjs/common";
-import { Assignor } from "./assignor.model";
 import { PrismaService } from "../prisma.service";
+import { Assignor } from "@prisma/client";
 
 @Injectable()
 export class AssignorService {
     constructor(private readonly prisma: PrismaService) { }
 
     async getAllAssignors() {
-        return await this.prisma.assignor.findMany({});
+        return await this.prisma.assignor.findMany({
+            where: {
+                deleted: false
+            }
+        });
     }
 
     async getAssignorById(id: string) {
         return await this.prisma.assignor.findFirst({
             where: {
-                id: id
+                id: id,
+                deleted: false
             }
         });
     }
@@ -39,7 +44,8 @@ export class AssignorService {
                 phone: assignor.phone,
             },
             where: {
-                id: assignor.id
+                id: assignor.id,
+                deleted: false
             }
         })
     }

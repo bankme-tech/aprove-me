@@ -16,6 +16,7 @@ model Payable {
   emissionDate DateTime
   assignor     Assignor @relation(fields: [assignorId], references: [id])
   assignorId   String
+  deleted Boolean @default(false)
 }
 
 model Assignor {
@@ -25,4 +26,5 @@ model Assignor {
   phone    String
   name     String
   payable  Payable[]
+  deleted Boolean @default(false)
 }
