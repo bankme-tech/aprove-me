@@ -83,6 +83,7 @@ const Home = () => {
                     <Input
                         label="Senha"
                         name="password"
+                        type="password"
                         errors={errors}
                         control={control}
                         rules={{ required: "Senha obrigatória" }}

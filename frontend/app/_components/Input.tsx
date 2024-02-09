@@ -4,12 +4,13 @@ import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { Control, Controller, FieldValues, RegisterOptions } from "react-hook-form";
 
-const Input = ({ label, name, control, errors, rules }: {
+const Input = ({ label, name, control, errors, rules, type }: {
     label: string
     name: string
     control?: Control<FieldValues>
     errors?: any
     rules?: Omit<RegisterOptions<FieldValues, "value">, "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"> | undefined
+    type?: string
 }) => {
 
     const getFormErrorMessage = (name: string) => {
@@ -24,7 +25,7 @@ const Input = ({ label, name, control, errors, rules }: {
             render={({ field, fieldState }) => (
                 <div className="w-full flex flex-col items-start gap-1">
                     <label htmlFor={field.name} className={classNames({ 'p-error': errors.value })}>{label}</label>
-                    <InputText id={field.name} value={field.value || ''} className={`w-full ${classNames({ 'p-invalid': fieldState.error })}`} onChange={(e) => field.onChange(e.target.value)} />
+                    <InputText id={field.name} value={field.value || ''} className={`w-full ${classNames({ 'p-invalid': fieldState.error })}`} onChange={(e) => field.onChange(e.target.value)} type={type}/>
                     {getFormErrorMessage(field.name)}
                 </div>
             )}
