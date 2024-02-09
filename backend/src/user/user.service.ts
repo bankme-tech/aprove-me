@@ -15,7 +15,7 @@ export class UserService {
     this.users.push(user);
   }
 
-  async findOne(username: string): Promise<User> {
-    return this.users.find(user => user.username === username);
+  async findOne(login: string): Promise<User> {
+    return this.users.find(user => user.login === login);
   }
 }
