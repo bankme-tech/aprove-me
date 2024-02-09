@@ -3,7 +3,7 @@
 export const getAssignors = async (token: string) => {
     const res = await fetch(`${process.env.BASE_URL}/integrations/assignor`, {
         headers: {
-            'Authentication': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
         },
         cache: 'no-store'
     });
