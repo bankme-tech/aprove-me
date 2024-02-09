@@ -1,47 +1,44 @@
 'use client';
 
-import { FormEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Input from "../_components/Input";
 import { Button } from "primereact/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { auth } from "./_actions/auth";
 import { Toast } from "primereact/toast";
+import { FieldValues, useForm } from "react-hook-form";
 
 const Home = () => {
     const toastRef = useRef<any>(null);
 
+    const { control, handleSubmit, formState: { errors } } = useForm();
+
     const router = useRouter();
 
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const showError = (message: string) => {
+    const showToastError = (message: string) => {
         toastRef.current.show({
             severity: 'error', summary: 'Error!', detail: message
         });
     }
 
-    const signIn = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
+    const onSubmit = async (data: FieldValues) => {
         try {
             setIsLoading(true);
 
-            const result = await auth(login, password);
-
-            console.log(result)
+            const result = await auth(data.login, data.password);
 
             if (result?.error) {
                 for (let i = 0; i < result.message.length; i++) {
-                    showError(result.message[i]);
+                    showToastError(result.message[i]);
                 }
                 return;
             }
 
             if (!result?.access_token) {
-                showError('Usuário não encontrado!');
+                showToastError('Usuário não encontrado!');
                 return;
             }
 
@@ -49,7 +46,7 @@ const Home = () => {
 
             router.push('/assignors');
         } catch (e: any) {
-            showError(e.message);
+            showToastError(e.message);
         } finally {
             setIsLoading(false);
         }
@@ -71,21 +68,24 @@ const Home = () => {
                 </div>
                 <form
                     className="w-full h-full flex flex-col items-start gap-4 p-4"
-                    onSubmit={signIn}
+                    onSubmit={handleSubmit(onSubmit)}
                 >
                     <h1 className="text-3xl font-bold">Login</h1>
 
                     <Input
                         label="Usuário"
-                        onChange={e => setLogin(e.target.value)}
-                        value={login}
+                        name="login"
+                        errors={errors}
+                        control={control}
+                        rules={{ required: "Usuário obrigatório" }}
                     />
 
                     <Input
-                        type="password"
                         label="Senha"
-                        onChange={e => setPassword(e.target.value)}
-                        value={password}
+                        name="password"
+                        errors={errors}
+                        control={control}
+                        rules={{ required: "Senha obrigatória" }}
                     />
 
                     <Button
