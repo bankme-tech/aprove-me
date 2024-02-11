@@ -8,6 +8,8 @@ import { Suspense } from "react";
 
 const Assignors = () => {
 
+    const token = localStorage.getItem('token');
+
     return (
         <div>
             <Header />
@@ -20,7 +22,7 @@ const Assignors = () => {
                 </div>
 
                 <Suspense fallback={<div>Carregando...</div>}>
-                    <AssignorsList />
+                    <AssignorsList token={token} />
                 </Suspense>
             </Container>
         </div>
