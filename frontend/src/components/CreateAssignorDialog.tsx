@@ -6,10 +6,14 @@ import { useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { BASE_URL } from "@/contants";
 import Input from "./Input";
+import { useRouter } from "next/navigation";
 
 const CreateAssignorDialog = ({ visible, toggleDialog }: {
     visible: boolean, toggleDialog: () => void
 }) => {
+
+    const router = useRouter();
+
     const toastRef = useRef<any>(null);
 
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -30,14 +34,16 @@ const CreateAssignorDialog = ({ visible, toggleDialog }: {
 
             const res = await fetch(`${BASE_URL}/integrations/assignor`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
                 method: 'post',
                 body: JSON.stringify(data)
             });
+            
             const result = await res.json();
 
-            console.log(result);
+            router.push(`/assignors/${result.id}`);
 
             toggleDialog();
         } catch (e: any) {
