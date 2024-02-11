@@ -3,18 +3,27 @@
 import { useState } from "react";
 import CreateAssignorDialog from "./CreateAssignorDialog";
 import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import AssignorForm from "./AssignorForm";
 
 const AddAssignorButton = () => {
 
-    const [visible, setVisible] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const toggleDialog = () => {
-        setVisible(value => !value);
+        setOpen(value => !value);
     }
 
     return (
         <div>
-            <CreateAssignorDialog visible={visible} toggleDialog={toggleDialog} />
+            <Dialog
+                visible={open}
+                onHide={toggleDialog}
+                header="Criar novo cedente"
+                className="w-full max-w-md"
+            >
+                <AssignorForm />
+            </Dialog>
 
             <Button label="Novo" onClick={toggleDialog} />
         </div>
