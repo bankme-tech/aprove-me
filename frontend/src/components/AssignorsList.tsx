@@ -1,14 +1,9 @@
 import { BASE_URL } from "@/contants";
-import Link from "next/link";
+import AssignorItem from "./AssignorItem";
 
-const AssignorsList = async ({token}: {
-    token: string | null
+const AssignorsList = async ({ token }: {
+    token: string
 }) => {
-
-    console.log(token);
-
-    if(!token) return;
-
     const res = await fetch(`${BASE_URL}/integrations/assignor`, {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -20,14 +15,7 @@ const AssignorsList = async ({token}: {
     return (
         <div className="w-full">
             {assignors.map((assignor: any) => (
-                <div className="w-full flex items-center justify-between py-4">
-                    <p>{assignor.name}</p>
-
-                    <Link
-                     href={`/assignors/${assignor.id}`}
-                     className="underline text-[--primary]"
-                     >Ver detalhes</Link>
-                </div>
+                <AssignorItem key={assignor.id} assignor={assignor} />
             ))}
         </div>
     )
