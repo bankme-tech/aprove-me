@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import AssignorForm from "./AssignorForm";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Toast } from "primereact/toast";
 
 interface AssignorItemActionsProps {
     assignor: {
@@ -17,6 +18,7 @@ interface AssignorItemActionsProps {
 }
 
 const AssignorItemActions = (props: AssignorItemActionsProps) => {
+    const toastRef = useRef<any>();
 
     const { assignor } = props;
 
@@ -28,15 +30,28 @@ const AssignorItemActions = (props: AssignorItemActionsProps) => {
         setOpen(value => !value);
     }
 
+    const showToastSuccess = () => {
+        toastRef.current.show({
+            severity: 'success', summary: 'Sucesso!', detail: 'Informações armazenadas com sucesso!'
+        });
+    }
+
+    const handleOnSuccess = () => {
+        toggleDialog();
+        showToastSuccess();
+    }
+
     return (
         <div>
+            <Toast ref={toastRef} />
+
             <Dialog
                 header="Editar cedente"
                 visible={open}
                 onHide={toggleDialog}
                 className="w-full max-w-md"
             >
-                <AssignorForm assignor={assignor} />
+                <AssignorForm assignor={assignor} onSuccess={handleOnSuccess} />
             </Dialog>
 
             <div className="flex items-center gap-4">
