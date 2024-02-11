@@ -7,9 +7,9 @@ import { Control, Controller, FieldValues, RegisterOptions } from "react-hook-fo
 const Input = ({ label, name, control, errors, rules, type }: {
     label: string
     name: string
-    control?: Control<FieldValues>
+    control?: Control<any>
     errors?: any
-    rules?: Omit<RegisterOptions<FieldValues, "value">, "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"> | undefined
+    rules?: Omit<RegisterOptions<any, "value">, "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"> | undefined
     type?: string
 }) => {
 
