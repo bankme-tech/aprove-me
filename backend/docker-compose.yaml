@@ -1,0 +1,8 @@
+version: '3'
+services:
+  sqlite-container:
+    image: alpine:latest
+    container_name: sqlite-container
+    volumes:
+       - $pwd/mydb.sqlite:/db/mydb.sqlite
+    tty: true
