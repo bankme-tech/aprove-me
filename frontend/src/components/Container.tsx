@@ -4,7 +4,7 @@ const Container = ({children}: {
     children?: ReactNode
 }) => {
     return (
-        <div className="w-full flex flex-col items-start gap-4 p-4">
+        <div className="w-full max-w-5xl mx-auto flex flex-col items-start gap-4 p-4">
             {children}
         </div>
     )
