@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import Input from "./Input";
 import { Button } from "primereact/button";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Toast } from "primereact/toast";
+import { BASE_URL } from "@/contants";
 
 interface Assignor {
     id: string
@@ -11,14 +13,16 @@ interface Assignor {
     phone: string
 }
 
-const AssignorForm = ({ assignor }: {
-    assignor?: Assignor
+const AssignorForm = ({ assignor, onSuccess }: {
+    assignor?: Assignor, onSuccess: () => void
 }) => {
+    const toastRef = useRef<any>();
 
     let defaultValues;
     
     if(assignor) {
         defaultValues = {
+            id: assignor.id,
             name: assignor.name,
             document: assignor.document,
             email: assignor.email,
@@ -32,8 +36,47 @@ const AssignorForm = ({ assignor }: {
         defaultValues
     });
 
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const showToastError = (message: string) => {
+        toastRef.current.show({
+            severity: 'error', summary: 'Erro!', detail: message
+        });
+    }
+
+    const onSubmit = async (data: any) => {
+        try {
+            setIsSubmitLoading(true);
+
+            const token = localStorage.getItem('token');
+
+            let method = 'POST';
+
+            if(data.id) {
+                method = 'PATCH';
+            }
+
+            const res = await fetch(`${BASE_URL}/integrations/assignor`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                method,
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+
+            if(result?.error) {
+                for(let i = 0; i < result.message.length; i++) {
+                    showToastError(result.message[i]);
+                }
+                return;
+            }
+
+            onSuccess();
+        } catch(e: any) {
+            showToastError(e.message);
+        } finally {
+            setIsSubmitLoading(false);
+        }
     }
 
     return (
@@ -41,6 +84,7 @@ const AssignorForm = ({ assignor }: {
             className="w-full flex flex-col gap-4"
             onSubmit={handleSubmit(onSubmit)}
         >
+            <Toast ref={toastRef} />
             <Input
                 label="Nome"
                 name="name"
