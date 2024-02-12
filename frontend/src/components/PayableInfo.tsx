@@ -1,6 +1,7 @@
 import { BASE_URL } from "@/contants";
 import { currency } from "@/helpers/currency";
 import { formatDate } from "@/helpers/format-date";
+import Link from "next/link";
 
 const PayableInfo = async ({ token, id }: {
     token: string | null, id: string
@@ -12,8 +13,6 @@ const PayableInfo = async ({ token, id }: {
         }
     });
     const payable = await res.json();
-    
-    console.log(payable);
 
     return (
         <div className="w-full">
@@ -23,7 +22,10 @@ const PayableInfo = async ({ token, id }: {
             </div>
             <div className="flex items-center justify-between py-4">
                 <p className="font-bold">Cedente</p>
-                <p>{payable.assignor.name}</p>
+                <Link
+                 href={`/assignors/${payable.assignor.id}`}
+                 className="underline text-blue-600"
+                 >{payable.assignor.name}</Link>
             </div>
             <div className="flex items-center justify-between py-4">
                 <p className="font-bold">Data de emissão</p>
