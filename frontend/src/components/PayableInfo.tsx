@@ -1,4 +1,6 @@
 import { BASE_URL } from "@/contants";
+import { currency } from "@/helpers/currency";
+import { formatDate } from "@/helpers/format-date";
 
 const PayableInfo = async ({ token, id }: {
     token: string | null, id: string
@@ -17,7 +19,7 @@ const PayableInfo = async ({ token, id }: {
         <div className="w-full">
             <div className="flex items-center justify-between py-4">
                 <p className="font-bold">Valor</p>
-                <p>{payable.value}</p>
+                <p>{currency(payable.value)}</p>
             </div>
             <div className="flex items-center justify-between py-4">
                 <p className="font-bold">Cedente</p>
@@ -25,7 +27,7 @@ const PayableInfo = async ({ token, id }: {
             </div>
             <div className="flex items-center justify-between py-4">
                 <p className="font-bold">Data de emissão</p>
-                <p>{payable.emissionDate}</p>
+                <p>{formatDate(payable.emissionDate)}</p>
             </div>
         </div>
     )

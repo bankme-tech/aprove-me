@@ -12,7 +12,7 @@ interface PayableItemActionsProps {
     payable: {
         id: string
         value: number
-        emissionDate: Date
+        emissionDate: string
         assignorId: string
     }
 }

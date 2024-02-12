@@ -1,10 +1,12 @@
+import { currency } from "@/helpers/currency"
 import PayableItemActions from "./PayableItemActions"
+import { formatDate } from "@/helpers/format-date"
 
 interface PayableItemProps {
     payable: {
         id: string
         value: number
-        emissionDate: Date
+        emissionDate: string
         assignorId: string
         assignor: {
             name: string
@@ -19,9 +21,9 @@ const PayableItem = (props: PayableItemProps) => {
     return (
         <div className="w-full flex items-center justify-between py-4">
             <div className="flex flex-col gap-1">
-                <p>{payable.value}</p>
+                <p>{currency(payable.value)}</p>
                 <p>{payable.assignor.name}</p>
-                <p>{payable.emissionDate.toString()}</p>
+                <p>{formatDate(payable.emissionDate)}</p>
             </div>
 
             <PayableItemActions payable={payable} />
