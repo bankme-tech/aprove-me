@@ -54,7 +54,7 @@ const AssignorItemActions = (props: AssignorItemActionsProps) => {
         try {
             setIsLoading(true);
 
-            const token = await localStorage.getItem('token');
+            const token = localStorage.getItem('token');
 
             const res = await fetch(`${BASE_URL}/integrations/assignor/${assignor.id}`, {
                 headers: {

@@ -53,7 +53,7 @@ const PayableItemActions = (props: PayableItemActionsProps) => {
         try {
             setIsLoading(true);
 
-            const token = await localStorage.getItem('token');
+            const token = localStorage.getItem('token');
 
             const res = await fetch(`${BASE_URL}/integrations/payable/${payable.id}`, {
                 headers: {
