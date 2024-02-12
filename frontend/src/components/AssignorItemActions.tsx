@@ -6,6 +6,7 @@ import { Dialog } from "primereact/dialog";
 import AssignorForm from "./AssignorForm";
 import { useRef, useState } from "react";
 import { Toast } from "primereact/toast";
+import { BASE_URL } from "@/contants";
 
 interface AssignorItemActionsProps {
     assignor: {
@@ -25,21 +26,57 @@ const AssignorItemActions = (props: AssignorItemActionsProps) => {
     const router = useRouter();
 
     const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const toggleDialog = () => {
         setOpen(value => !value);
     }
 
-    const showToastSuccess = () => {
+    const showToastError = (message: string) => {
         toastRef.current.show({
-            severity: 'success', summary: 'Sucesso!', detail: 'Informações armazenadas com sucesso!'
+            severity: 'error', summary: 'Erro!', detail: message
+        });
+    }
+
+    const showToastSuccess = (message: string) => {
+        toastRef.current.show({
+            severity: 'success', summary: 'Sucesso!', detail: message
         });
     }
 
     const handleOnSuccess = () => {
         toggleDialog();
-        showToastSuccess();
+        showToastSuccess('Informações armazenadas com sucesso!');
         router.refresh()
+    }
+
+    const handleRemove = async () => {
+        try {
+            setIsLoading(true);
+
+            const token = await localStorage.getItem('token');
+
+            const res = await fetch(`${BASE_URL}/integrations/assignor/${assignor.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                method: 'DELETE',
+            });
+            const result = await res.json();
+
+            if(result?.error) {
+                showToastError(result.message);
+                return;
+            }
+            
+            showToastSuccess('Cedente removido com sucesso!');
+
+            router.refresh();
+        } catch(e: any) {
+            showToastError(e.message);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -58,7 +95,7 @@ const AssignorItemActions = (props: AssignorItemActionsProps) => {
             <div className="flex items-center gap-4">
                 <Button icon="pi pi-eye" rounded onClick={() => router.push(`/assignors/${assignor.id}`)} />
                 <Button icon="pi pi-pencil" rounded onClick={toggleDialog} />
-                <Button icon="pi pi-trash" severity="danger" rounded />
+                <Button icon="pi pi-trash" severity="danger" rounded onClick={handleRemove} loading={isLoading} />
             </div>
         </div>
     )
