@@ -39,6 +39,7 @@ const AssignorItemActions = (props: AssignorItemActionsProps) => {
     const handleOnSuccess = () => {
         toggleDialog();
         showToastSuccess();
+        router.refresh()
     }
 
     return (

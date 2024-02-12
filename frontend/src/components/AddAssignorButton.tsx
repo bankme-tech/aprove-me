@@ -4,9 +4,12 @@ import { useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import AssignorForm from "./AssignorForm";
+import { useRouter } from "next/navigation";
 
 const AddAssignorButton = () => {
     const toastRef = useRef<any>();
+
+    const router = useRouter();
 
     const [open, setOpen] = useState(false);
 
@@ -23,6 +26,7 @@ const AddAssignorButton = () => {
     const handleOnSuccess = () => {
         toggleDialog();
         showToastSuccess();
+        router.refresh();
     }
 
     return (
