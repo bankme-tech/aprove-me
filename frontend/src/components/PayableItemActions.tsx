@@ -83,7 +83,7 @@ const PayableItemActions = (props: PayableItemActionsProps) => {
             <Toast ref={toastRef} />
 
             <Dialog
-                header="Editar cedente"
+                header="Editar recebível"
                 visible={open}
                 onHide={toggleDialog}
                 className="w-full max-w-md"
