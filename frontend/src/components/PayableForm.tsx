@@ -9,6 +9,7 @@ import InputNumber from "./InputNumber";
 import InputCalendar from "./InputCalendar";
 import AssignorsComboBox from "./AssignorsComboBox";
 import { Dropdown } from "primereact/dropdown";
+import { useRouter } from "next/navigation";
 
 interface Payable {
     id: string
@@ -21,6 +22,8 @@ const PayableForm = ({ payable, onSuccess }: {
     payable?: Payable, onSuccess: () => void
 }) => {
     const toastRef = useRef<any>();
+
+    const router = useRouter();
 
     let defaultValues;
 
@@ -71,6 +74,11 @@ const PayableForm = ({ payable, onSuccess }: {
             });
             const result = await res.json();
 
+            if(result?.statusCode === 401) {
+                router.push('/');
+                return;
+            }
+
             if (result?.error) {
                 for (let i = 0; i < result.message.length; i++) {
                     showToastError(result.message[i]);
@@ -117,11 +125,12 @@ const PayableForm = ({ payable, onSuccess }: {
                     />
                 </div>
             }>
-                <AssignorsComboBox
+                {token && <AssignorsComboBox
                     control={control}
                     errors={errors}
                     token={token as string}
-                />
+                    router={router}
+                />}
             </Suspense>
             <div className="flex justify-end">
                 <Button

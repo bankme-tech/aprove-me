@@ -1,9 +1,12 @@
+'use client';
+
 import { useForm } from "react-hook-form";
 import Input from "./Input";
 import { Button } from "primereact/button";
 import { useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 import { BASE_URL } from "@/contants";
+import { useRouter } from "next/navigation";
 
 interface Assignor {
     id: string
@@ -17,6 +20,8 @@ const AssignorForm = ({ assignor, onSuccess }: {
     assignor?: Assignor, onSuccess: () => void
 }) => {
     const toastRef = useRef<any>();
+
+    const router = useRouter();
 
     let defaultValues;
     
@@ -63,6 +68,11 @@ const AssignorForm = ({ assignor, onSuccess }: {
                 body: JSON.stringify(data)
             });
             const result = await res.json();
+
+            if(result?.statusCode === 401) {
+                router.push("/");
+                return;
+            }
 
             if(result?.error) {
                 for(let i = 0; i < result.message.length; i++) {

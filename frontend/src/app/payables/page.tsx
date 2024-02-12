@@ -4,9 +4,12 @@ import AddPayableButton from "@/components/AddPayableButton";
 import Container from "@/components/Container";
 import Header from "@/components/Header"
 import PayablesList from "@/components/PayablesList";
+import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 const Payables = () => {
+
+    const router = useRouter();
 
     const [token, setToken] = useState<string | null>(null)
 
@@ -27,7 +30,7 @@ const Payables = () => {
                 </div>
 
                 <Suspense fallback={<div>Carregando...</div>}>
-                    {token && <PayablesList token={token} />}
+                    {token && <PayablesList token={token} router={router} />}
                 </Suspense>
             </Container>
         </div>

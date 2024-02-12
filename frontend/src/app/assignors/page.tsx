@@ -4,10 +4,12 @@ import AddAssignorButton from "@/components/AddAssignorButton";
 import AssignorsList from "@/components/AssignorsList";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 const Assignors = () => {
+
+    const router = useRouter();
 
     const [token, setToken] = useState<string | null>(null);
 
@@ -28,7 +30,7 @@ const Assignors = () => {
                 </div>
 
                 <Suspense fallback={<div>Carregando...</div>}>
-                    {token && <AssignorsList token={token} />}
+                    {token && <AssignorsList token={token} router={router} />}
                 </Suspense>
             </Container>
         </div>
