@@ -10,6 +10,9 @@ export class PayableService {
         return await this.prisma.payable.findMany({
             where: {
                 deleted: false
+            },
+            include: {
+                assignor: true
             }
         });
     }
@@ -19,6 +22,9 @@ export class PayableService {
             where: {
                 id: id,
                 deleted: false
+            },
+            include: {
+                assignor: true
             }
         });
     }
