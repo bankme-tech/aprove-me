@@ -3,13 +3,18 @@
 import PayableInfo from "@/components/PayableInfo";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const Payable = ({ params }: {
     params: { id: string }
 }) => {
 
-    const token = localStorage.getItem('token');
+    const [token, setToken] = useState<string | null>(null)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setToken(token);
+    }, []);
 
     return (
         <div>

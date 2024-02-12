@@ -4,11 +4,17 @@ import AddAssignorButton from "@/components/AddAssignorButton";
 import AssignorsList from "@/components/AssignorsList";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
-import { Suspense } from "react";
+import { notFound } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 const Assignors = () => {
 
-    const token = localStorage.getItem('token');
+    const [token, setToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setToken(token);
+    }, []);
 
     return (
         <div>
@@ -22,7 +28,7 @@ const Assignors = () => {
                 </div>
 
                 <Suspense fallback={<div>Carregando...</div>}>
-                    <AssignorsList token={token} />
+                    {token && <AssignorsList token={token} />}
                 </Suspense>
             </Container>
         </div>

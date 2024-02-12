@@ -4,13 +4,16 @@ import AddPayableButton from "@/components/AddPayableButton";
 import Container from "@/components/Container";
 import Header from "@/components/Header"
 import PayablesList from "@/components/PayablesList";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const Payables = () => {
 
-    const token = localStorage.getItem('token');
+    const [token, setToken] = useState<string | null>(null)
 
-    if(!token) return
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setToken(token);
+    }, []);
 
     return (
         <div>
@@ -24,7 +27,7 @@ const Payables = () => {
                 </div>
 
                 <Suspense fallback={<div>Carregando...</div>}>
-                    <PayablesList token={token} />
+                    {token && <PayablesList token={token} />}
                 </Suspense>
             </Container>
         </div>
