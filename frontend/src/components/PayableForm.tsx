@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { Button } from "primereact/button";
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 import { BASE_URL } from "@/contants";
 import InputNumber from "./InputNumber";
@@ -28,16 +28,18 @@ const PayableForm = ({ payable, onSuccess }: {
         defaultValues = {
             id: payable.id,
             value: payable.value,
-            emissionDate: payable.emissionDate,
+            emissionDate: new Date(payable.emissionDate),
             assignorId: payable.assignorId
         }
     }
 
-    const token = localStorage.getItem('token');
-
-    if(!token) return;
-
     const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+    const [token, setToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setToken(token);
+    }, []);
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues
@@ -109,7 +111,7 @@ const PayableForm = ({ payable, onSuccess }: {
             <Suspense fallback={
                 <div className="flex flex-col gap-1">
                     <label>Cedente</label>
-                    <Dropdown 
+                    <Dropdown
                         disabled
                         placeholder="Carregando..."
                     />
@@ -118,7 +120,7 @@ const PayableForm = ({ payable, onSuccess }: {
                 <AssignorsComboBox
                     control={control}
                     errors={errors}
-                    token={token}
+                    token={token as string}
                 />
             </Suspense>
             <div className="flex justify-end">
