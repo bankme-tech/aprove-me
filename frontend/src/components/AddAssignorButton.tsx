@@ -5,6 +5,7 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import AssignorForm from "./AssignorForm";
 import { useRouter } from "next/navigation";
+import { Toast } from "primereact/toast";
 
 const AddAssignorButton = () => {
     const toastRef = useRef<any>();
@@ -31,6 +32,7 @@ const AddAssignorButton = () => {
 
     return (
         <div>
+            <Toast ref={toastRef} />
             <Dialog
                 visible={open}
                 onHide={toggleDialog}
