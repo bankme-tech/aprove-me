@@ -15,6 +15,12 @@ const Payables = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+
+        if(!token) {
+            router.push('/');
+            return;
+        }
+        
         setToken(token);
     }, []);
 

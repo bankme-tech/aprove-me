@@ -15,6 +15,12 @@ const Assignors = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+
+        if(!token) {
+            router.push('/');
+            return;
+        }
+
         setToken(token);
     }, []);
 

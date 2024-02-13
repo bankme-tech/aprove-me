@@ -4,15 +4,24 @@ import PayableInfo from "@/components/PayableInfo";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import { Suspense, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Payable = ({ params }: {
     params: { id: string }
 }) => {
+    
+    const router = useRouter();
 
     const [token, setToken] = useState<string | null>(null)
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+
+        if(!token) {
+            router.push('/');
+            return;
+        }
+
         setToken(token);
     }, []);
 

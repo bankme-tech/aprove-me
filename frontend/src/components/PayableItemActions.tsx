@@ -63,6 +63,11 @@ const PayableItemActions = (props: PayableItemActionsProps) => {
             });
             const result = await res.json();
 
+            if(result?.statusCode === 401) {
+                router.push("/");
+                return;
+            }
+
             if (result?.error) {
                 showToastError(result.message);
                 return;
