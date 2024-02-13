@@ -11,7 +11,6 @@ import { AuthController } from './auth.controller';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET || 'spider',
-      signOptions: { expiresIn: '60s' },
     }),
   ],
   providers: [AuthService],
