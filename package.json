@@ -5,11 +5,9 @@
   "main": "index.js",
   "repository": "git@github.com:kevinbzrra/bankme-challenge.git",
   "scripts": {
-    "dev:backend": "npm -w @bankme-challenge/backend run dev:all",
+    "dev:backend": "npm -w @bankme-challenge/backend run start:dev",
     "dev:frontend": "npm -w @bankme-challenge/frontend run dev",
-    "test:backend": "npm -w @bankme-challenge/backend run test",
-    "start:backend": "npm -w @bankme-challenge/backend run start:all",
-    "start:frontend": "npm -w @bankme-challenge/frontend run start:all"
+    "test:backend": "npm -w @bankme-challenge/backend run test"
   },
   "keywords": [],
   "author": "Kevin Bezerra <kevinbzrra@gmail.com>",
