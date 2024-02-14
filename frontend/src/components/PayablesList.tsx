@@ -2,9 +2,10 @@ import { BASE_URL } from "@/contants";
 import PayableItem from "./PayableItem";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-const PayablesList = async ({ token, router }: {
+const PayablesList = async ({ token, router, showToast }: {
     token: string
-    router: AppRouterInstance
+    router: AppRouterInstance,
+    showToast: (severity: string, summary: string, detail: string) => void
 }) => {
     const res = await fetch(`${BASE_URL}/integrations/payable`, {
         headers: {
@@ -24,7 +25,7 @@ const PayablesList = async ({ token, router }: {
     return (
         <div className="w-full">
             {data.map((payable: any) => (
-                <PayableItem key={payable.id} payable={payable} />
+                <PayableItem key={payable.id} payable={payable} showToast={showToast}/>
             ))}
         </div>
     )

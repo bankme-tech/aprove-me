@@ -14,13 +14,14 @@ interface PayableItemActionsProps {
         value: number
         emissionDate: string
         assignorId: string
-    }
+    },
+    showToast: (severity: string, summary: string, detail: string) => void
 }
 
 const PayableItemActions = (props: PayableItemActionsProps) => {
     const toastRef = useRef<any>();
 
-    const { payable } = props;
+    const { payable, showToast } = props;
 
     const router = useRouter();
 
@@ -31,21 +32,9 @@ const PayableItemActions = (props: PayableItemActionsProps) => {
         setOpen(value => !value);
     }
 
-    const showToastError = (message: string) => {
-        toastRef.current.show({
-            severity: 'error', summary: 'Erro!', detail: message
-        });
-    }
-
-    const showToastSuccess = (message: string) => {
-        toastRef.current.show({
-            severity: 'success', summary: 'Sucesso!', detail: message
-        });
-    }
-
     const handleOnSuccess = () => {
         toggleDialog();
-        showToastSuccess('Informações armazenadas com sucesso!');
+        showToast('success', 'Sucesso!', 'Informações armazenadas com sucesso!');
         router.refresh()
     }
 
@@ -63,21 +52,21 @@ const PayableItemActions = (props: PayableItemActionsProps) => {
             });
             const result = await res.json();
 
-            if(result?.statusCode === 401) {
+            if (result?.statusCode === 401) {
                 router.push("/");
                 return;
             }
 
             if (result?.error) {
-                showToastError(result.message);
+                showToast('error', 'Erro!', result.message);
                 return;
             }
 
-            showToastSuccess('Cedente removido com sucesso!');
+            showToast('success', 'Sucesso!', 'Cedente removido com sucesso!');
 
             router.refresh();
         } catch (e: any) {
-            showToastError(e.message);
+            showToast('error', 'Erro!', e.message);
         } finally {
             setIsLoading(false);
         }

@@ -5,9 +5,11 @@ import Container from "@/components/Container";
 import Header from "@/components/Header"
 import PayablesList from "@/components/PayablesList";
 import { useRouter } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Toast } from "primereact/toast";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 const Payables = () => {
+    const toastRef = useRef<any>();
 
     const router = useRouter();
 
@@ -24,8 +26,14 @@ const Payables = () => {
         setToken(token);
     }, []);
 
+    const showToast = (severity: string, summary: string, detail: string) => {
+        toastRef.current.show({severity, summary, detail});
+    }
+
     return (
         <div>
+            <Toast ref={toastRef} />
+
             <Header />
 
             <Container>
@@ -36,7 +44,7 @@ const Payables = () => {
                 </div>
 
                 <Suspense fallback={<div>Carregando...</div>}>
-                    {token && <PayablesList token={token} router={router} />}
+                    {token && <PayablesList token={token} router={router} showToast={showToast}/>}
                 </Suspense>
             </Container>
         </div>

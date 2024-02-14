@@ -11,12 +11,13 @@ interface PayableItemProps {
         assignor: {
             name: string
         }
-    }
+    },
+    showToast: (severity: string, summary: string, detail: string) => void
 }
 
 const PayableItem = (props: PayableItemProps) => {
 
-    const {payable} = props;
+    const {payable, showToast} = props;
     
     return (
         <div className="w-full flex items-center justify-between py-4">
@@ -26,7 +27,7 @@ const PayableItem = (props: PayableItemProps) => {
                 <p>{formatDate(payable.emissionDate)}</p>
             </div>
 
-            <PayableItemActions payable={payable} />
+            <PayableItemActions payable={payable} showToast={showToast}/>
         </div>
     )
 }

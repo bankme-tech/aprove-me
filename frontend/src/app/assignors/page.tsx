@@ -4,10 +4,12 @@ import AddAssignorButton from "@/components/AddAssignorButton";
 import AssignorsList from "@/components/AssignorsList";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
-import { notFound, useRouter } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Toast } from "primereact/toast";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 const Assignors = () => {
+    const toastRef = useRef<any>();
 
     const router = useRouter();
 
@@ -24,8 +26,14 @@ const Assignors = () => {
         setToken(token);
     }, []);
 
+    const showToast = (severity: string, summary: string, detail: string) => {
+        toastRef.current.show({severity, summary, detail});
+    }
+
     return (
         <div>
+            <Toast ref={toastRef} />
+
             <Header />
 
             <Container>
@@ -36,7 +44,7 @@ const Assignors = () => {
                 </div>
 
                 <Suspense fallback={<div>Carregando...</div>}>
-                    {token && <AssignorsList token={token} router={router} />}
+                    {token && <AssignorsList token={token} router={router} showToast={showToast}/>}
                 </Suspense>
             </Container>
         </div>

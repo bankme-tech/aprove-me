@@ -4,8 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import AssignorForm from "./AssignorForm";
-import { useRef, useState } from "react";
-import { Toast } from "primereact/toast";
+import { useState } from "react";
 import { BASE_URL } from "@/contants";
 
 interface AssignorItemActionsProps {
@@ -15,13 +14,12 @@ interface AssignorItemActionsProps {
         document: string
         email: string
         phone: string
-    }
+    },
+    showToast: (severity: string, summary: string, detail: string) => void
 }
 
 const AssignorItemActions = (props: AssignorItemActionsProps) => {
-    const toastRef = useRef<any>();
-
-    const { assignor } = props;
+    const { assignor, showToast } = props;
 
     const router = useRouter();
 
@@ -32,22 +30,10 @@ const AssignorItemActions = (props: AssignorItemActionsProps) => {
         setOpen(value => !value);
     }
 
-    const showToastError = (message: string) => {
-        toastRef.current.show({
-            severity: 'error', summary: 'Erro!', detail: message
-        });
-    }
-
-    const showToastSuccess = (message: string) => {
-        toastRef.current.show({
-            severity: 'success', summary: 'Sucesso!', detail: message
-        });
-    }
-
     const handleOnSuccess = () => {
         toggleDialog();
-        showToastSuccess('Informações armazenadas com sucesso!');
-        router.refresh()
+        showToast('success', 'Sucesso!', 'Informações armazenadas com sucesso!');
+        router.refresh();
     }
 
     const handleRemove = async () => {
@@ -70,15 +56,15 @@ const AssignorItemActions = (props: AssignorItemActionsProps) => {
             }
 
             if(result?.error) {
-                showToastError(result.message);
+                showToast('error', 'Erro!', result.message);
                 return;
             }
             
-            showToastSuccess('Cedente removido com sucesso!');
+            showToast('success', 'Sucesso!', 'Cedente removido com sucesso!');
 
             router.refresh();
         } catch(e: any) {
-            showToastError(e.message);
+            showToast('error', 'Erro!', e.message);
         } finally {
             setIsLoading(false);
         }
@@ -86,8 +72,6 @@ const AssignorItemActions = (props: AssignorItemActionsProps) => {
 
     return (
         <div>
-            <Toast ref={toastRef} />
-
             <Dialog
                 header="Editar cedente"
                 visible={open}

@@ -7,18 +7,19 @@ interface AssignorItemProps {
         document: string
         email: string
         phone: string
-    }
+    },
+    showToast: (severity: string, summary: string, detail: string) => void
 }
 
 const AssignorItem = (props: AssignorItemProps) => {
 
-    const {assignor} = props;
+    const {assignor, showToast} = props;
     
     return (
         <div className="w-full flex items-center justify-between py-4">
             <p>{assignor.name}</p>
 
-            <AssignorItemActions assignor={assignor} />
+            <AssignorItemActions assignor={assignor} showToast={showToast}/>
         </div>
     )
 }
