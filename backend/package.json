@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@bankme-challenge/backend",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -17,7 +17,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migrate-init": "prisma migrate dev --name init",
+    "seed": "prisma db seed",
+    "db": "npm run migrate-init & npm run seed",
+    "dev:all": "npm run db & npm run start:dev",
+    "start:all": "npm run build & npm run db & npm run start"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
