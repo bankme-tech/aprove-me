@@ -1,12 +1,13 @@
 {
-  "name": "frontend",
+  "name": "@bankme-challenge/frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start:all": "npm run build & npm start"
   },
   "dependencies": {
     "next": "14.1.0",
