@@ -117,11 +117,12 @@ const PayableForm = ({ payable, onSuccess }: {
                 rules={{ required: "Data de emissão obrigatória" }}
             />
             <Suspense fallback={
-                <div className="flex flex-col gap-1">
+                <div className="w-full flex flex-col gap-1">
                     <label>Cedente</label>
                     <Dropdown
                         disabled
                         placeholder="Carregando..."
+                        style={{width: '100%'}}
                     />
                 </div>
             }>
