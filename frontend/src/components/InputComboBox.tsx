@@ -27,7 +27,7 @@ const InputComboBox = ({ label, name, control, errors, rules, optionLabel, optio
             control={control}
             rules={rules}
             render={({ field, fieldState }) => (
-                <div className="w-full flex flex-col items-start gap-1">
+                <div className="w-full flex flex-col gap-1">
                     <label htmlFor={field.name}>{label}</label>
                     <Dropdown
                         filter
@@ -39,7 +39,8 @@ const InputComboBox = ({ label, name, control, errors, rules, optionLabel, optio
                         placeholder={placeholder}
                         options={options}
                         onChange={(e) => field.onChange(e.value)}
-                        className={`w-full ${classNames({ 'p-invalid': fieldState.error })}`}
+                        className={classNames({ 'p-invalid': fieldState.error })}
+                        style={{width: '100%'}}
                     />
                     {getFormErrorMessage(field.name)}
                 </div>

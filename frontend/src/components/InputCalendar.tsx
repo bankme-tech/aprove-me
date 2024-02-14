@@ -22,9 +22,9 @@ const InputCalendar = ({ label, name, control, errors, rules }: {
             control={control}
             rules={rules}
             render={({ field, fieldState }) => (
-                <div className="w-full flex flex-col items-start gap-1">
+                <div className="w-full flex flex-col gap-1">
                     <label htmlFor={field.name}>{label}</label>
-                    <Calendar inputId={field.name} value={field.value} onChange={field.onChange} dateFormat="dd/mm/yy" className={`w-full ${classNames({ 'p-invalid': fieldState.error })}`} />
+                    <Calendar inputId={field.name} value={field.value} onChange={field.onChange} dateFormat="dd/mm/yy" className={classNames({ 'p-invalid': fieldState.error })} inputClassName="w-full" />
                     {getFormErrorMessage(field.name)}
                 </div>
             )}
