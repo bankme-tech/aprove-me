@@ -1,0 +1,23 @@
+{
+  "name": "bankme-challenge",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">\r   <img src=\"./assets/logo-bankme.png\" alt=\"Logo Bankme\" width=\"91\" height=\"108\">\r </p>\r <h1 align=\"center\">\r   Aprove-me\r </h1>",
+  "main": "index.js",
+  "repository": "git@github.com:kevinbzrra/bankme-challenge.git",
+  "scripts": {
+    "dev:backend": "npm -w @bankme-challenge/backend run dev:all",
+    "dev:frontend": "npm -w @bankme-challenge/frontend run dev",
+    "test:backend": "npm -w @bankme-challenge/backend run test",
+    "start:backend": "npm -w @bankme-challenge/backend run start:all",
+    "start:frontend": "npm -w @bankme-challenge/frontend run start:all"
+  },
+  "keywords": [],
+  "author": "Kevin Bezerra <kevinbzrra@gmail.com>",
+  "license": "ISC",
+  "workspaces": {
+    "packages": [
+      "backend",
+      "frontend"
+    ]
+  }
+}
