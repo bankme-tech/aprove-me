@@ -1,10 +1,7 @@
 import { IsNotEmpty } from "class-validator";
-import { Role } from "../role/role.enum";
 
 export class User {
     public id: string;
-    
-    public username: string;
 
     @IsNotEmpty()
     public login: string;
@@ -12,5 +9,5 @@ export class User {
     @IsNotEmpty()
     public password: string;
 
-    public roles: Role[]
+    public roles: any[]
 }
