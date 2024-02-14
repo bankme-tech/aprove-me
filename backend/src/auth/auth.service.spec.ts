@@ -20,7 +20,7 @@ describe('AuthService', () => {
         {
           provide: UserService,
           useValue: {
-            findOne: jest.fn().mockResolvedValue(user)
+            getUserByLogin: jest.fn().mockResolvedValue(user)
           }
         },
         {
