@@ -1,4 +1,5 @@
 import { BASE_URL } from "@/contants";
+import { notFound } from "next/navigation";
 
 const AssignorInfo = async ({ token, id }: {
     token: string | null, id: string
@@ -10,7 +11,11 @@ const AssignorInfo = async ({ token, id }: {
         }
     });
     const assignor = await res.json();
-    
+
+    if (!assignor.id) {
+        notFound();
+    }
+
     return (
         <div className="w-full">
             <div className="flex items-center justify-between py-4">
