@@ -109,13 +109,6 @@ const PayableForm = ({ payable, onSuccess }: {
                 mode="currency"
                 currency="BRL"
             />
-            <InputCalendar
-                label="Data de emissão"
-                name="emissionDate"
-                control={control}
-                errors={errors}
-                rules={{ required: "Data de emissão obrigatória" }}
-            />
             <Suspense fallback={
                 <div className="w-full flex flex-col gap-1">
                     <label>Cedente</label>

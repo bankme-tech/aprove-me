@@ -13,7 +13,7 @@ datasource db {
 model Payable {
   id           String   @id @default(uuid())
   value        Float
-  emissionDate DateTime
+  emissionDate DateTime @default(now())
   assignor     Assignor @relation(fields: [assignorId], references: [id])
   assignorId   String
   deleted      Boolean  @default(false)

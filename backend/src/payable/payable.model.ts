@@ -8,7 +8,6 @@ export class Payable {
     @IsNotEmpty()
     public value: number
     
-    @IsNotEmpty()
     public emissionDate: Date
     
     public assignor: Assignor

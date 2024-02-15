@@ -33,7 +33,6 @@ export class PayableService {
         return await this.prisma.payable.create({
             data: {
                 value: payable.value,
-                emissionDate: payable.emissionDate,
                 assignorId: payable.assignorId
             }
         })
@@ -43,7 +42,6 @@ export class PayableService {
         return await this.prisma.payable.update({
             data: {
                 value: payable.value,
-                emissionDate: payable.emissionDate,
                 assignorId: payable.assignorId
             },
             where: {

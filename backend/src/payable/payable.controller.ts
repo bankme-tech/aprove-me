@@ -30,11 +30,10 @@ export class PayableController {
     async createPayable(
         @Body() payable: Payable
     ) {
-        const { value, emissionDate, assignorId } = payable;
+        const { value, assignorId } = payable;
 
         const newPayable = new Payable();
         newPayable.value = value;
-        newPayable.emissionDate = emissionDate;
         newPayable.assignorId = assignorId;
 
         return await this.payableService.createPayable(newPayable);
@@ -46,12 +45,11 @@ export class PayableController {
     async updatePayable(
         @Body() payable: Payable
     ) {
-        const { id, value, emissionDate, assignorId } = payable;
+        const { id, value, assignorId } = payable;
 
         const newPayable = new Payable();
         newPayable.id = id;
         newPayable.value = value;
-        newPayable.emissionDate = emissionDate;
         newPayable.assignorId = assignorId;
 
         return await this.payableService.updatePayable(newPayable);
