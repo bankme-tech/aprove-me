@@ -9,3 +9,35 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Receivable {
+  id           String    @id @default(uuid())
+  value        Float
+  emissionDate DateTime
+  assignor_id  String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  deleted_at   DateTime?
+
+  assingor Assignor @relation(fields: [assignor_id], references: [id])
+}
+
+model Assignor {
+  id         String    @id @default(uuid())
+  document   String    @unique
+  email      String
+  phone      String
+  name       String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+  Receivable Receivable[]
+}
+
+model User {
+  id         String   @id @default(uuid())
+  username   String   @unique
+  password   String
+  created_at DateTime @default(now())
+}
