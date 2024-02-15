@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { PrimeReactProvider } from 'primereact/api';
+import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primeicons/primeicons.css';
-import Tailwind from 'primereact/passthrough/tailwind';
 
 export const metadata: Metadata = {
   title: "Bankme",
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body>
-        <PrimeReactProvider value={{unstyled:true, pt: Tailwind}}>
+        <PrimeReactProvider>
           {children}
         </PrimeReactProvider>
       </body>
