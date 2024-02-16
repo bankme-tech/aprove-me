@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { IsEmail, IsPhoneNumber, IsString, Length } from 'class-validator';
 
 export class CreateAssignorDto {
@@ -16,3 +17,5 @@ export class CreateAssignorDto {
   @Length(0, 140)
   name: string;
 }
+
+export class UpdateAssignorDto extends PartialType(CreateAssignorDto) {}

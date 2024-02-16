@@ -10,7 +10,9 @@ import { EnvService } from '../env/env.service';
 import { ReceivableController } from './receivable.controller';
 import {
   CreateReceivableUseCase,
-  FindReceivableByIdUseCase
+  DeleteReceivableUseCase,
+  FindReceivableByIdUseCase,
+  UpdateReceivableUseCase,
 } from './use-cases';
 
 @Module({
@@ -19,6 +21,8 @@ import {
   providers: [
     FindReceivableByIdUseCase,
     CreateReceivableUseCase,
+    UpdateReceivableUseCase,
+    DeleteReceivableUseCase,
     EnvService,
     JwtService,
     {

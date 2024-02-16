@@ -1,0 +1,23 @@
+# Todo
+
+- [ ] Frontend
+  - [ ] Cadastro pagáveis
+    - [ ] React Hook Form
+    - [ ] Adicionar zod
+  - [ ] Conectando a Api
+    - [ ] Cadastro do Cedente
+      - [ ] Assignor precisa ser um combobox
+  - [ ] Listando
+    - [ ] Tabela de listagens de pagaveis: ID - VALUE - Emission Date
+    - [ ] Link com detalhe de cada pagável
+    - [ ] Opções de editar e excluir
+  - [ ] Autenticação
+    - [ ] Usar localstorage
+  - [ ] Testes
+    - [ ] Implementar testes
+- [ ] Backend
+  - [ ] Documentar como subir o projeto
+  - [ ] Endpoints de atualização
+    - [ ] Receivable
+    - [ ] Assignor
+  - [ ] Implementar testes

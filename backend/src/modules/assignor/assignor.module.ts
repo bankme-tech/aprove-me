@@ -7,7 +7,7 @@ import {
   PrismaReceivableRepository,
 } from 'src/db/repositories';
 import { AssignorController } from './assignor.controller';
-import { FindAssignorByIdUseCase } from './use-cases';
+import { FindAssignorByIdUseCase, UpdateAssignorUseCase } from './use-cases';
 import { DeleteAssignorUseCase } from './use-cases/delete-assignor-usecase';
 import { JwtService } from '@nestjs/jwt';
 import { EnvService } from '../env/env.service';
@@ -19,6 +19,7 @@ import { EnvService } from '../env/env.service';
     CreateAssignorUseCase,
     FindAssignorByIdUseCase,
     DeleteAssignorUseCase,
+    UpdateAssignorUseCase,
     EnvService,
     JwtService,
     {

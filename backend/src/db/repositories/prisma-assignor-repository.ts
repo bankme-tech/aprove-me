@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAssignorDto } from 'src/domain/dtos';
+import { CreateAssignorDto, UpdateAssignorDto } from 'src/domain/dtos';
 import { Assignor } from 'src/domain/entities';
 import { AssignorRepository } from 'src/repositories';
 import { PrismaService } from '../prisma/prisma.service';
@@ -39,7 +39,23 @@ export class PrismaAssignorRepository implements AssignorRepository {
         id,
       },
       data: {
+        updated_at: new Date(),
         deleted_at: new Date(),
+      },
+    });
+  }
+
+  async update(
+    id: string,
+    updateAssignorDto: UpdateAssignorDto,
+  ): Promise<void> {
+    await this.prisma.assignor.update({
+      where: {
+        id,
+      },
+      data: {
+        updated_at: new Date(),
+        ...updateAssignorDto,
       },
     });
   }

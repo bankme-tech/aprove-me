@@ -4,7 +4,7 @@ import { randomUUID } from 'crypto';
 export class Receivable implements PrismaReceivable {
   id: string;
   assignor_id: string;
-  emissionDate: Date;
+  emission_date: Date;
   value: number;
   created_at: Date;
   deleted_at: Date | null;
@@ -20,7 +20,7 @@ export class Receivable implements PrismaReceivable {
     receivable.updated_at = new Date();
     receivable.deleted_at = null;
     receivable.assignor_id = props.assignor_id;
-    receivable.emissionDate = props.emissionDate;
+    receivable.emission_date = props.emission_date;
     receivable.value = props.value;
 
     return receivable;

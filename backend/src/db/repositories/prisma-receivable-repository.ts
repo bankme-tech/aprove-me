@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReceivableDto } from 'src/domain/dtos';
+import { CreateReceivableDto, UpdateReceivableDto } from 'src/domain/dtos';
 import { Receivable } from 'src/domain/entities';
 import { ReceivableRepository } from 'src/repositories';
 import { PrismaService } from '../prisma/prisma.service';
@@ -12,17 +12,6 @@ export class PrismaReceivableRepository implements ReceivableRepository {
     const receivable = await this.prisma.receivable.create({
       data: {
         ...input,
-      },
-    });
-
-    return receivable;
-  }
-
-  async fetchById(id: string): Promise<Receivable[]> {
-    const receivable = await this.prisma.receivable.findMany({
-      where: {
-        assignor_id: id,
-        deleted_at: null,
       },
     });
 
@@ -61,6 +50,21 @@ export class PrismaReceivableRepository implements ReceivableRepository {
       },
       data: {
         deleted_at: new Date(),
+      },
+    });
+  }
+
+  async update(
+    id: string,
+    updateReceivableDto: UpdateReceivableDto,
+  ): Promise<void> {
+    await this.prisma.receivable.update({
+      where: {
+        id,
+      },
+      data: {
+        updated_at: new Date(),
+        ...updateReceivableDto,
       },
     });
   }

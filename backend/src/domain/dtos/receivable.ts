@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { IsDate, IsDateString, IsNumber, IsUUID } from 'class-validator';
 
 export class CreateReceivableDto {
@@ -5,8 +6,10 @@ export class CreateReceivableDto {
   value: number;
 
   @IsDateString()
-  emissionDate: Date;
+  emission_date: Date;
 
   @IsUUID()
   assignor_id: string;
 }
+
+export class UpdateReceivableDto extends PartialType(CreateReceivableDto) {}

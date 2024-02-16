@@ -1,4 +1,4 @@
-import { CreateAssignorDto } from 'src/domain/dtos';
+import { CreateAssignorDto, UpdateAssignorDto } from 'src/domain/dtos';
 import { Assignor } from 'src/domain/entities';
 import { AssignorRepository } from 'src/repositories';
 
@@ -18,6 +18,10 @@ export class InMemoryAssignorRepository implements AssignorRepository {
   }
 
   async delete(id: string): Promise<void> {
+    return null;
+  }
+
+  update(id: string, updateAssignorDto: UpdateAssignorDto): Promise<void> {
     return null;
   }
 }

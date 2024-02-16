@@ -1,4 +1,3 @@
-export * from './create-assignor';
-export * from './create-receivable';
-export * from './auth-user';
-export * from './create-user';
+export * from './assignor';
+export * from './receivable';
+export * from './user';

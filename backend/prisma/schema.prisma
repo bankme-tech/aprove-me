@@ -11,13 +11,13 @@ datasource db {
 }
 
 model Receivable {
-  id           String    @id @default(uuid())
-  value        Float
-  emissionDate DateTime
-  assignor_id  String
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  deleted_at   DateTime?
+  id            String    @id @default(uuid())
+  value         Float
+  emission_date DateTime
+  assignor_id   String
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
 
   assingor Assignor @relation(fields: [assignor_id], references: [id])
 }

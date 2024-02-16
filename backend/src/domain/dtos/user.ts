@@ -9,3 +9,13 @@ export class CreateUserDto {
   @Length(6)
   password: string;
 }
+
+export class AuthUserDto {
+  @IsString()
+  @Length(3, 30)
+  username: string;
+
+  @IsString()
+  @Length(6)
+  password: string;
+}

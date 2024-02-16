@@ -3,15 +3,19 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { CreateAssignorDto } from 'src/domain/dtos';
-import { CreateAssignorUseCase, FindAssignorByIdUseCase } from './use-cases';
+import { CreateAssignorDto, UpdateReceivableDto } from 'src/domain/dtos';
 import { UUIDParam } from '../../utils/validate-uuid';
-import { DeleteAssignorUseCase } from './use-cases/delete-assignor-usecase';
 import { AuthGuard } from '../guards/auth.guard';
+import {
+  CreateAssignorUseCase,
+  FindAssignorByIdUseCase,
+  DeleteAssignorUseCase,
+  UpdateAssignorUseCase,
+} from './use-cases';
 
 @Controller('assignor')
 @UseGuards(AuthGuard)
@@ -20,6 +24,7 @@ export class AssignorController {
     private readonly createAssignorUseCase: CreateAssignorUseCase,
     private readonly findAssignorByIdUseCase: FindAssignorByIdUseCase,
     private readonly deleteAssignorUseCase: DeleteAssignorUseCase,
+    private readonly updateAssignorUseCase: UpdateAssignorUseCase,
   ) {}
 
   @Post()
@@ -35,5 +40,16 @@ export class AssignorController {
   @Delete(':id')
   async delete(@UUIDParam('id') id: string) {
     return await this.deleteAssignorUseCase.execute(id);
+  }
+
+  @Patch(':id')
+  async update(
+    @UUIDParam('id') id: string,
+    @Body() updateAssignorDto: UpdateReceivableDto,
+  ) {
+    return await this.updateAssignorUseCase.execute({
+      id,
+      ...updateAssignorDto,
+    });
   }
 }
