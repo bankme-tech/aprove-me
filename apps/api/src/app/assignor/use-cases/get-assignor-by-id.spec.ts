@@ -4,6 +4,7 @@ import {
   GetAssignorByIdUseCaseError,
 } from './get-assignor-by-id';
 import { makeAssignor } from '@test/factories/assignor.factory';
+import { randomUUID } from 'crypto';
 
 let assignorRepository = new InMemoryAssignorRepository();
 let service = new GetAssignorByIdUseCase(assignorRepository);
@@ -25,11 +26,21 @@ describe('GetAssignorByIdUseCase', () => {
   });
 
   it('should not be able to return assigor using inexistent id', async () => {
-    const assignor = await service.execute({ id: 'inexistent-assignor-id' });
+    const inexistentId = randomUUID();
+    const assignor = await service.execute({ id: inexistentId });
 
     expect(assignor.isLeft()).toBe(true);
     expect(assignor.value).toEqual(
       GetAssignorByIdUseCaseError.ASSIGNOR_NOT_FOUND,
+    );
+  });
+
+  it('should not be able to return assigor using invalid id format', async () => {
+    const assignor = await service.execute({ id: 'invalid-id' });
+
+    expect(assignor.isLeft()).toBe(true);
+    expect(assignor.value).toEqual(
+      GetAssignorByIdUseCaseError.INVALID_ID_FORMAT,
     );
   });
 });
