@@ -8,6 +8,7 @@ import { PayableModule } from '@/payable/payable.module';
 import { DeleteAssignorByIdController } from './controllers/delete-assignor-by-id.controller';
 import { UpdateAssignorController } from './controllers/update-assignor.controller';
 import { DeletePayableByIdController } from './controllers/delete-payable.controller';
+import { GetPayableByIdController } from './controllers/get-payable-by-id.controller';
 
 @Module({
   imports: [DatabaseModule, AssignorModule, PayableModule],
@@ -18,6 +19,7 @@ import { DeletePayableByIdController } from './controllers/delete-payable.contro
     DeleteAssignorByIdController,
     UpdateAssignorController,
     DeletePayableByIdController,
+    GetPayableByIdController,
   ],
   providers: [],
 })
