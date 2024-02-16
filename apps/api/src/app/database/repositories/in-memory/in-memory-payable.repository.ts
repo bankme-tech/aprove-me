@@ -21,4 +21,8 @@ export class InMemoryPayableRepository implements PayableRepository {
   async delete(id: string): Promise<void> {
     this.payables = this.payables.filter((payable) => payable.id !== id);
   }
+
+  async findAll(): Promise<Payable[]> {
+    return this.payables;
+  }
 }
