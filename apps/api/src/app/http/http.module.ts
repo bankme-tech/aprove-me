@@ -6,6 +6,7 @@ import { DatabaseModule } from '@/database/database.module';
 import { AssignorModule } from '@/assignor/assignor.module';
 import { PayableModule } from '@/payable/payable.module';
 import { DeleteAssignorByIdController } from './controllers/delete-assignor-by-id.controller';
+import { UpdateAssignorController } from './controllers/update-assignor.controller';
 
 @Module({
   imports: [DatabaseModule, AssignorModule, PayableModule],
@@ -14,6 +15,7 @@ import { DeleteAssignorByIdController } from './controllers/delete-assignor-by-i
     CreatePayableController,
     GetAssignorByIdController,
     DeleteAssignorByIdController,
+    UpdateAssignorController,
   ],
   providers: [],
 })
