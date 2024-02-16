@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/bankme-api/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/bankme-api/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/bankme-api",
+  "projects": {
+    "bankme-api": {
+      "type": "application",
+      "root": "apps/bankme-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/bankme-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/bankme-api/tsconfig.app.json"
+      }
+    },
+    "payable-consumer": {
+      "type": "application",
+      "root": "apps/payable-consumer",
+      "entryFile": "main",
+      "sourceRoot": "apps/payable-consumer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/payable-consumer/tsconfig.app.json"
+      }
+    },
+    "core": {
+      "type": "library",
+      "root": "libs/core",
+      "entryFile": "index",
+      "sourceRoot": "libs/core/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/core/tsconfig.lib.json"
+      }
+    }
+  }
+}
