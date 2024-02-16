@@ -1,10 +1,11 @@
 import { DatabaseModule } from '@/database/database.module';
 import { Module } from '@nestjs/common';
 import { CreatePayableUseCase } from './use-cases/create-payable';
+import { DeletePayableUseCase } from './use-cases/delete-payable';
 
 @Module({
   imports: [DatabaseModule],
-  providers: [CreatePayableUseCase],
-  exports: [CreatePayableUseCase],
+  providers: [CreatePayableUseCase, DeletePayableUseCase],
+  exports: [CreatePayableUseCase, DeletePayableUseCase],
 })
 export class PayableModule {}

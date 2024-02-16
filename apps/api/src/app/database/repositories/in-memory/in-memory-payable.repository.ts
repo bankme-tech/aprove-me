@@ -2,7 +2,7 @@ import { Payable } from '@prisma/client';
 import { PayableRepository } from '../payable.repository';
 
 export class InMemoryPayableRepository implements PayableRepository {
-  public readonly payables: Payable[] = [];
+  public payables: Payable[] = [];
 
   async findById(id: string): Promise<Payable> {
     return this.payables.find((payable) => payable.id === id);
@@ -16,5 +16,9 @@ export class InMemoryPayableRepository implements PayableRepository {
     this.payables.push(data);
 
     return data;
+  }
+
+  async delete(id: string): Promise<void> {
+    this.payables = this.payables.filter((payable) => payable.id !== id);
   }
 }
