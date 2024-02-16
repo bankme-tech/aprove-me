@@ -34,4 +34,12 @@ export class PrismaAssignorRepository implements AssignorRepository {
 
     return assignor;
   }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.assignor.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

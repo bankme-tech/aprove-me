@@ -2,7 +2,7 @@ import { Assignor } from '@prisma/client';
 import { AssignorRepository } from '../assignor.repository';
 
 export class InMemoryAssignorRepository implements AssignorRepository {
-  public readonly assignors: Assignor[] = [];
+  public assignors: Assignor[] = [];
 
   async findById(id: string): Promise<Assignor> {
     return this.assignors.find((assignor) => assignor.id === id);
@@ -16,5 +16,9 @@ export class InMemoryAssignorRepository implements AssignorRepository {
     this.assignors.push(data);
 
     return data;
+  }
+
+  async delete(id: string): Promise<void> {
+    this.assignors = this.assignors.filter((assignor) => assignor.id !== id);
   }
 }
