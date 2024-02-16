@@ -1,7 +1,7 @@
 import { cnpj, cpf } from 'cpf-cnpj-validator';
 import { randomUUID } from 'node:crypto';
 import { AssignorRepository } from '@/database/repositories/assignor.repository';
-import { Either, left, right } from '@/util/either';
+import { Either, left, right } from '@util/either';
 import { Injectable } from '@nestjs/common';
 import { Assignor } from '@prisma/client';
 

@@ -2,7 +2,7 @@ import { InMemoryAssignorRepository } from '@/database/repositories/in-memory/in
 import {
   CreateAssignorUseCase,
   CreateAssignorUseCaseError,
-} from '../assignor/use-cases/create-assignor';
+} from './create-assignor';
 import { makeAssignor } from '@test/factories/assignor.factory';
 
 let assignorRepository = new InMemoryAssignorRepository();

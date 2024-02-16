@@ -6,7 +6,7 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
-import { CreateAssignorDTO } from '../../assignor/dtos/assignor';
+import { CreateAssignorDTO } from '@/assignor/dtos/assignor';
 import {
   CreateAssignorUseCase,
   CreateAssignorUseCaseError,
