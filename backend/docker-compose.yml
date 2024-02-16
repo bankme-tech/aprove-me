@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  aproveme-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aprove-api
+    image: node:20-alpine
+    ports:
+      - 3000:3000
+    command: sh -c "pnpm i && pnpm start:dev"
+    working_dir: /app
+    env_file:
+      - .env.example
