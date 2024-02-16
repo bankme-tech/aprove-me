@@ -42,4 +42,15 @@ export class PrismaAssignorRepository implements AssignorRepository {
       },
     });
   }
+
+  async update(id: string, data: Partial<Assignor>): Promise<Assignor> {
+    const updated = await this.prisma.assignor.update({
+      where: {
+        id,
+      },
+      data,
+    });
+
+    return updated;
+  }
 }

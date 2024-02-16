@@ -21,4 +21,12 @@ export class InMemoryAssignorRepository implements AssignorRepository {
   async delete(id: string): Promise<void> {
     this.assignors = this.assignors.filter((assignor) => assignor.id !== id);
   }
+
+  async update(id: string, data: Partial<Assignor>): Promise<Assignor> {
+    const index = this.assignors.findIndex((assignor) => assignor.id === id);
+
+    this.assignors[index] = Object.assign(this.assignors[index], data);
+
+    return this.assignors[index];
+  }
 }
