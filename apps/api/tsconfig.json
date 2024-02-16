@@ -20,7 +20,9 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@/*": ["./src/app/*"],
-      "@test/*": ["./test/*"]
+      "@test/*": ["./test/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@util/*": ["./src/util/*"]
     }
   }
 }
