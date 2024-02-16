@@ -48,4 +48,15 @@ export class PrismaPayableRepository implements PayableRepository {
 
     return payables;
   }
+
+  async update(id: string, data: Partial<Payable>): Promise<Payable> {
+    const updated = await this.prisma.payable.update({
+      data,
+      where: {
+        id,
+      },
+    });
+
+    return updated;
+  }
 }

@@ -25,4 +25,12 @@ export class InMemoryPayableRepository implements PayableRepository {
   async findAll(): Promise<Payable[]> {
     return this.payables;
   }
+
+  async update(id: string, data: Partial<Payable>): Promise<Payable> {
+    const index = this.payables.findIndex((payable) => payable.id === id);
+
+    this.payables[index] = Object.assign(this.payables[index], data);
+
+    return this.payables[index];
+  }
 }

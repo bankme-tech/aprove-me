@@ -4,6 +4,7 @@ import { CreatePayableUseCase } from './use-cases/create-payable';
 import { DeletePayableUseCase } from './use-cases/delete-payable';
 import { GetPayableByIdUseCase } from './use-cases/get-payable-by-id';
 import { ListPayablesUseCase } from './use-cases/list-payables';
+import { UpdatePayableUseCase } from './use-cases/update-payable';
 
 @Module({
   imports: [DatabaseModule],
@@ -12,12 +13,14 @@ import { ListPayablesUseCase } from './use-cases/list-payables';
     DeletePayableUseCase,
     GetPayableByIdUseCase,
     ListPayablesUseCase,
+    UpdatePayableUseCase,
   ],
   exports: [
     CreatePayableUseCase,
     DeletePayableUseCase,
     GetPayableByIdUseCase,
     ListPayablesUseCase,
+    UpdatePayableUseCase,
   ],
 })
 export class PayableModule {}
