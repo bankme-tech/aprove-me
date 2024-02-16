@@ -4,6 +4,7 @@ import {
   CreateAssignorUseCaseError,
 } from './create-assignor';
 import { makeAssignor } from '@test/factories/assignor.factory';
+import { cnpj } from 'cpf-cnpj-validator';
 
 let assignorRepository = new InMemoryAssignorRepository();
 let service = new CreateAssignorUseCase(assignorRepository);
@@ -30,5 +31,24 @@ describe('CreateAssignorUseCase', () => {
 
     expect(result.isRight()).toBe(false);
     expect(result.value).toBe(CreateAssignorUseCaseError.INVALID_DOCUMENT);
+  });
+
+  it('should not be able to create new assignor with repeated document', async () => {
+    const existent = makeAssignor({
+      document: cnpj.generate(false),
+    });
+
+    assignorRepository.create(existent);
+
+    const result = await service.execute(
+      makeAssignor({
+        document: existent.document,
+      }),
+    );
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBe(
+      CreateAssignorUseCaseError.ASSIGNOR_ALREADY_EXISTS,
+    );
   });
 });

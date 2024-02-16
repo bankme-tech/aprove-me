@@ -7,6 +7,7 @@ import { Assignor } from '@prisma/client';
 
 export enum CreateAssignorUseCaseError {
   INVALID_DOCUMENT = 'invalid_document',
+  ASSIGNOR_ALREADY_EXISTS = 'assignor_already_exists',
 }
 
 type CreateAssignorUseCaseRequest = {
@@ -35,6 +36,13 @@ export class CreateAssignorUseCase {
   }: CreateAssignorUseCaseRequest): Promise<CreateAssignorUseCaseResponse> {
     if (!cpf.isValid(document) && !cnpj.isValid(document)) {
       return left(CreateAssignorUseCaseError.INVALID_DOCUMENT);
+    }
+
+    const existsAssignor =
+      await this.assignorRepository.findByDocument(document);
+
+    if (existsAssignor) {
+      return left(CreateAssignorUseCaseError.ASSIGNOR_ALREADY_EXISTS);
     }
 
     const assignor = await this.assignorRepository.create({
