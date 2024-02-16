@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common';
 import { Assignor } from '@prisma/client';
 
 export enum CreateAssignorUseCaseError {
-  INVALID_DOCUMENT,
+  INVALID_DOCUMENT = 'invalid_document',
 }
 
 type CreateAssignorUseCaseRequest = {

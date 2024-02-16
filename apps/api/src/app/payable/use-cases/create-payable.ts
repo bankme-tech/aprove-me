@@ -8,11 +8,11 @@ import { isUUID } from 'class-validator';
 import { randomUUID } from 'crypto';
 
 export enum CreatePayableUseCaseError {
-  ASSIGNOR_NOT_FOUND,
-  INVALID_ASSIGNOR_ID,
-  INVALID_EMISSION_DATE_FORMAT,
-  INVALID_EMISSION_DATE,
-  INVALID_VALUE,
+  ASSIGNOR_NOT_FOUND = 'assignor_not_found',
+  INVALID_ASSIGNOR_ID = 'invalid_assignor_id',
+  INVALID_EMISSION_DATE_FORMAT = 'invalid_emission_date_format',
+  INVALID_EMISSION_DATE = 'invalid_emission_date',
+  INVALID_VALUE = 'invalid_value',
 }
 
 type CreatePayableUseCaseRequest = {

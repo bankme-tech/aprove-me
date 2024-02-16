@@ -7,10 +7,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { CreateAssignorDTO } from '@/assignor/dtos/assignor';
-import {
-  CreateAssignorUseCase,
-  CreateAssignorUseCaseError,
-} from '@/assignor/use-cases/create-assignor';
+import { CreateAssignorUseCase } from '@/assignor/use-cases/create-assignor';
 
 @Controller('/integrations/assignor')
 export class CreateAssignorController {
@@ -28,12 +25,7 @@ export class CreateAssignorController {
     });
 
     if (response.isLeft()) {
-      switch (response.value) {
-        case CreateAssignorUseCaseError.INVALID_DOCUMENT:
-          throw new BadRequestException('Enter a valid document');
-        default:
-          throw new BadRequestException();
-      }
+      throw new BadRequestException(response.value);
     }
 
     return res.json(response.value);
