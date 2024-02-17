@@ -1,14 +1,14 @@
 # Todo
 
 - [ ] Frontend
-  - [ ] Cadastro pagáveis
-    - [ ] React Hook Form
-    - [ ] Adicionar zod
+  - [x] Cadastro pagáveis
+    - [x] React Hook Form
+    - [x] Adicionar zod
   - [ ] Conectando a Api
-    - [ ] Cadastro do Cedente
-      - [ ] Assignor precisa ser um combobox
+    - [x] Cadastro do Cedente
+      - [x] Assignor precisa ser um combobox
   - [ ] Listando
-    - [ ] Tabela de listagens de pagaveis: ID - VALUE - Emission Date
+    - [x] Tabela de listagens de pagaveis: ID - VALUE - Emission Date
     - [ ] Link com detalhe de cada pagável
     - [ ] Opções de editar e excluir
   - [ ] Autenticação
@@ -16,8 +16,12 @@
   - [ ] Testes
     - [ ] Implementar testes
 - [ ] Backend
+  - [ ] Criar seed para gerar usuario padrao (aproveme/aproveme)
   - [ ] Documentar como subir o projeto
-  - [ ] Endpoints de atualização
-    - [ ] Receivable
-    - [ ] Assignor
+  - [x] Endpoints de atualização
+    - [x] Receivable
+    - [x] Assignor
   - [ ] Implementar testes
+  - [ ] Implementação filas
+    - [x] Receivable 10k
+    - [ ] Rever implementação
