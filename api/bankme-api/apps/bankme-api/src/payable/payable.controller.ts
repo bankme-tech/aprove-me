@@ -1,21 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
-import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ListPayableDto } from './dto/list-payable.dto';
 
 @Controller('payable')
 @ApiTags('Payable')
 export class PayableController {
-  @ApiOperation({ summary: 'Payable' })
-    constructor(private readonly payableService: PayableService) { }
+  constructor(private readonly payableService: PayableService) {}
 
   @Post()
   @ApiResponse({
     status: 200,
     description: 'Create a payable',
-    type: CreatePayableDto
+    type: CreatePayableDto,
   })
   create(@Body() createPayableDto: CreatePayableDto) {
     return this.payableService.create(createPayableDto);
@@ -25,7 +32,7 @@ export class PayableController {
   @ApiResponse({
     status: 200,
     description: 'Get list all payables',
-    type: ListPayableDto
+    type: ListPayableDto,
   })
   findAll() {
     return this.payableService.findAll();
@@ -35,7 +42,7 @@ export class PayableController {
   @ApiResponse({
     status: 200,
     description: 'Get Payable by Id',
-    type: CreatePayableDto
+    type: CreatePayableDto,
   })
   findOne(@Param('id') id: string) {
     return this.payableService.findOne(+id);
@@ -45,7 +52,7 @@ export class PayableController {
   @ApiResponse({
     status: 200,
     description: 'Change payable by Id',
-    type: UpdatePayableDto
+    type: UpdatePayableDto,
   })
   update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
     return this.payableService.update(+id, updatePayableDto);
@@ -55,7 +62,7 @@ export class PayableController {
   @ApiResponse({
     status: 200,
     description: 'Remove payable By Id',
-    type: CreatePayableDto
+    type: CreatePayableDto,
   })
   remove(@Param('id') id: string) {
     return this.payableService.remove(+id);

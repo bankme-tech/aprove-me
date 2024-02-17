@@ -10,20 +10,19 @@ import {
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ListAuthDto } from './dto/list-auth.dto';
 
 @Controller('auth')
 @ApiTags('Authentication')
 export class AuthController {
-  @ApiOperation({ summary: 'Autentication' })
-    constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post()
   @ApiResponse({
     status: 200,
     description: 'Create a user',
-    type: CreateAuthDto
+    type: CreateAuthDto,
   })
   create(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.create(createAuthDto);
@@ -33,7 +32,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Get user list',
-    type: ListAuthDto
+    type: ListAuthDto,
   })
   findAll() {
     return this.authService.findAll();
@@ -43,7 +42,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Get user By Id',
-    type: CreateAuthDto
+    type: CreateAuthDto,
   })
   findOne(@Param('id') id: string) {
     return this.authService.findOne(+id);
@@ -53,7 +52,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Change user By Id',
-    type: UpdateAuthDto
+    type: UpdateAuthDto,
   })
   update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
     return this.authService.update(+id, updateAuthDto);
@@ -63,7 +62,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Remove user By Id',
-    type: CreateAuthDto
+    type: CreateAuthDto,
   })
   remove(@Param('id') id: string) {
     return this.authService.remove(+id);

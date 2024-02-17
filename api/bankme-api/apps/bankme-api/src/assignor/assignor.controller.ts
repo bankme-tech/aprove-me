@@ -10,22 +10,19 @@ import {
 import { AssignorService } from './assignor.service';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ListAssignorDto } from './dto/list-assignor.dto';
 
 @Controller('assignor')
 @ApiTags('Assignor')
 export class AssignorController {
-  @ApiOperation({
-    summary: 'Assignor'
-  })
-    constructor(private readonly assignorService: AssignorService) { }
+  constructor(private readonly assignorService: AssignorService) {}
 
   @Post()
   @ApiResponse({
     status: 200,
     description: 'Create an assignor',
-    type: CreateAssignorDto
+    type: CreateAssignorDto,
   })
   create(@Body() createAssignorDto: CreateAssignorDto) {
     return this.assignorService.create(createAssignorDto);
@@ -35,7 +32,7 @@ export class AssignorController {
   @ApiResponse({
     status: 200,
     description: 'list all assignors',
-    type: ListAssignorDto
+    type: ListAssignorDto,
   })
   findAll() {
     return this.assignorService.findAll();
@@ -45,7 +42,7 @@ export class AssignorController {
   @ApiResponse({
     status: 200,
     description: 'Get an assignor by id',
-    type: CreateAssignorDto
+    type: CreateAssignorDto,
   })
   findOne(@Param('id') id: string) {
     return this.assignorService.findOne(+id);
@@ -55,7 +52,7 @@ export class AssignorController {
   @ApiResponse({
     status: 200,
     description: 'Change an assignor by id',
-    type: UpdateAssignorDto
+    type: UpdateAssignorDto,
   })
   update(
     @Param('id') id: string,
@@ -68,7 +65,7 @@ export class AssignorController {
   @ApiResponse({
     status: 200,
     description: 'Remove an assignor by id',
-    type: CreateAssignorDto
+    type: CreateAssignorDto,
   })
   remove(@Param('id') id: string) {
     return this.assignorService.remove(+id);

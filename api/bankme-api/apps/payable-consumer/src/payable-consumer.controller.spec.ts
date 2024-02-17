@@ -11,7 +11,9 @@ describe('PayableConsumerController', () => {
       providers: [PayableConsumerService],
     }).compile();
 
-    payableConsumerController = app.get<PayableConsumerController>(PayableConsumerController);
+    payableConsumerController = app.get<PayableConsumerController>(
+      PayableConsumerController,
+    );
   });
 
   describe('root', () => {
