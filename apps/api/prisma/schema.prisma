@@ -20,6 +20,14 @@ model Payable {
   updatedAt    DateTime @updatedAt
 }
 
+model User {
+  id        String   @id @default(uuid())
+  username  String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Assignor {
   id        String    @id @default(uuid())
   document  String    @unique
