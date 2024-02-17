@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@/database/database.module';
 import { AssignorModule } from '@/assignor/assignor.module';
 import { PayableModule } from '@/payable/payable.module';
+import { UserModule } from '@/user/user.module';
 import { CreateAssignorController } from './controllers/create-assignor.controller';
 import { CreatePayableController } from './controllers/create-payable.controller';
 import { GetAssignorByIdController } from './controllers/get-assignor-by-id.controller';
@@ -13,7 +14,7 @@ import { ListPayablesController } from './controllers/list-payables.controller';
 import { UpdatePayableController } from './controllers/update-payable.controller';
 
 @Module({
-  imports: [DatabaseModule, AssignorModule, PayableModule],
+  imports: [DatabaseModule, AssignorModule, PayableModule, UserModule],
   controllers: [
     CreateAssignorController,
     CreatePayableController,
