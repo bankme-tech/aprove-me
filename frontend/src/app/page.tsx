@@ -1,64 +1,35 @@
 'use client';
 
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Input from "../components/Input";
 import { Button } from "primereact/button";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { Toast } from "primereact/toast";
 import { FieldValues, useForm } from "react-hook-form";
-import { BASE_URL } from "@/contants";
 import Link from "next/link";
+import { signIn } from "./actions";
 
 const Home = () => {
   const toastRef = useRef<any>(null);
 
   const { control, handleSubmit, formState: { errors } } = useForm();
 
-  const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(false);
 
-  const showToastError = (message: string) => {
-    toastRef.current.show({
-      severity: 'error', summary: 'Error!', detail: message
-    });
+  const showToast = (severity: string, summary: string, detail: string) => {
+    toastRef.current.show({severity, summary, detail});
   }
 
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async ({login, password}: FieldValues) => {
     try {
       setIsLoading(true);
 
-      const res = await fetch(`${BASE_URL}/integrations/auth`, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'post',
-        body: JSON.stringify({
-          login: data.login,
-          password: data.password
-        })
-      });
+      const result = await signIn({login, password});
 
-      const result = await res.json();
+      console.log(result);
 
-      if (result?.error) {
-        for (let i = 0; i < result.message.length; i++) {
-          showToastError(result.message[i]);
-        }
-        return;
-      }
-
-      if (!result?.access_token) {
-        showToastError('Usuário não encontrado!');
-        return;
-      }
-
-      localStorage.setItem("token", result.access_token);
-
-      router.push('/assignors');
     } catch (e: any) {
-      showToastError(e.message);
+      showToast('error', 'Erro!', e.message);
     } finally {
       setIsLoading(false);
     }
