@@ -1,7 +1,15 @@
 import { Response } from 'express';
-import { BadRequestException, Controller, Get, Res } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { ListPayablesUseCase } from '@/payable/use-cases/list-payables';
+import { IsAuthenticated } from '../guards/auth.guard';
 
+@UseGuards(IsAuthenticated)
 @Controller('/integrations/payable')
 export class ListPayablesController {
   constructor(private listPayable: ListPayablesUseCase) {}

@@ -6,10 +6,13 @@ import {
   Param,
   Put,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { UpdateAssignorDTO } from '@/assignor/dtos/assignor';
 import { UpdateAssignorUseCase } from '@/assignor/use-cases/update-assignor';
+import { IsAuthenticated } from '../guards/auth.guard';
 
+@UseGuards(IsAuthenticated)
 @Controller('/integrations/assignor/:id')
 export class UpdateAssignorController {
   constructor(private updateAssignor: UpdateAssignorUseCase) {}

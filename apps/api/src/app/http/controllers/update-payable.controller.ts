@@ -6,10 +6,13 @@ import {
   Param,
   Put,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { UpdatePayableUseCase } from '@/payable/use-cases/update-payable';
 import { UpdatePayableDTO } from '@/payable/dtos/payable';
+import { IsAuthenticated } from '../guards/auth.guard';
 
+@UseGuards(IsAuthenticated)
 @Controller('/integrations/payable/:id')
 export class UpdatePayableController {
   constructor(private updatePayable: UpdatePayableUseCase) {}

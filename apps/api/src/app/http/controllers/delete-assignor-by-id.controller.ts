@@ -6,9 +6,12 @@ import {
   HttpStatus,
   Param,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { DeleteAssignorUseCase } from '@/assignor/use-cases/delete-assignor';
+import { IsAuthenticated } from '../guards/auth.guard';
 
+@UseGuards(IsAuthenticated)
 @Controller('/integrations/assignor/:id')
 export class DeleteAssignorByIdController {
   constructor(private deleteAssignor: DeleteAssignorUseCase) {}

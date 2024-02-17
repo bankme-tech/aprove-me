@@ -5,10 +5,13 @@ import {
   Controller,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateAssignorDTO } from '@/assignor/dtos/assignor';
 import { CreateAssignorUseCase } from '@/assignor/use-cases/create-assignor';
+import { IsAuthenticated } from '../guards/auth.guard';
 
+@UseGuards(IsAuthenticated)
 @Controller('/integrations/assignor')
 export class CreateAssignorController {
   constructor(private createAssignor: CreateAssignorUseCase) {}

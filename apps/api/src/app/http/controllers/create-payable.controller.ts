@@ -5,10 +5,13 @@ import {
   Controller,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { CreatePayableDTO } from '@/payable/dtos/payable';
 import { CreatePayableUseCase } from '@/payable/use-cases/create-payable';
+import { IsAuthenticated } from '../guards/auth.guard';
 
+@UseGuards(IsAuthenticated)
 @Controller('/integrations/payable')
 export class CreatePayableController {
   constructor(private createPayable: CreatePayableUseCase) {}

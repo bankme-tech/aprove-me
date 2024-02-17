@@ -5,9 +5,12 @@ import {
   Get,
   Param,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { GetPayableByIdUseCase } from '@/payable/use-cases/get-payable-by-id';
+import { IsAuthenticated } from '../guards/auth.guard';
 
+@UseGuards(IsAuthenticated)
 @Controller('/integrations/payable/:id')
 export class GetPayableByIdController {
   constructor(private getPayableById: GetPayableByIdUseCase) {}

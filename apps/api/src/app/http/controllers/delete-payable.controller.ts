@@ -6,9 +6,12 @@ import {
   HttpStatus,
   Param,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { DeletePayableUseCase } from '@/payable/use-cases/delete-payable';
+import { IsAuthenticated } from '../guards/auth.guard';
 
+@UseGuards(IsAuthenticated)
 @Controller('/integrations/payable/:id')
 export class DeletePayableByIdController {
   constructor(private deletePayable: DeletePayableUseCase) {}
