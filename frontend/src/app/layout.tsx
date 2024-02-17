@@ -3,6 +3,7 @@ import "./globals.css";
 import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primeicons/primeicons.css';
+import { ToastProvider } from "@/contexts/ToastContext";
 
 export const metadata: Metadata = {
   title: "Bankme",
@@ -18,7 +19,9 @@ export default function RootLayout({
     <html lang="pt">
       <body>
         <PrimeReactProvider>
-          {children}
+          <ToastProvider>
+            {children}
+          </ToastProvider>
         </PrimeReactProvider>
       </body>
     </html>

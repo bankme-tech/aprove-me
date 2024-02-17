@@ -1,30 +1,27 @@
 'use client';
 
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import Input from "../components/Input";
 import { Button } from "primereact/button";
 import Image from "next/image";
-import { Toast } from "primereact/toast";
 import { FieldValues, useForm } from "react-hook-form";
 import Link from "next/link";
 import { signIn } from "./actions";
+import { ToastContext } from "@/contexts/ToastContext";
 
 const Home = () => {
-  const toastRef = useRef<any>(null);
+
+  const { showToast } = useContext(ToastContext);
 
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const showToast = (severity: string, summary: string, detail: string) => {
-    toastRef.current.show({severity, summary, detail});
-  }
-
-  const onSubmit = async ({login, password}: FieldValues) => {
+  const onSubmit = async ({ login, password }: FieldValues) => {
     try {
       setIsLoading(true);
 
-      const result = await signIn({login, password});
+      const result = await signIn({ login, password });
 
       console.log(result);
 
@@ -37,8 +34,6 @@ const Home = () => {
 
   return (
     <div className="h-[100svh] bg-[--primary] relative">
-      <Toast ref={toastRef} />
-
       <Image
         src={'/bank-people.jpg'}
         alt="bank"

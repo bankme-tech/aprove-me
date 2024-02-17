@@ -1,25 +1,21 @@
 'use client';
 
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import AssignorForm from "./AssignorForm";
 import { useRouter } from "next/navigation";
-import { Toast } from "primereact/toast";
+import { ToastContext } from "@/contexts/ToastContext";
 
 const AddAssignorButton = () => {
-    const toastRef = useRef<any>();
-
     const router = useRouter();
+
+    const { showToast } = useContext(ToastContext);
 
     const [open, setOpen] = useState(false);
 
     const toggleDialog = () => {
         setOpen(value => !value);
-    }
-
-    const showToast = (severity: string, summary: string, detail: string) => {
-        toastRef.current.show({ severity, summary, detail });
     }
 
     const handleSuccess = () => {
@@ -36,7 +32,6 @@ const AddAssignorButton = () => {
 
     return (
         <div>
-            <Toast ref={toastRef} />
             <Dialog
                 visible={open}
                 onHide={toggleDialog}

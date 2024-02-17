@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import AssignorForm from "./AssignorForm";
-import { useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { BASE_URL } from "@/contants";
-import { Toast } from "primereact/toast";
 import { readCookie } from "@/helpers/cookie";
+import { ToastContext } from "@/contexts/ToastContext";
 
 type Assignor = {
     id: string
@@ -20,19 +20,15 @@ type Assignor = {
 const AssignorItemActions = ({ assignor }: {
     assignor: Assignor
 }) => {
-    const toastRef = useRef<any>();
-
     const router = useRouter();
+
+    const { showToast } = useContext(ToastContext);
 
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const toggleDialog = () => {
         setOpen(value => !value);
-    }
-
-    const showToast = (severity: string, summary: string, detail: string) => {
-        toastRef.current.show({ severity, summary, detail });
     }
 
     const handleSuccess = () => {
@@ -84,8 +80,6 @@ const AssignorItemActions = ({ assignor }: {
 
     return (
         <div>
-            <Toast ref={toastRef} />
-
             <Dialog
                 header="Editar cedente"
                 visible={open}
