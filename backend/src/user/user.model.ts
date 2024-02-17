@@ -1,3 +1,4 @@
+import { Role } from "@prisma/client";
 import { IsNotEmpty } from "class-validator";
 
 export class User {
@@ -9,5 +10,7 @@ export class User {
     @IsNotEmpty()
     public password: string;
 
-    public roles: any[]
+    public roleId: string;
+
+    public role: Role;
 }

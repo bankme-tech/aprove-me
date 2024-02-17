@@ -30,24 +30,16 @@ model Assignor {
 }
 
 model User {
-  id       String      @id @default(uuid())
-  login    String      @unique
+  id       String  @id @default(uuid())
+  login    String  @unique
   password String
-  roles    UserRoles[]
-  deleted  Boolean     @default(false)
+  role     Role    @relation(fields: [roleId], references: [id])
+  roleId   String
+  deleted  Boolean @default(false)
 }
 
 model Role {
-  id    String      @id @default(uuid())
-  name  String
-  users UserRoles[]
-}
-
-model UserRoles {
-  user   User   @relation(fields: [userId], references: [id])
-  role   Role   @relation(fields: [roleId], references: [id])
-  userId String
-  roleId String
-
-  @@id([userId, roleId])
+  id   String @id @default(uuid())
+  name String @unique
+  user User[]
 }

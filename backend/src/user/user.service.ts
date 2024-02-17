@@ -12,11 +12,7 @@ export class UserService {
         login: login
       },
       include: {
-        roles: {
-          include: {
-            role: true
-          }
-        }
+        role: true
       }
     });
   }
