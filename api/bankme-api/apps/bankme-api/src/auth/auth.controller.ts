@@ -63,7 +63,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Remove user By Id',
-    type: UpdateAuthDto
+    type: CreateAuthDto
   })
   remove(@Param('id') id: string) {
     return this.authService.remove(+id);
