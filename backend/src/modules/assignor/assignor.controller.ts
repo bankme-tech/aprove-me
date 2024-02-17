@@ -12,8 +12,9 @@ import { UUIDParam } from '../../utils/validate-uuid';
 import { AuthGuard } from '../guards/auth.guard';
 import {
   CreateAssignorUseCase,
-  FindAssignorByIdUseCase,
   DeleteAssignorUseCase,
+  FetchAllAssignorUseCase,
+  FindAssignorByIdUseCase,
   UpdateAssignorUseCase,
 } from './use-cases';
 
@@ -25,7 +26,13 @@ export class AssignorController {
     private readonly findAssignorByIdUseCase: FindAssignorByIdUseCase,
     private readonly deleteAssignorUseCase: DeleteAssignorUseCase,
     private readonly updateAssignorUseCase: UpdateAssignorUseCase,
+    private readonly fetchAllAssignorUseCase: FetchAllAssignorUseCase,
   ) {}
+
+  @Get()
+  async fetch() {
+    return await this.fetchAllAssignorUseCase.execute();
+  }
 
   @Post()
   async create(@Body() createAssignorDto: CreateAssignorDto) {

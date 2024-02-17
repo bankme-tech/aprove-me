@@ -1,15 +1,25 @@
 version: '3.8'
 
 services:
-  aproveme-api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: aprove-api
-    image: node:20-alpine
+  # aproveme-api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: aprove-api
+  #   depends_on:
+  #     - aproveme-redis
+  #   image: node:20-alpine
+  #   ports:
+  #     - 3000:3000
+  #   command: sh -c "pnpm i && pnpm start:dev"
+  #   working_dir: /app
+  #   env_file:
+  #     - .env.example
+
+  aproveme-redis:
+    container_name: aprove-redis
+    image: redis:latest
+    restart: always
+    command: redis-server
     ports:
-      - 3000:3000
-    command: sh -c "pnpm i && pnpm start:dev"
-    working_dir: /app
-    env_file:
-      - .env.example
+      - 6379:6379

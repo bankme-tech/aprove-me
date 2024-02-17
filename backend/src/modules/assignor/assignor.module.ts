@@ -1,14 +1,18 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from 'src/db/database.module';
-import { CreateAssignorUseCase } from './use-cases/create-assignor-usecase';
 import { AssignorRepository, ReceivableRepository } from 'src/repositories';
 import {
   PrismaAssignorRepository,
   PrismaReceivableRepository,
 } from 'src/db/repositories';
 import { AssignorController } from './assignor.controller';
-import { FindAssignorByIdUseCase, UpdateAssignorUseCase } from './use-cases';
-import { DeleteAssignorUseCase } from './use-cases/delete-assignor-usecase';
+import {
+  FetchAllAssignorUseCase,
+  CreateAssignorUseCase,
+  DeleteAssignorUseCase,
+  FindAssignorByIdUseCase,
+  UpdateAssignorUseCase,
+} from './use-cases';
 import { JwtService } from '@nestjs/jwt';
 import { EnvService } from '../env/env.service';
 
@@ -20,6 +24,7 @@ import { EnvService } from '../env/env.service';
     FindAssignorByIdUseCase,
     DeleteAssignorUseCase,
     UpdateAssignorUseCase,
+    FetchAllAssignorUseCase,
     EnvService,
     JwtService,
     {

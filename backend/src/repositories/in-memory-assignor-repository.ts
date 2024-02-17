@@ -24,4 +24,8 @@ export class InMemoryAssignorRepository implements AssignorRepository {
   update(id: string, updateAssignorDto: UpdateAssignorDto): Promise<void> {
     return null;
   }
+
+  fetch(): Promise<Assignor[]> {
+      return null
+  }
 }

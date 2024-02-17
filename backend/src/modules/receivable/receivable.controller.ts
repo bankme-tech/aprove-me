@@ -7,7 +7,11 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { CreateReceivableDto, UpdateReceivableDto } from 'src/domain/dtos';
+import {
+  CreateReceivableBatchDto,
+  CreateReceivableDto,
+  UpdateReceivableDto,
+} from 'src/domain/dtos';
 import { UUIDParam } from 'src/utils/validate-uuid';
 import { AuthGuard } from '../guards/auth.guard';
 import {
@@ -16,6 +20,7 @@ import {
   FindReceivableByIdUseCase,
   UpdateReceivableUseCase,
 } from './use-cases';
+import { ReceivableBatchService } from './jobs/receivable-batch.service';
 
 @Controller('payable')
 @UseGuards(AuthGuard)
@@ -25,6 +30,7 @@ export class ReceivableController {
     private readonly findReceivableByIdUseCase: FindReceivableByIdUseCase,
     private readonly deleteReceivableUseCase: DeleteReceivableUseCase,
     private readonly updateReceivableUseCase: UpdateReceivableUseCase,
+    private readonly receivableBatchService: ReceivableBatchService,
   ) {}
 
   @Post('')
@@ -51,5 +57,14 @@ export class ReceivableController {
       id,
       ...updateReceivable,
     });
+  }
+
+  @Post('batch')
+  async createMany(@Body() createReceivableBatchDto: CreateReceivableBatchDto) {
+    const createReceivable = createReceivableBatchDto.receivable_batch.map(
+      (receivable) => this.receivableBatchService.createReceivable(receivable),
+    );
+
+    await Promise.all(createReceivable);
   }
 }

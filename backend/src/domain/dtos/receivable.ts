@@ -1,5 +1,14 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { IsDate, IsDateString, IsNumber, IsUUID } from 'class-validator';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsDateString,
+  IsEmail,
+  IsNumber,
+  IsUUID,
+} from 'class-validator';
+import { Receivable } from '../entities';
 
 export class CreateReceivableDto {
   @IsNumber()
@@ -13,3 +22,13 @@ export class CreateReceivableDto {
 }
 
 export class UpdateReceivableDto extends PartialType(CreateReceivableDto) {}
+
+export class CreateReceivableBatchDto {
+  @IsArray()
+  @ArrayMinSize(2)
+  @ArrayMaxSize(10000)
+  receivable_batch: CreateReceivableDto[];
+
+  @IsEmail()
+  email: string;
+}
