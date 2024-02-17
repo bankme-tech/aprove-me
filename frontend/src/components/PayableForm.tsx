@@ -2,14 +2,11 @@
 
 import { useForm } from "react-hook-form";
 import { Button } from "primereact/button";
-import { Suspense, useEffect, useRef, useState } from "react";
-import { Toast } from "primereact/toast";
+import { useEffect, useState } from "react";
+import { readCookie } from "@/helpers/cookie";
 import { BASE_URL } from "@/contants";
 import InputNumber from "./InputNumber";
-import InputCalendar from "./InputCalendar";
-import AssignorsComboBox from "./AssignorsComboBox";
-import { Dropdown } from "primereact/dropdown";
-import { useRouter } from "next/navigation";
+import InputComboBox from "./InputComboBox";
 
 interface Payable {
     id: string
@@ -18,12 +15,9 @@ interface Payable {
     assignorId: string
 }
 
-const PayableForm = ({ payable, onSuccess }: {
-    payable?: Payable, onSuccess: () => void
+const PayableForm = ({ payable, onSuccess, onError }: {
+    payable?: Payable, onSuccess: () => void, onError: (message: string[]) => void
 }) => {
-    const toastRef = useRef<any>();
-
-    const router = useRouter();
 
     let defaultValues;
 
@@ -31,64 +25,64 @@ const PayableForm = ({ payable, onSuccess }: {
         defaultValues = {
             id: payable.id,
             value: payable.value,
-            emissionDate: new Date(payable.emissionDate),
-            assignorId: payable.assignorId
+            emissionDate: payable.emissionDate,
+            assignorId: payable.assignorId,
         }
     }
 
-    const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-    const [token, setToken] = useState<string | null>(null);
-
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        setToken(token);
+        getAssignors();
     }, []);
+
+    const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+    const [assignors, setAssignors] = useState([]);
+    const [assignor, setAssignor] = useState(null);
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues
     });
 
-    const showToastError = (message: string) => {
-        toastRef.current.show({
-            severity: 'error', summary: 'Erro!', detail: message
+    const getAssignors = async () => {
+        const token = readCookie('bankme.token');
+
+        const res = await fetch(`${BASE_URL}/integrations/assignor`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         });
+        const data = await res.json();
+
+        setAssignors(data);
     }
 
     const onSubmit = async (data: any) => {
         try {
             setIsSubmitLoading(true);
 
-            let method = 'POST';
-
-            if (data.id) {
-                method = 'PATCH';
-            }
+            const token = readCookie('bankme.token');
 
             const res = await fetch(`${BASE_URL}/integrations/payable`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 },
-                method,
+                method: data.id ? 'PATCH' : 'POST',
                 body: JSON.stringify(data)
             });
-            const result = await res.json();
+            const { error, message, statusCode } = await res.json();
 
-            if(result?.statusCode === 401) {
-                router.push('/');
+            if (error) {
+                onError(message);
                 return;
             }
 
-            if (result?.error) {
-                for (let i = 0; i < result.message.length; i++) {
-                    showToastError(result.message[i]);
-                }
+            if (statusCode === 401) {
+                onError([message]);
                 return;
             }
 
             onSuccess();
         } catch (e: any) {
-            showToastError(e.message);
         } finally {
             setIsSubmitLoading(false);
         }
@@ -99,7 +93,6 @@ const PayableForm = ({ payable, onSuccess }: {
             className="w-full flex flex-col gap-4"
             onSubmit={handleSubmit(onSubmit)}
         >
-            <Toast ref={toastRef} />
             <InputNumber
                 label="Valor"
                 name="value"
@@ -109,23 +102,17 @@ const PayableForm = ({ payable, onSuccess }: {
                 mode="currency"
                 currency="BRL"
             />
-            <Suspense fallback={
-                <div className="w-full flex flex-col gap-1">
-                    <label>Cedente</label>
-                    <Dropdown
-                        disabled
-                        placeholder="Carregando..."
-                        style={{width: '100%'}}
-                    />
-                </div>
-            }>
-                {token && <AssignorsComboBox
-                    control={control}
-                    errors={errors}
-                    token={token as string}
-                    router={router}
-                />}
-            </Suspense>
+            <InputComboBox
+                label="Cedente"
+                name="assignorId"
+                optionLabel="name"
+                optionValue="id"
+                options={assignors}
+                placeholder="Selecione um Cedente"
+                control={control}
+                errors={errors}
+                rules={{ required: "Cedente obrigatório" }}
+            />
             <div className="flex justify-end">
                 <Button
                     label="Salvar"

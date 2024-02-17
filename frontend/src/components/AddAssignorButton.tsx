@@ -18,16 +18,20 @@ const AddAssignorButton = () => {
         setOpen(value => !value);
     }
 
-    const showToastSuccess = () => {
-        toastRef.current.show({
-            severity: 'success', summary: 'Sucesso!', detail: 'Informações armazenadas com sucesso!'
-        });
+    const showToast = (severity: string, summary: string, detail: string) => {
+        toastRef.current.show({ severity, summary, detail });
     }
 
-    const handleOnSuccess = () => {
+    const handleSuccess = () => {
         toggleDialog();
-        showToastSuccess();
+        showToast('success', 'Sucesso!', 'Informações armazenadas com sucesso!');
         router.refresh();
+    }
+
+    const handleError = (message: string[]) => {
+        for (let i = 0; i < message.length; i++) {
+            showToast('error', 'Erro!', message[i]);
+        }
     }
 
     return (
@@ -39,7 +43,7 @@ const AddAssignorButton = () => {
                 header="Criar novo cedente"
                 className="w-full max-w-md"
             >
-                <AssignorForm onSuccess={handleOnSuccess} />
+                <AssignorForm onSuccess={handleSuccess} onError={handleError} />
             </Dialog>
 
             <Button label="Novo" onClick={toggleDialog} />
