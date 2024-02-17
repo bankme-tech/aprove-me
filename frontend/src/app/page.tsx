@@ -21,9 +21,11 @@ const Home = () => {
     try {
       setIsLoading(true);
 
-      const result = await signIn({ login, password });
+      const error = await signIn({ login, password });
 
-      console.log(result);
+      if (error) {
+        showToast('error', 'Erro!', error);
+      }
 
     } catch (e: any) {
       showToast('error', 'Erro!', e.message);

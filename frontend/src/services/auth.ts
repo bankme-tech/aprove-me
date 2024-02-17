@@ -2,7 +2,7 @@ import { BASE_URL } from "@/contants"
 
 export const signInRequest = async ({ login, password }: {
     login: string, password: string
-}): Promise<{ access_token: string, statusCode: number, message: string, error: string }> => {
+}): Promise<{ access_token: string, statusCode: number, message: string }> => {
     const res = await fetch(`${BASE_URL}/integrations/auth`, {
         headers: {
             'Content-Type': 'application/json' 
