@@ -10,3 +10,12 @@ export class CreateUserDTO {
   @IsNotEmpty()
   password: string;
 }
+
+export class AuthenticateDTO {
+  @IsNotEmpty()
+  @IsString()
+  username: string;
+
+  @IsNotEmpty()
+  password: string;
+}

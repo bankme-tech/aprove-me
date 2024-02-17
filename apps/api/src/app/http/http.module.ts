@@ -13,6 +13,7 @@ import { GetPayableByIdController } from './controllers/get-payable-by-id.contro
 import { ListPayablesController } from './controllers/list-payables.controller';
 import { UpdatePayableController } from './controllers/update-payable.controller';
 import { CreateUserController } from './controllers/create-user.controller';
+import { AuthenticateController } from './controllers/authenticate.controller';
 
 @Module({
   imports: [DatabaseModule, AssignorModule, PayableModule, UserModule],
@@ -27,6 +28,7 @@ import { CreateUserController } from './controllers/create-user.controller';
     ListPayablesController,
     UpdatePayableController,
     CreateUserController,
+    AuthenticateController,
   ],
   providers: [],
 })
