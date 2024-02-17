@@ -11,21 +11,21 @@ export class PayableController {
     constructor(private readonly payableService: PayableService) { }
 
     @UseGuards(AuthGuard, RoleGuard)
-    @Roles(Role.User)
+   @Roles(Role.Admin)
     @Get()
     async getPayables() {
         return await this.payableService.getAllPayables();
     }
 
     @UseGuards(AuthGuard, RoleGuard)
-    @Roles(Role.User)
+   @Roles(Role.Admin)
     @Get(':id')
     async getPayable(@Param('id') id: string) {
         return await this.payableService.getPayableById(id);
     }
 
     @UseGuards(AuthGuard, RoleGuard)
-    @Roles(Role.User)
+   @Roles(Role.Admin)
     @Post()
     async createPayable(
         @Body() payable: Payable
@@ -40,7 +40,7 @@ export class PayableController {
     }
 
     @UseGuards(AuthGuard, RoleGuard)
-    @Roles(Role.User)
+   @Roles(Role.Admin)
     @Patch()
     async updatePayable(
         @Body() payable: Payable
@@ -56,7 +56,7 @@ export class PayableController {
     }
 
     @UseGuards(AuthGuard, RoleGuard)
-    @Roles(Role.User)
+   @Roles(Role.Admin)
     @Delete(':id')
     async deletePayable(@Param('id') id: string) {
         return await this.payableService.deletePayableById(id);
