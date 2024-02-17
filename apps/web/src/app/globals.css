@@ -13,13 +13,6 @@
   --callout-border-rgb: 108, 108, 108;
   --card-rgb: 100, 100, 100;
   --card-border-rgb: 200, 200, 200;
-
-  --glow-conic: conic-gradient(
-    from 180deg at 50% 50%,
-    #2a8af6 0deg,
-    #a853ba 180deg,
-    #e92a67 360deg
-  );
 }
 
 * {
