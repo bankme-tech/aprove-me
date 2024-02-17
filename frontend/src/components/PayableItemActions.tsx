@@ -5,23 +5,21 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import PayableForm from "./PayableForm";
 import { useRef, useState } from "react";
-import { Toast } from "primereact/toast";
 import { BASE_URL } from "@/contants";
+import { Toast } from "primereact/toast";
+import { readCookie } from "@/helpers/cookie";
 
-interface PayableItemActionsProps {
-    payable: {
-        id: string
-        value: number
-        emissionDate: string
-        assignorId: string
-    },
-    showToast: (severity: string, summary: string, detail: string) => void
+type Payable = {
+    id: string
+    value: number
+    emissionDate: string
+    assignorId: string
 }
 
-const PayableItemActions = (props: PayableItemActionsProps) => {
+const PayableItemActions = ({ payable }: {
+    payable: Payable
+}) => {
     const toastRef = useRef<any>();
-
-    const { payable, showToast } = props;
 
     const router = useRouter();
 
@@ -32,17 +30,28 @@ const PayableItemActions = (props: PayableItemActionsProps) => {
         setOpen(value => !value);
     }
 
-    const handleOnSuccess = () => {
+    const showToast = (severity: string, summary: string, detail: string) => {
+        toastRef.current.show({ severity, summary, detail });
+    }
+
+    const handleSuccess = () => {
         toggleDialog();
         showToast('success', 'Sucesso!', 'Informações armazenadas com sucesso!');
-        router.refresh()
+        router.refresh();
+    }
+
+    const handleError = (message: string[]) => {
+        console.log(message);
+        for (let i = 0; i < message.length; i++) {
+            showToast('error', 'Erro!', message[i]);
+        }
     }
 
     const handleRemove = async () => {
         try {
             setIsLoading(true);
 
-            const token = localStorage.getItem('token');
+            const token = readCookie('bankme.token');
 
             const res = await fetch(`${BASE_URL}/integrations/payable/${payable.id}`, {
                 headers: {
@@ -77,12 +86,12 @@ const PayableItemActions = (props: PayableItemActionsProps) => {
             <Toast ref={toastRef} />
 
             <Dialog
-                header="Editar recebível"
+                header="Editar cedente"
                 visible={open}
                 onHide={toggleDialog}
                 className="w-full max-w-md"
             >
-                <PayableForm payable={payable} onSuccess={handleOnSuccess} />
+                <PayableForm payable={payable} onSuccess={handleSuccess} onError={handleError} />
             </Dialog>
 
             <div className="flex items-center gap-4">

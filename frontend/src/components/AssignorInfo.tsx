@@ -1,20 +1,25 @@
 import { BASE_URL } from "@/contants";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
-const AssignorInfo = async ({ token, id }: {
-    token: string | null, id: string
+const AssignorInfo = async ({ id }: {
+    id: string
 }) => {
+    const token = cookies().get('bankme.token')?.value;
 
     const res = await fetch(`${BASE_URL}/integrations/assignor/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     });
-    const assignor = await res.json();
 
-    if (!assignor.id) {
+    if (res.status === 404) {
         notFound();
     }
+
+    const assignor = await res.json();
+
+    console.log(assignor);
 
     return (
         <div className="w-full">

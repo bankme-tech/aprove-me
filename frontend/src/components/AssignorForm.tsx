@@ -3,10 +3,10 @@
 import { useForm } from "react-hook-form";
 import Input from "./Input";
 import { Button } from "primereact/button";
-import { useRef, useState } from "react";
-import { Toast } from "primereact/toast";
-import { BASE_URL } from "@/contants";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { readCookie } from "@/helpers/cookie";
+import { BASE_URL } from "@/contants";
 
 interface Assignor {
     id: string
@@ -16,12 +16,9 @@ interface Assignor {
     phone: string
 }
 
-const AssignorForm = ({ assignor, onSuccess }: {
-    assignor?: Assignor, onSuccess: () => void
+const AssignorForm = ({ assignor, onSuccess, onError }: {
+    assignor?: Assignor, onSuccess: () => void, onError: (message: string[]) => void
 }) => {
-    const toastRef = useRef<any>();
-
-    const router = useRouter();
 
     let defaultValues;
     
@@ -41,49 +38,34 @@ const AssignorForm = ({ assignor, onSuccess }: {
         defaultValues
     });
 
-    const showToastError = (message: string) => {
-        toastRef.current.show({
-            severity: 'error', summary: 'Erro!', detail: message
-        });
-    }
-
     const onSubmit = async (data: any) => {
         try {
             setIsSubmitLoading(true);
 
-            const token = localStorage.getItem('token');
-
-            let method = 'POST';
-
-            if(data.id) {
-                method = 'PATCH';
-            }
+            const token = readCookie('bankme.token');
 
             const res = await fetch(`${BASE_URL}/integrations/assignor`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 },
-                method,
+                method: data.id ? 'PATCH' : 'POST',
                 body: JSON.stringify(data)
             });
-            const result = await res.json();
+            const {error, message, statusCode} = await res.json();
 
-            if(result?.statusCode === 401) {
-                router.push("/");
+            if(error) {
+                onError(message);
                 return;
             }
 
-            if(result?.error) {
-                for(let i = 0; i < result.message.length; i++) {
-                    showToastError(result.message[i]);
-                }
+            if(statusCode === 401) {
+                onError([message]);
                 return;
             }
 
             onSuccess();
         } catch(e: any) {
-            showToastError(e.message);
         } finally {
             setIsSubmitLoading(false);
         }
@@ -94,7 +76,6 @@ const AssignorForm = ({ assignor, onSuccess }: {
             className="w-full flex flex-col gap-4"
             onSubmit={handleSubmit(onSubmit)}
         >
-            <Toast ref={toastRef} />
             <Input
                 label="Nome"
                 name="name"
