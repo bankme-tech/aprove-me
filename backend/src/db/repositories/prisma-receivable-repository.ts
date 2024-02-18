@@ -68,4 +68,12 @@ export class PrismaReceivableRepository implements ReceivableRepository {
       },
     });
   }
+
+  async fetchAll() {
+    return await this.prisma.receivable.findMany({
+      where: {
+        deleted_at: null,
+      },
+     });
+  }
 }

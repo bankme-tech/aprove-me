@@ -19,6 +19,7 @@ import {
   DeleteReceivableUseCase,
   FindReceivableByIdUseCase,
   UpdateReceivableUseCase,
+  FetchAllReceivableUseCase,
 } from './use-cases';
 import { ReceivableBatchService } from './jobs/receivable-batch.service';
 
@@ -31,6 +32,7 @@ export class ReceivableController {
     private readonly deleteReceivableUseCase: DeleteReceivableUseCase,
     private readonly updateReceivableUseCase: UpdateReceivableUseCase,
     private readonly receivableBatchService: ReceivableBatchService,
+    private readonly fetchReceivableUseCase: FetchAllReceivableUseCase,
   ) {}
 
   @Post('')
@@ -66,5 +68,10 @@ export class ReceivableController {
     );
 
     await Promise.all(createReceivable);
+  }
+
+  @Get()
+  async fetchAll() {
+    return await this.fetchReceivableUseCase.execute();
   }
 }

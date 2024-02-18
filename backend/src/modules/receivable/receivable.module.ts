@@ -13,6 +13,7 @@ import { ReceivableController } from './receivable.controller';
 import {
   CreateReceivableUseCase,
   DeleteReceivableUseCase,
+  FetchAllReceivableUseCase,
   FindReceivableByIdUseCase,
   UpdateReceivableUseCase,
 } from './use-cases';
@@ -52,6 +53,7 @@ import { ReceivableBatchService } from './jobs/receivable-batch.service';
     JwtService,
     ReceivableBatchConsumer,
     ReceivableBatchService,
+    FetchAllReceivableUseCase,
     {
       provide: AssignorRepository,
       useClass: PrismaAssignorRepository,
