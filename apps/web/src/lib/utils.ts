@@ -8,3 +8,10 @@ export function cn(...inputs: ClassValue[]) {
 export function isServerSide() {
   return typeof window === 'undefined';
 }
+
+export function formatMoney(value: number) {
+  return Intl.NumberFormat('pt-BR', {
+    currency: 'BRL',
+    style: 'currency',
+  }).format(value);
+}
