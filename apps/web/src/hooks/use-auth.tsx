@@ -20,17 +20,17 @@ export const AuthProvider = ({ children }: Props) => {
   const [username, setUsername] = useState<string | null>(() => {
     if (isServerSide()) return null;
 
-    const fromStorage = localStorage?.getItem('@approve-me:username');
+    const fromStorage = localStorage.getItem('@approve-me:username');
 
     return fromStorage;
   });
   const [token, setToken] = useState<string | null>(() => {
     if (isServerSide()) return null;
 
-    const tokenFromStorage = localStorage?.getItem('@approve-me:token');
+    const tokenFromStorage = localStorage.getItem('@approve-me:token');
 
     if (tokenFromStorage) {
-      api.defaults.headers.authorization = token;
+      api.defaults.headers.authorization = tokenFromStorage;
     }
 
     return tokenFromStorage;
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: Props) => {
     localStorage.setItem('@approve-me:username', username);
   };
 
-  const isLogged = !!username;
+  const isLogged = !!token;
 
   return (
     <AuthContext.Provider
