@@ -14,10 +14,7 @@ git clone git@github.com:kevinbzrra/bankme-challenge.git
 ```
 
 #### Configurações iniciais:
-Primeiro, vamos configurar o Backend. Digite os comandos abaixo para entrar no projeto Backend, instalar as dependências e configurar o Banco de dados
-```
-cd backend
-```
+Primeiro, vamos configurar o Backend. Abra o terminal, vá até a pasta ```bankme-challenge/backend/``` e digite os comandos abaixo para instalar as dependências e configurar o Banco de dados
 ```
 npm i
 ```
@@ -25,27 +22,18 @@ npm i
 npx prisma migrate dev --name init
 ```
 
-Em seguida, vamos configurar o Frontend. Na pasta inicial do projeto, digite os comandos abaixo para entrar no projeto Frontend e instalar as dependências
-```
-cd frontend
-```
+Em seguida, vamos configurar o Frontend. Vá até a pasta ```bankme-challenge/frontend/``` e digite o comando abaixo para instalar as dependências
 ```
 npm i
 ```
 
 ## Rodando o projeto
-Primeiro, vamos iniciar nosso servidor no Backend. Abra o Terminal e digite os comandos abaixo
-```
-cd backend
-```
+Primeiro, vamos iniciar nosso servidor no Backend. Abra o Terminal e, na pasta ```bankme-challenge/backend/```,  digite o comando abaixo:
 ```
 npm run start:dev
 ```
 
-Agora, vamos iniciar nosso Frontend. Abra <b>outro</b> Terminal e digite os comandos abaixo
-```
-cd frontend
-```
+Agora, vamos iniciar nosso Frontend. Abra <b>outro</b> Terminal e, na pasta ```bankme-challenge/frontend/```, digite o comando abaixo:
 ```
 npm run dev
 ```
