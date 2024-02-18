@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { api } from '@/services/api';
+import { isServerSide } from '@/lib/utils';
 
 type IAuthContext = {
   isLogged: boolean;
@@ -17,12 +18,16 @@ const AuthContext = React.createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: Props) => {
   const [username, setUsername] = useState<string | null>(() => {
-    const fromStorage = localStorage.getItem('@approve-me:username');
+    if (isServerSide()) return null;
+
+    const fromStorage = localStorage?.getItem('@approve-me:username');
 
     return fromStorage;
   });
   const [token, setToken] = useState<string | null>(() => {
-    const tokenFromStorage = localStorage.getItem('@approve-me:token');
+    if (isServerSide()) return null;
+
+    const tokenFromStorage = localStorage?.getItem('@approve-me:token');
 
     if (tokenFromStorage) {
       api.defaults.headers.authorization = token;
