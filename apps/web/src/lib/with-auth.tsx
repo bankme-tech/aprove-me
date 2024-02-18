@@ -15,10 +15,6 @@ export function withAuth(Component: any) {
       }
     }, []);
 
-    if (!isLogged) {
-      return null;
-    }
-
     return <Component {...props} />;
   };
 }
