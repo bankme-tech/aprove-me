@@ -4,14 +4,18 @@
   - [x] Cadastro pagáveis
     - [x] React Hook Form
     - [x] Adicionar zod
-  - [ ] Conectando a Api
+  - [x] Conectando a Api
     - [x] Cadastro do Cedente
       - [x] Assignor precisa ser um combobox
-  - [ ] Listando
+  - [x] Listando
     - [x] Tabela de listagens de pagaveis: ID - VALUE - Emission Date
-    - [ ] Link com detalhe de cada pagável
-    - [ ] Opções de editar e excluir
+    - [x] Link com detalhe de cada pagável
+    - [x] Opções de editar e excluir
+      - [x] Excluir
+      - [ ] Editar
   - [ ] Autenticação
+    - [ ] Login
+    - [ ] AuthLayout
     - [ ] Usar localstorage
   - [ ] Testes
     - [ ] Implementar testes

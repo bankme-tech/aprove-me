@@ -1,5 +1,5 @@
+import { DeleteItemTable } from '@/components/delete-item-table';
 import {
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -7,43 +7,43 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui';
-import { ArrowRight, Pencil, Trash } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Api } from '@/services/api';
+import { Receivable } from '@/types/receivable';
+import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
+import { EditReceivableForm } from './edit-receivable-form';
+import { ShowReceivable } from './show-receivable';
 
 export const ReceivableTable = () => {
-  const renderTable = (data: any) => (
-    <TableRow key={data}>
+  const { data } = useQuery({
+    queryKey: ['receivable-table'],
+    queryFn: Api.fetchReceivables,
+  });
+
+  const renderTable = (receivable: Receivable) => (
+    <TableRow key={receivable.id}>
       <TableCell>
-        <Button size="sm" variant="outline" asChild>
-          <Link to="">
-            <ArrowRight className="size-3" />
-            <span className="sr-only">ir para detalhes</span>
-          </Link>
-        </Button>
+        <ShowReceivable id={receivable.id} />
       </TableCell>
 
       <TableCell className="font-mono text-xs font-medium">
-        832fd66e-7ea4-44f8-8770-f9ace6c6ece3
+        {receivable.id}
       </TableCell>
 
-      <TableCell className="font-mono text-xs font-bold">3293</TableCell>
+      <TableCell className="font-mono text-xs font-bold">
+        {receivable.value}
+      </TableCell>
 
       <TableCell className="font-mono text-xs font-medium">
-        {new Date().toISOString()}
+        {format(new Date(receivable.emission_date), 'HH:mm dd/MM/yyyy')}
       </TableCell>
 
       <TableCell>
-        <Button size="sm" variant="outline">
-          <Pencil className="size-3" />
-          <span className="sr-only">editar</span>
-        </Button>
+        <EditReceivableForm />
       </TableCell>
 
       <TableCell>
-        <Button size="sm" variant="destructive">
-          <Trash className="size-3" />
-          <span className="sr-only">deletar</span>
-        </Button>
+        <DeleteItemTable id={receivable.id} />
       </TableCell>
     </TableRow>
   );
@@ -63,7 +63,7 @@ export const ReceivableTable = () => {
         </TableHeader>
 
         <TableBody>
-          {Array.from({ length: 10 }).map((_, i) => renderTable(i))}
+          {data?.map((receivable) => renderTable(receivable))}
         </TableBody>
       </Table>
     </div>

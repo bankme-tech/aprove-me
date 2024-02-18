@@ -11,3 +11,13 @@ export const receivableSchema = z.object({
 });
 
 export type ReceivableSchema = z.infer<typeof receivableSchema>;
+
+export interface Receivable {
+  id: string;
+  assignor_id: string;
+  emission_date: Date;
+  value: number;
+  created_at: Date;
+  deleted_at: Date | null;
+  updated_at: Date;
+}

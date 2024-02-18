@@ -8,12 +8,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui';
-import {
-  Select,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { ReceivableSchema, receivableSchema } from '@/types/receivable';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,23 +17,33 @@ import { ptBR } from 'date-fns/locale';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { SelectorAssignor } from './select-assignor';
+import { useMutation } from '@tanstack/react-query';
+import { Api } from '@/services/api';
 
 export const ReceivableForm = () => {
+  const { mutate } = useMutation({
+    mutationFn: Api.createReceivable,
+    onError: () => {
+      toast.error('Algum erro ocorreu');
+    },
+    onSuccess: () => {
+      toast.success('Recebivel criado com sucesso');
+      reset();
+    },
+  });
+
   const {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ReceivableSchema>({
     resolver: zodResolver(receivableSchema),
   });
 
   const handleSubmitReceivableForm = (data: ReceivableSchema) => {
-    toast.info(
-      <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-        <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-      </pre>
-    );
+    mutate(data);
   };
 
   return (
@@ -53,14 +57,7 @@ export const ReceivableForm = () => {
           name={'assignor_id'}
           control={control}
           render={({ field }) => (
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione um cedente" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectorAssignor />
-              </SelectContent>
-            </Select>
+            <SelectorAssignor onChange={field.onChange} value={field.value} />
           )}
         />
         {errors.assignor_id?.message && (
@@ -78,9 +75,9 @@ export const ReceivableForm = () => {
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant={'outline'}
+                  variant={'ghost'}
                   className={cn(
-                    'justify-start text-left font-normal',
+                    'justify-start border text-left font-normal',
                     !field.value && 'text-muted-foreground'
                   )}
                 >
@@ -120,10 +117,11 @@ export const ReceivableForm = () => {
           <Input
             id="value"
             type="number"
-            step={0.1}
+            step={0.01}
+            min={0.01}
             placeholder="Valor do recebível"
             {...register('value')}
-            className="rounded-l-none border-l-0"
+            className="rounded-l-none border-l-0 pl-px"
           />
         </div>
         {errors.value?.message && <ErrorForm message={errors.value.message} />}

@@ -4,7 +4,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 
 export const HomePage = () => {
   return (
-    <main className="flex h-full text-foreground">
+    <main className="flex h-screen text-foreground">
       <section className="relative flex w-full flex-col items-center justify-center lg:w-1/2">
         <div className="absolute left-7 top-10 flex items-center gap-2 lg:hidden">
           <AirVent />

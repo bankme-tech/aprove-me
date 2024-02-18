@@ -7,3 +7,6 @@ export * from './table';
 export * from './popover';
 export * from './calendar';
 export * from './card';
+export * from './select';
+export * from './alert-dialog';
+export * from './dialog';

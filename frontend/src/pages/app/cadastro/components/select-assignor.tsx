@@ -1,20 +1,43 @@
-import { SelectItem } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui';
 import { Api } from '@/services/api';
 import { useQuery } from '@tanstack/react-query';
 
-export const SelectorAssignor = () => {
+interface SelectorAssignorProps {
+  onChange: (...events: any[]) => void;
+  value: string;
+}
+
+export const SelectorAssignor = ({
+  onChange,
+  value,
+}: SelectorAssignorProps) => {
   const { data } = useQuery({
     queryFn: Api.fetchAssignors,
     queryKey: ['fetch-assignors'],
+    refetchOnWindowFocus: false,
   });
 
-  console.log(data);
   return (
     <>
-      {data && data.result}
-      <SelectItem value="light">Light</SelectItem>
-      <SelectItem value="dark">Dark</SelectItem>
-      <SelectItem value="system">System</SelectItem>
+      <Select onValueChange={onChange} defaultValue={value}>
+        <SelectTrigger>
+          <SelectValue placeholder="Selecione um cedente" />
+        </SelectTrigger>
+        <SelectContent>
+          {data &&
+            data.map(({ id, name }) => (
+              <SelectItem value={id} key={id}>
+                {name}
+              </SelectItem>
+            ))}
+        </SelectContent>
+      </Select>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { api } from '@/lib/axios';
-import { AssignorSchema } from '@/types/assignor';
+import { Assignor, AssignorSchema } from '@/types/assignor';
 import { LoginSchema } from '@/types/login';
-import { ReceivableSchema } from '@/types/receivable';
+import { Receivable, ReceivableSchema } from '@/types/receivable';
 
 export class Api {
   static async login(data: LoginSchema) {
@@ -16,33 +16,52 @@ export class Api {
   static async createAssignor(data: AssignorSchema) {
     const response = await api.post('/integrations/assignor', data);
 
-    return {
-      data: response.data,
-      status: response.status,
-    };
+    const resData = await response.data;
+
+    return resData;
   }
 
   static async createReceivable(data: ReceivableSchema) {
     const response = await api.post('/integrations/payable', data);
 
-    return {
-      data: response.data,
-      status: response.status,
-    };
+    return response.data;
   }
 
   static async fetchAssignors() {
-    const response = await api.get('/integrations/assignor', {
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MmY5NDFiMy1kM2ZmLTQ5N2YtYTViZC00MmFjN2JjZTczOTYiLCJpYXQiOjE3MDgwOTI2ODcsImV4cCI6MTcwODA5ODY4N30.C_b8Ccy-UAo5lYlXwUQ6qxwC7NFOiiFIp3uMN4eB7Xo',
-      },
-    });
-    console.log(response.data);
+    const response = await api.get<{ assignors: Assignor[] }>(
+      '/integrations/assignor'
+    );
 
-    return {
-      result: response.data,
-      status: response.status,
-    };
+    const { assignors } = response.data;
+
+    return assignors;
+  }
+
+  static async fetchReceivables() {
+    const response = await api.get<{ receivables: Receivable[] }>(
+      '/integrations/payable'
+    );
+
+    const { receivables } = response.data;
+
+    return receivables;
+  }
+
+  static async deleteReceivable(id: string) {
+    const response = await api.delete(`/integrations/payable/${id}`);
+
+    const data = await response.data;
+
+    return data;
+  }
+
+  static async getReceivable(id: string) {
+    const reponse = await api.get<{ receivable: Receivable }>(
+      `/integrations/payable/${id}`
+    );
+
+    const { receivable } = reponse.data;
+
+    return receivable;
   }
 }

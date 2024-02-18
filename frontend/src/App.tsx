@@ -9,7 +9,7 @@ export const App = () => {
   return (
     <Providers>
       <Router>
-        <div className="h-screen w-full bg-background">
+        <div className="min-h-screen w-full bg-background">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/app" element={<AuthProvider />}>
