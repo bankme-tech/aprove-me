@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: Props) => {
     const usernameFromStorage = localStorage.getItem('@approve-me:username');
 
     if (tokenFromStorage) {
-      api.defaults.headers.authorization = tokenFromStorage;
+      api.defaults.headers.authorization = `Bearer ${tokenFromStorage}`;
       setToken(tokenFromStorage);
     }
 
@@ -38,8 +38,8 @@ export const AuthProvider = ({ children }: Props) => {
   }, []);
 
   const updateSessionToken = (token: string) => {
+    api.defaults.headers.authorization = `Bearer ${token}`;
     setToken(token);
-    api.defaults.headers.authorization = token;
     localStorage.setItem('@approve-me:token', token);
   };
 
