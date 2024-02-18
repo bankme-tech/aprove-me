@@ -17,6 +17,7 @@ import {
 } from '@/services/fetch-payable-list';
 import { formatMoney } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
+import Link from 'next/link';
 
 function Page() {
   const { username } = useAuth();
@@ -72,9 +73,11 @@ function Page() {
                       {payable.emissionDate.toLocaleDateString('pt-BR')}
                     </TableCell>
                     <TableCell>
-                      <Button variant="outline" size="sm">
-                        Detalhes
-                      </Button>
+                      <Link href={`/payable/${payable.id}`}>
+                        <Button variant="outline" size="sm">
+                          Detalhes
+                        </Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))}
