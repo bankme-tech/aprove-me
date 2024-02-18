@@ -1,22 +1,19 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import SignInPage from './page';
+import SignUpPage from './page';
 
-describe('SignInPage', () => {
+describe('SignUpPage', () => {
   beforeAll(() => {
     vi.mock('next/navigation', () => ({
       useRouter: vi.fn,
-      useSearchParams: vi.fn(() => ({
-        get: vi.fn(),
-      })),
     }));
   });
 
   it('should render correctly', async () => {
-    render(<SignInPage />);
+    render(<SignUpPage />);
 
-    expect(screen.getByTestId('login-form')).toBeDefined();
+    expect(screen.getByTestId('register-form')).toBeDefined();
   });
 
   afterAll(() => {

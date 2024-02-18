@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,8 +24,10 @@ export default function SignInPage() {
   const { toast } = useToast();
   const { updateSessionToken, updateUsername } = useAuth();
   const router = useRouter();
+  const params = useSearchParams();
   const {
     handleSubmit,
+    setValue,
     register,
     formState: { isSubmitting },
   } = useForm<FormData>({
@@ -51,6 +53,14 @@ export default function SignInPage() {
     router.push('/');
   });
 
+  useEffect(() => {
+    const username = params.get('username');
+
+    if (username) {
+      setValue('username', username);
+    }
+  }, [params]);
+
   return (
     <div className="w-full h-screen flex justify-center">
       <div className="max-w-[400px] shadow-md bg-white h-fit p-10 w-full text-center mt-[30vh] flex flex-col items-center">
@@ -66,6 +76,7 @@ export default function SignInPage() {
               {...register('username')}
               required
               placeholder="Nome de usuário"
+              autoFocus
             />
             <Input
               {...register('password')}
