@@ -1,5 +1,4 @@
-import { AxiosError } from 'axios';
-import { api } from './api';
+import { api, handleResponseError } from './api';
 
 type Params = {
   username: string;
@@ -14,18 +13,13 @@ type ApiSuccessResponse = {
   };
 };
 
-type ApiErrorResponse = {
-  statusCode: number;
-  message: string;
-};
-
 type Result = {
   success: boolean;
   data?: {
     username: string;
     token: string;
   };
-  error?: string;
+  errors?: string[];
 };
 
 export async function makeLogin({
@@ -46,19 +40,11 @@ export async function makeLogin({
       },
     };
   } catch (error) {
-    let message = 'Não foi possível efetuar o login';
-
-    if (error instanceof AxiosError) {
-      const err = (error.response?.data as ApiErrorResponse)?.message;
-
-      if (err === 'invalid_credentials') {
-        message = 'Usuário e/ou senha inválidos';
-      }
-    }
+    const errorMessage = handleResponseError(error);
 
     return {
       success: false,
-      error: message,
+      errors: errorMessage,
     };
   }
 }

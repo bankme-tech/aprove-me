@@ -24,3 +24,18 @@ api.interceptors.response.use(
     }
   },
 );
+
+export function handleResponseError(error: unknown): string[] {
+  if (error instanceof AxiosError) {
+    const responseErrorMessage = error.response?.data?.message;
+
+    if (responseErrorMessage) {
+      if (Array.isArray(responseErrorMessage)) {
+        return responseErrorMessage as string[];
+      }
+      return [responseErrorMessage as string];
+    }
+  }
+
+  return ['unknown_error'];
+}

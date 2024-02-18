@@ -13,8 +13,11 @@ import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
 const formSchema = z.object({
-  username: z.string().min(3, 'Min. 3 caracteres'),
-  password: z.string().min(1),
+  username: z
+    .string()
+    .min(3, 'Min. 3 caracteres')
+    .max(50, 'Max. 50 caracteres'),
+  password: z.string().min(8, 'Sua senha deve ter no mínimo 8 caracteres'),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -24,6 +27,7 @@ export default function SignUpPage() {
   const {
     handleSubmit,
     register,
+    setError,
     formState: { isSubmitting, errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -36,9 +40,23 @@ export default function SignUpPage() {
     });
 
     if (!registerResponse.success) {
-      toast({
-        description: registerResponse.error,
+      registerResponse.errors?.forEach((error) => {
+        switch (error) {
+          case 'username_already_in_use':
+            setError('username', { message: 'Nome de usuário já em uso' });
+            break;
+          case 'password_to_small':
+            setError('password', {
+              message: 'Sua senha deve ter no mínimo 8 caracteres',
+            });
+            break;
+          default:
+            toast({
+              description: error,
+            });
+        }
       });
+
       return;
     }
 
@@ -50,8 +68,8 @@ export default function SignUpPage() {
   });
 
   return (
-    <div className="w-full h-screen flex justify-center">
-      <div className="max-w-[400px] shadow-md bg-white h-fit p-10 w-full text-center mt-[30vh] flex flex-col items-center">
+    <div className="w-full h-screen flex justify-center items-center">
+      <div className="max-w-[400px] shadow-md bg-white h-fit p-10 w-full text-center flex flex-col items-center">
         <div className="max-w-[300px]">
           <h2 className="font-bold text-xl">Criar uma conta</h2>
           <span className="text-gray-500">
@@ -71,7 +89,7 @@ export default function SignUpPage() {
             />
             {errors.username?.message && (
               <span className="text-red-400 text-sm -mt-1 text-left">
-                {errors.username?.message}
+                {errors.username.message}
               </span>
             )}
 
@@ -80,6 +98,11 @@ export default function SignUpPage() {
               type="password"
               placeholder="Senha"
             />
+            {errors.password?.message && (
+              <span className="text-red-400 text-sm -mt-1 text-left">
+                {errors.password.message}
+              </span>
+            )}
 
             <Button disabled={isSubmitting}>Cadastrar</Button>
             <Separator className="mt-2" />

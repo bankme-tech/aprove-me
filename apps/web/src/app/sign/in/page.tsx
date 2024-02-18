@@ -42,7 +42,7 @@ export default function SignInPage() {
 
     if (!authResponse.success) {
       toast({
-        description: authResponse.error,
+        description: 'Usuário e/ou senha inválidos',
       });
       return;
     }
@@ -62,8 +62,8 @@ export default function SignInPage() {
   }, [params]);
 
   return (
-    <div className="w-full h-screen flex justify-center">
-      <div className="max-w-[400px] shadow-md bg-white h-fit p-10 w-full text-center mt-[30vh] flex flex-col items-center">
+    <div className="w-full h-screen flex justify-center items-center">
+      <div className="max-w-[400px] shadow-md bg-white h-fit p-10 w-full text-center flex flex-col items-center">
         <div className="max-w-[250px]">
           <h2 className="font-bold text-xl">Faça login</h2>
           <span className="text-gray-500">
