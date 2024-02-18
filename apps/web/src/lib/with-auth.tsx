@@ -7,13 +7,17 @@ import { useEffect } from 'react';
 
 export function withAuth(Component: any) {
   return function withAuthFn(props: any) {
-    const { isLogged } = useAuth();
+    const { isLogged, isLoading } = useAuth();
 
     useEffect(() => {
-      if (!isLogged) {
+      if (!isLogged && !isLoading) {
         redirect('/sign/in');
       }
-    }, []);
+    }, [isLoading]);
+
+    if (isLoading) {
+      return null;
+    }
 
     return <Component {...props} />;
   };

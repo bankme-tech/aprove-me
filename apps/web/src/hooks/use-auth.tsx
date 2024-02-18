@@ -1,10 +1,10 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { api } from '@/services/api';
-import { isServerSide } from '@/lib/utils';
 
 type IAuthContext = {
   isLogged: boolean;
+  isLoading: boolean;
   username: string | null;
   updateUsername: (username: string) => void;
   updateSessionToken: (token: string) => void;
@@ -17,24 +17,25 @@ type Props = {
 const AuthContext = React.createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: Props) => {
-  const [username, setUsername] = useState<string | null>(() => {
-    if (isServerSide()) return null;
+  const [isLoading, setLoading] = useState(true);
+  const [username, setUsername] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-    const fromStorage = localStorage.getItem('@approve-me:username');
-
-    return fromStorage;
-  });
-  const [token, setToken] = useState<string | null>(() => {
-    if (isServerSide()) return null;
-
+  useEffect(() => {
     const tokenFromStorage = localStorage.getItem('@approve-me:token');
+    const usernameFromStorage = localStorage.getItem('@approve-me:username');
 
     if (tokenFromStorage) {
       api.defaults.headers.authorization = tokenFromStorage;
+      setToken(tokenFromStorage);
     }
 
-    return tokenFromStorage;
-  });
+    if (usernameFromStorage) {
+      setUsername(usernameFromStorage);
+    }
+
+    setLoading(false);
+  }, []);
 
   const updateSessionToken = (token: string) => {
     setToken(token);
@@ -54,6 +55,7 @@ export const AuthProvider = ({ children }: Props) => {
     <AuthContext.Provider
       value={{
         isLogged,
+        isLoading,
         username,
         updateUsername,
         updateSessionToken,
