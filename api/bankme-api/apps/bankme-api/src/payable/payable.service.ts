@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
+import { PayableRepository } from 'bme/core/infra/database/repositories/payable-repository';
 
 @Injectable()
 export class PayableService {
+  constructor(protected repository: PayableRepository) {}
   create(createPayableDto: CreatePayableDto) {
     return 'This action adds a new payable';
   }
 
-  findAll() {
+  async findAll() {
+    await this.repository.getAll();
     return `This action returns all payable`;
   }
 

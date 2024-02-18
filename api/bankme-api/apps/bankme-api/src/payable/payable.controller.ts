@@ -33,6 +33,7 @@ export class PayableController {
     status: 200,
     description: 'Get list all payables',
     type: ListPayableDto,
+    isArray: true,
   })
   findAll() {
     return this.payableService.findAll();
