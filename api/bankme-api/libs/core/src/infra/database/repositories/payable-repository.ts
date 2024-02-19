@@ -1,7 +1,7 @@
-import { IPayableRepository } from 'bme/core/domains/payables/payable-repository.interface';
+import { IPayableRepository } from 'bme/core/domains/payables/interfaces/payable-repository.interface';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma-service';
-import { Payable } from 'bme/core/domains/payables/payable.entity';
+import { Payable } from 'bme/core/domains/payables/entities/payable.entity';
 
 @Injectable()
 export class PayableRepository implements IPayableRepository {
