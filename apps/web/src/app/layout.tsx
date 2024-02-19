@@ -18,6 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <title>Tech Test | bankme.tech</title>
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased bg-slate-50',
