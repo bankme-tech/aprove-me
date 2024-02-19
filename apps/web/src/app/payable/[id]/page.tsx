@@ -116,7 +116,14 @@ function PayableDetailPage() {
             </div>
             <div className="flex justify-between">
               <span>Cedente:</span>
-              <span className="text-gray-500">{data.assignorId}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-gray-500">{data.assignorName}</span>
+                <Link href={`/assignor/${data.assignorId}`}>
+                  <Button variant="outline" size="sm">
+                    Detalhes
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         )}

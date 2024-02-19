@@ -6,6 +6,7 @@ export type Payable = {
   value: number;
   emissionDate: Date;
   assignorId: string;
+  assignorName: string;
 };
 
 export type ApiPayable = {
@@ -13,6 +14,9 @@ export type ApiPayable = {
   value: number;
   emissionDate: string;
   assignorId: string;
+  assignor: {
+    name: string;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -30,6 +34,7 @@ async function fetchPayableById(id: string): Promise<Payable> {
     id: payable.id,
     assignorId: payable.assignorId,
     emissionDate: new Date(payable.emissionDate),
+    assignorName: payable.assignor.name,
     value: payable.value,
   };
 }
