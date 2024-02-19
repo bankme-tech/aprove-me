@@ -1,7 +1,8 @@
 import axios, { AxiosError } from 'axios';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3001',
+  // eslint-disable-next-line no-undef
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 10000,
 });
 
