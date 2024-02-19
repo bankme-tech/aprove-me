@@ -29,7 +29,7 @@ jobs:
         run: npx prisma generate
 
       - name: Run api unit tests
-        run: npm run test
+        run: cd apps/api && npm run test
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
