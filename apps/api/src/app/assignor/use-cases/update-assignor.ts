@@ -53,7 +53,7 @@ export class UpdateAssignorUseCase {
       const assignorWithSameDocument =
         await this.assignorRepository.findByDocument(data.document);
 
-      if (assignorWithSameDocument) {
+      if (assignorWithSameDocument && assignorWithSameDocument.id !== id) {
         return left(UpdateAssignorUseCaseError.DOCUMENT_ALREADY_USED);
       }
     }

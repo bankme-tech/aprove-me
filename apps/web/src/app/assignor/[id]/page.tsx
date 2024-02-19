@@ -21,6 +21,7 @@ import {
   useFetchAssignor,
 } from '@/services/fetch-assignor-by-id';
 import { deleteAssignor } from '@/services/delete-assignor';
+import { EditableAssignor } from '@/components/editable-assignor';
 
 function AssignorDetailsPage() {
   const [excludeDialogVisible, setExcludeDialogVisible] = useState(false);
@@ -139,15 +140,15 @@ function AssignorDetailsPage() {
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* {data && (
-        <EditablePayable
-          id={id as string}
+      {data && (
+        <EditableAssignor
+          assignorId={id as string}
           initialData={data}
           isOpen={editableDialogVisible}
           onClose={toggleEditableDialog}
           onEdit={refetch}
         />
-      )} */}
+      )}
     </div>
   );
 }
