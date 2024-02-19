@@ -7,6 +7,9 @@ jobs:
   deploy:
     name: Deploy api
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
@@ -15,9 +18,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.x
-
-      - name: Enter api dir
-        run: cd apps/api
 
       - name: Install dependencies
         run: npm i
