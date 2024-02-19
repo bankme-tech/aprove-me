@@ -13,20 +13,23 @@ import {
 } from './ui';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Api } from '@/services/api';
+import { toast } from 'sonner';
 
 interface DeleteItemTableProps {
   id: string;
 }
 
 export const DeleteItemTable = ({ id }: DeleteItemTableProps) => {
-  const query = useQueryClient()
+  const query = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: Api.deleteReceivable,
     onSuccess: () => {
       query.refetchQueries({
-        queryKey: ['receivable-table']
-      })
-    }
+        queryKey: ['receivable-table'],
+      });
+
+      toast.success('Item deletado com sucesso');
+    },
   });
 
   const handleDelete = (id: string) => {

@@ -13,9 +13,10 @@ import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { EditReceivableForm } from './edit-receivable-form';
 import { ShowReceivable } from './show-receivable';
+import { ReceivableTableSkeleton } from '@/components/receivable-table-skeleton';
 
 export const ReceivableTable = () => {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['receivable-table'],
     queryFn: Api.fetchReceivables,
   });
@@ -63,6 +64,8 @@ export const ReceivableTable = () => {
         </TableHeader>
 
         <TableBody>
+          {isLoading &&
+            Array.from({ length: 5 }).map((_,i) => <ReceivableTableSkeleton key={i} />)}
           {data?.map((receivable) => renderTable(receivable))}
         </TableBody>
       </Table>

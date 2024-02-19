@@ -5,12 +5,12 @@ import { Receivable, ReceivableSchema } from '@/types/receivable';
 
 export class Api {
   static async login(data: LoginSchema) {
-    const response = await api.post('/', data);
-
-    return {
-      data: response.data,
-      status: response.status,
-    };
+    const response = await api.post<{ token: string }>(
+      '/integrations/auth',
+      data
+    );
+    const { token } = response.data;
+    return token;
   }
 
   static async createAssignor(data: AssignorSchema) {

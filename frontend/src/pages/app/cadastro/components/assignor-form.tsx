@@ -33,7 +33,10 @@ export const AssignorForm = () => {
   });
 
   const handleSubmitAssignorForm = (data: AssignorSchema) => {
-    mutate(data);
+    mutate({
+      ...data,
+      phone: data.phone.trim(),
+    });
   };
 
   return (
@@ -44,6 +47,7 @@ export const AssignorForm = () => {
       <div className="space-y-1">
         <Label htmlFor="document">Documento</Label>
         <Input
+          required
           id="document"
           placeholder="CPNJ ou CPF"
           {...register('document')}
@@ -55,19 +59,28 @@ export const AssignorForm = () => {
 
       <div className="space-y-1">
         <Label>Email</Label>
-        <Input placeholder="example@email.com" {...register('email')} />
+        <Input
+          placeholder="example@email.com"
+          required
+          {...register('email')}
+        />
         {errors.email?.message && <ErrorForm message={errors.email.message} />}
       </div>
 
       <div className="space-y-1">
         <Label>Telefone para contato</Label>
-        <Input placeholder="99 99999 9999" {...register('phone')} />
+        <Input placeholder="99 99999 9999" required {...register('phone')} />
         {errors.phone?.message && <ErrorForm message={errors.phone.message} />}
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="name">Nome</Label>
-        <Input id="name" placeholder="John doe" {...register('name')} />
+        <Input
+          id="name"
+          placeholder="John doe"
+          {...register('name')}
+          required
+        />
         {errors.name?.message && <ErrorForm message={errors.name.message} />}
       </div>
 

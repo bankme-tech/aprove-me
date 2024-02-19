@@ -1,3 +1,4 @@
+import { useAuth } from '@/components/providers/auth-context';
 import { Button, Input, Label } from '@/components/ui';
 import { Api } from '@/services/api';
 import { LoadingSpinner } from '@/shared/icon';
@@ -5,21 +6,21 @@ import { LoginSchema, loginSchema } from '@/types/login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export const Login = () => {
-  const navigate = useNavigate();
+  const { login } = useAuth();
   const { mutate, isPending } = useMutation({
     mutationFn: Api.login,
     mutationKey: ['login-user'],
     onError: () => {
       toast.error('Credenciais inválidas');
     },
-    onSuccess: async () => {
+    onSuccess: async (token) => {
+      localStorage.setItem('aprove-auth', JSON.stringify(token));
       toast.success('Login realizado');
       await new Promise((r) => setTimeout(r, 1500));
-      navigate('/app');
+      login(token);
     },
   });
 

@@ -10,7 +10,7 @@ export const Providers = ({ children }: { children: ReactNode }) => {
       <ThemeProvider storageKey="aproveme-theme" defaultTheme="system">
         {children}
       </ThemeProvider>
-      <Toaster richColors />
+      <Toaster richColors  />
     </QueryClientProvider>
   );
 };
