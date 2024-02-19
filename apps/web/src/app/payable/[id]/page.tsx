@@ -23,18 +23,23 @@ import {
 } from '@/components/ui/alert-dialog';
 import { deletePayable } from '@/services/delete-payable';
 import { useToast } from '@/components/ui/use-toast';
+import { EditablePayable } from '@/components/editable-payable';
 
 function PayableDetailPage() {
+  const [excludeDialogVisible, setExcludeDialogVisible] = useState(false);
+  const [editableDialogVisible, setEditableDialogVisible] = useState(false);
   const { id } = useParams();
   const { toast } = useToast();
   const router = useRouter();
-  const { data, status } = useFetchPayable(id as string);
-  const [excludeDialogVisible, setExcludeDialogVisible] = useState(false);
+  const { data, status, refetch } = useFetchPayable(id as string);
 
   const isLoading = status === FetchPayableStatus.LOADING;
 
   const toggleExcludeDialog = () =>
     setExcludeDialogVisible(!excludeDialogVisible);
+
+  const toggleEditableDialog = () =>
+    setEditableDialogVisible(!editableDialogVisible);
 
   const handleExclude = async () => {
     toggleExcludeDialog();
@@ -60,7 +65,7 @@ function PayableDetailPage() {
         <div className="flex justify-between items-center">
           <h2 className="font-medium text-xl">Detalhes do pagável</h2>
           <div className="flex gap-3">
-            <Button size="sm" variant="outline">
+            <Button size="sm" variant="outline" onClick={toggleEditableDialog}>
               Editar
             </Button>
             <Button
@@ -138,6 +143,16 @@ function PayableDetailPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {data && (
+        <EditablePayable
+          id={id as string}
+          initialData={data}
+          isOpen={editableDialogVisible}
+          onClose={toggleEditableDialog}
+          onEdit={refetch}
+        />
+      )}
     </div>
   );
 }

@@ -46,19 +46,30 @@ export function useFetchPayable(id: string) {
   );
   const [data, setData] = useState<Payable>();
 
-  useEffect(() => {
-    if (!id) return;
-
+  const fetch = () => {
     fetchPayableById(id)
       .then((payable) => {
         setData(payable);
         setStatus(FetchPayableStatus.SUCCESS);
       })
       .catch(() => setStatus(FetchPayableStatus.FAILED));
+  };
+
+  const refetch = () => {
+    setStatus(FetchPayableStatus.LOADING);
+
+    fetch();
+  };
+
+  useEffect(() => {
+    if (!id) return;
+
+    fetch();
   }, [id]);
 
   return {
     data,
     status,
+    refetch,
   };
 }
