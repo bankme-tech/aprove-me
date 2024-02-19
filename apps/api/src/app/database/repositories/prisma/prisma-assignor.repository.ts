@@ -53,4 +53,10 @@ export class PrismaAssignorRepository implements AssignorRepository {
 
     return updated;
   }
+
+  async findAll(): Promise<Assignor[]> {
+    const data = await this.prisma.assignor.findMany();
+
+    return data;
+  }
 }

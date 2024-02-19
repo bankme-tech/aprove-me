@@ -29,4 +29,8 @@ export class InMemoryAssignorRepository implements AssignorRepository {
 
     return this.assignors[index];
   }
+
+  async findAll(): Promise<Assignor[]> {
+    return this.assignors;
+  }
 }
