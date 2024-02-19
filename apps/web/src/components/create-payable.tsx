@@ -96,7 +96,7 @@ export const CreatePayable = ({ isOpen, onClose }: Props) => {
     }
 
     toast({
-      title: 'Recebível criado com sucesso!',
+      title: 'Pagável criado com sucesso!',
     });
 
     onClose();
@@ -108,7 +108,7 @@ export const CreatePayable = ({ isOpen, onClose }: Props) => {
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Novo Recebível</DialogTitle>
+          <DialogTitle>Novo Pagável</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">

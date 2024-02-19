@@ -109,7 +109,7 @@ export const EditablePayable = ({
     }
 
     toast({
-      title: 'Recebível editado com sucesso!',
+      title: 'Pagável editado com sucesso!',
     });
 
     onEdit();
@@ -120,7 +120,7 @@ export const EditablePayable = ({
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Editar recebível</DialogTitle>
+          <DialogTitle>Editar pagável</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">

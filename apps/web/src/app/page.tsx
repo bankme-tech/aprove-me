@@ -40,12 +40,10 @@ function Page() {
           <div className="w-full">
             <h2 className="font-bold text-xl">Olá {username}!</h2>
             <span className="text-gray-500">
-              Essa é a listagem de todos os recebíveis
+              Essa é a listagem de todos os pagáveis
             </span>
           </div>
-          <Button onClick={toggleCreatePayableDialog}>
-            Registrar recebível
-          </Button>
+          <Button onClick={toggleCreatePayableDialog}>Novo pagável</Button>
         </div>
         <div className="border-gray-200 rounded-md border mt-6">
           <Table>
@@ -97,7 +95,7 @@ function Page() {
         </div>
         {!isLoading && isEmpty && (
           <div className="w-full mt-8 mb-5 text-center">
-            <span>Ainda não há nenhum recebível</span>
+            <span>Ainda não há nenhum pagável...</span>
           </div>
         )}
       </div>
