@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -18,23 +18,34 @@ import {
 import { formatMoney } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
+import { CreatePayable } from '@/components/create-payable';
 
 function Page() {
+  const [createPayableDialogVisible, setCreatePayableDialogVisible] =
+    useState(false);
   const { username } = useAuth();
   const { data, status } = useFetchPayableList();
 
   const isLoading = status === FetchPayableListStatus.LOADING;
 
+  const toggleCreatePayableDialog = () =>
+    setCreatePayableDialogVisible(!createPayableDialogVisible);
+
+  const isEmpty = data.length === 0;
+
   return (
     <main className="p-5">
       <div className="w-full p-6 border shadow-sm border-gray-200 rounded-md bg-white">
-        <div className="flex justify-between gap-10">
+        <div className="flex justify-between items-center gap-10">
           <div className="w-full">
             <h2 className="font-bold text-xl">Olá {username}!</h2>
             <span className="text-gray-500">
               Essa é a listagem de todos os recebíveis
             </span>
           </div>
+          <Button onClick={toggleCreatePayableDialog}>
+            Registrar recebível
+          </Button>
         </div>
         <div className="border-gray-200 rounded-md border mt-6">
           <Table>
@@ -84,7 +95,16 @@ function Page() {
             </TableBody>
           </Table>
         </div>
+        {!isLoading && isEmpty && (
+          <div className="w-full mt-8 mb-5 text-center">
+            <span>Ainda não há nenhum recebível</span>
+          </div>
+        )}
       </div>
+      <CreatePayable
+        isOpen={createPayableDialogVisible}
+        onClose={toggleCreatePayableDialog}
+      />
     </main>
   );
 }

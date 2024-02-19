@@ -19,17 +19,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { updatePayable } from '@/services/update-payable';
 import { useToast } from './ui/use-toast';
-import { Payable } from '@/services/fetch-payable-by-id';
 import { useFetchAssignorList } from '@/services/fetch-assignor-list';
+import { createPayable } from '@/services/create-payable';
+import { useRouter } from 'next/navigation';
 
 type Props = {
-  id: string;
   isOpen: boolean;
-  initialData: Payable;
   onClose: () => void;
-  onEdit: () => void;
 };
 
 const formSchema = z.object({
@@ -47,15 +44,10 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export const EditablePayable = ({
-  id,
-  isOpen,
-  onClose,
-  onEdit,
-  initialData,
-}: Props) => {
+export const CreatePayable = ({ isOpen, onClose }: Props) => {
   const { toast } = useToast();
   const { data } = useFetchAssignorList();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -64,11 +56,6 @@ export const EditablePayable = ({
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      assignor: initialData.assignorId,
-      emissionDate: `${initialData.emissionDate.getFullYear()}-${initialData.emissionDate.getMonth() + 1}-${initialData.emissionDate.getDate()}`,
-      value: initialData.value,
-    },
   });
 
   const handleOpenChange = (open: boolean) => {
@@ -78,16 +65,16 @@ export const EditablePayable = ({
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    const updateResult = await updatePayable(id, {
+    const createResult = await createPayable({
       assignorId: data.assignor,
       emissionDate: data.emissionDate,
       value: data.value,
     });
 
-    if (!updateResult.success) {
-      updateResult.error?.forEach((error) => {
+    if (!createResult.success) {
+      createResult.error?.forEach((error) => {
         switch (error) {
-          case 'assignor_invalid_id':
+          case 'invalid_assignor_id':
             setError('assignor', { message: 'Cedente inválido.' });
             break;
           case 'assignor_not_found':
@@ -109,18 +96,19 @@ export const EditablePayable = ({
     }
 
     toast({
-      title: 'Recebível editado com sucesso!',
+      title: 'Recebível criado com sucesso!',
     });
 
-    onEdit();
     onClose();
+
+    router.push(`/payable/${createResult.data}`);
   });
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Editar recebível</DialogTitle>
+          <DialogTitle>Novo Recebível</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
@@ -186,7 +174,7 @@ export const EditablePayable = ({
         </div>
         <DialogFooter>
           <Button onClick={onSubmit} disabled={isSubmitting}>
-            Salvar alterações
+            Salvar
           </Button>
         </DialogFooter>
       </DialogContent>

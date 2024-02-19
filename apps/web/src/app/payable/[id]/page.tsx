@@ -48,7 +48,7 @@ function PayableDetailPage() {
 
     if (!excludeResponse.success) {
       toast({
-        title: 'Falha ao excluir pagável',
+        title: 'Falha ao excluir recebível',
       });
       return;
     }
@@ -63,7 +63,7 @@ function PayableDetailPage() {
     <div className="p-10 min-h-screen flex justify-center items-center">
       <div className="border border-gray-200 rounded-md p-6 max-w-[500px] w-full">
         <div className="flex justify-between items-center">
-          <h2 className="font-medium text-xl">Detalhes do pagável</h2>
+          <h2 className="font-medium text-xl">Detalhes do Recebível</h2>
           <div className="flex gap-3">
             <Button size="sm" variant="outline" onClick={toggleEditableDialog}>
               Editar
@@ -138,7 +138,7 @@ function PayableDetailPage() {
       <AlertDialog open={excludeDialogVisible}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Deseja excluir esse pagável?</AlertDialogTitle>
+            <AlertDialogTitle>Deseja excluir esse recebível?</AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={toggleExcludeDialog}>
