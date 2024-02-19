@@ -63,11 +63,7 @@ export class ReceivableController {
 
   @Post('batch')
   async createMany(@Body() createReceivableBatchDto: CreateReceivableBatchDto) {
-    const createReceivable = createReceivableBatchDto.receivable_batch.map(
-      (receivable) => this.receivableBatchService.createReceivable(receivable),
-    );
-
-    await Promise.all(createReceivable);
+    this.receivableBatchService.createReceivable(createReceivableBatchDto);
   }
 
   @Get()

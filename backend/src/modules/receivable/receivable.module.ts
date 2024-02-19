@@ -19,28 +19,39 @@ import {
 } from './use-cases';
 import { ReceivableBatchConsumer } from './jobs/receivable-batch.consumer';
 import { ReceivableBatchService } from './jobs/receivable-batch.service';
+import { RECEIVABLE_QUEUE } from './constants';
+import { EnvModule } from '../env/env.module';
+import { env } from 'process';
 
 @Module({
   imports: [
     DatabaseModule,
-    BullModule.forRoot({
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      },
+    BullModule.forRootAsync({
+      imports: [EnvModule],
+      useFactory: async (envService: EnvService) => ({
+        redis: {
+          host: envService.get('REDIS_HOST'),
+          port: envService.get('REDIS_PORT'),
+        },
+      }),
+      inject: [EnvService],
     }),
     BullModule.registerQueue({
-      name: 'receivable-queue',
+      name: RECEIVABLE_QUEUE,
     }),
-    MailerModule.forRoot({
-      transport: {
-        host: 'smtp.ethereal.email',
-        port: 587,
-        auth: {
-          user: 'meda69@ethereal.email',
-          pass: 'GTMKzKXbga7RSzDGcZ',
+    MailerModule.forRootAsync({
+      inject: [EnvService],
+      imports: [EnvModule],
+      useFactory: async (envService: EnvService) => ({
+        transport: {
+          host: envService.get('MAIL_HOST'),
+          port: envService.get('MAIL_PORT'),
+          auth: {
+            user: envService.get('MAIL_AUTH_USER'),
+            pass: envService.get('MAIL_AUTH_USER_PASSWORD'),
+          },
         },
-      },
+      }),
     }),
   ],
   controllers: [ReceivableController],

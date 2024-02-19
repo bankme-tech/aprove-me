@@ -5,6 +5,12 @@ export const envSchema = z.object({
   JWT_SECRET_KEY: z.string(),
   JWT_EXPIRATION_TIME: z.string(),
   PORT: z.coerce.number().optional().default(3000),
+  REDIS_HOST: z.string(),
+  REDIS_PORT: z.coerce.number().default(6379),
+  MAIL_HOST: z.string(),
+  MAIL_PORT: z.coerce.number(),
+  MAIL_AUTH_USER: z.string(),
+  MAIL_AUTH_USER_PASSWORD: z.string(),
 });
 
 export const validateEnv = (env: Record<string, any>) => {
