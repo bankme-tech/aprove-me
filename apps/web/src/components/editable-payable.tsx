@@ -66,7 +66,7 @@ export const EditablePayable = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       assignor: initialData.assignorId,
-      emissionDate: `${initialData.emissionDate.getFullYear()}-${initialData.emissionDate.getMonth() + 1}-${initialData.emissionDate.getDate()}`,
+      emissionDate: initialData.emissionDate.toISOString().split('T')[0],
       value: initialData.value,
     },
   });
