@@ -14,6 +14,7 @@ import { ListPayablesController } from './controllers/list-payables.controller';
 import { UpdatePayableController } from './controllers/update-payable.controller';
 import { CreateUserController } from './controllers/create-user.controller';
 import { AuthenticateController } from './controllers/authenticate.controller';
+import { ListAssignorsController } from './controllers/list-assignors.controller';
 
 @Module({
   imports: [DatabaseModule, AssignorModule, PayableModule, UserModule],
@@ -29,6 +30,7 @@ import { AuthenticateController } from './controllers/authenticate.controller';
     UpdatePayableController,
     CreateUserController,
     AuthenticateController,
+    ListAssignorsController,
   ],
   providers: [],
 })
