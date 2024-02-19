@@ -22,6 +22,9 @@ jobs:
       - name: Install dependencies
         run: npm i
 
+      - name: Install dotenv
+        run: npm i dotenv
+
       - name: Install prisma client
         run: npm install -g @prisma/client
 
