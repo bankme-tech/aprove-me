@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { PayableRepository } from '../payable.repository';
+import {
+  PayableRepository,
+  PayableWithAssignorName,
+} from '../payable.repository';
 import { Payable } from '@prisma/client';
 import { PrismaService } from '@/database/prisma.service';
 
@@ -11,6 +14,23 @@ export class PrismaPayableRepository implements PayableRepository {
     const payable = await this.prisma.payable.findUnique({
       where: {
         id,
+      },
+    });
+
+    return payable;
+  }
+
+  async findByIdWithAssignorName(id: string): Promise<PayableWithAssignorName> {
+    const payable = await this.prisma.payable.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        assignor: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
 

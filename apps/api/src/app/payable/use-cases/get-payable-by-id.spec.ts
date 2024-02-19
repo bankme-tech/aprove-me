@@ -9,7 +9,7 @@ import { makePayable } from '@test/factories/payable.factory';
 let payableRepository = new InMemoryPayableRepository();
 let service = new GetPayableByIdUseCase(payableRepository);
 
-describe('GetAssignorByIdUseCase', () => {
+describe('GetPayableByIdUseCase', () => {
   beforeEach(() => {
     payableRepository = new InMemoryPayableRepository();
     service = new GetPayableByIdUseCase(payableRepository);
@@ -22,7 +22,7 @@ describe('GetAssignorByIdUseCase', () => {
     const payable = await service.execute({ id: testPayable.id });
 
     expect(payable.isRight()).toBe(true);
-    expect(payable.isRight() && payable.value.payable).toEqual(testPayable);
+    expect(payable.isRight() && payable.value.payable.id).toBe(testPayable.id);
   });
 
   it('should not be able to return payable using inexistent id', async () => {

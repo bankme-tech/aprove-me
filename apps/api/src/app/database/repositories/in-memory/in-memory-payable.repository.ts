@@ -1,11 +1,28 @@
 import { Payable } from '@prisma/client';
-import { PayableRepository } from '../payable.repository';
+import {
+  PayableRepository,
+  PayableWithAssignorName,
+} from '../payable.repository';
 
 export class InMemoryPayableRepository implements PayableRepository {
   public payables: Payable[] = [];
 
   async findById(id: string): Promise<Payable> {
     return this.payables.find((payable) => payable.id === id);
+  }
+
+  async findByIdWithAssignorName(id: string): Promise<PayableWithAssignorName> {
+    const payable = this.payables.find((payable) => payable.id === id);
+
+    if (payable) {
+      return {
+        ...payable,
+        assignor: {
+          name: payable.assignorId,
+        },
+      };
+    }
+    return null;
   }
 
   async findByAssignor(assignorId: string): Promise<Payable[]> {

@@ -1,6 +1,8 @@
-import { PayableRepository } from '@/database/repositories/payable.repository';
+import {
+  PayableRepository,
+  PayableWithAssignorName,
+} from '@/database/repositories/payable.repository';
 import { Injectable } from '@nestjs/common';
-import { Payable } from '@prisma/client';
 import { Either, left, right } from '@util/either';
 import { isUUID } from 'class-validator';
 
@@ -16,7 +18,7 @@ type GetPayableByIdUseCaseRequest = {
 type GetPayableByIdUseCaseResponse = Either<
   GetPayableByIdUseCaseError,
   {
-    payable: Payable;
+    payable: PayableWithAssignorName;
   }
 >;
 
@@ -31,7 +33,7 @@ export class GetPayableByIdUseCase {
       return left(GetPayableByIdUseCaseError.INVALID_ID_FORMAT);
     }
 
-    const payable = await this.payableRepository.findById(id);
+    const payable = await this.payableRepository.findByIdWithAssignorName(id);
 
     if (!payable) {
       return left(GetPayableByIdUseCaseError.PAYABLE_NOT_FOUND);
