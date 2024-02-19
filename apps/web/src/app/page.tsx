@@ -19,9 +19,12 @@ import { formatMoney } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
 import { CreatePayable } from '@/components/create-payable';
+import { CreateAssignor } from '@/components/create-assignor';
 
 function Page() {
   const [createPayableDialogVisible, setCreatePayableDialogVisible] =
+    useState(false);
+  const [createAssignorDialogVisible, setCreateAssignorDialogVisible] =
     useState(false);
   const { username } = useAuth();
   const { data, status } = useFetchPayableList();
@@ -30,6 +33,9 @@ function Page() {
 
   const toggleCreatePayableDialog = () =>
     setCreatePayableDialogVisible(!createPayableDialogVisible);
+
+  const toggleCreateAssignorDialog = () =>
+    setCreateAssignorDialogVisible(!createAssignorDialogVisible);
 
   const isEmpty = data.length === 0;
 
@@ -43,7 +49,10 @@ function Page() {
               Essa é a listagem de todos os pagáveis
             </span>
           </div>
-          <Button onClick={toggleCreatePayableDialog}>Novo pagável</Button>
+          <div className="flex gap-2">
+            <Button onClick={toggleCreatePayableDialog}>Novo pagável</Button>
+            <Button onClick={toggleCreateAssignorDialog}>Novo cedente</Button>
+          </div>
         </div>
         <div className="border-gray-200 rounded-md border mt-6">
           <Table>
@@ -99,9 +108,15 @@ function Page() {
           </div>
         )}
       </div>
+
       <CreatePayable
         isOpen={createPayableDialogVisible}
         onClose={toggleCreatePayableDialog}
+      />
+
+      <CreateAssignor
+        isOpen={createAssignorDialogVisible}
+        onClose={toggleCreateAssignorDialog}
       />
     </main>
   );
