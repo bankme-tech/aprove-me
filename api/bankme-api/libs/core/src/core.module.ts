@@ -7,6 +7,9 @@ import { PayableVO } from './domains/payables/vos/payable.vo';
 import { PayableRepository } from './infra/database/repositories/payable-repository';
 import { PrismaService } from './infra/database/prisma-service';
 import { PayableDomainService } from './domains/payables/payable-service';
+import { AssignorRepository } from './infra/database/repositories/assignor-repository';
+import { Sequence } from './sequence';
+import { HttpResult } from './http/http-result';
 
 @Module({
   providers: [
@@ -18,6 +21,9 @@ import { PayableDomainService } from './domains/payables/payable-service';
     PayableVO,
     PayableRepository,
     PayableDomainService,
+    AssignorRepository,
+    Sequence,
+    HttpResult,
   ],
   exports: [
     CoreService,
@@ -28,6 +34,9 @@ import { PayableDomainService } from './domains/payables/payable-service';
     PayableVO,
     PayableRepository,
     PayableDomainService,
+    AssignorRepository,
+    Sequence,
+    HttpResult,
   ],
 })
 export class CoreModule {}

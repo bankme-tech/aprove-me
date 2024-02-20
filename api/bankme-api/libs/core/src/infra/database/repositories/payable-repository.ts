@@ -18,11 +18,11 @@ export class PayableRepository implements IPayableRepository {
   }
 
   async create(data: Payable): Promise<Payable> {
-    return (await this.prisma.payable.create({
+    return await this.prisma.payable.create({
       data: {
         ...data,
       },
-    })) as Payable;
+    });
   }
 
   async changeById(id: string, data: Payable): Promise<Payable> {

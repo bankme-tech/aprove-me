@@ -5,7 +5,16 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/bankme-api/tsconfig.app.json"
+    "tsConfigPath": "apps/bankme-api/tsconfig.app.json",
+    "plugins": [
+      {
+        "name": "@nestjs/swagger/plugin",
+        "options": {
+          "classValidatorShim": false,
+          "dtoFileNameSuffix": "DTO"
+        }
+      }
+    ]
   },
   "monorepo": true,
   "root": "apps/bankme-api",
@@ -16,7 +25,16 @@
       "entryFile": "main",
       "sourceRoot": "apps/bankme-api/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/bankme-api/tsconfig.app.json"
+        "tsConfigPath": "apps/bankme-api/tsconfig.app.json",
+        "plugins": [
+          {
+            "name": "@nestjs/swagger/plugin",
+            "options": {
+              "classValidatorShim": false,
+              "dtoFileNameSuffix": "DTO"
+            }
+          }
+        ]
       }
     },
     "payable-consumer": {

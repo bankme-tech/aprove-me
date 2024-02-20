@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ListPayableDto } from './dto/list-payable.dto';
+import { HttpStatusInterceptor } from '../interceptors/http-status.interceptor';
 
 @Controller('payable')
 @ApiTags('Payable')
@@ -24,6 +26,7 @@ export class PayableController {
     description: 'Create a payable',
     type: CreatePayableDto,
   })
+  @UseInterceptors(HttpStatusInterceptor)
   create(@Body() createPayableDto: CreatePayableDto) {
     return this.payableService.create(createPayableDto);
   }

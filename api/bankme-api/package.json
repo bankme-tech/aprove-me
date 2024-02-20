@@ -28,7 +28,8 @@
     "@nestjs/swagger": "^7.3.0",
     "@prisma/client": "5.9.1",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

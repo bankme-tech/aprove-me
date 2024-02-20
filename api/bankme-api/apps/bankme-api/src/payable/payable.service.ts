@@ -1,9 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { IPayableDomainService } from 'bme/core/domains/payables/interfaces/payable-service.interface';
 import { PayableDomainService } from 'bme/core/domains/payables/payable-service';
 import { PayableVO } from 'bme/core/domains/payables/vos/payable.vo';
+import { PayableAssignorVO } from 'bme/core/domains/payables/vos/payable-assignor.vo';
+import { HttpResult } from 'bme/core/http/http-result';
+import { HttpVO } from 'bme/core/http/http.vo';
 
 @Injectable()
 export class PayableService {
@@ -11,21 +14,36 @@ export class PayableService {
     @Inject(PayableDomainService)
     protected service: IPayableDomainService,
   ) {}
-  async create(createPayableDto: CreatePayableDto) {
+  async create(createPayableDto: CreatePayableDto): Promise<HttpVO> {
+    let assignor: PayableAssignorVO;
+    if (createPayableDto.assignor) {
+      assignor = new PayableAssignorVO(
+        createPayableDto.assignor.document,
+        createPayableDto.assignor.email,
+        createPayableDto.assignor.phone,
+        createPayableDto.assignor.name,
+      );
+    }
     const createVO = new PayableVO(
       '',
       createPayableDto.value,
       createPayableDto.emissionDate,
       createPayableDto.assignorId,
+      assignor,
     );
 
+    const validation = this.service.validate(createVO);
+
+    if (validation.length)
+      return HttpResult.BadRequest(createPayableDto, validation);
+
     const createResult = await this.service.create(createVO);
-    return createResult;
+
+    return HttpResult.Ok(createResult);
   }
 
   async findAll() {
-    // await this.service.getAll();
-    return `This action returns all payable`;
+    return await this.service.getAll();
   }
 
   findOne(id: number) {

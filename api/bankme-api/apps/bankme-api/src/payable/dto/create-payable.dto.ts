@@ -1,5 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PayableVO } from 'bme/core/domains/payables/vos/payable.vo';
+
+export class CreatePayableAssignorDto {
+  @ApiProperty()
+  public document: string;
+  @ApiProperty()
+  public email: string;
+  @ApiProperty()
+  public phone: string;
+  @ApiProperty()
+  public name: string;
+}
 
 export class CreatePayableDto {
   @ApiProperty()
@@ -9,7 +19,6 @@ export class CreatePayableDto {
   @ApiProperty()
   public assignorId: string;
 
-  public toValueObject(): PayableVO {
-    return new PayableVO('', this.value, this.emissionDate, this.assignorId);
-  }
+  @ApiProperty()
+  public assignor?: CreatePayableAssignorDto;
 }

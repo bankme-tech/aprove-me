@@ -1,5 +1,5 @@
 export interface IBaseVO {
   id: string;
   isValid(): string;
-  isEqual(data: IBaseVO): Boolean;
+  isEqual(data: IBaseVO): boolean;
 }
