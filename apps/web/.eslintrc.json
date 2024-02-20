@@ -1,4 +1,9 @@
 {
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "env": {
     "browser": true,
     "es2021": true
@@ -23,6 +28,7 @@
   ],
   "rules": {
     "prettier/prettier": ["error"],
+    "react/prop-types": "off",
     "space-before-function-paren": "off",
     "no-unused-vars": "off",
     "multiline-ternary": "off",
