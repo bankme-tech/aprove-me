@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  aproveme-api:
+    container_name: aprove-api
+    image: aproveme-api
+    build: .
+    depends_on:
+      - aproveme-redis
+    ports:
+      - "3000:3000"
+    restart: always
+    env_file:
+      - ./backend/.env.docker
+    networks:
+      - api-network
+
+  aproveme-redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    command: redis-server
+    ports:
+      - "6379:6379"
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge
+

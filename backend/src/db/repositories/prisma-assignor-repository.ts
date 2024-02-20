@@ -61,7 +61,7 @@ export class PrismaAssignorRepository implements AssignorRepository {
   }
 
   async fetch(): Promise<Assignor[]> {
-    return await this.prisma.assignor.findMany({
+    return this.prisma.assignor.findMany({
       where: {
         deleted_at: null,
       },

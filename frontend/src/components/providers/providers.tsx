@@ -1,7 +1,7 @@
 import { queryClient } from '@/lib/query';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode } from 'react';
-import { Toaster } from '../ui';
+import { Toaster } from 'sonner';
 import { ThemeProvider } from './theme';
 
 export const Providers = ({ children }: { children: ReactNode }) => {
@@ -10,7 +10,7 @@ export const Providers = ({ children }: { children: ReactNode }) => {
       <ThemeProvider storageKey="aproveme-theme" defaultTheme="system">
         {children}
       </ThemeProvider>
-      <Toaster richColors  />
+      <Toaster richColors />
     </QueryClientProvider>
   );
 };
