@@ -21,7 +21,6 @@ import { ReceivableBatchConsumer } from './jobs/receivable-batch.consumer';
 import { ReceivableBatchService } from './jobs/receivable-batch.service';
 import { RECEIVABLE_QUEUE } from './constants';
 import { EnvModule } from '../env/env.module';
-import { env } from 'process';
 
 @Module({
   imports: [

@@ -17,9 +17,9 @@ import { AuthGuard } from '../guards/auth.guard';
 import {
   CreateReceivableUseCase,
   DeleteReceivableUseCase,
+  FetchAllReceivableUseCase,
   FindReceivableByIdUseCase,
   UpdateReceivableUseCase,
-  FetchAllReceivableUseCase,
 } from './use-cases';
 import { ReceivableBatchService } from './jobs/receivable-batch.service';
 
@@ -63,7 +63,9 @@ export class ReceivableController {
 
   @Post('batch')
   async createMany(@Body() createReceivableBatchDto: CreateReceivableBatchDto) {
-    this.receivableBatchService.createReceivable(createReceivableBatchDto);
+    await this.receivableBatchService.createReceivable(
+      createReceivableBatchDto,
+    );
   }
 
   @Get()

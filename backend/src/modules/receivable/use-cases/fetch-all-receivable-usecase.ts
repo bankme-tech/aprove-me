@@ -11,7 +11,7 @@ type Output = {
 export class FetchAllReceivableUseCase implements UseCase<void, Output> {
   constructor(private readonly receivableRepository: ReceivableRepository) {}
 
-  async execute(input: void): Promise<Output> {
+  async execute(): Promise<Output> {
     const receivables = await this.receivableRepository.fetchAll();
 
     return {
