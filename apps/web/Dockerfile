@@ -12,6 +12,9 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV="production"
 
+# Api url
+ENV NEXT_PUBLIC_API_URL="https://bankme-tech-test-api.fly.dev"
+
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -42,4 +45,4 @@ COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 8080
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "run", "start", "--", "-p", "8080" ]
