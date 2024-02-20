@@ -44,7 +44,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built application
-COPY --from=build /dist /dist
+COPY --from=build /dist /app
 
 # Setup sqlite3 on a separate volume
 RUN mkdir -p /data
