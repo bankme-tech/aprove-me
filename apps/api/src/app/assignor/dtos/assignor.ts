@@ -1,43 +1,44 @@
 import { IsEmail, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
+import { AssignorValidationError } from '../constants/validation-error';
 
 export class CreateAssignorDTO {
-  @IsNotEmpty({ message: 'document is required' })
-  @MaxLength(30, { message: 'document must have a maximum of 30 characters' })
+  @IsNotEmpty({ message: AssignorValidationError.DOCUMENT_REQUIRED })
+  @MaxLength(30, { message: AssignorValidationError.DOCUMENT_MAX_30_ERROR })
   document: string;
 
-  @IsNotEmpty({ message: 'email is required' })
-  @IsEmail({}, { message: 'email invalid' })
-  @MaxLength(140, { message: 'email must have a maximum of 140 characters' })
+  @IsNotEmpty({ message: AssignorValidationError.EMAIL_REQUIRED })
+  @IsEmail({}, { message: AssignorValidationError.INVALID_EMAIL })
+  @MaxLength(140, { message: AssignorValidationError.EMAIL_MAX_140_ERROR })
   email: string;
 
-  @IsNotEmpty({ message: 'phone is required' })
-  @MaxLength(20, { message: 'phone must have a maximum of 20 characters' })
+  @IsNotEmpty({ message: AssignorValidationError.PHONE_REQUIRED })
+  @MaxLength(20, { message: AssignorValidationError.PHONE_MAX_20_ERROR })
   phone: string;
 
-  @IsNotEmpty({ message: 'name is required' })
-  @MaxLength(140, { message: 'name must have a maximum of 140 characters' })
+  @IsNotEmpty({ message: AssignorValidationError.NAME_REQUIRED })
+  @MaxLength(140, { message: AssignorValidationError.NAME_MAX_140_ERROR })
   name: string;
 }
 
 export class UpdateAssignorDTO {
   @IsNotEmpty()
-  @MaxLength(30, { message: 'document must have a maximum of 30 characters' })
+  @MaxLength(30, { message: AssignorValidationError.DOCUMENT_MAX_30_ERROR })
   @IsOptional()
   document?: string;
 
   @IsNotEmpty()
-  @IsEmail({}, { message: 'email invalid' })
-  @MaxLength(140, { message: 'email must have a maximum of 140 characters' })
+  @IsEmail({}, { message: AssignorValidationError.INVALID_EMAIL })
+  @MaxLength(140, { message: AssignorValidationError.EMAIL_MAX_140_ERROR })
   @IsOptional()
   email?: string;
 
   @IsNotEmpty()
-  @MaxLength(20, { message: 'phone must have a maximum of 20 characters' })
+  @MaxLength(20, { message: AssignorValidationError.PHONE_MAX_20_ERROR })
   @IsOptional()
   phone?: string;
 
   @IsNotEmpty()
-  @MaxLength(140, { message: 'name must have a maximum of 140 characters' })
+  @MaxLength(140, { message: AssignorValidationError.NAME_MAX_140_ERROR })
   @IsOptional()
   name?: string;
 }
