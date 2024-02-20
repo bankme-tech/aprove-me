@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  web:
+    container_name: bankme_test_web
+    build:
+      context: ./apps/web
+      args:
+        NEXT_PUBLIC_API_URL: "http://localhost:3000"
+    ports:
+      - "8080:8080"
+  api:
+    container_name: bankme_test_api
+    build:
+      context: ./apps/api
+    volumes:
+      - "data:/data"
+    env_file:
+      - "./apps/api/.env"
+    environment:
+      - PORT=3000
+      - DATABASE_URL=file:///data/sqlite.db
+    ports:
+      - "3000:3000"
+volumes:
+  data:

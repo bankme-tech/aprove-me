@@ -12,8 +12,9 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV="production"
 
-# Api url
-ENV NEXT_PUBLIC_API_URL="https://bankme-tech-test-api.fly.dev"
+ARG NEXT_PUBLIC_API_URL
+
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 
 # Throw-away build stage to reduce size of final image

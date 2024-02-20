@@ -16,6 +16,9 @@ primary_region = 'gru'
   min_machines_running = 0
   processes = ['app']
 
+[build.args]
+  NEXT_PUBLIC_API_URL="https://bankme-tech-test-api.fly.dev"
+
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
