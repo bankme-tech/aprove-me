@@ -7,7 +7,7 @@
 
 
 
-## Vamos começar!
+## 🚀 Vamos começar!
 #### Clone o projeto:
 ```
 git clone git@github.com:kevinbzrra/bankme-challenge.git
@@ -21,13 +21,16 @@ npm i
 ```
 npx prisma migrate dev --name init
 ```
+```
+npx prisma db seed
+```
 
 Em seguida, vamos configurar o Frontend. Vá até a pasta ```bankme-challenge/frontend/``` e digite o comando abaixo para instalar as dependências
 ```
 npm i
 ```
 
-## Rodando o projeto
+## ⚙ Rodando o projeto
 Primeiro, vamos iniciar nosso servidor no Backend. Abra o Terminal e, na pasta ```bankme-challenge/backend/```,  digite o comando abaixo:
 ```
 npm run start:dev
@@ -38,12 +41,12 @@ Agora, vamos iniciar nosso Frontend. Abra <b>outro</b> Terminal e, na pasta ```b
 npm run dev
 ```
 
-## Portas
+## 🚪 Portas
 Frontend ```http://localhost:3000```
 
 Backend ```http://localhost:3001```
 
-## Stack utilizada
+## 🧰 Stack utilizada
 
 - [NPM](https://www.npmjs.com/)
 
