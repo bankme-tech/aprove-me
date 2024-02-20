@@ -1,11 +1,16 @@
 import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsUUID,
   Length,
+  ValidateNested,
 } from 'class-validator';
 import { PayableValidationError } from '../constants/validation-error';
+import { Type } from 'class-transformer';
 
 export class CreatePayableDTO {
   @IsNotEmpty({ message: PayableValidationError.VALUE_REQUIRED })
@@ -26,6 +31,15 @@ export class CreatePayableDTO {
   @IsNotEmpty({ message: PayableValidationError.ASSIGNOR_ID_REQUIRED })
   @IsUUID(4, { message: PayableValidationError.INVALID_ASSIGNOR_ID })
   assignorId: string;
+}
+
+export class CreatePayableBatchDTO {
+  @IsArray()
+  @ArrayMinSize(2)
+  @ArrayMaxSize(10000)
+  @ValidateNested({ each: true })
+  @Type(() => CreatePayableDTO)
+  data: CreatePayableDTO[];
 }
 
 export class UpdatePayableDTO {

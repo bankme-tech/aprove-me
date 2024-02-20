@@ -1,4 +1,4 @@
 export const authConfig = {
   secret: process.env.JWT_SECRET,
-  expiresIn: '60s',
+  expiresIn: '60m',
 };

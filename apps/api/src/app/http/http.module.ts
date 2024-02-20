@@ -17,6 +17,7 @@ import { AuthenticateController } from './controllers/authenticate.controller';
 import { ListAssignorsController } from './controllers/list-assignors.controller';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import { CreatePayableBatchController } from './controllers/create-payable-batch.controller';
 
 @Module({
   imports: [DatabaseModule, AssignorModule, PayableModule, UserModule],
@@ -33,6 +34,7 @@ import { ThrottlerGuard } from '@nestjs/throttler';
     CreateUserController,
     AuthenticateController,
     ListAssignorsController,
+    CreatePayableBatchController,
   ],
   providers: [
     {
