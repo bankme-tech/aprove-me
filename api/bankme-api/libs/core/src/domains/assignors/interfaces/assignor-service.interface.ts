@@ -1,10 +1,10 @@
 import { Assignor } from '../entities/assignor.entity';
-import { PayableVO } from '../vos/payable.vo';
+import { AssignorVO } from '../vos/assignor.vo';
 
 export interface IAssignorDomainService {
-  validate(data: PayableVO): string[];
-  create(data: PayableVO): Promise<Payable>;
-  changeById(id: string, data: PayableVO): Promise<Payable>;
-  removeById(id: string): Promise<PayableVO>;
-  getAll(): Promise<PayableVO[]>;
+  validate(data: AssignorVO): Promise<string[]>;
+  create(data: AssignorVO): Promise<Assignor>;
+  changeById(id: string, data: AssignorVO): Promise<Assignor>;
+  removeById(id: string): Promise<AssignorVO>;
+  getAll(): Promise<AssignorVO[]>;
 }

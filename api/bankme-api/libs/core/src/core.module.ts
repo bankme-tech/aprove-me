@@ -10,6 +10,7 @@ import { PayableDomainService } from './domains/payables/payable-service';
 import { AssignorRepository } from './infra/database/repositories/assignor-repository';
 import { Sequence } from './sequence';
 import { HttpResult } from './http/http-result';
+import { AssignorDomainService } from './domains/assignors/assignor-service';
 
 @Module({
   providers: [
@@ -24,6 +25,7 @@ import { HttpResult } from './http/http-result';
     AssignorRepository,
     Sequence,
     HttpResult,
+    AssignorDomainService,
   ],
   exports: [
     CoreService,
@@ -37,6 +39,7 @@ import { HttpResult } from './http/http-result';
     AssignorRepository,
     Sequence,
     HttpResult,
+    AssignorDomainService,
   ],
 })
 export class CoreModule {}
