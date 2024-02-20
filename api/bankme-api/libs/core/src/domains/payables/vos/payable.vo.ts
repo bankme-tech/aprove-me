@@ -1,5 +1,5 @@
 import { BaseVO } from 'bme/core/infra/entities/base-vo';
-import { PayableAssignorVO } from './payable-assignor.vo';
+import { AssignorVO } from '../../assignors/vos/assignor.vo';
 import { Fails } from 'bme/core/messages/fails';
 
 export class PayableVO extends BaseVO {
@@ -8,7 +8,7 @@ export class PayableVO extends BaseVO {
     public readonly value: number,
     public readonly emissionDate: Date,
     public readonly assignorId: string,
-    public readonly assignor: PayableAssignorVO,
+    public readonly assignor: AssignorVO,
   ) {
     super(id);
   }

@@ -1,7 +1,6 @@
 import { IPayableDomainService } from './interfaces/payable-service.interface';
 import { Payable } from './entities/payable.entity';
 import { PayableVO } from './vos/payable.vo';
-import { Fails } from 'bme/core/messages/fails';
 import { Inject, Injectable } from '@nestjs/common';
 import { IPayableRepository } from './interfaces/payable-repository.interface';
 import { PayableRepository } from 'bme/core/infra/database/repositories/payable-repository';

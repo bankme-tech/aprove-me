@@ -1,6 +1,6 @@
 import { BaseVO } from 'bme/core/infra/entities/base-vo';
 
-export class PayableAssignorVO extends BaseVO {
+export class AssignorVO extends BaseVO {
   constructor(
     public readonly document: string,
     public readonly email: string,

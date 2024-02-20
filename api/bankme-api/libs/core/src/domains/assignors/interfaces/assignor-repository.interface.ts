@@ -4,4 +4,7 @@ import { IReaderRepository } from 'bme/core/infra/database/reader-repository.int
 
 export interface IAssignorRepository
   extends IWriterRepository<Assignor>,
-    IReaderRepository<Assignor> {}
+    IReaderRepository<Assignor> {
+  documentExists(document: string): Promise<Boolean>;
+  emailExists(email: string): Promise<Boolean>;
+}

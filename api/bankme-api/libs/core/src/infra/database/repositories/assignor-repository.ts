@@ -7,6 +7,24 @@ import { PrismaService } from '../prisma-service';
 export class AssignorRepository implements IAssignorRepository {
   constructor(protected prisma: PrismaService) {}
 
+  async documentExists(document: string): Promise<Boolean> {
+    const result = await this.prisma.assignor.count({
+      where: {
+        document,
+      },
+    });
+    return result > 0;
+  }
+
+  async emailExists(email: string): Promise<Boolean> {
+    const result = await this.prisma.assignor.count({
+      where: {
+        email,
+      },
+    });
+    return result > 0;
+  }
+
   async create(data: Assignor): Promise<Assignor> {
     return await this.prisma.assignor.create({
       data: {
@@ -17,7 +35,7 @@ export class AssignorRepository implements IAssignorRepository {
 
   async changeById(id: string, data: Assignor): Promise<Assignor> {
     return await this.prisma.assignor.update({
-      where: { id: id },
+      where: { id },
       data: {
         ...data,
       },
@@ -26,7 +44,7 @@ export class AssignorRepository implements IAssignorRepository {
 
   async removeById(id: string): Promise<Assignor> {
     return await this.prisma.assignor.delete({
-      where: { id: id },
+      where: { id },
     });
   }
 
@@ -36,7 +54,7 @@ export class AssignorRepository implements IAssignorRepository {
 
   async getById<Assignor>(id: string): Promise<Assignor> {
     return (await this.prisma.assignor.findUnique({
-      where: { id: id },
+      where: { id },
     })) as Assignor;
   }
 }

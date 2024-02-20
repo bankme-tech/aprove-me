@@ -10,4 +10,8 @@ export class HttpResult {
   public static BadRequest(body: any, errors: string[]): HttpVO {
     return new HttpVO(false, HttpStatus.BAD_REQUEST, body, errors);
   }
+
+  public static UnprocessableEntity(body: any, errors: string[]): HttpVO {
+    return new HttpVO(false, HttpStatus.UNPROCESSABLE_ENTITY, body, errors);
+  }
 }
