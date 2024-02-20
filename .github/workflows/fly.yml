@@ -65,5 +65,8 @@ jobs:
 
       - name: Deploy
         run: flyctl deploy --remote-only
+        with:
+          args:
+            "deploy --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
