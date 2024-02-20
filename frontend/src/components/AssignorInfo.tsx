@@ -19,8 +19,6 @@ const AssignorInfo = async ({ id }: {
 
     const assignor = await res.json();
 
-    console.log(assignor);
-
     return (
         <div className="w-full grid grid-cols-5 bg-white p-6">
             <div className="flex flex-col gap-1">

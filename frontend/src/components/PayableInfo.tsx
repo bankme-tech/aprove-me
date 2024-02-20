@@ -22,8 +22,6 @@ const PayableInfo = async ({ id }: {
 
     const payable = await res.json();
 
-    console.log(payable);
-
     return (
         <div className="w-full grid grid-cols-5 bg-white p-6">
             <div className="flex flex-col gap-1">

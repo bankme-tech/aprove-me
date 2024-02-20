@@ -17,8 +17,6 @@ const AssignorsList = async () => {
     });
     const data = await res.json();
 
-    console.log(data);
-
     return (
         <DataTable
             className="w-full"

@@ -35,7 +35,6 @@ const PayableItemActions = (payable: Payable) => {
     }
 
     const handleError = (message: string[]) => {
-        console.log(message);
         for (let i = 0; i < message.length; i++) {
             showToast('error', 'Erro!', message[i]);
         }
