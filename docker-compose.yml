@@ -24,9 +24,6 @@ services:
       - "data:/data"
     env_file:
       - "./apps/api/.env"
-    environment:
-      - PORT=3000
-      - DATABASE_URL=file:///data/sqlite.db
     ports:
       - "3000:3000"
 volumes:

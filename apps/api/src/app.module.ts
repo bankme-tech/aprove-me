@@ -7,6 +7,12 @@ import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath:
+        process.env.NODE_ENV === 'production'
+          ? '.env.production'
+          : '.env',
+    }),
     ThrottlerModule.forRoot([
       {
         ttl: 60000,
@@ -21,7 +27,6 @@ import { BullModule } from '@nestjs/bull';
         port: Number(process.env.REDIS_PORT),
       },
     }),
-    ConfigModule.forRoot(),
     DatabaseModule,
     HttpModule,
   ],
