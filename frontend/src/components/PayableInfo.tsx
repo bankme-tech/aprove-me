@@ -1,4 +1,6 @@
 import { BASE_URL } from "@/contants";
+import { currency } from "@/helpers/currency";
+import { formatDate } from "@/helpers/format-date";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -23,21 +25,18 @@ const PayableInfo = async ({ id }: {
     console.log(payable);
 
     return (
-        <div className="w-full">
-            <div className="flex items-center justify-between py-4">
+        <div className="w-full grid grid-cols-5 bg-white p-6">
+            <div className="flex flex-col gap-1">
                 <p className="font-bold">Valor</p>
-                <p>{payable.value}</p>
+                <p>{currency(payable.value)}</p>
             </div>
-            <div className="flex items-center justify-between py-4">
-                <p className="font-bold">Data de emissão</p>
-                <p>{payable.emissionDate}</p>
-            </div>
-            <div className="flex items-center justify-between py-4">
+            <div className="flex flex-col gap-1">
                 <p className="font-bold">Cedente</p>
-                <Link
-                    href={`/assignors/${payable.assignorId}`}
-                    className="text-blue-600 underline"
-                >{payable.assignor.name}</Link>
+                <p>{payable.assignor.name}</p>
+            </div>
+            <div className="flex flex-col gap-1">
+                <p className="font-bold">Data da emissão</p>
+                <p>{formatDate(payable.emissionDate)}</p>
             </div>
         </div>
     )

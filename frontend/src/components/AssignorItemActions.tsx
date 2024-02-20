@@ -17,9 +17,7 @@ type Assignor = {
     document: string
 }
 
-const AssignorItemActions = ({ assignor }: {
-    assignor: Assignor
-}) => {
+const AssignorItemActions = (assignor: Assignor) => {
     const router = useRouter();
 
     const { showToast } = useContext(ToastContext);
@@ -89,7 +87,7 @@ const AssignorItemActions = ({ assignor }: {
                 <AssignorForm assignor={assignor} onSuccess={handleSuccess} onError={handleError} />
             </Dialog>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-end gap-4">
                 <Button icon="pi pi-eye" rounded onClick={() => router.push(`/assignors/${assignor.id}`)} />
                 <Button icon="pi pi-pencil" rounded onClick={toggleDialog} />
                 <Button icon="pi pi-trash" severity="danger" rounded onClick={handleRemove} loading={isLoading} />

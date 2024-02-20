@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
@@ -29,16 +30,20 @@ const Header = () => {
         <>
             <ConfirmDialog />
 
-            <header className="flex justify-end p-4 bg-[--primary] text-white">
-                <nav className="flex items-center justify-end gap-10">
-                    <Link href="/assignors">Cedentes</Link>
-                    <Link href="/payables">Recebíveis</Link>
-                    <Button
-                        className="p-button-link text-white"
-                        icon="pi pi-sign-out"
-                        onClick={handleOnClick}
-                    />
-                </nav>
+            <header className="bg-white shadow-md flex justify-center">
+                <div className="max-w-screen-xl w-full flex items-center justify-between py-4 px-8 text-[--primary]">
+                    <Image src="/logo-bankme.png" alt="bankme" className="w-auto h-10" width={913} height={1080} />
+
+                    <nav className="flex items-center justify-end gap-10">
+                        <Link href="/assignors">Cedentes</Link>
+                        <Link href="/payables">Recebíveis</Link>
+                        <Button
+                            className="p-button-link"
+                            icon="pi pi-sign-out"
+                            onClick={handleOnClick}
+                        />
+                    </nav>
+                </div>
             </header>
         </>
     )

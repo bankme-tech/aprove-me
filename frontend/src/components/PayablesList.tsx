@@ -1,6 +1,8 @@
 import { BASE_URL } from "@/contants";
-import PayableItem from "./PayableItem";
 import { cookies } from "next/headers";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import PayableItemActions from "./PayableItemActions";
 
 const PayablesList = async () => {
 
@@ -17,11 +19,17 @@ const PayablesList = async () => {
     console.log(data);
 
     return (
-        <div className="w-full">
-            {data.map((payable: any) => (
-                <PayableItem key={payable.id} payable={payable} />
-            ))}
-        </div>
+        <DataTable
+            className="w-full"
+            value={data}
+            paginator
+            rowsPerPageOptions={[10, 50, 100]}
+            rows={10}
+        >
+            <Column header="Valor (R$)" field="value" />
+            <Column header="Cedente" field="assignor.name" />
+            <Column header="" field="" body={PayableItemActions} />
+        </DataTable>
     )
 }
 

@@ -7,7 +7,7 @@ const Payable = ({ params }: {
     params: { id: string }
 }) => {
     return (
-        <div>
+        <div className="w-full min-h-[100vh] bg-gray-100">
             <Header />
 
             <Container>

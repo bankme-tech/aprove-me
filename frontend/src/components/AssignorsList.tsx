@@ -1,6 +1,9 @@
 import { BASE_URL } from "@/contants";
 import AssignorItem from "./AssignorItem";
 import { cookies } from "next/headers";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import AssignorItemActions from "./AssignorItemActions";
 
 const AssignorsList = async () => {
 
@@ -17,11 +20,19 @@ const AssignorsList = async () => {
     console.log(data);
 
     return (
-        <div className="w-full">
-            {data.map((assignor: any) => (
-                <AssignorItem key={assignor.id} assignor={assignor} />
-            ))}
-        </div>
+        <DataTable
+            className="w-full"
+            value={data}
+            paginator
+            rowsPerPageOptions={[10, 50, 100]}
+            rows={10}
+        >
+            <Column header="Nome" field="name" />
+            <Column header="Email" field="email" />
+            <Column header="Telefone" field="phone" />
+            <Column header="Documento" field="document" />
+            <Column header="" field="" body={AssignorItemActions} />
+        </DataTable>
     )
 }
 

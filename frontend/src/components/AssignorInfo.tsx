@@ -22,20 +22,20 @@ const AssignorInfo = async ({ id }: {
     console.log(assignor);
 
     return (
-        <div className="w-full">
-            <div className="flex items-center justify-between py-4">
+        <div className="w-full grid grid-cols-5 bg-white p-6">
+            <div className="flex flex-col gap-1">
                 <p className="font-bold">Nome</p>
                 <p>{assignor.name}</p>
             </div>
-            <div className="flex items-center justify-between py-4">
+            <div className="flex flex-col gap-1">
                 <p className="font-bold">CPF</p>
                 <p>{assignor.document}</p>
             </div>
-            <div className="flex items-center justify-between py-4">
+            <div className="flex flex-col gap-1">
                 <p className="font-bold">Email</p>
                 <p>{assignor.email}</p>
             </div>
-            <div className="flex items-center justify-between py-4">
+            <div className="flex flex-col gap-1">
                 <p className="font-bold">Telefone</p>
                 <p>{assignor.phone}</p>
             </div>
