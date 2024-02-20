@@ -96,6 +96,11 @@ O backend segue uma arquitetura em módulos para organizar e separar responsabil
 da aplicação e contém seus próprios controladores, serviços, modelos de dados e rotas. Isso facilita a manutenção e
 escalabilidade do sistema
 
+## Filas e email
+
+Foi utilizado um fake smtp [Ethereal](https://ethereal.email/), as credenciais foram fornecidas no `.env`
+ou `env.example` e para acessar basta fazer o login na plataforma.
+
 ## Endpoints
 
 Toda a aplicação backend está protegida por AuthGuards por meio de JWT com validade de 1 minuto. Caso queira mudar, pode
