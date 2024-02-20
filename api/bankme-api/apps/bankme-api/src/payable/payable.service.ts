@@ -7,32 +7,41 @@ import { PayableVO } from 'bme/core/domains/payables/vos/payable.vo';
 import { HttpResult } from 'bme/core/http/http-result';
 import { HttpVO } from 'bme/core/http/http.vo';
 import { AssignorVO } from 'bme/core/domains/assignors/vos/assignor.vo';
+import { AssignorDomainService } from 'bme/core/domains/assignors/assignor-service';
+import { IAssignorDomainService } from 'bme/core/domains/assignors/interfaces/assignor-service.interface';
 
 @Injectable()
 export class PayableService {
   constructor(
     @Inject(PayableDomainService)
     protected service: IPayableDomainService,
+    @Inject(AssignorDomainService)
+    protected assignorService: IAssignorDomainService,
   ) {}
   async create(createPayableDto: CreatePayableDto): Promise<HttpVO> {
-    let assignor: AssignorVO;
+    let assignorVO: AssignorVO;
     if (createPayableDto.assignor) {
-      assignor = new AssignorVO(
+      assignorVO = new AssignorVO(
         createPayableDto.assignor.document,
         createPayableDto.assignor.email,
         createPayableDto.assignor.phone,
         createPayableDto.assignor.name,
       );
+
+      const validation = await this.assignorService.validate(assignorVO);
+
+      if (validation.length)
+        return HttpResult.BadRequest(createPayableDto, validation);
     }
     const createVO = new PayableVO(
       '',
       createPayableDto.value,
       createPayableDto.emissionDate,
       createPayableDto.assignorId,
-      assignor,
+      assignorVO,
     );
 
-    const validation = this.service.validate(createVO);
+    let validation = this.service.validate(createVO);
 
     if (validation.length)
       return HttpResult.BadRequest(createPayableDto, validation);
