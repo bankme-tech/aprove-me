@@ -62,9 +62,6 @@ jobs:
         run: npm run test
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
-        with:
-          args:
-            "deploy --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }}"
 
       - name: Deploy
         run: flyctl deploy --remote-only
