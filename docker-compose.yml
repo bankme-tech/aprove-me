@@ -1,5 +1,10 @@
 version: "3.9"
 services:
+  redis:
+    image: redis
+    command: redis-server --requirepass 123456789
+    ports:
+      - "6379:6379"
   web:
     container_name: bankme_test_web
     build:
@@ -10,6 +15,9 @@ services:
       - "8080:8080"
   api:
     container_name: bankme_test_api
+    restart: on-failure
+    depends_on:
+      - "redis"
     build:
       context: ./apps/api
     volumes:
