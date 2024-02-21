@@ -1,10 +1,10 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreatePayableDto } from './create-payable.dto';
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class UpdatePayableDto extends PartialType(CreatePayableDto) {
   @IsNotEmpty()
-  @IsString()
+  @IsNumber()
   value: number;
 
   @IsNotEmpty()
