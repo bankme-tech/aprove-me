@@ -1,0 +1,7 @@
+POST http://localhost:3000/payable
+Content-Type: application/json
+
+{
+  "value": 100.00,
+  "assignorId": "123456789"
+}
