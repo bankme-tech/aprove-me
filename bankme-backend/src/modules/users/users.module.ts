@@ -22,14 +22,14 @@ import { SendMailConsumer } from './jobs/sendMail.consumer';
     BullModule.registerQueue({
       name: "mailQueue"
     }),
-    // Works hardcoded but not with .env
+    // Works hardcoded with .env
     MailerModule.forRoot({
       transport: {
         host: "smtp.ethereal.email",
         port: 587,
         auth: {
-          user: "eugene55@ethereal.email",
-          pass: "rYkdhNJWCnT2waxgn2",
+          user: "",
+          pass: "",
         },
       },
     }),
