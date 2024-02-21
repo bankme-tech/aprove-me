@@ -4,6 +4,7 @@ import PayableRepository from './payableRepository';
 
 import { Payable } from '../entities/payable.entity';
 import { CreatePayableDto } from '../dto/create-payable.dto';
+import { UpdatePayableDto } from '../dto/update-payable.dto';
 
 @Injectable()
 export class PrismaPayableRepository extends PayableRepository {
@@ -21,13 +22,21 @@ export class PrismaPayableRepository extends PayableRepository {
     });
   }
 
-  findOne(id: string): Promise<Payable> {
+  async findOne(id: string): Promise<Payable> {
     return this.prisma.payable.findUnique({
       where: { id },
     });
   }
 
-  findAll(): Promise<Payable[]> {
+  async findAll(): Promise<Payable[]> {
     return this.prisma.payable.findMany();
+  }
+
+  async update(id: string, updatePayableDto: UpdatePayableDto): Promise<Payable> {
+    const { value, assignorId } = updatePayableDto;
+    return this.prisma.payable.update({
+      where: { id },
+      data: { value, assignorId },
+    });
   }
 }
