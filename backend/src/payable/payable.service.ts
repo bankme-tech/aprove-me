@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import PayableRepository from './repositories/payableRepository';
-import AssignorRepository from 'src/assignor/repositories/assignorRepository';
+import AssignorRepository from '../assignor/repositories/assignorRepository';
 
 @Injectable()
 export class PayableService {
