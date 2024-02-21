@@ -28,7 +28,8 @@ export class PayableController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.payableService.remove(id);
+  async remove(@Param('id') id: string) {
+    await this.payableService.remove(id);
+    return { message: 'Payable deleted' };
   }
 }
