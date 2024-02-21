@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import AssignorRepository from './repositories/assignorRepository';
@@ -7,7 +7,7 @@ import AssignorRepository from './repositories/assignorRepository';
 export class AssignorService {
   constructor(private readonly assignorRepository: AssignorRepository) {}
 
-  create(createAssignorDto: CreateAssignorDto) {
+  async create(createAssignorDto: CreateAssignorDto) {
     return this.assignorRepository.create(createAssignorDto);
   }
 
@@ -15,8 +15,12 @@ export class AssignorService {
     return `This action returns all assignor`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} assignor`;
+  async findOne(id: string) {
+    const assignor = await this.assignorRepository.findOne(id);
+    if (!assignor) {
+      throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
+    }
+    return assignor;
   }
 
   update(id: number, updateAssignorDto: UpdateAssignorDto) {

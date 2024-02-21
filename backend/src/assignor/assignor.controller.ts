@@ -19,7 +19,7 @@ export class AssignorController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.assignorService.findOne(+id);
+    return this.assignorService.findOne(id);
   }
 
   @Patch(':id')
