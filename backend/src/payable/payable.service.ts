@@ -34,12 +34,12 @@ export class PayableService {
   }
 
   async update(id: string, updatePayableDto: UpdatePayableDto) {
-    const updated = await this.payableRepository.update(id, updatePayableDto);
+    const updated = await this.payableRepository.findOne(id);
     if (!updated) {
       throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
     }
 
-    return updated;
+    return this.payableRepository.update(id, updatePayableDto);
   }
 
   async remove(id: string) {

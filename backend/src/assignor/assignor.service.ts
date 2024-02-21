@@ -24,12 +24,12 @@ export class AssignorService {
   }
 
   async update(id: string, updateAssignorDto: UpdateAssignorDto) {
-    const assignor = await this.assignorRepository.update(id, updateAssignorDto);
+    const assignor = await this.assignorRepository.findOne(id);
     if (!assignor) {
       throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
     }
 
-    return assignor;
+    return this.assignorRepository.update(id, updateAssignorDto);
   }
 
   async remove(id: string) {
