@@ -3,7 +3,7 @@ import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 
-@Controller('payable')
+@Controller()
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
