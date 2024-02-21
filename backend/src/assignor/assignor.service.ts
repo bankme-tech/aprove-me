@@ -12,7 +12,7 @@ export class AssignorService {
   }
 
   findAll() {
-    return `This action returns all assignor`;
+    return this.assignorRepository.findAll();
   }
 
   async findOne(id: string) {
