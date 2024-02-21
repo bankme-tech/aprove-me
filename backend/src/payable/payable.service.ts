@@ -15,8 +15,8 @@ export class PayableService {
     return `This action returns all payable`;
   }
 
-  findOne(id: string) {
-    const payable = this.payableRepository.findOne(id);
+  async findOne(id: string) {
+    const payable = await this.payableRepository.findOne(id);
     if (!payable) {
       throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
     }
