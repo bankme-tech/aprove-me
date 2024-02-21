@@ -45,4 +45,8 @@ export default class PrismaAssignorRepository extends AssignorRepository {
       },
     });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.assignor.delete({ where: { id } });
+  }
 }
