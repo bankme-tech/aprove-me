@@ -26,4 +26,8 @@ export class PrismaPayableRepository extends PayableRepository {
       where: { id },
     });
   }
+
+  findAll(): Promise<Payable[]> {
+    return this.prisma.payable.findMany();
+  }
 }
