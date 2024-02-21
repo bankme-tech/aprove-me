@@ -2,12 +2,21 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import PayableRepository from './repositories/payableRepository';
+import AssignorRepository from 'src/assignor/repositories/assignorRepository';
 
 @Injectable()
 export class PayableService {
-  constructor(private readonly payableRepository: PayableRepository) {}
+  constructor(
+    private readonly payableRepository: PayableRepository,
+    private readonly assignorRepository: AssignorRepository,
+  ) {}
 
   async create(createPayableDto: CreatePayableDto) {
+    const assignor = await this.assignorRepository.findOne(createPayableDto.assignorId);
+    if (!assignor) {
+      throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
+    }
+
     return this.payableRepository.create(createPayableDto);
   }
 
@@ -33,7 +42,12 @@ export class PayableService {
     return updated;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} payable`;
+  async remove(id: string) {
+    const payable = await this.findOne(id);
+    if (!payable) {
+      throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
+    }
+
+    return this.payableRepository.delete(id);
   }
 }
