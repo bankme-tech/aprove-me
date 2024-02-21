@@ -32,7 +32,12 @@ export class AssignorService {
     return assignor;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} assignor`;
+  async remove(id: string) {
+    const assignor = await this.assignorRepository.findOne(id);
+    if (!assignor) {
+      throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
+    }
+
+    return this.assignorRepository.delete(id);
   }
 }

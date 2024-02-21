@@ -8,27 +8,28 @@ export class AssignorController {
   constructor(private readonly assignorService: AssignorService) {}
 
   @Post()
-  create(@Body() createAssignorDto: CreateAssignorDto) {
+  async create(@Body() createAssignorDto: CreateAssignorDto) {
     return this.assignorService.create(createAssignorDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.assignorService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.assignorService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAssignorDto: UpdateAssignorDto) {
+  async update(@Param('id') id: string, @Body() updateAssignorDto: UpdateAssignorDto) {
     return this.assignorService.update(id, updateAssignorDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.assignorService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.assignorService.remove(id);
+    return { message: 'Assignor delted' };
   }
 }
