@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  postgres-db:
+    container_name: bankme-production-db
+    image: postgres:13.5
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=bankme
+      - POSTGRES_PASSWORD=bankme123
+      - POSTGRES_DB=bankme
+    volumes:
+      - './postgres-data/volume/bk:/bk'
+      - './postgres-data/volume/data:/var/lib/postgresql/data'
+    networks:
+      - network-bankme-production-db
+      
+  postgres-test-db:
+    container_name: bankme-testingdb
+    image: postgres:13.5
+    restart: always
+    ports:
+      - 5433:5433
+    environment:
+      - POSTGRES_USER=testingbankme
+      - POSTGRES_PASSWORD=testingbankme123
+      - POSTGRES_DB=test
+    networks:
+      - network-bankme-test-db
+
+  redis-server:
+    image: redis:latest
+    # image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    
+    volumes:
+      - redis-data:/data
+
+
+volumes:
+  postgres-data:
+  redis-data:
+networks:
+  network-bankme-production-db:
+    driver: bridge
+  network-bankme-test-db:
+    driver: bridge
+  redis-server:
+    driver: bridge
