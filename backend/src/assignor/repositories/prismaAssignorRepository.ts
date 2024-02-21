@@ -21,4 +21,10 @@ export default class PrismaAssignorRepository extends AssignorRepository {
       },
     });
   }
+
+  async findOne(id: string): Promise<Assignor> {
+    return this.prisma.assignor.findUnique({
+      where: { id },
+    });
+  }
 }
