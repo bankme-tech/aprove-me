@@ -27,4 +27,8 @@ export default class PrismaAssignorRepository extends AssignorRepository {
       where: { id },
     });
   }
+
+  async findAll(): Promise<Assignor[]> {
+    return this.prisma.assignor.findMany();
+  }
 }

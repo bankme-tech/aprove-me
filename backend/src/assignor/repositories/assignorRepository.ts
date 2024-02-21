@@ -4,4 +4,5 @@ import { Assignor } from '../entities/assignor.entity';
 export default abstract class AssignorRepository {
   abstract create(createAssignorDto: CreateAssignorDto): Promise<Assignor>;
   abstract findOne(id: string): Promise<Assignor>;
+  abstract findAll(): Promise<Assignor[]>;
 }
