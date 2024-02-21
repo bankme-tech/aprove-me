@@ -8,17 +8,17 @@ export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
   @Post()
-  create(@Body() createPayableDto: CreatePayableDto) {
+  async create(@Body() createPayableDto: CreatePayableDto) {
     return this.payableService.create(createPayableDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.payableService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.payableService.findOne(id);
   }
 

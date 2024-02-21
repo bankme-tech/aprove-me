@@ -11,8 +11,8 @@ export class PayableService {
     return this.payableRepository.create(createPayableDto);
   }
 
-  findAll() {
-    return `This action returns all payable`;
+  async findAll() {
+    return this.payableRepository.findAll();
   }
 
   async findOne(id: string) {
