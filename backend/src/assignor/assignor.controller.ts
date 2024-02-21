@@ -30,6 +30,6 @@ export class AssignorController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     await this.assignorService.remove(id);
-    return { message: 'Assignor delted' };
+    return { message: 'Assignor deleted' };
   }
 }
