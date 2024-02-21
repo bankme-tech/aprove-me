@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import PayableRepository from './repositories/payableRepository';
@@ -15,8 +15,13 @@ export class PayableService {
     return `This action returns all payable`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} payable`;
+  findOne(id: string) {
+    const payable = this.payableRepository.findOne(id);
+    if (!payable) {
+      throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
+    }
+
+    return payable;
   }
 
   update(id: number, updatePayableDto: UpdatePayableDto) {

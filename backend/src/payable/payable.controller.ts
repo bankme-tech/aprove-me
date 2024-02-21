@@ -19,7 +19,7 @@ export class PayableController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.payableService.findOne(+id);
+    return this.payableService.findOne(id);
   }
 
   @Patch(':id')
