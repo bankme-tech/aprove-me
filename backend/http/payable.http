@@ -1,7 +1,31 @@
+GET http://localhost:3000/payable
+
+###
+
+GET http://localhost:3000/payable/b7a33f8b-9658-459b-ac42-27a203cc3929
+
+###
+
 POST http://localhost:3000/payable
 Content-Type: application/json
 
 {
-  "value": 100.00,
-  "assignorId": "123456789"
+  "value": 240.00,
+  "assignorId": "a431ef69-c190-405b-b3a3-7829d4c95066"
 }
+
+###
+
+PATCH http://localhost:3000/payable/b7a33f8b-9658-459b-ac42-27a203cc3929
+Content-Type: application/json
+
+{
+  "value": 2400.00,
+  "assignorId": "a431ef69-c190-405b-b3a3-7829d4c95066"
+}
+
+###
+
+DELETE http://localhost:3000/payable/b7a33f8b-9658-459b-ac42-27a203cc3929
+
+###

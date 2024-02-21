@@ -1,0 +1,9 @@
+POST http://localhost:3000/assignor
+Content-Type: application/json
+
+{
+  "document": "123.456.789-10",
+  "email": "fulano@tal.com",
+  "phone": "11 99999-9999",
+  "name": "Fulano de Tal"
+}
