@@ -20,4 +20,10 @@ export class PrismaPayableRepository extends PayableRepository {
       },
     });
   }
+
+  findOne(id: string): Promise<Payable> {
+    return this.prisma.payable.findUnique({
+      where: { id },
+    });
+  }
 }
