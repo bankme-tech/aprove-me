@@ -6,8 +6,8 @@ import { Payable } from './entities/payable.entity';
 import { HttpException } from '@nestjs/common';
 import { Assignor } from '../assignor/entities/assignor.entity';
 
-const payableMock = new Payable('1', 100, new Date(), '1');
-const assignorMock = new Assignor('1', '12345678901', 'r@r.com', '12345678', 'Rafael');
+export const payableMock = new Payable('1', 100, new Date(), '1');
+export const assignorMock = new Assignor('1', '12345678901', 'r@r.com', '12345678', 'Rafael');
 
 const payableRepositoryMock = {
   findOne: jest.fn().mockResolvedValue(payableMock),
