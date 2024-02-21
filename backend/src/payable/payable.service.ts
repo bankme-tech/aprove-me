@@ -24,11 +24,16 @@ export class PayableService {
     return payable;
   }
 
-  update(id: number, updatePayableDto: UpdatePayableDto) {
-    return `This action updates a #${id} payable`;
+  async update(id: string, updatePayableDto: UpdatePayableDto) {
+    const updated = await this.payableRepository.update(id, updatePayableDto);
+    if (!updated) {
+      throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
+    }
+
+    return updated;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} payable`;
   }
 }

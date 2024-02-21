@@ -23,12 +23,12 @@ export class PayableController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
-    return this.payableService.update(+id, updatePayableDto);
+  async update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
+    return this.payableService.update(id, updatePayableDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.payableService.remove(+id);
+    return this.payableService.remove(id);
   }
 }
