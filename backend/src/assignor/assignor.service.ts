@@ -23,8 +23,13 @@ export class AssignorService {
     return assignor;
   }
 
-  update(id: number, updateAssignorDto: UpdateAssignorDto) {
-    return `This action updates a #${id} assignor`;
+  async update(id: string, updateAssignorDto: UpdateAssignorDto) {
+    const assignor = await this.assignorRepository.update(id, updateAssignorDto);
+    if (!assignor) {
+      throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
+    }
+
+    return assignor;
   }
 
   remove(id: number) {

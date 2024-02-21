@@ -24,7 +24,7 @@ export class AssignorController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAssignorDto: UpdateAssignorDto) {
-    return this.assignorService.update(+id, updateAssignorDto);
+    return this.assignorService.update(id, updateAssignorDto);
   }
 
   @Delete(':id')
