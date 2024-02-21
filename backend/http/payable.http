@@ -1,12 +1,12 @@
-GET http://localhost:3000/payable
+GET http://localhost:3000/integrations/payable
 
 ###
 
-GET http://localhost:3000/payable/b7a33f8b-9658-459b-ac42-27a203cc3929
+GET http://localhost:3000/integrations/payable/b7a33f8b-9658-459b-ac42-27a203cc3929
 
 ###
 
-POST http://localhost:3000/payable
+POST http://localhost:3000/integrations/payable
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ###
 
-PATCH http://localhost:3000/payable/b7a33f8b-9658-459b-ac42-27a203cc3929
+PATCH http://localhost:3000/integrations/payable/b7a33f8b-9658-459b-ac42-27a203cc3929
 Content-Type: application/json
 
 {
@@ -26,6 +26,6 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/payable/b7a33f8b-9658-459b-ac42-27a203cc3929
+DELETE http://localhost:3000/integrations/payable/b7a33f8b-9658-459b-ac42-27a203cc3929
 
 ###
