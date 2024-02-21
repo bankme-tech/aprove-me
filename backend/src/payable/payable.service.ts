@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
+import PayableRepository from './repositories/payableRepository';
 
 @Injectable()
 export class PayableService {
-  create(createPayableDto: CreatePayableDto) {
-    return 'This action adds a new payable';
+  constructor(private readonly payableRepository: PayableRepository) {}
+
+  async create(createPayableDto: CreatePayableDto) {
+    return this.payableRepository.create(createPayableDto);
   }
 
   findAll() {
