@@ -39,4 +39,8 @@ export class PrismaPayableRepository extends PayableRepository {
       data: { value, assignorId },
     });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.payable.delete({ where: { id } });
+  }
 }

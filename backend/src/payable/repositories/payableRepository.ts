@@ -7,4 +7,5 @@ export default abstract class PayableRepository {
   abstract findOne(id: string): Promise<Payable>;
   abstract findAll(): Promise<Payable[]>;
   abstract update(id: string, updatePayableDto: UpdatePayableDto): Promise<Payable>;
+  abstract delete(id: string): Promise<void>;
 }
