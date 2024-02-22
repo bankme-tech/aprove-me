@@ -1,22 +1,45 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards, Req, Request } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AssignorsService } from './assignors.service';
-import { ApiBearerAuth, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
-import { CreateAssignorBodyDTO, CreateAssignorDataDTO } from './dtos/CreateAssignorDTO';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { CreateAssignorBodyDTO } from './dtos/CreateAssignorDTO';
 import { AssignorEntity } from './entities/assignors.entity';
 
-// import { AuthGuard } from '../auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
-import { AssignorOkResponse,AssignorUnauthorizedResponse } from './swagger/assignors.swagger';
+import {
+  AssignorOkResponse,
+  AssignorUnauthorizedResponse,
+} from './swagger/assignors.swagger';
 
 import { FindOneAssignorParamDTO } from './dtos/FindOneAssignorDTO';
-import { UpdateAssignorBodyDTO, UpdateAssignorParamDTO } from './dtos/UpdateAssignorDTO';
+import {
+  UpdateAssignorBodyDTO,
+  UpdateAssignorParamDTO,
+} from './dtos/UpdateAssignorDTO';
 import { FindAllAssignorQueryDTO } from './dtos/FindAllAssignorDTO';
 import { DeleteAssignorParamDTO } from './dtos/DeleteAssignorDTO';
 
 @Controller('assignors')
 @ApiTags('Assignors')
 @ApiBearerAuth()
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 export class AssignorsController {
   constructor(private readonly assignorsService: AssignorsService) {}
 
@@ -24,9 +47,7 @@ export class AssignorsController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: AssignorOkResponse })
   @ApiUnauthorizedResponse({ type: AssignorUnauthorizedResponse })
-  create(
-    @Body() body: CreateAssignorBodyDTO,
-  ): Promise<AssignorEntity> {
+  create(@Body() body: CreateAssignorBodyDTO): Promise<AssignorEntity> {
     const { name, email, document, phone, userId } = body;
     return this.assignorsService.create({
       phone,
@@ -60,7 +81,9 @@ export class AssignorsController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: AssignorOkResponse })
   @ApiUnauthorizedResponse({ type: AssignorUnauthorizedResponse })
-  findById(@Param() param: FindOneAssignorParamDTO): Promise<AssignorEntity | null> {
+  findById(
+    @Param() param: FindOneAssignorParamDTO,
+  ): Promise<AssignorEntity | null> {
     const { id } = param;
     return this.assignorsService.findOne({ id: Number(id) });
   }

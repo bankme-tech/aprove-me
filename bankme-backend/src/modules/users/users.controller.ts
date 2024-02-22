@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { ApiBearerAuth, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { CreateUserBodyDTO } from './dtos/CreateUserDTO';
 import { UserEntity } from './entities/user.entity';
-// import { AuthGuard } from '../auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 import { UserOkResponse, UserUnauthorizedResponse } from './swagger/users.swagger';
 import { FindOneUserParamDTO } from './dtos/FindOneUserDTO';
 import { UpdateUserBodyDTO, UpdateUserParamDTO } from './dtos/UpdateUserDTO';
@@ -14,7 +14,7 @@ import { SendMailProducerService } from './jobs/sendMail.producer';
 @Controller('users')
 @ApiTags('Users')
 @ApiBearerAuth()
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
