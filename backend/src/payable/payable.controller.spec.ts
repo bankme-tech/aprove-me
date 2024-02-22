@@ -4,6 +4,7 @@ import { PayableService } from './payable.service';
 import PayableRepository from './repositories/payableRepository';
 import AssignorRepository from '../assignor/repositories/assignorRepository';
 import { payableMock } from './payable.service.spec';
+import { JwtService } from '@nestjs/jwt';
 
 describe('PayableController', () => {
   let controller: PayableController;
@@ -13,6 +14,7 @@ describe('PayableController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PayableController],
       providers: [
+        JwtService,
         PayableService,
         {
           provide: PayableRepository,

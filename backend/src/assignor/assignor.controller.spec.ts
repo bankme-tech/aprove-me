@@ -3,6 +3,7 @@ import { AssignorController } from './assignor.controller';
 import { AssignorService } from './assignor.service';
 import AssignorRepository from './repositories/assignorRepository';
 import { assignorMock } from './assignor.service.spec';
+import { JwtService } from '@nestjs/jwt';
 
 describe('AssignorController', () => {
   let controller: AssignorController;
@@ -12,6 +13,7 @@ describe('AssignorController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssignorController],
       providers: [
+        JwtService,
         AssignorService,
         {
           provide: AssignorRepository,
