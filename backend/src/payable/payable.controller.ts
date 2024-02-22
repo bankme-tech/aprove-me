@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  HttpCode,
+} from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
@@ -29,6 +39,7 @@ export class PayableController {
     return this.payableService.update(id, updatePayableDto);
   }
 
+  @HttpCode(204)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     await this.payableService.remove(id);
