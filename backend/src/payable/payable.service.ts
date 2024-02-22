@@ -34,20 +34,10 @@ export class PayableService {
   }
 
   async update(id: string, updatePayableDto: UpdatePayableDto) {
-    const updated = await this.payableRepository.findOne(id);
-    if (!updated) {
-      throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
-    }
-
     return this.payableRepository.update(id, updatePayableDto);
   }
 
   async remove(id: string) {
-    const payable = await this.findOne(id);
-    if (!payable) {
-      throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
-    }
-
     return this.payableRepository.delete(id);
   }
 }
