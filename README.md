@@ -1,3 +1,13 @@
+# How to run this project
+
+## bankme-backend
+- at bankme-backend directory you should run `npm install`;
+- configure the email queue service:
+  - generate an fake email account at `https://ethereal.email/`
+  - Add credentials to `.env` file (check `.env.example`)
+- run `docker-compose up` to generate required containers with the proper configuration (check `docker-compose.yml` to get the rest of the configuration settings for the `.env` file)
+<br>
+
 <p align="center">
   <img src="./assets/logo-bankme.png" alt="Logo Bankme" width="91" height="108">
 </p>
@@ -7,32 +17,34 @@
 
 ## Sumário
 
-- [Sumário](#sumário)
-- [❤️ Bem vindos](#️-bem-vindos)
-- [🚀 Vamos nessa!](#-vamos-nessa)
-  - [Dicas](#dicas)
-  - [Como você deverá desenvolver?](#como-você-deverá-desenvolver)
-  - [Qual o tempo para entregar?](#qual-o-tempo-para-entregar)
-- [💻 O Problema](#-o-problema)
-  - [Estrutura de um recebível](#estrutura-de-um-recebível)
-  - [Estrutrua de um cedente](#estrutrua-de-um-cedente)
-- [💾 Back-end](#-back-end)
-  - [Nível 1 - Validação](#nível-1---validação)
-  - [Nível 2 - Persistência](#nível-2---persistência)
-  - [Nível 3 - Testes](#nível-3---testes)
-  - [Nível 4 - Autenticação](#nível-4---autenticação)
-  - [Nível 5 - Gerenciamento de permissões](#nível-5---gerenciamento-de-permissões)
-  - [Nível 6 - Infra e Doc](#nível-6---infra-e-doc)
-  - [Nível 7 - Lotes](#nível-7---lotes)
-  - [Nível 8 - Resiliência](#nível-8---resiliência)
-  - [Nível 9 - Cloud](#nível-9---cloud)
-  - [Nível 10 - Infra as a Code](#nível-10---infra-as-a-code)
-- [🖥️ Front-end](#️-front-end)
-  - [Nível 1 - Cadastro](#nível-1---cadastro)
-  - [Nível 2 - Conectando na API](#nível-2---conectando-na-api)
-  - [Nível 3 - Listando](#nível-3---listando)
-  - [Nível 4 - Autenticação](#nível-4---autenticação-1)
-  - [Nível 5 - Testes](#nível-5---testes)
+- [How to run this project](#how-to-run-this-project)
+  - [bankme-backend](#bankme-backend)
+  - [Sumário](#sumário)
+  - [❤️ Bem vindos](#️-bem-vindos)
+  - [🚀 Vamos nessa!](#-vamos-nessa)
+    - [Dicas](#dicas)
+    - [Como você deverá desenvolver?](#como-você-deverá-desenvolver)
+    - [Qual o tempo para entregar?](#qual-o-tempo-para-entregar)
+  - [💻 O Problema](#-o-problema)
+    - [Estrutura de um recebível](#estrutura-de-um-recebível)
+    - [Estrutrua de um cedente](#estrutrua-de-um-cedente)
+  - [💾 Back-end](#-back-end)
+    - [Nível 1 - Validação](#nível-1---validação)
+    - [Nível 2 - Persistência](#nível-2---persistência)
+    - [Nível 3 - Testes](#nível-3---testes)
+    - [Nível 4 - Autenticação](#nível-4---autenticação)
+    - [Nível 5 - Gerenciamento de permissões](#nível-5---gerenciamento-de-permissões)
+    - [Nível 6 - Infra e Doc](#nível-6---infra-e-doc)
+    - [Nível 7 - Lotes](#nível-7---lotes)
+    - [Nível 8 - Resiliência](#nível-8---resiliência)
+    - [Nível 9 - Cloud](#nível-9---cloud)
+    - [Nível 10 - Infra as a Code](#nível-10---infra-as-a-code)
+  - [🖥️ Front-end](#️-front-end)
+    - [Nível 1 - Cadastro](#nível-1---cadastro)
+    - [Nível 2 - Conectando na API](#nível-2---conectando-na-api)
+    - [Nível 3 - Listando](#nível-3---listando)
+    - [Nível 4 - Autenticação](#nível-4---autenticação-1)
+    - [Nível 5 - Testes](#nível-5---testes)
 
 ## ❤️ Bem vindos 
 
