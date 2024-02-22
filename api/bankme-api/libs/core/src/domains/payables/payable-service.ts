@@ -24,13 +24,29 @@ export class PayableDomainService implements IPayableDomainService {
 
     return [];
   }
+
+  async getById(id: string): Promise<PayableVO> {
+    const result = await this.payableRepo.getById<Payable>(id);
+
+    if (result == null) return null;
+
+    return new PayableVO(
+      result.id,
+      result.value,
+      result.emissionDate,
+      result.assignorId,
+      null,
+    );
+  }
+
   async getAll(): Promise<PayableVO[]> {
-    const result = await this.payableRepo.getAll<Payable>();
+    const result = (await this.payableRepo.getAll<Payable>()) ?? [];
 
     return result.map(
       (x) => new PayableVO(x.id, x.value, x.emissionDate, x.assignorId, null),
     );
   }
+
   async create(data: PayableVO): Promise<Payable> {
     const createData = new Payable();
     createData.id = Sequence.getNext();

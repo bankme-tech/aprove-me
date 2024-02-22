@@ -7,4 +7,5 @@ export interface IPayableDomainService {
   changeById(id: string, data: PayableVO): Promise<Payable>;
   removeById(id: string): Promise<PayableVO>;
   getAll(): Promise<PayableVO[]>;
+  getById(id: string): Promise<PayableVO>;
 }
