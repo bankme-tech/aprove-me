@@ -6,6 +6,7 @@ import { AssignorModule } from './assignor/assignor.module';
 import { RouterModule } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './database/prisma.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PrismaModule } from './database/prisma.module';
           { path: 'auth', module: AuthModule },
           { path: 'payable', module: PayableModule },
           { path: 'assignor', module: AssignorModule },
+          { path: 'user', module: UserModule },
         ],
       },
     ]),
