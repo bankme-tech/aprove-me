@@ -1,0 +1,21 @@
+# This file is used to build the docker image and run the container for the backend service
+# The line below states which version of docker-compose is being used
+version: '3'
+
+services:
+  api:
+    # Build the image from the dockerfile in the app directory
+    build: ./backend/
+    # Name the container
+    container_name: bankme_api
+    # Expose the port 3000 to the host machine
+    ports:
+      - 3000:3000
+    # The next two lines are what makes the containers interactive, it's the equivalent of the -it flags in docker run
+    tty: true
+    stdin_open: true
+    # Restart the container if it crashes
+    restart: always
+    # Mount the backend directory to the /app/backend directory in the container
+    volumes:
+      - ./backend/src:/app/backend/src
