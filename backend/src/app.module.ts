@@ -5,28 +5,21 @@ import { PayableModule } from './payable/payable.module';
 import { AssignorModule } from './assignor/assignor.module';
 import { RouterModule } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
+import { PrismaModule } from './database/prisma.module';
 
 @Module({
   imports: [
     AuthModule,
     PayableModule,
     AssignorModule,
+    PrismaModule,
     RouterModule.register([
       {
         path: 'integrations',
         children: [
-          {
-            path: 'auth',
-            module: AuthModule,
-          },
-          {
-            path: 'payable',
-            module: PayableModule,
-          },
-          {
-            path: 'assignor',
-            module: AssignorModule,
-          },
+          { path: 'auth', module: AuthModule },
+          { path: 'payable', module: PayableModule },
+          { path: 'assignor', module: AssignorModule },
         ],
       },
     ]),
