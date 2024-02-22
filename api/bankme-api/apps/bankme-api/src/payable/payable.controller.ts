@@ -14,6 +14,8 @@ import { UpdatePayableDto } from './dto/update-payable.dto';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ListPayableDto } from './dto/list-payable.dto';
 import { HttpStatusInterceptor } from '../interceptors/http-status.interceptor';
+import { ZodValidationPipe } from 'bme/core/infra/pipes/zod-validation.pipe';
+import { createPayableSchema } from 'bme/core/domains/payables/entities/payable.schema';
 
 @Controller('payable')
 @ApiTags('Payable')
@@ -27,7 +29,10 @@ export class PayableController {
     type: CreatePayableDto,
   })
   @UseInterceptors(HttpStatusInterceptor)
-  create(@Body() createPayableDto: CreatePayableDto) {
+  create(
+    @Body(new ZodValidationPipe(createPayableSchema))
+    createPayableDto: CreatePayableDto,
+  ) {
     return this.payableService.create(createPayableDto);
   }
 

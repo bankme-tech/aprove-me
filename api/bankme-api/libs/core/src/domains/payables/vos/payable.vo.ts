@@ -19,6 +19,8 @@ export class PayableVO extends BaseVO {
       (this.assignor && this.assignorId)
     )
       return Fails.INVALID_ASSIGNOR;
+
+    if (this.value <= 0) return Fails.PAYMENTVALUE_MUSTBE_GREATERTHANZERO;
     return null;
   }
 }
