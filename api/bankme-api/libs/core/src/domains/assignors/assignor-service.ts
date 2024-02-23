@@ -2,28 +2,34 @@ import { AssignorRepository } from 'bme/core/infra/database/repositories/assigno
 import { Assignor } from './entities/assignor.entity';
 import { IAssignorDomainService } from './interfaces/assignor-service.interface';
 import { AssignorVO } from './vos/assignor.vo';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { IAssignorRepository } from './interfaces/assignor-repository.interface';
 import { Fails } from 'bme/core/messages/fails';
 import { Sequence } from 'bme/core/sequence';
+import { ErrorDomainService } from 'bme/core/infra/errors/error-domain.service';
 
-export class AssignorDomainService implements IAssignorDomainService {
+@Injectable()
+export class AssignorDomainService
+  extends ErrorDomainService
+  implements IAssignorDomainService
+{
   constructor(
     @Inject(AssignorRepository)
     private assignorRepo: IAssignorRepository,
-  ) {}
+  ) {
+    super();
+  }
 
-  async validate(data: AssignorVO): Promise<string[]> {
-    const result = [];
+  async validate(data: AssignorVO): Promise<boolean> {
     const resultValidation = await Promise.all([
       this.assignorRepo.documentExists(data.document),
       this.assignorRepo.emailExists(data.email),
     ]);
 
-    if (resultValidation[0]) result.push(Fails.DOCUMENT_ALREADY_EXISTS);
-    if (resultValidation[1]) result.push(Fails.EMAIL_ALREADY_EXISTS);
+    if (resultValidation[0]) super.addError(Fails.DOCUMENT_ALREADY_EXISTS);
+    if (resultValidation[1]) super.addError(Fails.EMAIL_ALREADY_EXISTS);
 
-    return result;
+    return !super.getErrors().length;
   }
 
   async create(data: AssignorVO): Promise<Assignor> {

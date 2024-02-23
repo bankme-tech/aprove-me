@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
-import { UpdatePayableDto } from './dto/update-payable.dto';
 import { IPayableDomainService } from 'bme/core/domains/payables/interfaces/payable-service.interface';
 import { PayableDomainService } from 'bme/core/domains/payables/payable-service';
 import { PayableVO } from 'bme/core/domains/payables/vos/payable.vo';
@@ -14,7 +13,7 @@ import { IAssignorDomainService } from 'bme/core/domains/assignors/interfaces/as
 export class PayableService {
   constructor(
     @Inject(PayableDomainService)
-    protected service: IPayableDomainService,
+    protected payableService: IPayableDomainService,
     @Inject(AssignorDomainService)
     protected assignorService: IAssignorDomainService,
   ) {}
@@ -28,10 +27,15 @@ export class PayableService {
         createPayableDto.assignor.name,
       );
 
+      this.assignorService.resetDomain();
+
       const validation = await this.assignorService.validate(assignorVO);
 
-      if (validation.length)
-        return HttpResult.BadRequest(createPayableDto, validation);
+      if (!validation)
+        return HttpResult.BadRequest(
+          createPayableDto,
+          this.assignorService.getErrors(),
+        );
     }
     const createVO = new PayableVO(
       '',
@@ -41,13 +45,17 @@ export class PayableService {
       assignorVO,
     );
 
-    let validation = await this.service.validate(createVO);
-
-    if (validation.length)
-      return HttpResult.BadRequest(createPayableDto, validation);
-
     try {
-      const createResult = await this.service.create(createVO);
+      this.payableService.resetDomain();
+
+      const createResult = await this.payableService.create(createVO);
+      const errors = this.payableService.getErrors();
+
+      if (errors.length)
+        return HttpResult.BadRequest(
+          createPayableDto,
+          this.payableService.getErrors(),
+        );
 
       return HttpResult.Ok(createResult);
     } catch (e) {
@@ -56,18 +64,46 @@ export class PayableService {
   }
 
   async findAll() {
-    return await this.service.getAll();
+    try {
+      const results = await this.payableService.getAll();
+      const errors = this.payableService.getErrors();
+
+      if (errors.length)
+        return HttpResult.BadRequest({}, this.payableService.getErrors());
+
+      return HttpResult.Ok({
+        results,
+      });
+    } catch (e) {
+      return HttpResult.BadRequest({}, [e.message]);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} payable`;
+  async findOne(id: string) {
+    try {
+      const result = await this.payableService.getById(id);
+      const errors = this.payableService.getErrors();
+
+      if (errors.length)
+        return HttpResult.BadRequest({ id }, this.payableService.getErrors());
+
+      return HttpResult.Ok(result);
+    } catch (e) {
+      return HttpResult.BadRequest({ id }, [e.message]);
+    }
   }
 
-  update(id: number, updatePayableDto: UpdatePayableDto) {
-    return `This action updates a #${id} payable`;
-  }
+  async remove(id: string) {
+    try {
+      const result = await this.payableService.removeById(id);
+      const errors = this.payableService.getErrors();
 
-  remove(id: number) {
-    return `This action removes a #${id} payable`;
+      if (errors.length)
+        return HttpResult.BadRequest({ id }, this.payableService.getErrors());
+
+      return HttpResult.Ok(result);
+    } catch (e) {
+      return HttpResult.BadRequest({ id }, [e.message]);
+    }
   }
 }

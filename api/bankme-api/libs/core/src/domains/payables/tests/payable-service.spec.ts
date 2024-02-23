@@ -32,7 +32,9 @@ describe('PayableDomainService', () => {
       const vo = PayableMocks.convertToVO([payable])[0];
 
       const result = await service.validate(vo);
-      expect(result).toStrictEqual([Fails.INVALID_ASSIGNOR]);
+
+      expect(service.getLastError()).toStrictEqual(Fails.INVALID_ASSIGNOR);
+      expect(result).toStrictEqual(false);
     });
 
     it('should be a valid PayableVO', async () => {
@@ -49,7 +51,9 @@ describe('PayableDomainService', () => {
       expect(assignorRepositoryMock.getById).toHaveBeenCalledWith(
         payable.assignorId,
       );
-      expect(result).toStrictEqual([]);
+
+      expect(service.getErrors()).toStrictEqual([]);
+      expect(result).toStrictEqual(true);
     });
   });
 

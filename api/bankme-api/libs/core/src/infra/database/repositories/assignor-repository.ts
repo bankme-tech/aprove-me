@@ -16,7 +16,7 @@ export class AssignorRepository implements IAssignorRepository {
     return result > 0;
   }
 
-  async emailExists(email: string): Promise<Boolean> {
+  async emailExists(email: string): Promise<boolean> {
     const result = await this.prisma.assignor.count({
       where: {
         email,

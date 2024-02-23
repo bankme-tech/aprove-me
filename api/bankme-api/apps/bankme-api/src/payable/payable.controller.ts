@@ -54,17 +54,7 @@ export class PayableController {
     type: CreatePayableDto,
   })
   findOne(@Param('id') id: string) {
-    return this.payableService.findOne(+id);
-  }
-
-  @Patch(':id')
-  @ApiResponse({
-    status: 200,
-    description: 'Change payable by Id',
-    type: UpdatePayableDto,
-  })
-  update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
-    return this.payableService.update(+id, updatePayableDto);
+    return this.payableService.findOne(id);
   }
 
   @Delete(':id')
@@ -74,6 +64,6 @@ export class PayableController {
     type: CreatePayableDto,
   })
   remove(@Param('id') id: string) {
-    return this.payableService.remove(+id);
+    return this.payableService.remove(id);
   }
 }

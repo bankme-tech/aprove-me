@@ -9,28 +9,41 @@ import { AssignorRepository } from 'bme/core/infra/database/repositories/assigno
 import { Assignor } from '../assignors/entities/assignor.entity';
 import { Sequence } from 'bme/core/sequence';
 import { Fails } from 'bme/core/messages/fails';
+import { ErrorDomainService } from 'bme/core/infra/errors/error-domain.service';
 
 @Injectable()
-export class PayableDomainService implements IPayableDomainService {
+export class PayableDomainService
+  extends ErrorDomainService
+  implements IPayableDomainService
+{
   constructor(
     @Inject(PayableRepository)
     private payableRepo: IPayableRepository,
     @Inject(AssignorRepository)
     private assignorRepo: IAssignorRepository,
-  ) {}
-  async validate(data: PayableVO): Promise<string[]> {
+  ) {
+    super();
+  }
+
+  async validate(data: PayableVO): Promise<boolean> {
     const validationError = data.isValid();
 
-    if (!!validationError) return [validationError];
+    if (!!validationError) {
+      super.addError(validationError);
+      return false;
+    }
 
     if (data.assignorId) {
       const assignorExists = await this.assignorRepo.getById<Assignor>(
         data.assignorId,
       );
-      if (!assignorExists) return [Fails.INVALID_ASSIGNOR_ID];
+      if (!assignorExists) {
+        super.addError(Fails.INVALID_ASSIGNOR_ID);
+        return false;
+      }
     }
 
-    return [];
+    return true;
   }
 
   async getById(id: string): Promise<PayableVO> {
@@ -56,6 +69,9 @@ export class PayableDomainService implements IPayableDomainService {
   }
 
   async create(data: PayableVO): Promise<Payable> {
+    const isError = await this.validate(data);
+    if (isError) return null;
+
     const createData = new Payable();
     createData.id = Sequence.getNext();
     createData.value = data.value;
@@ -77,10 +93,17 @@ export class PayableDomainService implements IPayableDomainService {
 
     return await this.payableRepo.create(createData);
   }
-  changeById(id: string, data: PayableVO): Promise<Payable> {
-    throw new Error('Method not implemented.');
-  }
-  removeById(id: string): Promise<PayableVO> {
-    throw new Error('Method not implemented.');
+
+  async removeById(id: string): Promise<PayableVO> {
+    const removed = await this.payableRepo.removeById(id);
+    if (!removed) return null;
+
+    return new PayableVO(
+      removed.id,
+      removed.value,
+      removed.emissionDate,
+      removed.assignorId,
+      null,
+    );
   }
 }
