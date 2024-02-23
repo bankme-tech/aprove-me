@@ -13,11 +13,15 @@ import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { ProducerService } from 'src/rabbitmq/producer.service';
 
 @UseGuards(AuthGuard)
 @Controller()
 export class PayableController {
-  constructor(private readonly payableService: PayableService) {}
+  constructor(
+    private readonly payableService: PayableService,
+    private readonly producerService: ProducerService,
+  ) {}
 
   @Post()
   async create(@Body() createPayableDto: CreatePayableDto) {
@@ -44,5 +48,11 @@ export class PayableController {
   async remove(@Param('id') id: string) {
     await this.payableService.remove(id);
     return { message: 'Payable deleted' };
+  }
+
+  @Post('message')
+  async sendMessage(@Body() createPayableDTO: CreatePayableDto) {
+    await this.producerService.sendMessage(createPayableDTO);
+    return { message: 'Message sent' };
   }
 }
