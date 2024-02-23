@@ -41,7 +41,7 @@ export class PayableService {
       assignorVO,
     );
 
-    let validation = this.service.validate(createVO);
+    let validation = await this.service.validate(createVO);
 
     if (validation.length)
       return HttpResult.BadRequest(createPayableDto, validation);

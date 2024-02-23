@@ -26,20 +26,29 @@ describe('PayableDomainService', () => {
   });
 
   describe('PayableDomainService.isValid()', () => {
-    it('should be a invalid PayableVO: INVALID_ASSIGNOR', () => {
+    it('should be a invalid PayableVO: INVALID_ASSIGNOR', async () => {
       const payable = PayableMocks.getPayable();
       payable.assignorId = null;
       const vo = PayableMocks.convertToVO([payable])[0];
 
-      const result = service.validate(vo);
+      const result = await service.validate(vo);
       expect(result).toStrictEqual([Fails.INVALID_ASSIGNOR]);
     });
 
-    it('should be a valid PayableVO', () => {
+    it('should be a valid PayableVO', async () => {
       const payable = PayableMocks.getPayable();
+      const assignor = PayableMocks.getAssignor();
+
+      assignorRepositoryMock.getById
+        .calledWith(payable.assignorId)
+        .mockReturnValue(Promise.resolve(assignor));
+
       const vo = PayableMocks.convertToVO([payable])[0];
 
-      const result = service.validate(vo);
+      const result = await service.validate(vo);
+      expect(assignorRepositoryMock.getById).toHaveBeenCalledWith(
+        payable.assignorId,
+      );
       expect(result).toStrictEqual([]);
     });
   });

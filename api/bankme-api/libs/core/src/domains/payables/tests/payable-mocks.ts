@@ -1,6 +1,8 @@
 import { Sequence } from 'bme/core/sequence';
 import { Payable } from '../entities/payable.entity';
 import { PayableVO } from '../vos/payable.vo';
+import { Assignor } from '../../assignors/entities/assignor.entity';
+import { cpf } from 'cpf-cnpj-validator';
 
 export class PayableMocks {
   public static getAll(): Payable[] {
@@ -16,6 +18,18 @@ export class PayableMocks {
     }
 
     return payables;
+  }
+
+  public static getAssignor(): Assignor {
+    const assignor = new Assignor();
+    assignor.id = Sequence.getNext();
+    assignor.document = cpf.generate();
+    assignor.email = 'email@liame.com';
+    assignor.phone = '(19) 98765-4321';
+    assignor.name = 'Name Surname';
+    assignor.createdAt = new Date();
+    assignor.updateAt = new Date();
+    return assignor;
   }
 
   public static getPayable(): Payable {

@@ -17,7 +17,7 @@ lerna-debug.log*
 .DS_Store
 
 # Tests
-/coverage
+/api/bankme-api/coverage
 /.nyc_output
 
 # IDEs and editors

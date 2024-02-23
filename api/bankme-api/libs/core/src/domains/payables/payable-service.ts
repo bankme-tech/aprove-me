@@ -8,6 +8,7 @@ import { IAssignorRepository } from '../assignors/interfaces/assignor-repository
 import { AssignorRepository } from 'bme/core/infra/database/repositories/assignor-repository';
 import { Assignor } from '../assignors/entities/assignor.entity';
 import { Sequence } from 'bme/core/sequence';
+import { Fails } from 'bme/core/messages/fails';
 
 @Injectable()
 export class PayableDomainService implements IPayableDomainService {
@@ -17,10 +18,17 @@ export class PayableDomainService implements IPayableDomainService {
     @Inject(AssignorRepository)
     private assignorRepo: IAssignorRepository,
   ) {}
-  validate(data: PayableVO): string[] {
+  async validate(data: PayableVO): Promise<string[]> {
     const validationError = data.isValid();
 
     if (!!validationError) return [validationError];
+
+    if (data.assignorId) {
+      const assignorExists = await this.assignorRepo.getById<Assignor>(
+        data.assignorId,
+      );
+      if (!assignorExists) return [Fails.INVALID_ASSIGNOR_ID];
+    }
 
     return [];
   }
