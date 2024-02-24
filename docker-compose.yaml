@@ -3,6 +3,18 @@
 version: '3'
 
 services:
+  # Instantiating rabbitmq container
+  rabbitmq:
+    image: rabbitmq:3.8.16-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15692:15692"
+    environment:
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "admin"
+      RABBITMQ_DEFAULT_VHOST: "/"
   api:
     # Build the image from the dockerfile in the app directory
     build: ./backend/
@@ -10,7 +22,7 @@ services:
     container_name: bankme_api
     # Expose the port 3000 to the host machine
     ports:
-      - 3000:3000
+      - 3333:3333
     # The next two lines are what makes the containers interactive, it's the equivalent of the -it flags in docker run
     tty: true
     stdin_open: true
@@ -19,3 +31,5 @@ services:
     # Mount the backend directory to the /app/backend directory in the container
     volumes:
       - ./backend/src:/app/backend/src
+    depends_on:
+      - rabbitmq
