@@ -49,7 +49,6 @@ export class PayablesController {
   @ApiUnauthorizedResponse({ type: PayableUnauthorizedResponse })
   create(@Body() body: CreatePayableBodyDTO): Promise<PayableEntity | null> {
     const userId = body.userId;
-    console.log(body.userId);
 
     const { value, assignorId } = body;
 
