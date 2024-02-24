@@ -7,6 +7,8 @@ import { RouterModule } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './database/prisma.module';
 import { UserModule } from './user/user.module';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
 
 @Module({
   imports: [
@@ -14,6 +16,7 @@ import { UserModule } from './user/user.module';
     PayableModule,
     AssignorModule,
     PrismaModule,
+    RabbitMQModule,
     RouterModule.register([
       {
         path: 'integrations',
@@ -23,6 +26,19 @@ import { UserModule } from './user/user.module';
           { path: 'assignor', module: AssignorModule },
           { path: 'user', module: UserModule },
         ],
+      },
+    ]),
+    ClientsModule.register([
+      {
+        name: 'RMQ',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqp://admin:admin@rabbitmq:5672/'],
+          queue: 'payable-queue',
+          queueOptions: {
+            durable: true,
+          },
+        },
       },
     ]),
   ],
