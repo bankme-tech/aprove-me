@@ -4,7 +4,7 @@ FROM node:20-alpine
 WORKDIR /app/backend
 
 # Expose port
-EXPOSE 3000
+EXPOSE 3333
 
 # Install app dependencies
 COPY package.json package-lock.json ./
