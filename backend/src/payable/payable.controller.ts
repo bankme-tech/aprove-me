@@ -15,7 +15,7 @@ import { UpdatePayableDto } from './dto/update-payable.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { ProducerService } from 'src/rabbitmq/producer.service';
 
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller()
 export class PayableController {
   constructor(
@@ -50,9 +50,10 @@ export class PayableController {
     return { message: 'Payable deleted' };
   }
 
-  @Post('message')
-  async sendMessage(@Body() createPayableDTO: CreatePayableDto) {
-    await this.producerService.sendMessage(createPayableDTO);
-    return { message: 'Message sent' };
+  @Post('batch')
+  async sendMessage(@Body() batch: { payables: CreatePayableDto[] }) {
+    const { payables } = batch;
+    await this.producerService.sendMessage(payables);
+    return { message: 'Batch sent' };
   }
 }
