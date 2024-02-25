@@ -15,7 +15,7 @@ import { UpdatePayableDto } from './dto/update-payable.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { ProducerService } from 'src/rabbitmq/producer.service';
 
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 @Controller()
 export class PayableController {
   constructor(

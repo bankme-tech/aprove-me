@@ -29,7 +29,7 @@ export class PrismaPayableRepository extends PayableRepository {
   }
 
   async findAll(): Promise<Payable[]> {
-    return this.prisma.payable.findMany();
+    return this.prisma.payable.findMany({ take: 100 });
   }
 
   async update(id: string, updatePayableDto: UpdatePayableDto): Promise<Payable> {

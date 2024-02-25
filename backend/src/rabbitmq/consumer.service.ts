@@ -11,6 +11,7 @@ export class ConsumerService {
     private readonly deadProducerService: DeadProducerService,
   ) {}
 
+  //TODO: Implement exponential backoff
   async consumeMessage(content: CreatePayableDto[]) {
     for (const payable of content) {
       let retries = 0;
@@ -31,5 +32,3 @@ export class ConsumerService {
     }
   }
 }
-
-// exponential backoff strategy
