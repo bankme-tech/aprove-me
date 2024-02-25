@@ -2,7 +2,7 @@ import { Sequence } from 'bme/core/sequence';
 import { Payable } from '../entities/payable.entity';
 import { PayableVO } from '../vos/payable.vo';
 import { Assignor } from '../../assignors/entities/assignor.entity';
-import { cpf } from 'cpf-cnpj-validator';
+import { AssignorMocks } from '../../assignors/tests/assignor-mocks';
 
 export class PayableMocks {
   public static getAll(): Payable[] {
@@ -20,18 +20,6 @@ export class PayableMocks {
     return payables;
   }
 
-  public static getAssignor(): Assignor {
-    const assignor = new Assignor();
-    assignor.id = Sequence.getNext();
-    assignor.document = cpf.generate();
-    assignor.email = 'email@liame.com';
-    assignor.phone = '(19) 98765-4321';
-    assignor.name = 'Name Surname';
-    assignor.createdAt = new Date();
-    assignor.updateAt = new Date();
-    return assignor;
-  }
-
   public static getPayable(): Payable {
     const payable = new Payable();
     payable.id = Sequence.getNext();
@@ -43,9 +31,17 @@ export class PayableMocks {
     return payable;
   }
 
-  public static convertToVO(payables: Payable[]): PayableVO[] {
-    return payables.map(
-      (x) => new PayableVO(x.id, x.value, x.emissionDate, x.assignorId, null),
+  public static convertPayableToVO(
+    payable: Payable,
+    assignor: Assignor,
+  ): PayableVO {
+    if (!payable) return null;
+    return new PayableVO(
+      payable.id,
+      payable.value,
+      payable.emissionDate,
+      payable.assignorId,
+      AssignorMocks.convertAssignorToVO(assignor),
     );
   }
 }

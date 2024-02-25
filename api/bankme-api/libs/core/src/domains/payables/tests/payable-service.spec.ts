@@ -1,11 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PayableDomainService } from '../payable-service';
-import { mock } from 'jest-mock-extended';
+import { mock, mockReset } from 'jest-mock-extended';
 import { IPayableRepository } from '../interfaces/payable-repository.interface';
 import { PayableRepository } from 'bme/core/infra/database/repositories/payable-repository';
 import { IAssignorRepository } from '../../assignors/interfaces/assignor-repository.interface';
 import { AssignorRepository } from 'bme/core/infra/database/repositories/assignor-repository';
 import { PayableMocks } from './payable-mocks';
+import { AssignorMocks } from '../../assignors/tests/assignor-mocks';
 import { Fails } from 'bme/core/messages/fails';
 
 describe('PayableDomainService', () => {
@@ -22,6 +23,8 @@ describe('PayableDomainService', () => {
       ],
     }).compile();
 
+    mockReset(payableRepositoryMock);
+    mockReset(assignorRepositoryMock);
     service = module.get<PayableDomainService>(PayableDomainService);
   });
 
@@ -29,7 +32,7 @@ describe('PayableDomainService', () => {
     it('should be a invalid PayableVO: INVALID_ASSIGNOR', async () => {
       const payable = PayableMocks.getPayable();
       payable.assignorId = null;
-      const vo = PayableMocks.convertToVO([payable])[0];
+      const vo = PayableMocks.convertPayableToVO(payable, null);
 
       const result = await service.validate(vo);
 
@@ -39,13 +42,13 @@ describe('PayableDomainService', () => {
 
     it('should be a valid PayableVO', async () => {
       const payable = PayableMocks.getPayable();
-      const assignor = PayableMocks.getAssignor();
+      const assignor = AssignorMocks.getAssignor();
 
       assignorRepositoryMock.getById
         .calledWith(payable.assignorId)
         .mockReturnValue(Promise.resolve(assignor));
 
-      const vo = PayableMocks.convertToVO([payable])[0];
+      const vo = PayableMocks.convertPayableToVO(payable, null);
 
       const result = await service.validate(vo);
       expect(assignorRepositoryMock.getById).toHaveBeenCalledWith(
@@ -108,6 +111,106 @@ describe('PayableDomainService', () => {
 
       expect(result.length).toStrictEqual(mockValues.length);
       expect(result).toStrictEqual(mockValues);
+    });
+  });
+
+  describe('PayableDomainService.create()', () => {
+    it('should fail to create a new payment', async () => {
+      let payable = PayableMocks.getPayable();
+      let assignor = AssignorMocks.getAssignor();
+      payable.assignorId = null;
+
+      payableRepositoryMock.create.mockReturnValue(Promise.resolve(payable));
+
+      assignorRepositoryMock.getById
+        .calledWith(payable.assignorId)
+        .mockReturnValue(Promise.resolve(assignor));
+
+      let payableVO = PayableMocks.convertPayableToVO(payable, null);
+      let result = await service.create(payableVO);
+
+      expect(result).toStrictEqual(null);
+      expect(service.getErrors().length).toBeGreaterThanOrEqual(1);
+      expect(assignorRepositoryMock.getById).toHaveBeenCalledTimes(0);
+      expect(payableRepositoryMock.create).toHaveBeenCalledTimes(0);
+
+      mockReset(payableRepositoryMock);
+      mockReset(assignorRepositoryMock);
+
+      payable = PayableMocks.getPayable();
+      assignor = AssignorMocks.getAssignor();
+
+      payableRepositoryMock.create.mockReturnValue(Promise.resolve(payable));
+
+      assignorRepositoryMock.getById
+        .calledWith(payable.assignorId)
+        .mockReturnValue(Promise.resolve(null));
+
+      payableVO = PayableMocks.convertPayableToVO(payable, null);
+      result = await service.create(payableVO);
+
+      expect(result).toStrictEqual(null);
+      expect(service.getErrors().length).toBeGreaterThanOrEqual(1);
+
+      expect(assignorRepositoryMock.getById).toHaveBeenCalledWith(
+        payable.assignorId,
+      );
+      expect(assignorRepositoryMock.getById).toHaveBeenCalledTimes(1);
+      expect(payableRepositoryMock.create).toHaveBeenCalledTimes(0);
+    });
+
+    it('should create a new payment with assignor Id', async () => {
+      const payable = PayableMocks.getPayable();
+      const assignor = AssignorMocks.getAssignor();
+      payable.assignorId = assignor.id;
+
+      payableRepositoryMock.create.mockReturnValue(Promise.resolve(payable));
+
+      assignorRepositoryMock.getById
+        .calledWith(payable.assignorId)
+        .mockReturnValue(Promise.resolve(assignor));
+
+      const payableVO = PayableMocks.convertPayableToVO(payable, null);
+      const result = await service.create(payableVO);
+
+      expect(result.id).toBeDefined();
+      expect(result.value).toBeGreaterThan(0);
+      expect(result.value).toStrictEqual(payable.value);
+      expect(result.emissionDate).toStrictEqual(payable.emissionDate);
+      expect(result.assignorId).toStrictEqual(payable.assignorId);
+
+      expect(assignorRepositoryMock.getById).toHaveBeenCalledWith(
+        payable.assignorId,
+      );
+      expect(assignorRepositoryMock.getById).toHaveBeenCalledTimes(1);
+      expect(payableRepositoryMock.create).toHaveBeenCalledTimes(1);
+    });
+
+    it('should create a new payment and a new assignor', async () => {
+      const payable = PayableMocks.getPayable();
+      const assignor = AssignorMocks.getAssignor();
+
+      assignorRepositoryMock.getById
+        .calledWith(payable.assignorId)
+        .mockReturnValue(Promise.resolve(assignor));
+
+      payable.assignorId = null;
+
+      payableRepositoryMock.create.mockReturnValue(Promise.resolve(payable));
+      assignorRepositoryMock.create.mockReturnValue(Promise.resolve(assignor));
+
+      const payableVO = PayableMocks.convertPayableToVO(payable, assignor);
+      const result = await service.create(payableVO);
+
+      expect(result.id).toBeDefined();
+      expect(result.assignorId).toBeDefined();
+      expect(result.value).toBeGreaterThan(0);
+      expect(result.value).toStrictEqual(payable.value);
+      expect(result.emissionDate).toStrictEqual(payable.emissionDate);
+
+      expect(assignorRepositoryMock.getById).toHaveBeenCalledTimes(0);
+      expect(payableRepositoryMock.create).toHaveBeenCalledTimes(1);
+      expect(assignorRepositoryMock.create).toHaveBeenCalledTimes(1);
     });
   });
 });

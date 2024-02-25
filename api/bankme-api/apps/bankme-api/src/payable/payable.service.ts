@@ -21,6 +21,7 @@ export class PayableService {
     let assignorVO: AssignorVO;
     if (createPayableDto.assignor) {
       assignorVO = new AssignorVO(
+        '',
         createPayableDto.assignor.document,
         createPayableDto.assignor.email,
         createPayableDto.assignor.phone,
@@ -65,6 +66,7 @@ export class PayableService {
 
   async findAll() {
     try {
+      this.payableService.resetDomain();
       const results = await this.payableService.getAll();
       const errors = this.payableService.getErrors();
 
@@ -81,6 +83,7 @@ export class PayableService {
 
   async findOne(id: string) {
     try {
+      this.payableService.resetDomain();
       const result = await this.payableService.getById(id);
       const errors = this.payableService.getErrors();
 
@@ -95,6 +98,7 @@ export class PayableService {
 
   async remove(id: string) {
     try {
+      this.payableService.resetDomain();
       const result = await this.payableService.removeById(id);
       const errors = this.payableService.getErrors();
 

@@ -7,7 +7,7 @@ import { PrismaService } from '../prisma-service';
 export class AssignorRepository implements IAssignorRepository {
   constructor(protected prisma: PrismaService) {}
 
-  async documentExists(document: string): Promise<Boolean> {
+  async documentExists(document: string): Promise<boolean> {
     const result = await this.prisma.assignor.count({
       where: {
         document,

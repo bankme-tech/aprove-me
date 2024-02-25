@@ -18,7 +18,6 @@ export class ErrorDomainService implements IErrorDomainService {
   }
 
   getLastError(): string {
-    console.log(this.errors);
     if (!this.errors.length) return null;
 
     return this.errors[this.errors.length - 1];

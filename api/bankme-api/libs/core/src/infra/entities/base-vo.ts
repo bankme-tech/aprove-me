@@ -1,7 +1,6 @@
 import { IBaseVO } from './base-vo.interface';
 
 export abstract class BaseVO implements IBaseVO {
-  // constructor(public readonly id: string) {}
   constructor(
     public readonly id: string,
     public readonly createdAt: Date = new Date(),
