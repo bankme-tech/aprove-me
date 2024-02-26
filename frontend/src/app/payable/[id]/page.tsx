@@ -1,6 +1,7 @@
 'use client';
 import axiosInstance from "@/api/axiosInstance"
 import CardRow from "@/components/CardRow"
+import { convertToCurrency } from "@/lib/utils";
 import { Payable } from "@/types/Payable"
 import Link from "next/link"
 import { useEffect, useState } from "react";
@@ -26,7 +27,7 @@ export default function PayableDetailsPage({ params }: { params: { id: string } 
         {data && (
           <main className="flex flex-col gap-4">
             <CardRow label="ID" data={data?.id} />
-            <CardRow label="Value" data={data?.value} />
+            <CardRow label="Value" data={convertToCurrency(data?.value)} />
             <CardRow label="Emission Date" data={data?.emissionDate} />
             <CardRow label="Assignor" data={data?.assignorId} />
             <Link
