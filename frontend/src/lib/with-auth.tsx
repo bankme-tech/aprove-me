@@ -2,13 +2,14 @@
 
 import React from 'react';
 import { useAuth } from '@/hooks/useAuth'
+import { redirect } from 'next/navigation';
 
 export function withAuth(Component: any) {
   return function withAuthFn(props: any) {
-    const {  isLoading } = useAuth();
+    const { isLoading } = useAuth();
 
     if (isLoading) {
-      return null;
+      redirect('/login');
     }
 
     return <Component {...props} />;
