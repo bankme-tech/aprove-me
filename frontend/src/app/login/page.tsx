@@ -25,7 +25,7 @@ function LoginPage() {
         <div className="flex flex-col">
           <label htmlFor="password" className="font-bold text-xl">Password</label>
           <input
-            type="text" name="password" id="password"
+            type="password" name="password" id="password"
             className="text-black border-2 border-blue-500 p-2 rounded-md"
           />
         </div>
