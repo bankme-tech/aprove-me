@@ -1,4 +1,4 @@
-'use server';
+'use client';
 import axiosInstance from "@/api/axiosInstance";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -16,7 +16,6 @@ export default async function editAssignor(_: any, formData: FormData) {
   try {
     const data = schema.parse(Object.fromEntries(formData.entries()));
     await axiosInstance.patch(`/assignor/${data.id}`, data);
-    revalidatePath(`/assignor/${data.id}`)
   } catch (error: any) {
     if (error instanceof z.ZodError) {
       const { errors: [first] } = error;

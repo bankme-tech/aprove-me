@@ -15,7 +15,7 @@ export default function AssignorDetailsPage({ params }: { params: { id: string }
     }
 
     fetchAssignor();
-  });
+  }, []);
 
   return (
     <div

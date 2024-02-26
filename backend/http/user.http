@@ -1,0 +1,7 @@
+POST http://localhost:3333/integrations/user
+Content-Type: application/json
+
+{
+  "login": "ricardo",
+  "password": "123456"
+}

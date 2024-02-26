@@ -22,9 +22,7 @@ export default function EditAssignorPage({ params }: { params: { id: string } })
     }
 
     fetchAssignor();
-  });
-
-
+  }, []);
 
   return (
     <div

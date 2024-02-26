@@ -33,3 +33,15 @@ services:
       - ./backend/src:/app/backend/src
     depends_on:
       - rabbitmq
+  front:
+    build: ./frontend/
+    container_name: bankme_frontend
+    ports:
+      - 3000:3000
+    tty: true
+    stdin_open: true
+    restart: always
+    volumes:
+      - ./frontend/src:/app/frontend/src
+    depends_on:
+      - api

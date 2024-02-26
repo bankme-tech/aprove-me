@@ -1,12 +1,13 @@
-GET http://localhost:3000/integrations/assignor
+GET http://localhost:3333/integrations/assignor
 
 ###
 
-GET http://localhost:3000/integrations/assignor/a1a3f1ea-5b03-4f31-8c8d-a5a0a2010999
+GET http://localhost:3333/integrations/assignor/a1a3f1ea-5b03-4f31-8c8d-a5a0a2010999
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYjU3YzI3ZC0xMDMxLTQxN2MtYjAyNy03N2FkYzQ3ZjRlYzkiLCJsb2dpbiI6InJpY2FyZG8iLCJpYXQiOjE3MDg4NjA4OTYsImV4cCI6MTcwODg2NDQ5Nn0.roiObwOZ6GknlzbnZIduUhd1ZUhD6YoCA07StZ8XSaU
 
 ###
 
-POST http://localhost:3000/integrations/assignor
+POST http://localhost:3333/integrations/assignor
 Content-Type: application/json
 
 {
@@ -18,7 +19,7 @@ Content-Type: application/json
 
 ###
 
-PATCH http://localhost:3000/integrations/assignor/a1a3f1ea-5b03-4f31-8c8d-a5a0a2010999
+PATCH http://localhost:3333/integrations/assignor/a1a3f1ea-5b03-4f31-8c8d-a5a0a2010999
 Content-Type: application/json
 
 {
@@ -28,6 +29,6 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/integrations/assignor/a1a3f1ea-5b03-4f31-8c8d-a5a0a2010999
+DELETE http://localhost:3333/integrations/assignor/a1a3f1ea-5b03-4f31-8c8d-a5a0a2010999
 
 ###
