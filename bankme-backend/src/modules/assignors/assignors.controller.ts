@@ -41,7 +41,7 @@ import { DeleteAssignorParamDTO } from './dtos/DeleteAssignorDTO';
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
 export class AssignorsController {
-  constructor(private readonly assignorsService: AssignorsService) {}
+  constructor(private readonly assignorsService: AssignorsService) { }
 
   @Post('create')
   @HttpCode(HttpStatus.OK)

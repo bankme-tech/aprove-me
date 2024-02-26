@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prismaService';
-import * as bcrypt from 'bcryptjs'
+import * as bcrypt from 'bcryptjs';
 import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UserRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(
     name: string,

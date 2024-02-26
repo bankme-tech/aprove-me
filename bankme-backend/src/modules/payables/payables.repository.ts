@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prismaService';
 import { PayableEntity } from './entities/payables.entity';
 import { CreatePayableDataDTO } from './dtos/CreatePayableDTO';
-import { FindAllPayableDataDTO } from './dtos/FindAllPayableDTO';  
-import { UpdatePayableDataDTO } from './dtos/UpdatePayableDTO';  
+import { FindAllPayableDataDTO } from './dtos/FindAllPayableDTO';
+import { UpdatePayableDataDTO } from './dtos/UpdatePayableDTO';
 import { FindOnePayableDataDTO } from './dtos/FindOnePayableDTO';
 import { Prisma } from '@prisma/client';
 

@@ -3,7 +3,7 @@ import { CreatePayableDataDTO } from './dtos/CreatePayableDTO';
 import { FindOnePayableDataDTO } from './dtos/FindOnePayableDTO';
 import { PayablesRepository } from './payables.repository';
 import { UpdatePayableDataDTO } from './dtos/UpdatePayableDTO';
-import { FindAllPayableDataDTO } from './dtos/FindAllPayableDTO'; 
+import { FindAllPayableDataDTO } from './dtos/FindAllPayableDTO';
 import { DeletePayableDataDTO } from './dtos/DeletePayableDTO';
 
 @Injectable()
@@ -37,11 +37,7 @@ export class PayablesService {
   }
 
   async update(data: UpdatePayableDataDTO) {
-    const {
-      id,
-      value,
-      valueInCents
-    } = data;
+    const { id, value, valueInCents } = data;
     return this.payablesRepository.update({
       id,
       value,

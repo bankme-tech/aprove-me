@@ -1,4 +1,8 @@
-import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginBodyDTO } from './dtos/loginBodyDTO';
@@ -24,7 +28,7 @@ export class AuthService {
       throw new BadRequestException('Email or password incorrect');
     }
 
-    const payload = { email: user.email }
+    const payload = { email: user.email };
 
     return {
       access_token: this.jwtService.sign(payload),

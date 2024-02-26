@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from 'src/modules/app.module';
 import { faker } from '@faker-js/faker';
 
-describe('Users (e2e)', () => {
+describe('Assignors (e2e)', () => {
   let app: INestApplication;
 
   let token = '';
@@ -30,86 +30,99 @@ describe('Users (e2e)', () => {
     token = response.body.access_token;
   });
 
-  it('/users/create (POST) not authorized', async () => {
+  it('/assignors/create (POST) not authorized', async () => {
     const response = await request(app.getHttpServer())
-      .post('/users/create')
+      .post('/assignors/create')
       .send({
-        email: faker.internet.email(),
-        password: faker.internet.password(),
+        email: 'test@admin.com',
         name: 'test',
+        document: '00000000000',
+        phone: '00000000000',
       });
 
     expect(response.statusCode).toBe(401);
     expect(response.body.message).toBe('Unauthorized');
   });
 
-  it('/users/create (POST) created with success', async () => {
+  it('/assignors/create (POST) created with success', async () => {
     const response = await request(app.getHttpServer())
-      .post('/users/create')
+      .post('/assignors/create')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        email: faker.internet.email(),
-        password: faker.internet.password(),
+        email: 'test@admin.com',
         name: 'test',
+        document: '00000000000',
+        phone: '00000000000',
       });
 
     expect(response.statusCode).toBe(200);
     expect(response.body.name).toBe('test');
     expect(response.body.email).toBe('test@admin.com');
+
+    const responseAllAssignors = await request(app.getHttpServer())
+      .get('/assignors')
+      .set('Authorization', `Bearer ${token}`)
+
+    expect(responseAllAssignors.body.assignors).toHaveLength(1);
+
   });
 
-  it('/users/create (POST) missing name', async () => {
+  it('/assignors/create (POST) missing name', async () => {
     const response = await request(app.getHttpServer())
-      .post('/users/create')
+      .post('/assignors/create')
       .set('Authorization', `Bearer ${token}`)
       .send({
         email: 'test@admin.com',
-        password: 'admin',
-        // name: 'test'
+        // name: 'test',
+        document: '00000000000',
+        phone: '00000000000',
       });
 
     expect(response.statusCode).toBe(400);
     expect(response.body.message).toEqual(['name should not be empty']);
   });
-  it('/users/create (POST) invalid email', async () => {
+  it('/assignors/create (POST) invalid email', async () => {
     const response = await request(app.getHttpServer())
-      .post('/users/create')
+      .post('/assignors/create')
       .set('Authorization', `Bearer ${token}`)
       .send({
         email: 'test',
-        password: 'admin',
         name: 'test',
+        document: '00000000000',
+        phone: '00000000000',
       });
 
     expect(response.statusCode).toBe(400);
     expect(response.body.message).toEqual(['email must be an email']);
   });
 
-  it('/users/create (POST) missing password', async () => {
+  it('/assignors/create (POST) missing document', async () => {
     const response = await request(app.getHttpServer())
-      .post('/users/create')
+      .post('/assignors/create')
       .set('Authorization', `Bearer ${token}`)
       .send({
         email: 'test@admin.com',
-        // password: 'admin',
         name: 'test',
+        // document: '00000000000',
+        phone: '00000000000',
       });
 
     expect(response.statusCode).toBe(400);
-    expect(response.body.message).toEqual(['password should not be empty']);
+    expect(response.body.message).toEqual(['document should not be empty']);
   });
 
-  it('/users/create (POST) missing email', async () => {
+  it('/assignors/create (POST) missing phone', async () => {
     const response = await request(app.getHttpServer())
-      .post('/users/create')
+      .post('/assignors/create')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        // email: 'test@admin.com',
-        password: 'admin',
+        email: 'test@admin.com',
         name: 'test',
+        document: '00000000000',
+        // phone: '00000000000',
       });
 
     expect(response.statusCode).toBe(400);
-    expect(response.body.message).toEqual(['email must be an email']);
+    expect(response.body.message).toEqual(['phone should not be empty']);
   });
 });

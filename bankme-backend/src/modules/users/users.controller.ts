@@ -1,10 +1,30 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiBearerAuth, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { CreateUserBodyDTO } from './dtos/CreateUserDTO';
 import { UserEntity } from './entities/user.entity';
 import { AuthGuard } from '../auth/auth.guard';
-import { UserOkResponse, UserUnauthorizedResponse } from './swagger/users.swagger';
+import {
+  UserOkResponse,
+  UserUnauthorizedResponse,
+} from './swagger/users.swagger';
 import { FindOneUserParamDTO } from './dtos/FindOneUserDTO';
 import { UpdateUserBodyDTO, UpdateUserParamDTO } from './dtos/UpdateUserDTO';
 import { FindUserQueryDTO } from './dtos/FindAllUsersDTO';
@@ -18,15 +38,15 @@ import { SendMailProducerService } from './jobs/sendMail.producer';
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly sendEmailService: SendMailProducerService
-    ) {}
+    private readonly sendEmailService: SendMailProducerService,
+  ) { }
 
   @Post('create')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: UserOkResponse })
   @ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
   create(@Body() body: CreateUserBodyDTO): Promise<UserEntity> {
-    this.sendEmailService.sendMail(body)
+    this.sendEmailService.sendMail(body);
     const { name, email, password } = body;
     return this.usersService.create({ name, email, password });
   }

@@ -35,27 +35,27 @@ import { FindAllPayableQueryDTO } from './dtos/FindAllPayableDTO';
 import { DeletePayableParamDTO } from './dtos/DeletePayableDTO';
 import { AuthGuard } from '../auth/auth.guard';
 import { AssignorUnauthorizedResponse } from '../assignors/swagger/assignors.swagger';
+import { SendPayablesEmailProducer } from './jobs/payablesBatch.producer';
 
 @Controller('payables')
 @ApiTags('Payables')
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
 export class PayablesController {
-  constructor(private readonly payablesService: PayablesService) {}
+  constructor(
+    private readonly payablesService: PayablesService,
+    private readonly sendPayableMailService: SendPayablesEmailProducer,
+  ) { }
 
   @Post('create')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: PayableOkResponse })
   @ApiUnauthorizedResponse({ type: PayableUnauthorizedResponse })
   create(@Body() body: CreatePayableBodyDTO): Promise<PayableEntity | null> {
-    const userId = body.userId;
-
-    const { value, assignorId } = body;
-
+    this.sendPayableMailService.sendMail(body);
+    const { value, assignorId, userId } = body;
     const emissionDate = new Date();
-
     const valueInCents = Number(value) * 100;
-
     return this.payablesService.create({
       value,
       valueInCents,

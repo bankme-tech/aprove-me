@@ -6,16 +6,16 @@ export class UserOkResponse {
 
   @ApiProperty()
   name: string;
-  
+
   @ApiProperty()
   email: string;
-  
+
   @ApiProperty()
   password: string;
-  
+
   @ApiProperty()
   createdAt: string;
-  
+
   @ApiProperty()
   updatedAt: string;
 }

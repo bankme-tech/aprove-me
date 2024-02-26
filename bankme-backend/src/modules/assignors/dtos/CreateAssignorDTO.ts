@@ -20,7 +20,7 @@ export class CreateAssignorBodyDTO {
 
   @ApiProperty()
   @IsNotEmpty()
-  userId: number
+  userId: number;
 }
 
 export class CreateAssignorDataDTO {

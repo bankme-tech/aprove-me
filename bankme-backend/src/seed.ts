@@ -3,7 +3,6 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-
   const user1 = await prisma.user.create({
     data: {
       email: 'joao@gmail.com',
@@ -43,14 +42,14 @@ async function main() {
   await prisma.payable.createMany({
     data: [
       {
-        value: 100.00,
+        value: 100.0,
         valueInCents: 10000,
         emissionDate: new Date(),
         userId: user1.id,
         assignorId: assignor1.id,
       },
       {
-        value: 200.00,
+        value: 200.0,
         valueInCents: 20000,
         emissionDate: new Date(),
         userId: user2.id,
