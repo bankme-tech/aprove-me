@@ -3,6 +3,7 @@ import axiosInstance from "@/api/axiosInstance";
 import { useAuth } from "@/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -40,13 +41,14 @@ function LoginPage() {
   }
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
+    <div className="h-screen w-screen flex flex-col justify-center items-center gap-3">
+      <h1 className="font-bold text-3xl">Login</h1>
       <form
         className="flex flex-col gap-4 border-2 border-blue-500 px-5 py-8 rounded-xl"
         onSubmit={handleSubmit(loginUser)}
       >
         <div className="flex flex-col">
-          <label htmlFor="login" className="font-bold text-xl">Login</label>
+          <label htmlFor="login" className="font-bold text-xl">Username</label>
           <input
             type="text" id="login"
             className="text-black border-2 border-blue-500 p-2 rounded-md"
@@ -68,8 +70,14 @@ function LoginPage() {
           type="submit"
           className="bg-blue-500 text-white p-2 rounded-md disabled:bg-gray-300 disabled:text-gray-500"
         >
-          Submit
+          Login
         </button>
+        <Link
+          href={"/login/create"}
+          className="bg-gray-400 text-black p-2 rounded-md text-center"
+        >
+          Create account
+        </Link>
       </form>
     </div>
   )
