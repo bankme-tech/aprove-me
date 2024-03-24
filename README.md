@@ -91,7 +91,7 @@ Os recebíveis são representações digitais de um documento que simula uma dí
 | id           | string (UUID) | É a identificação de um recebível.        |
 | value        | float         | É o valor do recebível.                   |
 | emissionDate | date          | É a data de emissão do recebível.         |
-| assignor     | int           | Representa a identificação de um cedente. |
+| assignor     | string (UUID) | Representa a identificação de um cedente. |
 
 ### Estrutrua de um cedente
 
