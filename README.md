@@ -95,12 +95,13 @@ Os recebíveis são representações digitais de um documento que simula uma dí
 
 ### Estrutrua de um cedente
 
-| CAMPO    | TIPO        | DESCRIÇÃO                             |
-|----------|-------------|---------------------------------------|
-| document | string(30)  | É o documento CPF ou CNPJ do cedente. |
-| email    | string(140) | É o email do cedente.                 |
-| phone    | string(20)  | É o telefone do cedente.              |
-| name     | string(140) | É a nome ou razão social do cedente.  |
+| CAMPO    | TIPO          | DESCRIÇÃO                             |
+|----------|---------------|---------------------------------------|
+| id       | string (UUID) | É a identificação de um cedente.      |
+| document | string(30)    | É o documento CPF ou CNPJ do cedente. |
+| email    | string(140)   | É o email do cedente.                 |
+| phone    | string(20)    | É o telefone do cedente.              |
+| name     | string(140)   | É a nome ou razão social do cedente.  |
 
 ## 💾 Back-end
 
