@@ -1,2 +1,4 @@
 bankme-backend/node_modules
 bankme-backend/dist
+bankme-backend/.env
+bankme-backend/prisma/dev.db
