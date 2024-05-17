@@ -1,261 +1,73 @@
 <p align="center">
-  <img src="./assets/logo-bankme.png" alt="Logo Bankme" width="91" height="108">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
-<h1 align="center">
-  Aprove-me
-</h1>
 
-## Sumário
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-- [Sumário](#sumário)
-- [❤️ Bem vindos](#️-bem-vindos)
-- [🚀 Vamos nessa!](#-vamos-nessa)
-  - [Dicas](#dicas)
-  - [Como você deverá desenvolver?](#como-você-deverá-desenvolver)
-  - [Qual o tempo para entregar?](#qual-o-tempo-para-entregar)
-- [💻 O Problema](#-o-problema)
-  - [Estrutura de um recebível](#estrutura-de-um-recebível)
-  - [Estrutrua de um cedente](#estrutrua-de-um-cedente)
-- [💾 Back-end](#-back-end)
-  - [Nível 1 - Validação](#nível-1---validação)
-  - [Nível 2 - Persistência](#nível-2---persistência)
-  - [Nível 3 - Testes](#nível-3---testes)
-  - [Nível 4 - Autenticação](#nível-4---autenticação)
-  - [Nível 5 - Gerenciamento de permissões](#nível-5---gerenciamento-de-permissões)
-  - [Nível 6 - Infra e Doc](#nível-6---infra-e-doc)
-  - [Nível 7 - Lotes](#nível-7---lotes)
-  - [Nível 8 - Resiliência](#nível-8---resiliência)
-  - [Nível 9 - Cloud](#nível-9---cloud)
-  - [Nível 10 - Infra as a Code](#nível-10---infra-as-a-code)
-- [🖥️ Front-end](#️-front-end)
-  - [Nível 1 - Cadastro](#nível-1---cadastro)
-  - [Nível 2 - Conectando na API](#nível-2---conectando-na-api)
-  - [Nível 3 - Listando](#nível-3---listando)
-  - [Nível 4 - Autenticação](#nível-4---autenticação-1)
-  - [Nível 5 - Testes](#nível-5---testes)
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## ❤️ Bem vindos 
+## Description
 
-Olá, tudo certo?
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-Seja bem vindo ao teste de seleção para novos desenvolvedores na Bankme!
+## Installation
 
-Estamos honrados que você tenha chegado até aqui!
-
-Prepare aquele ☕️ , e venha conosco codar e se divertir!
-
-## 🚀 Vamos nessa!
-
-Este é um teste para analisarmos como você desempenha ao entender, traduzir, resolver e entregar um código que resolve um problema.
-
-### Dicas
-
-- Documente;
-- Pergunte;
-- Mostre a sua linha de reciocínio;
-- Trabalhe bem o seu README.md;
-
-### Como você deverá desenvolver?
-
-1. Faça um clone deste projeto em seu GitHub pessoal;
-2. Realize as implementações de acordo com cada um dos níveis;
-3. Faça pequenos commits;
-4. Depois de sentir que fez o seu máximo, faça um PR para o repositório original. (Para conseguir fazer isso, não se esqueça de fazer um Fork antes de iniciar tudo!)
-
-**IMPORTANTE!**
-
-Não significa que você precisa implementar todos os níveis para ser aprovado no processo!
-
-Faça até onde se sentir confortável.
-
-### Qual o tempo para entregar?
-
-Nós temos um período para fechar a vaga em questão. Então, quanto antes você enviar, mais cuidado podemos ter na revisão do seu teste.
-
-Mas sabemos que o dia a dia é corrido, faça de forma que fique confortável para você!
-
-Mas não desista! Envie até onde conseguir.
-
-## 💻 O Problema
-
-Um cliente da Bankme solicitou uma nova funcionalidade, relacionada a recebíveis.
-
-Todos os dias esse cliente movimenta vários recebíveis, e nosso time de operações estava ficando maluco tendo que cadastrar tudo isso de forma manual!
-
-Os recebíveis são representações digitais de um documento que simula uma dívida a ser recebida. E para Bankme, é importante ter essas informações como parte do fluxo comercial que temos com este cliente.
-
-### Estrutura de um recebível
-
-| CAMPO        | TIPO          | DESCRIÇÃO                                 |
-|--------------|---------------|-------------------------------------------|
-| id           | string (UUID) | É a identificação de um recebível.        |
-| value        | float         | É o valor do recebível.                   |
-| emissionDate | date          | É a data de emissão do recebível.         |
-| assignor     | string (UUID) | Representa a identificação de um cedente. |
-
-### Estrutrua de um cedente
-
-| CAMPO    | TIPO          | DESCRIÇÃO                             |
-|----------|---------------|---------------------------------------|
-| id       | string (UUID) | É a identificação de um cedente.      |
-| document | string(30)    | É o documento CPF ou CNPJ do cedente. |
-| email    | string(140)   | É o email do cedente.                 |
-| phone    | string(20)    | É o telefone do cedente.              |
-| name     | string(140)   | É a nome ou razão social do cedente.  |
-
-## 💾 Back-end
-
-### Nível 1 - Validação
-
-Implemente uma API utilizando NestJS que receba dados de um recebível e de um cedente.
-
-A rota para este cadastro é:
-
-`POST /integrations/payable`
-
-Essa rota deverá receber todas as informações. É importante garantir a validação destes dados:
-
-1. Nenhum campo pode ser nulo;
-2. Os ids devem ser do tipo UUID;
-3. As strings não podem ter caracteres a mais do que foi definido em sua estrutura;
-
-Se algum campo não estiver preenchido corretamente, deve-se retornar uma mensagem para o usuário mostrando qual o problema foi encontrado em qual campo.
-
-Se todos os dados estiverem validados. Apenas retorne todos os dados em um formato JSON.
-
-### Nível 2 - Persistência
-
-Utilize o Prisma, para incluir um novo banco de dados SQLite.
-
-Crie a estrutura de acordo com o que foi definido.
-
-Caso os dados estejam válidos, cadastre-os.
-
-Crie 2 novas rotas:
-
-`GET /integrations/payable/:id`
-
-`GET /integrations/assignor/:id`
-
-Para que seja possível retornar pagáveis e cedentes de forma independete.
-
-Inclua também rotas para as outras operações:
-
-- Edição;
-- Exclusão;
-- Cadastro;
-
-### Nível 3 - Testes
-
-Crie testes unitários para cada arquivo da aplicação. Para cada nova implementação a seguir, também deve-se criar os testes.
-
-### Nível 4 - Autenticação
-
-Inclua um sistema de autenticação em todas as rotas.
-
-Para isso, crie uma nova rota:
-
-`POST /integrations/auth` que deve receber:
-
-```json
-{
-  "login": "aprovame",
-  "password": "aprovame"
-}
+```bash
+$ pnpm install
 ```
 
-Com essas credenciais o endpoint deverá retornar um JWT com o tempo de expiração de 1 minuto.
+## Running the app
 
-Reescreva as regras de todas as outras rotas para que o JWT seja enviado como parâmetro do `Header` da requisição.
+```bash
+# development
+$ pnpm run start
 
-Se o JWT estiver válido, então os dados devem ser mostrados, caso contrário, deve-se mostrar uma mensagem de "Não autorizado".
+# watch mode
+$ pnpm run start:dev
 
-### Nível 5 - Gerenciamento de permissões
+# production mode
+$ pnpm run start:prod
+```
 
-Agora, crie um sistema de gerenciamento de permissões.
+## Test
 
-Crie um novo cadastro de permissões. Esse cadastro deve armazenar: `login` e `password`.
+```bash
+# unit tests
+$ pnpm run test
 
-Refatore o endpoint de autenticação para que sempre se gere JWTs se login e senha estiverem cadastrados no Banco de Dados.
+# e2e tests
+$ pnpm run test:e2e
 
-### Nível 6 - Infra e Doc
+# test coverage
+$ pnpm run test:cov
+```
 
-Crie um `Dockerfile` para sua API.
+## Support
 
-Crie um `docker-compose.yaml` para iniciar o seu projeto.
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-Documente tudo o que foi feito até aqui:
+## Stay in touch
 
-- Como preparar o ambiente;
-- Como instalar as dependência;
-- Como rodar o projeto;
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-### Nível 7 - Lotes
+## License
 
-Crie um novo recurso de processamento de pagáveis por lotes.
-
-A ideia é que o cliente possa enviar um GRANDE número de pagáveis de uma única vez. E isso, não poderá ser processado de forma síncrona.
-
-Crie um novo endpoint:
-
-`POST integrations/payable/batch`
-
-Neste endpoint deve ser possível receber lotes de até 10.000 pagáveis.
-
-Ao receber todos os pagáveis, deve-se postá-los em uma fila.
-
-Crie um consumidor para esta fila que deverá pegar pagável por pagável, criar seu registro no banco de dados, e ao final do processamento do lote enviar um e-mail de lote processado, com o número de sucesso e falhas.
-
-### Nível 8 - Resiliência
-
-Caso não seja possível processar algum ítem do lote, coloque-o novamente na fila. Isso deve ocorrer por até 4 vezes. Depois, esse ítem deve ir para uma "Fila Morta" e um e-mail deve ser disparado para o time de operações.
-
-### Nível 9 - Cloud
-
-Crie uma pipeline de deploy da aplicação em alguma estrutura de Cloud. (AWS, Google, Azure...)
-
-### Nível 10 - Infra as a Code
-
-Crie uma estrutura em terraforma que monte a infra-estrutura desejada.
-
-## 🖥️ Front-end
-
-### Nível 1 - Cadastro
-
-Crie uma interface na qual é possível cadastrar os pagáveis.
-
-É importante que sua interface previna o cadastro de campos vazios, ou que não estejam nas regras definidas anteriormente.
-
-Exiba o pagável cadastrado em uma nova tela.
-
-### Nível 2 - Conectando na API
-
-Conecte a seu Front-end a API que foi criada, e faça o cadastro de um pagável refletir na sua API.
-
-Faça também uma tela para cadastro do cedente.
-
-Altere o cadastro inicial para que o campo `assignor` seja um `combobox` no qual seja possível selecionar um cedente.
-
-### Nível 3 - Listando
-
-Agora faça um sistema de listagens de pagáveis. Mostrando apenas: `id`, `value` e `emissionDate`.
-
-Para cada ítem da lista, coloque um link que mostra os detalhes do pagável.
-
-Além disso, coloque opções de editar e excluir.
-
-Nessa página de detalhes, inclua um novo link para exibir os dados do cedente.
-
-Todos os dados devem vir da API.
-
-### Nível 4 - Autenticação
-
-Implemente agora o sistema de login e senha para poder acessar as suas rotas de forma autenticada.
-
-Armazene o token no `localStorage` do seu navegador.
-
-Caso o token expire, redirecione o usuário para a página de login.
-
-### Nível 5 - Testes
-
-Crie testes para sua aplicação Front-end.
+Nest is [MIT licensed](LICENSE).
