@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, ValidationPipe } from '@nestjs/common';
 import { PayableDto } from './dto/payable.dto';
 import { PayableService } from './payable.service';
 
@@ -14,5 +14,10 @@ export class PayableController {
   @Get(':id')
   findOne(@Param() params: any) {
     return this.service.findById(params.id)
+  }
+
+  @Post()
+  create(@Body(new ValidationPipe()) payable: PayableDto): Promise<PayableDto> {
+    return this.service.createPayable(payable);
   }
 }
