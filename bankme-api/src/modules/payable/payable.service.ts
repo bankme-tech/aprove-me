@@ -42,4 +42,17 @@ export class PayableService {
       throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
     }
   }
+
+  async delete(id: string) {
+    try {
+      const deletedPayable = await prisma.payable.delete({
+        where: { id }
+      });
+  
+      return deletedPayable;
+    } catch (e) {
+
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 }

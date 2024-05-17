@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, ValidationPipe } from '@nestjs/common';
 import { EditPayableDto } from './dto/editPayable.dto';
 import { PayableDto } from './dto/payable.dto';
 import { PayableService } from './payable.service';
@@ -25,5 +25,10 @@ export class PayableController {
   @Put(':id')
   edit(@Param() params: any, @Body(new ValidationPipe) data: EditPayableDto): Promise<PayableDto> {
     return this.service.edit(params.id, data);
+  }
+
+  @Delete(':id')
+  delete(@Param() params: any) {
+    return this.service.delete(params.id);
   }
 }
