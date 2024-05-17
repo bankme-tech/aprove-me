@@ -18,8 +18,8 @@ interface PayablePropsReplaceble {
 }
 
 export class Payable {
-  private _id: string;
-  private props: PayableProps;
+  public _id: string;
+  public props: PayableProps;
 
   constructor(
     props: Replace<PayablePropsReplaceble, PayablePropsReplaceble>,
@@ -33,61 +33,5 @@ export class Payable {
       updatedAt: props.updatedAt ?? new Date(),
       deletedAt: props.deletedAt ?? new Date(),
     };
-  }
-
-  public get id(): string {
-    return this._id;
-  }
-
-  public set id(id: string) {
-    this._id = id;
-  }
-
-  get value(): number {
-    return this.props.value;
-  }
-
-  set value(newValue: number) {
-    this.props.value = newValue;
-  }
-
-  get assignorId(): string {
-    return this.props.assignorId;
-  }
-
-  set assignorId(newAssignorId: string) {
-    this.props.assignorId = newAssignorId;
-  }
-
-  get emissionDate(): Date {
-    return this.props.emissionDate;
-  }
-
-  set emissionDate(newEmissionDate: Date) {
-    this.props.emissionDate = newEmissionDate;
-  }
-
-  get createdAt(): Date {
-    return this.props.createdAt;
-  }
-
-  set createdAt(newCreatedAt: Date) {
-    this.props.createdAt = newCreatedAt;
-  }
-
-  get updatedAt(): Date {
-    return this.props.updatedAt;
-  }
-
-  set updatedAt(newUpdatedAt: Date) {
-    this.props.updatedAt = newUpdatedAt;
-  }
-
-  get deletedAt(): Date | undefined {
-    return this.props.deletedAt;
-  }
-
-  set deletedAt(newDeletedAt: Date) {
-    this.props.deletedAt = newDeletedAt;
   }
 }
