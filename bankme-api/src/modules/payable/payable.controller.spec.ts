@@ -1,4 +1,3 @@
-import { EditPayableDto } from "./dto/editPayable.dto";
 import { PayableController } from "./payable.controller";
 import { PayableService } from "./payable.service";
 import { newPayable, payable, result } from "../../../test/mocks/payable.mocks";
