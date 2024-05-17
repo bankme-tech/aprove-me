@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, ValidationPipe } from '@nestjs/common';
+import { EditPayableDto } from './dto/editPayable.dto';
 import { PayableDto } from './dto/payable.dto';
 import { PayableService } from './payable.service';
 
@@ -19,5 +20,10 @@ export class PayableController {
   @Post()
   create(@Body(new ValidationPipe()) payable: PayableDto): Promise<PayableDto> {
     return this.service.createPayable(payable);
+  }
+
+  @Put(':id')
+  edit(@Param() params: any, @Body(new ValidationPipe) data: EditPayableDto): Promise<PayableDto> {
+    return this.service.edit(params.id, data);
   }
 }

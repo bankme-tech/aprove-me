@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import prisma from '../../client';
+import { EditPayableDto } from './dto/editPayable.dto';
 import { PayableDto } from './dto/payable.dto';
 
 @Injectable()
@@ -26,5 +27,19 @@ export class PayableService {
     });
 
     return newPayable;
+  }
+
+  async edit(id: string, data: EditPayableDto) {
+    try {
+      const updatedPayable = await prisma.payable.update({
+        where: { id },
+        data
+      });
+  
+      return updatedPayable;
+    } catch (e) {
+
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }
