@@ -6,15 +6,15 @@ import { PrismaPayableMapper } from '../mappers/payable';
 
 @Injectable()
 export class PrismaPayableRepository implements PayableRepository {
-  constructor(private db: PrismaService) {}
+  constructor(private db: PrismaService) { }
 
   async create(payable: Payable): Promise<Payable> {
     const newPayable = await this.db.payable.create({
       data: {
-        value: payable.value,
-        emissionDate: payable.emissionDate,
+        value: payable.props.value,
+        emissionDate: payable.props.emissionDate,
         assingor: {
-          connect: { id: payable.assignorId },
+          connect: { id: payable.props.assignorId },
         },
       },
     });

@@ -17,7 +17,7 @@ interface PayablePropsReplaceble {
   updatedAt?: Date;
 }
 
-export class Payable {
+export class Assignor {
   public _id: string;
   public props: PayableProps;
 
