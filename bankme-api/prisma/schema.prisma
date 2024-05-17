@@ -9,3 +9,26 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Payable {
+  id String @id @default(uuid())
+  value Float
+  emissionDate DateTime
+  assignor Assignor @relation(fields: [assignorId], references: [id])
+  assignorId Int
+}
+
+model Assignor {
+  id Int @id @default(autoincrement())
+  document String
+  email String
+  phone String
+  name String
+  payables Payable[]
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+}
