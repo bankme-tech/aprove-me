@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { PayableDto } from './dto/payable.dto';
 import { PayableService } from './payable.service';
 
@@ -9,5 +9,10 @@ export class PayableController {
   @Get()
   findAll(): Promise<PayableDto []> {
     return this.service.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param() params: any) {
+    return this.service.findById(params.id)
   }
 }
