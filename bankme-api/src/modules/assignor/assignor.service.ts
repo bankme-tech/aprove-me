@@ -43,4 +43,17 @@ export class AssignorService {
       throw new HttpException(e.message, HttpStatus.BAD_REQUEST)
     }
   }
+
+  async delete(id: number) {
+    try {
+      const deletedAssignor = await prisma.assignor.delete({
+        where: { id }
+      });
+  
+      return deletedAssignor;
+    } catch (e) {
+
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 }
