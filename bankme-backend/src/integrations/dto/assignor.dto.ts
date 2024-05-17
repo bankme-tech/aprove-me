@@ -1,3 +1,4 @@
+import { OmitType, PartialType } from '@nestjs/mapped-types';
 import { IsEmail, IsString, IsUUID, Length, MaxLength } from 'class-validator';
 
 export class AssignorDto {
@@ -21,3 +22,7 @@ export class AssignorDto {
   @Length(1, 140)
   name: string;
 }
+
+export class CreateAssignorDto extends OmitType(AssignorDto, ['id']) {}
+
+export class UpdateAssignorDto extends PartialType(AssignorDto) {}
