@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
-export class CreateAssignorDto{
+export class AssignorDto{
   @IsString({message: 'The "document" field must be a string.'})
   @IsNotEmpty({message: 'The "document" field cannot be empty'})
   @Length(1, 30, {message: 'The "document" field must have a minimum of 1 character and a maximum of 30'})

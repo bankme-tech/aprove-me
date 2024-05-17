@@ -1,6 +1,6 @@
-import {Controller, Get, Param } from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, ValidationPipe } from '@nestjs/common';
 import { AssignorService } from './assignor.service';
-import { CreateAssignorDto } from './dto/assignor.dto';
+import { AssignorDto } from './dto/assignor.dto';
 
 
 @Controller('integrations/assignor')
@@ -8,7 +8,7 @@ export class AssignorController {
   constructor(private service: AssignorService) {}
 
   @Get()
-  findAll(): Promise<CreateAssignorDto []> {
+  findAll(): Promise<AssignorDto []> {
     return this.service.findAll();
   }
 
@@ -17,5 +17,10 @@ export class AssignorController {
     const id = Number(params.id);
 
     return this.service.findById(id);
+  }
+
+  @Post()
+  create(@Body(new ValidationPipe()) assignor: AssignorDto): Promise<AssignorDto> {
+    return this.service.createAssignor(assignor);
   }
 }
