@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -16,22 +15,19 @@ export class AssignorController {
   constructor(private readonly service: AssignorService) {}
 
   @Post('assignor')
-  async createAssignor(@Body() dto: CreateAssignorDto) {
+  async create(@Body() dto: CreateAssignorDto) {
     const createdAssignor = await this.service.createAssignor(dto);
     return createdAssignor;
   }
 
   @Get('assignor/:id')
-  async findOneAssignor(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     const assignor = await this.service.getAssignorById(id);
-    if (!assignor) {
-      throw new NotFoundException();
-    }
     return assignor;
   }
 
   @Patch('assignor/:id')
-  async updateAssignor(
+  async update(
     @Param('id') id: string,
     @Body() dto: UpdateAssignorDto,
   ) {
@@ -40,7 +36,7 @@ export class AssignorController {
   }
 
   @Delete('assignor/:id')
-  async deleteAssignor(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return await this.service.deleteAssignor(id);
   }
 }
