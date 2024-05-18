@@ -6,6 +6,10 @@ import { AssignorRepository } from './repositories/assignor-repository';
 export const assignorMock = new Assignor('1', 'John', 'john@doe.com', '(81)12345-6789', '123.456.789-12');
 
 export class AssignorRepositoryMock implements AssignorRepository {
+  async update() {
+    return assignorMock;
+  }
+
   async getAll() {
     return [assignorMock];
   }
@@ -68,5 +72,14 @@ describe('Assignor Service', () => {
     const assignors = await service.getAll();
 
     expect(assignors).toEqual([]);
+  });
+
+  it('should return the assignor if update successfully', async () => {
+    const newAssignor = new Assignor('1', 'John Doe', 'johndoe@email.com', '1239494', '138249283');
+    jest.spyOn(AssignorRepositoryMock.prototype, 'update').mockResolvedValue(newAssignor);
+
+    const assignor = await service.update('1', newAssignor);
+
+    expect(assignor).toEqual(newAssignor);
   });
 });

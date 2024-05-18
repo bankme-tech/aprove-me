@@ -4,11 +4,19 @@ import { AssignorRepository } from './assignor-repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateAssignorDto } from '../dto/create-assignor.dto';
 import { cnpj, cpf } from 'cpf-cnpj-validator';
+import { UpdateAssignorDto } from '@assignor/dto/update-assignor.dto';
 
 @Injectable()
 export default class PrismaAssignorRepository extends AssignorRepository {
   constructor(private prisma: PrismaService) {
     super();
+  }
+
+  async update(id: string, updateAssignorDto: UpdateAssignorDto): Promise<Assignor> {
+    return this.prisma.assignor.update({
+      where: { id },
+      data: updateAssignorDto,
+    });
   }
 
   async getAll(): Promise<Assignor[]> {
