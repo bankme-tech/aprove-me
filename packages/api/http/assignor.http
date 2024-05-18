@@ -12,3 +12,15 @@ Content-Type: application/json
 ### Get all assignors
 
 GET http://localhost:3333/integrations/assignor
+
+### Update an assignor
+
+PATCH http://localhost:3333/integrations/assignor/29dc27a1-a2d9-40b2-a165-4b1dcf973bc5
+Content-Type: application/json
+
+{
+    "name": "John",
+    "email": "email@emaila.com",
+    "phone": "123123123123",
+    "document": "113.657.974-57"
+}

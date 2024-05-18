@@ -47,4 +47,13 @@ describe('Assignor Controller', () => {
 
     expect(assignors).toEqual([]);
   });
+
+  it('should return a assignor after updating it', async () => {
+    const newAssignor = new Assignor('1', 'John Doe', 'johndoe@email.com', '1239494', '138249283');
+    jest.spyOn(service, 'update').mockResolvedValue(newAssignor);
+
+    const assignor = await controller.update('1', newAssignor);
+
+    expect(assignor).toEqual(newAssignor);
+  });
 });
