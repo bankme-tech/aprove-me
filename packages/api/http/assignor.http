@@ -6,7 +6,7 @@ Content-Type: application/json
     "name": "John",
     "email": "email@email.com",
     "phone": "123123123123",
-    "document": "113.657.974-57"
+    "document": "756.203.260-20"
 }
 
 ### Get all assignors
@@ -22,5 +22,9 @@ Content-Type: application/json
     "name": "John",
     "email": "email@emaila.com",
     "phone": "123123123123",
-    "document": "113.657.974-57"
+    "document": "756.203.260-20"
 }
+
+### Delete an assignor
+
+DELETE http://localhost:3333/integrations/assignor/995ed332-2850-434b-b392-e067e94fd690

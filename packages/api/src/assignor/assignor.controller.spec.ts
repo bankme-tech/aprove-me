@@ -56,4 +56,10 @@ describe('Assignor Controller', () => {
 
     expect(assignor).toEqual(newAssignor);
   });
+
+  it('should return nothing when delete an assignor', async () => {
+    jest.spyOn(service, 'delete').mockResolvedValue();
+
+    expect(await service.delete('1')).toBeUndefined();
+  });
 });

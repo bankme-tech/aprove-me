@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
-import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { AssignorService } from './assignor.service';
+import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 
 @Controller()
 export class AssignorController {
@@ -20,5 +20,11 @@ export class AssignorController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateAssignorDto: UpdateAssignorDto) {
     return this.assignorService.update(id, updateAssignorDto);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(@Param('id') id: string) {
+    return this.assignorService.delete(id);
   }
 }
