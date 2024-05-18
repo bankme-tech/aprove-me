@@ -4,12 +4,14 @@ import { PayableModule } from './payable/payable.module';
 import { PrismaService } from './database/prisma.service';
 import { AssignorModule } from './assignor/assignor.module';
 import { DatabaseModule } from './database/database.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    AssignorModule,
+    UserModule,
     PayableModule,
     DatabaseModule,
+    AssignorModule,
     RouterModule.register([
       {
         path: 'integrations',
