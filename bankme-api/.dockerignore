@@ -1,0 +1,11 @@
+.dockerignore   # Ignore the ignore
+node_modules    # Ignore local node_modules folder
+npm-debug.log   # Debug files
+Dockerfile      # The dockerfile
+.git            # The git history
+.gitignore      #
+.npmrc          # If accessing a private npm repository here will be the token used, so ignore to prevent leaking
+.env-*          # Any other environment that we don't want to include
+.gitlab-*       # Deploying with gitlab ?
+.github         # Using github actions ?
+*.md            # Any 
