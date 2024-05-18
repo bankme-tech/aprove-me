@@ -4,9 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-# COPY package*.json .
-# COPY yarn.lock .
-
 RUN yarn install
 
 RUN npx prisma generate
