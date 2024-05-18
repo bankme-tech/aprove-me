@@ -11,6 +11,10 @@ export default class PrismaAssignorRepository extends AssignorRepository {
     super();
   }
 
+  async getAll(): Promise<Assignor[]> {
+    return this.prisma.assignor.findMany();
+  }
+
   async create(createAssignorDto: CreateAssignorDto): Promise<Assignor> {
     this.validateDocument(createAssignorDto.document);
 

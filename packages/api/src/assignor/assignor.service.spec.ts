@@ -6,6 +6,10 @@ import { AssignorRepository } from './repositories/assignor-repository';
 export const assignorMock = new Assignor('1', 'John', 'john@doe.com', '(81)12345-6789', '123.456.789-12');
 
 export class AssignorRepositoryMock implements AssignorRepository {
+  async getAll() {
+    return [assignorMock];
+  }
+
   async create() {
     return assignorMock;
   }
@@ -46,8 +50,23 @@ describe('Assignor Service', () => {
 
   it('should not return an assignor if find not found', async () => {
     jest.spyOn(AssignorRepositoryMock.prototype, 'findById').mockResolvedValue(null);
+
     const assignor = await service.findById('1');
 
     expect(assignor).toBeNull();
+  });
+
+  it('should return an array of assignors', async () => {
+    const assignors = await service.getAll();
+
+    expect(assignors).toEqual([assignorMock]);
+  });
+
+  it('should return an empty array if has no assignors', async () => {
+    jest.spyOn(AssignorRepositoryMock.prototype, 'getAll').mockResolvedValue([]);
+
+    const assignors = await service.getAll();
+
+    expect(assignors).toEqual([]);
   });
 });

@@ -13,4 +13,8 @@ export class AssignorService {
   async findById(id: string) {
     return this.assignorRepository.findById(id);
   }
+
+  async getAll() {
+    return this.assignorRepository.getAll();
+  }
 }
