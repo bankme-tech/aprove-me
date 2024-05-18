@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Receivable {
+model Payable {
   id           String   @id @default(uuid())
   value        Float
   emissionDate DateTime
@@ -16,10 +16,10 @@ model Receivable {
 }
 
 model Assignor {
-  id          String       @id @default(uuid())
-  document    String
-  email       String       @unique
-  phone       String       @unique
-  name        String
-  receivables Receivable[]
+  id       String    @id @default(uuid())
+  document String
+  email    String    @unique
+  phone    String    @unique
+  name     String
+  payables  Payable[]
 }

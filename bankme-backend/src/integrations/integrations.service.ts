@@ -7,16 +7,16 @@ import { DbService } from 'src/db/db.service';
 export class IntegrationsService {
   constructor(private readonly db: DbService) {}
 
-  async getPayableById(receivableId: string) {
-    const payable = await this.db.receivable.findUnique({
-      where: { id: receivableId },
+  async getPayableById(id: string) {
+    const payable = await this.db.payable.findUnique({
+      where: { id },
     });
     return payable;
   }
 
   async createPayable(dto: PayableDto) {
     const { assignor, receivable } = dto;
-    const payable = await this.db.receivable.create({
+    const payable = await this.db.payable.create({
       data: {
         emissionDate: receivable.emissionDate,
         value: receivable.value,
@@ -31,10 +31,10 @@ export class IntegrationsService {
     return payable;
   }
 
-  async updatedPayable(receivableId: string, dto: UpdatePayableDto) {
+  async updatedPayable(id: string, dto: UpdatePayableDto) {
     const { receivable } = dto;
-    const updatedPayable = await this.db.receivable.update({
-      where: { id: receivableId },
+    const updatedPayable = await this.db.payable.update({
+      where: { id },
       data: {
         value: receivable.value,
         emissionDate: receivable.emissionDate,
@@ -44,15 +44,15 @@ export class IntegrationsService {
     return updatedPayable;
   }
 
-  async deletePayable(receivableId: string) {
-    await this.db.receivable.delete({ where: { id: receivableId } });
+  async deletePayable(id: string) {
+    await this.db.payable.delete({ where: { id: id } });
   }
 
   // assignor
 
-  async getAssignorById(assignorId: string) {
+  async getAssignorById(id: string) {
     const assignor = await this.db.assignor.findUnique({
-      where: { id: assignorId },
+      where: { id },
     });
     return assignor;
   }
