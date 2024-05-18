@@ -1,30 +1,22 @@
-import { randomUUID } from 'crypto';
 import { AssignorService } from './assignor.service';
 import { Assignor } from './entities/assignor.entity';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AssignorRepository } from './repositories/assignor-repository';
 
-export const assignorMock = new Assignor(
-  randomUUID(),
-  'John',
-  'john@doe.com',
-  '(81)12345-6789',
-  '123.456.789-12',
-);
+export const assignorMock = new Assignor('1', 'John', 'john@doe.com', '(81)12345-6789', '123.456.789-12');
 
-const AssignorRepositoryMock = {
-  create: jest.fn().mockResolvedValue(assignorMock),
-};
+export class AssignorRepositoryMock implements AssignorRepository {
+  async create() {
+    return assignorMock;
+  }
+}
 
 describe('Assignor Service', () => {
   let service: AssignorService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AssignorService,
-        { provide: AssignorRepository, useValue: AssignorRepositoryMock },
-      ],
+      providers: [AssignorService, { provide: AssignorRepository, useClass: AssignorRepositoryMock }],
     }).compile();
 
     service = module.get<AssignorService>(AssignorService);
