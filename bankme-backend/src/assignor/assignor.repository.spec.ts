@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Prisma, Assignor } from '@prisma/client';
+import { Assignor } from '@prisma/client';
 import { Context, MockContext, createMockContext } from 'src/db/db.mock';
-import { UpdateAssignorDto } from './dto/assignor.dto';
+import { CreateAssignorDto, UpdateAssignorDto } from './dto/assignor.dto';
 import { DbService } from 'src/db/db.service';
 import { AssignorRepository } from './assignor.repository';
 
@@ -71,7 +71,7 @@ describe('AssignorRepository', () => {
         name: 'any-name',
         phone: 'any-phone',
       };
-      const dto: Prisma.AssignorCreateInput = {
+      const dto: CreateAssignorDto = {
         document: assignor.document,
         email: assignor.email,
         name: assignor.name,
@@ -85,7 +85,7 @@ describe('AssignorRepository', () => {
     });
 
     test('should throw if DbService throws', async () => {
-      const dto: Prisma.AssignorCreateInput = {
+      const dto: CreateAssignorDto = {
         document: 'any-document',
         email: 'any-email',
         name: 'any-name',
