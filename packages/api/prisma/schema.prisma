@@ -10,5 +10,26 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("./db")
+  url      = "file:./dev.db"
+}
+
+model Payable {
+  id           String   @id
+  value        Float
+  emissionDate DateTime
+  assignorId   String
+  assignor     Assignor @relation(fields: [assignorId], references: [id])
+
+  @@map("payables")
+}
+
+model Assignor {
+  id       String    @id
+  name     String
+  email    String
+  phone    String
+  document String
+  payables Payable[]
+
+  @@map("assignors")
 }
