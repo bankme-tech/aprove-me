@@ -1,11 +1,17 @@
 import { AssignorService } from './assignor.service';
 import { AssignorController } from './assignor.controller';
-
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { JwtMiddleware } from 'src/shared/middlewares/jwt.middleware';
 
 @Module({
   imports: [],
   controllers: [AssignorController],
   providers: [AssignorService],
 })
-export class AssignorModule {}
+export class AssignorModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(JwtMiddleware)
+      .forRoutes('integrations/assignor');
+  }
+}

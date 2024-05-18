@@ -11,3 +11,12 @@ export function generateToken(user) {
 
   return token;
 }
+
+export function verifyToken(token) {
+  try {
+    jwt.verify(token, process.env.SECRET_KEY);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}

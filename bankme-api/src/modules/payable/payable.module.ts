@@ -4,11 +4,18 @@ import { PayableController } from './payable.controller';
 https://docs.nestjs.com/modules
 */
 
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { JwtMiddleware } from 'src/shared/middlewares/jwt.middleware';
 
 @Module({
   imports: [],
   controllers: [PayableController],
   providers: [PayableService],
 })
-export class PayableModule {}
+export class PayableModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(JwtMiddleware)
+      .forRoutes('integrations/payable');
+  }
+}
