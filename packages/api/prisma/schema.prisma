@@ -33,3 +33,9 @@ model Assignor {
 
   @@map("assignors")
 }
+
+model User {
+  id       String @id @default(uuid())
+  login    String @unique
+  password String
+}
