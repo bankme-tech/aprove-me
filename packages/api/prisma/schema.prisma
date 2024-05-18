@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Payable {
-  id           String   @id
+  id           String   @id @default(uuid())
   value        Float
   emissionDate DateTime
   assignorId   String
@@ -24,7 +24,7 @@ model Payable {
 }
 
 model Assignor {
-  id       String    @id
+  id       String    @id @default(uuid())
   name     String
   email    String
   phone    String
