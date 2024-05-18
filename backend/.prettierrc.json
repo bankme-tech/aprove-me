@@ -2,9 +2,10 @@
   "endOfLine": "lf",
   "printWidth": 80,
   "tabWidth": 2,
+  "trailingComma": "all",
   "semi": true,
   "singleQuote": true,
   "jsxSingleQuote": false,
-  "trailingComma": "all",
+  "bracketSpacing": false,
   "useTabs": false
 }
