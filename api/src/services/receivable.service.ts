@@ -37,9 +37,9 @@ export class ReceivableService {
     });
   }
 
-  async updateReceivable(params: { 
-    where: Prisma.ReceivableWhereUniqueInput; 
-    data: Prisma.ReceivableUpdateInput; 
+  async updateReceivable(params: {
+    where: Prisma.ReceivableWhereUniqueInput;
+    data: Prisma.ReceivableUpdateInput;
   }): Promise<Receivable> {
     const { where, data } = params;
     return this.prisma.receivable.update({
@@ -49,7 +49,7 @@ export class ReceivableService {
   }
 
   async deleteReceivable(where: Prisma.ReceivableWhereUniqueInput): Promise<Receivable> {
-    return this.prisma.receivable.delete({
+    return await this.prisma.receivable.delete({
       where,
     });
   }

@@ -53,4 +53,14 @@ export class AssignorService {
       where,
     });
   }
+
+  async findByDocument(
+    document: string
+  ): Promise<Assignor | null> {
+    return this.prisma.assignor.findFirst({
+      where: {
+        document
+      },
+    });
+  }
 }
