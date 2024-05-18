@@ -13,4 +13,10 @@ export class PayableService {
 
     return createdPayable;
   }
+
+  async findPayableById(id: string) {
+    const payable = await this.payableRepository.findPayableById(id);
+
+    return payable;
+  }
 }
