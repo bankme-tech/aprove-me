@@ -1,6 +1,7 @@
 # Prisma
-/prisma/*
-!/prisma/schema.prisma
+/prisma/migrations/*.toml
+/prisma/*.db
+/prisma/*.db-journal
 
 # compiled output
 /dist
