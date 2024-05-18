@@ -6,20 +6,20 @@ import { generateToken } from '../../services/jwt';
 @Injectable()
 export class AuthService {
   async login(user: LoginDto) {
-    const theUser = await prisma.user.findUnique({ 
+    const authUser = await prisma.user.findUnique({ 
       where: { username: user.login }
     });
 
-    if (!theUser) {
+    if (!authUser) {
       throw new HttpException('User not found!', HttpStatus.NOT_FOUND)
     };
 
-    if (theUser.password !== user.password) {
+    if (authUser.password !== user.password) {
       throw new HttpException('Incorrect Credentials!', HttpStatus.NOT_FOUND)
     }
 
     const token = generateToken(user);
 
-    return {token, user: theUser};
+    return {token, user: authUser};
   }
 }
