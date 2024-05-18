@@ -22,4 +22,8 @@ export class AssignorService {
   async update(id: string, updateAssignorDto: UpdateAssignorDto) {
     return this.assignorRepository.update(id, updateAssignorDto);
   }
+
+  async delete(id: string) {
+    return this.assignorRepository.delete(id);
+  }
 }

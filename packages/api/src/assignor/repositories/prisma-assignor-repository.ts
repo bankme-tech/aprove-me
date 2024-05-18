@@ -12,7 +12,13 @@ export default class PrismaAssignorRepository extends AssignorRepository {
     super();
   }
 
+  async delete(id: string): Promise<void> {
+    await this.prisma.assignor.delete({ where: { id } });
+  }
+
   async update(id: string, updateAssignorDto: UpdateAssignorDto): Promise<Assignor> {
+    this.validateDocument(updateAssignorDto.document);
+
     return this.prisma.assignor.update({
       where: { id },
       data: updateAssignorDto,

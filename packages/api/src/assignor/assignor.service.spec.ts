@@ -6,6 +6,10 @@ import { AssignorRepository } from './repositories/assignor-repository';
 export const assignorMock = new Assignor('1', 'John', 'john@doe.com', '(81)12345-6789', '123.456.789-12');
 
 export class AssignorRepositoryMock implements AssignorRepository {
+  async delete() {
+    return;
+  }
+
   async update() {
     return assignorMock;
   }
@@ -81,5 +85,11 @@ describe('Assignor Service', () => {
     const assignor = await service.update('1', newAssignor);
 
     expect(assignor).toEqual(newAssignor);
+  });
+
+  it('should return nothing after deleting an assignor', async () => {
+    const assignor = await service.delete('1');
+
+    expect(assignor).toBeUndefined();
   });
 });
