@@ -1,0 +1,14 @@
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    volumes:
+      - db-data:/app/prisma
+
+volumes:
+  db-data:
