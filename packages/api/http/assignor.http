@@ -1,0 +1,10 @@
+### Create  assignor
+POST http://localhost:3333/integrations/assignor
+Content-Type: application/json
+
+{
+    "name": "John",
+    "email": "email@email.com",
+    "phone": "123123123123",
+    "document": "113.657.974-57"
+}

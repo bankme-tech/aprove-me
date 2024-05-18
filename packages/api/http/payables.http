@@ -1,0 +1,8 @@
+### Create payable
+POST http://localhost:3333/integrations/payable
+Content-Type: application/json
+
+{
+    "value": 100,
+    "assignorId": "29dc27a1-a2d9-40b2-a165-4b1dcf973bc5"
+}
