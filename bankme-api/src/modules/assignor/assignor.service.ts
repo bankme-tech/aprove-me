@@ -21,13 +21,12 @@ export class AssignorService {
     return assignor;
   }
 
-  async createAssignor(payable: AssignorDto) {
-
-    const newPayable = await prisma.assignor.create({
-      data: payable
+  async createAssignor(assignor: AssignorDto) {
+    const newAssignor = await prisma.assignor.create({
+      data: assignor
     });
 
-    return newPayable;
+    return newAssignor;
   }
 
   async edit(id: number, data: EditAssignorDto) {
