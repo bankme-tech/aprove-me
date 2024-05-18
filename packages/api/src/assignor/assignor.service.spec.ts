@@ -2,6 +2,7 @@ import { AssignorService } from './assignor.service';
 import { Assignor } from './entities/assignor.entity';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AssignorRepository } from './repositories/assignor-repository';
+import { NotFoundException } from '@nestjs/common';
 
 export const assignorMock = new Assignor('1', 'John', 'john@doe.com', '(81)12345-6789', '123.456.789-12');
 
@@ -56,12 +57,16 @@ describe('Assignor Service', () => {
     expect(assignor).toBeInstanceOf(Assignor);
   });
 
-  it('should not return an assignor if find not found', async () => {
+  it('should throw if an assignor is not found', async () => {
     jest.spyOn(AssignorRepositoryMock.prototype, 'findById').mockResolvedValue(null);
 
-    const assignor = await service.findById('1');
-
-    expect(assignor).toBeNull();
+    try {
+      await service.findById('1');
+    } catch (error) {
+      expect(error).toBeInstanceOf(NotFoundException);
+      expect(error.status).toBe(404);
+      expect(error.message).toBe('assignor not found');
+    }
   });
 
   it('should return an array of assignors', async () => {

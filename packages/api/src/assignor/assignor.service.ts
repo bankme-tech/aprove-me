@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AssignorRepository } from './repositories/assignor-repository';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
@@ -12,7 +12,12 @@ export class AssignorService {
   }
 
   async findById(id: string) {
-    return this.assignorRepository.findById(id);
+    const assignor = await this.assignorRepository.findById(id);
+    if (!assignor) {
+      throw new NotFoundException('assignor not found');
+    }
+
+    return assignor;
   }
 
   async getAll() {
