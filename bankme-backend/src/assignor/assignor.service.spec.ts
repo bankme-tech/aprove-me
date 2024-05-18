@@ -1,7 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateAssignorDto, UpdateAssignorDto } from './dto/assignor.dto';
-import { DbModule } from 'src/db/db.module';
 import { AssignorRepository } from './assignor.repository';
 import { AssignorService } from './assignor.service';
 
@@ -9,10 +8,22 @@ describe('AssignorService', () => {
   let service: AssignorService;
   let repository: AssignorRepository;
 
+  const mockRepository = {
+    findById: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+  };
+
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
-      imports: [DbModule],
-      providers: [AssignorService, AssignorRepository],
+      providers: [
+        AssignorService,
+        {
+          provide: AssignorRepository,
+          useValue: mockRepository,
+        },
+      ],
     }).compile();
 
     service = moduleRef.get<AssignorService>(AssignorService);
