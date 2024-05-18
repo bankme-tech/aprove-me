@@ -8,5 +8,6 @@ import { AssignorRepository } from './assignor.repository';
   imports: [DbModule],
   controllers: [AssignorController],
   providers: [AssignorService, AssignorRepository],
+  exports: [AssignorService]
 })
 export class AssignorModule {}
