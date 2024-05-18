@@ -7,12 +7,7 @@ export class Payable {
   emissionDate: Date;
   assignor?: Assignor;
 
-  constructor(
-    id: string,
-    value: number,
-    assignorId: string,
-    emissionDate: Date,
-  ) {
+  constructor(id: string, value: number, assignorId: string, emissionDate: Date) {
     this.id = id;
     this.value = value;
     this.assignorId = assignorId;

@@ -12,10 +12,7 @@ describe('Assignor Controller', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssignorController],
-      providers: [
-        AssignorService,
-        { provide: AssignorRepository, useValue: {} },
-      ],
+      providers: [AssignorService, { provide: AssignorRepository, useValue: {} }],
     }).compile();
 
     controller = module.get<AssignorController>(AssignorController);
