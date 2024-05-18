@@ -6,7 +6,17 @@ export default class Payable implements IPayable {
   private _emissionDate: Date;
   private _assignorId: string;
 
-  constructor() {}
+  constructor(
+    id?: string,
+    value?: number,
+    emissionDate?: Date,
+    assignorId?: string,
+  ) {
+    this.id = id;
+    this.value = value;
+    this.emissionDate = emissionDate;
+    this.assignorId = assignorId;
+  }
 
   get id(): string {
     return this._id;
@@ -44,7 +54,7 @@ export default class Payable implements IPayable {
     return {
       value: this.value,
       emissionDate: new Date(this.emissionDate),
-      assignorId: this.assignorId || 'um_id',
+      assignorId: this.assignorId,
     };
   }
 
