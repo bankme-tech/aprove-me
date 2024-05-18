@@ -8,7 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { PayableDto, UpdatePayableDto } from './dto/payable.dto';
+import { CreatePayableDto, UpdatePayableDto } from './dto/payable.dto';
 import { CreateAssignorDto, UpdateAssignorDto } from './dto/assignor.dto';
 import { IntegrationsService } from './integrations.service';
 
@@ -17,7 +17,7 @@ export class IntegrationsController {
   constructor(private readonly service: IntegrationsService) {}
 
   @Post('payable')
-  async payable(@Body() dto: PayableDto) {
+  async payable(@Body() dto: CreatePayableDto) {
     const createdPayable = await this.service.createPayable(dto);
     return createdPayable;
   }

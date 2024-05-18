@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PayableDto, UpdatePayableDto } from './dto/payable.dto';
+import { CreatePayableDto, UpdatePayableDto } from './dto/payable.dto';
 import { CreateAssignorDto, UpdateAssignorDto } from './dto/assignor.dto';
 import { DbService } from 'src/db/db.service';
 
@@ -14,15 +14,15 @@ export class IntegrationsService {
     return payable;
   }
 
-  async createPayable(dto: PayableDto) {
-    const { assignor, receivable } = dto;
+  async createPayable(dto: CreatePayableDto) {
+    const { assignorId, emissionDate, value } = dto;
     const payable = await this.db.payable.create({
       data: {
-        emissionDate: receivable.emissionDate,
-        value: receivable.value,
+        emissionDate: emissionDate,
+        value: value,
         Assignor: {
           connect: {
-            id: assignor.id,
+            id: assignorId,
           },
         },
       },
@@ -32,12 +32,13 @@ export class IntegrationsService {
   }
 
   async updatedPayable(id: string, dto: UpdatePayableDto) {
-    const { receivable } = dto;
+    const { assignorId, emissionDate, value } = dto;
     const updatedPayable = await this.db.payable.update({
       where: { id },
       data: {
-        value: receivable.value,
-        emissionDate: receivable.emissionDate,
+        value: value,
+        emissionDate: emissionDate,
+        assignorId,
       },
     });
 

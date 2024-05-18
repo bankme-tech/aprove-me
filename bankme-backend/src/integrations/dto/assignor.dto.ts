@@ -1,28 +1,25 @@
-import { OmitType, PartialType } from '@nestjs/mapped-types';
-import { IsEmail, IsString, IsUUID, Length, MaxLength } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
-export class AssignorDto {
-  @IsUUID()
-  id: string;
-
+export class CreateAssignorDto {
   @IsString()
-  @Length(1, 30)
+  @IsNotEmpty()
   @MaxLength(30)
   document: string;
 
   @IsEmail()
-  @Length(1, 140)
+  @MaxLength(140)
   email: string;
 
   @IsString()
-  @Length(1, 20)
+  @IsNotEmpty()
+  @MaxLength(20)
   phone: string;
 
   @IsString()
-  @Length(1, 140)
+  @IsNotEmpty()
+  @MaxLength(140)
   name: string;
 }
 
-export class CreateAssignorDto extends OmitType(AssignorDto, ['id']) {}
-
-export class UpdateAssignorDto extends PartialType(AssignorDto) {}
+export class UpdateAssignorDto extends PartialType(CreateAssignorDto) {}
