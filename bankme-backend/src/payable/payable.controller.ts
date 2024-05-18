@@ -32,7 +32,7 @@ export class PayableController {
 
   @Patch('payable/:id')
   async updatePayable(@Param('id') id: string, @Body() dto: UpdatePayableDto) {
-    const updatedAssignor = await this.service.updatedPayable(id, dto);
+    const updatedAssignor = await this.service.updatePayable(id, dto);
     return updatedAssignor;
   }
 

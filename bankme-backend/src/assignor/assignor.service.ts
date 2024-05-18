@@ -1,47 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAssignorDto, UpdateAssignorDto } from './dto/assignor.dto';
-import { DbService } from 'src/db/db.service';
+import { AssignorRepository } from './assignor.repository';
 
 @Injectable()
 export class AssignorService {
-  constructor(private readonly db: DbService) {}
+  constructor(private readonly repository: AssignorRepository) {}
 
   async getAssignorById(id: string) {
-    const assignor = await this.db.assignor.findUnique({
-      where: { id },
-    });
+    const assignor = await this.repository.findById(id);
     return assignor;
   }
 
   async createAssignor(dto: CreateAssignorDto) {
-    const { document, email, name, phone } = dto;
-    const assignor = await this.db.assignor.create({
-      data: {
-        document,
-        email,
-        name,
-        phone,
-      },
-    });
-
-    return assignor;
+    const createdAssignor = await this.repository.create(dto);
+    return createdAssignor;
   }
 
   async updateAssignor(id: string, dto: UpdateAssignorDto) {
-    const { document, email, name, phone } = dto;
-    const updatedAssignor = await this.db.assignor.update({
-      where: { id },
-      data: { document, email, name, phone },
-    });
-
+    const updatedAssignor = await this.repository.update(id, dto);
     return updatedAssignor;
   }
 
   async deleteAssignor(id: string) {
-    await this.db.assignor.delete({
-      where: {
-        id,
-      },
-    });
+    await this.repository.delete(id);
   }
 }

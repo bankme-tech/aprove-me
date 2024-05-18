@@ -1,50 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePayableDto, UpdatePayableDto } from './dto/payable.dto';
-import { DbService } from 'src/db/db.service';
+import { PayableRepository } from './payable.repository';
 
 @Injectable()
 export class PayableService {
-  constructor(private readonly db: DbService) {}
+  constructor(private readonly repository: PayableRepository) {}
 
   async getPayableById(id: string) {
-    const payable = await this.db.payable.findUnique({
-      where: { id },
-    });
+    const payable = await this.repository.findById(id);
     return payable;
   }
 
   async createPayable(dto: CreatePayableDto) {
-    const { assignorId, emissionDate, value } = dto;
-    const payable = await this.db.payable.create({
-      data: {
-        emissionDate: emissionDate,
-        value: value,
-        Assignor: {
-          connect: {
-            id: assignorId,
-          },
-        },
-      },
-    });
-
-    return payable;
+    const createdPayable = await this.repository.create(dto);
+    return createdPayable;
   }
 
-  async updatedPayable(id: string, dto: UpdatePayableDto) {
-    const { assignorId, emissionDate, value } = dto;
-    const updatedPayable = await this.db.payable.update({
-      where: { id },
-      data: {
-        value: value,
-        emissionDate: emissionDate,
-        assignorId,
-      },
-    });
-
+  async updatePayable(id: string, dto: UpdatePayableDto) {
+    const updatedPayable = await this.repository.update(id, dto);
     return updatedPayable;
   }
 
   async deletePayable(id: string) {
-    await this.db.payable.delete({ where: { id: id } });
+    await this.repository.delete(id);
   }
 }
