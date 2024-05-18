@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  aproveme-api:
+    container_name: aprove-backend
+    image: aproveme-backend
+    build: .
+    ports:
+      - "3000:3000"
+    restart: always
+    env_file:
+      - ./backend/.env.docker
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge

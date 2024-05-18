@@ -4,7 +4,7 @@ import { AddNewPayable } from '@/app/use-cases/payable/add-new-payable';
 
 @Controller('payable')
 export class PayableController {
-  constructor(private addNewPayable: AddNewPayable) {}
+  constructor(private addNewPayable: AddNewPayable) { }
 
   @Post()
   async create(@Body() body: CreatePayableDTO) {

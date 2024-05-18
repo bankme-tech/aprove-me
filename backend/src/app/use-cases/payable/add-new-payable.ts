@@ -4,6 +4,7 @@ import { PayableRepository } from '@/app/repositories/payable.repository';
 
 interface Input {
   value: number;
+  emissionDate: Date;
   assignorId: string;
 }
 

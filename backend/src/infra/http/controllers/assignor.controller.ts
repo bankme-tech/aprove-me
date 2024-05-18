@@ -1,10 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AddNewAssignor } from '@/app/use-cases/assignor/add-new-assignor';
-import { CreateAssignorDTO } from '@/infra/http/dto/payable/create-assignor.dto';
+import { CreateAssignorDTO } from '@/infra/http/dto/assignor/create-assignor.dto';
 
 @Controller('assignor')
 export class PayableController {
-  constructor(private addNewAssignor: AddNewAssignor) {}
+  constructor(private addNewAssignor: AddNewAssignor) { }
 
   @Post()
   async create(@Body() body: CreateAssignorDTO) {
