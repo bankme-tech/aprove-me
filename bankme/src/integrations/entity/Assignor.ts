@@ -49,6 +49,15 @@ export default class Assignor implements IAssignor {
     this._name = name;
   }
 
+  toCreate() {
+    return {
+      document: this.document,
+      email: this.email,
+      phone: this.phone,
+      name: this.name,
+    };
+  }
+
   toJSON() {
     return {
       id: this.id,
