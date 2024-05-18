@@ -4,10 +4,11 @@ import { ReceivableService } from './services/receivable.service';
 import { AssignorService } from './services/assignor.service';
 import { ReceivableController } from './controllers/receivable.controller';
 import { AssignorController } from './controllers/assignor.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [],
+  imports: [AuthModule],
   controllers: [ReceivableController, AssignorController],
   providers: [PrismaService, ReceivableService, AssignorService],
 })
-export class AppModule {}
+export class AppModule { }

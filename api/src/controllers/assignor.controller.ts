@@ -10,12 +10,14 @@ import {
   ValidationPipe,
   ConflictException,
   HttpException,
-  HttpStatus
+  HttpStatus,
+  UseGuards
 } from '@nestjs/common';
 import { AssignorService } from '../services/assignor.service';
 import { UUID } from 'crypto';
 import { IsNotEmpty, IsUUID, IsString, MaxLength } from 'class-validator';
 import { Assignor as AssignorModel } from '@prisma/client';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 export class Assignor {
   id: UUID
@@ -41,6 +43,7 @@ export class Assignor {
   name: string
 }
 
+@UseGuards(AuthGuard)
 @Controller('/integrations/assignor/')
 export class AssignorController {
   constructor(private readonly assignorService: AssignorService) { }

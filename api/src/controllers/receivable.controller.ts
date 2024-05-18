@@ -9,7 +9,8 @@ import {
   UsePipes,
   ValidationPipe,
   HttpException,
-  HttpStatus
+  HttpStatus,
+  UseGuards
 } from '@nestjs/common';
 import { ReceivableService } from '../services/receivable.service';
 import { AssignorService } from '../services/assignor.service';
@@ -17,6 +18,7 @@ import { UUID } from 'crypto';
 import { IsNotEmpty, IsNumber, IsDateString } from 'class-validator';
 import { Receivable as ReceivableModel } from '@prisma/client';
 import { Assignor } from './assignor.controller';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 export class Receivable {
   id: UUID
@@ -32,6 +34,7 @@ export class Receivable {
   assignor: UUID
 }
 
+@UseGuards(AuthGuard)
 @Controller('/integrations/payable')
 export class ReceivableController {
   constructor(
