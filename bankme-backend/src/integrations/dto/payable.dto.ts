@@ -3,10 +3,10 @@ import { IsNumber, IsDate, IsUUID } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreatePayableDto {
-  @IsNumber()
+  @IsNumber({}, { message: 'value must be a number' })
   value: number;
 
-  @IsDate()
+  @IsDate({ message: 'invalid date' })
   @Type(() => Date)
   emissionDate: Date;
 

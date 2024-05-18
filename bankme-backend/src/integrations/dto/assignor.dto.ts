@@ -1,24 +1,25 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { maxLengthMessage } from 'src/utils/max-length-message';
 
 export class CreateAssignorDto {
   @IsString()
   @IsNotEmpty()
-  @MaxLength(30)
+  @MaxLength(30, { message: maxLengthMessage('document', 30) })
   document: string;
 
-  @IsEmail()
-  @MaxLength(140)
+  @IsEmail({}, { message: 'invalid email' })
+  @MaxLength(140, { message: maxLengthMessage('email', 140) })
   email: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(20)
+  @MaxLength(20, { message: maxLengthMessage('phone', 20) })
   phone: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(140)
+  @MaxLength(140, { message: maxLengthMessage('name', 140) })
   name: string;
 }
 
