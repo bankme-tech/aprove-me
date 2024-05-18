@@ -6,7 +6,7 @@ import { Payable } from '../entities/payable.entity';
 import { CreatePayableDto } from '../dto/create-payable.dto';
 
 @Injectable()
-export class PrismaPayableRepository implements PayableRepository {
+export default class PrismaPayableRepository implements PayableRepository {
   constructor(private prisma: PrismaService) {}
 
   async create({ value, assignorId }: CreatePayableDto): Promise<Payable> {

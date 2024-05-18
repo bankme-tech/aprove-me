@@ -1,21 +1,27 @@
-import { cnpj, cpf } from 'cpf-cnpj-validator';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Assignor } from '../entities/assignor.entity';
 import { AssignorRepository } from './assignor-repository';
 import { PrismaService } from 'src/database/prisma.service';
-import { UnprocessableEntityException } from '@nestjs/common';
 import { CreateAssignorDto } from '../dto/create-assignor.dto';
+import { cnpj, cpf } from 'cpf-cnpj-validator';
 
-export class PrismaAssignorRepository implements AssignorRepository {
-  constructor(private prisma: PrismaService) {}
-
-  async findById(id: string) {
-    return this.prisma.assignor.findUnique({ where: { id } });
+@Injectable()
+export default class PrismaAssignorRepository extends AssignorRepository {
+  constructor(private prisma: PrismaService) {
+    super();
   }
 
-  async create({ name, email, phone, document }: CreateAssignorDto) {
-    this.validateDocument(document);
+  async create(createAssignorDto: CreateAssignorDto): Promise<Assignor> {
+    this.validateDocument(createAssignorDto.document);
 
     return this.prisma.assignor.create({
-      data: { name, email, phone, document },
+      data: createAssignorDto,
+    });
+  }
+
+  async findById(id: string): Promise<Assignor> {
+    return this.prisma.assignor.findUnique({
+      where: { id },
     });
   }
 
