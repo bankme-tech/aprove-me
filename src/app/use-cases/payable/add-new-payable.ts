@@ -4,7 +4,7 @@ import { PayableRepository } from '@/app/repositories/payable.repository';
 
 interface Input {
   value: number;
-  emissionDate: Date;
+  assignorId: string;
 }
 
 interface Output {
@@ -13,7 +13,7 @@ interface Output {
 
 @Injectable()
 export class AddNewPayable {
-  constructor(private payableRepository: PayableRepository) {}
+  constructor(private payableRepository: PayableRepository) { }
 
   async execute(input: Input): Promise<Output> {
     const newPayable = new Payable(input);
