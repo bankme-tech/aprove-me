@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CreatePayableDTO } from '@/infra/http/dto/create-payable.dto';
-import { AddNewPayable } from '@/app/use-cases/add-new-payable';
+import { CreatePayableDTO } from '@/infra/http/dto/payable/create-payable.dto';
+import { AddNewPayable } from '@/app/use-cases/payable/add-new-payable';
 
 @Controller('payable')
 export class PayableController {
