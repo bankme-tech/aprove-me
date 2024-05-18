@@ -12,7 +12,6 @@ interface PayableProps {
 }
 
 interface PayablePropsReplaceble {
-  deletedAt?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -22,15 +21,14 @@ export class Assignor {
   public props: PayableProps;
 
   constructor(
-    props: Replace<PayablePropsReplaceble, PayablePropsReplaceble>,
+    props: Replace<PayableProps, PayablePropsReplaceble>,
     _id?: string,
   ) {
     this._id = _id ? _id : randomUUID();
     this.props = {
-      ...this.props,
+      ...props,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
-      deletedAt: props.deletedAt ?? new Date(),
     };
   }
 }

@@ -14,7 +14,6 @@ interface PayablePropsReplaceble {
   emissionDate?: Date;
   createdAt?: Date;
   updatedAt?: Date;
-  deletedAt?: Date;
 }
 
 export class Payable {
@@ -22,16 +21,15 @@ export class Payable {
   public props: PayableProps;
 
   constructor(
-    props: Replace<PayablePropsReplaceble, PayablePropsReplaceble>,
+    props: Replace<PayableProps, PayablePropsReplaceble>,
     _id?: string,
   ) {
     this._id = _id ? _id : randomUUID();
     this.props = {
-      ...this.props,
+      ...props,
       emissionDate: props.emissionDate ?? new Date(),
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
-      deletedAt: props.deletedAt ?? new Date(),
     };
   }
 }
