@@ -15,7 +15,7 @@ import {
 } from '@nestjs/common';
 import { AssignorService } from '../services/assignor.service';
 import { UUID } from 'crypto';
-import { IsNotEmpty, IsUUID, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { Assignor as AssignorModel } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guard';
 

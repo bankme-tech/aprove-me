@@ -27,3 +27,11 @@ model Assignor {
 
   @@map("assignors")
 }
+
+model Permission {
+  id       String @id @default(uuid())
+  login    String @unique
+  password String
+
+  @@map("permissions")
+}
