@@ -25,7 +25,6 @@ export class Permission {
   password: string
 }
 
-@UseGuards(AuthGuard)
 @Controller('/integrations/permissions/')
 export class PermissionController {
   constructor(private readonly permissionService: PermissionsService) { }
