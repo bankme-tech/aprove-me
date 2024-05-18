@@ -12,6 +12,30 @@ export default class PayableRepository {
       data: payable.toCreate(),
     });
 
-    return payableRegister;
+    return new Payable(
+      payableRegister.id,
+      payableRegister.value,
+      payableRegister.emissionDate,
+      payableRegister.assignorId,
+    );
+  }
+
+  async findPayableById(id: string): Promise<IPayable | null> {
+    const payable = await this.prismaService.payable.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!payable) {
+      return null;
+    }
+
+    return new Payable(
+      payable.id,
+      payable.value,
+      payable.emissionDate,
+      payable.assignorId,
+    );
   }
 }
