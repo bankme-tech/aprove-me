@@ -1,0 +1,1 @@
+export const MONEY_EQUIVALENT_IN_CENTS = 100;

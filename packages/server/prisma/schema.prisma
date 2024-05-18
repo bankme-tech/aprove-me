@@ -20,7 +20,8 @@ model Assignor {
 
 model Receivable {
   id           String   @id @default(uuid())
-  value        Int
+  value        Float
+  value_cents  Int
   emissionDate DateTime
   assignorId   String
   assignor     Assignor @relation(fields: [assignorId], references: [id])
