@@ -40,7 +40,10 @@ describe('Payable Service', () => {
   });
 
   it('should create a payable and return it', async () => {
+    jest.spyOn(AssignorRepositoryMock.prototype, 'findById').mockResolvedValue(assignorMock);
+
     const payable = await service.create(payableMock);
+
     expect(payable).toEqual(payableMock);
   });
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { PayableRepository } from './repositories/payable-repository';
 import { AssignorRepository } from '@assignor/repositories/assignor-repository';
@@ -11,6 +11,11 @@ export class PayableService {
   ) {}
 
   async create(createPayableDto: CreatePayableDto) {
+    const assignor = await this.assignorRepository.findById(createPayableDto.assignorId);
+    if (!assignor) {
+      throw new NotFoundException('assignor not found');
+    }
+
     return this.payableRepository.create(createPayableDto);
   }
 }
