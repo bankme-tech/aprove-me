@@ -7,6 +7,10 @@ import { CreateAssignorDto } from '../dto/create-assignor.dto';
 export class PrismaAssignorRepository implements AssignorRepository {
   constructor(private prisma: PrismaService) {}
 
+  async findById(id: string) {
+    return this.prisma.assignor.findUnique({ where: { id } });
+  }
+
   async create({ name, email, phone, document }: CreateAssignorDto) {
     this.validateDocument(document);
 

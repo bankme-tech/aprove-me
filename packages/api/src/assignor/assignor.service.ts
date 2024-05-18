@@ -9,4 +9,8 @@ export class AssignorService {
   async create(createAssignorDto: CreateAssignorDto) {
     return this.assignorRepository.create(createAssignorDto);
   }
+
+  async findById(id: string) {
+    return this.assignorRepository.findById(id);
+  }
 }

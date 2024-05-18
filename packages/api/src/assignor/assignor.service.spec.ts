@@ -9,6 +9,10 @@ export class AssignorRepositoryMock implements AssignorRepository {
   async create() {
     return assignorMock;
   }
+
+  async findById() {
+    return assignorMock;
+  }
 }
 
 describe('Assignor Service', () => {
@@ -31,5 +35,19 @@ describe('Assignor Service', () => {
 
     expect(assignor).toEqual(assignorMock);
     expect(assignor).toBeInstanceOf(Assignor);
+  });
+
+  it('should return an assignor if find by id', async () => {
+    const assignor = await service.findById('1');
+
+    expect(assignor).toEqual(assignorMock);
+    expect(assignor).toBeInstanceOf(Assignor);
+  });
+
+  it('should not return an assignor if find not found', async () => {
+    jest.spyOn(AssignorRepositoryMock.prototype, 'findById').mockResolvedValue(null);
+    const assignor = await service.findById('1');
+
+    expect(assignor).toBeNull();
   });
 });
