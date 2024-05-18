@@ -4,5 +4,22 @@ Content-Type: application/json
 
 {
     "value": 100,
-    "assignorId": "29dc27a1-a2d9-40b2-a165-4b1dcf973bc5"
+    "assignorId": "bfa8a658-cf0e-4dcf-a825-64ae69ae3491"
 }
+
+### Get all payables
+GET http://localhost:3333/integrations/payable
+
+### Get a payable
+GET http://localhost:3333/integrations/payable/43d36b67-7e62-42d7-9e5c-76ca41a107da
+
+### Update payable
+PATCH  http://localhost:3333/integrations/payable/43d36b67-7e62-42d7-9e5c-76ca41a107da
+Content-Type: application/json
+
+{
+    "value": 150
+}
+
+### Delete payable
+DELETE   http://localhost:3333/integrations/payable/43d36b67-7e62-42d7-9e5c-76ca41a107da
