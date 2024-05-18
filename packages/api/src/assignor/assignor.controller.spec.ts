@@ -24,11 +24,27 @@ describe('Assignor Controller', () => {
   });
 
   it('should create an assignor and return it', async () => {
-    jest.spyOn(service, 'create').mockImplementation(async () => assignorMock);
+    jest.spyOn(service, 'create').mockResolvedValue(assignorMock);
 
     const assignor = await controller.create(assignorMock);
 
     expect(assignor).toEqual(assignorMock);
     expect(assignor).toBeInstanceOf(Assignor);
+  });
+
+  it('should return all assignors', async () => {
+    jest.spyOn(service, 'getAll').mockResolvedValue([assignorMock]);
+
+    const assignors = await controller.getAll();
+
+    expect(assignors).toEqual([assignorMock]);
+  });
+
+  it('should return an empty array if has no assignors', async () => {
+    jest.spyOn(service, 'getAll').mockResolvedValue([]);
+
+    const assignors = await controller.getAll();
+
+    expect(assignors).toEqual([]);
   });
 });

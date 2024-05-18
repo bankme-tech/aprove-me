@@ -1,4 +1,4 @@
-### Create  assignor
+### Create assignor
 POST http://localhost:3333/integrations/assignor
 Content-Type: application/json
 
@@ -8,3 +8,7 @@ Content-Type: application/json
     "phone": "123123123123",
     "document": "113.657.974-57"
 }
+
+### Get all assignors
+
+GET http://localhost:3333/integrations/assignor
