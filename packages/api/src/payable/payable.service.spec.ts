@@ -9,6 +9,22 @@ import { AssignorRepositoryMock, assignorMock } from '@assignor/assignor.service
 export const payableMock = new Payable('1', 100, assignorMock.id, new Date());
 
 export class PayableRepositoryMock implements PayableRepository {
+  async getAll() {
+    return [payableMock];
+  }
+
+  async delete() {
+    return;
+  }
+
+  async findById() {
+    return payableMock;
+  }
+
+  async update() {
+    return payableMock;
+  }
+
   async create() {
     return payableMock;
   }
@@ -57,5 +73,39 @@ describe('Payable Service', () => {
       expect(error.status).toBe(404);
       expect(error.message).toBe('assignor not found');
     }
+  });
+
+  it('should return nothing when deleting a payable', async () => {
+    expect(await service.delete('1')).toBeUndefined();
+  });
+
+  it('should return a payable after updating it', async () => {
+    const newPayable = new Payable('1', 50, assignorMock.id, new Date());
+    jest.spyOn(PayableRepositoryMock.prototype, 'update').mockResolvedValue(newPayable);
+
+    const payable = await service.update('1', newPayable);
+
+    expect(payable).toEqual(newPayable);
+  });
+
+  it('should throw an exception when payable is not found', async () => {
+    jest.spyOn(PayableRepositoryMock.prototype, 'findById').mockResolvedValue(null);
+
+    try {
+      await service.findById('2');
+    } catch (error) {
+      expect(error).toBeInstanceOf(NotFoundException);
+      expect(error.status).toBe(404);
+      expect(error.message).toBe('payable not found');
+    }
+  });
+
+  it('should return a payable if exists', async () => {
+    jest.spyOn(PayableRepositoryMock.prototype, 'findById').mockResolvedValue(payableMock);
+
+    const payable = await service.findById('1');
+
+    expect(payable).toBeInstanceOf(Payable);
+    expect(payable).toEqual(payableMock);
   });
 });
