@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -16,28 +15,25 @@ export class PayableController {
   constructor(private readonly service: PayableService) {}
 
   @Post('payable')
-  async payable(@Body() dto: CreatePayableDto) {
+  async create(@Body() dto: CreatePayableDto) {
     const createdPayable = await this.service.createPayable(dto);
     return createdPayable;
   }
 
   @Get('payable/:id')
-  async findOnePayable(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     const payable = await this.service.getPayableById(id);
-    if (!payable) {
-      throw new NotFoundException();
-    }
     return payable;
   }
 
   @Patch('payable/:id')
-  async updatePayable(@Param('id') id: string, @Body() dto: UpdatePayableDto) {
+  async update(@Param('id') id: string, @Body() dto: UpdatePayableDto) {
     const updatedAssignor = await this.service.updatePayable(id, dto);
     return updatedAssignor;
   }
 
   @Delete('payable/:id')
-  async deletePayable(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return await this.service.deletePayable(id);
   }
 }
