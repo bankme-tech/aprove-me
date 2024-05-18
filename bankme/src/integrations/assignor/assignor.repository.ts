@@ -28,6 +28,36 @@ export default class AssignorRepository {
       },
     });
 
-    return assignor;
+    if (!assignor) {
+      return null;
+    }
+
+    return new Assignor(
+      assignor.id,
+      assignor.document,
+      assignor.name,
+      assignor.email,
+      assignor.phone,
+    );
+  }
+
+  async findAssignorById(id: string): Promise<IAssignor | null> {
+    const assignor = await this.prismaService.assignor.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!assignor) {
+      return null;
+    }
+
+    return new Assignor(
+      assignor.id,
+      assignor.document,
+      assignor.name,
+      assignor.email,
+      assignor.phone,
+    );
   }
 }
