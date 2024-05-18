@@ -1,9 +1,10 @@
 version: "3.8"
 
 services:
-  bankme-api:
+  api:
     build: .
     ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
+      - 3000:3000
+    tty: true
+    stdin_open: true
+    restart: always
