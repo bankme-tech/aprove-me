@@ -5,6 +5,6 @@ export interface ID {
   id: string;
 }
 
-export interface IPayableCreation extends IPayableValues {
-  assignor: IAssignorValues;
-}
+export interface IPayableCreation extends IPayableValues {}
+
+export interface IAssignorCretion extends IAssignorValues {}
