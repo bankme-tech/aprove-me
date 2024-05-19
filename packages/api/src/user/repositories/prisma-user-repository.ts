@@ -1,3 +1,4 @@
+import * as argon from 'argon2';
 import { UserRepository } from './user-repository';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { PrismaService } from '@database/prisma.service';
@@ -11,7 +12,9 @@ export default class PrismaUserRepository extends UserRepository {
     return this.prisma.user.findUnique({ where: { login } });
   }
 
-  async create(createUserDto: CreateUserDto) {
-    return this.prisma.user.create({ data: createUserDto });
+  async create({ login, password }: CreateUserDto) {
+    const hashedPassword = await argon.hash(password);
+
+    return this.prisma.user.create({ data: { login, password: hashedPassword } });
   }
 }
