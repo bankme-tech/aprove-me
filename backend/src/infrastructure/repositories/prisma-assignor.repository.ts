@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma/prisma.service';
 import { AssignorRepository } from 'src/domain/repositories/assignor.repository';
 import { Assignor } from 'src/domain/entities/assignor.entity';
-import { CreateAssignorDto } from 'src/application/dtos/create-Assignor.dto';
+import { CreateAssignorDto } from 'src/application/dtos/create-assignor.dto';
 import { UpdateAssignorDto } from 'src/application/dtos/update-assignor.dto';
 
 @Injectable()
