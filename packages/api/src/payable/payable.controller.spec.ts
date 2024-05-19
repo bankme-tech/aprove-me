@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import { PayableService } from './payable.service';
 import { Payable } from './entities/payable.entity';
 import { payableMock } from './payable.service.spec';
@@ -24,6 +25,7 @@ describe('PayableController', () => {
           provide: AssignorRepository,
           useValue: {},
         },
+        JwtService,
       ],
     }).compile();
 

@@ -1,10 +1,11 @@
 ### Create assignor
 POST http://localhost:3333/integrations/assignor
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZmEyNjBmZC01ZTY3LTQxNGMtYmNiOC1lYTI2NTc5Yjc3ZGQiLCJsb2dpbiI6ImFwcm92YW1lIiwiaWF0IjoxNzE2MTM0NjYxLCJleHAiOjE3MTYxMzQ3MjF9.sMohDrx6iuqq8dHd8QmLElRrPcty43s6S2WWlnKCb1g
 
 {
     "name": "John",
-    "email": "email@email.com",
+    "email": "emaila@email.com",
     "phone": "123123123123",
     "document": "756.203.260-20"
 }
@@ -12,15 +13,18 @@ Content-Type: application/json
 ### Get all assignors
 
 GET http://localhost:3333/integrations/assignor
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZmEyNjBmZC01ZTY3LTQxNGMtYmNiOC1lYTI2NTc5Yjc3ZGQiLCJsb2dpbiI6ImFwcm92YW1lIiwiaWF0IjoxNzE2MTM0NDEyLCJleHAiOjE3MTYxMzQ0NzJ9.DASfDTlEueo7PxcHC3PkVt_DN8W7ozANuTVo464qsYg
 
 ### Get an assignors
 
 GET http://localhost:3333/integrations/assignor/bfa8a658-cf0e-4dcf-a825-64ae69ae3491
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZmEyNjBmZC01ZTY3LTQxNGMtYmNiOC1lYTI2NTc5Yjc3ZGQiLCJsb2dpbiI6ImFwcm92YW1lIiwiaWF0IjoxNzE2MTM0NDEyLCJleHAiOjE3MTYxMzQ0NzJ9.DASfDTlEueo7PxcHC3PkVt_DN8W7ozANuTVo464qsYg
 
 ### Update an assignor
 
 PATCH http://localhost:3333/integrations/assignor/29dc27a1-a2d9-40b2-a165-4b1dcf973bc5
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZmEyNjBmZC01ZTY3LTQxNGMtYmNiOC1lYTI2NTc5Yjc3ZGQiLCJsb2dpbiI6ImFwcm92YW1lIiwiaWF0IjoxNzE2MTM0NDEyLCJleHAiOjE3MTYxMzQ0NzJ9.DASfDTlEueo7PxcHC3PkVt_DN8W7ozANuTVo464qsYg
 
 {
     "name": "John",
@@ -32,3 +36,4 @@ Content-Type: application/json
 ### Delete an assignor
 
 DELETE http://localhost:3333/integrations/assignor/995ed332-2850-434b-b392-e067e94fd690
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZmEyNjBmZC01ZTY3LTQxNGMtYmNiOC1lYTI2NTc5Yjc3ZGQiLCJsb2dpbiI6ImFwcm92YW1lIiwiaWF0IjoxNzE2MTM0NDEyLCJleHAiOjE3MTYxMzQ0NzJ9.DASfDTlEueo7PxcHC3PkVt_DN8W7ozANuTVo464qsYg

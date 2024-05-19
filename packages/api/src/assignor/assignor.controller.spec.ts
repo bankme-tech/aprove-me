@@ -1,18 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AssignorController } from './assignor.controller';
+import { JwtService } from '@nestjs/jwt';
 import { AssignorService } from './assignor.service';
-import { AssignorRepository } from './repositories/assignor-repository';
-import { assignorMock } from './assignor.service.spec';
 import { Assignor } from './entities/assignor.entity';
+import { Test, TestingModule } from '@nestjs/testing';
+import { assignorMock } from './assignor.service.spec';
+import { AssignorController } from './assignor.controller';
+import { AssignorRepository } from './repositories/assignor-repository';
 
 describe('Assignor Controller', () => {
-  let controller: AssignorController;
   let service: AssignorService;
+  let controller: AssignorController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssignorController],
-      providers: [AssignorService, { provide: AssignorRepository, useValue: {} }],
+      providers: [AssignorService, { provide: AssignorRepository, useValue: {} }, JwtService],
     }).compile();
 
     controller = module.get<AssignorController>(AssignorController);
