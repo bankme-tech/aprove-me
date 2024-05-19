@@ -52,5 +52,5 @@ Dentro da pasta`packages/api/http` existem arquivos demonstrando o que as rotas 
 
 ## Contato
 
-[E-mail](caiofsr13@gmail.com)
+E-mail: [caiofsr13@gmail.com](mailto:caiofsr13@gmail.com) <br>
 [Linkedin](https://www.linkedin.com/in/caiofsr)
