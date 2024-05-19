@@ -6,7 +6,6 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PrismaAssignorRepository implements AssignorRepository {
-  constructor(private db: PrismaService) { }
 
   public async create(assignor: Assignor): Promise<Assignor> {
     const rawData = PrismaAssignorMapper.toPrisma(assignor);
@@ -45,5 +44,12 @@ export class PrismaAssignorRepository implements AssignorRepository {
     if (!assignor) return null;
 
     return PrismaAssignorMapper.toDomain(assignor);
+  }
+
+  public async delete(assignorId: string): Promise<void> {
+    await this.db.assignor.update({
+      where: { id: assignorId },
+      data: { deletedAt: new Date() },
+    });
   }
 }

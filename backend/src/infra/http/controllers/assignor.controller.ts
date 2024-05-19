@@ -9,6 +9,7 @@ export class AssignorController {
   constructor(
     private addNewAssignor: AddNewAssignor,
     private findAssignorById: FindAssignorById,
+    private editAssignor: EditAssignor,
   ) {}
 
   @Post()
@@ -20,6 +21,19 @@ export class AssignorController {
   @Get(':assignorId')
   async findById(@ParamId('assignorId') assignorId: string) {
     const { assignor } = await this.findAssignorById.execute({ assignorId });
+
+    return assignor;
+  }
+
+  @Put(':assignorId')
+  async edit(
+    @ParamId('assignorId') assignorId: string,
+    @Body() body: EditAssignorDTO,
+  ) {
+    const { assignor } = await this.editAssignor.execute({
+      ...body,
+      assignorId,
+    });
 
     return assignor;
   }
