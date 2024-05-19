@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "87963fc1-4c3d-45eb-897b-b9e7f4e849c4",
+		"name": "APROVA-ME",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10812174"
+	},
+	"item": [
+		{
+			"name": "CREATE PAYABLE WITH ASSIGNOR",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payable\": {\r\n        \"id\": \"6e106664-a260-4133-9e95-1124089155eb\",\r\n        \"value\": 10.2,\r\n        \"emissionDate\": \"2013-03-10T02:00:00Z\",\r\n        \"assignor\": \"c64c013f-fa30-486d-83b4-5a1f78de1f68\"\r\n\r\n    },\r\n    \"assignor\": {\r\n        \"id\": \"c64c013f-fa30-486d-83b4-5a1f78de1f68\",\r\n        \"document\": \"document example\",\r\n        \"email\": \"email_example@gmail.com\",\r\n        \"phone\": \"34-97515645\",\r\n        \"name\": \"Fulano\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/integrations/payable",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"integrations",
+						"payable"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
