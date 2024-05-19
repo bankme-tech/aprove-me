@@ -2,7 +2,9 @@ import * as argon from 'argon2';
 import { UserRepository } from './user-repository';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { PrismaService } from '@database/prisma.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export default class PrismaUserRepository extends UserRepository {
   constructor(private prisma: PrismaService) {
     super();
@@ -15,6 +17,6 @@ export default class PrismaUserRepository extends UserRepository {
   async create({ login, password }: CreateUserDto) {
     const hashedPassword = await argon.hash(password);
 
-    return this.prisma.user.create({ data: { login, password: hashedPassword } });
+    return this.prisma.user.create({ data: { login, password: hashedPassword }, select: { id: true, login: true } });
   }
 }

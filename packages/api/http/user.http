@@ -1,0 +1,8 @@
+### create an user
+POST http://localhost:3333/integrations/user
+Content-Type: application/json
+
+{
+    "login": "test2",
+    "password": "123123123123"
+}
