@@ -1,4 +1,4 @@
-import { InjectQueue, OnQueueFailed, Process, Processor } from "@nestjs/bull";
+import { InjectQueue, OnQueueCompleted, OnQueueFailed, Process, Processor } from "@nestjs/bull";
 import { Job, Queue } from "bull";
 import { ReceivableDto } from "src/dtos/receivable.dto";
 import { AssignorDto } from "src/dtos/assignor.dto";
@@ -13,9 +13,7 @@ export class PayableConsumer {
     private readonly receivableService: ReceivableService,
     @InjectQueue('payables')
     private readonly queue: Queue
-  ) {
-    console.log('PayableConsumer instantiated');
-  }
+  ) { }
 
   @Process('process-receivable')
   async process(job: Job<{ receivableData: ReceivableDto, assignorData?: AssignorDto }>) {
@@ -23,7 +21,7 @@ export class PayableConsumer {
       // adicionar a fila morta
       return;
     }
-
+    //se ainda não chegou no limite de tentativas, tenta novamente
     try {
       const receivableData: ReceivableDto = job.data.receivableData;
       const assignorData: AssignorDto = job.data.assignorData;
@@ -55,7 +53,18 @@ export class PayableConsumer {
       });
     } catch (error) {
       throw error;
-    } 
+    }
   }
+
+  @OnQueueCompleted()
+  async onCompleted(job: Job) {
+    const jobCounts = await this.queue.getJobCounts();
+    console.log('Job counts:', jobCounts);
+    if (jobCounts.waiting === 0 && jobCounts.active === 0 && jobCounts.delayed === 0) {
+      console.log('All jobs have been completed');
+    }
+  }
+
+  
 
 }
