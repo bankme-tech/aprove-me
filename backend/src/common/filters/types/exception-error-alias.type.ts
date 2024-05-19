@@ -1,0 +1,5 @@
+export enum ExceptionErrorAlias {
+  INVALID_PAYLOAD = 'INVALID_PAYLOAD',
+  SERVICE_ERROR = 'SERVICE_ERROR',
+  UNKNOWN_ERROR = 'UNKNOWN_ERROR',
+}
