@@ -17,6 +17,11 @@ export class AssignorController {
     return this.assignorService.getAll();
   }
 
+  @Get(':id')
+  async get(@Param('id') id: string) {
+    return this.assignorService.findById(id);
+  }
+
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateAssignorDto: UpdateAssignorDto) {
     return this.assignorService.update(id, updateAssignorDto);

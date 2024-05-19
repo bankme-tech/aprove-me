@@ -62,4 +62,11 @@ describe('Assignor Controller', () => {
 
     expect(await service.delete('1')).toBeUndefined();
   });
+
+  it('should return an assignor when passed id', async () => {
+    jest.spyOn(service, 'findById').mockResolvedValue(assignorMock);
+    const assignor = await service.findById('1');
+
+    expect(assignor).toEqual(assignorMock);
+  });
 });

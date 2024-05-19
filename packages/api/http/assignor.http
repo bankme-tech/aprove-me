@@ -13,6 +13,10 @@ Content-Type: application/json
 
 GET http://localhost:3333/integrations/assignor
 
+### Get an assignors
+
+GET http://localhost:3333/integrations/assignor/bfa8a658-cf0e-4dcf-a825-64ae69ae3491
+
 ### Update an assignor
 
 PATCH http://localhost:3333/integrations/assignor/29dc27a1-a2d9-40b2-a165-4b1dcf973bc5
