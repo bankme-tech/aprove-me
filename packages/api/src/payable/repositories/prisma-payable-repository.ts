@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Payable } from '../entities/payable.entity';
+import { PrismaService } from '@database/prisma.service';
 import { PayableRepository } from './payable-repository';
-import { PrismaService } from 'src/database/prisma.service';
 import { CreatePayableDto } from '../dto/create-payable.dto';
 import { UpdatePayableDto } from '@payable/dto/update-payable.dto';
 

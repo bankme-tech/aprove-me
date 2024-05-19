@@ -19,6 +19,9 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@src/*": [
+        "./src/8"
+      ],
       "@payable/*": [
         "./src/payable/*"
       ],

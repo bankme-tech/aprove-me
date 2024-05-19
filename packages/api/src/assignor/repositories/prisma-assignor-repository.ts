@@ -1,10 +1,10 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { Assignor } from '../entities/assignor.entity';
-import { AssignorRepository } from './assignor-repository';
-import { PrismaService } from 'src/database/prisma.service';
-import { CreateAssignorDto } from '../dto/create-assignor.dto';
 import { cnpj, cpf } from 'cpf-cnpj-validator';
+import { Assignor } from '../entities/assignor.entity';
+import { PrismaService } from '@database/prisma.service';
+import { AssignorRepository } from './assignor-repository';
+import { CreateAssignorDto } from '../dto/create-assignor.dto';
 import { UpdateAssignorDto } from '@assignor/dto/update-assignor.dto';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 
 @Injectable()
 export default class PrismaAssignorRepository extends AssignorRepository {
