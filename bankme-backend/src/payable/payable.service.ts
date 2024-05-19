@@ -21,7 +21,7 @@ export class PayableService {
   }
 
   async updatePayable(id: string, dto: UpdatePayableDto) {
-    await this.assignorService.getAssignorById(dto.assignorId)
+    await this.assignorService.getAssignorById(dto.assignorId!)
     await this.payableExists(id);
     const updatedPayable = await this.repository.update(id, dto);
     return updatedPayable;
