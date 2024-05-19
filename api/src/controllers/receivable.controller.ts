@@ -16,26 +16,12 @@ import {
 import { ReceivableService } from '../services/receivable.service';
 import { AssignorService } from '../services/assignor.service';
 import { UUID } from 'crypto';
-import { IsNotEmpty, IsNumber, IsDateString } from 'class-validator';
 import { Receivable as ReceivableModel } from '@prisma/client';
-import { Assignor } from './assignor.controller';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { Job, Queue } from 'bull';
-import { InjectQueue, Process, Processor } from '@nestjs/bull';
-
-export class Receivable {
-  id: UUID
-
-  @IsNotEmpty()
-  @IsNumber()
-  value: number
-
-  @IsNotEmpty()
-  @IsDateString()
-  emissionDate: Date
-
-  assignor: UUID
-}
+import { Queue } from 'bull';
+import { InjectQueue} from '@nestjs/bull';
+import { ReceivableDto } from 'src/dtos/receivable.dto';
+import { AssignorDto } from 'src/dtos/assignor.dto';
 
 @UseGuards(AuthGuard)
 @Controller('/integrations/payable')
@@ -50,10 +36,10 @@ export class ReceivableController {
   @Post()
   @UsePipes(new ValidationPipe())
   async create(
-    @Body() data: { receivableData: Receivable, assignorData?: Assignor }
+    @Body() data: { receivableData: ReceivableDto, assignorData?: AssignorDto }
   ): Promise<ReceivableModel> {
-    const receivableData: Receivable = data.receivableData;
-    const assignorData: Assignor = data.assignorData;
+    const receivableData: ReceivableDto = data.receivableData;
+    const assignorData: AssignorDto = data.assignorData;
 
     let assignorId: UUID;
 
@@ -99,7 +85,7 @@ export class ReceivableController {
   @Put(':id')
   @UsePipes(new ValidationPipe())
   async update(
-    @Param('id') id: UUID, @Body() receivableData: Receivable
+    @Param('id') id: UUID, @Body() receivableData: ReceivableDto
   ): Promise<ReceivableModel> {
     // verifica se o recebível existe
     const receivable = await this.receivableService.receivable({ id });
@@ -130,7 +116,7 @@ export class ReceivableController {
 
   @Post('/batch')
   @HttpCode(204)
-  async createBatch(@Body() payables: { receivableData: Receivable, assignorData?: Assignor }[]): Promise<void> {
+  async createBatch(@Body() payables: { receivableData: ReceivableDto, assignorData?: AssignorDto }[]): Promise<void> {
     if (payables.length > 10000) {
       throw new Error('Too many payables in batch');
     }

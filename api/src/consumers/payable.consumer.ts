@@ -1,7 +1,7 @@
 import { InjectQueue, OnQueueFailed, Process, Processor } from "@nestjs/bull";
 import { Job, Queue } from "bull";
-import { Assignor } from "src/controllers/assignor.controller";
-import { Receivable } from "src/controllers/receivable.controller";
+import { ReceivableDto } from "src/dtos/receivable.dto";
+import { AssignorDto } from "src/dtos/assignor.dto";
 
 @Processor('payables')
 export class PayableConsumer {
@@ -13,7 +13,7 @@ export class PayableConsumer {
   }
 
   @Process('process-receivable')
-  async process(job: Job<{ receivableData: Receivable, assignorData?: Assignor}>) {
+  async process(job: Job<{ receivableData: ReceivableDto, assignorData?: AssignorDto}>) {
     if(job.attemptsMade >= 4) {
       // adicionar a fila morta
     }

@@ -15,33 +15,9 @@ import {
 } from '@nestjs/common';
 import { AssignorService } from '../services/assignor.service';
 import { UUID } from 'crypto';
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { Assignor as AssignorModel } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guard';
-
-export class Assignor {
-  id: UUID
-
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(30)
-  document: string
-
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(140)
-  email: string
-
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(20)
-  phone: string
-
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(140)
-  name: string
-}
+import { AssignorDto } from 'src/dtos/assignor.dto';
 
 @UseGuards(AuthGuard)
 @Controller('/integrations/assignor/')
@@ -50,7 +26,7 @@ export class AssignorController {
 
   @Post()
   @UsePipes(new ValidationPipe())
-  async create(@Body() assignorData: Assignor): Promise<AssignorModel> {
+  async create(@Body() assignorData: AssignorDto): Promise<AssignorModel> {
     const { document, email, phone, name } = assignorData;
 
     const existingAssignor = await this.assignorService.findByDocument(document);
@@ -84,7 +60,7 @@ export class AssignorController {
   @UsePipes(new ValidationPipe())
   async update(
     @Param('id') id: UUID,
-    @Body() assignorData: Assignor
+    @Body() assignorData: AssignorDto
   ): Promise<AssignorModel> {
     // Verifica se o assignor existe
     const assignor = await this.assignorService.assignor({ id });
