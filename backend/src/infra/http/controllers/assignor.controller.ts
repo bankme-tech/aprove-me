@@ -4,7 +4,7 @@ import { FindAssignorById } from '@/app/use-cases/assignor/find-assignor-by-id';
 import { CreateAssignorDTO } from '@/infra/http/dto/assignor/create-assignor.dto';
 import { ParamId } from '@/utils/param-id';
 import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
-import { EditAssignorDTO } from '../dto/assignor/edit-assignor.dto';
+import { EditAssignorDTO } from '@/infra/http/dto/assignor/edit-assignor.dto';
 import { DeleteAssignor } from '@/app/use-cases/assignor/delete-assignor';
 
 @Controller('/assignor')

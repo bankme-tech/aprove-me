@@ -19,7 +19,7 @@ export class PrismaAssignorRepository implements AssignorRepository {
 
   public async findById(assignorId: string): Promise<Assignor | null> {
     const assignor = await this.db.assignor.findFirst({
-      where: { id: assignorId },
+      where: { id: assignorId, deletedAt: null },
     });
 
     if (!assignor) return null;
@@ -29,7 +29,7 @@ export class PrismaAssignorRepository implements AssignorRepository {
 
   public async findByEmail(assignorEmail: string): Promise<Assignor | null> {
     const assignor = await this.db.assignor.findFirst({
-      where: { email: assignorEmail },
+      where: { email: assignorEmail, deletedAt: null },
     });
 
     if (!assignor) return null;
@@ -39,7 +39,7 @@ export class PrismaAssignorRepository implements AssignorRepository {
 
   public async findByDocument(assignorDocument: string): Promise<Assignor> {
     const assignor = await this.db.assignor.findFirst({
-      where: { document: assignorDocument },
+      where: { document: assignorDocument, deletedAt: null },
     });
 
     if (!assignor) return null;
