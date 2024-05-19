@@ -12,4 +12,8 @@ export class PayableService {
   async createPayable(payable: CreatePayableDto) {
     return this.payableRepository.create(payable);
   }
+
+  async findById(id: string) {
+    return this.payableRepository.findById(id);
+  }
 }

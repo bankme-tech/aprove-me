@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PayableService } from 'src/domain/services/payable.service';
 import { CreatePayableDto } from 'src/application/dtos/create-payable.dto';
 
@@ -16,4 +16,8 @@ export class PayableController {
     return this.payableService.createPayable(createPayableDto);
   }
 
+  @Get(":id")
+  async findById(@Param('id') id: string){
+    return this.payableService.findById(id);
+  }
 }

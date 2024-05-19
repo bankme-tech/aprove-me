@@ -25,8 +25,8 @@ export class PrismaPayableRepository implements PayableRepository {
       throw new HttpException(formattedErrorMessage, HttpStatus.BAD_REQUEST);
     }
   }
-  findById(id: string): Promise<Payable> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Payable> {
+    return await this.prisma.payable.findUnique({ where: { id } });
   }
   update(id: string, payable: Payable): Promise<Payable> {
     throw new Error('Method not implemented.');

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, } from '@nestjs/common';
 import { CreateAssignorDto } from 'src/application/dtos/create-assignor.dto';
 import { AssignorService } from 'src/domain/services/assignor.service';
 
@@ -12,5 +12,10 @@ export class AssignorController {
   @Post()
   async create(@Body() createAssignorDto: CreateAssignorDto) {
     return this.assignorService.createAssignor(createAssignorDto);
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    return this.assignorService.findById(id);
   }
 }

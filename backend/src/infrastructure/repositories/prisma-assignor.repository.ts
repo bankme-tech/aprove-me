@@ -20,8 +20,8 @@ export class PrismaAssignorRepository implements AssignorRepository {
       throw new HttpException(formattedErrorMessage, HttpStatus.BAD_REQUEST);
     }
   }
-  findById(id: string): Promise<Assignor> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Assignor> {
+    return await this.prisma.assignor.findUnique({ where: { id } });
   }
   update(id: string, assignor: Assignor): Promise<Assignor> {
     throw new Error('Method not implemented.');
