@@ -1,17 +1,17 @@
 import * as argon from 'argon2';
-import { UserService } from '@user/user.service';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UserRepository } from '@user/repositories/user-repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly userRepository: UserRepository,
   ) {}
 
   async signIn(login: string, password: string) {
-    const user = await this.userService.findByLogin(login);
+    const user = await this.userRepository.findByLogin(login);
 
     if (!user) {
       throw new UnauthorizedException('invalid credentials');
