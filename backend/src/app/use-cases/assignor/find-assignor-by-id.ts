@@ -13,11 +13,11 @@ interface Output {
 
 @Injectable()
 export class FindAssignorById {
-  constructor(private assignorRepository: AssignorRepository) {}
+  constructor(private assignorRepository: AssignorRepository) { }
 
   async execute(input: Input): Promise<Output> {
     const findById = await this.assignorRepository.findById(input.assignorId);
-    console.log(findById);
+
     if (!findById) throw new AssignorNotFound();
 
     return { assignor: findById };

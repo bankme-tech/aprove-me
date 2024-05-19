@@ -21,4 +21,14 @@ export class PrismaPayableRepository implements PayableRepository {
 
     return PrismaPayableMapper.toDomain(newPayable);
   }
+
+  async findById(payableId: string): Promise<Payable> {
+    const findPayable = await this.db.payable.findFirst({
+      where: { id: payableId },
+    });
+
+    if (!findPayable) return null;
+
+    return PrismaPayableMapper.toDomain(findPayable);
+  }
 }
