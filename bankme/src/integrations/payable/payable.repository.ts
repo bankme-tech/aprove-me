@@ -38,4 +38,44 @@ export default class PayableRepository {
       payable.assignorId,
     );
   }
+
+  async updatePayableById(
+    id: string,
+    payable: Payable,
+  ): Promise<IPayable | null> {
+    const updatedPayable = await this.prismaService.payable.update({
+      where: {
+        id,
+      },
+      data: payable.toCreate(),
+    });
+
+    return new Payable(
+      updatedPayable.id,
+      updatedPayable.value,
+      updatedPayable.emissionDate,
+      updatedPayable.assignorId,
+    );
+  }
+
+  async deletePayableById(id: string): Promise<IPayable | null> {
+    const payable = await this.findPayableById(id);
+
+    if (!payable) {
+      return;
+    }
+
+    await this.prismaService.payable.delete({
+      where: {
+        id,
+      },
+    });
+
+    return new Payable(
+      payable.id,
+      payable.value,
+      payable.emissionDate,
+      payable.assignorId,
+    );
+  }
 }
