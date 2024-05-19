@@ -3,12 +3,21 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
+    container_name: api
     ports:
       - ${PORT}:${PORT}
     env_file:
       - .env
     volumes:
       - db-data:/app/prisma
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
 
 volumes:
+  redis:
+    driver: local
   db-data:

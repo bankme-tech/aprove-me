@@ -10,7 +10,8 @@ import {
   ValidationPipe,
   HttpException,
   HttpStatus,
-  UseGuards
+  UseGuards,
+  HttpCode
 } from '@nestjs/common';
 import { ReceivableService } from '../services/receivable.service';
 import { AssignorService } from '../services/assignor.service';
@@ -19,6 +20,8 @@ import { IsNotEmpty, IsNumber, IsDateString } from 'class-validator';
 import { Receivable as ReceivableModel } from '@prisma/client';
 import { Assignor } from './assignor.controller';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Job, Queue } from 'bull';
+import { InjectQueue, Process, Processor } from '@nestjs/bull';
 
 export class Receivable {
   id: UUID
@@ -39,7 +42,9 @@ export class Receivable {
 export class ReceivableController {
   constructor(
     private readonly assignorService: AssignorService,
-    private readonly receivableService: ReceivableService
+    private readonly receivableService: ReceivableService,
+    @InjectQueue('payables')
+    private readonly queue: Queue
   ) { }
 
   @Post()
@@ -121,5 +126,18 @@ export class ReceivableController {
     }
 
     return await this.receivableService.deleteReceivable({ id });
+  }
+
+  @Post('/batch')
+  @HttpCode(204)
+  async createBatch(@Body() payables: { receivableData: Receivable, assignorData?: Assignor }[]): Promise<void> {
+    if (payables.length > 10000) {
+      throw new Error('Too many payables in batch');
+    }
+    // add payables to a queue
+    for (const payable of payables) {
+      console.log('Add payable to queue',payable)
+      this.queue.add('process-receivable', payable);
+    }
   }
 }
