@@ -69,14 +69,4 @@ export default class Assignor implements IAssignor {
       name: this.name,
     };
   }
-
-  toJSON() {
-    return {
-      id: this.id,
-      document: this.document,
-      email: this.email,
-      phone: this.phone,
-      name: this.name,
-    };
-  }
 }

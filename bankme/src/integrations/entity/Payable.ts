@@ -57,13 +57,4 @@ export default class Payable implements IPayable {
       assignorId: this.assignorId,
     };
   }
-
-  toJSON() {
-    return {
-      id: this.id,
-      value: this.value,
-      emissionDate: this.emissionDate,
-      assignorId: this.assignorId,
-    };
-  }
 }
