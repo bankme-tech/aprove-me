@@ -21,5 +21,11 @@ model Assignor {
   email    String    @unique
   phone    String    @unique
   name     String
-  payables  Payable[]
+  payables Payable[]
+}
+
+model User {
+  id       String @id @default(uuid())
+  login    String @unique
+  password String
 }
