@@ -16,8 +16,9 @@ import { UserModule } from './user/user.module';
       {
         path: 'integrations',
         children: [
-          { path: 'assignor', module: AssignorModule },
+          { path: 'user', module: UserModule },
           { path: 'payable', module: PayableModule },
+          { path: 'assignor', module: AssignorModule },
         ],
       },
     ]),
