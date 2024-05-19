@@ -28,10 +28,13 @@ export class PrismaPayableRepository implements PayableRepository {
   async findById(id: string): Promise<Payable> {
     return await this.prisma.payable.findUnique({ where: { id } });
   }
-  update(id: string, payable: Payable): Promise<Payable> {
-    throw new Error('Method not implemented.');
+  async update(id: string, payable: Payable): Promise<Payable> {
+    return await this.prisma.payable.update({
+      where: { id },
+      data: payable,
+    });
   }
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    await this.prisma.payable.delete({ where: { id } });
   }
 }

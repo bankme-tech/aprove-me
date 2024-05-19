@@ -3,6 +3,7 @@ import { PrismaService } from '../database/prisma/prisma.service';
 import { AssignorRepository } from 'src/domain/repositories/assignor.repository';
 import { Assignor } from 'src/domain/entities/assignor.entity';
 import { CreateAssignorDto } from 'src/application/dtos/create-Assignor.dto';
+import { UpdateAssignorDto } from 'src/application/dtos/update-assignor.dto';
 
 @Injectable()
 export class PrismaAssignorRepository implements AssignorRepository {
@@ -23,10 +24,13 @@ export class PrismaAssignorRepository implements AssignorRepository {
   async findById(id: string): Promise<Assignor> {
     return await this.prisma.assignor.findUnique({ where: { id } });
   }
-  update(id: string, assignor: Assignor): Promise<Assignor> {
-    throw new Error('Method not implemented.');
+  async update(id: string, assignor: UpdateAssignorDto): Promise<Assignor> {
+    return await this.prisma.assignor.update({
+      where: { id },
+      data: assignor,
+    });
   }
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    await this.prisma.assignor.delete({ where: { id } });
   }
 }
