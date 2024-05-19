@@ -17,6 +17,7 @@ Sistema de gestão de recebíveis: A aplicação permite que usuários cadastrem
 ### Funcionalidades
 
 - Cadastro de recebíveis
+- Cadastro de recebíveis por lotes
 - Listagem de recebíveis
 - Exclusão de recebíveis
 - Cadastro de cedentes
