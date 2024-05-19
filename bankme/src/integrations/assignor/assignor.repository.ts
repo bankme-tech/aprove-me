@@ -60,4 +60,52 @@ export default class AssignorRepository {
       assignor.phone,
     );
   }
+
+  async updateAssignorById(
+    id: string,
+    assignor: Assignor,
+  ): Promise<IAssignor | null> {
+    const assignorFromDB = await this.findAssignorById(id);
+
+    if (!assignorFromDB) {
+      return null;
+    }
+
+    const updatedAssignor = await this.prismaService.assignor.update({
+      where: {
+        id,
+      },
+      data: assignor.toCreate(),
+    });
+
+    return new Assignor(
+      updatedAssignor.id,
+      updatedAssignor.document,
+      updatedAssignor.name,
+      updatedAssignor.email,
+      updatedAssignor.phone,
+    );
+  }
+
+  async deleteAssignorById(id: string): Promise<IAssignor | null> {
+    const assignorFromDB = await this.findAssignorById(id);
+
+    if (!assignorFromDB) {
+      return null;
+    }
+
+    const deletedAssignor = await this.prismaService.assignor.delete({
+      where: {
+        id,
+      },
+    });
+
+    return new Assignor(
+      deletedAssignor.id,
+      deletedAssignor.document,
+      deletedAssignor.name,
+      deletedAssignor.email,
+      deletedAssignor.phone,
+    );
+  }
 }
