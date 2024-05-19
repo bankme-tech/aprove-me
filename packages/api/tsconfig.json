@@ -27,6 +27,12 @@
       ],
       "@assignor/*": [
         "./src/assignor/*"
+      ],
+      "@user/*": [
+        "./src/user/*"
+      ],
+      "@configs/*": [
+        "./src/config/*"
       ]
     }
   }
