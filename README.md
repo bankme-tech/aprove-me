@@ -31,6 +31,7 @@ Sistema de gestão de recebíveis: A aplicação permite que usuários cadastrem
 - NestJS
 - Prisma
 - Jest
+- RabbitMQ
 
 ## Executando o projeto
 
@@ -38,10 +39,13 @@ Sistema de gestão de recebíveis: A aplicação permite que usuários cadastrem
 ```bash
 mv ~/.env.example ~/.env
 ```
+> [!NOTE]
+> Lembre se que a url do RabbitMQ é baseada no service do docker-compose, então ao invés de ser `localhost` será `rabbitmq`
+
 
 2 - Executar o container
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 Dentro da pasta`packages/api/http` existem arquivos demonstrando o que as rotas aceitam de parâmetros

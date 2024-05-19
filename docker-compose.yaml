@@ -11,3 +11,14 @@ services:
     volumes:
       - ./packages/api:/home/node/app
       - ./node_modules:/home/node/app/node_modules
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15692:15692"
+    environment:
+      RABBITMQ_DEFAULT_USER: "rmq"
+      RABBITMQ_DEFAULT_PASS: "rmq"
