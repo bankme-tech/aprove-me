@@ -11,10 +11,29 @@ services:
     volumes:
       - ./packages/api:/home/node/app
       - ./node_modules:/home/node/app/node_modules
+    depends_on:
+      - rabbitmq
+    networks:
+      - bankme
+
+  web:
+    container_name: bakme-web
+    build:
+      context: ./packages/web
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./packages/web:/home/node/app
+      - ./node_modules:/home/node/app/node_modules
+    depends_on:
+      - api
+    networks:
+      - bankme
 
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: rabbitmq
+    container_name: bankme-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -22,3 +41,9 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: "rmq"
       RABBITMQ_DEFAULT_PASS: "rmq"
+    networks:
+      - bankme
+
+networks:
+  bankme:
+    driver: bridge
