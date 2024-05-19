@@ -13,7 +13,7 @@ interface Output {
 
 @Injectable()
 export class FindPayableById {
-  constructor(private payableRepository: PayableRepository) { }
+  constructor(private payableRepository: PayableRepository) {}
 
   async execute(input: Input): Promise<Output> {
     const findById = await this.payableRepository.findById(input.payableId);

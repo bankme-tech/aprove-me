@@ -11,6 +11,11 @@ interface PayableProps {
   deletedAt?: Date;
 }
 
+type UpdateAssignorProps = Omit<
+  PayableProps,
+  'createdAt' | 'updatedAt' | 'deletedAt'
+>;
+
 interface PayablePropsReplaceble {
   createdAt?: Date;
   updatedAt?: Date;
@@ -30,5 +35,12 @@ export class Assignor {
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
     };
+  }
+
+  public updateAssignor(input: UpdateAssignorProps): void {
+    this.props.name = input.name;
+    this.props.email = input.email;
+    this.props.phone = input.phone;
+    this.props.document = input.document;
   }
 }

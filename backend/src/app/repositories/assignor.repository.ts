@@ -7,4 +7,6 @@ export abstract class AssignorRepository {
   public abstract findByDocument(
     assignorDocument: string,
   ): Promise<Assignor | null>;
+  public abstract edit(assignor: Assignor): Promise<Assignor>;
+  public abstract delete(assignorId: string): Promise<void>;
 }

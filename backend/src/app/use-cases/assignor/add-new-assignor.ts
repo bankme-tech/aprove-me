@@ -16,7 +16,7 @@ interface Output {
 
 @Injectable()
 export class AddNewAssignor {
-  constructor(private assignorRepository: AssignorRepository) { }
+  constructor(private assignorRepository: AssignorRepository) {}
 
   async execute(input: Input): Promise<Output> {
     const [assignorEmail, assignorDocument] = await Promise.all([

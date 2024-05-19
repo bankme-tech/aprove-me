@@ -1,8 +1,11 @@
 import { AddNewAssignor } from '@/app/use-cases/assignor/add-new-assignor';
+import { EditAssignor } from '@/app/use-cases/assignor/edit-assignor';
 import { FindAssignorById } from '@/app/use-cases/assignor/find-assignor-by-id';
 import { CreateAssignorDTO } from '@/infra/http/dto/assignor/create-assignor.dto';
 import { ParamId } from '@/utils/param-id';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { EditAssignorDTO } from '../dto/assignor/edit-assignor.dto';
+import { DeleteAssignor } from '@/app/use-cases/assignor/delete-assignor';
 
 @Controller('/assignor')
 export class AssignorController {
@@ -10,6 +13,7 @@ export class AssignorController {
     private addNewAssignor: AddNewAssignor,
     private findAssignorById: FindAssignorById,
     private editAssignor: EditAssignor,
+    private deleteAssignor: DeleteAssignor,
   ) {}
 
   @Post()
@@ -36,5 +40,10 @@ export class AssignorController {
     });
 
     return assignor;
+  }
+
+  @Delete(':assignorId')
+  async delete(@ParamId('assignorId') assignorId: string) {
+    await this.deleteAssignor.execute({ assignorId });
   }
 }
