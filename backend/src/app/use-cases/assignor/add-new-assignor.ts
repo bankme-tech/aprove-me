@@ -16,11 +16,15 @@ interface Output {
 
 @Injectable()
 export class AddNewAssignor {
-  constructor(private assignorRepository: AssignorRepository) {}
+  constructor(private assignorRepository: AssignorRepository) { }
 
   async execute(input: Input): Promise<Output> {
-    const findAssignor = await this.assignorRepository.findByEmail(input.email);
-    if (findAssignor) {
+    const [assignorEmail, assignorDocument] = await Promise.all([
+      this.assignorRepository.findByEmail(input.email),
+      this.assignorRepository.findByDocument(input.document),
+    ]);
+
+    if (assignorEmail || assignorDocument) {
       throw new AssignorAlreadyExists();
     }
 

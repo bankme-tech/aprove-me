@@ -36,4 +36,14 @@ export class PrismaAssignorRepository implements AssignorRepository {
 
     return PrismaAssignorMapper.toDomain(assignor);
   }
+
+  public async findByDocument(assignorDocument: string): Promise<Assignor> {
+    const assignor = await this.db.assignor.findFirst({
+      where: { document: assignorDocument },
+    });
+
+    if (!assignor) return null;
+
+    return PrismaAssignorMapper.toDomain(assignor);
+  }
 }
