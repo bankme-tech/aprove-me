@@ -1,0 +1,8 @@
+### sign in user
+POST http://localhost:3333/integrations/auth
+Content-Type: application/json
+
+{
+    "login": "test",
+    "password": "123123123123"
+}

@@ -5,10 +5,12 @@ import { PrismaService } from './database/prisma.service';
 import { AssignorModule } from './assignor/assignor.module';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     UserModule,
+    AuthModule,
     PayableModule,
     DatabaseModule,
     AssignorModule,
@@ -17,6 +19,7 @@ import { UserModule } from './user/user.module';
         path: 'integrations',
         children: [
           { path: 'user', module: UserModule },
+          { path: 'auth', module: AuthModule },
           { path: 'payable', module: PayableModule },
           { path: 'assignor', module: AssignorModule },
         ],
