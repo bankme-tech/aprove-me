@@ -1,18 +1,18 @@
-import { IsEmail, IsString, Max } from 'class-validator';
+import { IsEmail, IsPhoneNumber, IsString, Length } from 'class-validator';
 
 export class CreateAssignorDTO {
-  @Max(140)
+  @Length(0, 140)
   @IsString()
   name: string;
 
-  @Max(20)
-  @IsString()
+  @IsPhoneNumber('BR')
   phone: string;
 
+  @Length(0, 140)
   @IsEmail()
   email: string;
 
-  @Max(30)
   @IsString()
+  @Length(11, 30)
   document: string;
 }

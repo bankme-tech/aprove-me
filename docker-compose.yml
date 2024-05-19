@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   aproveme-api:
-    container_name: aprove-backend
+    container_name: aproveme-backend
     image: aproveme-backend
     build: .
     ports:
