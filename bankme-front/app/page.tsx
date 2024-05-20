@@ -1,7 +1,12 @@
+import Header from "./components/Header";
+import { AuthProvider } from "./context/AuthContext";
+
 export default function Home() {
   return (
-    <div>
-      Página Inicial
-    </div>
+    <AuthProvider>
+      <div>
+        <Header></Header>
+      </div>
+    </AuthProvider>
   );
 }
