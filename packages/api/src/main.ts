@@ -6,7 +6,7 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { PrismaExceptionFilter } from './exception-filters/prisma.exception-filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
