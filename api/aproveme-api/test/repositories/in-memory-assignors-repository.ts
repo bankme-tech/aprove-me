@@ -7,4 +7,22 @@ export class InMemoryAssignorsRepository implements AssignorsRepository {
   async create(assignor: Assignor): Promise<void> {
     this.items.push(assignor);
   }
+
+  async update(assignor: Assignor): Promise<void> {
+    const itemIndex = this.items.findIndex((item) => item.id === assignor.id);
+
+    this.items[itemIndex] = assignor;
+  }
+
+  async delete(assignor: Assignor): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  async findById(id: string): Promise<Assignor> {
+    const assignor = this.items.find((item) => item.id.toString() === id);
+
+    if (!assignor) return null;
+
+    return assignor;
+  }
 }

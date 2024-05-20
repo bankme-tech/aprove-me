@@ -18,11 +18,19 @@ export class Payable extends Entity<PayableProps> {
     return this.props.value;
   }
 
+  set value(value: number) {
+    this.props.value = value;
+  }
+
   get emissionDate() {
     return this.props.emissionDate;
   }
 
   get assignorId() {
     return this.props.assignorId;
+  }
+
+  set assignorId(id: UniqueEntityId) {
+    this.props.assignorId = id;
   }
 }
