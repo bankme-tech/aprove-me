@@ -4,26 +4,13 @@ import {
   Body,
   UsePipes,
   ValidationPipe,
-  ConflictException,
-  UseGuards
+  ConflictException
 } from '@nestjs/common';
 import { PermissionsService } from '../services/permissions.service';
-import { UUID } from 'crypto';
-import { IsNotEmpty, IsString} from 'class-validator';
 import { Permission as PermissionModel } from '@prisma/client';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { Permission } from 'src/dtos/permission.dto';
 
-export class Permission {
-  id: UUID
 
-  @IsNotEmpty()
-  @IsString()
-  login: string
-
-  @IsNotEmpty()
-  @IsString()
-  password: string
-}
 
 @Controller('/integrations/permissions/')
 export class PermissionController {
