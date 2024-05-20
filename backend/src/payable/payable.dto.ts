@@ -1,18 +1,16 @@
-import { Type } from 'class-transformer';
 import {
   IsString,
-  IsUUID,
+  IsNotEmpty,
+  Length,
   IsNumber,
   Min,
   ValidateNested,
-  Length,
-  IsNotEmpty,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 class CreateAssignorDto {
   @IsString()
   @IsNotEmpty()
-  @Length(1, 50)
   name: string;
 }
 
@@ -27,9 +25,6 @@ export class CreatePayableDto {
   @IsNotEmpty()
   amount: number;
 
-  @IsUUID()
-  @IsNotEmpty()
-  assignorId: string;
 }
 
 export class CreatePayableAssignorDto {
@@ -37,7 +32,7 @@ export class CreatePayableAssignorDto {
   @Type(() => CreateAssignorDto)
   assignor: CreateAssignorDto;
 
-  @ValidateNested()
+  @ValidateNested({ each: true })
   @Type(() => CreatePayableDto)
-  payable: CreatePayableDto;
+  payables: CreatePayableDto[];
 }
