@@ -20,7 +20,7 @@ export class AuthService {
 
     const token = generateToken(user);
 
-    return {token, user: authUser};
+    return {token, user: { id: authUser.id, login: authUser.username }};
   }
 
   async register(user: LoginDto) {
@@ -39,6 +39,6 @@ export class AuthService {
       }
     });
 
-    return newUser;
+    return { id: newUser.id, login: newUser.username };
   }
 }
