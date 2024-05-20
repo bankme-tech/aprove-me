@@ -5,14 +5,22 @@ import {
   Get,
   HttpCode,
   Param,
+  Patch,
   Post,
   UsePipes,
 } from '@nestjs/common';
 import { ZodValidationPipe } from 'src/zod-validation/zod-validation.pipe';
-import { CreatePayableDto, createPayableSchema } from './create-payable.dto';
+import {
+  CreatePayableDto,
+  createPayableSchema,
+} from './dtos/create-payable.dto';
 import { PayableService } from './payable.service';
 import { z } from 'zod';
 import { uuidSchema } from 'src/common/zod';
+import {
+  UpdatePayableDto,
+  updatePayableSchema,
+} from './dtos/update-payable.dto';
 
 @Controller('integrations/payable')
 export class PayableController {
@@ -39,5 +47,15 @@ export class PayableController {
     id: string,
   ) {
     return this.payableService.delete(id);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id', new ZodValidationPipe(uuidSchema))
+    id: string,
+    @Body(new ZodValidationPipe(updatePayableSchema))
+    updatePayableDto: UpdatePayableDto,
+  ) {
+    return this.payableService.update(id, updatePayableDto);
   }
 }
