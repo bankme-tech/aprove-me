@@ -4,6 +4,16 @@ import { PayableRepository } from '@/app/repositories/payable.repository';
 export class InMemoryPayableRepository implements PayableRepository {
   public payable: Payable[] = [];
 
+  async findAll(skip: number, take: number): Promise<Payable[]> {
+    const skipedData = this.payable.slice(skip);
+
+    return skipedData.slice(0, take);
+  }
+
+  async count(): Promise<number> {
+    return this.payable.length;
+  }
+
   async create(payable: Payable): Promise<Payable> {
     this.payable.push(payable);
 
