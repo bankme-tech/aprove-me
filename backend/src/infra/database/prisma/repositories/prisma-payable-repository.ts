@@ -6,7 +6,7 @@ import { PrismaPayableMapper } from '../mappers/payable';
 
 @Injectable()
 export class PrismaPayableRepository implements PayableRepository {
-  constructor(private db: PrismaService) { }
+  constructor(private db: PrismaService) {}
 
   async create(payable: Payable): Promise<Payable> {
     const newPayable = await this.db.payable.create({
@@ -30,5 +30,14 @@ export class PrismaPayableRepository implements PayableRepository {
     if (!findPayable) return null;
 
     return PrismaPayableMapper.toDomain(findPayable);
+  }
+
+  async edit(payable: Payable): Promise<Payable> {
+    const updatePayable = await this.db.payable.update({
+      where: { id: payable._id },
+      data: { ...payable.props },
+    });
+
+    return PrismaPayableMapper.toDomain(updatePayable);
   }
 }
