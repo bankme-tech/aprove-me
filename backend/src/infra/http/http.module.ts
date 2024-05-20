@@ -13,6 +13,7 @@ import { PayableController } from '@/infra/http/controllers/payable.controller';
 import { Module } from '@nestjs/common';
 import { UserController } from './controllers/user.controller';
 import { AdaptersModule } from '@/app/adapters/adapters.module';
+import { LoginUser } from '@/app/use-cases/user/login-user';
 
 const assignorUseCases = [
   AddNewAssignor,
@@ -28,7 +29,7 @@ const payableUseCases = [
   DeletePayable,
 ];
 
-const userUseCases = [AddNewUser];
+const userUseCases = [AddNewUser, LoginUser];
 
 @Module({
   imports: [AdaptersModule, DatabaseModule],
