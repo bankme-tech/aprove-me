@@ -1,8 +1,8 @@
 import { User } from '@/app/entities/user';
 import { UserAlreadyExists } from '@/app/errors/user-already-exists';
+import { BcryptAdapterRepository } from '@/app/repositories/bcrypt-adapter-repository';
 import { UserRepository } from '@/app/repositories/user.repository';
 import { Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
 
 interface Input {
   login: string;
@@ -15,11 +15,14 @@ interface Output {
 
 @Injectable()
 export class AddNewUser {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private bcryptAdapter: BcryptAdapterRepository,
+  ) {}
 
   async execute(input: Input): Promise<Output> {
-    const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(input.password, salt);
+    const salt = await this.bcryptAdapter.genSalt();
+    const hashPassword = await this.bcryptAdapter.hash(input.password, salt);
 
     const findUser = await this.userRepository.findByLogin(input.login);
 

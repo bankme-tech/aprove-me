@@ -12,6 +12,7 @@ import { AssignorController } from '@/infra/http/controllers/assignor.controller
 import { PayableController } from '@/infra/http/controllers/payable.controller';
 import { Module } from '@nestjs/common';
 import { UserController } from './controllers/user.controller';
+import { AdaptersModule } from '@/app/adapters/adapters.module';
 
 const assignorUseCases = [
   AddNewAssignor,
@@ -30,7 +31,7 @@ const payableUseCases = [
 const userUseCases = [AddNewUser];
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [AdaptersModule, DatabaseModule],
   providers: [...assignorUseCases, ...payableUseCases, ...userUseCases],
   controllers: [PayableController, AssignorController, UserController],
 })
