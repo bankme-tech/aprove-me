@@ -24,7 +24,7 @@ export class PrismaPayableRepository implements PayableRepository {
 
   async findById(payableId: string): Promise<Payable> {
     const findPayable = await this.db.payable.findFirst({
-      where: { id: payableId },
+      where: { id: payableId, deletedAt: null },
     });
 
     if (!findPayable) return null;
