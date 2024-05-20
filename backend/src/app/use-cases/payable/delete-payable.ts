@@ -13,9 +13,9 @@ export class DeletePayable {
   constructor(private payableRepository: PayableRepository) {}
 
   async execute(input: Input): Promise<Output> {
-    const findAssignor = await this.payableRepository.findById(input.payableId);
+    const findPayable = await this.payableRepository.findById(input.payableId);
 
-    if (!findAssignor) throw new PayableNotFound();
+    if (!findPayable) throw new PayableNotFound();
 
     await this.payableRepository.delete(input.payableId);
   }
