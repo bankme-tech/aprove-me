@@ -19,7 +19,7 @@ export class AddNewPayable {
   constructor(
     private payableRepository: PayableRepository,
     private assignorRepository: AssignorRepository,
-  ) { }
+  ) {}
 
   async execute(input: Input): Promise<Output> {
     const findAssignor = await this.assignorRepository.findById(
