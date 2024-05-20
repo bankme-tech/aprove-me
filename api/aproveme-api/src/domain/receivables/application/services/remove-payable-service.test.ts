@@ -1,30 +1,29 @@
 import { InMemoryPayablesRepository } from "test/repositories/in-memory-payables-repository";
 import { makePayable } from "test/factories/makePayable";
-import { EditPayableService } from "./edit-payable-service";
+import { RemovePayableService } from "./remove-payable-service";
 
 let inMemoPayableRepo: InMemoryPayablesRepository;
-let sut: EditPayableService;
+let sut: RemovePayableService;
 
-describe("Edit Payable", () => {
+describe("Remove Payable", () => {
   beforeEach(() => {
     inMemoPayableRepo = new InMemoryPayablesRepository();
-    sut = new EditPayableService(inMemoPayableRepo);
+    sut = new RemovePayableService(inMemoPayableRepo);
   });
 
-  it("should be able to edit a payable", async () => {
+  it("should be able to remove a payable", async () => {
     const fakePayable = makePayable({});
 
     await inMemoPayableRepo.create(fakePayable);
 
+    expect(inMemoPayableRepo.items).toHaveLength(1);
+
     const result = await sut.execute({
       id: fakePayable.id.toString(),
-      assignorId: "14655538540",
-      value: 1500.5,
     });
 
     expect(result.isRight()).toBeTruthy();
 
-    expect(result.value.payable.value).toEqual(1500.5);
-    expect(result.value.payable.assignorId.value).toEqual("14655538540");
+    expect(inMemoPayableRepo.items).toHaveLength(0);
   });
 });

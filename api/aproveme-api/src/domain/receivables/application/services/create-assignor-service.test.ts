@@ -11,7 +11,7 @@ describe("Create Assignor", () => {
     sut = new CreateAssignorService(inMemoAssignorsRepo);
   });
 
-  it("should be able to create a payable", async () => {
+  it("should be able to create a assignor", async () => {
     const fakeAssignor = makeAssignor({});
 
     await inMemoAssignorsRepo.create(fakeAssignor);
