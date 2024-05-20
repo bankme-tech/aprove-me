@@ -37,4 +37,12 @@ export class AssignorService {
 
     return assignor;
   }
+
+  async delete(id: string) {
+    await this.prisma.assignor.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
