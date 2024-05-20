@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
-function Header() {
+export default function Header() {
   const { user, logout } = useAuth();
 
   const handleClick = () => {
@@ -38,5 +38,3 @@ function Header() {
     </header>
   )
 }
-
-export default Header;
