@@ -1,7 +1,7 @@
 import { Replace } from '@/utils/replace';
 import { randomUUID } from 'crypto';
 
-interface PayableProps {
+interface AssignorProps {
   document: string;
   email: string;
   phone: string;
@@ -12,21 +12,21 @@ interface PayableProps {
 }
 
 type UpdateAssignorProps = Omit<
-  PayableProps,
+  AssignorProps,
   'createdAt' | 'updatedAt' | 'deletedAt'
 >;
 
-interface PayablePropsReplaceble {
+interface AssignorPropsReplaceble {
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export class Assignor {
   public _id: string;
-  public props: PayableProps;
+  public props: AssignorProps;
 
   constructor(
-    props: Replace<PayableProps, PayablePropsReplaceble>,
+    props: Replace<AssignorProps, AssignorPropsReplaceble>,
     _id?: string,
   ) {
     this._id = _id ? _id : randomUUID();
