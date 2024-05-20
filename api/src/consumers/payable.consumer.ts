@@ -12,7 +12,9 @@ export class PayableConsumer {
     private readonly assignorService: AssignorService,
     private readonly receivableService: ReceivableService,
     @InjectQueue('payables')
-    private readonly queue: Queue
+    private readonly queue: Queue,
+    @InjectQueue('deadQueue')
+    private readonly deadQueue: Queue
   ) { }
 
   @Process('process-receivable')
@@ -61,6 +63,8 @@ export class PayableConsumer {
     if (job.attemptsMade >= 4) {
       console.log(`Enviar email para o time de operações: Erro ao processar o item 4 vezes, adicionado à "fila morta".
       `);
+      // Add job à "fila morta"
+      this.deadQueue.add(job)
     }
     await this.handleJobCompletion(job);
   }

@@ -25,6 +25,9 @@ import { PayableConsumer } from './consumers/payable.consumer';
     BullModule.registerQueue({
       name: 'payables',
     }),
+    BullModule.registerQueue({
+      name: 'deadQueue',
+    }),
   ],
   controllers: [ReceivableController, AssignorController, PermissionController],
   providers: [PrismaService, ReceivableService, AssignorService, PermissionsService, PayableConsumer],
