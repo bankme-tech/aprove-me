@@ -5,9 +5,16 @@
   "license": "MIT",
   "private": true,
   "workspaces": {
-    "packages": ["packages/*"]
+    "packages": [
+      "packages/*"
+    ]
   },
   "scripts": {
-    "api:start:dev":"yarn workspace @bankme/api start:dev"
+    "api:start:dev": "yarn workspace @bankme/api start:dev",
+    "web:start:dev": "yarn workspace @bankme/web dev",
+    "start": "concurrently \"yarn api:start:dev\" \"yarn web:start:dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
