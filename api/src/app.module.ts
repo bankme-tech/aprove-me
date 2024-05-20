@@ -19,15 +19,12 @@ import { PayableConsumer } from './consumers/payable.consumer';
         port: parseInt(process.env.REDIS_PORT)
       },
       defaultJobOptions: {
-        // removeOnComplete: 100,
-        // removeOnFail: 1000,
         attempts: 4,
-        backoff: 1000
       },
     }),
     BullModule.registerQueue({
       name: 'payables',
-    })
+    }),
   ],
   controllers: [ReceivableController, AssignorController, PermissionController],
   providers: [PrismaService, ReceivableService, AssignorService, PermissionsService, PayableConsumer],
