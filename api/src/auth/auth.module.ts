@@ -11,7 +11,7 @@ import {PrismaService} from '../services/prisma.service'
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '300s' }, // trocar para 300s pq 60s tava muito curto para fazer os testes
     }),
   ],
   providers: [AuthService, PermissionsService, PrismaService],
