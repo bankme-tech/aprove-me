@@ -4,7 +4,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 export interface PayableProps {
   value: number;
   emissionDate: Date;
-  assignor: UniqueEntityId;
+  assignorId: UniqueEntityId;
 }
 
 export class Payable extends Entity<PayableProps> {
@@ -22,7 +22,7 @@ export class Payable extends Entity<PayableProps> {
     return this.props.emissionDate;
   }
 
-  get assignor() {
-    return this.props.assignor;
+  get assignorId() {
+    return this.props.assignorId;
   }
 }
