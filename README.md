@@ -66,13 +66,16 @@ The project has been structured into two main parts: the backend and the fronten
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/project-repo.git
+   git clone https://github.com/samueldeotti/aprove-me.git
    ```
+
 2. **Navigate to the project directory:**
 
     ```bash
     cd bankme-samueldeotti
-    ```  
+    ```
+3. **Modify the environment variables**
+    The project requires environment variables to be set, you you need to modify the .env.example file. Duplicate this file and rename it to .env. Then, update the values of the variables according to your environment.
 
 3. **Start the Docker containers:**
 

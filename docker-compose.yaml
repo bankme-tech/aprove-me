@@ -15,7 +15,7 @@ services:
   #  build: ./backend/
   #  container_name: bankme_api
   #  ports:
-  #    - 3000:3000
+  #    - 8080:8080
   #  restart: always
   #  volumes:
   #   - ./backend/src:/app/backend/src
