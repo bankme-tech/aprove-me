@@ -1,7 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
-import { LoginForm } from "./login-form";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
@@ -17,16 +17,20 @@ export default function Header() {
       </div>
 
       <div className="flex items-center space-x-5 text-gray-500">
-        <Button variant="outline">Pagáveis</Button>
-        <Button variant="outline">Cedentes</Button>
-        <Dialog>
+        <Link href="/payables">
+          <Button variant="outline">Pagáveis</Button>
+        </Link>
+        <Link href="/assignors">
+          <Button variant="outline">Cedentes</Button>
+        </Link>
+        {/* <Dialog>
           <DialogTrigger asChild>
             <Button>Login</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <LoginForm />
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </div>
     </header>
   );
