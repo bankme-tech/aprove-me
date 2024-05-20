@@ -34,6 +34,7 @@ describe('delete payable use-case', () => {
       await sut.execute({ payableId: payable._id });
 
       expect(payableRepo.payable).toHaveLength(0);
+      expect(payableRepo.payable[0]).not.toEqual(payable);
     });
   });
 
