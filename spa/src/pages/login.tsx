@@ -36,7 +36,7 @@ export default function Login() {
       <FormCard>
         <div className="flex flex-col gap-3 items-center">
           <img
-            src="logo-bankme.png"
+            src={process.env.PUBLIC_URL + '/logo-bankme.png'}
             alt="Logo bankme"
             className="w-16 h-auto"
           />
