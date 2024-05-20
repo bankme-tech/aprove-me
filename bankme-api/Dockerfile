@@ -8,11 +8,11 @@ COPY package.json yarn.lock ./
 
 RUN yarn install
 
-RUN npx prisma generate
-
 RUN yarn build
 
 RUN npx prisma migrate deploy
+
+RUN npx prisma generate
 
 EXPOSE 3000
 
