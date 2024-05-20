@@ -18,4 +18,14 @@ export class PrismaUserRepository implements UserRepository {
 
     return PrismaUserMappers.toDomain(newUser);
   }
+
+  public async findByLogin(userLogin: string): Promise<User> {
+    const findUser = await this.db.user.findFirst({
+      where: { login: userLogin, deletedAt: null },
+    });
+
+    if (!findUser) return null;
+
+    return PrismaUserMappers.toDomain(findUser);
+  }
 }

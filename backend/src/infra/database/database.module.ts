@@ -5,6 +5,7 @@ import { PayableRepository } from '@/app/repositories/payable.repository';
 import { PrismaAssignorRepository } from '@/infra/database/prisma/repositories/prisma-assignor-repository';
 import { PrismaPayableRepository } from '@/infra/database/prisma/repositories/prisma-payable-repository';
 import { UserRepository } from '@/app/repositories/user.repository';
+import { PrismaUserRepository } from '@/infra/database/prisma/repositories/prisma-user-repository';
 
 @Module({
   providers: [
@@ -16,6 +17,10 @@ import { UserRepository } from '@/app/repositories/user.repository';
     {
       provide: PayableRepository,
       useClass: PrismaPayableRepository,
+    },
+    {
+      provide: UserRepository,
+      useClass: PrismaUserRepository,
     },
   ],
   exports: [AssignorRepository, PayableRepository, UserRepository],
