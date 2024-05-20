@@ -28,6 +28,8 @@ async function main() {
   dotenv.config();
   console.log('Seeding...');
 
+  await prisma.user.create({ data: { username: 'admin', password: 'admin' }});
+
   for (let i = 0; i < fakerRounds; i += 1) {
     await prisma.user.create({ data: fakerUser() });
   }
