@@ -1,12 +1,12 @@
 import { Either, right } from "@/core/either";
-import { Receivable } from "../../enterprise/entities/receivable";
 import { Assignor } from "../../enterprise/entities/assignor";
 import { Injectable } from "@nestjs/common";
-import { ReceivablesRepository } from "../repositories/receivables-repository";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { PayablesRepository } from "../repositories/payables-repository";
+import { Payable } from "../../enterprise/entities/payable";
 
-interface CreateReceivableServiceRequest {
-  receivable: {
+interface CreatePayableServiceRequest {
+  payable: {
     id: string;
     value: number;
     emissionDate: Date;
@@ -19,22 +19,22 @@ interface CreateReceivableServiceRequest {
     name: string;
   };
 }
-type CreateReceivableServiceResponse = Either<
+type CreatePayableServiceResponse = Either<
   null,
   {
-    receivable: Receivable;
+    payable: Payable;
     assignor: Assignor;
   }
 >;
 
 @Injectable()
-export class CreateReceivableService {
-  constructor(private receivablesRepo: ReceivablesRepository) {}
+export class CreatePayableService {
+  constructor(private payablesRepo: PayablesRepository) {}
 
   async execute({
-    receivable,
+    payable,
     assignor,
-  }: CreateReceivableServiceRequest): Promise<CreateReceivableServiceResponse> {
+  }: CreatePayableServiceRequest): Promise<CreatePayableServiceResponse> {
     const assignorEntity = Assignor.create(
       {
         document: assignor.document,
@@ -45,19 +45,19 @@ export class CreateReceivableService {
       new UniqueEntityId(assignor.id)
     );
 
-    const receivableEntity = Receivable.create(
+    const payableEntity = Payable.create(
       {
-        value: receivable.value,
-        emissionDate: receivable.emissionDate,
+        value: payable.value,
+        emissionDate: payable.emissionDate,
         assignor: new UniqueEntityId(assignor.id),
       },
-      new UniqueEntityId(receivable.id)
+      new UniqueEntityId(payable.id)
     );
 
-    await this.receivablesRepo.create(receivableEntity, assignorEntity);
+    await this.payablesRepo.create(payableEntity, assignorEntity);
 
     return right({
-      receivable: receivableEntity,
+      payable: payableEntity,
       assignor: assignorEntity,
     });
   }

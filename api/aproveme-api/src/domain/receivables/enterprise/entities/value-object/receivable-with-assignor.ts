@@ -1,8 +1,8 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { ValueObject } from "@/core/entities/value-object";
 
-export interface ReceivableWithAssignorProps {
-  receivableId: UniqueEntityId;
+export interface PayableWithAssignorProps {
+  payableId: UniqueEntityId;
   value: number;
   emissionDate: Date;
   assignor: {
@@ -14,13 +14,13 @@ export interface ReceivableWithAssignorProps {
   };
 }
 
-export class ReceivableWithAssignor extends ValueObject<ReceivableWithAssignorProps> {
-  static create(props: ReceivableWithAssignorProps) {
-    return new ReceivableWithAssignor(props);
+export class PayableWithAssignor extends ValueObject<PayableWithAssignorProps> {
+  static create(props: PayableWithAssignorProps) {
+    return new PayableWithAssignor(props);
   }
 
-  get receivableId() {
-    return this.props.receivableId;
+  get payableId() {
+    return this.props.payableId;
   }
 
   get value() {
