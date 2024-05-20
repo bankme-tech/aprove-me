@@ -1,18 +1,33 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
-import { CreatePayableDto } from './payable.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { PayableService } from './payable.service';
+import { Prisma } from '@prisma/client';
 
-@Controller('payable')
+@Controller('integrations/payable')
 export class PayableController {
-    @Post()
-    async createPayable(@Body() payableDto : CreatePayableDto) {
-        try {
-            return await {
-                status: "OK",
-                payableDto
-            }
-        } catch(err) {
-            throw new BadRequestException(err.message)
-        }
-    }
+  constructor(private readonly payableService: PayableService) {}
 
+  @Post()
+  create(@Body() createPayableDto: Prisma.PayableCreateInput) {
+    return this.payableService.create(createPayableDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.payableService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.payableService.findOne(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePayableDto: Prisma.PayableUpdateInput) {
+    return this.payableService.update(+id, updatePayableDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.payableService.remove(+id);
+  }
 }
