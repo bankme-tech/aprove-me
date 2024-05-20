@@ -20,10 +20,10 @@ model Assignor {
   email    String  
   phone    String?  
   name     String   
-  receivables Receivable[]
+  receivables Payable[]
 }
 
-model Receivable {
+model Payable {
   id           String   @id @default(uuid())
   value        Float
   emissionDate DateTime @default(now())
