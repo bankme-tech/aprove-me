@@ -1,7 +1,7 @@
 import { Replace } from '@/utils/replace';
 import { randomUUID } from 'crypto';
 
-interface PayableProps {
+export interface PayableProps {
   value: number;
   assignorId: string;
   emissionDate: Date;
