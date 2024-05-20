@@ -122,7 +122,6 @@ export class ReceivableController {
     }
     // add payables to a queue
     for (const payable of payables) {
-      console.log('Add payable to queue',payable)
       this.queue.add('process-receivable', payable);
     }
   }

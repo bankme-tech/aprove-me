@@ -17,11 +17,6 @@ export class PayableConsumer {
 
   @Process('process-receivable')
   async process(job: Job<{ receivableData: ReceivableDto, assignorData?: AssignorDto }>) {
-    if (job.attemptsMade >= 4) {
-      // adicionar a fila morta
-      return;
-    }
-    //se ainda não chegou no limite de tentativas, tenta novamente
     try {
       const receivableData: ReceivableDto = job.data.receivableData;
       const assignorData: AssignorDto = job.data.assignorData;
@@ -57,14 +52,33 @@ export class PayableConsumer {
   }
 
   @OnQueueCompleted()
-  async onCompleted(job: Job) {
-    const jobCounts = await this.queue.getJobCounts();
-    console.log('Job counts:', jobCounts);
-    if (jobCounts.waiting === 0 && jobCounts.active === 0 && jobCounts.delayed === 0) {
-      console.log('All jobs have been completed');
-    }
+  async handleCompleted(job: Job) {
+    await this.handleJobCompletion(job);
   }
 
-  
+  @OnQueueFailed()
+  async handleFaild(job: Job) {
+    if (job.attemptsMade >= 4) {
+      console.log(`Enviar email para o time de operações: Erro ao processar o item 4 vezes, adicionado à "fila morta".
+      `);
+    }
+    await this.handleJobCompletion(job);
+  }
 
+  async handleJobCompletion(job: Job) {
+    const jobCounts = await this.queue.getJobCounts();
+    if (jobCounts.waiting === 0 && jobCounts.active === 0 && jobCounts.delayed === 0) {
+      console.log(`Enviar email: Processamento do lote concluído. ${jobCounts.completed} sucessos. ${jobCounts.failed} falhas.
+      `);
+
+      // Limpando a fila
+      await this.queue.clean(0, 'wait');
+      await this.queue.clean(0, 'active');
+      await this.queue.clean(0, 'completed');
+      await this.queue.clean(0, 'failed');
+      await this.queue.clean(0, 'delayed');
+      await this.queue.clean(0, 'paused');
+    }
+  }
 }
+
