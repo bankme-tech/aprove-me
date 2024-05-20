@@ -16,7 +16,7 @@ model Payable {
   amount      Float
   dueDate     DateTime
   assignorId  String
-  assignor    Assignor @relation(fields: [assignorId], references: [id])
+  assignor    Assignor @relation(fields: [assignorId], references: [id], onDelete: Cascade)
 }
 
 model Assignor {
