@@ -1,7 +1,7 @@
 import { Replace } from '@/utils/replace';
 import { randomUUID } from 'crypto';
 
-interface AssignorProps {
+export interface AssignorProps {
   document: string;
   email: string;
   phone: string;
