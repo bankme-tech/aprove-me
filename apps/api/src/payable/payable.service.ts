@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePayableDto } from './create-payable.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PayableService {
@@ -33,5 +34,26 @@ export class PayableService {
     }
 
     return payable;
+  }
+
+  async delete(id: string) {
+    try {
+      await this.prisma.payable.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      // record not found
+      // https://www.prisma.io/docs/orm/reference/error-reference#p2025
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(`Payable not found.`);
+      }
+
+      throw error;
+    }
   }
 }
