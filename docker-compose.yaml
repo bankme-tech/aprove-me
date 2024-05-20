@@ -11,13 +11,13 @@ services:
    volumes:
      - rabbitmq_data:/var/lib/rabbitmq
 
-  api:
-    build: ./backend/
-    container_name: bankme_api
-    ports:
-      - 3000:3000
-    restart: always
-    volumes:
-      - ./backend/src:/app/backend/src
+  #api:
+  #  build: ./backend/
+  #  container_name: bankme_api
+  #  ports:
+  #    - 3000:3000
+  #  restart: always
+  #  volumes:
+  #   - ./backend/src:/app/backend/src
 volumes:
   rabbitmq_data:
