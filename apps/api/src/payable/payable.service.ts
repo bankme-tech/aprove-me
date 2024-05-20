@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class PayableService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
   create({ assignorId, emissionDate, value }: CreatePayableDto) {
     return this.prisma.payable.create({
       data: {
