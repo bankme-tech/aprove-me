@@ -1,16 +1,9 @@
+"use client";
+
 import Image from "next/image";
+import { LoginForm } from "./login-form";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 export default function Header() {
   return (
@@ -31,26 +24,7 @@ export default function Header() {
             <Button>Login</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader className="mt-4">
-              <DialogDescription>Faça o seu login para poder fazer alterações e adicionar pagáveis e cedentes</DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="login" className="text-right">
-                  Login
-                </Label>
-                <Input id="login" className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="password" className="text-right">
-                  Password
-                </Label>
-                <Input id="password" className="col-span-3" type="password" />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">Login</Button>
-            </DialogFooter>
+            <LoginForm />
           </DialogContent>
         </Dialog>
       </div>
