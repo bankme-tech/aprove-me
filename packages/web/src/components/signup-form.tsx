@@ -10,7 +10,7 @@ const formSchema = z.object({
   password: z.string(),
 });
 
-export function LoginForm() {
+export function SignupForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,8 +53,8 @@ export function LoginForm() {
           )}
         />
         <div className="flex justify-between">
-          <Button type="submit">Logar</Button>
-          <Button variant="outline">Criar conta</Button>
+          <Button type="submit">Cadastrar</Button>
+          <Button variant="outline">Já tenho uma conta</Button>
         </div>
       </form>
     </Form>

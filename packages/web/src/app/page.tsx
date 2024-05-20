@@ -1,11 +1,13 @@
-import { AssignorList } from "@/components/assignor-list";
-import { PayableList } from "@/components/payable-list";
+"use client";
+import { LoginForm } from "@/components/login-form";
 
-export default function Home() {
+function LoginPage() {
   return (
-    <div className="flex flex-col justify-center items-center gap-12">
-      <PayableList payables={[]}/>
-      <AssignorList assignors={[]} />
+    <div className="h-screen w-screen flex flex-col justify-center items-center gap-3">
+      <h1 className="font-bold text-3xl">Login</h1>
+      <LoginForm />
     </div>
   );
 }
+
+export default LoginPage;
