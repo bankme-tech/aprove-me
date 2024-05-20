@@ -1,13 +1,16 @@
 import { InMemoryPayablesRepository } from "test/repositories/in-memory-payables-repository";
 import { makePayable } from "test/factories/makePayable";
 import { EditPayableService } from "./edit-payable-service";
+import { InMemoryAssignorsRepository } from "test/repositories/in-memory-assignors-repository";
 
+let inMemoAssignorRepo: InMemoryAssignorsRepository;
 let inMemoPayableRepo: InMemoryPayablesRepository;
 let sut: EditPayableService;
 
 describe("Edit Payable", () => {
   beforeEach(() => {
-    inMemoPayableRepo = new InMemoryPayablesRepository();
+    inMemoAssignorRepo = new InMemoryAssignorsRepository();
+    inMemoPayableRepo = new InMemoryPayablesRepository(inMemoAssignorRepo);
     sut = new EditPayableService(inMemoPayableRepo);
   });
 
