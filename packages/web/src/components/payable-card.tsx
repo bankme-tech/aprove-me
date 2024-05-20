@@ -1,4 +1,3 @@
-import { Link } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
 
 type PayableCardProps = {
@@ -9,7 +8,7 @@ type PayableCardProps = {
 
 export default function PayableCard(props: PayableCardProps) {
   return (
-    <Card>
+    <Card className="min-w-96">
       <CardHeader>
         <CardTitle>R${props.amount}</CardTitle>
       </CardHeader>
