@@ -14,9 +14,12 @@ export class InMemoryPayablesRepository implements PayablesRepository {
     this.items[itemIndex] = payable;
   }
 
-  delete(payable: Payable): Promise<void> {
-    throw new Error("Method not implemented.");
+  async delete(payable: Payable): Promise<void> {
+    const itemIndex = this.items.findIndex((item) => item.id === payable.id);
+
+    this.items.splice(itemIndex, 1);
   }
+
   async findByid(id: string) {
     const payable = this.items.find((item) => item.id.toString() === id);
 

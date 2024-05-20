@@ -15,7 +15,9 @@ export class InMemoryAssignorsRepository implements AssignorsRepository {
   }
 
   async delete(assignor: Assignor): Promise<void> {
-    throw new Error("Method not implemented.");
+    const itemIndex = this.items.findIndex((item) => item.id === assignor.id);
+
+    this.items.splice(itemIndex, 1);
   }
 
   async findById(id: string): Promise<Assignor> {
