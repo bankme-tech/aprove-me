@@ -40,4 +40,11 @@ export class PrismaPayableRepository implements PayableRepository {
 
     return PrismaPayableMapper.toDomain(updatePayable);
   }
+
+  async delete(payableId: string): Promise<void> {
+    await this.db.payable.update({
+      where: { id: payableId },
+      data: { deletedAt: new Date() },
+    });
+  }
 }
