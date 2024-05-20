@@ -1,9 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateAssignorDto } from './dtos/create-assignor.dto';
 
 @Injectable()
 export class AssignorService {
   constructor(private readonly prisma: PrismaService) {}
+
+  create({ document, email, name, phone }: CreateAssignorDto) {
+    return this.prisma.assignor.create({
+      data: {
+        document,
+        email,
+        name,
+        phone,
+      },
+    });
+  }
 
   async findById(id: string) {
     const assignor = await this.prisma.assignor.findUnique({

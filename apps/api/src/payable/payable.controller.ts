@@ -27,8 +27,10 @@ export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(createPayableSchema))
-  create(@Body() createPayableDto: CreatePayableDto) {
+  create(
+    @Body(new ZodValidationPipe(createPayableSchema))
+    createPayableDto: CreatePayableDto,
+  ) {
     return this.payableService.create(createPayableDto);
   }
 

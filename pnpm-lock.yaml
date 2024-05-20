@@ -14,6 +14,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@brazilian-utils/brazilian-utils':
+        specifier: 1.0.0-rc.12
+        version: 1.0.0-rc.12
       '@nestjs/common':
         specifier: ^10.0.0
         version: 10.3.8(reflect-metadata@0.2.2)(rxjs@7.8.1)
@@ -26,6 +29,9 @@ importers:
       '@prisma/client':
         specifier: 5.14.0
         version: 5.14.0(prisma@5.14.0)
+      phone:
+        specifier: ^3.1.43
+        version: 3.1.43
       reflect-metadata:
         specifier: ^0.2.0
         version: 0.2.2
@@ -296,6 +302,9 @@ packages:
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
+
+  '@brazilian-utils/brazilian-utils@1.0.0-rc.12':
+    resolution: {integrity: sha512-gR5TbSKTgFgDe0/ZghgwqCEryLbHjwdEpvr3ao/Z0f8zRu6LD3lif0HJ3eQiC3pJSwtUPyA+97vm1IEqZkYSTA==}
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -2201,6 +2210,10 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
 
+  phone@3.1.43:
+    resolution: {integrity: sha512-R4UT/3fIXJUHFko7WpOtHj4YYUIUwRIs1VKCMf74gLfiq6QczDBy3S/Ihy0MG1Sc4KcylvnQgIOMQGfQ6T6/3A==}
+    engines: {node: '>=12'}
+
   picocolors@1.0.1:
     resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
 
@@ -3070,6 +3083,8 @@ snapshots:
       to-fast-properties: 2.0.0
 
   '@bcoe/v8-coverage@0.2.3': {}
+
+  '@brazilian-utils/brazilian-utils@1.0.0-rc.12': {}
 
   '@colors/colors@1.5.0':
     optional: true
@@ -5398,6 +5413,8 @@ snapshots:
   path-to-regexp@3.2.0: {}
 
   path-type@4.0.0: {}
+
+  phone@3.1.43: {}
 
   picocolors@1.0.1: {}
 

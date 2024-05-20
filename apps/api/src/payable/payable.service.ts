@@ -38,58 +38,32 @@ export class PayableService {
   }
 
   async delete(id: string) {
-    try {
-      await this.prisma.payable.delete({
-        where: {
-          id,
-        },
-      });
-    } catch (error) {
-      // record not found
-      // https://www.prisma.io/docs/orm/reference/error-reference#p2025
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === 'P2025'
-      ) {
-        throw new NotFoundException(`Payable not found.`);
-      }
-
-      throw error;
-    }
+    await this.prisma.payable.delete({
+      where: {
+        id,
+      },
+    });
   }
 
   async update(id: string, { emissionDate, value }: UpdatePayableDto) {
-    try {
-      const payable = await this.prisma.payable.update({
-        where: {
-          id,
-        },
-        data: {
-          ...(emissionDate
-            ? {
-                emissionDate: new Date(emissionDate),
-              }
-            : {}),
-          ...(value
-            ? {
-                value,
-              }
-            : {}),
-        },
-      });
+    const payable = await this.prisma.payable.update({
+      where: {
+        id,
+      },
+      data: {
+        ...(emissionDate
+          ? {
+              emissionDate: new Date(emissionDate),
+            }
+          : {}),
+        ...(value
+          ? {
+              value,
+            }
+          : {}),
+      },
+    });
 
-      return payable;
-    } catch (error) {
-      // record not found
-      // https://www.prisma.io/docs/orm/reference/error-reference#p2025
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === 'P2025'
-      ) {
-        throw new NotFoundException(`Payable not found.`);
-      }
-
-      throw error;
-    }
+    return payable;
   }
 }
