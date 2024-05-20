@@ -15,7 +15,8 @@ module.exports = {
         themeColor: '#0a36b0',
         borderColor: '#d1d5db',
         cardBgColorFrom: '#EAF1FC',
-        cardBgColorto: '#F1F5F9'
+        cardBgColorto: '#F1F5F9',
+        borderInputColor: '#767676'
       }
     },
   },
