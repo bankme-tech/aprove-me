@@ -18,16 +18,16 @@ export class AssignorController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.assignorService.findOne(+id);
+    return this.assignorService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAssignorDto: Prisma.AssignorUpdateInput) {
-    return this.assignorService.update(+id, updateAssignorDto);
+    return this.assignorService.update(id, updateAssignorDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.assignorService.remove(+id);
+    return this.assignorService.remove(id);
   }
 }

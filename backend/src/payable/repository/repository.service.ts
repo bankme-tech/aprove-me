@@ -14,15 +14,15 @@ export class PayableRepository {
     return this.prisma.payable.findMany();
   }
 
-  async findOne(id: number): Promise<Payable | null> {
+  async findOne(id: string): Promise<Payable | null> {
     return this.prisma.payable.findUnique({ where: { id } });
   }
 
-  async update(id: number, data: Prisma.PayableUpdateInput): Promise<Payable> {
+  async update(id: string, data: Prisma.PayableUpdateInput): Promise<Payable> {
     return this.prisma.payable.update({ where: { id }, data });
   }
 
-  async delete(id: number): Promise<Payable> {
+  async delete(id: string): Promise<Payable> {
     return this.prisma.payable.delete({ where: { id } });
   }
 }

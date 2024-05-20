@@ -14,15 +14,15 @@ export class AssignorRepository {
     return this.prisma.assignor.findMany();
   }
 
-  async findOne(id: number): Promise<Assignor | null> {
+  async findOne(id: string): Promise<Assignor | null> {
     return this.prisma.assignor.findUnique({ where: { id } });
   }
 
-  async update(id: number, data: Prisma.AssignorUpdateInput): Promise<Assignor> {
+  async update(id: string, data: Prisma.AssignorUpdateInput): Promise<Assignor> {
     return this.prisma.assignor.update({ where: { id }, data });
   }
 
-  async delete(id: number): Promise<Assignor> {
+  async delete(id: string): Promise<Assignor> {
     return this.prisma.assignor.delete({ where: { id } });
   }
 }
