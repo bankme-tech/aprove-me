@@ -3,6 +3,8 @@ import { DatabaseModule } from '@/infra/database/database.module';
 import { HttpModule } from '@/infra/http/http.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from '@/utils/auth-guard';
 
 @Module({
   imports: [
@@ -14,6 +16,11 @@ import { JwtModule } from '@nestjs/jwt';
     DatabaseModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}
