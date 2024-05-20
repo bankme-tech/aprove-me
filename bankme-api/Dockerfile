@@ -14,6 +14,8 @@ RUN npx prisma migrate deploy
 
 RUN npx prisma generate
 
+RUN yarn seed
+
 EXPOSE 3000
 
 CMD [ "yarn", "start" ]
