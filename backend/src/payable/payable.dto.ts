@@ -6,34 +6,38 @@ import {
   Min,
   ValidateNested,
   Length,
+  IsNotEmpty,
 } from 'class-validator';
 
-class CreateGrantorDto {
-  @IsUUID()
-  id: string;
-
+class CreateAssignorDto {
   @IsString()
+  @IsNotEmpty()
   @Length(1, 50)
   name: string;
-
-  @IsString()
-  @Length(1, 50)
-  document: string;
 }
 
 export class CreatePayableDto {
-  @IsUUID()
-  id: string;
-
   @IsString()
+  @IsNotEmpty()
   @Length(1, 100)
   description: string;
 
   @IsNumber()
   @Min(0)
+  @IsNotEmpty()
   amount: number;
 
+  @IsUUID()
+  @IsNotEmpty()
+  assignorId: string;
+}
+
+export class CreatePayableAssignorDto {
   @ValidateNested()
-  @Type(() => CreateGrantorDto)
-  grantor: CreateGrantorDto;
+  @Type(() => CreateAssignorDto)
+  assignor: CreateAssignorDto;
+
+  @ValidateNested()
+  @Type(() => CreatePayableDto)
+  payable: CreatePayableDto;
 }
