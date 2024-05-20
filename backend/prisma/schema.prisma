@@ -7,16 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String @id @default(uuid())
+  login    String
+  password String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("users")
+}
+
 model Payable {
-  id            String    @id @default(uuid())
-  value         Float
+  id           String   @id @default(uuid())
+  value        Float
   emissionDate DateTime
 
-  assignorId   String
+  assignorId String
 
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  deletedAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   assingor Assignor @relation(fields: [assignorId], references: [id])
 
@@ -24,11 +36,11 @@ model Payable {
 }
 
 model Assignor {
-  id         String    @id @default(uuid())
-  document   String    @unique
-  email      String
-  phone      String
-  name       String
+  id       String @id @default(uuid())
+  document String @unique
+  email    String
+  phone    String
+  name     String
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
