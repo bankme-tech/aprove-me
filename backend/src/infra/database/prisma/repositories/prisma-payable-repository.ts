@@ -8,6 +8,24 @@ import { PrismaPayableMapper } from '../mappers/payable';
 export class PrismaPayableRepository implements PayableRepository {
   constructor(private db: PrismaService) {}
 
+  async findAll(skip: number, take: number): Promise<Payable[]> {
+    const findPayables = await this.db.payable.findMany({
+      where: { deletedAt: { equals: null } },
+      skip,
+      take,
+    });
+
+    return findPayables.map(PrismaPayableMapper.toDomain);
+  }
+
+  async count(): Promise<number> {
+    const countPayables = await this.db.payable.count({
+      where: { deletedAt: { equals: null } },
+    });
+
+    return countPayables;
+  }
+
   async create(payable: Payable): Promise<Payable> {
     const newPayable = await this.db.payable.create({
       data: {
