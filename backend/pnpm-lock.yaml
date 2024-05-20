@@ -43,6 +43,9 @@ dependencies:
     version: 3.23.8
 
 devDependencies:
+  '@jest/types':
+    specifier: ^29.6.3
+    version: 29.6.3
   '@nestjs/cli':
     specifier: ^10.0.0
     version: 10.3.2
@@ -102,7 +105,7 @@ devDependencies:
     version: 6.3.4
   ts-jest:
     specifier: ^29.1.0
-    version: 29.1.2(@babel/core@7.24.5)(jest@29.7.0)(typescript@5.4.5)
+    version: 29.1.2(@babel/core@7.24.5)(@jest/types@29.6.3)(jest@29.7.0)(typescript@5.4.5)
   ts-loader:
     specifier: ^9.4.3
     version: 9.5.1(typescript@5.4.5)(webpack@5.91.0)
@@ -5315,7 +5318,7 @@ packages:
       typescript: 5.4.5
     dev: true
 
-  /ts-jest@29.1.2(@babel/core@7.24.5)(jest@29.7.0)(typescript@5.4.5):
+  /ts-jest@29.1.2(@babel/core@7.24.5)(@jest/types@29.6.3)(jest@29.7.0)(typescript@5.4.5):
     resolution: {integrity: sha512-br6GJoH/WUX4pu7FbZXuWGKGNDuU7b8Uj77g/Sp7puZV6EXzuByl6JrECvm0MzVzSTkSHWTihsXt+5XYER5b+g==}
     engines: {node: ^16.10.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -5337,6 +5340,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.24.5
+      '@jest/types': 29.6.3
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
       jest: 29.7.0(@types/node@20.12.12)(ts-node@10.9.2)

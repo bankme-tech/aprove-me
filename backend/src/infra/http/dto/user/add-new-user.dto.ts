@@ -6,7 +6,7 @@ import {
 } from 'class-validator';
 
 export class AddNewUserDTO {
-  @Length(0, 140)
+  @Length(3, 140)
   @IsString()
   login: string;
 

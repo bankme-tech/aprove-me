@@ -2,7 +2,7 @@ import { User } from '@/app/entities/user';
 import { UserRepository } from '@/app/repositories/user.repository';
 
 export class InMemoryUserRepository implements UserRepository {
-  private user: User[];
+  public user: User[] = [];
 
   public async create(user: User): Promise<User> {
     this.user.push(user);

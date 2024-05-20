@@ -5,7 +5,7 @@ export class InMemoryBcryptRepository implements BcryptAdapterRepository {
     return 'fakeSalt';
   }
   async hash(text: string, salt: string): Promise<string> {
-    return text.concat(salt);
+    return text.concat(`-${salt}`);
   }
   async compare(text: string, hashTextToCompare: string): Promise<boolean> {
     return text === hashTextToCompare;
