@@ -10,6 +10,10 @@ export class PayableRepository {
     return this.db.payable.findUnique({ where: { id } });
   }
 
+  async findAll() {
+    return this.db.payable.findMany();
+  }
+
   async create(dto: CreatePayableDto) {
     const { assignorId, emissionDate, value } = dto;
     return this.db.payable.create({

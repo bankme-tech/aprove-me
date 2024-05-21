@@ -14,6 +14,10 @@ export class PayableService {
     return await this.payableExists(id);
   }
 
+  async getAllPayable() {
+    return this.repository.findAll()
+  }
+
   async createPayable(dto: CreatePayableDto) {
     await this.assignorService.getAssignorById(dto.assignorId)
     const createdPayable = await this.repository.create(dto);

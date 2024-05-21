@@ -27,6 +27,15 @@ export class PayableController {
   }
 
   /**
+   * Returns list of Payable
+   */
+  @Get('payable')
+  async findall() {
+    const payables = await this.service.getAllPayable();
+    return payables;
+  }
+
+  /**
    * Returns one Payable by id
    */
   @Get('payable/:id')
