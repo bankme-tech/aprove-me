@@ -59,17 +59,21 @@ export default function PayableDropdown({ payable }: Props) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <PayableDetails
-        payable={payable}
-        open={openPayableDetails}
-        onOpenChange={setOpenPayableDetails}
-      />
+      {openPayableDetails && (
+        <PayableDetails
+          payable={payable}
+          open={openPayableDetails}
+          onOpenChange={setOpenPayableDetails}
+        />
+      )}
 
-      <UpdatePayableForm
-        payable={payable}
-        open={openUpdateForm}
-        onOpenChange={setOpenUpdateForm}
-      />
+      {openUpdateForm && (
+        <UpdatePayableForm
+          payable={payable}
+          open={openUpdateForm}
+          onOpenChange={setOpenUpdateForm}
+        />
+      )}
     </>
   );
 }
