@@ -21,4 +21,10 @@ export class PrismaAssignorRepository implements IAssignorRepository {
 
     return AssignorMapper.toDomain(entity);
   }
+
+  async findAll(): Promise<AssignorEntity[]> {
+    const entities = await this.prisma.assignor.findMany();
+
+    return entities.map(AssignorMapper.toDomain);
+  }
 }

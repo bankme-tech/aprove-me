@@ -21,4 +21,8 @@ export class InMemoryAssignorRepository implements IAssignorRepository {
 
     return AssignorMapper.toDomain(entity);
   }
+
+  async findAll(): Promise<AssignorEntity[]> {
+    return this.items.map(AssignorMapper.toDomain);
+  }
 }
