@@ -15,9 +15,11 @@ import { UserController } from './controllers/user.controller';
 import { AdaptersModule } from '@/app/adapters/adapters.module';
 import { LoginUser } from '@/app/use-cases/user/login-user';
 import { FindAll } from '@/app/use-cases/payable/find-all';
+import { FindAllAssingors } from '@/app/use-cases/assignor/find-all';
 
 const assignorUseCases = [
   AddNewAssignor,
+  FindAllAssingors,
   FindAssignorById,
   EditAssignor,
   DeleteAssignor,
@@ -38,4 +40,4 @@ const userUseCases = [AddNewUser, LoginUser];
   providers: [...assignorUseCases, ...payableUseCases, ...userUseCases],
   controllers: [PayableController, AssignorController, UserController],
 })
-export class HttpModule {}
+export class HttpModule { }

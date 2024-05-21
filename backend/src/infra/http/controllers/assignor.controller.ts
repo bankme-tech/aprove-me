@@ -6,20 +6,29 @@ import { ParamId } from '@/utils/param-id';
 import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { EditAssignorDTO } from '@/infra/http/dto/assignor/edit-assignor.dto';
 import { DeleteAssignor } from '@/app/use-cases/assignor/delete-assignor';
+import { FindAllAssingors } from '@/app/use-cases/assignor/find-all';
 
 @Controller('/assignor')
 export class AssignorController {
   constructor(
     private addNewAssignor: AddNewAssignor,
+    private findAllAssignors: FindAllAssingors,
     private findAssignorById: FindAssignorById,
     private editAssignor: EditAssignor,
     private deleteAssignor: DeleteAssignor,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() body: CreateAssignorDTO) {
     const { newAssignor } = await this.addNewAssignor.execute(body);
     return newAssignor;
+  }
+
+  @Get()
+  async findAll() {
+    const { assignors } = await this.findAllAssignors.execute();
+
+    return assignors;
   }
 
   @Get(':assignorId')

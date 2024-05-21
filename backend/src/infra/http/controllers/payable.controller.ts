@@ -25,7 +25,7 @@ export class PayableController {
     private findAll: FindAll,
     private editPayable: EditPayable,
     private deletePayable: DeletePayable,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() body: CreatePayableDTO) {
@@ -35,8 +35,6 @@ export class PayableController {
 
   @Get()
   async findAllPayables(@Query() query: FindAllDTO) {
-    const { payables, totalPages, totalPayables } =
-      await this.findAll.execute(query);
     const { payables, totalPages, totalPayables } = await this.findAll.execute({
       skip: Number(query.skip),
       take: Number(query.take),
