@@ -10,6 +10,10 @@ export class InMemoryAssignorRepository implements AssignorRepository {
     return assignor;
   }
 
+  public async findAll(): Promise<Assignor[]> {
+    return this.assignor;
+  }
+
   public async findById(assignorId: string): Promise<Assignor> {
     return this.assignor.find((assignor) => assignor._id === assignorId);
   }
