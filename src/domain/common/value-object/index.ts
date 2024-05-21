@@ -1,0 +1,1 @@
+export * from './unique-entity-id.vo';
