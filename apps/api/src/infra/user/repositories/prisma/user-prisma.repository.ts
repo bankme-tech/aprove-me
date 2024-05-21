@@ -26,16 +26,17 @@ export class UserPrismaRepository implements IUserRepository {
   }
   async findOneByUsername(username: string): Promise<IOption<User>> {
     const user = await this._prismaService.user.findFirst({
-      where: {
-        username,
-      },
+      where: { username },
     });
     return toOption(user).map(UserMapper.toDomain);
   }
-  findOneById(id: string): Promise<IOption<User>> {
-    throw new Error('Method not implemented.');
+  async findOneById(id: string): Promise<IOption<User>> {
+    const user = await this._prismaService.user.findFirst({
+      where: { id },
+    });
+    return toOption(user).map(UserMapper.toDomain);
   }
-  delete(user: User): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(user: User): Promise<void> {
+    await this._prismaService.user.delete({ where: { id: user.id } });
   }
 }
