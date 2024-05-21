@@ -1,29 +1,67 @@
-import { ArgumentsHost, Catch, HttpStatus } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { Prisma } from '@prisma/client';
-import { Response } from 'express';
 
 @Catch(Prisma.PrismaClientKnownRequestError)
 export class PrismaClientExceptionFilter extends BaseExceptionFilter {
-  catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
-    console.error(exception.message);
-    const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
-    const message = exception.message.replace(/\n/g, '');
+  private readonly defaultMapping = {
+    P2000: HttpStatus.BAD_REQUEST,
+    P2002: HttpStatus.CONFLICT,
+    P2025: HttpStatus.NOT_FOUND,
+  };
 
-    switch (exception.code) {
-      case 'P2002': {
-        const status = HttpStatus.CONFLICT;
-        response.status(status).json({
-          statusCode: status,
-          message: message,
-        });
-        break;
+  catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
+    this.catchClientKnownRequestError(exception, host);
+  }
+
+  private catchClientKnownRequestError(
+    exception: Prisma.PrismaClientKnownRequestError,
+    host: ArgumentsHost,
+  ) {
+    const statusCode = this.defaultStatusCode(exception);
+
+    const message = this.defaultExceptionMessage(exception);
+
+    if (host.getType() === 'http') {
+      if (statusCode === undefined) {
+        return super.catch(exception, host);
       }
-      default:
-        // default 500 error code
-        super.catch(exception, host);
-        break;
+
+      return super.catch(
+        new HttpException({ statusCode, message }, statusCode),
+        host,
+      );
     }
+    if (statusCode === undefined) {
+      return exception;
+    }
+
+    return new HttpException({ statusCode, message }, statusCode);
+  }
+
+  private defaultStatusCode(
+    exception: Prisma.PrismaClientKnownRequestError,
+  ): number | undefined {
+    return this.defaultMapping[exception.code];
+  }
+
+  private defaultExceptionMessage(
+    exception: Prisma.PrismaClientKnownRequestError,
+  ): string {
+    const shortMessage = exception.message.substring(
+      exception.message.indexOf('→'),
+    );
+    return (
+      `[${exception.code}]: ` +
+      shortMessage
+        .substring(shortMessage.indexOf('\n'))
+        .replace(/\n/g, '')
+        .trim()
+    );
   }
 }

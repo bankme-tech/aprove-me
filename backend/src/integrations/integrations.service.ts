@@ -5,7 +5,8 @@ import {
   UpdateAssignorDto,
   UpdatePayableDto,
 } from './dto/create-integration.dto';
-import { PrismaService } from 'src/services/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { validateDto } from './../utils';
 
 @Injectable()
 export class IntegrationsService {
@@ -17,23 +18,25 @@ export class IntegrationsService {
     });
   }
 
-  createPayable(createDto: CreatePayableDto) {
+  async createPayable(createDto: CreatePayableDto) {
+    await validateDto(createDto, CreatePayableDto);
+
     return this.prisma.payable.create({
       data: createDto,
     });
   }
 
   async updatePayable(id: string, updateDto: UpdatePayableDto) {
+    await validateDto(updateDto, UpdatePayableDto);
     try {
       return await this.prisma.payable.update({
         where: { id },
         data: updateDto,
       });
     } catch (error) {
-      if (error.code === 'P2025') {
+      if (error?.code === 'P2025') {
         throw new NotFoundException('Payable not found');
       }
-
       throw error;
     }
   }
@@ -48,31 +51,30 @@ export class IntegrationsService {
     });
   }
 
-  createAssignor(assignorDto: CreateAssignorDto) {
+  async createAssignor(assignorDto: CreateAssignorDto) {
+    await validateDto(assignorDto, CreateAssignorDto);
     return this.prisma.assignor.create({
       data: assignorDto,
     });
   }
 
   getAssignorById(id: string) {
-    return this.prisma.assignor.findUniqueOrThrow({
+    return this.prisma.assignor.findUnique({
       where: { id },
     });
   }
 
   async updateAssignor(id: string, updateDto: UpdateAssignorDto) {
-    try {
-      return await this.prisma.assignor.update({
-        where: { id },
-        data: updateDto,
-      });
-    } catch (error) {
-      if (error.code === 'P2025') {
-        throw new NotFoundException('Assignor not found');
-      }
+    await validateDto(updateDto, UpdateAssignorDto);
 
-      throw error;
-    }
+    const assignor = await this.getAssignorById(id);
+
+    if (!assignor) throw new NotFoundException('Assignor not found');
+
+    return await this.prisma.assignor.update({
+      where: { id },
+      data: updateDto,
+    });
   }
 
   async deleteAssignor(id: string) {

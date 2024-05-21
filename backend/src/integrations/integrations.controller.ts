@@ -23,7 +23,7 @@ export class IntegrationsController {
   constructor(private readonly integrationsService: IntegrationsService) {}
 
   @Post('/payable')
-  createPayable(@Body() payableDto: CreatePayableDto) {
+  async createPayable(@Body() payableDto: CreatePayableDto) {
     return this.integrationsService.createPayable(payableDto);
   }
 
@@ -56,7 +56,7 @@ export class IntegrationsController {
 
   @Put('/assignor/:id')
   @UsePipes(new ValidationPipe({ transform: true }))
-  updateAssignor(
+  async updateAssignor(
     @Param('id') id: string,
     @Body() assignorDto: UpdateAssignorDto,
   ) {
