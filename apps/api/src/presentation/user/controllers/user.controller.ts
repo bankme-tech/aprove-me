@@ -3,6 +3,7 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -28,7 +29,7 @@ export class UserController {
     private readonly _findMeUseCase: FindMeUseCase,
   ) {}
 
-  @ApiOperation({ summary: 'Creates a new user' })
+  @ApiOperation({ summary: 'Creates a single new user' })
   @ApiCreatedResponse({ type: UserPresenter })
   @Post()
   async signUp(@Body() dto: CreateUserDto): Promise<UserPresenter> {
@@ -48,6 +49,7 @@ export class UserController {
 
   @ApiOperation({ summary: 'Retrieves a single user given its token' })
   @ApiOkResponse({ type: UserPresenter })
+  @ApiParam({ name: 'id', type: String })
   @Get(':id')
   async findOneById(
     @CurrentUser() currentUser: IOption<User>,

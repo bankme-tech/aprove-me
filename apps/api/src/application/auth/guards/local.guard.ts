@@ -24,7 +24,7 @@ export class LocalGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
     const user = await this._userRepository.findOneByUsername(
-      request.body!['username'],
+      request.body!['login'],
     );
     if (user.isNone()) {
       throw new InvalidUsernameOrPasswordException();

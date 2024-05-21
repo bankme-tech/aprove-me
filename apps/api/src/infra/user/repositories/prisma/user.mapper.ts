@@ -5,19 +5,19 @@ import { Password } from '@domain/user/value-objects/password';
 import { User as PrismaUser } from '@prisma/client';
 
 export class UserMapper {
-  static toPrisma(user: IUser): PrismaUser {
+  static toPrisma(data: IUser): PrismaUser {
     return {
-      id: user.id,
-      username: user.username,
-      password: user.password.value,
+      id: data.id,
+      username: data.username,
+      password: data.password.value,
     };
   }
 
-  static toDomain(input: PrismaUser): User {
+  static toDomain(data: PrismaUser): User {
     return User.fromData({
-      id: input.id,
-      username: input.username,
-      password: Password.fromExisting({ value: input.password }),
+      id: data.id,
+      username: data.username,
+      password: Password.fromExisting({ value: data.password }),
     });
   }
 }
