@@ -9,8 +9,13 @@ export class AppController {
   constructor(private readonly prismaService: PrismaService) {}
   @IsPublic()
   @Get('/health')
-  health() {
-    const dbStatus = this.prismaService.$queryRaw`SELECT 1+1 as result`;
+  async health() {
+    let dbStatus = 'unavailable';
+    const db = await this.prismaService.$queryRaw`SELECT 1`;
+    if (db) {
+      dbStatus = 'ok';
+    }
+
     return {
       api: 'ok',
       dbStatus,

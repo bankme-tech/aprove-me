@@ -1,0 +1,77 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  name: Azure Pipelines
+
+variables:
+  imageName: backend-aprove-me
+  imageUrlDev: <dev-image-url>
+  imageUrlPrd: <prd-image-url>
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        steps:
+          - task: Docker@2
+            displayName: Build
+            inputs:
+              repository: $(imageName)
+              command: build
+              Dockerfile: Dockerfile
+
+  - stage: DEV
+    jobs:
+      - job: DeployDEV
+        steps:
+          - task: AWSShellScript@1
+            displayName: Build, Push and Deploy
+            inputs:
+              awsCredentials: '<vault-dev-credentials-name>'
+              scriptType: 'inline'
+              inlineScript: |
+                curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                unzip awscliv2.zip
+                sudo ./aws/install
+                aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(imageUrlDev)
+                docker build -t $(imageUrlDev)/$(imageName):latest .
+                docker push $(imageUrlDev)/$(imageName):latest
+                aws ecs update-service --region us-east-1 --cluster bff-home --service bff-scheduling --force-new-deployment
+
+  - stage: AprovarPRD # Manual approval
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: Aprovar
+        pool: server
+        steps:
+          - task: ManualValidation@0
+            timeoutInMinutes: 1440 # 1 day
+            inputs:
+              instructions: 'Release PRD'
+
+  - stage: PRD
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: DeployPRD
+        steps:
+          - task: AWSShellScript@1
+            displayName: Build, Push and Deploy
+            inputs:
+              awsCredentials: '<vault-prd-credentials-name>'
+              scriptType: 'inline'
+              inlineScript: |
+                curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                unzip awscliv2.zip
+                sudo ./aws/install
+                aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(imageUrlPrd)
+                docker build -t $(imageUrlPrd)/$(imageName):latest .
+                docker push $(imageUrlPrd)/$(imageName):latest
+                aws ecs update-service --region us-east-1 --cluster bff-home --service bff-scheduling --force-new-deployment

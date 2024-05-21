@@ -11,10 +11,14 @@ import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { Payable } from './entities/payable.entity';
+import { ProducerService } from 'src/rabbitmq/producer.service';
 
 @Controller('payable')
 export class PayableController {
-  constructor(private readonly payableService: PayableService) {}
+  constructor(
+    private readonly payableService: PayableService,
+    private readonly producerService: ProducerService,
+  ) {}
 
   @Post()
   create(@Body() createPayableDto: CreatePayableDto): Promise<Payable> {
@@ -39,5 +43,12 @@ export class PayableController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.payableService.remove(id);
+  }
+
+  @Post('batch')
+  async sendMessage(@Body() batch: { payables: CreatePayableDto[] }) {
+    const { payables } = batch;
+    await this.producerService.sendToPayableQueue(payables);
+    return { message: 'Batch sent' };
   }
 }

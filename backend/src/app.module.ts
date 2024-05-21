@@ -8,6 +8,9 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { PayableModule } from './payable/payable.module';
 import { AssignorModule } from './assignor/assignor.module';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
+import { PAYABLE_QUEUE } from './rabbitmq/constants';
 
 @Module({
   imports: [
@@ -16,6 +19,20 @@ import { AssignorModule } from './assignor/assignor.module';
     AuthModule,
     PayableModule,
     AssignorModule,
+    RabbitMQModule,
+    ClientsModule.register([
+      {
+        name: 'RMQ',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqp://admin:admin@rabbitmq:5672/'],
+          queue: PAYABLE_QUEUE,
+          queueOptions: {
+            durable: true,
+          },
+        },
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [
