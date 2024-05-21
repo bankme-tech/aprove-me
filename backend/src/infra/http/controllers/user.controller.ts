@@ -10,7 +10,7 @@ export class UserController {
   constructor(
     private addNewUser: AddNewUser,
     private loginUser: LoginUser,
-  ) { }
+  ) {}
 
   @Post()
   @SkipAuth()

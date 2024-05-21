@@ -14,6 +14,7 @@ import { Module } from '@nestjs/common';
 import { UserController } from './controllers/user.controller';
 import { AdaptersModule } from '@/app/adapters/adapters.module';
 import { LoginUser } from '@/app/use-cases/user/login-user';
+import { FindAll } from '@/app/use-cases/payable/find-all';
 
 const assignorUseCases = [
   AddNewAssignor,
@@ -24,6 +25,7 @@ const assignorUseCases = [
 
 const payableUseCases = [
   AddNewPayable,
+  FindAll,
   FindPayableById,
   EditPayable,
   DeletePayable,
