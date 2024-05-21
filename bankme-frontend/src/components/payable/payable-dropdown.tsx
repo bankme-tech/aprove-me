@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Ellipsis } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,10 +7,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
+import UpdatePayableForm from "./update-payable";
 import { Payable, deletePayable } from "@/services/payable";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import UpdatePayableForm from "../update-payable";
 
 interface Props {
   payable: Payable;
