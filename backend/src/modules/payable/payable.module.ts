@@ -7,10 +7,11 @@ import { FindPayableByIdService } from './services/find-payable-by-id/find-payab
 import { GetPayablesService } from './services/get-payables/get-payables.service';
 import { DeletePayableService } from './services/delete-payable/delete-payable.service';
 import { UpdatePayableService } from './services/update-payable/update-payable.service';
+import { GetPayablesController } from './controllers/get-payables/get-payables.controller';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [RegisterPayableController, FindPayableByIdController],
+  controllers: [RegisterPayableController, FindPayableByIdController, GetPayablesController],
   providers: [RegisterPayableService, FindPayableByIdService, GetPayablesService, DeletePayableService, UpdatePayableService],
 })
 export class PayableModule {}
