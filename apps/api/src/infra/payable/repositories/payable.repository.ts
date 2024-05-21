@@ -8,5 +8,7 @@ export const PAYABLE_REPOSITORY = Symbol('__payable_repository__');
 export interface IPayableRepository {
   create(payableData: Omit<IPayableConstructor, 'id'>): Promise<Payable>;
 
+  save(data: Payable): Promise<Payable>;
+
   findOneById(id: Id): Promise<IOption<Payable>>;
 }

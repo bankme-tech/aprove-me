@@ -5,8 +5,13 @@ import { AssignorInfraModule } from '@infra/assignor/assignor-infra.module';
 
 import { CreatePayableUseCase } from '@application/payable/usecases/create-payable.usecase';
 import { FindOnePayableUseCase } from '@application/payable/usecases/find-one-payable-by-id.usecase';
+import { UpdateOnePayableUseCase } from '@application/payable/usecases/update-one-assignor.usecase';
 
-const useCases: Provider[] = [CreatePayableUseCase, FindOnePayableUseCase];
+const useCases: Provider[] = [
+  CreatePayableUseCase,
+  FindOnePayableUseCase,
+  UpdateOnePayableUseCase,
+];
 
 @Module({
   imports: [PayableInfraModule, AssignorInfraModule],

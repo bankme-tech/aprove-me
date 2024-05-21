@@ -27,6 +27,14 @@ export class AssignorPrismaRepository implements IAssignorRepository {
     return AssignorMapper.toDomain(assignor);
   }
 
+  async save(data: Assignor): Promise<Assignor> {
+    const assignor = await this._prismaService.assignor.update({
+      where: { id: data.id },
+      data: AssignorMapper.toPrisma(data),
+    });
+    return AssignorMapper.toDomain(assignor);
+  }
+
   async findOneById(id: string): Promise<IOption<Assignor>> {
     const user = await this._prismaService.assignor.findFirst({
       where: { id },

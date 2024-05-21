@@ -24,6 +24,18 @@ export class PayablePrismaRepository implements IPayableRepository {
     return PayableMapper.toDomain(payable);
   }
 
+  async save(data: Payable): Promise<Payable> {
+    const payable = await this._prismaService.payable.update({
+      include: { assignor: true },
+      where: { id: data.id },
+      data: {
+        value: data.value,
+        emissionDate: data.emissionDate,
+      },
+    });
+    return PayableMapper.toDomain(payable);
+  }
+
   async findOneById(id: string): Promise<IOption<Payable>> {
     const user = await this._prismaService.payable.findFirst({
       include: { assignor: true },
