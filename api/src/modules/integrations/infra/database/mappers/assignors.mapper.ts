@@ -2,7 +2,7 @@ import { Assignor as PrismaAssignor } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { Assignor } from '@/modules/integrations/domain/entities/assignor.entity';
 
-export class AssignorMapper {
+export class AssignorsMapper {
   public static toDomain(assignor: PrismaAssignor): Assignor {
     return new Assignor({
       id: assignor.id,

@@ -2,7 +2,7 @@ import { PrismaService } from '@/infra/database/prisma/prisma.service';
 
 import { Injectable } from '@nestjs/common';
 import { Assignor } from '@/modules/integrations/domain/entities/assignor.entity';
-import { AssignorMapper } from '../mappers/assignor.mapper';
+import { AssignorsMapper } from '../mappers/assignors.mapper';
 import { AssignorsRepository } from '@/modules/integrations/domain/repositories/assignors.repository';
 
 @Injectable()
@@ -10,11 +10,15 @@ export class PrismaAssignorsRepository implements AssignorsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   public async save(assignor: Assignor): Promise<Assignor> {
-    return AssignorMapper.toDomain(
-      await this.prisma.assignor.create({
-        data: AssignorMapper.toPersist(assignor),
-      }),
-    );
+    const { id, ...raw } = AssignorsMapper.toPersist(assignor);
+
+    const payableCreatedOrUpdated = await this.prisma.assignor.upsert({
+      where: { id: id ?? 'does not exists' },
+      update: raw,
+      create: { id, ...raw },
+    });
+
+    return AssignorsMapper.toDomain(payableCreatedOrUpdated);
   }
 
   public async findById(id: string): Promise<Assignor | null> {
@@ -25,7 +29,7 @@ export class PrismaAssignorsRepository implements AssignorsRepository {
     });
 
     if (assignor) {
-      return AssignorMapper.toDomain(assignor);
+      return AssignorsMapper.toDomain(assignor);
     }
 
     return null;
