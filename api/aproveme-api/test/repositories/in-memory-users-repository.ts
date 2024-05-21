@@ -5,10 +5,14 @@ export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = [];
 
   async create(user: User): Promise<void> {
-    throw new Error("Method not implemented.");
+    this.items.push(user);
   }
 
-  async findByLogin(email: string): Promise<User> {
-    throw new Error("Method not implemented.");
+  async findByLogin(login: string) {
+    const user = this.items.find((item) => item.login === login);
+
+    if (!user) return null;
+
+    return user;
   }
 }
