@@ -3,7 +3,7 @@ import { AssignorController } from './assignor.controller';
 import { AssignorService } from './assignor.service';
 
 @Module({
-  controllers: [AssignorController ],
+  controllers: [AssignorController],
   providers: [AssignorService],
 })
 export class AssignorModule { }

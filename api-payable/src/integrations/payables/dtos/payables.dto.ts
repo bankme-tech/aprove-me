@@ -1,9 +1,9 @@
 import { IsNumber, IsDate, IsUUID } from 'class-validator';
 
-export class CreatePayablesDto {
-  /** É a identificação de um recebível */
-  @IsUUID()
-  id: string;
+export class PayablesDto {
+  // /** É a identificação de um recebível */
+  // @IsUUID()
+  // id: string;
 
   /** É o valor do recebível */
   @IsNumber()

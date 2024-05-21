@@ -1,7 +1,9 @@
-# API TODO list
-1. [] `POST /integrations/payable`
-    - [X] Validar dto.
-    - [X] UUID
+# TODO
+## Todo-list
+### Back-end
+1. [x] `POST /integrations/payable`
+    - [x] Validar dto.
+    - [x] UUID
 2. Testes
     - [] Tests.
 3. Persistência

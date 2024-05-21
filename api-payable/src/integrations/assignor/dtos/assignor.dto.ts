@@ -1,27 +1,27 @@
-import { IsUUID, IsString, MinLength } from 'class-validator';
+import { IsUUID, IsString, MaxLength } from 'class-validator';
 
-export class CreatePayablesDto {
+export class CreateAssignorDto {
   /** É a identificação de um cedente */
   @IsUUID()
   id: string;
 
   /** É o documento CPF ou CNPJ do cedente */
   @IsString()
-  @MinLength(30)
+  @MaxLength(30)
   document: string;
 
   /** É o email do cedente */
   @IsString()
-  @MinLength(140)
+  @MaxLength(140)
   email: string;
 
   /** É o telefone do cedente */
   @IsString()
-  @MinLength(20)
+  @MaxLength(20)
   phone: string;
 
   /** É a nome ou razão social do cedente */
   @IsString()
-  @MinLength(140)
+  @MaxLength(140)
   name: string;
 }
