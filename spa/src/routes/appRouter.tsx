@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./protectedRoute";
 import Login from "../pages/login";
+import NewPayable from "../pages/newPayable";
+import ViewPayables from "../pages/viewPayable";
 
 export default function AppRouter() {
 	return (
@@ -18,15 +20,15 @@ export default function AppRouter() {
 				path="/payables/new"
 				element={
 					<ProtectedRoute>
-						<span>cadastrar pagavel</span>
+						<NewPayable />
 					</ProtectedRoute>
 				}
 			/>
 			<Route
-				path="/payables/view/:id"
+				path="/payables/view/"
 				element={
 					<ProtectedRoute>
-						<span>pagavel</span>
+						<ViewPayables />
 					</ProtectedRoute>
 				}
 			/>

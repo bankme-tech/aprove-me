@@ -1,5 +1,5 @@
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
-import { AssignorType } from "../types";
+import { AssignorType } from "../../types";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegisterReturn;

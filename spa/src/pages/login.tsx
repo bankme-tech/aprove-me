@@ -1,10 +1,10 @@
 import FormCard from "../components/formCard";
-import Title from "../components/title";
-import Button from "../components/button";
-import ErrorMessage from "../components/errorMessage";
+import Title from "../components/ui/title";
+import Button from "../components/ui/button";
+import ErrorMessage from "../components/ui/errorMessage";
 import { authenticatePermission } from "../services/authentication";
 import { useNavigate } from "react-router-dom";
-import Input from "../components/input";
+import Input from "../components/ui/input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod'
