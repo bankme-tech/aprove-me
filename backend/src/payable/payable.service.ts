@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { randomUUID } from 'node:crypto';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 
 @Injectable()
 export class PayableService {
   create(createPayableDto: CreatePayableDto) {
-    return 'This action adds a new payable';
+    return {
+      id: randomUUID(),
+      ...createPayableDto,
+    };
   }
 
   findAll() {
