@@ -4,14 +4,17 @@ import { RegisterAssignorService } from '../../services/register-assignor/regist
 import { IAssignorRepository } from '../../repositories/interfaces/assignor.repository-interface';
 import { InMemoryAssignorRepository } from '../../repositories/in-memory/assignor.repository';
 import { faker } from '@faker-js/faker';
+import { FakeAuthModule } from '~/common/test/fake-auth-module';
 
 describe('RegisterAssignorController', () => {
   let controller: RegisterAssignorController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [...FakeAuthModule.imports],
       controllers: [RegisterAssignorController],
       providers: [
+        ...FakeAuthModule.providers,
         RegisterAssignorService,
         {
           provide: IAssignorRepository,

@@ -4,9 +4,11 @@ import {
   HttpCode,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { GetPayablesService } from '../../services/get-payables/get-payables.service';
 import { ResponsePresenter } from './response.presenter';
+import { AuthGuard } from '~/modules/auth/guards/auth.guard';
 
 @Controller('/integrations/payables')
 export class GetPayablesController {
@@ -14,6 +16,7 @@ export class GetPayablesController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
   async handle() {
     const result = await this.service.execute();
 

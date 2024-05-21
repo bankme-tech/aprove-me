@@ -5,11 +5,13 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { RegisterAssignorRequestSchema } from './request.schema';
 import { RegisterAssignorService } from '../../services/register-assignor/register-assignor.service';
 import { InvalidEntityEntry } from '~/common/exceptions/invalid-entity-entry.exception';
 import { ResponsePresenter } from './response.presenter';
+import { AuthGuard } from '~/modules/auth/guards/auth.guard';
 
 @Controller('integrations/assignor')
 export class RegisterAssignorController {
@@ -17,6 +19,7 @@ export class RegisterAssignorController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(AuthGuard)
   async handle(@Body() data: RegisterAssignorRequestSchema) {
     const result = await this.service.execute(data);
 

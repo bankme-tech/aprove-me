@@ -4,6 +4,7 @@ import { GetAssignorsService } from '../../services/get-assignors/get-assignors.
 import { InMemoryAssignorRepository } from '../../repositories/in-memory/assignor.repository';
 import { IAssignorRepository } from '../../repositories/interfaces/assignor.repository-interface';
 import { makeAssignor } from '../../test/factories/make-assignor';
+import { FakeAuthModule } from '~/common/test/fake-auth-module';
 
 describe('GetAssignorsController', () => {
   let controller: GetAssignorsController;
@@ -11,8 +12,10 @@ describe('GetAssignorsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [...FakeAuthModule.imports],
       controllers: [GetAssignorsController],
       providers: [
+        ...FakeAuthModule.providers,
         GetAssignorsService,
         {
           useClass: InMemoryAssignorRepository,

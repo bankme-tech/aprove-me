@@ -7,6 +7,7 @@ import { InMemoryPayableRepository } from '../../repositories/in-memory/payable.
 import { IAssignorRepository } from '~/modules/assignor/repositories/interfaces/assignor.repository-interface';
 import { InMemoryAssignorRepository } from '~/modules/assignor/repositories/in-memory/assignor.repository';
 import { faker } from '@faker-js/faker';
+import { FakeAuthModule } from '~/common/test/fake-auth-module';
 
 describe('RegisterPayableController', () => {
   let controller: RegisterPayableController;
@@ -14,8 +15,10 @@ describe('RegisterPayableController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [...FakeAuthModule.imports],
       controllers: [RegisterPayableController],
       providers: [
+        ...FakeAuthModule.providers,
         RegisterPayableService,
         {
           provide: IPayableRepository,

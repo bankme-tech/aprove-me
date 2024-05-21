@@ -4,6 +4,7 @@ import { InMemoryAssignorRepository } from '../../repositories/in-memory/assigno
 import { IAssignorRepository } from '../../repositories/interfaces/assignor.repository-interface';
 import { faker } from '@faker-js/faker';
 import { FindAssignorByIdService } from '../../services/find-assignor-by-id/find-assignor-by-id.service';
+import { FakeAuthModule } from '~/common/test/fake-auth-module';
 
 describe('FindAssignorByIdController', () => {
   let controller: FindAssignorByIdController;
@@ -11,8 +12,10 @@ describe('FindAssignorByIdController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [...FakeAuthModule.imports],
       controllers: [FindAssignorByIdController],
       providers: [
+        ...FakeAuthModule.providers,
         FindAssignorByIdService,
         {
           provide: IAssignorRepository,

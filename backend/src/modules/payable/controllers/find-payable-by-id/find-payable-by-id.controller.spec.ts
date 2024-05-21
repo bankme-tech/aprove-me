@@ -4,6 +4,7 @@ import { InMemoryPayableRepository } from '../../repositories/in-memory/payable.
 import { IPayableRepository } from '../../repositories/interfaces/payable.repository-interface';
 import { faker } from '@faker-js/faker';
 import { FindPayableByIdService } from '../../services/find-payable-by-id/find-payable-by-id.service';
+import { FakeAuthModule } from '~/common/test/fake-auth-module';
 
 describe('FindPayableByIdController', () => {
   let controller: FindPayableByIdController;
@@ -11,8 +12,10 @@ describe('FindPayableByIdController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [...FakeAuthModule.imports],
       controllers: [FindPayableByIdController],
       providers: [
+        ...FakeAuthModule.providers,
         FindPayableByIdService,
         {
           provide: IPayableRepository,

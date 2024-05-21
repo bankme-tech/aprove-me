@@ -5,11 +5,13 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { RegisterPayableRequestSchema } from './request.schema';
 import { RegisterPayableService } from '../../services/register-payable/register-payable.service';
 import { NotFoundResource } from '~/common/exceptions/not-found-resource.exception';
 import { ResponsePresenter } from './response.presenter';
+import { AuthGuard } from '~/modules/auth/guards/auth.guard';
 
 @Controller('/integrations/payable')
 export class RegisterPayableController {
@@ -17,6 +19,7 @@ export class RegisterPayableController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(AuthGuard)
   async handle(
     @Body() { assignor, emissionDate, value }: RegisterPayableRequestSchema,
   ) {

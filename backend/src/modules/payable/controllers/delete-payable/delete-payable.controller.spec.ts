@@ -4,6 +4,7 @@ import { DeletePayableService } from '../../services/delete-payable/delete-payab
 import { IPayableRepository } from '../../repositories/interfaces/payable.repository-interface';
 import { InMemoryPayableRepository } from '../../repositories/in-memory/payable.repository';
 import { makePayable } from '../../test/factories/make-payable';
+import { FakeAuthModule } from '~/common/test/fake-auth-module';
 
 describe('DeletePayableController', () => {
   let controller: DeletePayableController;
@@ -11,8 +12,10 @@ describe('DeletePayableController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [...FakeAuthModule.imports],
       controllers: [DeletePayableController],
       providers: [
+        ...FakeAuthModule.providers,
         DeletePayableService,
         {
           provide: IPayableRepository,

@@ -6,10 +6,12 @@ import {
   HttpStatus,
   Param,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { FindPayableByIdService } from '../../services/find-payable-by-id/find-payable-by-id.service';
 import { NotFoundResource } from '~/common/exceptions/not-found-resource.exception';
 import { ResponsePresenter } from './response.presenter';
+import { AuthGuard } from '~/modules/auth/guards/auth.guard';
 
 @Controller('/integrations/payable')
 export class FindPayableByIdController {
@@ -17,6 +19,7 @@ export class FindPayableByIdController {
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
   async handle(@Param('id', ParseUUIDPipe) id: string) {
     const result = await this.service.execute({ id: id });
 
