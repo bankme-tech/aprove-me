@@ -15,3 +15,7 @@ export type assignorResponseDto = {
 };
 
 export type assignorListResponseDto = assignorResponseDto[];
+export type assignorUniqueResponseType = {
+  id: string | null;
+  field: string | null;
+};
