@@ -1,25 +1,38 @@
-import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+"use client";
+import { axiosInstance } from "@/api/api";
+import { createContext, useContext, useEffect, useState } from "react";
 
-interface AuthState {
-  isAuthenticated: boolean;
-  token: string;
-  setToken: (user: string) => void;
+type AuthContextType = {
+  isLoading: boolean;
+  isLogged: boolean;
+  updateSessionToken: (token: string) => void;
+};
+
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+
+export function AuthProvider({ children }: React.PropsWithChildren) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axiosInstance.defaults.headers["authorization"] = `Bearer ${token}`;
+      setToken(token);
+    }
+
+    setIsLoading(false);
+  }, []);
+
+  const updateSessionToken = (token: string) => {
+    axiosInstance.defaults.headers["authorization"] = `Bearer ${token}`;
+    localStorage.setItem("token", token);
+    setToken(token);
+  };
+
+  const isLogged = !!token;
+
+  return <AuthContext.Provider value={{ isLoading, isLogged, updateSessionToken }}>{children}</AuthContext.Provider>;
 }
 
-export const useAuthStore = create<AuthState>()(
-  devtools(
-    persist(
-      (set) => ({
-        token: '',
-        isAuthenticated: false,
-        setToken: (token: string) => set({ token, isAuthenticated: true }),
-      }),
-      {
-        name: "auth-store",
-      },
-    ),
-  ),
-);
-
-export const setToken = useAuthStore.getState().setToken;
+export const useAuth = () => useContext(AuthContext);

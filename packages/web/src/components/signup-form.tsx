@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import Link from "next/link";
 
 const formSchema = z.object({
   login: z.string(),
@@ -54,7 +55,9 @@ export function SignupForm() {
         />
         <div className="flex justify-between">
           <Button type="submit">Cadastrar</Button>
-          <Button variant="outline">Já tenho uma conta</Button>
+          <Link href="/">
+            <Button variant="outline">Já tenho uma conta</Button>
+          </Link>
         </div>
       </form>
     </Form>

@@ -1,13 +1,17 @@
+"use client";
+
 import { z } from "zod";
-import { api } from "@/api/api";
+import { useState } from "react";
 import { AxiosError } from "axios";
+import { axiosInstance } from "@/api/api";
+import { useAuth } from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
-import { setToken } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import Link from "next/link";
 
 const formSchema = z.object({
   login: z.string(),
@@ -16,6 +20,8 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const router = useRouter();
+  const { updateSessionToken } = useAuth();
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -27,15 +33,17 @@ export function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const { data } = await api.post<{ token: string }>("/auth", values);
+      const { data } = await axiosInstance.post<{ token: string }>("/auth", values);
 
-      setToken(data.token)
-
+      updateSessionToken(data.token);
       router.push("/payables");
     } catch (error) {
       if (error instanceof AxiosError) {
-        form.setError("login", { message: error.response?.data.message[0] });
-        form.setError("password", { message: error.response?.data.message[1] });
+        if (error.response?.status === 401) {
+          setLoginError("Credenciais invalidas");
+        } else {
+          setLoginError("Algo deu errado");
+        }
       }
     }
   }
@@ -69,9 +77,12 @@ export function LoginForm() {
             </FormItem>
           )}
         />
+        {loginError && <p className="text-red-500">{loginError}</p>}
         <div className="flex justify-between">
           <Button type="submit">Logar</Button>
-          <Button variant="outline">Criar conta</Button>
+          <Link href="/signup">
+            <Button variant="outline">Criar conta</Button>
+          </Link>
         </div>
       </form>
     </Form>

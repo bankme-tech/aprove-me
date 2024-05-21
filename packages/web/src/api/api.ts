@@ -1,20 +1,21 @@
 import axios from "axios";
+import { redirect } from "next/navigation";
 
-export const api = axios.create({
+export const axiosInstance = axios.create({
   baseURL: "http://localhost:3333/integrations",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-api.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (res) => res,
   async (err) => {
     const status = err?.response?.status || null;
 
     if (status === 401) {
       console.warn(status);
-      window.location.replace("/");
+      redirect("/");
     }
     return Promise.reject(err);
   },
