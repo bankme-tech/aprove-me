@@ -15,4 +15,12 @@ export class InMemoryAssignorRepository implements IAssignorRepository {
 
     return entity;
   }
+
+  async findById(id: string): Promise<AssignorEntity | null> {
+    const entity = this.items.find((item) => item.id === id);
+
+    if (!entity) return null;
+
+    return AssignorMapper.toDomain(entity);
+  }
 }

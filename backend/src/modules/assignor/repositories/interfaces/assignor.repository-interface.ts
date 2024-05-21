@@ -3,4 +3,5 @@ import type { AssignorEntity } from '../../entities/assignor.entity';
 
 export abstract class IAssignorRepository {
   abstract create(assignor: AssignorEntity): Promise<AssignorPersistence>;
+  abstract findById(id: string): Promise<AssignorEntity | null>;
 }

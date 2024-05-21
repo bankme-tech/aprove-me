@@ -16,4 +16,12 @@ export class PrismaAssignorRepository implements IAssignorRepository {
 
     return entity;
   }
+
+  async findById(id: string): Promise<AssignorEntity | null> {
+    const entity = await this.prisma.assignor.findFirst({ where: { id } });
+
+    if (!entity) return null;
+
+    return AssignorMapper.toDomain(entity);
+  }
 }
