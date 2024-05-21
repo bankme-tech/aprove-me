@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowBigRight } from "lucide-react";
 
 export default function Home() {
   return (
@@ -19,12 +21,6 @@ export default function Home() {
           >
             <Link href="/login">Fazer Login</Link>
           </button>
-          <button
-            className="px-4 py-1 bg-[#0a36b0] text-[#fff] font-semibold rounded"
-            data-testid="button-onboarding"
-          >
-            <Link href="/register">Cadastrar Pagável</Link>
-          </button>
         </div>
       </nav>
       <div className="flex sm:justify-between flex-col sm:flex-row text-center sm:text-start pt-5 items-center sm:pr-4 sm:pl-8 px-5 w-full">
@@ -34,14 +30,20 @@ export default function Home() {
               Tecnologia, suporte operacional e contábil para quem deseja ganhar
               dinheiro ofertando crédito
             </p>
-            <p
-              className="text-[16px] mt-5"
-            >
+            <p className="text-[16px] mt-5">
               Para além de absorver toda a complexibilidade da estruturação de
               Empresas de Crédito, somos responsáveis por todas as demandas da
               jornada de nossos clientes, entregando rentabilidade e segurança
               em suas operações.
             </p>
+            <div className="mt-5">
+              <Link href="/register-payable">
+                <Button className="flex gap-2 bg-[#0a36b0]">
+                  Cadastrar Pagável
+                  <ArrowBigRight className="mr-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
 
