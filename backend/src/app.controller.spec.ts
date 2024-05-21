@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 describe('AppController', () => {
-  let appController: AppController;
+  let sut: AppController;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -11,11 +11,11 @@ describe('AppController', () => {
       providers: [AppService],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    sut = app.get<AppController>(AppController);
   });
 
   test('should return API health check mesage', () => {
-    expect(appController.healthCheck()).toEqual({
+    expect(sut.healthCheck()).toEqual({
       message: 'Service is up and running',
     });
   });
