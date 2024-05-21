@@ -1,0 +1,37 @@
+{
+  "name": "aprove-me",
+  "version": "0.0.1",
+  "author": "Caique Torres",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caiquetorres/aprove-me"
+  },
+  "packageManager": "pnpm@9.1.1",
+  "engines": {
+    "pnpm": "^9.0.0"
+  },
+  "scripts": {
+    "start:api": "pnpm --dir apps/api start",
+    "start:api:dev": "pnpm --dir apps/api start:dev",
+    "start:api:debug": "pnpm --dir apps/api start:debug",
+    "start:api:prod": "pnpm --dir apps/api start:prod",
+    "lint": "pnpm -r --parallel lint",
+    "test": "pnpm -r test",
+    "build": "pnpm -r --parallel build",
+    "build:apps": "pnpm -F \"./apps/**\" --parallel build",
+    "build:packages": "pnpm -F \"./packages/**\" --parallel build"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-angular": "^19.3.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^9.0.11",
+    "prettier": "^3.0.0",
+    "typescript": "^5.1.3"
+  }
+}

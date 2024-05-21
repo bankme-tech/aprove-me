@@ -1,0 +1,21 @@
+{
+  "name": "@bankme/nestjs-env",
+  "version": "0.0.1",
+  "private": true,
+  "author": "Caique Torres",
+  "main": "dist/index.js",
+  "scripts": {
+    "check": "tsc",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "build": "tsc --incremental"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.2.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3"
+  }
+}
