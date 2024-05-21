@@ -7,7 +7,7 @@ describe('# Teste de Unidade - UniqueEntityIdVO', () => {
     '123e4567-e89b-12d3-a456426614174000',
     '123e4567-e89b-12d3-a456-4266141740001',
     '123e4567-e89b-12d3-a456-42661417400'
-  ])('deve lançar exceção quando informado UUID "%s" inválido',
+  ])('deve lançar exceção se informado UUID "%s" inválido',
     (value) => {
       expect(() => new UniqueEntityIdVO(value)).toThrow(`Value ${value} must be a valid UUID`);
     });
