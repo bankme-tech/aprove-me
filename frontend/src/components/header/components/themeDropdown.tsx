@@ -27,18 +27,18 @@ export function ThemeDropDown() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem onSelect={() => handleTheme("light")}>
-          <Sun className="mr-2 h-4 w-4" />
           <span>Modo claro</span>
+          <Sun className="mr-2 h-4 w-4" />
         </DropdownMenuItem>
 
         <DropdownMenuItem onSelect={() => handleTheme("dark")}>
-          <Moon className="mr-2 h-4 w-4" />
           <span>Modo Escuro</span>
+          <Moon className="mr-2 h-4 w-4" />
         </DropdownMenuItem>
 
         <DropdownMenuItem onSelect={() => handleTheme("system")}>
-          <Monitor className="mr-2 h-4 w-4" />
           <span>Padrão do sistema</span>
+          <Monitor className="mr-2 h-4 w-4" />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

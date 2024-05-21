@@ -12,8 +12,8 @@ interface PayableStoreTypes extends FindAllResponse {
   status: Status;
   createPayable: (createPayableData: PlayableTypes) => Promise<void>;
   findAllPayables: (input: FindAllPayables) => Promise<void>;
+  deletePayable: (payableId: string) => Promise<void>;
 }
-
 export const usePayableStore = create<PayableStoreTypes>()((set) => ({
   status: "idle",
   payables: [],
@@ -48,5 +48,20 @@ export const usePayableStore = create<PayableStoreTypes>()((set) => ({
       totalPages,
       totalPayables,
     });
+  },
+  deletePayable: async (payableId) => {
+    try {
+      await payableService.delete(payableId);
+
+      set((state) => ({
+        ...state,
+        payables: state.payables.filter((payable) => payable._id !== payableId),
+      }));
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        "Algo inesperado aconteceu, por favor tente novamente mais tarde",
+      );
+    }
   },
 }));

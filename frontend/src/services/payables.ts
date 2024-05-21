@@ -28,4 +28,8 @@ export class payableService {
       return { payables: [], totalPages: 0, totalPayables: 0 };
     }
   }
+
+  static async delete(payableId: string): Promise<void> {
+    await api.delete(`/integrations/payable/${payableId}`);
+  }
 }

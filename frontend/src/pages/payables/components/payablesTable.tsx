@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/formatCurrency";
 import { usePayableStore } from "@/stores/usePayableStore";
-import { EllipsisVertical } from "lucide-react";
 import { useEffect } from "react";
+import { PayableMenu } from "./payableMenu";
 
 export const PayablesTable = () => {
   const payable = usePayableStore();
@@ -37,7 +37,7 @@ export const PayablesTable = () => {
         </TableCell>
 
         <TableCell className="flex w-full justify-end gap-2">
-          <EllipsisVertical />
+          <PayableMenu payable={payable} />
         </TableCell>
       </TableRow>
     ));

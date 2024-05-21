@@ -8,14 +8,31 @@ import { create } from "zustand";
 
 interface AssignorStoreTypes {
   status: Status;
+  assignor: Assignor;
   assignors: Assignor[];
+  findById: (assignorId: string) => void;
   getAllAssignors: () => void;
   createAssignor: (input: AssignorTypes) => Promise<void>;
 }
 
 export const useAssignorStore = create<AssignorStoreTypes>()((set) => ({
   status: "idle",
+  assignor: {} as unknown as Assignor,
   assignors: [],
+  findById: async (assignorId) => {
+    const assignor = await AssignorService.findById(assignorId);
+
+    if (!assignor) {
+      toast.error("Cedente não-encontrado");
+      return;
+    }
+
+    set((state) => ({
+      ...state,
+      assignor,
+    }));
+  },
+
   getAllAssignors: async () => {
     const { assignors } = await AssignorService.getAll();
 
