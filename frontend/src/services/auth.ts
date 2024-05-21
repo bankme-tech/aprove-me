@@ -23,4 +23,8 @@ export class AuthService {
       return { accessToken: "" };
     }
   }
+
+  static async signup(signUpData: LoginProps): Promise<void> {
+    await api.post<LoginResponse>("/integrations/user", signUpData);
+  }
 }

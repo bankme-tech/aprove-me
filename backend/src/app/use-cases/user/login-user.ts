@@ -10,7 +10,6 @@ interface Input {
 }
 
 interface Output {
-  acessToken: string;
   accessToken: string;
 }
 
@@ -20,7 +19,7 @@ export class LoginUser {
     private userRepository: UserRepository,
     private bcryptAdapter: BcryptAdapterRepository,
     private jwtAdapterRepository: JwtAdapterRepository,
-  ) {}
+  ) { }
 
   async execute(input: Input): Promise<Output> {
     const findUser = await this.userRepository.findByLogin(input.login);
@@ -39,10 +38,8 @@ export class LoginUser {
       login: findUser.props.login,
     };
 
-    const acessToken = await this.jwtAdapterRepository.signAsync(token);
     const accessToken = await this.jwtAdapterRepository.signAsync(token);
 
-    return { acessToken };
     return { accessToken };
   }
 }

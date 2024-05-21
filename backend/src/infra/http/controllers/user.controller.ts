@@ -10,12 +10,13 @@ export class UserController {
   constructor(
     private addNewUser: AddNewUser,
     private loginUser: LoginUser,
-  ) {}
+  ) { }
 
   @Post()
   @SkipAuth()
   async create(@Body() body: AddNewUserDTO) {
     const { user } = await this.addNewUser.execute(body);
+
     return user;
   }
 
@@ -23,10 +24,8 @@ export class UserController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() body: loginUserDTO) {
-    const { acessToken } = await this.loginUser.execute(body);
     const { accessToken } = await this.loginUser.execute(body);
 
-    return { acessToken };
     return { accessToken };
   }
 }
