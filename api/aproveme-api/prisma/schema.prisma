@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/sqlite/dev.db"
+}
+
+model User {
+  id       String @id @default(uuid())
+  login    String @unique
+  password String
+}
+
+model Assignor {
+  id       String    @id @default(uuid())
+  document String    @unique
+  email    String    @unique
+  phone    String
+  name     String
+  payables Payable[]
+}
+
+model Payable {
+  id           String   @id @default(uuid())
+  value        Float
+  emissionDate DateTime
+  assignorId   String
+  assignor     Assignor @relation(fields: [assignorId], references: [id])
+}
