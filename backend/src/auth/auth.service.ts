@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserRepository {
@@ -42,19 +42,36 @@ export class UserRepository {
 
 @Injectable()
 export class AuthService {
-    constructor(readonly userRepository : UserRepository){
-      this.userRepository = userRepository
+  constructor(private readonly userRepository: UserRepository) {}
+
+  async register(email: string, password: string): Promise<User> {
+    // Verifique se o usuário já existe
+    let user: User | null = await this.userRepository.findOneByEmail(email);
+    if (user) {
+      throw new HttpException("User already exists", HttpStatus.BAD_REQUEST);
     }
 
-    async authenticate(email: string, password: string) {
-      // descobrir pq tá dando que o usuario já existe
-      // ype '{ id: string; email: string; password: string; }' is missing the following properties from type 'Promise<{ id: string; email: string; password: string; }>': then, catch, finally, [Symbol.toStringTag]ts(2739)
-      let user : User | null = await this.userRepository.findOneByEmail(email)
-      if (user) {
-        throw new HttpException("User already exists", HttpStatus.BAD_REQUEST)
-      }
+    const hashedPassword = await bcrypt.hash(password + "aprove-me bank-me", 10);
 
-      user = await this.userRepository.create({email, password})
-      return user
+    user = await this.userRepository.create({ email, password: hashedPassword });
+    return user;
+  }
+
+  async login(email: string, password: string): Promise<User> {
+    const user: User | null = await this.userRepository.findOneByEmail(email);
+    if (!user) {
+      throw new HttpException("Invalid email or password", HttpStatus.UNAUTHORIZED);
     }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new HttpException("Invalid email or password", HttpStatus.UNAUTHORIZED);
+    }
+
+    return user;
+  }
+
+  async authenticate(email: string, password: string): Promise<User> {
+    return this.login(email, password);
+  }
 }

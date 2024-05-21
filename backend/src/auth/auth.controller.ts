@@ -1,6 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { IsString } from 'class-validator';
+import { User } from '@prisma/client';
 
 
 class UserDTO {
@@ -22,5 +23,10 @@ export class AuthController {
     @Post()
     authenticate(@Body() authDTO : UserDTO) {
         return this.authService.authenticate(authDTO.email, authDTO.password)
+    }
+
+    @Post()
+    login(@Body() authDTO : UserDTO) {
+        return this.authService.login(authDTO.email, authDTO.password)
     }
 }
