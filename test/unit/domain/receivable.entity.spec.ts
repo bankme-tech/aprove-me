@@ -20,7 +20,7 @@ describe('# Test de Unidade - ReceivableEntity', () => {
     expect(receivable.id).toBeInstanceOf(UniqueEntityIdVO);
     expect(receivable.assignor.value).toEqual(expectedAssignor.value);
     expect(receivable.assignor).toBeInstanceOf(UniqueEntityIdVO);
-    expect(receivable.emissonDate).toStrictEqual(expectedEmissionDate);
+    expect(receivable.emissionDate).toStrictEqual(expectedEmissionDate);
     expect(receivable.value).toStrictEqual(expectedValue);
 
     expect(receivable.toJSON()).toEqual({
@@ -49,7 +49,7 @@ describe('# Test de Unidade - ReceivableEntity', () => {
     expect(receivable.id).toBeInstanceOf(UniqueEntityIdVO);
     expect(receivable.assignor.value).toEqual(expectedAssignor.value);
     expect(receivable.assignor).toBeInstanceOf(UniqueEntityIdVO);
-    expect(receivable.emissonDate).toStrictEqual(expectedEmissionDate);
+    expect(receivable.emissionDate).toStrictEqual(expectedEmissionDate);
     expect(receivable.value).toStrictEqual(expectedValue);    
   });
 });

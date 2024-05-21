@@ -11,14 +11,14 @@ export type ReceivableProps = {
 export class ReceivableEntity extends Entity {
   readonly id: UniqueEntityIdVO;
   readonly value: number;
-  readonly emissonDate: Date;
+  readonly emissionDate: Date;
   readonly assignor: UniqueEntityIdVO;
 
   constructor(props: ReceivableProps) {
     super();
     this.id = props.id ? new UniqueEntityIdVO(props.id) : new UniqueEntityIdVO();
     this.value = props.value;
-    this.emissonDate = new Date(props.emissionDate);
+    this.emissionDate = new Date(props.emissionDate);
     this.assignor = new UniqueEntityIdVO(props.assignor);
   }
 
