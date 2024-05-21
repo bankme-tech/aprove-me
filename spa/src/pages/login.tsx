@@ -19,8 +19,8 @@ export default function Login() {
     if(!login || !password) return setError({message: 'Preencha todos os campos.'});
 
     try {
-      const { token } = await authenticatePermission(login, password);
-      localStorage.setItem('accessToken', token);
+      const {access_token} = await authenticatePermission(login, password);
+      localStorage.setItem('accessToken', access_token);
       navigate('/payables/new');
     } catch (error) {
       setError(error)
