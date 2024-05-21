@@ -13,7 +13,8 @@ function App() {
     const timer = setInterval(() => user.checkUser(), 6000);
 
     return () => clearInterval(timer);
-  }, [user, user.userToken]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="min-h-screen w-full bg-background">
       <ThemesProvider>
