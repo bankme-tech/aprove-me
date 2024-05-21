@@ -28,19 +28,20 @@ export abstract class ValueObject<Value = any> {
   }
 
   toString = () => {
-    if (typeof this.value !== 'object' || this.value === null) {
-      try {
-        return this.value.toString();
-      } catch (e) {
-        return this.value + '';
-      }
+    if (this.value === null || this.value === undefined) {
+      return String(this.value);
     }
-
-    const valueStr = this.value.toString();
-    
-    return valueStr === '[object Object]'
-      ? JSON.stringify(this.value)
-      : valueStr;
+  
+    if (typeof this.value !== 'object') {
+      return String(this.value);
+    }
+  
+    try {
+      const valueStr = this.value.toString();
+      return valueStr === '[object Object]' ? JSON.stringify(this.value) : valueStr;
+    } catch (e) {
+      return JSON.stringify(this.value);
+    }
   };
 }
 
