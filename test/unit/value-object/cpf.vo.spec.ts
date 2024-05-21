@@ -23,7 +23,7 @@ describe('# Teste de Unidade - Cpf', () => {
   );
 
   it('deve retornar uma instância de CPF', () => {
-    const value = '389.967.700-51'
+    const value = '389.967.700-51';
     const cpf = new CpfVO(value);
 
     expect(cpf.value).toStrictEqual(value.replace(/\D/g, ''));
