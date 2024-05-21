@@ -15,17 +15,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import useUsers from "@/hooks/useUsers";
 
 const formSchema = z.object({
   value: z.string({
-    required_error: "Valor não pode ser vazio"
+    required_error: "Valor não pode ser vazio",
   }),
   assignor: z.string({
-    required_error: "Valor não pode ser vazio"
-  })
+    required_error: "Valor não pode ser vazio",
+  }),
 });
 
 export default function Page() {
+  const { users } = useUsers();
+  console.log("Users: ", users);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,7 +66,11 @@ export default function Page() {
                   <FormItem>
                     <FormLabel>Valor</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite o valor da nota" type="number" {...field} />
+                      <Input
+                        placeholder="Digite o valor da nota"
+                        type="number"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -76,13 +83,19 @@ export default function Page() {
                   <FormItem>
                     <FormLabel>Assinante</FormLabel>
                     <FormControl>
-                      <Input placeholder="Informe o ID do assinante" type="text" {...field} />
+                      <Input
+                        placeholder="Informe o ID do assinante"
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button  className="bg-[#0a36b0]" type="submit">Cadastrar</Button>
+              <Button className="bg-[#0a36b0]" type="submit">
+                Cadastrar
+              </Button>
             </form>
           </Form>
 
