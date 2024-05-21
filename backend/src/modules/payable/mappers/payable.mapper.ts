@@ -30,8 +30,6 @@ export class PayableMapper {
     if (entity.isLeft())
       throw new Error(`Can't transform "${raw.id}" payable to domain layer.`);
 
-    console.log(entity.value);
-
     return entity.value;
   }
 
