@@ -1,86 +1,236 @@
 import { IntegrationsController } from './integrations.controller';
 import { IntegrationsService } from './integrations.service';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { CreatePayableDto } from './dto/create-integration.dto';
+import { NotFoundException } from '@nestjs/common';
+import {
+  CreateAssignorDto,
+  CreatePayableDto,
+  UpdateAssignorDto,
+  UpdatePayableDto,
+} from './dto/create-integration.dto';
 import { Test, TestingModule } from '@nestjs/testing';
+import { randomUUID } from 'crypto';
+import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 
 describe('IntegrationsController', () => {
-  let integrationsController: IntegrationsController;
-  let integrationsService: IntegrationsService;
+  let controller: IntegrationsController;
+  let service: DeepMockProxy<IntegrationsService>;
+  // let payableDto: CreatePayableDto;
+
   beforeEach(async () => {
+    // payableDto = {
+    //   id: randomUUID(),
+    //   value: 100,
+    //   emissionDate: new Date(),
+    //   assignor: randomUUID(),
+    // };
     const module: TestingModule = await Test.createTestingModule({
       controllers: [IntegrationsController],
       providers: [
         {
           provide: IntegrationsService,
-          useValue: {
-            createPayable: jest.fn(),
-            getPayableById: jest.fn(),
-            updatePayable: jest.fn(),
-            deletePayable: jest.fn(),
-            getAssignorById: jest.fn(),
-            updateAssignor: jest.fn(),
-            createAssignor: jest.fn(),
-            deleteAssignor: jest.fn(),
-          },
+          useValue: mockDeep<IntegrationsService>(),
         },
       ],
     }).compile();
 
-    integrationsController = module.get<IntegrationsController>(
-      IntegrationsController,
-    );
-    integrationsService = module.get<IntegrationsService>(IntegrationsService);
+    controller = module.get<IntegrationsController>(IntegrationsController);
+    service = module.get<IntegrationsService>(
+      IntegrationsService,
+    ) as DeepMockProxy<IntegrationsService>;
   });
 
   it('should be defined', () => {
-    expect(integrationsController).toBeDefined();
+    expect(controller).toBeDefined();
   });
 
   describe('createPayable', () => {
     it('should create a payable', async () => {
-      const dto = new CreatePayableDto();
-      dto.id = 'uuidd';
-      dto.value = 100;
-      dto.emissionDate = new Date();
-      dto.assignor = 'assignor-uuid';
-      jest
-        .spyOn(integrationsService, 'createPayable')
-        .mockResolvedValue(dto as any);
+      const payableDto: CreatePayableDto = {
+        id: randomUUID(),
+        value: 100,
+        emissionDate: new Date(),
+        assignor: randomUUID(),
+      };
+      service.createPayable.mockResolvedValue(payableDto);
 
-      expect(await integrationsController.createPayable(dto)).toBe(dto);
+      expect(await controller.createPayable(payableDto)).toBe(payableDto);
     });
-
-    // it('should throw BadRequestException if value is negative', async () => {
-    //   const dto = new CreatePayableDto();
-    //   dto.id = 'uuid';
-    //   dto.value = 10000000;
-    //   dto.emissionDate = new Date();
-    //   dto.assignor = 'assignor-uuid';
-    //   await expect(integrationsController.createPayable(dto)).rejects.toThrow(
-    //     BadRequestException,
-    //   );
-    // });
   });
 
   describe('getPayableById', () => {
     it('should return a payable if it exists', async () => {
-      const result = {
-        id: 'uuid',
+      const payableDto: CreatePayableDto = {
+        id: randomUUID(),
         value: 100,
         emissionDate: new Date(),
-        assignor: 'assignor-uuid',
+        assignor: randomUUID(),
       };
-      jest
-        .spyOn(integrationsService, 'getPayableById')
-        .mockResolvedValue(result);
-      expect(await integrationsController.getPayableById('uuid')).toBe(result);
+      service.getPayableById.mockResolvedValue(payableDto);
+
+      expect(await controller.getPayableById(payableDto.id)).toBe(payableDto);
     });
 
     it('should throw NotFoundException if payable does not exist', async () => {
-      jest.spyOn(integrationsService, 'getPayableById').mockResolvedValue(null);
+      service.getPayableById.mockResolvedValue(null);
       await expect(
-        integrationsController.getPayableById('uuid'),
+        controller.getPayableById('non-existent-id'),
+      ).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('updatePayable', () => {
+    it('should update a payable', async () => {
+      const updatePayableDto: UpdatePayableDto = {
+        id: randomUUID(),
+        value: 200,
+        emissionDate: new Date(),
+        assignor: randomUUID(),
+      };
+      service.updatePayable.mockResolvedValue(updatePayableDto);
+
+      expect(
+        await controller.updatePayable(updatePayableDto, updatePayableDto.id),
+      ).toBe(updatePayableDto);
+    });
+
+    it('should throw NotFoundException if payable does not exist', async () => {
+      service.updatePayable.mockRejectedValue(
+        new NotFoundException('Payable not found'),
+      );
+      const updatePayableDto: UpdatePayableDto = {
+        id: randomUUID(),
+        value: 200,
+        emissionDate: new Date(),
+        assignor: randomUUID(),
+      };
+
+      await expect(
+        controller.updatePayable(updatePayableDto, 'non-existent-id'),
+      ).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('deletePayable', () => {
+    it('should delete a payable', async () => {
+      const payableDto: CreatePayableDto = {
+        id: randomUUID(),
+        value: 100,
+        emissionDate: new Date(),
+        assignor: randomUUID(),
+      };
+      service.deletePayable.mockResolvedValue(payableDto);
+
+      expect(await controller.deletePayable(payableDto.id)).toBe(payableDto);
+    });
+
+    it('should throw NotFoundException if payable does not exist', async () => {
+      service.deletePayable.mockRejectedValue(
+        new NotFoundException('Payable not found'),
+      );
+
+      await expect(controller.deletePayable('non-existent-id')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+  });
+
+  describe('getAssignorById', () => {
+    it('should return an assignor if it exists', async () => {
+      const assignorDto: CreateAssignorDto = {
+        id: randomUUID(),
+        document: '12345678901',
+        email: 'email@example.com',
+        phone: '1234567890',
+        name: 'Assignor Name',
+      };
+      service.getAssignorById.mockResolvedValue(assignorDto);
+
+      expect(await controller.getAssignorById(assignorDto.id)).toBe(
+        assignorDto,
+      );
+    });
+
+    it('should throw NotFoundException if assignor does not exist', async () => {
+      service.getAssignorById.mockResolvedValue(null);
+      await expect(
+        controller.getAssignorById('non-existent-id'),
+      ).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('updateAssignor', () => {
+    it('should update an assignor', async () => {
+      const updateAssignorDto: UpdateAssignorDto = {
+        id: randomUUID(),
+        document: '12345678901',
+        email: 'updated@example.com',
+        phone: '1234567890',
+        name: 'Updated Assignor Name',
+      };
+      service.updateAssignor.mockResolvedValue(updateAssignorDto);
+
+      expect(
+        await controller.updateAssignor(
+          updateAssignorDto.id,
+          updateAssignorDto,
+        ),
+      ).toBe(updateAssignorDto);
+    });
+
+    it('should throw NotFoundException if assignor does not exist', async () => {
+      service.updateAssignor.mockRejectedValue(
+        new NotFoundException('Assignor not found'),
+      );
+      const updateAssignorDto: UpdateAssignorDto = {
+        id: randomUUID(),
+        document: '12345678901',
+        email: 'updated@example.com',
+        phone: '1234567890',
+        name: 'Updated Assignor Name',
+      };
+
+      await expect(
+        controller.updateAssignor('non-existent-id', updateAssignorDto),
+      ).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('createAssignor', () => {
+    it('should create an assignor', async () => {
+      const assignorDto: CreateAssignorDto = {
+        id: randomUUID(),
+        document: '12345678901',
+        email: 'email@example.com',
+        phone: '1234567890',
+        name: 'Assignor Name',
+      };
+      service.createAssignor.mockResolvedValue(assignorDto);
+
+      expect(await controller.create(assignorDto)).toBe(assignorDto);
+    });
+  });
+
+  describe('deleteAssignor', () => {
+    it('should delete an assignor', async () => {
+      const assignorDto: CreateAssignorDto = {
+        id: randomUUID(),
+        document: '12345678901',
+        email: 'email@example.com',
+        phone: '1234567890',
+        name: 'Assignor Name',
+      };
+      service.deleteAssignor.mockResolvedValue(assignorDto);
+
+      expect(await controller.deleteAssignor(assignorDto.id)).toBe(assignorDto);
+    });
+
+    it('should throw NotFoundException if assignor does not exist', async () => {
+      service.deleteAssignor.mockRejectedValue(
+        new NotFoundException('Assignor not found'),
+      );
+
+      await expect(
+        controller.deleteAssignor('non-existent-id'),
       ).rejects.toThrow(NotFoundException);
     });
   });
