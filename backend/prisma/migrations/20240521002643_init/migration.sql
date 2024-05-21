@@ -1,13 +1,11 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Receivable` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-PRAGMA foreign_keys=off;
-DROP TABLE "Receivable";
-PRAGMA foreign_keys=on;
+-- CreateTable
+CREATE TABLE "Assignor" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "document" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "phone" TEXT,
+    "name" TEXT NOT NULL
+);
 
 -- CreateTable
 CREATE TABLE "Payable" (
