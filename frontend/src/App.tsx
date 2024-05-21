@@ -1,10 +1,11 @@
+import { Header } from "@/components/header/header";
+import { Toaster } from "@/components/ui/sonner";
+import { ThemesProvider } from "@/context/theme";
 import "@/globals.css";
-import { RouterProvider } from "react-router-dom";
-import { ThemesProvider } from "./context/theme";
-import { router } from "./routes";
-import { Toaster } from "./components/ui/sonner";
-import { useAuthStore } from "./stores/authStore";
+import { router } from "@/routes";
+import { useAuthStore } from "@/stores/authStore";
 import { useEffect } from "react";
+import { RouterProvider } from "react-router-dom";
 
 function App() {
   const user = useAuthStore();
@@ -18,6 +19,7 @@ function App() {
   return (
     <div className="min-h-screen w-full bg-background">
       <ThemesProvider>
+        <Header />
         <Toaster />
         <RouterProvider router={router} />
       </ThemesProvider>
