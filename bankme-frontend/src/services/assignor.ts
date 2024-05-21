@@ -24,3 +24,15 @@ export async function createAssignor(data: CreateAssignorInput) {
   const res = await api.post("/assignor", data);
   return res.data;
 }
+
+interface UpdateAssignorInput extends Partial<Assignor> {}
+
+export async function updateAssignor(data: UpdateAssignorInput) {
+  const res = await api.patch(`/assignor/${data.id}`, {
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    document: data.document,
+  });
+  return res.data;
+}

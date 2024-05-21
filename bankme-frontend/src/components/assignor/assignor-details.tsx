@@ -1,6 +1,13 @@
 "use client";
 import { useParams } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import UpdateAssignor from "./update-assignor";
 import { useGetAssignorById } from "@/hooks/useGetAssignorById";
 
 export default function AssignorDetails() {
@@ -44,6 +51,11 @@ export default function AssignorDetails() {
           </div>
         </div>
       </CardContent>
+      <CardFooter>
+        <div className="flex items-center gap-4 ml-auto">
+          <UpdateAssignor assignor={data!} />
+        </div>
+      </CardFooter>
     </Card>
   );
 }
