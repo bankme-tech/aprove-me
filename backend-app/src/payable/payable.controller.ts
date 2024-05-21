@@ -1,17 +1,17 @@
 import {
   Controller,
-  // Get,
+  Get,
   Post,
   Body,
   // Patch,
-  // Param,
+  Param,
   // Delete,
 } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 // import { UpdatePayableDto } from './dto/update-payable.dto';
 
-@Controller('integration')
+@Controller('integrations')
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
@@ -25,10 +25,10 @@ export class PayableController {
   //   return this.payableService.findAll();
   // }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.payableService.findOne(+id);
-  // }
+  @Get('payable/:id')
+  findOne(@Param('id') id: string) {
+    return this.payableService.findOne(+id);
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
