@@ -10,13 +10,13 @@ export class PayableService {
     private readonly assignor: AssignorService,
   ) {}
 
-  async createPayable(data: CreatePayableDto): Promise<Payable> {
+  async createPayable(data: CreatePayableDto): Promise<Payable> | null {
     const assignor = await this.assignor.findOneAssignor({
       where: { id: data.assignorId },
     });
 
     if (!assignor) {
-      return;
+      throw new Error('Assignor not found');
     }
 
     return await this.prisma.payable.create({
