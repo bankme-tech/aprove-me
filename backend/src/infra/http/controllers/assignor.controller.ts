@@ -28,7 +28,7 @@ export class AssignorController {
   async findAll() {
     const { assignors } = await this.findAllAssignors.execute();
 
-    return assignors;
+    return { assignors };
   }
 
   @Get(':assignorId')

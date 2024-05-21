@@ -7,7 +7,7 @@ interface Output {
 }
 
 @Injectable()
-export class FindAll {
+export class FindAllAssingors {
   constructor(private assignorRepository: AssignorRepository) { }
 
   async execute(): Promise<Output> {
