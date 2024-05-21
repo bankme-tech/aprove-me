@@ -10,7 +10,10 @@ export class ZodValidationPipe implements PipeTransform {
       return parsedValue;
     } catch (error) {
       if (error instanceof ZodError) {
-        throw new BadRequestException(error.flatten().fieldErrors);
+        throw new BadRequestException({
+          issues: error.flatten().fieldErrors,
+          message: 'Validation failed',
+        });
       } else {
         throw new BadRequestException('Validation failed');
       }

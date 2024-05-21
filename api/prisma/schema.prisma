@@ -24,3 +24,16 @@ model Payable {
 
   @@map("payables")
 }
+
+model Assignor {
+  id String  @default(uuid()) @id
+  document String
+  email String
+  phone String
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("assignors")
+}
