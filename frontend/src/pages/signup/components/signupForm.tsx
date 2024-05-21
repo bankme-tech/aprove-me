@@ -6,6 +6,7 @@ import { useId } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { SignupTypes, signupSchema } from "./signupSchema";
 import { useAuthStore } from "@/stores/authStore";
+import { Loader2Icon } from "lucide-react";
 
 export const SignupForm = () => {
   const loginId = useId();
@@ -46,7 +47,10 @@ export const SignupForm = () => {
         <FormError message={formState.errors.samePassword?.message} />
       </div>
 
-      <Button size="full">Fazer cadastro</Button>
+      <Button disabled={!formState.isValid} size="full">
+        {formState.isSubmitting && <Loader2Icon className="animate-spin" />}{" "}
+        Fazer cadastro
+      </Button>
     </form>
   );
 };

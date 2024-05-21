@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormError } from "@/components/formError/formError";
 import { useAuthStore } from "@/stores/authStore";
 import { LoginTypes, loginSchema } from "@/types/login";
+import { Loader2Icon } from "lucide-react";
 
 export const LoginForm = () => {
   const loginId = useId();
@@ -39,7 +40,10 @@ export const LoginForm = () => {
         <FormError message={formState.errors.password?.message} />
       </div>
 
-      <Button size="full">Fazer login</Button>
+      <Button disabled={!formState.isValid} size="full">
+        {formState.isSubmitting && <Loader2Icon className="animate-spin" />}{" "}
+        Fazer login
+      </Button>
     </form>
   );
 };
