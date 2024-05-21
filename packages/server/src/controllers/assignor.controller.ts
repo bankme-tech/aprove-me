@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { AssignorService } from 'src/services/assignor.service';
 
 @Controller('assignor')
@@ -9,24 +9,44 @@ export class AssignorController {
   }
 
   @Get(':id')
-  get_Assignor(id: string): Promise<any> {
-    return this.assignorService.get_assignor(id);
+  async get_Assignor(id: string): Promise<any> {
+    const result = await this.assignorService.get_assignor(id);
+    if (result.isError()) {
+      throw new BadRequestException(result.value);
+    }
+    return result.value;
   }
   @Get()
-  get_list_Assignor(): Promise<any> {
-    return this.assignorService.get_list_assignor();
+  async get_list_Assignor(): Promise<any> {
+    const result = await this.assignorService.get_list_assignor();
+    if (result.isError()) {
+      throw new BadRequestException(result.value);
+    }
+    return result.value;
   }
   @Delete(':id')
-  delete_Assignor(id: string): Promise<any> {
-    return this.assignorService.delete_assignor(id);
+  async delete_Assignor(id: string): Promise<any> {
+    const result = await this.assignorService.delete_assignor(id);
+    if (result.isError()) {
+      throw new BadRequestException(result.value);
+    }
+    return result.value;
   }
   @Put()
-  update_Assignor(@Body() id: string, assignor: any): Promise<any> {
-    return this.assignorService.update_assignor(id, assignor);
+  async update_Assignor(@Body() id: string, assignor: any): Promise<any> {
+    const result = await this.assignorService.update_assignor(id, assignor);
+    if (result.isError()) {
+      throw new BadRequestException(result.value);
+    }
+    return result.value;
   }
 
   @Post()
-  create_Assignor(@Body() assignor: any): Promise<any> {
-    return this.assignorService.create_assignor(assignor);
+  async create_Assignor(@Body() assignor: any): Promise<any> {
+    const result = await this.assignorService.create_assignor(assignor);
+    if (result.isError()) {
+      throw new BadRequestException(result.value);
+    }
+    return result.value;
   }
 }
