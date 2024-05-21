@@ -81,9 +81,11 @@ export const PayablesTable = () => {
             : renderTableContent()}
 
           {payable.payables.length === 0 && (
-            <TableCell colSpan={4} className="text-center">
-              Vazia no momento, adicione algum pagável para aparecer aqui!
-            </TableCell>
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                Vazia no momento, adicione algum pagável para aparecer aqui!
+              </TableCell>
+            </TableRow>
           )}
         </TableBody>
 
