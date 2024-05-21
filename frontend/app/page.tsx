@@ -21,6 +21,12 @@ export default function Home() {
           >
             <Link href="/login">Fazer Login</Link>
           </button>
+          <button
+            className="px-4 py-1 bg-[#0a36b0] text-[#fff] font-semibold rounded"
+            data-testid="button-onboarding"
+          >
+            <Link href="/register-assignor">Cadastre-se</Link>
+          </button>
         </div>
       </nav>
       <div className="flex sm:justify-between flex-col sm:flex-row text-center sm:text-start pt-5 items-center sm:pr-4 sm:pl-8 px-5 w-full">

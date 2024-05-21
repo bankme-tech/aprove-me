@@ -4,8 +4,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useLogin } from "@/hooks/useLogin";
-
+import { useCreateAssignor } from "@/hooks/useCreateAssignor";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,32 +15,38 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import InputMask from "react-input-mask";
 
 const formSchema = z.object({
-  login: z.string({
-    required_error: "Valor não pode ser vazio",
+  name: z.string({
+    required_error: "Nome não pode ser vazio",
   }),
-  password: z.string({
-    required_error: "Valor não pode ser vazio",
+  document: z.string({
+    required_error: "Document não pode ser vazio",
+  }),
+  email: z.string({
+    required_error: "Email não pode ser vazio",
+  }),
+  phone: z.string({
+    required_error: "Telefone não pode ser vazio",
   }),
 });
 
 export default function Page() {
-  const { login } = useLogin();
+  const { createAssignor } = useCreateAssignor();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      login: "",
-      password: "",
+      name: "",
+      document: "",
+      email: "",
+      phone: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      await login(values);
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(values);
+    await createAssignor(values);
   }
 
   return (
@@ -54,7 +59,7 @@ export default function Page() {
             className="h-16 w-auto cursor-pointer"
           />
           <h1 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
-            Entre na sua conta
+            Cadastre-se para poder enviar pagáveis
           </h1>
         </div>
 
@@ -63,13 +68,13 @@ export default function Page() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
                 control={form.control}
-                name="login"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Login</FormLabel>
+                    <FormLabel>Nome</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Digite seu login"
+                        placeholder="Ex: Usuário Demo"
                         type="text"
                         {...field}
                       />
@@ -80,14 +85,14 @@ export default function Page() {
               />
               <FormField
                 control={form.control}
-                name="password"
+                name="document"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Senha</FormLabel>
+                    <FormLabel>CPF / CNPJ </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Digite sua senha"
-                        type="password"
+                        placeholder="Ex: 123.456.789-00 | 00.000.000/0000-00"
+                        type="text"
                         {...field}
                       />
                     </FormControl>
@@ -95,20 +100,57 @@ export default function Page() {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Ex: usuario.demo@demo.com"
+                        type="email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Telefone</FormLabel>
+                    <FormControl>
+                     <InputMask
+                        mask="(99) 99999-9999"
+                        value={field.value}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                      >
+                        {(inputProps) => <Input {...inputProps} placeholder="Digite seu telefone" />}
+                      </InputMask>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Button className="bg-[#0a36b0]" type="submit">
-                Login
+                Cadastrar
               </Button>
             </form>
           </Form>
 
           <div className="flex items-start flex-col gap-2 mt-2">
-          <p className="text-center text-sm text-gray-800">
-              Não tem conta ?
+            <p className="text-center text-sm text-gray-800">
+              Já possui conta?
               <Link
-                href="/register-assignor"
+                href="/login"
                 className="font-semibold leading-6 text-gray-800 ml-1"
               >
-                Cadastre-se
+                Faça Login
               </Link>
             </p>
             <Link className="text-sm" href="/">
