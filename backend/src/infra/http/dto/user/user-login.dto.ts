@@ -1,8 +1,8 @@
 import { IsString, Length } from 'class-validator';
 
 export class loginUserDTO {
-  @Length(3, 140)
   @IsString()
+  @Length(3, 140)
   login: string;
 
   @IsString()
