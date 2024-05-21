@@ -18,7 +18,7 @@ model Assignor {
   id       String   @id @default(uuid())
   document String   
   email    String  
-  phone    String?  
+  phone    String  
   name     String   
   payables Payable[]
 }
@@ -34,7 +34,7 @@ model Payable {
 
 model User {
   id       String   @id @default(uuid())
-  email    String   @unique
+  login    String   @unique
   password String
   userPayables UserPayable[]
 }

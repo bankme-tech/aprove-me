@@ -16,7 +16,7 @@ export class AssignorDto extends BaseModel {
   @IsString()
   @IsOptional()
   @ApiProperty()
-  phone?: string;
+  phone: string;
 
   @IsString()
   @IsNotEmpty()

@@ -6,7 +6,7 @@ export class UserDto extends BaseModel {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  email: string;
+  login: string;
 
   @IsString()
   @IsNotEmpty()
