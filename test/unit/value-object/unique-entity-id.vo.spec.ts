@@ -11,4 +11,9 @@ describe('# Teste de Unidade - UniqueEntityIdVO', () => {
     (value) => {
       expect(() => new UniqueEntityIdVO(value)).toThrow(`Value ${value} must be a valid UUID`);
     });
+
+  it('deve criar um UUID corretamente', () => {
+    expect(new UniqueEntityIdVO()).toBeDefined();
+    expect(new UniqueEntityIdVO('af45e9b8-ee6c-4d29-8a65-fb8eed994b46')).toBeDefined();
+  });
 });
