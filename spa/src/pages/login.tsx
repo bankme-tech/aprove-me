@@ -1,35 +1,42 @@
-import { FormEvent, useEffect, useState } from "react";
 import FormCard from "../components/formCard";
-import Input from "../components/input";
 import Title from "../components/title";
 import Button from "../components/button";
 import ErrorMessage from "../components/errorMessage";
 import { authenticatePermission } from "../services/authentication";
 import { useNavigate } from "react-router-dom";
+import Input from "../components/input";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod'
+
+const loginSchema = z.object({
+  login: z.string().min(1),
+  password: z.string().min(1)
+})
+
+type LoginSchema = z.infer<typeof loginSchema>
 
 export default function Login() {
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<any>(null);
   const navigate = useNavigate();
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema)
+  })
 
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if(!login || !password) return setError({message: 'Preencha todos os campos.'});
+  const handleLogin: SubmitHandler<LoginSchema> = async (data) => {
+    const { login, password } = data;
 
     try {
-      const {access_token} = await authenticatePermission(login, password);
+      const { access_token } = await authenticatePermission(login, password);
       localStorage.setItem('accessToken', access_token);
       navigate('/payables/new');
-    } catch (error) {
-      setError(error)
+    } catch (error: any) {
+      setError("root", { message: error.message as string })
     }
   };
 
-  useEffect(() => {
-    setError(null);
-  }, [login, password])
+  const onError = () => {
+    setError("root", { message: 'Preencha todos os campos!' })
+  }
 
   return (
     <main className="font-Nunito bg-themeColor w-full h-screen flex justify-center items-center">
@@ -43,23 +50,21 @@ export default function Login() {
           <Title>Bem vindo!</Title>
         </div>
 
-        <ErrorMessage error={error}/>
+        <ErrorMessage error={errors.root} />
 
-        <form 
-          onSubmit={(e) => handleLogin(e)}
+        <form
+          onSubmit={handleSubmit(handleLogin, onError)}
           className="flex flex-col gap-3"
         >
           <Input
-            type="text"
             placeholder="Login"
-            value={login}
-            setValue={setLogin}
+            register={register('login')}
           />
+
           <Input
+            placeholder="Senha"
             type="password"
-            placeholder="Password"
-            value={password}
-            setValue={setPassword}
+            register={register('password')}
           />
 
           <Button type="submit">Entrar</Button>
