@@ -1,16 +1,8 @@
 import { api } from "@/lib/api";
-
-interface LoginProps {
-  login: string;
-  password: string;
-}
-
-interface LoginResponse {
-  accessToken: string;
-}
+import { LoginResponse, LoginTypes } from "@/types/login";
 
 export class AuthService {
-  static async login(loginData: LoginProps): Promise<LoginResponse> {
+  static async login(loginData: LoginTypes): Promise<LoginResponse> {
     try {
       const { data } = await api.post<LoginResponse>(
         "/integrations/user/login",
@@ -24,7 +16,7 @@ export class AuthService {
     }
   }
 
-  static async signup(signUpData: LoginProps): Promise<void> {
+  static async signup(signUpData: LoginTypes): Promise<void> {
     await api.post<LoginResponse>("/integrations/user", signUpData);
   }
 }

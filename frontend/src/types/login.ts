@@ -13,3 +13,7 @@ export const loginSchema = z.object({
 });
 
 export type LoginTypes = z.infer<typeof loginSchema>;
+
+export interface LoginResponse {
+  accessToken: string;
+}

@@ -1,6 +1,7 @@
-import { LoginTypes } from "@/pages/login/components/loginSchema";
+import { api } from "@/lib/api";
 import { router } from "@/routes";
 import { AuthService } from "@/services/auth";
+import { LoginTypes } from "@/types/login";
 import { toast } from "sonner";
 import { create } from "zustand";
 
@@ -34,6 +35,7 @@ export const useAuthStore = create<AuthStoreTypes>()((set) => ({
 
     set({ userToken: accessToken });
     localStorage.setItem("@auth", JSON.stringify(authToken));
+    api.defaults.headers.authorization = `Bearer ${accessToken}`;
     router.navigate("/payables");
   },
 
@@ -41,6 +43,7 @@ export const useAuthStore = create<AuthStoreTypes>()((set) => ({
     try {
       await AuthService.signup(signupData);
       router.navigate("/");
+      toast.success("Cadastrado com sucesso! Agora necessário fazer o login.");
     } catch (error) {
       toast.error("usuário já registrado");
       console.error(error);
@@ -62,11 +65,8 @@ export const useAuthStore = create<AuthStoreTypes>()((set) => ({
 
     const parsedToken: AuthTokenTypes = JSON.parse(token);
 
-    const now = new Date();
-    const tokenTime = new Date(parsedToken.dateTime);
-
-    const minutesNow = now.getMinutes();
-    const minutesToken = tokenTime.getMinutes();
+    const minutesToken = new Date().getMinutes();
+    const minutesNow = new Date(parsedToken.dateTime).getMinutes();
 
     const diffTime = minutesNow - minutesToken;
 
@@ -77,5 +77,6 @@ export const useAuthStore = create<AuthStoreTypes>()((set) => ({
     }
 
     set({ userToken: parsedToken.accessToken });
+    api.defaults.headers.authorization = `Bearer ${parsedToken.accessToken}`;
   },
 }));

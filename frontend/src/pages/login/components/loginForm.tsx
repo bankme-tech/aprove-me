@@ -2,10 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useId } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginTypes, loginSchema } from "./loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormError } from "@/components/formError/formError";
 import { useAuthStore } from "@/stores/authStore";
+import { LoginTypes, loginSchema } from "@/types/login";
 
 export const LoginForm = () => {
   const loginId = useId();
