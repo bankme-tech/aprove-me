@@ -12,6 +12,7 @@ import { JwtGuard } from '@application/auth/guards/jwt.guard';
 import { UserRoutesModule } from '@presentation/user/user-routes.module';
 import { AuthRoutesModule } from '@presentation/auth/auth-routes.module';
 import { PayableRoutesModule } from '@presentation/payable/payable-routes.module';
+import { AssignorRoutesModule } from '@presentation/assignor/assignor-routes.module';
 
 import path from 'path';
 
@@ -31,6 +32,7 @@ const routes: Imports = [
   AuthRoutesModule,
   UserRoutesModule,
   PayableRoutesModule,
+  AssignorRoutesModule,
 ];
 
 @Module({

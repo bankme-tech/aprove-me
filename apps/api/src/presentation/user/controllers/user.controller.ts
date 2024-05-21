@@ -47,7 +47,7 @@ export class UserController {
     return new UserPresenter(result);
   }
 
-  @ApiOperation({ summary: 'Retrieves a single user given its token' })
+  @ApiOperation({ summary: 'Retrieves a single user given its id' })
   @ApiOkResponse({ type: UserPresenter })
   @ApiParam({ name: 'id', type: String })
   @Get(':id')

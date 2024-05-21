@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { IOption, toOption } from '@bankme/monads';
+
 import {
   Assignor,
   IAssignorConstructor,
@@ -23,5 +25,12 @@ export class AssignorPrismaRepository implements IAssignorRepository {
       },
     });
     return AssignorMapper.toDomain(assignor);
+  }
+
+  async findOneById(id: string): Promise<IOption<Assignor>> {
+    const user = await this._prismaService.assignor.findFirst({
+      where: { id },
+    });
+    return toOption(user).map(AssignorMapper.toDomain);
   }
 }

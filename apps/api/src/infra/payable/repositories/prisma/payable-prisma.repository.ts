@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { IOption, toOption } from '@bankme/monads';
+
 import { IPayableConstructor, Payable } from '@domain/payable/models/payable';
 
 import { IPayableRepository } from '@infra/payable/repositories/payable.repository';
@@ -20,5 +22,13 @@ export class PayablePrismaRepository implements IPayableRepository {
       },
     });
     return PayableMapper.toDomain(payable);
+  }
+
+  async findOneById(id: string): Promise<IOption<Payable>> {
+    const user = await this._prismaService.payable.findFirst({
+      include: { assignor: true },
+      where: { id },
+    });
+    return toOption(user).map(PayableMapper.toDomain);
   }
 }
