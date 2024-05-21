@@ -12,6 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { createPayable } from "@/services/payable";
 
 const dateSchema = z.coerce.date();
 
@@ -37,8 +39,13 @@ export default function CreatePayableForm() {
     },
   });
 
+  const mutation = useMutation({
+    mutationFn: createPayable,
+  });
+
   function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
+    const { assignorId, emissionDate, value } = data;
+    mutation.mutate({ assignorId, emissionDate, value });
   }
 
   return (
