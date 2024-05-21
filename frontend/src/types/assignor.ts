@@ -1,5 +1,22 @@
 import { z } from "zod";
 
+export interface Assignor {
+  _id: string;
+  props: {
+    document: string;
+    email: string;
+    phone: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt?: Date;
+  };
+}
+
+export interface getAllAssignorResponse {
+  assignors: Assignor[];
+}
+
 export const assignorSchema = z.object({
   name: z
     .string()
