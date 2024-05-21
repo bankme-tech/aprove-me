@@ -27,7 +27,7 @@ export abstract class ValueObject<Value = any> {
     return isEqual(this.value, obj.value);
   }
 
-  toString = () => {
+  toString () {
     if (this.value === null || this.value === undefined) {
       return String(this.value);
     }
