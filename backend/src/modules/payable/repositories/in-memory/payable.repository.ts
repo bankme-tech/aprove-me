@@ -19,4 +19,8 @@ export class InMemoryPayableRepository implements IPayableRepository {
 
     return PayableMapper.toDomain(entity);
   }
+
+  async findAll(): Promise<PayableEntity[]> {
+    return this.items.map(PayableMapper.toDomain);
+  }
 }
