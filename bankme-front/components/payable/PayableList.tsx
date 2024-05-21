@@ -43,7 +43,7 @@ export default function ListPayable() {
         </thead>
         <tbody>
             {teste.map((item) => {
-              return <TableItem item={item}></TableItem>
+              return <TableItem item={item} />
             })}
         </tbody>
       </table>

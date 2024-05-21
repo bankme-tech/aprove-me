@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <AuthProvider>
       <div className="bg-gray-800 w-full h-screen">
-        <Header></Header>
+        <Header />
       </div>
     </AuthProvider>
   );
