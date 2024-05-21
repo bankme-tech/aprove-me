@@ -31,13 +31,11 @@ export default function Payable() {
     <div>
       <Header></Header>
       <PayableHeader onSelect={setSelectedComponent}></PayableHeader>
-      <form>
-        <div className="h-screen flex justify-center items-center bg-gray-800">
-          <div className="bg-gray-200 rounded-lg shadow p-8 w-full sm:max-w-md">
-            {renderComponent()}
-          </div>
+      <div className="flex justify-center items-center bg-gray-800">
+        <div className="rounded-lg shadow p-8 w-full sm:max-w-md">
+          {renderComponent()}
         </div>
-      </form>
+      </div>
     </div>
   )
 }
