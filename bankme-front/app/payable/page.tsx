@@ -20,7 +20,7 @@ export default function Payable() {
         return <AddPayable />;
       case 'edit':
         return <EditPayable />;
-      case 'remove':
+      case 'del':
         return <DeletePayable />;
       default:
         return <ListPayable />;
