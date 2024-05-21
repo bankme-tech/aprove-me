@@ -1,5 +1,5 @@
 import { ReceivableService } from '../services/receivable.service';
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 
 @Controller('receivable')
 export class ReceivableController {
@@ -17,11 +17,11 @@ export class ReceivableController {
     return this.receivableService.get_list_receivable();
   }
   @Delete(':id')
-  delete_receivable(id: string): Promise<any> {
+  delete_receivable(@Param('id') id: string): Promise<any> {
     return this.receivableService.delete_receivable(id);
   }
-  @Put()
-  update_receivable(@Body() id: string, receivable: any): Promise<any> {
+  @Put(':id')
+  update_receivable(@Param('id') id: string, @Body() receivable: any): Promise<any> {
     return this.receivableService.update_receivable(id, receivable);
   }
 

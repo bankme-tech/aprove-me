@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { AssignorService } from 'src/services/assignor.service';
 
 @Controller('assignor')
@@ -25,18 +25,18 @@ export class AssignorController {
     return result.value;
   }
   @Delete(':id')
-  async delete_Assignor(id: string): Promise<any> {
+  async delete_Assignor(@Param('id') id: string): Promise<any> {
     const result = await this.assignorService.delete_assignor(id);
     if (result.isError()) {
       throw new BadRequestException(result.value);
     }
     return result.value;
   }
-  @Put()
-  async update_Assignor(@Body() id: string, assignor: any): Promise<any> {
+  @Put(':id')
+  async update_Assignor(@Param('id') id: string, @Body() assignor: any): Promise<any> {
     const result = await this.assignorService.update_assignor(id, assignor);
     if (result.isError()) {
-      throw new BadRequestException(result.value);
+      throw new BadRequestException(result.value.message);
     }
     return result.value;
   }
