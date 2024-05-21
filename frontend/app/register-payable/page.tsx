@@ -4,6 +4,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useCreatePayable } from "@/hooks/useCreatePayable";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import useUsers from "@/hooks/useUsers";
 
 const formSchema = z.object({
   value: z.string({
@@ -27,9 +27,6 @@ const formSchema = z.object({
 });
 
 export default function Page() {
-  const { users } = useUsers();
-  console.log("Users: ", users);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,9 +34,19 @@ export default function Page() {
       assignor: "",
     },
   });
+  const { createPayable } = useCreatePayable();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const payload = {
+      value: parseFloat(values.value),
+      assignor: values.assignor,
+    };
+    console.log("Payload do Form:", payload);
+    try {
+      await createPayable(payload);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
