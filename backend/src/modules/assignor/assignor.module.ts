@@ -4,10 +4,15 @@ import { RegisterAssignorController } from './controllers/register-assignor/regi
 import { DatabaseModule } from '~/database.module';
 import { FindAssignorByIdService } from './services/find-assignor-by-id/find-assignor-by-id.service';
 import { FindAssignorByIdController } from './controllers/find-assignor-by-id/find-assignor-by-id.controller';
+import { GetAssignorsService } from './services/get-assignors/get-assignors.service';
 
 @Module({
   imports: [DatabaseModule],
   controllers: [RegisterAssignorController, FindAssignorByIdController],
-  providers: [RegisterAssignorService, FindAssignorByIdService],
+  providers: [
+    RegisterAssignorService,
+    FindAssignorByIdService,
+    GetAssignorsService,
+  ],
 })
 export class AssignorModule {}
