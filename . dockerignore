@@ -1,0 +1,6 @@
+node_modules
+dist
+.next
+Dockerfile
+docker-compose.yml
+npm-debug.log

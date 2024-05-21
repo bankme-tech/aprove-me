@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build-server
+    working_dir: /app/server
+    command: ['node', 'dist/main']
+    ports:
+      - '3003:3003'
+    volumes:
+      - ./server/prisma:/app/server/prisma
+      - ./server/src:/app/server/src
+    environment:
+      DATABASE_URL: 'file:/app/server/prisma/static/local.db'
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build-web
+    working_dir: /app/web
+    command: ['next', 'start', '-p', '3000']
+    ports:
+      - '3000:3000'
+    depends_on:
+      - server
+    volumes:
+      - ./web/pages:/app/web/pages
+      - ./web/public:/app/web/public
+      - ./web/.next:/app/web/.next

@@ -8,12 +8,16 @@
     "start": "concurrently \"pnpm --filter server run start\" \"pnpm --filter web run start\"",
     "test": "concurrently \"pnpm --filter server run test\" \"pnpm --filter web run test\"",
     "dev:server": "pnpm --filter server run dev",
+    "build:server": "pnpm --filter server run build",
+    "build:web": "pnpm --filter web run build",
     "dev:web": "pnpm --filter web run dev",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write ."
   },
   "keywords": [],
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
