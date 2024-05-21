@@ -32,7 +32,7 @@ export default function Payable() {
       <Header></Header>
       <PayableHeader onSelect={setSelectedComponent}></PayableHeader>
       <div className="flex justify-center items-center bg-gray-800">
-        <div className="rounded-lg shadow p-8 w-full sm:max-w-md">
+      <div className={`rounded-lg shadow w-full ${selectedComponent !== 'list' ? 'sm:max-w-md' : ''}`}>
           {renderComponent()}
         </div>
       </div>
