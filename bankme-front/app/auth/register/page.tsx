@@ -3,8 +3,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { register as registerUser } from '../../../services/auth'
-import { useAuth } from "../../../context/AuthContext";
+import { register as registerUser } from '@/services/auth'
+import { useAuth } from "@/context/AuthContext";
 
 export default function Register() {
   const { login: contextLogin } = useAuth();

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Header() {
   const { user, logout } = useAuth();

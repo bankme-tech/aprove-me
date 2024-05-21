@@ -1,11 +1,12 @@
 'use client'
 
+import Header from "@/components/header/Header";
 import { useState } from "react";
-import AddPayable from "./PayableAdd";
-import DeletePayable from "./PayableDelete";
-import EditPayable from "./PayableEdit";
-import PayableHeader from "./PayableHeader"
-import ListPayable from "./PayableList";
+import AddPayable from "@/components/payable/PayableAdd";
+import DeletePayable from "@/components/payable/PayableDelete";
+import EditPayable from "@/components/payable/PayableEdit";
+import PayableHeader from "@/components/payable/PayableHeader"
+import ListPayable from "@/components/payable/PayableList";
 
 export default function Payable() {
   const [selectedComponent, setSelectedComponent] = useState('list');
@@ -28,6 +29,7 @@ export default function Payable() {
 
   return (
     <div>
+      <Header></Header>
       <PayableHeader onSelect={setSelectedComponent}></PayableHeader>
       <form>
         <div className="h-screen flex justify-center items-center bg-gray-800">

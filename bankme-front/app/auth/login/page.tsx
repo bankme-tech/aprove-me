@@ -3,8 +3,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { login as loginUser } from '../../../services/auth'
-import { useAuth } from "../../../context/AuthContext";
+import { login as loginUser } from '@/services/auth'
+import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 
 export default function Login() {
