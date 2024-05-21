@@ -10,6 +10,10 @@ export class AssignorService {
     return await this.assignorExists(id);
   }
 
+  async getAllAssignor() {
+    return this.repository.findAll()
+  }
+
   async createAssignor(dto: CreateAssignorDto) {
     const createdAssignor = await this.repository.create(dto);
     return createdAssignor;

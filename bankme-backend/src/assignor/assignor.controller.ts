@@ -27,6 +27,15 @@ export class AssignorController {
   }
 
   /**
+   * Returns list of Assignor
+   */
+  @Get('assignor')
+  async findall() {
+    const assignors = await this.service.getAllAssignor();
+    return assignors;
+  }
+
+  /**
    *  Returns one Assignor by id
    */
   @Get('assignor/:id')

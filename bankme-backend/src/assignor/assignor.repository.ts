@@ -10,6 +10,10 @@ export class AssignorRepository {
     return this.db.assignor.findUnique({ where: { id } });
   }
 
+  async findAll() {
+    return this.db.assignor.findMany();
+  }
+
   async create(dto: CreateAssignorDto) {
     const { document, email, name, phone } = dto;
     return this.db.assignor.create({
