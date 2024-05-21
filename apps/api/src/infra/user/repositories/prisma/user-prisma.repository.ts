@@ -21,21 +21,21 @@ export class UserPrismaRepository implements IUserRepository {
     });
     return UserMapper.toDomain(user);
   }
-  save(user: User): Promise<User> {
-    throw new Error('Method not implemented.');
-  }
+
   async findOneByUsername(username: string): Promise<IOption<User>> {
     const user = await this._prismaService.user.findFirst({
       where: { username },
     });
     return toOption(user).map(UserMapper.toDomain);
   }
+
   async findOneById(id: string): Promise<IOption<User>> {
     const user = await this._prismaService.user.findFirst({
       where: { id },
     });
     return toOption(user).map(UserMapper.toDomain);
   }
+
   async delete(user: User): Promise<void> {
     await this._prismaService.user.delete({ where: { id: user.id } });
   }

@@ -3,6 +3,7 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -15,6 +16,7 @@ import { CurrentUser } from '@application/auth/decorators/current-user.decorator
 import { FindOneUserUseCase } from '@application/user/usecases/find-one-user.usecase';
 import { UserByIdPipe } from '@application/user/pipes/user-by-id.pipe';
 import { FindMeUseCase } from '@application/user/usecases/find-me-usecase';
+import { SkipJwt } from '@application/auth/decorators/skip-jwt.decorator';
 
 import { UserPresenter } from '@presentation/user/presenters/user.presenter';
 import { CreateUserDto } from '@presentation/user/dtos/create-user.dto';
@@ -28,8 +30,9 @@ export class UserController {
     private readonly _findMeUseCase: FindMeUseCase,
   ) {}
 
-  @ApiOperation({ summary: 'Creates a new user' })
+  @ApiOperation({ summary: 'Creates a single new user' })
   @ApiCreatedResponse({ type: UserPresenter })
+  @SkipJwt()
   @Post()
   async signUp(@Body() dto: CreateUserDto): Promise<UserPresenter> {
     const user = await this._createUserUseCase.create(dto);
@@ -46,8 +49,9 @@ export class UserController {
     return new UserPresenter(result);
   }
 
-  @ApiOperation({ summary: 'Retrieves a single user given its token' })
+  @ApiOperation({ summary: 'Retrieves a single user given its id' })
   @ApiOkResponse({ type: UserPresenter })
+  @ApiParam({ name: 'id', type: String })
   @Get(':id')
   async findOneById(
     @CurrentUser() currentUser: IOption<User>,
