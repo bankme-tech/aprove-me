@@ -1,6 +1,6 @@
 import { Assignor } from '@/modules/integrations/domain/entities/assignor.entity';
 
-export class AssignorViewModel {
+export class AssignorsViewModel {
   public static toHTTP(assignor: Assignor) {
     return {
       id: assignor.id,

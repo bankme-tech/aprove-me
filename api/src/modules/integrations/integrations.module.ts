@@ -7,6 +7,7 @@ import { AssignorsRepository } from './domain/repositories/assignors.repository'
 import { PrismaAssignorsRepository } from './infra/database/repositories/prisma-assignors.repository';
 import { CreateAssignorUseCase } from './use-cases/create-assignor.use-case';
 import { FindPayableByIdUseCase } from './use-cases/find-payable-by-id.use-case';
+import { FindAssignorByIdUseCase } from './use-cases/find-assignor-by-id.use-case';
 
 @Module({
   imports: [],
@@ -23,6 +24,7 @@ import { FindPayableByIdUseCase } from './use-cases/find-payable-by-id.use-case'
     CreatePayableUseCase,
     CreateAssignorUseCase,
     FindPayableByIdUseCase,
+    FindAssignorByIdUseCase,
   ],
 })
 export class IntegrationsModule {}

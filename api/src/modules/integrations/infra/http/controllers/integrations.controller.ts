@@ -12,14 +12,13 @@ import { CreatePayableDto, createPayableDto } from '../dtos/create-payable.dto';
 import { CreatePayableUseCase } from '@/modules/integrations/use-cases/create-payable.use-case';
 import { PayablesViewModel } from '../view-models/payables.view-model';
 import { CreateAssignorUseCase } from '@/modules/integrations/use-cases/create-assignor.use-case';
-import { AssignorViewModel } from '../view-models/assignor.view-model';
+import { AssignorsViewModel } from '../view-models/assignors.view-model';
 import { FindPayableByIdUseCase } from '@/modules/integrations/use-cases/find-payable-by-id.use-case';
-import {
-  FindPayableByIdDto,
-  findPayableByIdDto,
-} from '../dtos/find-payable-by-id.dto';
+
 import { createAssignorDto } from '../dtos/create-assignor.dto';
 import type { CreateAssignorDto } from '../dtos/create-assignor.dto';
+import { UuidDto, uuidDto } from '@/infra/http/dtos/id.dto';
+import { FindAssignorByIdUseCase } from '@/modules/integrations/use-cases/find-assignor-by-id.use-case';
 
 @Controller('/integrations')
 export class IntegrationsController {
@@ -27,6 +26,7 @@ export class IntegrationsController {
     private createPayableUseCase: CreatePayableUseCase,
     private createAssignorUseCase: CreateAssignorUseCase,
     private findPayableByIdUseCase: FindPayableByIdUseCase,
+    private findAssignorByIdUseCase: FindAssignorByIdUseCase,
   ) {}
 
   @Post('/payables')
@@ -48,17 +48,28 @@ export class IntegrationsController {
   ) {
     const createdAssignor = await this.createAssignorUseCase.execute(body);
 
-    return AssignorViewModel.toHTTP(createdAssignor);
+    return AssignorsViewModel.toHTTP(createdAssignor);
   }
 
   @Get('/payables/:id')
   @HttpCode(HttpStatus.FOUND)
   public async findPayableById(
-    @Param(new ZodValidationPipe(findPayableByIdDto))
-    params: FindPayableByIdDto,
+    @Param(new ZodValidationPipe(uuidDto))
+    params: UuidDto,
   ) {
     const payable = await this.findPayableByIdUseCase.execute(params.id);
 
     return PayablesViewModel.toHTTP(payable);
+  }
+
+  @Get('/assignors/:id')
+  @HttpCode(HttpStatus.FOUND)
+  public async findAssignorById(
+    @Param(new ZodValidationPipe(uuidDto))
+    params: UuidDto,
+  ) {
+    const assignor = await this.findAssignorByIdUseCase.execute(params.id);
+
+    return AssignorsViewModel.toHTTP(assignor);
   }
 }
