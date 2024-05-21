@@ -40,9 +40,11 @@ export class ConsumerService {
           INITIAL_DELAY,
         );
         console.log('Payable created');
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         countSuccess++;
       } catch (error) {
         console.error('Error creating payable', error);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         countError++;
         await this.deadProducerService.sendToDeadQueue(payable);
         //TODO: send email to operations team

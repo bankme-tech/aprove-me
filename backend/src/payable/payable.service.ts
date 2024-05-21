@@ -3,7 +3,7 @@ import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import PayableRepository from './repositories/payable.repository';
 import { Payable } from './entities/payable.entity';
-import AssignorRepository from 'src/assignor/repositories/assignor.repository';
+import AssignorRepository from '../assignor/repositories/assignor.repository';
 
 @Injectable()
 export class PayableService {
@@ -41,6 +41,10 @@ export class PayableService {
     id: string,
     updatePayableDto: UpdatePayableDto,
   ): Promise<Payable> {
+    const payable = await this.payableRepository.findOne(id);
+    if (!payable) {
+      throw new NotFoundException(`Payable #${id} not found`);
+    }
     return await this.payableRepository.update(id, updatePayableDto);
   }
 

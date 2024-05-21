@@ -1,4 +1,4 @@
-import { Assignor } from 'src/assignor/entities/assignor.entity';
+import { Assignor } from '../../assignor/entities/assignor.entity';
 
 export class Payable {
   id: string;
