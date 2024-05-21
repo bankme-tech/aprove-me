@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -7,12 +7,27 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import UpdateAssignor from "./update-assignor";
+import { deleteAssignor } from "@/services/assignor";
 import { useGetAssignorById } from "@/hooks/useGetAssignorById";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function AssignorDetails() {
+  const router = useRouter();
   const params = useParams();
   const { data, isPending } = useGetAssignorById(params.id as string);
+  const queryClient = useQueryClient();
+  const { mutate: deleteAssignorMutation } = useMutation({
+    mutationFn: deleteAssignor,
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ["get-assignor-by-id", data?.id],
+      });
+      queryClient.invalidateQueries({ queryKey: ["get-all-assignor"] });
+      router.push("/assignor");
+    },
+  });
 
   if (isPending) {
     return <div>loading...</div>;
@@ -54,6 +69,12 @@ export default function AssignorDetails() {
       <CardFooter>
         <div className="flex items-center gap-4 ml-auto">
           <UpdateAssignor assignor={data!} />
+          <Button
+            onClick={() => deleteAssignorMutation(data?.id!)}
+            variant={"destructive"}
+          >
+            Delete
+          </Button>
         </div>
       </CardFooter>
     </Card>

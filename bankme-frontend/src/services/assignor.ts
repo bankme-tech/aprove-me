@@ -21,18 +21,23 @@ export async function getAssignorById(id: string) {
 interface CreateAssignorInput extends Omit<Assignor, "id"> {}
 
 export async function createAssignor(data: CreateAssignorInput) {
-  const res = await api.post("/assignor", data);
+  const res = await api.post<Assignor>("/assignor", data);
   return res.data;
 }
 
 interface UpdateAssignorInput extends Partial<Assignor> {}
 
 export async function updateAssignor(data: UpdateAssignorInput) {
-  const res = await api.patch(`/assignor/${data.id}`, {
+  const res = await api.patch<Assignor>(`/assignor/${data.id}`, {
     name: data.name,
     email: data.email,
     phone: data.phone,
     document: data.document,
   });
+  return res.data;
+}
+
+export async function deleteAssignor(id: string) {
+  const res = await api.delete<void>(`/assignor/${id}`);
   return res.data;
 }
