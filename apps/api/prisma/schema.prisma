@@ -13,6 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Admin {
+  id       String @id @default(uuid())
+  login    String @unique
+  password String
+}
+
 model Assignor {
   id       String    @id @default(uuid())
   document String    @unique

@@ -1,14 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignInDto, signInSchema } from './dto/authenticate-auth.dto';
+import { AuthDto, authSchema } from './dto/authenticate-auth.dto';
 import { ZodValidationPipe } from '../zod-validation/zod-validation.pipe';
 
 @Controller('integrations/auth')
@@ -16,10 +8,18 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post()
-  authenticate(
-    @Body(new ZodValidationPipe(signInSchema))
-    signInDto: SignInDto,
+  signIn(
+    @Body(new ZodValidationPipe(authSchema))
+    authDto: AuthDto,
   ) {
-    return this.authService.signIn(signInDto);
+    return this.authService.signIn(authDto);
+  }
+
+  @Post()
+  signUp(
+    @Body(new ZodValidationPipe(authSchema))
+    authDto: AuthDto,
+  ) {
+    return this.authService.signUp(authDto);
   }
 }

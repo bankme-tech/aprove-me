@@ -41,6 +41,32 @@ describe('PayableController', () => {
     await prisma.$disconnect();
   });
 
+  it('finds all payables', async () => {
+    const payables = await prisma.payable.createManyAndReturn({
+      data: [
+        {
+          emissionDate: new Date(),
+          value: 200.11,
+          assignorId: assignor.id,
+        },
+        {
+          emissionDate: new Date(),
+          value: 250.11,
+          assignorId: assignor.id,
+        },
+        {
+          emissionDate: new Date(),
+          value: 2000.11,
+          assignorId: assignor.id,
+        },
+      ],
+    });
+
+    const result = await controller.findAll();
+
+    expect(result).toEqual(payables);
+  });
+
   it('finds a payable by id', async () => {
     const payable = await prisma.payable.create({
       data: {

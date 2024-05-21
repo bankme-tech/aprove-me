@@ -6,7 +6,7 @@ import { CreateAssignorDto, UpdateAssignorDto } from './dto';
 export class AssignorService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create({ document, email, name, phone }: CreateAssignorDto) {
+  async create({ document, email, name, phone }: CreateAssignorDto) {
     return this.prisma.assignor.create({
       data: {
         document,
@@ -14,7 +14,18 @@ export class AssignorService {
         name,
         phone,
       },
+      select: {
+        id: true,
+        document: true,
+        email: true,
+        name: true,
+        phone: true,
+      },
     });
+  }
+
+  findAll() {
+    return this.prisma.assignor.findMany();
   }
 
   async findById(id: string) {
@@ -56,6 +67,13 @@ export class AssignorService {
         ...(email ? { email } : {}),
         ...(name ? { name } : {}),
         ...(phone ? { phone } : {}),
+      },
+      select: {
+        id: true,
+        document: true,
+        email: true,
+        name: true,
+        phone: true,
       },
     });
   }

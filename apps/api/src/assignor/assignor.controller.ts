@@ -32,6 +32,12 @@ export class AssignorController {
   }
 
   @UseGuards(AuthGuard)
+  @Get()
+  findAll() {
+    return this.assignorService.findAll();
+  }
+
+  @UseGuards(AuthGuard)
   @Get(':id')
   findById(
     @Param('id', new ZodValidationPipe(uuidSchema))

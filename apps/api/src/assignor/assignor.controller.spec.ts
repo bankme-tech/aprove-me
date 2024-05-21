@@ -3,7 +3,7 @@ import { AssignorController } from './assignor.controller';
 import { AssignorService } from './assignor.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { faker } from '@faker-js/faker';
-import { CreateAssignorDto, createAssignorSchema } from './dto';
+import { CreateAssignorDto } from './dto';
 import { JwtService } from '@nestjs/jwt';
 
 describe('AssignorController', () => {
@@ -49,9 +49,33 @@ describe('AssignorController', () => {
     await prisma.$disconnect();
   });
 
+  it('finds all assignors', async () => {
+    const assignors = await prisma.assignor.createManyAndReturn({
+      data: assignorData,
+      select: {
+        id: true,
+        document: true,
+        email: true,
+        name: true,
+        phone: true,
+      },
+    });
+
+    const result = await controller.findAll();
+
+    expect(result).toEqual(assignors);
+  });
+
   it('finds an assignor by id', async () => {
     const assignors = await prisma.assignor.createManyAndReturn({
       data: assignorData,
+      select: {
+        id: true,
+        document: true,
+        email: true,
+        name: true,
+        phone: true,
+      },
     });
     const assignor = assignors[1];
     const result = await controller.findById(assignor.id);
@@ -71,15 +95,18 @@ describe('AssignorController', () => {
     const result = await controller.create(newAssignor);
     expect(result).toEqual({
       id: expect.any(String),
-      ...newAssignor,
+      document: newAssignor.document,
+      email: newAssignor.email,
+      name: newAssignor.name,
+      phone: newAssignor.phone,
     });
   });
 
   it('fails to create an assignor if email is registered', async () => {
     await prisma.assignor.create({ data: assignorData[0] });
     const newAssignor: CreateAssignorDto = {
-      ...assignorData[0],
-      email: assignorData[1].email,
+      ...assignorData[1],
+      email: assignorData[0].email,
     };
 
     expect(async () => {
@@ -90,8 +117,8 @@ describe('AssignorController', () => {
   it('fails to create an assignor if document is registered', async () => {
     await prisma.assignor.create({ data: assignorData[0] });
     const newAssignor: CreateAssignorDto = {
-      ...assignorData[0],
-      document: assignorData[1].document,
+      ...assignorData[1],
+      document: assignorData[0].document,
     };
 
     expect(async () => {
@@ -102,8 +129,8 @@ describe('AssignorController', () => {
   it('fails to create an assignor if phone is registered', async () => {
     await prisma.assignor.create({ data: assignorData[0] });
     const newAssignor: CreateAssignorDto = {
-      ...assignorData[0],
-      phone: assignorData[1].phone,
+      ...assignorData[1],
+      phone: assignorData[0].phone,
     };
 
     expect(async () => {
@@ -114,6 +141,13 @@ describe('AssignorController', () => {
   it('updates an assignor', async () => {
     const assignor = await prisma.assignor.create({
       data: assignorData[0],
+      select: {
+        id: true,
+        document: true,
+        email: true,
+        name: true,
+        phone: true,
+      },
     });
     const newEmail = faker.internet.email();
     const updatedAssignor = await controller.update(assignor.id, {

@@ -15,6 +15,10 @@ export class PayableService {
     });
   }
 
+  findAll() {
+    return this.prisma.payable.findMany();
+  }
+
   async findById(id: string) {
     const payable = await this.prisma.payable.findUnique({
       where: {

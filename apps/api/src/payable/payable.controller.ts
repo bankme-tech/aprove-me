@@ -34,6 +34,12 @@ export class PayableController {
   }
 
   @UseGuards(AuthGuard)
+  @Get()
+  findAll() {
+    return this.payableService.findAll();
+  }
+
+  @UseGuards(AuthGuard)
   @Get(':id')
   findById(
     @Param('id', new ZodValidationPipe(uuidSchema))
