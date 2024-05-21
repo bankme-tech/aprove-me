@@ -6,6 +6,7 @@ import { PayableRepository } from './repository/repository.service';
 import { CreatePayableAssignorDto } from './payable.dto';
 import { Payable } from '@prisma/client';
 
+// all the test made here will be only to verify if the service is returning the repository content due to the simplicity of the project
 describe('basic CRUD operation (payable)', () => {
   let service: PayableService;
   let repository: PayableRepository;
@@ -61,14 +62,14 @@ describe('basic CRUD operation (payable)', () => {
         description: 'example 1',
         amount: 10,
         assignorId: 'uuid3',
-        dueDate: new Date()
+        // dueDate: new Date()
       },
       {
         id: 'uuid2',
         description: 'example 2',
         amount: 150,
         assignorId: 'uuid3',
-        dueDate: new Date()
+        // dueDate: new Date()
       },
     ]
 
@@ -82,7 +83,58 @@ describe('basic CRUD operation (payable)', () => {
 
   })
 
+  it('should return an payable by id', async() => {
+    const mockPayable = { 
+      id: '1', 
+      description: 'Test Payable', 
+      amount: 1000, 
+      assignorId: '1', 
+      // dueDate: new Date() 
+    };
 
+    // force the provider repository return the variable above
+    mockPayableRepository.findOne.mockResolvedValue(mockPayable)
+
+    const result = await service.findOne('1');
+    expect(result).toEqual(mockPayable)
+    expect(repository.findOne).toHaveBeenCalled();
+    expect(result).toMatchSnapshot()
+
+  })
+
+  it('should update an payable by id', async() => {
+    const updatePayableDto = {
+      description : "An updated description",
+    }
+
+    const mockUpdatedPayable = {
+      id: '1',
+      description: 'An updated description',
+      amount: 1000,
+      assignId: '1',
+      // dueDate: new Date()
+    }
+
+    mockPayableRepository.update.mockResolvedValue(mockUpdatedPayable);
+
+    const result = await service.update('1', updatePayableDto)
+    expect(result).toEqual(mockUpdatedPayable)
+    expect(repository.update).toHaveBeenCalledWith('1', updatePayableDto);
+    expect(result).toMatchSnapshot();
+  })
+
+  it('should delete a payable', async () => {
+    const mockPayable = { id: '1', description: 'Test Payable', amount: 1000, assignorId: '1', dueDate: new Date()};
+
+    mockPayableRepository.delete.mockResolvedValue(mockPayable);
+
+    const result = await service.remove('1');
+    expect(result).toEqual(mockPayable);
+    expect(repository.delete).toHaveBeenCalledWith('1');
+
+    // Validate the structure of the result using snapshot
+    expect(result).toMatchSnapshot();
+  });
 });
 
 
