@@ -4,10 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"pnpm --filter server run dev\" \"pnpm --filter web run dev\"",
+    "start": "concurrently \"pnpm --filter server run start\" \"pnpm --filter web run start\"",
+    "test": "concurrently \"pnpm --filter server run test\" \"pnpm --filter web run test\"",
+    "dev:server": "pnpm --filter server run dev",
+    "dev:web": "pnpm --filter web run dev",
+    "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write ."
   },
   "keywords": [],
   "workspaces": ["packages/*"],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prettier": "^3.0.0"
+  }
 }
