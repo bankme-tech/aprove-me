@@ -9,15 +9,12 @@ import {
 } from '@prisma/client';
 
 export class PayableMapper {
-  static toPrisma(
-    data: IPayable,
-  ): PrismaPayable & { assignor: PrismaAssignor } {
+  static toPrisma(data: IPayable): PrismaPayable {
     return {
       id: data.id,
       value: data.value,
       emissionDate: data.emissionDate,
       assignorId: data.assignor.id,
-      assignor: data.assignor,
     };
   }
 

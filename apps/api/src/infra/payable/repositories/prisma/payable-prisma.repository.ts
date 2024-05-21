@@ -43,4 +43,13 @@ export class PayablePrismaRepository implements IPayableRepository {
     });
     return toOption(user).map(PayableMapper.toDomain);
   }
+
+  async delete(payable: Payable): Promise<void> {
+    await this._prismaService.$transaction([
+      this._prismaService.payable.delete({ where: { id: payable.id } }),
+      this._prismaService.assignor.delete({
+        where: { id: payable.assignor.id },
+      }),
+    ]);
+  }
 }

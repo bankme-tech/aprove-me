@@ -4,7 +4,7 @@ CREATE TABLE "Payable" (
     "value" REAL NOT NULL,
     "emissionDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "assignorId" TEXT NOT NULL,
-    CONSTRAINT "Payable_assignorId_fkey" FOREIGN KEY ("assignorId") REFERENCES "Assignor" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Payable_assignorId_fkey" FOREIGN KEY ("assignorId") REFERENCES "Assignor" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -24,7 +24,7 @@ CREATE TABLE "User" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Assignor_email_key" ON "Assignor"("email");
+CREATE UNIQUE INDEX "Payable_assignorId_key" ON "Payable"("assignorId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");

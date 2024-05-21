@@ -11,4 +11,6 @@ export interface IPayableRepository {
   save(data: Payable): Promise<Payable>;
 
   findOneById(id: Id): Promise<IOption<Payable>>;
+
+  delete(payable: Payable): Promise<void>;
 }

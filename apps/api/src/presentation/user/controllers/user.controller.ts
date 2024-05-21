@@ -16,6 +16,7 @@ import { CurrentUser } from '@application/auth/decorators/current-user.decorator
 import { FindOneUserUseCase } from '@application/user/usecases/find-one-user.usecase';
 import { UserByIdPipe } from '@application/user/pipes/user-by-id.pipe';
 import { FindMeUseCase } from '@application/user/usecases/find-me-usecase';
+import { SkipJwt } from '@application/auth/decorators/skip-jwt.decorator';
 
 import { UserPresenter } from '@presentation/user/presenters/user.presenter';
 import { CreateUserDto } from '@presentation/user/dtos/create-user.dto';
@@ -31,6 +32,7 @@ export class UserController {
 
   @ApiOperation({ summary: 'Creates a single new user' })
   @ApiCreatedResponse({ type: UserPresenter })
+  @SkipJwt()
   @Post()
   async signUp(@Body() dto: CreateUserDto): Promise<UserPresenter> {
     const user = await this._createUserUseCase.create(dto);

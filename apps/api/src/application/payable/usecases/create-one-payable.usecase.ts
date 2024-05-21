@@ -13,7 +13,7 @@ import {
 } from '@infra/payable/repositories/payable.repository';
 
 @Injectable()
-export class CreatePayableUseCase {
+export class CreateOnePayableUseCase {
   constructor(
     @Inject(PAYABLE_REPOSITORY)
     private readonly _payableRepository: IPayableRepository,

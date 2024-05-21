@@ -3,14 +3,16 @@ import { Module, Provider } from '@nestjs/common';
 import { PayableInfraModule } from '@infra/payable/payable-infra.module';
 import { AssignorInfraModule } from '@infra/assignor/assignor-infra.module';
 
-import { CreatePayableUseCase } from '@application/payable/usecases/create-payable.usecase';
+import { CreateOnePayableUseCase } from '@application/payable/usecases/create-one-payable.usecase';
 import { FindOnePayableUseCase } from '@application/payable/usecases/find-one-payable-by-id.usecase';
 import { UpdateOnePayableUseCase } from '@application/payable/usecases/update-one-assignor.usecase';
+import { DeleteOnePayableUseCase } from '@application/payable/usecases/delete-one-payable.usecase';
 
 const useCases: Provider[] = [
-  CreatePayableUseCase,
+  CreateOnePayableUseCase,
   FindOnePayableUseCase,
   UpdateOnePayableUseCase,
+  DeleteOnePayableUseCase,
 ];
 
 @Module({
