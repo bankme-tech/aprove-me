@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpCode,
   HttpException,
   HttpStatus,
   Param,
@@ -17,6 +18,7 @@ export class UpdatePayableController {
   constructor(private service: UpdatePayableService) {}
 
   @Put('/:id')
+  @HttpCode(HttpStatus.OK)
   async handle(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() { value, assignorId, emissionDate }: UpdatePayableRequestSchema,

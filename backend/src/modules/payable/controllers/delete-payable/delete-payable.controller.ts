@@ -1,6 +1,7 @@
 import {
   Controller,
   Delete,
+  HttpCode,
   HttpException,
   HttpStatus,
   Param,
@@ -14,6 +15,7 @@ export class DeletePayableController {
   constructor(private service: DeletePayableService) {}
 
   @Delete('/:id')
+  @HttpCode(HttpStatus.OK)
   async handle(@Param('id', ParseUUIDPipe) id: string) {
     const result = await this.service.execute({
       id,

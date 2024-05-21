@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpCode,
   HttpException,
   HttpStatus,
   Post,
@@ -15,6 +16,7 @@ export class RegisterAssignorController {
   constructor(private service: RegisterAssignorService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   async handle(@Body() data: RegisterAssignorRequestSchema) {
     const result = await this.service.execute(data);
 

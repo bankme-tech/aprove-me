@@ -1,4 +1,10 @@
-import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { GetAssignorsService } from '../../services/get-assignors/get-assignors.service';
 import { ResponsePresenter } from './response.presenter';
 
@@ -7,6 +13,7 @@ export class GetAssignorsController {
   constructor(private service: GetAssignorsService) {}
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   async handle() {
     const result = await this.service.execute();
 

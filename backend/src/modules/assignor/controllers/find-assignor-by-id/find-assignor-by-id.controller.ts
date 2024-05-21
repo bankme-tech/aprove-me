@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  HttpCode,
   HttpException,
   HttpStatus,
   Param,
@@ -15,6 +16,7 @@ export class FindAssignorByIdController {
   constructor(private service: FindAssignorByIdService) {}
 
   @Get('/:id')
+  @HttpCode(HttpStatus.OK)
   async handle(@Param('id', ParseUUIDPipe) id: string) {
     const result = await this.service.execute({ id: id });
 

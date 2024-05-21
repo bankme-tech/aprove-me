@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpCode,
   HttpException,
   HttpStatus,
   Post,
@@ -15,6 +16,7 @@ export class RegisterPayableController {
   constructor(private service: RegisterPayableService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   async handle(
     @Body() { assignor, emissionDate, value }: RegisterPayableRequestSchema,
   ) {
