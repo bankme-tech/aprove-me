@@ -37,11 +37,11 @@ describe('login user use-case', () => {
 
     describe('and login is correct', () => {
       it('realizes the login correctly', async () => {
-        const { acessToken } = await sut.execute({
+        const { accessToken } = await sut.execute({
           ...user.props,
         });
 
-        expect(acessToken).toBeDefined();
+        expect(accessToken).toBeDefined();
       });
     });
 
@@ -50,11 +50,11 @@ describe('login user use-case', () => {
         let token: string;
 
         try {
-          const { acessToken } = await sut.execute({
+          const { accessToken } = await sut.execute({
             login: 'wronglogin',
             password: 'wrongpassword',
           });
-          token = acessToken;
+          token = accessToken;
         } catch (error) {
           expect(error).toBeInstanceOf(UserNotFound);
           expect(error.message).toBe('user not found');
@@ -70,11 +70,11 @@ describe('login user use-case', () => {
       const { sutCase } = makeSut();
 
       try {
-        const { acessToken } = await sutCase.execute({
+        const { accessToken } = await sutCase.execute({
           login: 'wronglogin',
           password: 'wrongpassword',
         });
-        token = acessToken;
+        token = accessToken;
       } catch (error) {
         expect(error).toBeInstanceOf(UserNotFound);
         expect(error.message).toBe('user not found');

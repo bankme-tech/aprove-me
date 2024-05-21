@@ -11,6 +11,7 @@ interface Input {
 
 interface Output {
   acessToken: string;
+  accessToken: string;
 }
 
 @Injectable()
@@ -39,7 +40,9 @@ export class LoginUser {
     };
 
     const acessToken = await this.jwtAdapterRepository.signAsync(token);
+    const accessToken = await this.jwtAdapterRepository.signAsync(token);
 
     return { acessToken };
+    return { accessToken };
   }
 }

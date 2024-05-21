@@ -24,7 +24,9 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async login(@Body() body: loginUserDTO) {
     const { acessToken } = await this.loginUser.execute(body);
+    const { accessToken } = await this.loginUser.execute(body);
 
     return { acessToken };
+    return { accessToken };
   }
 }
