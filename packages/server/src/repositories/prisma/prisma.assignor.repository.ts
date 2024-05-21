@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.config';
+import { assignorUniqueResponseType } from 'src/dtos/assignor.dto';
 import { AssignorRepository } from 'src/repositories/assignor.repository';
 import { Err, Ok, Result } from 'src/types/either';
 
@@ -37,6 +38,98 @@ export class PrismaAssignorRepository implements AssignorRepository {
         },
       });
       return Ok(assignor);
+    } catch (error) {
+      return Err(new Error(error));
+    }
+  }
+  async get_assignor_by_document(document: string): AssignorRepository.responseType {
+    try {
+      const assignor = await this.prisma_service.assignor.findUnique({
+        where: {
+          document,
+        },
+      });
+      return Ok(assignor);
+    } catch (error) {
+      return Err(new Error(error));
+    }
+  }
+  async get_assignor_by_email(email: string): AssignorRepository.responseType {
+    try {
+      const assignor = await this.prisma_service.assignor.findUnique({
+        where: {
+          email,
+        },
+      });
+      return Ok(assignor);
+    } catch (error) {
+      return Err(new Error(error));
+    }
+  }
+  async get_assignor_by_phone(phone: string): AssignorRepository.responseType {
+    try {
+      const assignor = await this.prisma_service.assignor.findUnique({
+        where: {
+          phone,
+        },
+      });
+      return Ok(assignor);
+    } catch (error) {
+      return Err(new Error(error));
+    }
+  }
+
+  async get_unique_assignor(
+    assignor: Partial<AssignorRepository.bodyType>,
+  ): Promise<Result<Error, assignorUniqueResponseType>> {
+    try {
+      if (assignor.document) {
+        const assignorId = await this.prisma_service.assignor.findUnique({
+          where: {
+            document: assignor.document,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        return Ok({
+          id: assignorId.id,
+          field: 'document',
+        });
+      }
+      if (assignor.email) {
+        const assignorId = await this.prisma_service.assignor.findUnique({
+          where: {
+            email: assignor.email,
+          },
+          select: {
+            id: true,
+          },
+        });
+        return Ok({
+          id: assignorId.id,
+          field: 'email',
+        });
+      }
+      if (assignor.phone) {
+        const assignorId = await this.prisma_service.assignor.findUnique({
+          where: {
+            phone: assignor.phone,
+          },
+          select: {
+            id: true,
+          },
+        });
+        return Ok({
+          id: assignorId.id,
+          field: 'phone',
+        });
+      }
+      return Ok({
+        id: null,
+        field: null,
+      });
     } catch (error) {
       return Err(new Error(error));
     }
