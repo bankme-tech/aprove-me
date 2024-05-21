@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { DatabaseModule } from '~/database.module';
+import { AuthenticateAccountService } from './services/authenticate-account/authenticate-account.service';
+import { AuthenticateAccountController } from './authenticate-account/authenticate-account.controller';
+import { HashProvider } from '~/common/providers/hash.provider';
 
 @Module({
   imports: [
@@ -11,7 +14,7 @@ import { DatabaseModule } from '~/database.module';
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AuthenticateAccountController],
+  providers: [AuthenticateAccountService, HashProvider],
 })
 export class AuthModule {}
