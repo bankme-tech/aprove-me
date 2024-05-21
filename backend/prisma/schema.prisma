@@ -34,3 +34,12 @@ model Assignor {
     @@unique([email, document])
     @@map("assignors")
 }
+
+model Account {
+    id       String @id @default(uuid())
+    login    String
+    password String
+
+    @@unique([login])
+    @@map("accounts")
+}
