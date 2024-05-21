@@ -1,8 +1,8 @@
 import { BadRequestException, Body, Controller, Post } from "@nestjs/common";
-import { CreatePayableOutputDTO } from "./dtos/create-payable-output.dto";
-import { CreatePayableInputDTO } from "./dtos/create-payable-input.dto";
-import { ValidationError } from "./errors/validation.error";
-import { PrismaProvider } from "./providers/prisma.provider";
+import { CreatePayableOutputDTO } from "../dtos/create-payable-output.dto";
+import { CreatePayableInputDTO } from "../dtos/create-payable-input.dto";
+import { ValidationError } from "../errors/validation.error";
+import { PrismaProvider } from "../providers/prisma.provider";
 
 @Controller()
 export class CreatePayableController {
