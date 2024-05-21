@@ -26,7 +26,7 @@ const config: Imports = [
   EnvModule.forRoot({ envFilePath: path.resolve(__dirname, '../.env') }),
 ];
 
-const routes: Imports = [UserRoutesModule, AuthRoutesModule];
+const routes: Imports = [AuthRoutesModule, UserRoutesModule];
 
 @Module({
   imports: [...infra, ...config, ...routes],
