@@ -27,6 +27,11 @@ export async function getAllPayable() {
   return res.data;
 }
 
+export async function getPayableById(id: string) {
+  const res = await api.get<Payable>(`payable/${id}`);
+  return res.data;
+}
+
 export async function updatePayable(data: UpdatePayableInput) {
   const res = await api.patch<Payable>(`/payable/${data.payableId}`, {
     value: data.value,

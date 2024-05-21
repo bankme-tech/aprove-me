@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import UpdatePayableForm from "./update-payable";
+import PayableDetails from "./payable-details";
 import { Payable, deletePayable } from "@/services/payable";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function PayableDropdown({ payable }: Props) {
+  const [openPayableDetails, setOpenPayableDetails] = useState(false);
   const [openUpdateForm, setOpenUpdateForm] = useState(false);
 
   const queryClient = useQueryClient();
@@ -35,6 +37,13 @@ export default function PayableDropdown({ payable }: Props) {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem
+            onClick={() => setOpenPayableDetails(true)}
+            className="cursor-pointer justify-center"
+          >
+            details
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
             onClick={() => setOpenUpdateForm(true)}
             className="cursor-pointer justify-center"
           >
@@ -49,6 +58,12 @@ export default function PayableDropdown({ payable }: Props) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <PayableDetails
+        payable={payable}
+        open={openPayableDetails}
+        onOpenChange={setOpenPayableDetails}
+      />
 
       <UpdatePayableForm
         payable={payable}
