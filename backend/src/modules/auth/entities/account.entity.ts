@@ -18,6 +18,12 @@ export class AccountEntity extends BaseEntity<AccountEntityProps> {
     return this.props.password;
   }
 
+  set password(password: string) {
+    if (password.length < 8) return;
+
+    this.props.password = password;
+  }
+
   private constructor(props: AccountEntityProps, id?: string) {
     super(props, id);
   }
