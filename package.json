@@ -19,11 +19,13 @@
     "@nestjs/platform-express": "^10.3.8",
     "@prisma/client": "^5.14.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.3.2",
     "@types/node": "^20.12.12",
+    "@types/validator": "^13.11.10",
     "prisma": "^5.14.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
