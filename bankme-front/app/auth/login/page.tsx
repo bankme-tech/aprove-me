@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import { login as loginUser } from '../../../services/auth'
 import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
 
 export default function Login() {
   const { login: contextLogin } = useAuth();
@@ -73,6 +74,12 @@ export default function Login() {
             />
           </div>
           <button disabled={ isDisable } onClick={(e) => handleClick(e.target)} type="button" className="my-10 w-full text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-50">Entrar</button>
+          <p className="text-sm font-light text-black dark:text-gray-400">
+                Não possui conta? 
+              <Link href="/register" className="mx-2 font-medium text-blue-600 hover:underline dark:text-primary-500">
+                Register
+              </Link>
+          </p>
           {isError && <div role="alert">
             <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
               Erro!
