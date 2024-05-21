@@ -17,22 +17,22 @@ export default function Header() {
   });
 
   return(
-    <header>
-      <nav className="bg-gray-900 border-gray-200 px-4 lg:px-6 py-2.5">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link href="/" className="text-blue-600 self-center text-4xl font-semibold whitespace-nowrap">
-            Bankme
-          </Link>
-          <div className="flex items-center lg:order-2">
-            {user && <button onClick={ handleClick } className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">
-              Sair
-            </button>}
-            {user ? <Link href="/profile" className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">Meu Perfil
-            </Link> : 
-            <Link href="/auth" className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none">Login
-            </Link> 
-            }
-          </div>
+    <header className="flex flex-wrap justify-around items-center bg-gray-900 border-gray-200 py-7">
+      <div>
+        <h1 className="text-5xl font-bold font-poppins">
+          <span className="text-blue-500">Bankme</span>
+        </h1>
+      </div>
+      <nav>
+        <div className="flex items-center">
+          {user && <button onClick={ handleClick } className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 focus:outline-none">
+            Sair
+          </button>}
+          {user ? <Link href="/profile" className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-10 py-3 focus:outline-none">Meu Perfil
+          </Link> : 
+          <Link href="/auth" className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-10 py-3 focus:outline-none">Login
+          </Link> 
+          }
         </div>
       </nav>
     </header>
