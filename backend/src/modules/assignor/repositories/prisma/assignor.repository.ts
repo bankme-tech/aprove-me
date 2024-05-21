@@ -27,4 +27,11 @@ export class PrismaAssignorRepository implements IAssignorRepository {
 
     return entities.map(AssignorMapper.toDomain);
   }
+
+  async update(assignor: AssignorEntity): Promise<void> {
+    await this.prisma.assignor.update({
+      where: { id: assignor.id },
+      data: AssignorMapper.toPersistence(assignor),
+    });
+  }
 }

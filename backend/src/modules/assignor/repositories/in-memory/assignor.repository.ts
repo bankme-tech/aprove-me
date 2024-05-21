@@ -1,5 +1,5 @@
 import type { AssignorPersistence } from '~/common/types/assignor.types';
-import type { AssignorEntity } from '../../entities/assignor.entity';
+import { AssignorEntity } from '../../entities/assignor.entity';
 import { IAssignorRepository } from '../interfaces/assignor.repository-interface';
 import { Injectable } from '@nestjs/common';
 import { AssignorMapper } from '../../mappers/assignor.mapper';
@@ -24,5 +24,11 @@ export class InMemoryAssignorRepository implements IAssignorRepository {
 
   async findAll(): Promise<AssignorEntity[]> {
     return this.items.map(AssignorMapper.toDomain);
+  }
+
+  async update(assignor: AssignorEntity): Promise<void> {
+    const entityIndex = this.items.findIndex((item) => item.id);
+
+    this.items[entityIndex] = AssignorMapper.toPersistence(assignor);
   }
 }
