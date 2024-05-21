@@ -1,20 +1,15 @@
 import { isValidEmail } from '@brazilian-utils/brazilian-utils';
 import { InvalidFieldError } from '../exception';
+import { ValueObject } from './value-object';
 
-export class EmailVO {
-  private readonly _value: string;
-
+export class EmailVO extends ValueObject<string> {
   constructor(email: string) {
-    this._value = email;
+    super(email);
     this.validate();
   }
 
   private validate() {
-    const isValid = isValidEmail(this.value);
+    const isValid = isValidEmail(this._value);
     if (!isValid) throw new InvalidFieldError('e-mail');
-  }
-
-  get value() {
-    return this._value;
   }
 }
