@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { PayablesTable } from "@/pages/payables/components/payablesTable";
 import { AddAssignorDialog } from "@/pages/payables/components/addAssignorDialog/addAssignorDialog";
+import { AddPayableDialog } from "@/pages/payables/components/addPayableDialog/addPayableDialog";
 
 export const Payables = () => {
   return (
@@ -9,7 +9,7 @@ export const Payables = () => {
         <h1 className="text-title text-primary font-bold">Lista de pagáveis</h1>
 
         <div className="gap-2 flex items-center flex-col md:flex-row">
-          <Button>Adicionar pagável</Button>
+          <AddPayableDialog />
           <AddAssignorDialog />
         </div>
       </div>

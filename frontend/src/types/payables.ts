@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export interface Payable {
   _id: string;
   props: {
@@ -20,3 +22,14 @@ export interface FindAllResponse {
   totalPayables: number;
   totalPages: number;
 }
+
+export const playableSchema = z.object({
+  assignorId: z.string().uuid(),
+  value: z.coerce.number({
+    required_error: "Necessário preencher este campo",
+    invalid_type_error: "Necessário ser um número",
+  }),
+  emissionDate: z.date({ message: "Necessário escolher uma data" }),
+});
+
+export type PlayableTypes = z.infer<typeof playableSchema>;

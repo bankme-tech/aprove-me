@@ -13,12 +13,9 @@ import { useAssignorStore } from "@/stores/useAssignorStore";
 import { AssignorTypes, assignorSchema } from "@/types/assignor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon } from "lucide-react";
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 export function AddAssignorDialog() {
-  const [open, setOpen] = useState(false);
-
   const assignor = useAssignorStore();
 
   const { register, formState, handleSubmit } = useForm<AssignorTypes>({
@@ -34,11 +31,10 @@ export function AddAssignorDialog() {
 
   const onSubmit: SubmitHandler<AssignorTypes> = async (data) => {
     await assignor.createAssignor(data);
-    setOpen(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
         <Button>Adicionar cedente</Button>
       </DialogTrigger>
