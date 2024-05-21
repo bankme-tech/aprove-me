@@ -20,7 +20,7 @@ export default function Header() {
     <header className="flex flex-wrap justify-around items-center bg-gray-900 border-gray-200 py-5">
       <div>
         <h1 className="text-5xl font-bold font-poppins">
-          <span className="text-blue-500">Bankme</span>
+          <Link href='/' className="text-blue-500">Bankme</Link>
         </h1>
       </div>
       <nav>
