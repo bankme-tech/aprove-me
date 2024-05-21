@@ -21,21 +21,47 @@ export class PayableEntity extends BaseEntity<PayableEntityProps> {
     return this.props.value;
   }
 
+  set value(value: number) {
+    if (value < 0) return;
+
+    this.props.value = value;
+  }
+
   get emissionDate() {
     return this.props.emissionDate;
+  }
+
+  set emissionDate(date: Date) {
+    this.props.emissionDate = date;
   }
 
   get assignor() {
     return this.props.assignor;
   }
 
+  set assignor(assignor: AssignorEntity) {
+    this.props.assignor = assignor;
+  }
+
   get assignorId() {
     return this.props.assignorId;
+  }
+
+  set assignorId(id: string) {
+    if (!isUUID(id)) return;
+
+    this.props.assignorId = id;
   }
 
   static validate(props: PayableEntityProps): Either<Error, true> {
     if (!isUUID(props.assignorId)) {
       return left(new InvalidEntityEntry('AssignorId must be an uuid.'));
+    }
+
+    if (props.value < 0) {
+      return left(
+        new InvalidEntityEntry('Value must be greater or equals to 0.'),
+      );
     }
 
     return right(true);
