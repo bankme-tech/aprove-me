@@ -1,6 +1,6 @@
 import { CpfVO } from '../../../src/domain/common/value-object';
 
-describe('# Cpf Test Unit', () => {
+describe('# Teste de Unidade - Cpf', () => {
   const invalidCpf = [
     '406.302.170-27',
     '406302170',
