@@ -61,7 +61,7 @@ module.exports = {
         newlinesBetween: 'always',
         groups: [
           '/@nestjs|^mongoose|@automock|vitest|supertest/',
-          '/@vaner/',
+          '/@bankme/',
           '/@domain/',
           '/@infra/',
           '/@application/',
