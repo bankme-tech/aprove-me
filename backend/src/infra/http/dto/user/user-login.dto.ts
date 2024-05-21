@@ -1,3 +1,11 @@
-import { AddNewUserDTO } from '@/infra/http/dto/user/add-new-user.dto';
+import { IsString, Length } from 'class-validator';
 
-export class loginUserDTO extends AddNewUserDTO {}
+export class loginUserDTO {
+  @Length(3, 140)
+  @IsString()
+  login: string;
+
+  @IsString()
+  @Length(3, 140)
+  password: string;
+}
