@@ -13,7 +13,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import AssignorCombobox from "./assignor-combobox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPayable } from "@/services/payable";
@@ -80,6 +86,9 @@ export default function CreatePayableForm() {
           Create new payable
         </DialogTrigger>
         <DialogContent>
+        <DialogHeader>
+          <DialogTitle>New payable</DialogTitle>
+        </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField

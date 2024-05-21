@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import AssignorCombobox from "./assignor-combobox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Payable, updatePayable } from "@/services/payable";
@@ -85,6 +85,9 @@ export default function UpdatePayableForm({
         }}
       >
         <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Update payable</DialogTitle>
+        </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
