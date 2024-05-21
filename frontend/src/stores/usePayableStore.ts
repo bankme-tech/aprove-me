@@ -12,9 +12,13 @@ interface PayableStoreTypes extends FindAllResponse {
   status: Status;
   createPayable: (createPayableData: PlayableTypes) => Promise<void>;
   findAllPayables: (input: FindAllPayables) => Promise<void>;
+  editPayable: (
+    editPayableData: PlayableTypes,
+    payableId: string,
+  ) => Promise<void>;
   deletePayable: (payableId: string) => Promise<void>;
 }
-export const usePayableStore = create<PayableStoreTypes>()((set) => ({
+export const usePayableStore = create<PayableStoreTypes>()((set, get) => ({
   status: "idle",
   payables: [],
   totalPayables: 0,
@@ -34,6 +38,27 @@ export const usePayableStore = create<PayableStoreTypes>()((set) => ({
     }
   },
 
+  editPayable: async (editPayableData, payableId) => {
+    const payable = await payableService.edit(editPayableData, payableId);
+
+    const payables = get().payables;
+
+    const payableIndex = payables.findIndex(
+      (payable) => payable._id === payableId,
+    );
+
+    if (payableIndex >= 0) {
+      const updatedPayables = [...payables];
+
+      updatedPayables[payableIndex] = payable;
+
+      set((state) => ({
+        ...state,
+        payables: updatedPayables,
+      }));
+    }
+  },
+
   findAllPayables: async (input) => {
     set((state) => ({
       ...state,
@@ -49,6 +74,7 @@ export const usePayableStore = create<PayableStoreTypes>()((set) => ({
       totalPayables,
     });
   },
+
   deletePayable: async (payableId) => {
     try {
       await payableService.delete(payableId);

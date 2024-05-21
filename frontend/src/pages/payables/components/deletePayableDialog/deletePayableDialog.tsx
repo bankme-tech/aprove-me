@@ -28,7 +28,7 @@ export const DeletePayableDialog = ({ payable }: DeletedPayableData) => {
     async function handleFindAssignor() {
       assignor.findById(payable.props.assignorId);
     }
-    console.log(assignor.assignor);
+
     handleFindAssignor();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

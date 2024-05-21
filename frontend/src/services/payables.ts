@@ -29,6 +29,18 @@ export class payableService {
     }
   }
 
+  static async edit(
+    editPayableData: PlayableTypes,
+    payableId: string,
+  ): Promise<Payable> {
+    const { data } = await api.put<Payable>(
+      `/integrations/payable/${payableId}`,
+      editPayableData,
+    );
+
+    return data;
+  }
+
   static async delete(payableId: string): Promise<void> {
     await api.delete(`/integrations/payable/${payableId}`);
   }
