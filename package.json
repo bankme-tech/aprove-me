@@ -24,12 +24,14 @@
   },
   "homepage": "https://github.com/rntvicente/aprove-me#readme",
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@swc/core": "^1.5.7",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.17.4",
     "@types/node": "^20.12.12",
     "jest": "^29.7.0",
+    "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
