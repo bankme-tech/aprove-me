@@ -18,12 +18,18 @@ export async function login(login: string, password: string){
 }
 
 export async function register(login: string, password: string){
-  const user = await axios.post('http://localhost:3000/integrations/auth/register', {
-    data: {
-      login,
-      password
-    }
-  });
+  try {
+    const user = await axios.post('http://localhost:3000/integrations/auth/register', {
+        login,
+        password
+    });
 
-  return user;
+    return user;
+  } catch (e: any) {
+    console.log(e);
+    const status = e.response ? e.response.data.statusCode : 'Network Error';
+    const message = e.response ? e.response.data.message : e.message;
+
+    return { status, message, data: '' };
+  }
 }

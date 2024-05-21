@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import { register as registerUser } from '@/services/auth'
-import { useAuth } from "@/context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Register() {
-  const { login: contextLogin } = useAuth();
+  const { setIsLogged } = useAuthContext();
   const [isDisable, setIsDisable] = useState(true);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -18,7 +18,7 @@ export default function Register() {
   });
   const router = useRouter();
 
-  const minPasswordLength = 6;
+  const minPasswordLength = 5;
   const minLoginLength = 3;
 
   const buttonValidate = () => {
@@ -32,26 +32,18 @@ export default function Register() {
     setUser({ ...user, [name]: value });
   };
 
-  const saveUser = (token: string) => {
-    localStorage.setItem('user', JSON.stringify({
-      token
-    }));
-  };
-
   const handleClick = async (e: any) => {
-      const { login, password } = user;
-      try {
-        const request = await registerUser(login, password);
-        if (request.status === 200) {
-          saveUser(request.data.token.token);
-          contextLogin();
-          router.push('/');
-         } 
-      }
-      catch (e: any) { 
-        setIsError(true);
-        setErrorMessage(e.message);
-      }
+    const { login, password } = user;
+    const request = await registerUser(login, password);
+    if (request.status === 201) {
+      setIsLogged(true);
+      router.push('/auth/login');
+      } 
+
+    setIsError(true);
+    if ('message' in request) {
+      setErrorMessage(request.message);
+    }
   }
 
   useEffect(() => {
