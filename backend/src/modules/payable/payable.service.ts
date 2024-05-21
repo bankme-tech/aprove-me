@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Payable } from '@prisma/client';
 import { PrismaService } from 'src/config/prisma.service';
-import { AssignorService } from '../assignor/assignor/assignor.service';
+import { AssignorService } from '../assignor/assignor.service';
 import { CreatePayableDto } from './payable.dto';
 @Injectable()
 export class PayableService {
@@ -15,22 +15,22 @@ export class PayableService {
   }
 
   async findOne(id: Pick<CreatePayableDto, 'id'>['id']): Promise<Payable> {
-    return await this.prisma.payable.findUnique({
+    const payable = await this.prisma.payable.findUnique({
       where: { id },
     });
+
+    if (!payable) {
+      throw new Error('Payable not found');
+    }
+
+    return payable;
   }
 
   async create(data: Omit<CreatePayableDto, 'id'>): Promise<Payable> {
-    const assignor = await this.assignor.findOne({
-      where: { id: data.assignorId },
-    });
-
-    if (!assignor) {
-      throw new Error('Assignor not found');
-    }
+    await this.assignor.findOne(data.assignorId);
 
     return await this.prisma.payable.create({
-      data: data,
+      data,
     });
   }
 

@@ -8,23 +8,23 @@ import { PayableService } from './payable.service';
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
-  // TODO: test assertions functions
-  @Post('/integrations/payable')
-  @ApiBody({ type: OmitType(CreatePayableDto, ['id']) })
-  @HttpCode(201)
-  async create(@Body() body: Omit<CreatePayableDto, 'id'>): Promise<Payable> {
-    return await this.payableService.create(body);
-  }
-
   @Get('/integrations/payable/:id')
   @ApiParam({
     name: 'id',
     type: PickType(CreatePayableDto, ['id'])['id'],
     description: 'ID do payable',
   })
-  async getOne(
+  async findOne(
     @Param('id') id: Pick<CreatePayableDto, 'id'>['id'],
   ): Promise<Payable> {
     return await this.payableService.findOne(id);
+  }
+
+  // TODO: test assertions functions
+  @Post('/integrations/payable')
+  @ApiBody({ type: OmitType(CreatePayableDto, ['id']) })
+  @HttpCode(201)
+  async create(@Body() body: Omit<CreatePayableDto, 'id'>): Promise<Payable> {
+    return await this.payableService.create(body);
   }
 }
