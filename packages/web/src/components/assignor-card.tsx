@@ -2,13 +2,16 @@
 
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
 
+export type Assignor = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  document: string;
+};
+
 type AssignorCardProps = {
-  assignor: {
-    name: string;
-    email: string;
-    phone: string;
-    document: string;
-  };
+  assignor: Assignor;
 };
 
 export default function AssignorCard({ assignor }: AssignorCardProps) {
