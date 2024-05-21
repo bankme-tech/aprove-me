@@ -1,6 +1,6 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Payable } from "@/domain/receivables/enterprise/entities/payable";
-import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/receivable-with-assignor";
+import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/payable-with-assignor";
 import {
   Prisma,
   Payable as PrismaPayable,

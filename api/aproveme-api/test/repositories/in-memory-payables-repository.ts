@@ -1,6 +1,6 @@
 import { PayablesRepository } from "@/domain/receivables/application/repositories/payables-repository";
 import { Payable } from "@/domain/receivables/enterprise/entities/payable";
-import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/receivable-with-assignor";
+import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/payable-with-assignor";
 import { InMemoryAssignorsRepository } from "./in-memory-assignors-repository";
 
 export class InMemoryPayablesRepository implements PayablesRepository {

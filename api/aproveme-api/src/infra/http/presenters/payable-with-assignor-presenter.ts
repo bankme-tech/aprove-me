@@ -1,5 +1,4 @@
-import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/receivable-with-assignor";
-import { Payable } from "@prisma/client";
+import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/payable-with-assignor";
 
 export class PayableWithAssignorPresenter {
   static toHTTP(payable: PayableWithAssignor) {

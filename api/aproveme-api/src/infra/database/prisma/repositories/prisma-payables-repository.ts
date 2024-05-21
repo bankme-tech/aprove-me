@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
 
 import { Payable } from "@/domain/receivables/enterprise/entities/payable";
-import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/receivable-with-assignor";
+import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/payable-with-assignor";
 import { PayablesRepository } from "@/domain/receivables/application/repositories/payables-repository";
 import { PrismaPayableMapper } from "../mappers/prisma-payable-mapper";
 import { PrismaPayableWithAssignorMapper } from "../mappers/prisma-payable-with-assignor-mapper";
