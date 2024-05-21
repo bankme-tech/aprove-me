@@ -1,8 +1,8 @@
 import { z } from "zod";
-import api from "@/api/api";
+import { api } from "@/api/api";
 import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import { useAuth } from "@/hooks/useAuth";
+import { setToken } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,6 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const router = useRouter();
-  const { updateSessionToken } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -30,7 +29,7 @@ export function LoginForm() {
     try {
       const { data } = await api.post<{ token: string }>("/auth", values);
 
-      updateSessionToken(data.token)
+      setToken(data.token)
 
       router.push("/payables");
     } catch (error) {
