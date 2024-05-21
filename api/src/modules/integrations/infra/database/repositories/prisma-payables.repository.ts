@@ -15,4 +15,18 @@ export class PrismaPayablesRepository implements PayablesRepository {
       }),
     );
   }
+
+  public async findById(id: string): Promise<Payable | null> {
+    const payable = await this.prisma.payable.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (payable) {
+      return PayablesMapper.toDomain(payable);
+    }
+
+    return null;
+  }
 }

@@ -6,6 +6,7 @@ import { IntegrationsController } from './infra/http/controllers/integrations.co
 import { AssignorsRepository } from './domain/repositories/assignors.repository';
 import { PrismaAssignorsRepository } from './infra/database/repositories/prisma-assignors.repository';
 import { CreateAssignorUseCase } from './use-cases/create-assignor.use-case';
+import { FindPayableByIdUseCase } from './use-cases/find-payable-by-id.use-case';
 
 @Module({
   imports: [],
@@ -21,6 +22,7 @@ import { CreateAssignorUseCase } from './use-cases/create-assignor.use-case';
     },
     CreatePayableUseCase,
     CreateAssignorUseCase,
+    FindPayableByIdUseCase,
   ],
 })
 export class IntegrationsModule {}
