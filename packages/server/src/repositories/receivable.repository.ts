@@ -10,7 +10,7 @@ export abstract class ReceivableRepository {
 }
 
 export namespace ReceivableRepository {
-  export type bodyType = receivableBodyDto;
+  export type bodyType = Partial<receivableBodyDto>;
   export type responseType = Promise<Result<Error, receivableResponseDto>>;
   export type listResponseType = Promise<Result<Error, receivableListResponseDto>>;
   export type IdResponseType = Promise<Result<Error, { id: string }>>;

@@ -67,6 +67,32 @@ export class PrismaReceivableRepository implements ReceivableRepository {
       return Err(new Error(error));
     }
   }
+
+  public async get_receivable_by_assignor(assignorId: string): ReceivableRepository.listResponseType {
+    try {
+      const receivables = await this.prisma_service.receivable.findMany({
+        where: {
+          assignorId,
+        },
+        select: {
+          id: true,
+          value: true,
+          emissionDate: true,
+          assignorId: true,
+        },
+      });
+      const data = receivables.map((receivable) => ({
+        id: receivable.id,
+        value: receivable.value,
+        emissionDate: receivable.emissionDate.toISOString(),
+        assignorId: receivable.assignorId,
+      }));
+      return Ok(data);
+    } catch (error) {
+      return Err(new Error(error));
+    }
+  }
+
   public async delete_receivable(id: string): Promise<void> {
     await this.prisma_service.receivable.delete({
       where: {
