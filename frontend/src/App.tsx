@@ -1,19 +1,14 @@
 import "@/globals.css";
-import { Login } from "@/pages/login/login";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { ThemesProvider } from "./context/theme";
+import { router } from "./routes";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Login />,
-    },
-  ]);
-
   return (
     <div className="min-h-screen w-full bg-background">
       <ThemesProvider>
+        <Toaster />
         <RouterProvider router={router} />
       </ThemesProvider>
     </div>
