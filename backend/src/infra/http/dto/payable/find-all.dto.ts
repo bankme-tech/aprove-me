@@ -1,11 +1,12 @@
-import { IsNumber, IsPositive } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsInt } from 'class-validator';
 
 export class FindAllDTO {
-  @IsNumber()
-  @IsPositive()
+  @IsInt()
+  @Type(() => Number)
   skip: number;
 
-  @IsNumber()
-  @IsPositive()
+  @IsInt()
+  @Type(() => Number)
   take: number;
 }

@@ -12,6 +12,8 @@ import { AuthGuard } from '@/utils/auth-guard';
     ConfigModule.forRoot(),
     JwtModule.register({
       global: true,
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
     }),
     DatabaseModule,
   ],

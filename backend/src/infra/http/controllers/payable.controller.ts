@@ -37,6 +37,10 @@ export class PayableController {
   async findAllPayables(@Query() query: FindAllDTO) {
     const { payables, totalPages, totalPayables } =
       await this.findAll.execute(query);
+    const { payables, totalPages, totalPayables } = await this.findAll.execute({
+      skip: Number(query.skip),
+      take: Number(query.take),
+    });
 
     return { payables, totalPages, totalPayables };
   }
