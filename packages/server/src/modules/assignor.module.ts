@@ -5,11 +5,13 @@ import { PrismaReceivableRepository } from 'src/repositories/prisma/prisma.recei
 import { ReceivableRepository } from 'src/repositories/receivable.repository';
 
 import { ReceivableService } from 'src/services/receivable.service';
+import { ValidationService } from 'src/services/validations.service';
 
 @Module({
   imports: [],
   controllers: [ReceivableController],
   providers: [
+    ValidationService,
     PrismaService,
     ReceivableService,
     {

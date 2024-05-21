@@ -5,11 +5,13 @@ import { PrismaService } from 'src/database/prisma.config';
 import { AssignorRepository } from 'src/repositories/assignor.repository';
 import { PrismaAssignorRepository } from 'src/repositories/prisma/prisma.assignor.repository';
 import { AssignorService } from 'src/services/assignor.service';
+import { ValidationService } from 'src/services/validations.service';
 
 @Module({
   imports: [],
   controllers: [AssignorController],
   providers: [
+    ValidationService,
     PrismaService,
     AssignorService,
     {
