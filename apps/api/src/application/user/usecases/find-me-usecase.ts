@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 
 import { IOption, Some } from '@bankme/monads';
 
-import { User } from '@domain/user/models/user';
+import { User } from '@bankme/domain';
 
 function _throwForbiddenException(): never {
   throw new ForbiddenException(

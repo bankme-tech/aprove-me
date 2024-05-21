@@ -1,5 +1,5 @@
-import { IAssignor } from '@domain/assignor/interfaces/assignor.interface';
-import { Id } from '@domain/shared/id';
+import { IAssignor } from '../../assignor';
+import { Id } from '../../shared';
 
 export interface IPayable {
   readonly id: Id;

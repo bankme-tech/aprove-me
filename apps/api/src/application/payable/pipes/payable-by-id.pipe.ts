@@ -1,7 +1,8 @@
 import { Inject, Injectable, PipeTransform } from '@nestjs/common';
 
-import { Id } from '@domain/shared/id';
-import { IPayable } from '@domain/payable/interfaces/payable.interface';
+import { Id } from '@bankme/domain';
+import { IPayable } from '@bankme/domain';
+
 import { PayableNotFoundException } from '@domain/payable/exceptions/payable-not-found.exception';
 
 import {

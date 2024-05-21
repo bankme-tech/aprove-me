@@ -1,6 +1,6 @@
-import { Id } from '@domain/shared/id';
-import { IUser } from '@domain/user/interfaces/user.interface';
-import { Password } from '@domain/user/value-objects/password';
+import { Id } from '../../shared';
+import { IUser } from '../interfaces/user.interface';
+import { Password } from '../value-objects/password';
 
 export interface IUserConstructor {
   id: Id;

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { IOption, toOption } from '@bankme/monads';
 
-import { IPayableConstructor, Payable } from '@domain/payable/models/payable';
+import { IPayableConstructor, Payable } from '@bankme/domain';
 
 import { IPayableRepository } from '@infra/payable/repositories/payable.repository';
 import { PrismaService } from '@infra/prisma/services/prisma.service';

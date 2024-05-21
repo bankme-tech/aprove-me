@@ -15,13 +15,13 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { Payable } from '@domain/payable/models/payable';
+import { Payable } from '@bankme/domain';
 
 import { CreateOnePayableUseCase } from '@application/payable/usecases/create-one-payable.usecase';
 import { PayableByIdPipe } from '@application/payable/pipes/payable-by-id.pipe';
 import { FindOnePayableUseCase } from '@application/payable/usecases/find-one-payable-by-id.usecase';
-import { UpdateOnePayableUseCase } from '@application/payable/usecases/update-one-assignor.usecase';
 import { DeleteOnePayableUseCase } from '@application/payable/usecases/delete-one-payable.usecase';
+import { UpdateOnePayableUseCase } from '@application/payable/usecases/update-one-payable.usecase';
 
 import { CreatePayableDto } from '@presentation/payable/dtos/create-payable.dto';
 import { PayablePresenter } from '@presentation/payable/presenters/payable.presenter';

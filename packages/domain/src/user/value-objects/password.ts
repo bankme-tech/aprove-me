@@ -1,6 +1,5 @@
-import { IPassword } from '@domain/user/interfaces/password.interface';
-
 import bcryptjs from 'bcryptjs';
+import { IPassword } from '../interfaces/password.interface';
 
 export class Password implements IPassword {
   readonly value: string;

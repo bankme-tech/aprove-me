@@ -1,4 +1,4 @@
-import { Id } from '@domain/shared/id';
+import { Id } from '../../shared/id';
 
 export interface IAssignor {
   readonly id: Id;

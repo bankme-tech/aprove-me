@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@bankme/monads": "workspace:monads",
+    "@bankme/domain": "workspace:domain",
     "@bankme/nestjs-env": "workspace:nestjs-env",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",

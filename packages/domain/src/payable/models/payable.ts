@@ -1,7 +1,6 @@
-import { IAssignor } from '@domain/assignor/interfaces/assignor.interface';
-import { Assignor } from '@domain/assignor/models/assignor';
-import { IPayable } from '@domain/payable/interfaces/payable.interface';
-import { Id } from '@domain/shared/id';
+import { IAssignor, Assignor } from '../../assignor';
+import { Id } from '../../shared';
+import { IPayable } from '../interfaces/payable.interface';
 
 export interface IPayableConstructor {
   id: Id;

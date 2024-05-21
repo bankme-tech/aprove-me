@@ -1,6 +1,4 @@
-import { IUser } from '@domain/user/interfaces/user.interface';
-import { User } from '@domain/user/models/user';
-import { Password } from '@domain/user/value-objects/password';
+import { IUser, Password, User } from '@bankme/domain';
 
 import { User as PrismaUser } from '@prisma/client';
 

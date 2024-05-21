@@ -1,5 +1,5 @@
-import { IAssignor } from '@domain/assignor/interfaces/assignor.interface';
-import { Id } from '@domain/shared/id';
+import { Id } from '../../shared';
+import { IAssignor } from '../interfaces/assignor.interface';
 
 export interface IAssignorConstructor {
   id: Id;

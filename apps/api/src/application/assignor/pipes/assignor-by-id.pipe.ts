@@ -1,7 +1,7 @@
 import { Inject, Injectable, PipeTransform } from '@nestjs/common';
 
-import { Id } from '@domain/shared/id';
-import { IAssignor } from '@domain/assignor/interfaces/assignor.interface';
+import { IAssignor, Id } from '@bankme/domain';
+
 import { AssignorNotFoundException } from '@domain/assignor/exceptions/payable-not-found.exception';
 
 import {

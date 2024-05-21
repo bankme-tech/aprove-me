@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { Payable } from '@domain/payable/models/payable';
+import { Payable } from '@bankme/domain';
 
 @Injectable()
 export class FindOnePayableUseCase {

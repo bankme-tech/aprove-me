@@ -1,5 +1,5 @@
-import { IPayable } from '@domain/payable/interfaces/payable.interface';
-import { Payable } from '@domain/payable/models/payable';
+import { IPayable } from '@bankme/domain';
+import { Payable } from '@bankme/domain';
 
 import { AssignorMapper } from '@infra/assignor/repositories/prisma/assignor.mapper';
 

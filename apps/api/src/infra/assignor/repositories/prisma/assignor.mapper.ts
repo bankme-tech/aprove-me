@@ -1,5 +1,4 @@
-import { IAssignor } from '@domain/assignor/interfaces/assignor.interface';
-import { Assignor } from '@domain/assignor/models/assignor';
+import { Assignor, IAssignor } from '@bankme/domain';
 
 import { Assignor as PrismaAssignor } from '@prisma/client';
 
