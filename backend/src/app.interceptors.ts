@@ -28,11 +28,11 @@ export class ResponseInterceptor implements NestInterceptor {
       catchError((error) => {
         const response = context.switchToHttp().getResponse();
         const status =
-          error.response.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
+          error.response?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR;
 
         response.status(status).json({
           status,
-          error: error.response.message || 'Internal server error',
+          error: error.response?.message ?? 'Internal server error',
         });
 
         return throwError(() => error);
