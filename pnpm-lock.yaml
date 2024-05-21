@@ -7,6 +7,13 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@prisma/client':
+        specifier: 5.14.0
+        version: 5.14.0(prisma@5.14.0)
+      prisma:
+        specifier: ^5.14.0
+        version: 5.14.0
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.3.0
@@ -65,9 +72,6 @@ importers:
       '@nestjs/swagger':
         specifier: ^7.3.1
         version: 7.3.1(@nestjs/common@10.3.8(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.3.8(@nestjs/common@10.3.8(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/platform-express@10.3.8)(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)
-      '@prisma/client':
-        specifier: 5.14.0
-        version: 5.14.0(prisma@5.14.0)
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
@@ -80,9 +84,6 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
-      prisma:
-        specifier: ^5.14.0
-        version: 5.14.0
       reflect-metadata:
         specifier: ^0.2.0
         version: 0.2.2
@@ -168,6 +169,9 @@ importers:
 
   apps/bulk-payable-service:
     dependencies:
+      '@bankme/domain':
+        specifier: workspace:domain
+        version: link:../../packages/domain
       '@nestjs/common':
         specifier: ^10.0.0
         version: 10.3.8(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1)

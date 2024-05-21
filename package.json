@@ -12,15 +12,16 @@
   },
   "scripts": {
     "start:apps": "pnpm -r run start",
-    "start:api": "pnpm --dir apps/api start",
-    "start:api:dev": "pnpm --dir apps/api start:dev",
-    "start:api:debug": "pnpm --dir apps/api start:debug",
-    "start:api:prod": "pnpm --dir apps/api start:prod",
+    "start:apps:dev": "pnpm -r run start:dev",
     "lint": "pnpm -r --parallel lint",
     "test": "pnpm -r test",
     "build": "pnpm -r --parallel build",
     "build:apps": "pnpm -F \"./apps/**\" --parallel build",
     "build:packages": "pnpm -F \"./packages/**\" --parallel build"
+  },
+  "dependencies": {
+    "@prisma/client": "5.14.0",
+    "prisma": "^5.14.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
