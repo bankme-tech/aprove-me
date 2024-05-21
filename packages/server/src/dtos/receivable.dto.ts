@@ -1,6 +1,6 @@
 export type receivableBodyDto = {
   value: number;
-  emissionDate: string;
+  emissionDate: Date;
   assignorId: string;
 };
 
