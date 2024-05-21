@@ -1,30 +1,31 @@
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
-import { ApiBody, ApiParam, OmitType, PickType } from '@nestjs/swagger';
+import { Body, Controller, HttpCode, Param, Patch, Post } from '@nestjs/common';
+import { ApiBody, ApiTags, OmitType } from '@nestjs/swagger';
 import { Payable } from '@prisma/client';
-import { CreatePayableDto } from './payable.dto';
+import { CrudStrategyController } from '../crud-strategy/crud-strategy.controller';
+import { PayableDto } from './dto/payable.dto';
 import { PayableService } from './payable.service';
 
-@Controller({ version: '1' })
-export class PayableController {
-  constructor(private readonly payableService: PayableService) {}
-
-  @Get('/integrations/payable/:id')
-  @ApiParam({
-    name: 'id',
-    type: PickType(CreatePayableDto, ['id'])['id'],
-    description: 'ID do payable',
-  })
-  async findOne(
-    @Param('id') id: Pick<CreatePayableDto, 'id'>['id'],
-  ): Promise<Payable> {
-    return await this.payableService.findOne(id);
+// TODO: Fix documentation of Payable
+@ApiTags('Payable')
+@Controller({ path: 'integrations/payable', version: '1' })
+export class PayableController extends CrudStrategyController<any, any, any> {
+  constructor(private readonly payableService: PayableService) {
+    super(payableService);
   }
 
-  // TODO: test assertions functions
-  @Post('/integrations/payable')
-  @ApiBody({ type: OmitType(CreatePayableDto, ['id']) })
+  @Post()
+  @ApiBody({ type: OmitType(PayableDto, ['id']) })
   @HttpCode(201)
-  async create(@Body() body: Omit<CreatePayableDto, 'id'>): Promise<Payable> {
-    return await this.payableService.create(body);
+  async create(@Body() createDto: Omit<PayableDto, 'id'>): Promise<Payable> {
+    return await this.payableService.create(createDto);
+  }
+
+  @Patch(':id')
+  @ApiBody({ type: OmitType(PayableDto, ['id']) })
+  async update(
+    @Param('id') id: string,
+    @Body() updateDto: Omit<PayableDto, 'id'>,
+  ): Promise<Payable> {
+    return await this.payableService.update(id, updateDto);
   }
 }

@@ -1,48 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { Payable } from '@prisma/client';
 import { PrismaService } from 'src/config/prisma.service';
-import { AssignorService } from '../assignor/assignor.service';
-import { CreatePayableDto } from './payable.dto';
+import { CrudStrategyService } from '../crud-strategy/crud-strategy.service';
+import { AssignorService } from './../assignor/assignor.service';
+import { PayableDto } from './dto/payable.dto';
+
 @Injectable()
-export class PayableService {
+export class PayableService extends CrudStrategyService<
+  Payable,
+  Omit<PayableDto, 'id'>,
+  Omit<PayableDto, 'id'>
+> {
+  refPrisma!: any;
   constructor(
-    private prisma: PrismaService,
-    private readonly assignor: AssignorService,
-  ) {}
+    prisma: PrismaService, // Removendo a definição de 'prisma' daqui
+    private readonly assignorService: AssignorService,
+  ) {
+    super(prisma, 'Payable');
 
-  async findAll() {
-    // Implementação para buscar todos os payables
+    this.refPrisma = prisma;
   }
 
-  async findOne(id: Pick<CreatePayableDto, 'id'>['id']): Promise<Payable> {
-    const payable = await this.prisma.payable.findUnique({
-      where: { id },
-    });
+  async create(data: Omit<PayableDto, 'id'>): Promise<Payable> {
+    await this.assignorService.findOne(data.assignorId);
 
-    if (!payable) {
-      throw new Error('Payable not found');
-    }
-
-    return payable;
-  }
-
-  async create(data: Omit<CreatePayableDto, 'id'>): Promise<Payable> {
-    await this.assignor.findOne(data.assignorId);
-
-    return await this.prisma.payable.create({
+    return await this.refPrisma.payable.create({
       data,
     });
-  }
-
-  async update() {
-    // Implementação para atualizar um payable existente
-  }
-
-  async updatePartial() {
-    // Implementação para atualizar parcialmente um payable existente
-  }
-
-  async remove() {
-    // Implementação para remover um payable por ID
   }
 }
