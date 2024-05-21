@@ -10,8 +10,17 @@ export class PayableService {
     private readonly assignor: AssignorService,
   ) {}
 
-  async createPayable(data: CreatePayableDto): Promise<Payable> {
-    const assignor = await this.assignor.findOneAssignor({
+  async findAll() {
+    // Implementação para buscar todos os payables
+  }
+
+  async findOne(id: Pick<CreatePayableDto, 'id'>['id']): Promise<Payable> {
+    return await this.prisma.payable.findUnique({
+      where: { id },
+    });
+  }
+  async create(data: CreatePayableDto): Promise<Payable> {
+    const assignor = await this.assignor.findOne({
       where: { id: data.assignorId },
     });
 
@@ -24,9 +33,15 @@ export class PayableService {
     });
   }
 
-  async findOne(id: Pick<CreatePayableDto, 'id'>['id']): Promise<Payable> {
-    return await this.prisma.payable.findUnique({
-      where: { id },
-    });
+  async update() {
+    // Implementação para atualizar um payable existente
+  }
+
+  async updatePartial() {
+    // Implementação para atualizar parcialmente um payable existente
+  }
+
+  async remove() {
+    // Implementação para remover um payable por ID
   }
 }

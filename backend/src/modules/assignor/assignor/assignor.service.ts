@@ -5,15 +5,28 @@ import { PrismaService } from 'src/config/prisma.service';
 export class AssignorService {
   constructor(private prisma: PrismaService) {}
 
-  async createAssignor(data: Prisma.AssignorCreateInput): Promise<Assignor> {
+  async findAll() {
+    // Implementação para buscar todos os payables
+  }
+
+  async findOne(data: Prisma.AssignorFindUniqueArgs): Promise<Assignor> {
+    return await this.prisma.assignor.findUnique(data);
+  }
+  async create(data: Prisma.AssignorCreateInput): Promise<Assignor> {
     return await this.prisma.assignor.create({
       data,
     });
   }
 
-  async findOneAssignor(
-    data: Prisma.AssignorFindUniqueArgs,
-  ): Promise<Assignor> {
-    return await this.prisma.assignor.findUnique(data);
+  async update() {
+    // Implementação para atualizar um payable existente
+  }
+
+  async updatePartial() {
+    // Implementação para atualizar parcialmente um payable existente
+  }
+
+  async remove() {
+    // Implementação para remover um payable por ID
   }
 }

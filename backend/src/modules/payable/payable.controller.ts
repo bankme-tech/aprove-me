@@ -12,7 +12,7 @@ export class PayableController {
   @Post('/integrations/payable')
   @HttpCode(201)
   async create(@Body() body: CreatePayableDto): Promise<Payable> {
-    return await this.payableService.createPayable(body);
+    return await this.payableService.create(body);
   }
 
   @Get('/integrations/payable/:id')
