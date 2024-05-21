@@ -3,6 +3,7 @@ import { RegisterAssignorService } from './register-assignor.service';
 import { IAssignorRepository } from '../../repositories/interfaces/assignor.repository-interface';
 import { InMemoryAssignorRepository } from '../../repositories/in-memory/assignor.repository';
 import { InvalidEntityEntry } from '~/common/exceptions/invalid-entity-entry.exception';
+import { AssignorEntity } from '../../entities/assignor.entity';
 
 describe('RegisterAssignorService', () => {
   let service: RegisterAssignorService;
@@ -34,6 +35,8 @@ describe('RegisterAssignorService', () => {
     });
 
     expect(result.isRight()).toBeTruthy();
+
+    expect(result.value).toBeInstanceOf(AssignorEntity);
 
     expect(repository.items).toEqual(
       expect.arrayContaining([

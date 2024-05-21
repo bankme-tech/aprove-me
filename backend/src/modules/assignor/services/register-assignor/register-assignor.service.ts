@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import type { AssignorPersistence } from '~/common/types/assignor.types';
 import { type Either, left, right } from '~/common/utils/either';
 import { AssignorEntity } from '../../entities/assignor.entity';
 import { IAssignorRepository } from '../../repositories/interfaces/assignor.repository-interface';
@@ -11,7 +10,7 @@ interface RequestData {
   phone: string;
 }
 
-type ResponseData = Either<Error, AssignorPersistence>;
+type ResponseData = Either<Error, AssignorEntity>;
 
 @Injectable()
 export class RegisterAssignorService {
@@ -22,8 +21,8 @@ export class RegisterAssignorService {
 
     if (assignorOrError.isLeft()) return left(assignorOrError.value);
 
-    const assignor = await this.repository.create(assignorOrError.value);
+    await this.repository.create(assignorOrError.value);
 
-    return right(assignor);
+    return right(assignorOrError.value);
   }
 }

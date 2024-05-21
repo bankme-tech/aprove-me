@@ -8,6 +8,7 @@ import {
 import { RegisterAssignorRequestSchema } from './request.schema';
 import { RegisterAssignorService } from '../../services/register-assignor/register-assignor.service';
 import { InvalidEntityEntry } from '~/common/exceptions/invalid-entity-entry.exception';
+import { ResponsePresenter } from './response.presenter';
 
 @Controller('integrations/assignor')
 export class RegisterAssignorController {
@@ -25,6 +26,6 @@ export class RegisterAssignorController {
       }
     }
 
-    return result.value;
+    return ResponsePresenter.toHTTP(result.value);
   }
 }

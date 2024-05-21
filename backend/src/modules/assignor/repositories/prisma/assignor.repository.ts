@@ -1,4 +1,3 @@
-import type { AssignorPersistence } from '~/common/types/assignor.types';
 import type { AssignorEntity } from '../../entities/assignor.entity';
 import { IAssignorRepository } from '../interfaces/assignor.repository-interface';
 import { Injectable } from '@nestjs/common';
@@ -9,12 +8,10 @@ import { AssignorMapper } from '../../mappers/assignor.mapper';
 export class PrismaAssignorRepository implements IAssignorRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(assignor: AssignorEntity): Promise<AssignorPersistence> {
+  async create(assignor: AssignorEntity): Promise<void> {
     const entity = AssignorMapper.toPersistence(assignor);
 
     await this.prisma.assignor.create({ data: entity });
-
-    return entity;
   }
 
   async findById(id: string): Promise<AssignorEntity | null> {

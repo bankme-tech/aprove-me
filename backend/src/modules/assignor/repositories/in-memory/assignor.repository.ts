@@ -8,12 +8,10 @@ import { AssignorMapper } from '../../mappers/assignor.mapper';
 export class InMemoryAssignorRepository implements IAssignorRepository {
   items: AssignorPersistence[] = [];
 
-  async create(assignor: AssignorEntity): Promise<AssignorPersistence> {
+  async create(assignor: AssignorEntity): Promise<void> {
     const entity = AssignorMapper.toPersistence(assignor);
 
     this.items.push(entity);
-
-    return entity;
   }
 
   async findById(id: string): Promise<AssignorEntity | null> {
