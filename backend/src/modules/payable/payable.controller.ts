@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
-import { ApiParam } from '@nestjs/swagger';
+import { ApiBody, ApiParam, OmitType, PickType } from '@nestjs/swagger';
 import { Payable } from '@prisma/client';
 import { CreatePayableDto } from './payable.dto';
 import { PayableService } from './payable.service';
@@ -10,16 +10,21 @@ export class PayableController {
 
   // TODO: test assertions functions
   @Post('/integrations/payable')
+  @ApiBody({ type: OmitType(CreatePayableDto, ['id']) })
   @HttpCode(201)
-  async create(@Body() body: CreatePayableDto): Promise<Payable> {
+  async create(@Body() body: Omit<CreatePayableDto, 'id'>): Promise<Payable> {
     return await this.payableService.create(body);
   }
 
   @Get('/integrations/payable/:id')
-  @ApiParam({ name: 'id', type: 'string', description: 'ID do payable' })
+  @ApiParam({
+    name: 'id',
+    type: PickType(CreatePayableDto, ['id'])['id'],
+    description: 'ID do payable',
+  })
   async getOne(
     @Param('id') id: Pick<CreatePayableDto, 'id'>['id'],
   ): Promise<Payable> {
-    return this.payableService.findOne(id);
+    return await this.payableService.findOne(id);
   }
 }

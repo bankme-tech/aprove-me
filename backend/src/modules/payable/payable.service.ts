@@ -19,7 +19,8 @@ export class PayableService {
       where: { id },
     });
   }
-  async create(data: CreatePayableDto): Promise<Payable> {
+
+  async create(data: Omit<CreatePayableDto, 'id'>): Promise<Payable> {
     const assignor = await this.assignor.findOne({
       where: { id: data.assignorId },
     });
