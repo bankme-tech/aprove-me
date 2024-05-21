@@ -1,10 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PayableService } from './payable.service';
-// import { Test, TestingModule } from '@nestjs/testing';
-// import { PayableService } from './payable.service';
 import { PayableRepository } from './repository/repository.service';
 import { CreatePayableAssignorDto } from './payable.dto';
-import { Payable } from '@prisma/client';
 
 // all the test made here will be only to verify if the service is returning the repository content due to the simplicity of the project
 describe('basic CRUD operation (payable)', () => {
