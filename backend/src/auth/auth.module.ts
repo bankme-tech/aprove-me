@@ -14,7 +14,7 @@ import { LoginValidationMiddleware } from './middlewares/login-validation.middle
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '10m' },
+      signOptions: { expiresIn: '60m' },
     }),
   ],
   controllers: [AuthController],
@@ -22,6 +22,6 @@ import { LoginValidationMiddleware } from './middlewares/login-validation.middle
 })
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoginValidationMiddleware).forRoutes('login');
+    consumer.apply(LoginValidationMiddleware).forRoutes('integrations/auth');
   }
 }

@@ -3,13 +3,24 @@ import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import PayableRepository from './repositories/payable.repository';
 import { Payable } from './entities/payable.entity';
+import AssignorRepository from 'src/assignor/repositories/assignor.repository';
 
 @Injectable()
 export class PayableService {
-  constructor(private readonly payableRepository: PayableRepository) {}
+  constructor(
+    private readonly payableRepository: PayableRepository,
+    private readonly assignorRepository: AssignorRepository,
+  ) {}
 
   async create(createPayableDto: CreatePayableDto): Promise<Payable> {
-    //TODO: Find the assignor by ID
+    const assignor = await this.assignorRepository.findOne(
+      createPayableDto.assignorId,
+    );
+    if (!assignor) {
+      throw new NotFoundException(
+        `Assignor with id ${createPayableDto.assignorId} not found`,
+      );
+    }
 
     return await this.payableRepository.create(createPayableDto);
   }

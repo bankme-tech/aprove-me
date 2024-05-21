@@ -25,6 +25,7 @@ export class PrismaPayableRepository extends PayableRepository {
   async findOne(id: string): Promise<Payable> {
     return this.prisma.payable.findUnique({
       where: { id },
+      include: { assignor: true },
     });
   }
 
