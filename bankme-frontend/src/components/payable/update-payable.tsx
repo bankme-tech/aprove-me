@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import AssignorCombobox from "./assignor-combobox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Payable, updatePayable } from "@/services/payable";
+import { convertIsoToYyyyMmDd } from "@/utils/date-formatter";
 
 const dateSchema = z.coerce.date();
 
@@ -44,10 +46,14 @@ export default function UpdatePayableForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       value: payable.value,
-      emissionDate: payable.emissionDate,
+      emissionDate: convertIsoToYyyyMmDd(payable.emissionDate),
       assignorId: payable.assignorId,
     },
   });
+
+  const selectAssignor = (value: string) => {
+    form.setValue("assignorId", value);
+  };
 
   const queryClient = useQueryClient();
   const { mutate: updatePayableMutation } = useMutation({
@@ -71,7 +77,13 @@ export default function UpdatePayableForm({
 
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog
+        open={open}
+        onOpenChange={(value) => {
+          form.reset();
+          onOpenChange(value);
+        }}
+      >
         <DialogContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -105,11 +117,12 @@ export default function UpdatePayableForm({
                 control={form.control}
                 name="assignorId"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Assignor ID</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Assignor</FormLabel>
+                    <AssignorCombobox
+                      fieldValue={field.value}
+                      selectValue={selectAssignor}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}
