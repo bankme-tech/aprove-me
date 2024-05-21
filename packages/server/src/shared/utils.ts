@@ -1,6 +1,8 @@
 import { Err, Ok } from './../types/either';
 import { Result } from 'src/types/either';
 import { MONEY_EQUIVALENT_IN_CENTS } from './constants';
+import { ZodError } from 'zod';
+import { CustomError } from 'src/validations/errors';
 
 export function get_env_var(name: string, defaultValue?: string) {
   const value = process.env[name];
@@ -27,4 +29,11 @@ export function to_money(cents: number): Result<Error, number> {
   }
   const money = (cents / MONEY_EQUIVALENT_IN_CENTS).toFixed(2);
   return Ok(Number(money));
+}
+
+export function is_internal_error(error: Error): boolean {
+  if (error instanceof ZodError || error instanceof CustomError) {
+    return true;
+  }
+  return false;
 }
