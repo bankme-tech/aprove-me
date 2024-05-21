@@ -1,9 +1,11 @@
+import Link from "next/link";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { buttonVariants } from "@/components/ui/button";
 import { Payable } from "@/services/payable";
 import { formatDate } from "@/utils/date-formatter";
 
@@ -41,6 +43,13 @@ export default function PayableDetails({ open, onOpenChange, payable }: Props) {
             <strong>Assignor ID:</strong>
             <span>{payable.assignorId}</span>
           </div>
+
+          <Link
+            href={`/assignor/${payable.assignorId}`}
+            className={buttonVariants({ variant: "link", className: 'w-max mx-auto' })}
+          >
+            See assignor details
+          </Link>
         </div>
       </DialogContent>
     </Dialog>
