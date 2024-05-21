@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import AssignorCombobox from "./assignor-combobox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPayable } from "@/services/payable";
 
@@ -21,14 +22,17 @@ const dateSchema = z.coerce.date();
 
 const formSchema = z.object({
   value: z.coerce.number(),
-  emissionDate: z.string().refine((arg) => {
-    const isValid = dateSchema.safeParse(arg);
-    if (isValid.success) {
-      return true;
-    }
-    return false;
-  }),
-  assignorId: z.string().uuid(),
+  emissionDate: z.string().refine(
+    (arg) => {
+      const isValid = dateSchema.safeParse(arg);
+      if (isValid.success) {
+        return true;
+      }
+      return false;
+    },
+    { message: "invalid date" }
+  ),
+  assignorId: z.string(),
 });
 
 export default function CreatePayableForm() {
@@ -43,7 +47,12 @@ export default function CreatePayableForm() {
     },
   });
 
+  const selectAssignor = (value: string) => {
+    form.setValue("assignorId", value);
+  };
+
   const queryClient = useQueryClient();
+
   const { mutate: createPayableMutation } = useMutation({
     mutationFn: createPayable,
     onSuccess() {
@@ -60,7 +69,13 @@ export default function CreatePayableForm() {
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog
+        open={open}
+        onOpenChange={(value) => {
+          form.reset();
+          setOpen(value);
+        }}
+      >
         <DialogTrigger className={buttonVariants()}>
           Create new payable
         </DialogTrigger>
@@ -97,17 +112,19 @@ export default function CreatePayableForm() {
                 control={form.control}
                 name="assignorId"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Assignor ID</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Assignor</FormLabel>
+                    <AssignorCombobox
+                      fieldValue={field.value}
+                      selectValue={selectAssignor}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
-              <Button type="submit">Submit</Button>
+              <div className="flex w-full justify-end">
+                <Button type="submit">Submit</Button>
+              </div>
             </form>
           </Form>
         </DialogContent>
