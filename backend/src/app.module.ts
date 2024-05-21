@@ -4,10 +4,12 @@ import { AppController } from './app.controller';
 import { ResponseInterceptor } from './app.interceptors';
 import { AppService } from './app.service';
 import { AssignorModule } from './modules/assignor/assignor.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { PayableModule } from './modules/payable/payable.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
-  imports: [PayableModule, AssignorModule],
+  imports: [PayableModule, AssignorModule, AuthModule, UserModule],
   controllers: [AppController],
   providers: [
     AppService,
