@@ -18,4 +18,5 @@ WORKDIR /app
 RUN pnpm build
 
 WORKDIR /app/apps/api
+EXPOSE 3000
 CMD [ "node", "dist/main.js" ]
