@@ -14,9 +14,9 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    test('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  test('should return API health check mesage', () => {
+    expect(appController.healthCheck()).toEqual({
+      message: 'Service is up and running',
     });
   });
 });
