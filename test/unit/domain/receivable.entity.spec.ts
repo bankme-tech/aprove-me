@@ -4,7 +4,7 @@ import { UniqueEntityIdVO } from '../../../src/domain/common/value-object';
 import { ReceivableEntity } from '../../../src/domain/receivable.entity';
 
 describe('# Test de Unidade - ReceivableEntity', () => {
-  it('deve criar um recibivel quando chamado metodo "create"', () => {
+  it('deve criar um recebível quando chamado metodo "create"', () => {
     const expectedAssignor = new UniqueEntityIdVO();
     const expectedEmissionDate = faker.date.recent();
     const expectedValue = faker.number.int({ min: 11111, max: 99999 });
@@ -31,7 +31,7 @@ describe('# Test de Unidade - ReceivableEntity', () => {
     })
   });
 
-  it('deve carregar um recebivel corretamente', () => {
+  it('deve carregar um recebível corretamente', () => {
     const expectedId = new UniqueEntityIdVO();
     const expectedAssignor = new UniqueEntityIdVO();
     const expectedEmissionDate = faker.date.recent();
