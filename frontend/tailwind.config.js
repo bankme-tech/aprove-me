@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      fontSize: {
+        title: "clamp(24px, 8vw, 48px)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
