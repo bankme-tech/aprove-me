@@ -1,0 +1,88 @@
+@baseUrl = http://localhost:3000
+@authToken = {{authenticate.response.body.accessToken}}
+
+
+# @name authenticate
+POST {{baseUrl}}/integrations/auth
+Content-Type: application/json
+
+{
+    "login": "aprovame",
+    "password": "aprovame"
+}
+
+###
+
+# @name register_assignor
+POST {{baseUrl}}/integrations/assignor
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+	"name": "John Doe",
+  	"document": "123.456.789-00",
+  	"email": "johndoe@example.com",
+  	"phone": "+55 11 90000-0000"
+}
+
+###
+
+# @name get_assignors
+GET {{baseUrl}}/integrations/assignors
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name find_assignor_by_id
+GET {{baseUrl}}/integrations/assignors/:id
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name register_payable
+POST {{baseUrl}}/integrations/payable/
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+	"assignor": "04bbaaee-b1e7-442f-a32a-ed83daa03060",
+  	"emissionDate": "2024-05-21T06:28:25.545Z",
+  	"value": 10.90
+}
+
+###
+
+# @name get_payables
+GET {{baseUrl}}/integrations/payables
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name find_payable_by_id
+GET {{baseUrl}}/integrations/payable/:id
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name edit_payable
+PUT {{baseUrl}}/integrations/payable/:id
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+	"assignor": "04bbaaee-b1e7-442f-a32a-ed83daa03060",
+  	"emissionDate": "2024-05-21T06:28:25.545Z",
+  	"value": 10.90
+}
+
+###
+
+# @name delete_payable
+DELETE {{baseUrl}}/integrations/payable/:id
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
