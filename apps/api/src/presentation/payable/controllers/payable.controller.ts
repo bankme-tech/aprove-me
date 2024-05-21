@@ -4,10 +4,12 @@ import {
   Delete,
   Get,
   Param,
+  ParseArrayPipe,
   Patch,
   Post,
 } from '@nestjs/common';
 import {
+  ApiBody,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
@@ -22,6 +24,7 @@ import { PayableByIdPipe } from '@application/payable/pipes/payable-by-id.pipe';
 import { FindOnePayableUseCase } from '@application/payable/usecases/find-one-payable-by-id.usecase';
 import { DeleteOnePayableUseCase } from '@application/payable/usecases/delete-one-payable.usecase';
 import { UpdateOnePayableUseCase } from '@application/payable/usecases/update-one-payable.usecase';
+import { CreateBulkPayableUseCase } from '@application/payable/usecases/create-bulk-payable.usecase';
 
 import { CreatePayableDto } from '@presentation/payable/dtos/create-payable.dto';
 import { PayablePresenter } from '@presentation/payable/presenters/payable.presenter';
@@ -32,6 +35,7 @@ import { UpdatePayableDto } from '@presentation/payable/dtos/update-payable.dto'
 export class PayableController {
   constructor(
     private readonly _createOnePayableUseCase: CreateOnePayableUseCase,
+    private readonly _createBulkPayableUseCase: CreateBulkPayableUseCase,
     private readonly _findOnePayableUseCase: FindOnePayableUseCase,
     private readonly _updateOnePayableUseCase: UpdateOnePayableUseCase,
     private readonly _deleteOnePayableUseCase: DeleteOnePayableUseCase,
@@ -43,6 +47,14 @@ export class PayableController {
   async create(@Body() dto: CreatePayableDto): Promise<PayablePresenter> {
     const result = await this._createOnePayableUseCase.create(dto);
     return new PayablePresenter(result);
+  }
+
+  @ApiOperation({ summary: 'Creates many new payable' })
+  @ApiOkResponse()
+  @ApiBody({ type: CreatePayableDto, isArray: true })
+  @Post('batch')
+  async batch(@Body(ParseArrayPipe) dtos: CreatePayableDto[]): Promise<void> {
+    await this._createBulkPayableUseCase.create(dtos);
   }
 
   @ApiOperation({ summary: 'Retrieves a single payable given its id' })

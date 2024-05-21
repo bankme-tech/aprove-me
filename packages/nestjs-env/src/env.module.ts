@@ -53,7 +53,7 @@ export class EnvModule {
    * @returns an object that represents the variables and it values.
    */
   private static validate(config: Record<string, unknown>): IEnv {
-    let res = {};
+    let res = config;
     for (const classRef of EnvModule._configs) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const validatedConfig: any = plainToClass(classRef, config, {

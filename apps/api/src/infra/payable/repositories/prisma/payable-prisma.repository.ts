@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
 import { IOption, toOption } from '@bankme/monads';
-
 import { IPayableConstructor, Payable } from '@bankme/domain';
 
 import { IPayableRepository } from '@infra/payable/repositories/payable.repository';

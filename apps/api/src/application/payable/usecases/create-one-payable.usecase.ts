@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { ICreatePayable } from '@domain/payable/interfaces/create-payable.interface';
 import { Payable } from '@bankme/domain';
+
+import { ICreatePayable } from '@domain/payable/interfaces/create-payable.interface';
 
 import {
   ASSIGNOR_REPOSITORY,

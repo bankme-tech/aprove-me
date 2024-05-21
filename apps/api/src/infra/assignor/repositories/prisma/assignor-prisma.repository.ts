@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
 import { IOption, toOption } from '@bankme/monads';
-
 import { Assignor, IAssignorConstructor } from '@bankme/domain';
 
 import { PrismaService } from '@infra/prisma/services/prisma.service';

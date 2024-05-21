@@ -13,6 +13,5 @@ RUN pnpm install
 RUN npx prisma generate
 RUN pnpm build
 
-WORKDIR /app/apps/api
-EXPOSE 3000
+WORKDIR /app/apps/bulk-payable-service
 CMD [ "node", "dist/main.js" ]

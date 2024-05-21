@@ -6,18 +6,13 @@ services:
     ports:
       - '3000:3000'
 
-  kafka:
-    image: 'bitnami/kafka:latest'
-    environment:
-      - KAFKA_CFG_NODE_ID=0
-      - KAFKA_CFG_PROCESS_ROLES=controller,broker
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
-      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+  redis:
+    image: redis
+    command: redis-server
     ports:
-      - '9092:9092'
+      - '6379:6379'
 
-networks:
-  bankme:
-    driver: bridge
+  bulk-payable-service:
+    build:
+      context: ./
+      dockerfile: ./apps/bulk-payable-service/Dockerfile

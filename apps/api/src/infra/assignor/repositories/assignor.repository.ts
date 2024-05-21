@@ -1,5 +1,4 @@
 import { IOption } from '@bankme/monads';
-
 import { Assignor, IAssignorConstructor } from '@bankme/domain';
 import { Id } from '@bankme/domain';
 
