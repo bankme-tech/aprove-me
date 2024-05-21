@@ -1,7 +1,7 @@
-import { CpfVO, EmailVO, PhoneVO, UniqueEntityIdVO } from "./common/value-object";
+import { CpfVO, EmailVO, PhoneVO, UniqueEntityIdVO } from "../common/value-object";
 import { Entity } from "./entity";
-import { CnpjVO } from "./common/value-object/cnpj.vo";
-import { InvalidFieldError } from "./common/exception";
+import { CnpjVO } from "../common/value-object/cnpj.vo";
+import { InvalidFieldError } from "../common/exception";
 
 export type AssignorProps = {
   id?: string;

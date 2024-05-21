@@ -1,4 +1,4 @@
-import { AssignorEntity } from '../../../src/domain/assignor.entity';
+import { AssignorEntity } from '../../../src/domain/entity';
 import { CnpjVO, CpfVO, EmailVO, PhoneVO, UniqueEntityIdVO } from '../../../src/domain/common/value-object';
 
 describe('Teste de Unidade - AssignorEntity', () => {

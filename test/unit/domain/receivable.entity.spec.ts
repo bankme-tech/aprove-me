@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import { UniqueEntityIdVO } from '../../../src/domain/common/value-object';
-import { ReceivableEntity } from '../../../src/domain/receivable.entity';
+import { ReceivableEntity } from '../../../src/domain/entity';
 
 describe('# Test de Unidade - ReceivableEntity', () => {
   it('deve criar um recebível quando chamado metodo "create"', () => {

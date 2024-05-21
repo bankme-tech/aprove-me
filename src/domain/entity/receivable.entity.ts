@@ -1,4 +1,4 @@
-import { UniqueEntityIdVO } from "./common/value-object";
+import { UniqueEntityIdVO } from "../common/value-object";
 import { Entity } from "./entity";
 
 export type ReceivableProps = {
