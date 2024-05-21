@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { hash } from 'bcrypt';
+import { hash } from 'bcryptjs';
 import { AssignorMapper } from '~/modules/assignor/mappers/assignor.mapper';
 import { makeAssignor } from '~/modules/assignor/test/factories/make-assignor';
 
