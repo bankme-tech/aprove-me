@@ -23,4 +23,10 @@ export class InMemoryPayableRepository implements IPayableRepository {
   async findAll(): Promise<PayableEntity[]> {
     return this.items.map(PayableMapper.toDomain);
   }
+
+  async update(assignor: PayableEntity): Promise<void> {
+    const entityIndex = this.items.findIndex((item) => item.id);
+
+    this.items[entityIndex] = PayableMapper.toPersistence(assignor);
+  }
 }

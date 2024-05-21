@@ -37,4 +37,18 @@ export class PrismaPayableRepository implements IPayableRepository {
 
     return entities.map(PayableMapper.toDomain);
   }
+
+  async update(payable: PayableEntity): Promise<void> {
+    const entity = PayableMapper.toPersistence(payable);
+
+    await this.prisma.payable.update({
+      where: { id: payable.id },
+      data: {
+        id: entity.id,
+        emissionDate: entity.emissionDate,
+        value: entity.value,
+        assignorId: entity.assignorId,
+      },
+    });
+  }
 }
