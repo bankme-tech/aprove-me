@@ -51,4 +51,10 @@ export class PrismaPayableRepository implements IPayableRepository {
       },
     });
   }
+
+  async delete(payable: PayableEntity): Promise<void> {
+    await this.prisma.payable.delete({
+      where: { id: payable.id },
+    });
+  }
 }

@@ -29,4 +29,8 @@ export class InMemoryPayableRepository implements IPayableRepository {
 
     this.items[entityIndex] = PayableMapper.toPersistence(assignor);
   }
+
+  async delete(assignor: PayableEntity): Promise<void> {
+    this.items = this.items.filter((item) => item.id !== assignor.id);
+  }
 }
