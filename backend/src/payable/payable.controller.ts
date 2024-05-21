@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { Prisma } from '@prisma/client';
 import { CreatePayableAssignorDto } from './payable.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('integrations/payable')
 export class PayableController {
@@ -12,6 +13,7 @@ export class PayableController {
     return this.payableService.create(createPayableDto);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.payableService.findAll();
