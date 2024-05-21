@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateAssignorDto } from './dtos/create-assignor.dto';
+import { CreateAssignorDto, UpdateAssignorDto } from './dtos';
 
 @Injectable()
 export class AssignorService {
@@ -42,6 +42,20 @@ export class AssignorService {
     await this.prisma.assignor.delete({
       where: {
         id,
+      },
+    });
+  }
+
+  update(id: string, { document, email, name, phone }: UpdateAssignorDto) {
+    return this.prisma.assignor.update({
+      where: {
+        id,
+      },
+      data: {
+        ...(document ? { document } : {}),
+        ...(email ? { email } : {}),
+        ...(name ? { name } : {}),
+        ...(phone ? { phone } : {}),
       },
     });
   }

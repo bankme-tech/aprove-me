@@ -5,15 +5,17 @@ import {
   Get,
   HttpCode,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { AssignorService } from './assignor.service';
 import { ZodValidationPipe } from 'src/zod-validation/zod-validation.pipe';
-import { z } from 'zod';
 import {
   CreateAssignorDto,
   createAssignorSchema,
-} from './dtos/create-assignor.dto';
+  UpdateAssignorDto,
+  updateAssignorSchema,
+} from './dtos';
 import { uuidSchema } from 'src/common/zod';
 
 @Controller('/integrations/assignor')
@@ -39,5 +41,15 @@ export class AssignorController {
   @HttpCode(204)
   delete(@Param('id', new ZodValidationPipe(uuidSchema)) id: string) {
     return this.assignorService.delete(id);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id', new ZodValidationPipe(uuidSchema))
+    id: string,
+    @Body(new ZodValidationPipe(updateAssignorSchema))
+    updateAssignorDto: UpdateAssignorDto,
+  ) {
+    return this.assignorService.update(id, updateAssignorDto);
   }
 }
