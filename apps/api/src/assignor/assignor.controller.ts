@@ -15,7 +15,7 @@ import {
   createAssignorSchema,
   UpdateAssignorDto,
   updateAssignorSchema,
-} from './dtos';
+} from './dto';
 import { uuidSchema } from '../common/zod';
 
 @Controller('/integrations/assignor')

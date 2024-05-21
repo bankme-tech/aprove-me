@@ -8,15 +8,15 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ZodValidationPipe } from 'src/zod-validation/zod-validation.pipe';
+import { ZodValidationPipe } from '../zod-validation/zod-validation.pipe';
 import {
   CreatePayableDto,
   createPayableSchema,
   UpdatePayableDto,
   updatePayableSchema,
-} from './dtos';
+} from './dto';
 import { PayableService } from './payable.service';
-import { uuidSchema } from 'src/common/zod';
+import { uuidSchema } from '../common/zod';
 
 @Controller('integrations/payable')
 export class PayableController {

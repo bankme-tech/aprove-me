@@ -1,8 +1,8 @@
-import { uuidSchema } from 'src/common/zod';
 import { z } from 'zod';
+import { uuidSchema } from '../../common/zod';
 
 export const createPayableSchema = z.object({
-  value: z.coerce.number(),
+  value: z.coerce.number().min(0.1),
   emissionDate: z.string().date(),
   assignorId: uuidSchema,
 });

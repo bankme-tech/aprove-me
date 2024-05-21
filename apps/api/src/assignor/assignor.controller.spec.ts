@@ -3,7 +3,7 @@ import { AssignorController } from './assignor.controller';
 import { AssignorService } from './assignor.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { faker } from '@faker-js/faker';
-import { CreateAssignorDto, createAssignorSchema } from './dtos';
+import { CreateAssignorDto, createAssignorSchema } from './dto';
 
 describe('AssignorController', () => {
   let controller: AssignorController;
@@ -44,6 +44,7 @@ describe('AssignorController', () => {
   });
 
   afterAll(async () => {
+    await prisma.$executeRaw`DELETE FROM "Assignor"`;
     await prisma.$disconnect();
   });
 
