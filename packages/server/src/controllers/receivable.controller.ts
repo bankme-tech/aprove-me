@@ -1,7 +1,7 @@
 import { ReceivableService } from '../services/receivable.service';
 import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
 
-@Controller()
+@Controller('receivable')
 export class ReceivableController {
   private readonly receivableService: ReceivableService;
   constructor(receivableService: ReceivableService) {
