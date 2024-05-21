@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
 
 type PayableCardProps = {

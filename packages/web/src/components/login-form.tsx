@@ -1,5 +1,9 @@
 import { z } from "zod";
+import api from "@/api/api";
+import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +15,9 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
+  const router = useRouter();
+  const { updateSessionToken } = useAuth();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -19,8 +26,19 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const { data } = await api.post<{ token: string }>("/auth", values);
+
+      updateSessionToken(data.token)
+
+      router.push("/payables");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        form.setError("login", { message: error.response?.data.message[0] });
+        form.setError("password", { message: error.response?.data.message[1] });
+      }
+    }
   }
 
   return (
