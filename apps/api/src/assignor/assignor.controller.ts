@@ -9,14 +9,14 @@ import {
   Post,
 } from '@nestjs/common';
 import { AssignorService } from './assignor.service';
-import { ZodValidationPipe } from 'src/zod-validation/zod-validation.pipe';
+import { ZodValidationPipe } from '../zod-validation/zod-validation.pipe';
 import {
   CreateAssignorDto,
   createAssignorSchema,
   UpdateAssignorDto,
   updateAssignorSchema,
 } from './dtos';
-import { uuidSchema } from 'src/common/zod';
+import { uuidSchema } from '../common/zod';
 
 @Controller('/integrations/assignor')
 export class AssignorController {

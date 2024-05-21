@@ -8,14 +8,7 @@ export const documentSchema = z
   .string()
   .refine((value) => isValidCPF(value) || isValidCNPJ(value));
 
-export const phoneSchema = z.string().transform((value, ctx) => {
-  const { phoneNumber, isValid } = phoneValidator(value, { country: 'BR' });
-  if (!isValid) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: 'invalid phone number',
-    });
-  }
-
-  return phoneNumber;
+export const phoneSchema = z.string().refine((value) => {
+  const { isValid } = phoneValidator(value, { country: 'BR' });
+  return isValid;
 });

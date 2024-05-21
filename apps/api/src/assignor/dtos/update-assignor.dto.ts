@@ -1,5 +1,5 @@
-import { documentSchema, phoneSchema } from 'src/common/zod';
 import { z } from 'zod';
+import { documentSchema, phoneSchema } from '../../common/zod';
 
 export const updateAssignorSchema = z.object({
   document: documentSchema.optional(),
