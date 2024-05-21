@@ -30,7 +30,7 @@ export default function Header() {
           </button>}
           {user ? <Link href="/profile" className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-10 py-3 focus:outline-none">Meu Perfil
           </Link> : 
-          <Link href="/auth" className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-10 py-3 focus:outline-none">Login
+          <Link href="/auth/login" className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-10 py-3 focus:outline-none">Login
           </Link> 
           }
         </div>
