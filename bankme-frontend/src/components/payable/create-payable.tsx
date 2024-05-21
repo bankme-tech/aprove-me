@@ -23,29 +23,13 @@ import {
 import AssignorCombobox from "./assignor-combobox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPayable } from "@/services/payable";
-
-const dateSchema = z.coerce.date();
-
-const formSchema = z.object({
-  value: z.coerce.number(),
-  emissionDate: z.string().refine(
-    (arg) => {
-      const isValid = dateSchema.safeParse(arg);
-      if (isValid.success) {
-        return true;
-      }
-      return false;
-    },
-    { message: "invalid date" }
-  ),
-  assignorId: z.string(),
-});
+import { payableSchema } from "@/schemas/payable-schema";
 
 export default function CreatePayableForm() {
   const [open, setOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof payableSchema>>({
+    resolver: zodResolver(payableSchema),
     defaultValues: {
       value: 0,
       emissionDate: "",
@@ -68,7 +52,7 @@ export default function CreatePayableForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  function onSubmit(data: z.infer<typeof payableSchema>) {
     const { assignorId, emissionDate, value } = data;
     createPayableMutation({ assignorId, emissionDate, value });
   }
@@ -86,9 +70,9 @@ export default function CreatePayableForm() {
           Create new payable
         </DialogTrigger>
         <DialogContent>
-        <DialogHeader>
-          <DialogTitle>New payable</DialogTitle>
-        </DialogHeader>
+          <DialogHeader>
+            <DialogTitle>New payable</DialogTitle>
+          </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField

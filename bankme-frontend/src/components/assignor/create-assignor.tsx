@@ -22,19 +22,13 @@ import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createAssignor } from "@/services/assignor";
-
-const formSchema = z.object({
-  document: z.string().min(1, { message: "document is required" }).max(30),
-  email: z.string().email().max(140),
-  phone: z.string().min(1, { message: "phone is required " }).max(20),
-  name: z.string().min(1, { message: "name is required" }).max(140),
-});
+import { assignorSchema } from "@/schemas/assignor-schema";
 
 export default function CreateAssignor() {
   const [open, setOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof assignorSchema>>({
+    resolver: zodResolver(assignorSchema),
     defaultValues: {
       document: "",
       email: "",
@@ -54,7 +48,7 @@ export default function CreateAssignor() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  function onSubmit(data: z.infer<typeof assignorSchema>) {
     const { document, email, name, phone } = data;
     createAssignorMutation({ document, email, name, phone });
   }

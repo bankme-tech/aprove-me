@@ -11,25 +11,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import AssignorCombobox from "./assignor-combobox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Payable, updatePayable } from "@/services/payable";
 import { convertIsoToYyyyMmDd } from "@/utils/date-formatter";
-
-const dateSchema = z.coerce.date();
-
-const formSchema = z.object({
-  value: z.coerce.number(),
-  emissionDate: z.string().refine((arg) => {
-    const isValid = dateSchema.safeParse(arg);
-    if (isValid.success) {
-      return true;
-    }
-    return false;
-  }),
-  assignorId: z.string().uuid(),
-});
+import { payableSchema } from "@/schemas/payable-schema";
 
 interface Props {
   payable: Payable;
@@ -42,8 +34,8 @@ export default function UpdatePayableForm({
   open,
   onOpenChange,
 }: Props) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof payableSchema>>({
+    resolver: zodResolver(payableSchema),
     defaultValues: {
       value: payable.value,
       emissionDate: convertIsoToYyyyMmDd(payable.emissionDate),
@@ -65,7 +57,7 @@ export default function UpdatePayableForm({
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  function onSubmit(data: z.infer<typeof payableSchema>) {
     const { assignorId, emissionDate, value } = data;
     updatePayableMutation({
       payableId: payable.id,
@@ -85,9 +77,9 @@ export default function UpdatePayableForm({
         }}
       >
         <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Update payable</DialogTitle>
-        </DialogHeader>
+          <DialogHeader>
+            <DialogTitle>Update payable</DialogTitle>
+          </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
