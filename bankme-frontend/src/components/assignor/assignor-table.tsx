@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import {
   Table,
   TableBody,
@@ -9,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetAllAssignor } from "@/hooks/useGetAllAssignor";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function AssignorTable() {
   const { data, isPending } = useGetAllAssignor();
@@ -37,6 +39,14 @@ export default function AssignorTable() {
             <TableCell>{assignor.email}</TableCell>
             <TableCell>{assignor.document}</TableCell>
             <TableCell>{assignor.phone}</TableCell>
+            <TableCell>
+              <Link
+                href={`/assignor/${assignor.id}`}
+                className={buttonVariants({ variant: "link" })}
+              >
+                Details
+              </Link>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
