@@ -4,7 +4,9 @@ export const fetchAPI = async (url: string, options?: RequestInit) => {
   // Token inválido ou expirado
 	if(response?.status === 401) {
 		localStorage.removeItem('accessToken');
+		window.location.href = '/login';
 	}
+	
 	if (!response?.ok) {
 		const errorBody = await response?.json(); // Ler o corpo da resposta como JSON
 		const errorMessage = errorBody.message; // Acessar a mensagem de erro
