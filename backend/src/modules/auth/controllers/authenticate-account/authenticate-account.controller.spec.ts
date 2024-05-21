@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthenticateAccountController } from './authenticate-account.controller';
-import { AuthenticateAccountService } from '../services/authenticate-account/authenticate-account.service';
+import { AuthenticateAccountService } from '../../services/authenticate-account/authenticate-account.service';
 import { HashProvider } from '~/common/providers/hash.provider';
-import { InMemoryAccountRepository } from '../repositories/in-memory/account.repository';
-import { IAccountRepository } from '../repositories/interfaces/account.repository-interface';
+import { InMemoryAccountRepository } from '../../repositories/in-memory/account.repository';
+import { IAccountRepository } from '../../repositories/interfaces/account.repository-interface';
 import { JwtModule } from '@nestjs/jwt';
 import { randomUUID } from 'node:crypto';
-import { makeAccount } from '../test/factories/make-account';
+import { makeAccount } from '../../test/factories/make-account';
 
 describe('AuthenticateAccountController', () => {
   let controller: AuthenticateAccountController;

@@ -6,7 +6,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { AuthenticateAccountRequestSchema } from './request.schema';
-import { AuthenticateAccountService } from '../services/authenticate-account/authenticate-account.service';
+import { AuthenticateAccountService } from '../../services/authenticate-account/authenticate-account.service';
 import { InvalidCredentials } from '~/common/exceptions/invalid-credentials.exception';
 import { NotFoundResource } from '~/common/exceptions/not-found-resource.exception';
 
