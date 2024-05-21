@@ -11,6 +11,7 @@
     "pnpm": "^9.0.0"
   },
   "scripts": {
+    "start:apps": "pnpm -r run start",
     "start:api": "pnpm --dir apps/api start",
     "start:api:dev": "pnpm --dir apps/api start:dev",
     "start:api:debug": "pnpm --dir apps/api start:debug",
