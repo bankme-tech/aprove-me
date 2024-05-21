@@ -1,49 +1,28 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
-type authContextType = {
-  user: boolean;
-  login: () => void;
-  logout: () => void;
-};
-
-const authContextDefaultValues: authContextType = {
-  user: false,
-  login: () => {},
-  logout: () => {},
-};
-
-const AuthContext = createContext<authContextType>(authContextDefaultValues);
-
-export function useAuth() {
-  return useContext(AuthContext);
+interface AuthContextType {
+  isLogged: boolean;
+  setIsLogged: (isLogged: boolean) => void;
 }
 
-type Props = {
-  children: ReactNode;
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthContextProvider = ({ children }: any) => {
+    const [isLogged, setIsLogged] = useState(false);
+
+    return (
+        <AuthContext.Provider value={{isLogged, setIsLogged }}>
+            {children}
+        </AuthContext.Provider>
+    )
 };
 
-export function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<boolean>(false);
-
-  const login = () => {
-      setUser(true);
-  };
-
-  const logout = () => {
-      setUser(false);
-  };
-
-  const value = {
-      user,
-      login,
-      logout,
-  };
-
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+export const useAuthContext = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuthContext must be used within an AuthContextProvider');
+  }
+  return context;
+};

@@ -1,19 +1,19 @@
 'use client';
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Header() {
-  const { user, logout } = useAuth();
+  const { isLogged, setIsLogged } = useAuthContext();
 
   const handleClick = () => {
-    logout();
+    setIsLogged(false);
     localStorage.clear();
   };
 
   useEffect(() =>{
-    console.log('Header useEffect', user);
+    console.log('Header useEffect', isLogged);
   });
 
   return(
@@ -25,11 +25,10 @@ export default function Header() {
       </div>
       <nav>
         <div className="flex items-center">
-          {user && <button onClick={ handleClick } className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 focus:outline-none">
+          {isLogged && <button onClick={ handleClick } className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-10 py-3 focus:outline-none">
             Sair
           </button>}
-          {user ? <Link href="/profile" className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-10 py-3 focus:outline-none">Meu Perfil
-          </Link> : 
+          {isLogged ? '' : 
           <Link href="/auth/login" className="bg-blue-600 text-white hover:bg-gray-200 font-medium rounded-lg text-sm px-4 lg:px-10 py-3 focus:outline-none">Login
           </Link> 
           }

@@ -1,14 +1,20 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export async function login(login: string, password: string){
-  const user = await axios.post('http://localhost:3000/integrations/auth', {
-    data: {
-      login,
-      password
-    }
-  });
+  try {
+    const user = await axios.post('http://localhost:3000/integrations/auth', {
+        login,
+        password
+    });
 
-  return user;
+    return user;
+  } catch (e: any) {
+    console.log(e);
+    const status = e.response ? e.response.data.statusCode : 'Network Error';
+    const message = e.response ? e.response.data.message : e.message;
+
+    return { status, message, data: '' };
+  }
 }
 
 export async function register(login: string, password: string){

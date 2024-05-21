@@ -1,14 +1,14 @@
 'use client'
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import { login as loginUser } from '@/services/auth'
-import { useAuth } from "@/context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 import Link from "next/link";
 
 export default function Login() {
-  const { login: contextLogin } = useAuth();
+  const { setIsLogged } = useAuthContext();
   const [isDisable, setIsDisable] = useState(true);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -18,7 +18,7 @@ export default function Login() {
   });
   const router = useRouter();
 
-  const minPasswordLength = 6;
+  const minPasswordLength = 5;
   const minLoginLength = 3;
 
   const buttonValidate = () => {
@@ -40,17 +40,18 @@ export default function Login() {
 
   const handleClick = async (e: any) => {
       const { login, password } = user;
-      try {
-        const request = await loginUser(login, password);
-        if (request.status === 200) {
-          saveUser(request.data.token.token);
-          contextLogin();
-          router.push('/');
-         } 
-      }
-      catch (e: any) { 
-        setIsError(true);
-        setErrorMessage(e.message);
+      const request = await loginUser(login, password);
+      if (request.status === 201) {
+        saveUser(request.data.token);
+        setIsLogged(true);
+        router.push('/');
+        return;
+      } 
+
+      setIsError(true);
+
+      if ('message' in request) {
+        setErrorMessage(request.message);
       }
   }
 
