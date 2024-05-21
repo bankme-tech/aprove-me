@@ -29,4 +29,22 @@ model Payable {
   emissionDate DateTime @default(now())
   assignorId   String
   assignor     Assignor @relation(fields: [assignorId], references: [id])
+  userPayables UserPayable[]
+}
+
+model User {
+  id       String   @id @default(uuid())
+  email    String   @unique
+  password String
+  userPayables UserPayable[]
+}
+
+model UserPayable { 
+  id         String  @id @default(uuid())
+  userId     String
+  payableId  String
+  user       User    @relation(fields: [userId], references: [id])
+  payable    Payable @relation(fields: [payableId], references: [id])
+
+  @@unique([userId, payableId])
 }
