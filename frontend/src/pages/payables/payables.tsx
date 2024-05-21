@@ -4,7 +4,7 @@ import { AddPayableDialog } from "@/pages/payables/components/addPayableDialog/a
 
 export const Payables = () => {
   return (
-    <main className="p-4 pt-20">
+    <main className="p-8 pt-16">
       <div className="flex justify-between w-full mb-2">
         <h1 className="text-title text-primary font-bold">Lista de pagáveis</h1>
 

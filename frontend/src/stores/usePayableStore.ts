@@ -1,17 +1,19 @@
 import { payableService } from "@/services/payables";
 import { Status } from "@/types/general";
-import {
-  FindAllPayables,
-  FindAllResponse,
-  PlayableTypes,
-} from "@/types/payables";
+import { FindAllResponse, PlayableTypes } from "@/types/payables";
 import { toast } from "sonner";
 import { create } from "zustand";
 
 interface PayableStoreTypes extends FindAllResponse {
   status: Status;
+  skip: number;
+  take: number;
+  currentPage: number;
+  increaseSkip: () => void;
+  decreaseSkip: () => void;
+  handleTake: (take: number) => void;
   createPayable: (createPayableData: PlayableTypes) => Promise<void>;
-  findAllPayables: (input: FindAllPayables) => Promise<void>;
+  findAllPayables: () => Promise<void>;
   editPayable: (
     editPayableData: PlayableTypes,
     payableId: string,
@@ -20,9 +22,30 @@ interface PayableStoreTypes extends FindAllResponse {
 }
 export const usePayableStore = create<PayableStoreTypes>()((set, get) => ({
   status: "idle",
+  skip: 0,
+  take: 5,
+  currentPage: 1,
   payables: [],
   totalPayables: 0,
   totalPages: 0,
+  increaseSkip: () => {
+    set((state) => ({
+      ...state,
+      currentPage: ++get().currentPage,
+      skip: get().currentPage > 1 ? --get().currentPage : 0,
+    }));
+  },
+
+  decreaseSkip: () => {
+    set((state) => ({
+      ...state,
+      currentPage: --get().currentPage,
+      skip: get().currentPage > 1 ? --get().currentPage : 0,
+    }));
+  },
+
+  handleTake: (take) => set((state) => ({ ...state, take })),
+
   createPayable: async (createPayableData) => {
     try {
       const payable = await payableService.create(createPayableData);
@@ -59,13 +82,14 @@ export const usePayableStore = create<PayableStoreTypes>()((set, get) => ({
     }
   },
 
-  findAllPayables: async (input) => {
+  findAllPayables: async () => {
     set((state) => ({
       ...state,
       status: "loading",
     }));
-    const { totalPages, totalPayables, payables } =
-      await payableService.getAll(input);
+    const { totalPages, totalPayables, payables } = await payableService.getAll(
+      { skip: get().skip, take: get().take },
+    );
 
     set({
       status: "success",

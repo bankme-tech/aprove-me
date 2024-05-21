@@ -12,18 +12,19 @@ import { formatCurrency } from "@/lib/formatCurrency";
 import { usePayableStore } from "@/stores/usePayableStore";
 import { useEffect } from "react";
 import { PayableMenu } from "./payableMenu";
+import { TablePagination } from "@/components/pagination/pagination";
 
 export const PayablesTable = () => {
   const payable = usePayableStore();
 
   useEffect(() => {
     async function handleFindPayables() {
-      await payable.findAllPayables({ skip: 0, take: 5 });
+      await payable.findAllPayables();
     }
-
+    console.log(payable);
     handleFindPayables();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [payable.skip, payable.take]);
 
   const renderTableContent = () =>
     payable.payables.map((payable) => (
@@ -91,7 +92,14 @@ export const PayablesTable = () => {
 
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={4}>pinaćão</TableCell>
+            <TableCell className="py-0" colSpan={4}>
+              <TablePagination
+                prevPage={payable.decreaseSkip}
+                nextPage={payable.increaseSkip}
+                currentPage={payable.currentPage}
+                totalPages={payable.totalPages}
+              />
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>
