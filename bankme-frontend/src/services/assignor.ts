@@ -17,3 +17,10 @@ export async function getAssignorById(id: string) {
   const res = await api.get<Assignor>(`/assignor/${id}`);
   return res.data;
 }
+
+interface CreateAssignorInput extends Omit<Assignor, "id"> {}
+
+export async function createAssignor(data: CreateAssignorInput) {
+  const res = await api.post("/assignor", data);
+  return res.data;
+}
