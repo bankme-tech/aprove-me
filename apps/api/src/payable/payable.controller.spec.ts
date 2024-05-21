@@ -5,6 +5,7 @@ import { faker } from '@faker-js/faker';
 import { PayableService } from './payable.service';
 import { CreateAssignorDto } from '../assignor/dto';
 import { CreatePayableDto } from './dto';
+import { JwtService } from '@nestjs/jwt';
 
 describe('PayableController', () => {
   let controller: PayableController;
@@ -14,7 +15,7 @@ describe('PayableController', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PayableController],
-      providers: [PayableService, PrismaService],
+      providers: [PayableService, PrismaService, JwtService],
     }).compile();
 
     controller = module.get<PayableController>(PayableController);

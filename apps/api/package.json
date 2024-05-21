@@ -26,6 +26,7 @@
     "@brazilian-utils/brazilian-utils": "1.0.0-rc.12",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
+    "@nestjs/jwt": "^10.2.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "5.14.0",

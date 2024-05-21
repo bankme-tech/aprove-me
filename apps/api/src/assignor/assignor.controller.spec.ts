@@ -4,6 +4,7 @@ import { AssignorService } from './assignor.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { faker } from '@faker-js/faker';
 import { CreateAssignorDto, createAssignorSchema } from './dto';
+import { JwtService } from '@nestjs/jwt';
 
 describe('AssignorController', () => {
   let controller: AssignorController;
@@ -32,7 +33,7 @@ describe('AssignorController', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssignorController],
-      providers: [AssignorService, PrismaService],
+      providers: [AssignorService, PrismaService, JwtService],
     }).compile();
 
     controller = module.get<AssignorController>(AssignorController);

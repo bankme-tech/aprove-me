@@ -5,7 +5,7 @@ import { AssignorModule } from './assignor/assignor.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [PayableModule, AssignorModule],
+  imports: [PayableModule, AssignorModule, AuthModule],
   controllers: [],
   providers: [PrismaService],
 })
