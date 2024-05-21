@@ -1,12 +1,14 @@
 version: "3.8"
 
 services:
-  sqlite3:
+  app:
     container_name: aproveme-prisma-app
-    image: nouchka/sqlite3
+    image: node:20
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: "file:./db/dev.db" # URL do SQLite para o Prisma
+      DATABASE_URL: "file:/app/data/sqlite/dev.db"
     volumes:
-      - ./data/sqlite:/data/sqlite
+      - .:/app    # Mapeando o diretório raiz do projeto para /app no contêiner
+    working_dir: /app
+    command: ["node", "dist/src/infra/main.js"]  # Atualize o caminho para o seu main.js
