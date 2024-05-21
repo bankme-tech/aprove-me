@@ -1,7 +1,9 @@
 import { Err, Ok } from 'src/types/either';
 import { PrismaService } from 'src/database/prisma.config';
 import { ReceivableRepository } from 'src/repositories/receivable.repository';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaReceivableRepository implements ReceivableRepository {
   private readonly prisma_service: PrismaService;
   constructor(prisma_service: PrismaService) {

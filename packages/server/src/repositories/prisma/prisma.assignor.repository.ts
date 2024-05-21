@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.config';
 import { AssignorRepository } from 'src/repositories/assignor.repository';
 import { Err, Ok, Result } from 'src/types/either';
 
+@Injectable()
 export class PrismaAssignorRepository implements AssignorRepository {
   private readonly prisma_service: PrismaService;
   constructor(prisma_service: PrismaService) {
@@ -52,6 +54,7 @@ export class PrismaAssignorRepository implements AssignorRepository {
       });
       return Ok(assignors);
     } catch (error) {
+      console.log(error);
       return Err(new Error(error));
     }
   }
