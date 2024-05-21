@@ -34,4 +34,10 @@ export class PrismaAssignorRepository implements IAssignorRepository {
       data: AssignorMapper.toPersistence(assignor),
     });
   }
+
+  async delete(assignor: AssignorEntity): Promise<void> {
+    await this.prisma.assignor.delete({
+      where: { id: assignor.id },
+    });
+  }
 }

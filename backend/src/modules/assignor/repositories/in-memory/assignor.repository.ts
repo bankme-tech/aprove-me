@@ -31,4 +31,8 @@ export class InMemoryAssignorRepository implements IAssignorRepository {
 
     this.items[entityIndex] = AssignorMapper.toPersistence(assignor);
   }
+
+  async delete(assignor: AssignorEntity): Promise<void> {
+    this.items = this.items.filter((item) => item.id !== assignor.id);
+  }
 }
