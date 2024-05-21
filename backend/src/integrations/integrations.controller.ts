@@ -1,42 +1,75 @@
-import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Put,
+  Delete,
+  Param,
+  NotFoundException,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { IntegrationsService } from './integrations.service';
 import {
   CreateAssignorDto,
-  CreateReceivableDto,
+  CreatePayableDto,
+  UpdateAssignorDto,
+  UpdatePayableDto,
 } from './dto/create-integration.dto';
-import { validateDto } from 'src/utils';
 
 @Controller('integrations')
 export class IntegrationsController {
   constructor(private readonly integrationsService: IntegrationsService) {}
 
   @Post('/payable')
-  async create(@Body() dataDto: CreateReceivableDto | CreateAssignorDto) {
-    let validatedData;
-    try {
-      if (
-        dataDto.hasOwnProperty('value') &&
-        dataDto.hasOwnProperty('emissionDate')
-      ) {
-        validatedData = await validateDto(dataDto, CreateReceivableDto);
-      } else if (
-        dataDto.hasOwnProperty('document') &&
-        dataDto.hasOwnProperty('email')
-      ) {
-        validatedData = await validateDto(dataDto, CreateAssignorDto);
-      } else {
-        throw new BadRequestException('Invalid data format');
-      }
-    } catch (error) {
-      let message = error.message;
+  createPayable(@Body() payableDto: CreatePayableDto) {
+    return this.integrationsService.createPayable(payableDto);
+  }
 
-      try {
-        message = JSON.parse(error.message);
-      } catch (_err) {}
+  @Get('/payable/:id')
+  async getPayableById(@Param('id') id: string) {
+    const payable = await this.integrationsService.getPayableById(id);
+    if (!payable) throw new NotFoundException('Payable not found');
+    return payable;
+  }
 
-      throw new BadRequestException(message);
-    }
+  @Put('/payable/:id')
+  @UsePipes(new ValidationPipe({ transform: true }))
+  updatePayable(@Body() payableDto: UpdatePayableDto, @Param('id') id: string) {
+    return this.integrationsService.updatePayable(id, payableDto);
+  }
 
-    return this.integrationsService.create(validatedData);
+  @Delete('/payable/:id')
+  deletePayable(@Param('id') id: string) {
+    return this.integrationsService.deletePayable(id);
+  }
+
+  @Get('/assignor/:id')
+  async getAssignorById(@Param('id') id: string) {
+    const assignor = await this.integrationsService.getAssignorById(id);
+
+    if (!assignor) throw new NotFoundException('Assignor not found');
+
+    return this.integrationsService.getAssignorById(id);
+  }
+
+  @Put('/assignor/:id')
+  @UsePipes(new ValidationPipe({ transform: true }))
+  updateAssignor(
+    @Param('id') id: string,
+    @Body() assignorDto: UpdateAssignorDto,
+  ) {
+    return this.integrationsService.updateAssignor(id, assignorDto);
+  }
+
+  @Post('/assignor')
+  create(@Body() assignorDto: CreateAssignorDto) {
+    return this.integrationsService.createAssignor(assignorDto);
+  }
+
+  @Delete('/assignor/:id')
+  deleteAssignor(@Param('id') id: string) {
+    return this.integrationsService.deleteAssignor(id);
   }
 }

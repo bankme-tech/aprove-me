@@ -1,4 +1,4 @@
-export class Receivable {
+export class Payable {
   id: string;
   value: number;
   emissionDate: Date;
