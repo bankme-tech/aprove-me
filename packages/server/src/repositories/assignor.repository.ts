@@ -1,5 +1,5 @@
 import { Result } from 'src/types/either';
-import { assignorResponseDto, assignorBodyDto } from '../dtos/assignor.dto';
+import { assignorResponseDto, assignorBodyDto } from 'src/dtos/assignor.dto';
 
 export abstract class AssignorRepository {
   abstract create_assignor(assignor: AssignorRepository.bodyType): AssignorRepository.IdResponseType;

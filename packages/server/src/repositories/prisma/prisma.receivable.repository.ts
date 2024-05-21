@@ -1,6 +1,6 @@
-import { Err, Ok } from './../../types/either';
+import { Err, Ok } from 'src/types/either';
 import { PrismaService } from 'src/database/prisma.config';
-import { ReceivableRepository } from '../receivable.repository';
+import { ReceivableRepository } from 'src/repositories/receivable.repository';
 
 export class PrismaReceivableRepository implements ReceivableRepository {
   private readonly prisma_service: PrismaService;
