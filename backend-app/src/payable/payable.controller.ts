@@ -3,13 +3,13 @@ import {
   Get,
   Post,
   Body,
-  // Patch,
+  Patch,
   Param,
-  // Delete,
+  Delete,
 } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
-// import { UpdatePayableDto } from './dto/update-payable.dto';
+import { UpdatePayableDto } from './dto/update-payable.dto';
 
 @Controller('integrations')
 export class PayableController {
@@ -20,23 +20,23 @@ export class PayableController {
     return this.payableService.create(createPayableDto);
   }
 
-  // @Get('payable')
-  // findAll() {
-  //   return this.payableService.findAll();
-  // }
+  @Get('payable')
+  findAll() {
+    return this.payableService.findAll();
+  }
 
   @Get('payable/:id')
   findOne(@Param('id') id: string) {
     return this.payableService.findOne(+id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
-  //   return this.payableService.update(+id, updatePayableDto);
-  // }
+  @Patch('payable/:id')
+  update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
+    return this.payableService.update(+id, updatePayableDto);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.payableService.remove(+id);
-  // }
+  @Delete('payable/:id')
+  remove(@Param('id') id: string) {
+    return this.payableService.remove(+id);
+  }
 }
