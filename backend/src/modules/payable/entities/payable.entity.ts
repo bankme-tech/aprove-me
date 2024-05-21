@@ -1,6 +1,7 @@
 import { isUUID } from 'class-validator';
 import { BaseEntity } from '~/common/entities/base-entity';
 import { InvalidEntityEntry } from '~/common/exceptions/invalid-entity-entry.exception';
+import { Optional } from '~/common/types/optional';
 import { Either, left, right } from '~/common/utils/either';
 import { AssignorEntity } from '~/modules/assignor/entities/assignor.entity';
 
@@ -41,10 +42,10 @@ export class PayableEntity extends BaseEntity<PayableEntityProps> {
   }
 
   static create(
-    props: Omit<PayableEntityProps, 'assignor'>,
+    props: Optional<PayableEntityProps, 'assignor'>,
     id?: string,
   ): Either<Error, PayableEntity> {
-    const data: PayableEntityProps = { ...props, assignor: null };
+    const data: PayableEntityProps = { assignor: null, ...props };
 
     const isValid = this.validate(data);
 

@@ -11,11 +11,21 @@ export class PrismaPayableRepository implements IPayableRepository {
   async create(payable: PayableEntity): Promise<void> {
     const entity = PayableMapper.toPersistence(payable);
 
-    await this.prisma.payable.create({ data: entity });
+    await this.prisma.payable.create({
+      data: {
+        id: entity.id,
+        emissionDate: entity.emissionDate,
+        value: entity.value,
+        assignorId: entity.assignorId,
+      },
+    });
   }
 
   async findById(id: string): Promise<PayableEntity | null> {
-    const entity = await this.prisma.payable.findFirst({ where: { id } });
+    const entity = await this.prisma.payable.findFirst({
+      where: { id },
+      include: { assignor: true },
+    });
 
     if (!entity) return null;
 
