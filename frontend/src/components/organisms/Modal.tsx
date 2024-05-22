@@ -68,6 +68,8 @@ const ModalMy = ({ isOpen, onClose, children }: any) => {
   );
 };
 
+// TODO: add listeners to know when route changes
+
 export const Modal = ({ label }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

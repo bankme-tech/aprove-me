@@ -5,7 +5,7 @@ type Table = {};
 
 export const Table = () => {
   return (
-    <div className="max-w-2xl mx-auto ">
+    <div className="max-w-2xl mx-auto">
       <div className="flex flex-col ">
         <div className="overflow-x-auto shadow-md sm:rounded-lg">
           <div className="inline-block min-w-full align-middle">
