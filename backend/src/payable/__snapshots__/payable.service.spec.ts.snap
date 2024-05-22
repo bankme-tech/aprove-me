@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic CRUD operation (payable) should create two payables payable 1`] = `
+{
+  "amount": 1000,
+  "description": "Please approve-me bank-me",
+}
+`;
+
+exports[`basic CRUD operation (payable) should delete a payable 1`] = `
+{
+  "amount": 1000,
+  "assignorId": "1",
+  "description": "Test Payable",
+  "dueDate": 2024-05-22T19:28:29.378Z,
+  "id": "1",
+}
+`;
+
+exports[`basic CRUD operation (payable) should return all playable 1`] = `
+[
+  {
+    "amount": 10,
+    "assignorId": "uuid3",
+    "description": "example 1",
+    "id": "uuid1",
+  },
+  {
+    "amount": 150,
+    "assignorId": "uuid3",
+    "description": "example 2",
+    "id": "uuid2",
+  },
+]
+`;
+
+exports[`basic CRUD operation (payable) should return an payable by id 1`] = `
+{
+  "amount": 1000,
+  "assignorId": "1",
+  "description": "Test Payable",
+  "id": "1",
+}
+`;
+
+exports[`basic CRUD operation (payable) should update an payable by id 1`] = `
+{
+  "amount": 1000,
+  "assignId": "1",
+  "description": "An updated description",
+  "id": "1",
+}
+`;
