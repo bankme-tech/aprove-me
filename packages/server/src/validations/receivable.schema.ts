@@ -30,6 +30,7 @@ export const updateReceivableSchema = z.object({
   emissionDate: z
     .string()
     .datetime({
+      offset: true,
       message: 'Invalid emission date',
     })
     .optional(),
