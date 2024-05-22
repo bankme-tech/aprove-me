@@ -8,7 +8,16 @@ import { UpdateAssignorDto } from 'src/application/dtos/update-assignor.dto';
 @Injectable()
 export class PrismaAssignorRepository implements AssignorRepository {
   constructor(private readonly prisma: PrismaService) {}
-
+  async findAll() {
+    try {
+      return await this.prisma.assignor.findMany();
+    } catch (error) {
+      const errorMessageLines = error.message.split('\n');
+      const formattedErrorMessage =
+        errorMessageLines[errorMessageLines.length - 1];
+      throw new HttpException(formattedErrorMessage, HttpStatus.BAD_REQUEST);
+    }
+  }
   async create(assignor: CreateAssignorDto) {
     try {
       return await this.prisma.assignor.create({ data: assignor });

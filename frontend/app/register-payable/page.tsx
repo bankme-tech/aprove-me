@@ -5,7 +5,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useCreatePayable } from "@/hooks/useCreatePayable";
-
+import { useListAssignor } from "@/hooks/useListAssignor";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,7 +16,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   value: z.string({
@@ -27,6 +34,8 @@ const formSchema = z.object({
 });
 
 export default function Page() {
+  const { assignors } = useListAssignor();
+  const { createPayable } = useCreatePayable();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,9 +43,9 @@ export default function Page() {
       assignor: "",
     },
   });
-  const { createPayable } = useCreatePayable();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
     const payload = {
       value: parseFloat(values.value),
       assignor: values.assignor,
@@ -90,17 +99,28 @@ export default function Page() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Assinante</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Informe o ID do assinante"
-                        type="text"
-                        {...field}
-                      />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione o assinante" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {assignors?.map((assignor: any) => (
+                          <SelectItem value={assignor.id} key={assignor.id}>
+                            {assignor.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <Button className="bg-[#0a36b0]" type="submit">
                 Cadastrar
               </Button>

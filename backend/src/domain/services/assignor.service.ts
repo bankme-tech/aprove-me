@@ -5,11 +5,15 @@ import { Assignor } from '../entities/assignor.entity';
 
 @Injectable()
 export class AssignorService {
+  
   constructor(
     @Inject('AssignorRepository')
     private readonly assignorRepository: AssignorRepository,
   ) {}
 
+  async findAll() {
+    return this.assignorRepository.findAll();
+  }
   async createAssignor(assignor: CreateAssignorDto) {
     return this.assignorRepository.create(assignor);
   }

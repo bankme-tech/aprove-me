@@ -17,6 +17,10 @@ export class AssignorController {
     return this.assignorService.createAssignor(createAssignorDto);
   }
 
+  @Get("all")
+  async findAll() {
+    return this.assignorService.findAll();
+  }
   @UseGuards(AuthGuard)
   @Get(':id')
   async findById(@Param('id') id: string) {
