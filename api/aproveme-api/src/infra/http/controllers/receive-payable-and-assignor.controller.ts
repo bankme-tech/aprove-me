@@ -72,19 +72,29 @@ export class ReceivePayableAndAssignorController {
       },
     });
 
+    const {
+      id: payableId,
+      assignorId,
+      emissionDate,
+      value,
+    } = createPayableResult.value.payable;
+
+    const { id, document, email, phone, name } =
+      createAssignorResult.value.assignor;
+
     return {
       payable: PayablePresenter.toHTTP({
-        id: createPayableResult.value.payable.id.toString(),
-        assignorId: createPayableResult.value.payable.assignorId.toString(),
-        emissionDate: createPayableResult.value.payable.emissionDate,
-        value: createPayableResult.value.payable.value,
+        id: payableId.toString(),
+        assignorId: assignorId.toString(),
+        emissionDate,
+        value,
       }),
       assignor: AssignorPresenter.toHTTP({
-        id: createAssignorResult.value.assignor.id.toString(),
-        document: createAssignorResult.value.assignor.document,
-        email: createAssignorResult.value.assignor.email,
-        name: createAssignorResult.value.assignor.name,
-        phone: createAssignorResult.value.assignor.phone,
+        id: id.toString(),
+        document,
+        email,
+        name,
+        phone,
       }),
     };
   }
