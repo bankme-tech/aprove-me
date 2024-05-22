@@ -23,8 +23,9 @@ model Payable {
 
 model Assignor {
   id       String    @id @default(uuid())
+  document String   @unique
   name     String
   email    String
-  password String
-  payables Payable[]
+  phone    String
+  Payable  Payable[]
 }
