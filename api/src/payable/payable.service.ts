@@ -27,18 +27,25 @@ export class PayableService {
   }
 
   findAll() {
-    return `This action returns all payable`;
+    return this.prisma.payable.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} payable`;
+  findOne(id: string) {
+    return this.prisma.payable.findUniqueOrThrow({
+      where: { id },
+    });
   }
 
-  update(id: number, updatePayableDto: UpdatePayableDto) {
-    return `This action updates a #${id} payable`;
+  update(id: string, updatePayableDto: UpdatePayableDto) {
+    return this.prisma.payable.update({
+      where: { id },
+      data: updatePayableDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} payable`;
+  remove(id: string) {
+    return this.prisma.payable.delete({
+      where: { id },
+    });
   }
 }

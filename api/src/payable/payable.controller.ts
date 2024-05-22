@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
@@ -27,16 +28,17 @@ export class PayableController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.payableService.findOne(+id);
+    return this.payableService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
-    return this.payableService.update(+id, updatePayableDto);
+    return this.payableService.update(id, updatePayableDto);
   }
 
+  @HttpCode(204)
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.payableService.remove(+id);
+    return this.payableService.remove(id);
   }
 }
