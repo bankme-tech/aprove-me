@@ -8,40 +8,40 @@ export default function Header() {
   const { isAuthenticated, logout } = useAuth();
 
   return (
-    <header className="container flex items-center justify-between p-4">
-      <Link href={"/payable"} className="text-3xl text-primary font-semibold">
-        Bankme
-      </Link>
+    isAuthenticated && (
+      <header className="container flex items-center justify-between p-4">
+        <Link href={"/payable"} className="text-3xl text-primary font-semibold">
+          Bankme
+        </Link>
 
-      <nav>
-        <ul className="flex items-center gap-2">
-          <li>
-            <Link
-              href={"/payable"}
-              className={buttonVariants({ variant: "link" })}
-            >
-              payables
-            </Link>
-          </li>
+        <nav>
+          <ul className="flex items-center gap-2">
+            <li>
+              <Link
+                href={"/payable"}
+                className={buttonVariants({ variant: "link" })}
+              >
+                Payables
+              </Link>
+            </li>
 
-          <li>
-            <Link
-              href={"/assignor"}
-              className={buttonVariants({ variant: "link" })}
-            >
-              assignors
-            </Link>
-          </li>
+            <li>
+              <Link
+                href={"/assignor"}
+                className={buttonVariants({ variant: "link" })}
+              >
+                Assignors
+              </Link>
+            </li>
 
-          {isAuthenticated && (
             <li>
               <Button variant={"link"} size={"sm"} onClick={() => logout()}>
                 Logout
               </Button>
             </li>
-          )}
-        </ul>
-      </nav>
-    </header>
+          </ul>
+        </nav>
+      </header>
+    )
   );
 }
