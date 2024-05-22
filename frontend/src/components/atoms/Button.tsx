@@ -1,10 +1,14 @@
-export const Button = () => {
+type Button = {
+  label: string;
+};
+
+export const Button = ({ label }: Button) => {
   return (
     <button
       type="button"
-      className="w-full py-2 px-4 rounded-full bg-blue-500 text-white font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      className="w-full h-16 rounded-xl py-2 px-4  bg-primary text-white font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
     >
-      Clique Aqui
+      {label}
     </button>
   );
 };
