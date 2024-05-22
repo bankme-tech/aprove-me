@@ -8,8 +8,8 @@ type FormField = {
 export const FormLogin = () => {
   return (
     <div className="flex flex-col gap-4">
-      <FormField name="Login" />
-      <FormField name="Senha" />
+      <FormField title="Login" />
+      <FormField title="Senha" />
       <Button />
     </div>
   );
