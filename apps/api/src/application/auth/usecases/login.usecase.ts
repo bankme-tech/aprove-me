@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { EnvService } from '@bankme/nestjs-env';
-
-import { IToken } from '@domain/auth/interfaces/token.interface';
+import { IToken } from '@bankme/domain';
 
 import { User } from '@prisma/client';
 import jwt from 'jsonwebtoken';

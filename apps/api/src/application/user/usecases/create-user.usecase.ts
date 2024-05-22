@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { User } from '@domain/user/models/user';
+import { Password, User } from '@bankme/domain';
+
 import { ICreateUser } from '@domain/user/interfaces/create-user.interface';
-import { Password } from '@domain/user/value-objects/password';
 import { DuplicatedUsernameException } from '@domain/user/exceptions/duplicated-username.exception';
 
 import {

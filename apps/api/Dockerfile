@@ -10,11 +10,7 @@ RUN apt-get update -y && apt-get install -y openssl
 
 FROM base AS build
 RUN pnpm install
-
-WORKDIR /app/apps/api
-RUN npx prisma migrate dev
-
-WORKDIR /app
+RUN npx prisma generate
 RUN pnpm build
 
 WORKDIR /app/apps/api

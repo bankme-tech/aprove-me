@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Payable } from '@domain/payable/models/payable';
+import { Payable } from '@bankme/domain';
 
 import {
   IPayableRepository,

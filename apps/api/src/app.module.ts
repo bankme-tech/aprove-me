@@ -25,7 +25,9 @@ const infra: Imports = [
 
 const config: Imports = [
   PrismaInfraModule,
-  EnvModule.forRoot({ envFilePath: path.resolve(__dirname, '../.env') }),
+  EnvModule.forRoot({
+    envFilePath: [path.resolve(__dirname, '../.env')],
+  }),
 ];
 
 const routes: Imports = [

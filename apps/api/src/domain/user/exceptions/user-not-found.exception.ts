@@ -1,6 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 
-import { Id } from '@domain/shared/id';
+import { Id } from '@bankme/domain';
 
 export class UserNotFoundException extends NotFoundException {
   static withId(id: Id): UserNotFoundException {

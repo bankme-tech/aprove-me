@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IToken } from '@domain/auth/interfaces/token.interface';
+import { IToken } from '@bankme/domain';
 
 export class TokenPresenter {
   @ApiProperty({

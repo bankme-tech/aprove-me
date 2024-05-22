@@ -1,10 +1,6 @@
 import { IOption } from '@bankme/monads';
-
-import {
-  Assignor,
-  IAssignorConstructor,
-} from '@domain/assignor/models/assignor';
-import { Id } from '@domain/shared/id';
+import { Assignor, IAssignorConstructor } from '@bankme/domain';
+import { Id } from '@bankme/domain';
 
 export const ASSIGNOR_REPOSITORY = Symbol('__assignor_repository__');
 

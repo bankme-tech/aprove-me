@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IAssignor } from '@domain/assignor/interfaces/assignor.interface';
+import { IAssignor } from '@bankme/domain';
 
 import { randomUUID } from 'crypto';
 

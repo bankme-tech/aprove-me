@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Id } from '@domain/shared/id';
-import { IUser } from '@domain/user/interfaces/user.interface';
+import { IUser, Id } from '@bankme/domain';
 
 export class UserPresenter {
   @ApiProperty({ example: '660824bffc69a69538084cf9' })

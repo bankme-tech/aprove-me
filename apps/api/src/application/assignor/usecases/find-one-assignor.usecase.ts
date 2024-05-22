@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { Assignor } from '@domain/assignor/models/assignor';
+import { Assignor } from '@bankme/domain';
 
 @Injectable()
 export class FindOneAssignorUseCase {

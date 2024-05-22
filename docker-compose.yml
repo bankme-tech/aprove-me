@@ -5,3 +5,14 @@ services:
       dockerfile: ./apps/api/Dockerfile
     ports:
       - '3000:3000'
+
+  redis:
+    image: redis
+    command: redis-server
+    ports:
+      - '6379:6379'
+
+  bulk-payable-service:
+    build:
+      context: ./
+      dockerfile: ./apps/bulk-payable-service/Dockerfile

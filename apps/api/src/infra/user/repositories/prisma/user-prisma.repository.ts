@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { IOption, toOption } from '@bankme/monads';
-
-import { IUserConstructor, User } from '@domain/user/models/user';
+import { IUserConstructor, User } from '@bankme/domain';
 
 import { IUserRepository } from '@infra/user/repositories/user.repository';
 import { PrismaService } from '@infra/prisma/services/prisma.service';

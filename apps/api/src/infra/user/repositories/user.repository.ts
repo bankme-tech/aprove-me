@@ -1,7 +1,7 @@
 import { IOption } from '@bankme/monads';
 
-import { Id } from '@domain/shared/id';
-import { IUserConstructor, User } from '@domain/user/models/user';
+import { Id } from '@bankme/domain';
+import { IUserConstructor, User } from '@bankme/domain';
 
 export const USER_REPOSITORY = Symbol('__user_repository__');
 

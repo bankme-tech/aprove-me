@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Assignor } from '@domain/assignor/models/assignor';
+import { Assignor } from '@bankme/domain';
+
 import { IUpdateAssignor } from '@domain/assignor/interfaces/update-assignor.interface';
 
 import {

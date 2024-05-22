@@ -9,7 +9,7 @@ import {
 
 import { IOption } from '@bankme/monads';
 
-import { User } from '@domain/user/models/user';
+import { User } from '@bankme/domain';
 
 import { CreateUserUseCase } from '@application/user/usecases/create-user.usecase';
 import { CurrentUser } from '@application/auth/decorators/current-user.decorator';

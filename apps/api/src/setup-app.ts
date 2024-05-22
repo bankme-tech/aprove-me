@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import '@domain/shared/id';
+import '@bankme/domain';
 import '@domain/shared/wrapper';
 
 export function setupApp(app: INestApplication): void {

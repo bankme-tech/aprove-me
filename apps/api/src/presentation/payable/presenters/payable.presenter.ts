@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IPayable } from '@domain/payable/interfaces/payable.interface';
-import { Id } from '@domain/shared/id';
+import { IPayable } from '@bankme/domain';
+import { Id } from '@bankme/domain';
 
 import { AssignorPresenter } from '@presentation/assignor/presenters/assignor.presenter';
 

@@ -6,7 +6,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { Assignor } from '@domain/assignor/models/assignor';
+import { Assignor } from '@bankme/domain';
 
 import { AssignorByIdPipe } from '@application/assignor/pipes/assignor-by-id.pipe';
 import { FindOneAssignorUseCase } from '@application/assignor/usecases/find-one-assignor.usecase';
