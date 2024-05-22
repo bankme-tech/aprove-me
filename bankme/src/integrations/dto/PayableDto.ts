@@ -1,15 +1,21 @@
-import Payable from '../entity/Payable';
 import { IPayable } from '../types/IPayables';
 
-export default class PayableDto extends Payable {
-  toEntity(): Payable {
-    const payableEntity = new Payable();
+export default class PayableDto {
+  id: string;
+  value: number;
+  emissionDate: Date;
+  assignorId: string;
 
-    payableEntity.value = this.value;
-    payableEntity.emissionDate = this.emissionDate;
-    payableEntity.assignorId = this.assignorId;
-
-    return payableEntity;
+  constructor(
+    id?: string,
+    value?: number,
+    emissionDate?: Date,
+    assignorId?: string,
+  ) {
+    this.id = id;
+    this.value = value;
+    this.emissionDate = emissionDate;
+    this.assignorId = assignorId;
   }
 
   static fromEntity(payable: IPayable): PayableDto {
