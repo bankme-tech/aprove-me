@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 import { AssignorEntity } from '../../domain/entity';
 import { IAssignorRepository } from '../../domain/repository';
+import { assign } from 'lodash';
 
 export class PrismaAssignorRepository implements IAssignorRepository {
   constructor(private readonly prisma: PrismaClient) { }
