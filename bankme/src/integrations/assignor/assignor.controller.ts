@@ -8,21 +8,21 @@ import {
   Put,
 } from '@nestjs/common';
 import { AssignorService } from './assignor.service';
-import AssignorDto from '../dto/AssignorDto';
 import Assignor from '../entity/Assignor';
+import AssignorCreationDto from '../dto/AssignorCreationDto';
 
 @Controller('/integrations/assignor/')
 export class AssignorController {
   constructor(private assignorService: AssignorService) {}
 
   @Post('/')
-  async createPayableRegister(@Body() payableBody: AssignorDto) {
-    const payable: Assignor = payableBody.toEntity();
+  async createAssignorRegister(@Body() assignorBody: AssignorCreationDto) {
+    const assignor: Assignor = assignorBody.toEntity();
 
-    const responsePayable =
-      await this.assignorService.createAssignorRegister(payable);
+    const responseAssignor =
+      await this.assignorService.createAssignorRegister(assignor);
 
-    return responsePayable;
+    return responseAssignor;
   }
 
   @Get('/:id')
@@ -35,9 +35,9 @@ export class AssignorController {
   @Put('/:id')
   async updateAssignorById(
     @Param('id') id: string,
-    @Body() assignorBody: AssignorDto,
+    @Body() assignorBody: AssignorCreationDto,
   ) {
-    const assignor: Assignor = assignorBody.toEntity();
+    const assignor = assignorBody.toEntity();
 
     const responseAssignor = await this.assignorService.updateAssignorById(
       id,
