@@ -3,3 +3,7 @@ export type DeepRequired<T> = {
 };
 
 export type Replace<T, R> = Omit<T, keyof R> & R;
+
+export type DeepPartial<T> = {
+  [P in keyof T]?: DeepPartial<T[P]>;
+};

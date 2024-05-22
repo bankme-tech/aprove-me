@@ -9,15 +9,11 @@ export class PrismaPayablesRepository implements PayablesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   public async save(payable: Payable): Promise<Payable> {
-    const { id, ...raw } = PayablesMapper.toPersist(payable);
-
-    const payableCreatedOrUpdated = await this.prisma.payable.upsert({
-      where: { id: id ?? 'does not exists' },
-      update: raw,
-      create: { id, ...raw },
-    });
-
-    return PayablesMapper.toDomain(payableCreatedOrUpdated);
+    return PayablesMapper.toDomain(
+      await this.prisma.payable.create({
+        data: PayablesMapper.toPersist(payable),
+      }),
+    );
   }
 
   public async findById(id: string): Promise<Payable | null> {
@@ -32,5 +28,18 @@ export class PrismaPayablesRepository implements PayablesRepository {
     }
 
     return null;
+  }
+
+  public async update(payable: Payable): Promise<Payable> {
+    const { id, ...raw } = PayablesMapper.toPersist(payable);
+
+    const updatedPayable = await this.prisma.payable.update({
+      where: {
+        id: id,
+      },
+      data: raw,
+    });
+
+    return PayablesMapper.toDomain(updatedPayable);
   }
 }

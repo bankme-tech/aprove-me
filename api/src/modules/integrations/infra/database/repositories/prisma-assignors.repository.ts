@@ -10,15 +10,11 @@ export class PrismaAssignorsRepository implements AssignorsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   public async save(assignor: Assignor): Promise<Assignor> {
-    const { id, ...raw } = AssignorsMapper.toPersist(assignor);
-
-    const payableCreatedOrUpdated = await this.prisma.assignor.upsert({
-      where: { id: id ?? 'does not exists' },
-      update: raw,
-      create: { id, ...raw },
-    });
-
-    return AssignorsMapper.toDomain(payableCreatedOrUpdated);
+    return AssignorsMapper.toDomain(
+      await this.prisma.assignor.create({
+        data: AssignorsMapper.toPersist(assignor),
+      }),
+    );
   }
 
   public async findById(id: string): Promise<Assignor | null> {

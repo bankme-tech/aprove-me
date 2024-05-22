@@ -10,9 +10,20 @@ export class ZodValidationPipe implements PipeTransform {
       return parsedValue;
     } catch (error) {
       if (error instanceof ZodError) {
+        const issues = error.flatten().fieldErrors;
+        const objectHasNoKeys = Object.keys(issues).length === 0;
+        if (objectHasNoKeys) {
+          console.log('ISSUEESS: ', error);
+          throw new BadRequestException({
+            issues: error.issues,
+            message: 'Validation failed',
+            statusCode: 400,
+          });
+        }
         throw new BadRequestException({
-          issues: error.flatten().fieldErrors,
+          issues,
           message: 'Validation failed',
+          statusCode: 400,
         });
       } else {
         throw new BadRequestException('Validation failed');

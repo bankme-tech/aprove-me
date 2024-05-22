@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { CreatePayableDto, createPayableDto } from '../dtos/create-payable.dto';
@@ -19,6 +20,8 @@ import { createAssignorDto } from '../dtos/create-assignor.dto';
 import type { CreateAssignorDto } from '../dtos/create-assignor.dto';
 import { UuidDto, uuidDto } from '@/infra/http/dtos/id.dto';
 import { FindAssignorByIdUseCase } from '@/modules/integrations/use-cases/find-assignor-by-id.use-case';
+import { PatchPayableDto, patchPayableDto } from '../dtos/patch-payable.dto';
+import { PatchPayableUseCase } from '@/modules/integrations/use-cases/patch-assignor.use-case';
 
 @Controller('/integrations')
 export class IntegrationsController {
@@ -27,7 +30,30 @@ export class IntegrationsController {
     private createAssignorUseCase: CreateAssignorUseCase,
     private findPayableByIdUseCase: FindPayableByIdUseCase,
     private findAssignorByIdUseCase: FindAssignorByIdUseCase,
+    private updateAssignorUseCase: PatchPayableUseCase,
   ) {}
+
+  @Get('/payables/:id')
+  @HttpCode(HttpStatus.FOUND)
+  public async findPayableById(
+    @Param(new ZodValidationPipe(uuidDto))
+    params: UuidDto,
+  ) {
+    const payable = await this.findPayableByIdUseCase.execute(params.id);
+
+    return PayablesViewModel.toHTTP(payable);
+  }
+
+  @Get('/assignors/:id')
+  @HttpCode(HttpStatus.FOUND)
+  public async findAssignorById(
+    @Param(new ZodValidationPipe(uuidDto))
+    params: UuidDto,
+  ) {
+    const assignor = await this.findAssignorByIdUseCase.execute(params.id);
+
+    return AssignorsViewModel.toHTTP(assignor);
+  }
 
   @Post('/payables')
   @HttpCode(HttpStatus.CREATED)
@@ -51,25 +77,17 @@ export class IntegrationsController {
     return AssignorsViewModel.toHTTP(createdAssignor);
   }
 
-  @Get('/payables/:id')
-  @HttpCode(HttpStatus.FOUND)
-  public async findPayableById(
-    @Param(new ZodValidationPipe(uuidDto))
-    params: UuidDto,
+  @Patch('/payables/:id')
+  @HttpCode(HttpStatus.OK)
+  public async partialUpdatePayable(
+    @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
+    @Body(new ZodValidationPipe(patchPayableDto)) body: PatchPayableDto,
   ) {
-    const payable = await this.findPayableByIdUseCase.execute(params.id);
+    const updatedAssignor = await this.updateAssignorUseCase.execute({
+      id: params.id,
+      patchPayableDto: body,
+    });
 
-    return PayablesViewModel.toHTTP(payable);
-  }
-
-  @Get('/assignors/:id')
-  @HttpCode(HttpStatus.FOUND)
-  public async findAssignorById(
-    @Param(new ZodValidationPipe(uuidDto))
-    params: UuidDto,
-  ) {
-    const assignor = await this.findAssignorByIdUseCase.execute(params.id);
-
-    return AssignorsViewModel.toHTTP(assignor);
+    return PayablesViewModel.toHTTP(updatedAssignor);
   }
 }

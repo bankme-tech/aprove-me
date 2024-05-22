@@ -1,4 +1,4 @@
-import { DeepRequired, Replace } from '@/utils/types';
+import { DeepPartial, DeepRequired } from '@/utils/types';
 
 export interface EntityProps {
   id: string;
@@ -8,11 +8,7 @@ export interface EntityProps {
 
 type Props<T> = DeepRequired<T> & EntityProps;
 
-export type PropsConstructor<T> = T &
-  Replace<
-    EntityProps,
-    { id?: string; createdAt?: Date; updatedAt?: Date | null }
-  >;
+export type PropsConstructor<T> = DeepPartial<T & EntityProps>;
 
 export abstract class Entity<T> {
   protected props: Props<T>;
