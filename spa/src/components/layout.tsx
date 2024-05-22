@@ -13,7 +13,7 @@ export default function Layout(props: Props) {
       <> {props.children} </> :
       <>
         <Header />
-        <main className="p-6">
+        <main className="px-6 py-3">
           {props.children}
         </main>
       </>

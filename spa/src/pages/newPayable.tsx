@@ -11,6 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import PayableFormInputs from "../components/payableFormInputs";
 import AssignorFormInputs from "../components/assignorFormInputs";
 import { UUID } from "crypto";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function NewPayable() {
   const [assignors, setAssignors] = useState<AssignorType[]>([])
@@ -47,8 +49,8 @@ export default function NewPayable() {
       payableSetError("root", { message: 'Preencha todos os campos do pagável!' })
       return
     }
-    
-    if(newAssignor) {
+
+    if (newAssignor) {
       assignorHandleSubmit(onSubmitAssignor, onErrorAssignor)()
     }
     else {
@@ -72,7 +74,19 @@ export default function NewPayable() {
         },
         assignorData
       })
-      navigate(`/payable/view/${data.id}`)
+      toast.success("Pagável criado!", {
+        position: "top-center",
+        autoClose: 1200,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light"
+      });
+      setTimeout(() => {
+        navigate(`/payable/view/${data.id}`);
+      }, 1300);
     } catch (error) {
       console.log(error)
       payableSetError("root", { message: 'Erro ao cadastrar pagável' })
@@ -108,6 +122,7 @@ export default function NewPayable() {
 
   return (
     <div className="flex flex-col items-center w-full gap-6">
+      <ToastContainer />
       <Title>Cadastre um pagável:</Title>
 
       <FormCard>

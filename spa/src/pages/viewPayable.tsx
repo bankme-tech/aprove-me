@@ -10,6 +10,8 @@ import Button from '../components/ui/button';
 import ErrorMessage from '../components/ui/errorMessage';
 import { editPayable, getPayable } from '../services/payable';
 import { UUID } from 'crypto';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ViewPayable() {
   const { id } = useParams<{ id: UUID }>();
@@ -52,6 +54,9 @@ export default function ViewPayable() {
         emissionDate: new Date(data.emissionDate).toISOString().substring(0, 10)
       })
       setIsDirty(false)
+      toast.success("Alterações salvas", {
+        position: "top-center",
+      });
     } catch (error) {
       setError("root", { message: 'Erro ao salvar as alterações.' })
     }
@@ -64,6 +69,7 @@ export default function ViewPayable() {
 
   return (
     <div className='flex flex-col items-center w-full gap-6'>
+      <ToastContainer />
       <Title>Pagável criado:</Title>
       <FormCard>
         <form onSubmit={handleSubmit(onSubmit, onError)} className="flex flex-col gap-3">
@@ -90,7 +96,7 @@ export default function ViewPayable() {
           <Button
             className={isDirty ?
               '' :
-              'bg-opacity-40 hover:bg-opacity-40'
+              'bg-opacity-40 hover:bg-opacity-45'
             }
           >
             Salvar alterações
