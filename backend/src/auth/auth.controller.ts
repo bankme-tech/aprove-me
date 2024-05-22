@@ -12,21 +12,19 @@ class UserDTO {
     password : string
 }
 
-
-@Controller('integrations/auth')
+@Controller('integrations')
 export class AuthController {
-    constructor(readonly authService : AuthService) {
-        this.authService = authService
-    }
+  constructor(private readonly authService: AuthService) {}
 
-    @HttpCode(HttpStatus.CREATED)
-    @Post()
-    authenticate(@Body() authDTO : UserDTO) {
-        return this.authService.authenticate(authDTO.email, authDTO.password)
-    }
+  @HttpCode(HttpStatus.CREATED)
+  @Post('register')
+  async register(@Body() authDTO: UserDTO) {
+    return this.authService.register(authDTO.email, authDTO.password);
+  }
 
-    @Post()
-    login(@Body() authDTO : UserDTO) {
-        return this.authService.login(authDTO.email, authDTO.password)
-    }
+  @HttpCode(HttpStatus.OK)
+  @Post('auth')
+  async authenticate(@Body() authDTO: UserDTO) {
+    return this.authService.authenticate(authDTO.email, authDTO.password);
+  }
 }

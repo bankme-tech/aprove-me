@@ -1,32 +1,30 @@
-import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { SessionManagerService } from './session-manager.service';
+import { Injectable, CanActivate, ExecutionContext, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from '@prisma/client';
-
-type GuardProps = boolean | Promise<boolean> | Observable<boolean>;
+import { SessionManagerService } from './session-manager.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  constructor(private readonly sessionManager: SessionManagerService) {}
 
-  constructor(readonly sessionManagerService : SessionManagerService){
-    this.sessionManagerService = sessionManagerService
-  }
+  canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest();
 
-  canActivate(context: ExecutionContext): GuardProps {
-    const request = context.switchToHttp().getRequest()
-
-    const [name, token] : [string, string] = request.headers['authorization'].split(" ")
-    if (name !== "bearer") {
-      throw new HttpException("authentication format invalid", HttpStatus.BAD_REQUEST)
+    const authorizationHeader = request.headers['authorization'];
+    if (!authorizationHeader) {
+      throw new HttpException('Authorization header missing', HttpStatus.BAD_REQUEST);
     }
 
-    const user : User | null = this.sessionManagerService.getSession(token)
+    const [name, token] = authorizationHeader.split(' ');
+    if (name !== 'Bearer') {
+      throw new HttpException('Authentication format invalid', HttpStatus.BAD_REQUEST);
+    }
 
+    const user: any = this.sessionManager.getSession(token);
     if (user) {
-      request.user = user
-      return true
+      request.user = user;
+      return true;
     }
-    
-    throw new HttpException("User not found", HttpStatus.BAD_REQUEST)
+
+    throw new HttpException('Session expired or invalid token. Total sessions: ' + this.sessionManager.getAllSessions(), HttpStatus.UNAUTHORIZED);
   }
 }
