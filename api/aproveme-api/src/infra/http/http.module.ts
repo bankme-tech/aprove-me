@@ -11,10 +11,11 @@ import { RemovePayableService } from "@/domain/receivables/application/services/
 import { RegisterUserService } from "@/domain/account/application/services/register-user";
 import { AuthenticateUserService } from "@/domain/account/application/services/authenticate-user";
 import { ReceivePayableAndAssignorController } from "./controllers/receive-payable-and-assignor.controller";
+import { CreateAccountController } from "./controllers/create-account.controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
-  controllers: [ReceivePayableAndAssignorController],
+  controllers: [ReceivePayableAndAssignorController, CreateAccountController],
   providers: [
     //Account Services
     RegisterUserService,
