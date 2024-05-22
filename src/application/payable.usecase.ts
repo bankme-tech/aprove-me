@@ -1,7 +1,7 @@
 import { AssignorEntity } from "../domain/entity";
 import { IAssignorRepository } from "../domain/repository/assignor-repository.interface";
 
-export class Payable {
+export class PayableUsecase {
   constructor(private readonly assignorRepo: IAssignorRepository) {}
 
   async execute(input: Input): Promise<void> {
