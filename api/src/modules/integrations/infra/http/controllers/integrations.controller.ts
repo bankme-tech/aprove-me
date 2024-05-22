@@ -2,6 +2,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -23,6 +24,8 @@ import { PatchPayableDto, patchPayableDto } from '../dtos/patch-payable.dto';
 import { PatchAssignorDto, patchAssignorDto } from '../dtos/patch-assignor.dto';
 import { PatchPayableUseCase } from '@/modules/integrations/use-cases/patch-payable.use-case';
 import { PatchAssignorUseCase } from '@/modules/integrations/use-cases/patch-assignor.use-case';
+import { DeletePayableUseCase } from '@/modules/integrations/use-cases/delete-payable.use-case';
+import { DeleteAssignorUseCase } from '@/modules/integrations/use-cases/delete-assignor.use-case';
 
 @Controller('/integrations')
 export class IntegrationsController {
@@ -33,6 +36,8 @@ export class IntegrationsController {
     private findAssignorByIdUseCase: FindAssignorByIdUseCase,
     private updatePayableUseCase: PatchPayableUseCase,
     private updateAssignorUseCase: PatchAssignorUseCase,
+    private deletePayableUseCase: DeletePayableUseCase,
+    private deleteAssignorUseCase: DeleteAssignorUseCase,
   ) {}
 
   @Get('/payables/:id')
@@ -106,4 +111,24 @@ export class IntegrationsController {
 
     return AssignorsViewModel.toHTTP(updatedAssignor);
   }
+
+  @Delete('/payables/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async deletePayable(
+    @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
+  ) {
+    await this.deletePayableUseCase.execute(params.id);
+  }
+
+  @Delete('/assignors/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async deleteAssignor(
+    @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
+  ) {
+    await this.deleteAssignorUseCase.execute(params.id);
+  }
+
+  @Post('/auth')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async auth() {}
 }

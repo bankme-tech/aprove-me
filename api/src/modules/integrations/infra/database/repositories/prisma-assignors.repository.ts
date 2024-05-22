@@ -43,4 +43,12 @@ export class PrismaAssignorsRepository implements AssignorsRepository {
 
     return AssignorsMapper.toDomain(updatedAssignor);
   }
+
+  public async delete(id: string): Promise<void> {
+    await this.prisma.assignor.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

@@ -10,6 +10,8 @@ import { FindPayableByIdUseCase } from './use-cases/find-payable-by-id.use-case'
 import { FindAssignorByIdUseCase } from './use-cases/find-assignor-by-id.use-case';
 import { PatchPayableUseCase } from './use-cases/patch-payable.use-case';
 import { PatchAssignorUseCase } from './use-cases/patch-assignor.use-case';
+import { DeletePayableUseCase } from './use-cases/delete-payable.use-case';
+import { DeleteAssignorUseCase } from './use-cases/delete-assignor.use-case';
 
 @Module({
   imports: [],
@@ -29,6 +31,8 @@ import { PatchAssignorUseCase } from './use-cases/patch-assignor.use-case';
     FindAssignorByIdUseCase,
     PatchPayableUseCase,
     PatchAssignorUseCase,
+    DeletePayableUseCase,
+    DeleteAssignorUseCase,
   ],
 })
 export class IntegrationsModule {}
