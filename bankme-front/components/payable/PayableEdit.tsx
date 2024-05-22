@@ -2,6 +2,7 @@ import { getAssignors } from "@/services/assignor";
 import { editPayables } from "@/services/payable";
 import { useEffect, useState } from "react";
 import Combobox from "../shared/combobox/Combobox";
+import ErrorComponent from "../shared/error/Error";
 import MyInput from "../shared/input/input";
 
 export default function EditPayable() {
@@ -84,14 +85,7 @@ export default function EditPayable() {
         </div>
         <button onClick={handleClick} type="button" className="my-5 text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Editar Recebível</button>
       </form>
-      {isError && <div role="alert">
-        <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
-          Erro!
-        </div>
-        <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
-          <p>{errorMessage}</p>
-        </div>
-      </div>}
+      {isError && <ErrorComponent errorMessage={errorMessage}/>}
     </div>
   )
 }

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import { register as registerUser } from '@/services/auth'
 import { useAuthContext } from "@/context/AuthContext";
+import ErrorComponent from "@/components/shared/error/Error";
 
 export default function Register() {
   const { setIsLogged } = useAuthContext();
@@ -71,14 +72,7 @@ export default function Register() {
             />
           </div>
           <button disabled={ isDisable } onClick={(e) => handleClick(e.target)} type="button" className="my-10 w-full text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-50">Entrar</button>
-          {isError && <div role="alert">
-            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
-              Erro!
-            </div>
-            <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
-              <p>{errorMessage}</p>
-            </div>
-          </div>}
+          {isError && <ErrorComponent errorMessage={errorMessage}/>}
         </form>
       </div>
     </div>

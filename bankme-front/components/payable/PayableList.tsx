@@ -1,5 +1,6 @@
 import { getPayables } from "@/services/payable";
 import { useEffect, useState } from "react";
+import ErrorComponent from "../shared/error/Error";
 import TableItem from "./components/TableItem";
 
 export default function ListPayable() {
@@ -58,14 +59,7 @@ export default function ListPayable() {
               return <TableItem key={index} item={item} />
             })}
         </tbody>
-        {isError && <div role="alert">
-            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
-              Erro!
-            </div>
-            <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
-              <p>{errorMessage}</p>
-            </div>
-          </div>}
+        {isError && <ErrorComponent errorMessage={errorMessage}/>}
       </table>
     </div>
   );
