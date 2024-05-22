@@ -39,7 +39,7 @@ export function AddPayableDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Adicionar pagável</Button>
+        <Button size="sm">Adicionar pagável</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">

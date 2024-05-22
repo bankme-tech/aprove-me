@@ -12,6 +12,7 @@ import { DeletePayableDialog } from "./deletePayableDialog/deletePayableDialog";
 import { Payable } from "@/types/payables";
 import { EditPayableDialog } from "./editPayableDialog/editPayableDialog";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { DetailsPayableDialog } from "./detailsPayableDialog/detailsPayableDialog";
 
 interface PayableMenuProps {
   payable: Payable;
@@ -29,6 +30,12 @@ export const PayableMenu = ({ payable }: PayableMenuProps) => {
 
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Ações disponíveis</DropdownMenuLabel>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem onSelect={(ev) => ev.preventDefault()}>
+            <DetailsPayableDialog payable={payable} />
+          </DropdownMenuItem>
 
           <DropdownMenuSeparator />
 

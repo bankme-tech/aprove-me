@@ -36,7 +36,7 @@ export function AddAssignorDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Adicionar cedente</Button>
+        <Button size="sm">Adicionar cedente</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
