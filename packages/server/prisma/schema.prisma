@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Assignor {
-  id          String       @id @default(uuid())
+  id          String       @id @default(uuid()) @unique
   document    String       @unique
   email       String       @unique
   phone       String       @unique
@@ -19,12 +19,10 @@ model Assignor {
 }
 
 model Receivable {
-  id           String   @id @default(uuid())
+  id           String   @id @default(uuid()) @unique
   value        Float
-  value_cents  Int
   emissionDate DateTime
   assignorId   String
-  assignor     Assignor @relation(fields: [assignorId], references: [id])
-
+  assignor     Assignor @relation(fields: [assignorId], references: [id], onDelete: Cascade)
   @@map("receivables")
 }
