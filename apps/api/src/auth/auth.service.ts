@@ -1,8 +1,13 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthDto } from './dto/authenticate-auth.dto';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
+import { AuthenticateDto } from './dto/authenticate-auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
-import { compare, compareSync, hash } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
+import { RegisterDto } from './dto/register-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -11,34 +16,46 @@ export class AuthService {
     private prisma: PrismaService,
   ) {}
 
-  async signIn({ login, password }: AuthDto) {
-    const admin = await this.prisma.admin.findUnique({
-      where: { login },
+  async signIn({ email, password }: AuthenticateDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { email },
       select: {
         id: true,
         password: true,
       },
     });
 
-    if (!admin) {
-      throw new UnauthorizedException('Unauthorized');
+    if (!user) {
+      throw new UnauthorizedException('Wrong email or password');
     }
 
-    const match = await compare(password, admin.password);
+    const match = await compare(password, user.password);
     if (!match) {
-      throw new UnauthorizedException('Unauthorized');
+      throw new UnauthorizedException('Wrong email or password');
     }
 
     return {
-      token: await this.jwtService.signAsync({}),
+      token: await this.jwtService.signAsync({ id: user.id }),
     };
   }
 
-  async signUp({ login, password }: AuthDto) {
+  async signUp({ email, name, password }: RegisterDto) {
+    const userExists = await this.prisma.user.findUnique({
+      where: { email },
+      select: {
+        id: true,
+      },
+    });
+
+    if (userExists) {
+      throw new ConflictException();
+    }
+
     const hashedPassword = await hash(password, 8);
-    await this.prisma.admin.create({
+    const { id } = await this.prisma.user.create({
       data: {
-        login,
+        email,
+        name,
         password: hashedPassword,
       },
       select: {
@@ -47,7 +64,7 @@ export class AuthService {
     });
 
     return {
-      token: await this.jwtService.signAsync({}),
+      token: await this.jwtService.signAsync({ id }),
     };
   }
 }

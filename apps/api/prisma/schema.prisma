@@ -13,10 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
-  id       String @id @default(uuid())
-  login    String @unique
-  password String
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  payables  Payable[]
+  assignors Assignor[]
+
+  @@map("users")
 }
 
 model Assignor {
@@ -26,6 +33,10 @@ model Assignor {
   phone    String    @unique
   name     String
   Payable  Payable[]
+  User     User      @relation(fields: [userId], references: [id])
+  userId   String
+
+  @@map("assignors")
 }
 
 model Payable {
@@ -34,4 +45,9 @@ model Payable {
   emissionDate DateTime
   assignor     Assignor @relation(fields: [assignorId], references: [id])
   assignorId   String
+
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map("payables")
 }
