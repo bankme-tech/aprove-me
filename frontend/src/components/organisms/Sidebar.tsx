@@ -4,9 +4,9 @@ import { SidebarLine } from "../molecules/SidebarLine";
 export const Sidebar = () => {
   const lines = useMemo(
     () => [
-      { title: "Pagáveis", icon: "" },
-      { title: "Cedentes", icon: "" },
-      { title: "Log Out", icon: "" },
+      { title: "Pagáveis", icon: "", link: "/payable" },
+      { title: "Cedentes", icon: "", link: "/assignor" },
+      { title: "Log Out", icon: "", link: "#" },
     ],
     []
   );
@@ -20,7 +20,7 @@ export const Sidebar = () => {
       </div>
       <nav className="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
         {lines.map((line) => (
-          <SidebarLine key={line.title} title={line.title} />
+          <SidebarLine key={line.title} title={line.title} link={line.link} />
         ))}
       </nav>
     </div>
