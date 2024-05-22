@@ -20,31 +20,39 @@ export class PayablesController {
 
   @Post()
   @ApiCreatedResponse({ type: PayableEntity })
-  create(@Body() createPayableDto: CreatePayableDto) {
-    return this.payablesService.create(createPayableDto);
+  async create(@Body() createPayableDto: CreatePayableDto) {
+    return new PayableEntity(
+      await this.payablesService.create(createPayableDto),
+    );
   }
 
   @Get()
   @ApiOkResponse({ type: PayableEntity, isArray: true })
-  findAll() {
-    return this.payablesService.findAll();
+  async findAll() {
+    const payables = await this.payablesService.findAll();
+    return payables.map((payable) => new PayableEntity(payable));
   }
 
   @Get(':id')
   @ApiOkResponse({ type: PayableEntity })
-  findOne(@Param('id') id: string) {
-    return this.payablesService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    return new PayableEntity(await this.payablesService.findOne(id));
   }
 
   @Patch(':id')
   @ApiOkResponse({ type: PayableEntity })
-  update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
-    return this.payablesService.update(id, updatePayableDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updatePayableDto: UpdatePayableDto,
+  ) {
+    return new PayableEntity(
+      await this.payablesService.update(id, updatePayableDto),
+    );
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: PayableEntity })
-  remove(@Param('id') id: string) {
-    return this.payablesService.remove(id);
+  async remove(@Param('id') id: string) {
+    return new PayableEntity(await this.payablesService.remove(id));
   }
 }
