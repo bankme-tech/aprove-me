@@ -1,6 +1,6 @@
 import { UUID } from 'crypto';
 
-export class Assignor {
+export class AssignorEntity {
   public id: UUID;
   public document: string;
   public email: string;
