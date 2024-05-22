@@ -23,6 +23,11 @@ import { PrismaAssignorsRepository } from "./repositories/prisma-assignors-repos
       useClass: PrismaAssignorsRepository,
     },
   ],
-  exports: [UsersRepository, PayablesRepository, AssignorsRepository],
+  exports: [
+    PrismaService,
+    UsersRepository,
+    PayablesRepository,
+    AssignorsRepository,
+  ],
 })
 export class DatabaseModule {}

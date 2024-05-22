@@ -12,10 +12,15 @@ import { RegisterUserService } from "@/domain/account/application/services/regis
 import { AuthenticateUserService } from "@/domain/account/application/services/authenticate-user";
 import { ReceivePayableAndAssignorController } from "./controllers/receive-payable-and-assignor.controller";
 import { CreateAccountController } from "./controllers/create-account.controller";
+import { AuthenticateController } from "./controllers/authenticate.controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
-  controllers: [ReceivePayableAndAssignorController, CreateAccountController],
+  controllers: [
+    ReceivePayableAndAssignorController,
+    CreateAccountController,
+    AuthenticateController,
+  ],
   providers: [
     //Account Services
     RegisterUserService,

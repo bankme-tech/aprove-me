@@ -13,7 +13,8 @@ const env = envSchema.parse(process.env);
 
 const prisma = new PrismaClient();
 
-beforeAll(async () => {
+beforeEach(async () => {
+  prisma.$connect;
   try {
     // Executar migrações no banco de dados de teste
     execSync("npx prisma migrate deploy");
@@ -22,7 +23,7 @@ beforeAll(async () => {
   }
 });
 
-afterAll(async () => {
+afterEach(async () => {
   try {
     // Apagar todas as linhas de todas as tabelas
     const tables = await prisma.$queryRaw<{ name: string }[]>`
