@@ -8,8 +8,8 @@ import { Reflector } from '@nestjs/core';
 
 import { none, some, IEither, right, left } from '@bankme/monads';
 import { EnvService } from '@bankme/nestjs-env';
-
 import { Id } from '@bankme/domain';
+
 import { InvalidOrMissingAuthenticationTokenException } from '@domain/auth/exceptions/invalid-or-missing-authentication-token.exception';
 
 import {

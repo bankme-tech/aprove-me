@@ -4,7 +4,7 @@ import { EnvService } from '@bankme/nestjs-env';
 import { IToken } from '@bankme/domain';
 
 import { User } from '@prisma/client';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class LoginUseCase {

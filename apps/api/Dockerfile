@@ -16,7 +16,7 @@ ENV JWT_EXPIRES_IN="1m"
 
 FROM base AS build
 RUN pnpm install
-RUN npx prisma generate
+RUN npx prisma migrate dev
 RUN pnpm build
 
 WORKDIR /app/apps/api

@@ -12,7 +12,7 @@ import {
   USER_REPOSITORY,
 } from '@infra/user/repositories/user.repository';
 
-import bcryptjs from 'bcryptjs';
+import * as bcryptjs from 'bcryptjs';
 
 @Injectable()
 export class LocalGuard implements CanActivate {
@@ -24,7 +24,7 @@ export class LocalGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
     const user = await this._userRepository.findOneByUsername(
-      request.body!['login'],
+      request.body!['username'],
     );
     if (user.isNone()) {
       throw new InvalidUsernameOrPasswordException();

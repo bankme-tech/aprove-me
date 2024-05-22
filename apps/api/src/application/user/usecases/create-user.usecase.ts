@@ -18,7 +18,7 @@ export class CreateUserUseCase {
   ) {}
 
   async create(data: ICreateUser): Promise<User> {
-    const { username, password } = data;
+    const { username: username, password } = data;
     if (await this._hasUserWithUsername(username)) {
       throw DuplicatedUsernameException.withUsername(username);
     }
