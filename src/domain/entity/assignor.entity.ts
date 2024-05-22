@@ -1,7 +1,8 @@
-import { CpfVO, EmailVO, PhoneVO, UniqueEntityIdVO } from "../common/value-object";
-import { Entity } from "./entity";
-import { CnpjVO } from "../common/value-object/cnpj.vo";
+import { AggregateRoot } from "./aggregate-root";
+
 import { InvalidFieldError } from "../common/exception";
+import { CnpjVO, CpfVO, EmailVO, PhoneVO, UniqueEntityIdVO } from "../common/value-object";
+import { ReceivableProps, ReceivableEntity } from "./receivable.entity";
 
 export type AssignorProps = {
   id?: string;
@@ -11,12 +12,13 @@ export type AssignorProps = {
   name: string;
 }
 
-export class AssignorEntity extends Entity {
+export class AssignorEntity extends AggregateRoot {
   readonly id: UniqueEntityIdVO;
   readonly document: CpfVO | CnpjVO;
   readonly email: EmailVO;
   readonly phone: PhoneVO;
-  readonly name: string;  
+  readonly name: string;
+  private _receivables: ReceivableEntity[];
 
   constructor(props: AssignorProps){
     super();
@@ -25,11 +27,20 @@ export class AssignorEntity extends Entity {
     this.email = new EmailVO(props.email);
     this.phone = new PhoneVO(props.phone);
     this.name = props.name;
+    this._receivables = [];
   }
 
   static create(props: Omit<AssignorProps, 'id'>): AssignorEntity {
     return new AssignorEntity(props);
   };
+
+  addReceivable(command: ReceivableProps): void {
+    this._receivables.push(ReceivableEntity.create(command));
+  }
+
+  get receivables(): ReceivableEntity[] {
+    return this._receivables;
+  }
 
   toJSON() {
     return {
@@ -37,7 +48,8 @@ export class AssignorEntity extends Entity {
       document: this.document.value,
       email: this.email.value,
       phone: this.phone.value,
-      name: this.name
+      name: this.name,
+      receivables: this._receivables.map((receivable) => receivable.toJSON())
     }
   }
 
