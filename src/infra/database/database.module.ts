@@ -4,6 +4,8 @@ import { PrismaAssignorsRepository } from './prisma/repositories/prisma-assignor
 import { AssignorsRepository } from 'src/domain/operations/application/repositories/assignor-repository';
 import { ReceivableRepository } from 'src/domain/operations/application/repositories/receivable-repository';
 import { PrismaReceivableRepository } from './prisma/repositories/prisma-receivable-repository.ts';
+import { AccountsRepository } from 'src/domain/operations/application/repositories/account-repository';
+import { PrismaAccountsRepository } from './prisma/repositories/prisma-account-repository';
 
 @Module({
   providers: [
@@ -15,12 +17,17 @@ import { PrismaReceivableRepository } from './prisma/repositories/prisma-receiva
     {
       provide: ReceivableRepository,
       useClass: PrismaReceivableRepository
+    },
+    {
+      provide: AccountsRepository,
+      useClass: PrismaAccountsRepository
     }
   ],
   exports: [
     PrismaService,
     AssignorsRepository,
-    ReceivableRepository
+    ReceivableRepository,
+    AccountsRepository
   ]
 })
 export class DatabaseModule {}

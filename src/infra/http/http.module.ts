@@ -17,6 +17,10 @@ import { EditAssignorController } from './controllers/edit-assignor.controller';
 import { EditRecevableController } from './controllers/edit-payable.controller';
 import { DeleteAssignorController } from './controllers/delete-assignor.controller';
 import { DeleteReceivableController } from './controllers/delete-payable.controller';
+import { CreateAccountController } from './controllers/create-account.controller';
+import { CreateAccountUseCase } from 'src/domain/operations/application/use-cases/authentication/use-cases/create-account';
+import { AuthenticateAccountUseCase } from 'src/domain/operations/application/use-cases/authentication/use-cases/authenticate';
+import { AuthenticateController } from './controllers/authenticate.controller';
 
 @Module({
   imports: [
@@ -26,6 +30,9 @@ import { DeleteReceivableController } from './controllers/delete-payable.control
     CreatePayableController,
     CreateAssignorController,
     CreateOnlyPayableController,
+    CreateAccountController,
+
+    AuthenticateController,
 
     EditAssignorController,
     EditRecevableController,
@@ -46,6 +53,9 @@ import { DeleteReceivableController } from './controllers/delete-payable.control
     EditReceivableUseCase,
     DeleteReceivableUseCase,
     GetReceivableUseCase,
+
+    CreateAccountUseCase,
+    AuthenticateAccountUseCase
   ]
 })
 export class HttpModule {}
