@@ -31,7 +31,7 @@ export default function Header() {
           <FiMenu size={24} />
         </button>
 
-        <ul className={"flex gap-6 flex-col md:flex-row absolute md:static top-12 py-4 px-12 md:p-0 shadow-md md:shadow-none right-0 md:bg-transparent bg-HeaderBgColor " + (isMenuOpen ? '' : 'hidden md:flex')}>
+        <ul className={"flex gap-6 flex-col md:flex-row absolute md:static top-12 py-4 px-12 md:p-0 shadow-md md:shadow-none right-0 md:bg-transparent bg-HeaderBgColor z-50 " + (isMenuOpen ? '' : 'hidden md:flex')}>
           <MenuItem to="/payables/new" setIsMenuOpen={setIsMenuOpen}>Cadastrar Pagável</MenuItem>
           <MenuItem to="/assignor/new" setIsMenuOpen={setIsMenuOpen}>Cadastrar Cedente</MenuItem>
           <MenuItem to="/payables" setIsMenuOpen={setIsMenuOpen}>Lista de Pagáveis</MenuItem>

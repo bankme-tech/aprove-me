@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { PayableSchema, PayableType, payableSchema } from '../types';
 import { useState } from 'react';
 import Title from '../components/ui/title';
@@ -8,14 +8,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '../components/ui/input';
 import Button from '../components/ui/button';
 import ErrorMessage from '../components/ui/errorMessage';
-import { editPayable, getPayable } from '../services/payable';
+import { deletePayable, editPayable, getPayable } from '../services/payable';
 import { UUID } from 'crypto';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function ViewPayable() {
   const { id } = useParams<{ id: UUID }>();
+  const location = useLocation();
+  const title = location.state?.title;
   const [isDirty, setIsDirty] = useState(false)
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -37,6 +40,7 @@ export default function ViewPayable() {
       }
     },
   })
+
   const onSubmit: SubmitHandler<PayableSchema> = async (data) => {
     if (
       new Date(data.emissionDate).toISOString().substring(0, 10) as unknown as Date === defaultValues?.emissionDate &&
@@ -56,6 +60,13 @@ export default function ViewPayable() {
       setIsDirty(false)
       toast.success("Alterações salvas", {
         position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light"
       });
     } catch (error) {
       setError("root", { message: 'Erro ao salvar as alterações.' })
@@ -67,10 +78,31 @@ export default function ViewPayable() {
     setError("root", { message: 'Preencha todos os campos corretamente para salvar.' })
   }
 
+  const onDelete = async () => {
+    try {
+      const res = await deletePayable(id as UUID)
+      toast.success("Pagável deletado", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light"
+      });
+      setTimeout(() => {
+        navigate(-1);
+      }, 1100);
+    } catch (error) {
+      setError("root", { message: 'Erro ao deletar o pagável.' })
+    }
+  }
+
   return (
     <div className='flex flex-col items-center w-full gap-6'>
-      <ToastContainer />
-      <Title>Pagável criado:</Title>
+      <Title>{title}</Title>
+
       <FormCard>
         <form onSubmit={handleSubmit(onSubmit, onError)} className="flex flex-col gap-3">
           <ErrorMessage error={errors.root} />
@@ -81,13 +113,13 @@ export default function ViewPayable() {
           />
           <Input
             label='Valor'
-            register={register('value', {onChange: () => setIsDirty(true)})}
+            register={register('value', { onChange: () => setIsDirty(true) })}
 
           />
           <Input
             label='Data de emissão'
             type="date"
-            register={register('emissionDate', {onChange: () => setIsDirty(true)})}
+            register={register('emissionDate', { onChange: () => setIsDirty(true) })}
           />
           <Input
             label='Cedente'
@@ -96,13 +128,23 @@ export default function ViewPayable() {
           <Button
             className={isDirty ?
               '' :
-              'bg-opacity-40 hover:bg-opacity-45'
+              'bg-opacity-40 hover:bg-opacity-40'
             }
           >
             Salvar alterações
           </Button>
+          <Button
+            onClick={onDelete}
+            className='bg-red-500'
+          >
+            Deletar
+          </Button>
         </form>
+
+
       </FormCard>
+
+      <ToastContainer />
     </div>
   )
 }

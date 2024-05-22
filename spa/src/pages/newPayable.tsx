@@ -74,9 +74,9 @@ export default function NewPayable() {
         },
         assignorData
       })
-      toast.success("Pagável criado!", {
+      toast.loading("Cadastrando pagável...", {
         position: "top-center",
-        autoClose: 1200,
+        autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
@@ -85,8 +85,8 @@ export default function NewPayable() {
         theme: "light"
       });
       setTimeout(() => {
-        navigate(`/payable/view/${data.id}`);
-      }, 1300);
+        navigate(`/payable/view/${data.id}`, {state: {title: 'Pagável criado:'}});
+      }, 1400);
     } catch (error) {
       console.log(error)
       payableSetError("root", { message: 'Erro ao cadastrar pagável' })
@@ -122,7 +122,6 @@ export default function NewPayable() {
 
   return (
     <div className="flex flex-col items-center w-full gap-6">
-      <ToastContainer />
       <Title>Cadastre um pagável:</Title>
 
       <FormCard>
@@ -149,6 +148,7 @@ export default function NewPayable() {
         </form>
 
       </FormCard>
+      <ToastContainer />
     </div>
   )
 }

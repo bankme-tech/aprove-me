@@ -3,6 +3,7 @@ import ProtectedRoute from "./protectedRoute";
 import Login from "../pages/login";
 import NewPayable from "../pages/newPayable";
 import ViewPayables from "../pages/viewPayable";
+import Payables from "../pages/payables";
 
 export default function AppRouter() {
 	return (
@@ -12,7 +13,7 @@ export default function AppRouter() {
 				path="/payables"
 				element={
 					<ProtectedRoute>
-						<span>Pagaveis</span>
+						<Payables />
 					</ProtectedRoute>
 				}
 			/>
