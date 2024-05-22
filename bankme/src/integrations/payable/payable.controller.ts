@@ -8,15 +8,15 @@ import {
   Put,
 } from '@nestjs/common';
 import { PayableService } from './payable.service';
-import PayableDto from '../dto/PayableDto';
 import Payable from '../entity/Payable';
+import PayableCreationDto from '../dto/PayableCreationDto';
 
 @Controller('integrations/payable')
 export class PayableController {
   constructor(private payableService: PayableService) {}
 
   @Post('/')
-  async createPayableRegister(@Body() payableBody: PayableDto) {
+  async createPayableRegister(@Body() payableBody: PayableCreationDto) {
     const payable: Payable = payableBody.toEntity();
     const responsePayable =
       await this.payableService.createPayableRegister(payable);
@@ -34,7 +34,7 @@ export class PayableController {
   @Put('/:id')
   async updatePayableById(
     @Param('id') id: string,
-    @Body() payableBody: PayableDto,
+    @Body() payableBody: PayableCreationDto,
   ) {
     const payable: Payable = payableBody.toEntity();
     const responsePayable = await this.payableService.updatePayableById(
