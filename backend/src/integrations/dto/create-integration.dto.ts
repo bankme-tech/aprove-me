@@ -1,17 +1,13 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import {
   IsNotEmpty,
   IsUUID,
   IsNumber,
   MaxLength,
   IsEmail,
-  IsDate,
 } from 'class-validator';
 
 export class UpdatePayableDto {
-  @Exclude()
-  id: string;
-
   @Expose()
   @IsNotEmpty()
   @IsNumber()
@@ -19,7 +15,7 @@ export class UpdatePayableDto {
 
   @Expose()
   @IsNotEmpty()
-  @IsDate()
+  @Type(() => Date)
   emissionDate: Date;
 
   @Expose()
@@ -41,7 +37,7 @@ export class CreatePayableDto {
 
   @Expose()
   @IsNotEmpty()
-  @IsDate()
+  @Type(() => Date)
   emissionDate: Date;
 
   @Expose()
@@ -51,9 +47,6 @@ export class CreatePayableDto {
 }
 
 export class UpdateAssignorDto {
-  @Exclude()
-  id: string;
-
   @Expose()
   @IsNotEmpty()
   @MaxLength(30)
