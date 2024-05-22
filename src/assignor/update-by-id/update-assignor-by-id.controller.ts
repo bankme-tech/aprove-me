@@ -2,10 +2,10 @@ import { Body, Controller, Param, ParseUUIDPipe, Put } from "@nestjs/common";
 import type { Assignor } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
+import { AssignorDTO } from "../assignor.dto";
 import { FindAssignorByIdPipe } from "../find-by-id/find-assignor-by-id.pipe";
 import { UpdateAssignorByIdInputDTO } from "./update-assignor-by-id-input.dto";
 import { UpdateAssignorByIdInputPipe } from "./update-assignor-by-id-input.pipe";
-import { UpdateAssignorByIdOutputDTO } from "./update-assignor-by-id-output.dto";
 
 @Controller()
 export class UpdateAssignorByIdController {
@@ -33,12 +33,12 @@ export class UpdateAssignorByIdController {
       },
     });
 
-    return new UpdateAssignorByIdOutputDTO(
-      assignor.id,
-      input.document,
-      input.email,
-      input.phone,
-      input.name,
-    );
+    return new AssignorDTO({
+      id: assignor.id,
+      document: input.document,
+      email: input.email,
+      phone: input.phone,
+      name: input.name,
+    });
   }
 }
