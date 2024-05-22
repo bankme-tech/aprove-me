@@ -11,6 +11,7 @@ import { IAssignorRepository } from '~/modules/assignor/repositories/interfaces/
 import { InMemoryAssignorRepository } from '~/modules/assignor/repositories/in-memory/assignor.repository';
 import { makeAssignor } from '~/modules/assignor/test/factories/make-assignor';
 import { randomUUID } from 'crypto';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 // Bull does not export these libs as module
 const Job = require('bull/lib/job');
@@ -25,6 +26,7 @@ describe('RegisterBatchPayableConsumer', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [EventEmitterModule.forRoot({ global: true })],
       providers: [
         RegisterBatchPayableConsumer,
         RegisterPayableService,

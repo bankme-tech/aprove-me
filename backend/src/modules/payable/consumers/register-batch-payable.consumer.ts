@@ -4,14 +4,20 @@ import {
   OnQueueFailed,
   OnQueueCompleted,
 } from '@nestjs/bull';
-import { Job } from 'bull';
+import { Job, Queue } from 'bull';
 import { PayableJob } from '~/common/types/payable.types';
 import { QueuesName } from '~/common/types/queues';
 import { RegisterPayableService } from '../services/register-payable/register-payable.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { NotificationsName } from '~/common/types/events';
+import { NotificationSuccessPayableBatchEvent } from '~/modules/notification/events/notification-success-payable-batch.event';
 
 @Processor(QueuesName.PAYABLE)
 export class RegisterBatchPayableConsumer {
-  constructor(private service: RegisterPayableService) {}
+  constructor(
+    private service: RegisterPayableService,
+    private eventEmitter: EventEmitter2,
+  ) {}
 
   @Process()
   async process(job: Job<PayableJob>) {
@@ -25,7 +31,7 @@ export class RegisterBatchPayableConsumer {
       return;
     }
 
-    await job.moveToCompleted();
+    await job.moveToCompleted(result.value.id);
   }
 
   @OnQueueCompleted()
@@ -40,13 +46,45 @@ export class RegisterBatchPayableConsumer {
 
     if (hasJobFromSameBatch) return;
 
-    // TODO: Implements event to send email
-    return true;
+    /**
+     * In a big application might save the prefixes in a KV DB
+     * is more recommend to increase the performance of many items.
+     */
+    const completedJobs = await this.countCompletedJobsFromBatch(
+      job.queue,
+      prefix,
+    );
+    const failedJobs = await this.countFailedJobsFromBatch(job.queue, prefix);
+
+    this.eventEmitter.emit(
+      NotificationsName.SUCCESS_PAYABLE_BATCH,
+      new NotificationSuccessPayableBatchEvent(
+        completedJobs,
+        failedJobs,
+        job.data.assignorId,
+      ),
+    );
   }
 
   @OnQueueFailed()
   async onFailure(job: Job<PayableJob>) {
     // TODO: Implements event to send email to developer team
     console.log('failed job', job);
+  }
+
+  private async countCompletedJobsFromBatch(
+    queue: Queue<PayableJob>,
+    prefix: string,
+  ) {
+    const jobs = await queue.getCompleted();
+    return jobs.filter((job) => job.name.startsWith(prefix)).length;
+  }
+
+  private async countFailedJobsFromBatch(
+    queue: Queue<PayableJob>,
+    prefix: string,
+  ) {
+    const jobs = await queue.getFailed();
+    return jobs.filter((job) => job.name.startsWith(prefix)).length;
   }
 }
