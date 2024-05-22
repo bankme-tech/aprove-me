@@ -16,3 +16,5 @@ export class Payable {
     this.assignorId = assignorId;
   }
 }
+
+// Created according to the README instructions to what the database should look like.
