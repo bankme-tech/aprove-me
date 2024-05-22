@@ -40,6 +40,18 @@ export const getPayable = async (id: UUID) => {
   return response.json();
 }
 
+export const getAllPayables = async (skip: number, take: number) => {
+  const token = localStorage.getItem('accessToken');
+  const response = await fetchAPI(`payable?skip=${skip}&take=${take}&orderDate=desc`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  return response.json();
+}
+
 export const editPayable = async (receivableData: PayableType) => {
   const token = localStorage.getItem('accessToken');
   const response = await fetchAPI(`payable/${receivableData.id}`, {
@@ -49,6 +61,18 @@ export const editPayable = async (receivableData: PayableType) => {
       'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify(receivableData)
+  })
+  return response.json();
+}
+
+export const deletePayable = async (id: UUID) => {
+  const token = localStorage.getItem('accessToken');
+  const response = await fetchAPI(`payable/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
   })
   return response.json();
 }
