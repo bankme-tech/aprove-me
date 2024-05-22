@@ -13,7 +13,9 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "DEBUG=eslint:cli-engine eslint src",
-    "test": "jest"
+    "test": "jest",
+    "migrate:dev": "prisma migrate dev",
+    "db:push": "prisma db push"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.8",
