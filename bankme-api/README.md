@@ -4,6 +4,12 @@
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
+## Configuração .ENV
+Antes de qualquer coisa, crie um .env nesse formato:
+```bash
+DATABASE_URL="file:./dev.db"
+SECRET_KEY="SUACHAVEULTRASECRETA"
+```
 
 ## Utilizando o docker
 
