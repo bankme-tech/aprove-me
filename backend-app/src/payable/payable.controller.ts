@@ -11,6 +11,10 @@ import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 
+// CRUD with validations created with "nest g resource payable".
+// It creates the controller as well as the service layer.
+// Adjusted the routes to match "/integrations/payable"
+
 @Controller('integrations')
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
