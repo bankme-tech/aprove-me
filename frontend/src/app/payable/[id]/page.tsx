@@ -38,7 +38,6 @@ export default function PayableDetails({params}: PayableDetailsProps) {
             </Link>
             <h1 className="text-3xl mb-8 font-bold">Payable Details</h1>
             <div>
-                Edit
             </div>
         </div>
         {data && (

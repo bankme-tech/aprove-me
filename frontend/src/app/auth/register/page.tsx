@@ -19,19 +19,17 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AuthFormData, authFormSchema } from "@/schemas/auth-schemas";
 import { api } from "@/api/api";
-import { useAuth } from "./useAuth";
+
 import { AxiosError } from "axios";
 import { Loading } from "@/components/Loading";
 import Link from "next/link";
 
 
 
-export default function Login() {
+export default function Register() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [loginError, setLoginError] = useState<string | null>(null);
+  const [registerError, setRegisterError] = useState<string | null>(null);
   const router = useRouter();
-  const { updateSession } = useAuth();
-  console.log(updateSession)
   const form = useForm<AuthFormData>({
     resolver: zodResolver(authFormSchema),
     defaultValues: {
@@ -40,19 +38,18 @@ export default function Login() {
     },
   });
 
-  async function signIn({ login, password }: AuthFormData) {
+  async function register({ login, password }: AuthFormData) {
     try {
       setIsLoading(true);
-      const {data} = await api.post<{ access_token: string }>("/auth", {login, password});
-      updateSession(data.access_token);
-      router.push("/");
+      await api.post("/user", {login, password});
+      router.push("/auth");
     }
     catch (error) {
-      if ((error as AxiosError).response?.status === 401) {
-        setLoginError("Invalid login or password");
+      if ((error as AxiosError).response?.status === 409) {
+        setRegisterError("User already exists");
       } else {
         console.log(error)
-        setLoginError("Something went wrong");
+        setRegisterError("Something went wrong");
       }
     }
     finally {
@@ -62,7 +59,7 @@ export default function Login() {
 
   const handleSubmit = async (formData: AuthFormData) => {
     const { login, password } = formData;
-     await signIn({ login, password });
+     await register({ login, password });
   };
   return (
     <div className="flex min-h-screen max-h-screen flex-col items-center justify-center p-24">
@@ -73,7 +70,7 @@ export default function Login() {
               <Image src="/logo-bankme.png" width={50} height={50} alt="logo" />
             </div>
             <h1 className="text-3xl font-semibold tracking-tight">
-            Sign in 
+            Register 
             </h1>
           </div>
           <Form {...form}>
@@ -115,7 +112,7 @@ export default function Login() {
                   );
                 }}
               />
-              {loginError && <p className="text-red-500">{loginError}</p>}
+              {registerError && <p className="text-red-500">{registerError}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? <Loading /> : "Entrar"}
               </Button>
@@ -123,12 +120,12 @@ export default function Login() {
           </Form>
           <div className="flex flex-col space-y-2 text-center items-center mb-10">
             <p className="px-8 text-center text-sm text-muted-foreground">
-              ​ Dont have an account? {" "}
+              ​ Already have an account? {" "}
               <Link
                 className="underline underline-offset-4 hover:text-primary text-blue-500"
-                href={"/auth/register"}
+                href={"/auth"}
               >
-                Register
+                Login
               </Link>
               .
             </p>
