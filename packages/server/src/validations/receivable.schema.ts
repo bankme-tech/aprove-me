@@ -8,6 +8,7 @@ export const receivableSchema = z
       })
       .min(0, 'Value must be positive'),
     emissionDate: z.string().datetime({
+      offset: true,
       message: 'Invalid emission date',
     }),
     assignorId: z.string().uuid({ message: 'Invalid assignor id' }),
@@ -27,7 +28,8 @@ export const updateReceivableSchema = z.object({
     .min(0, 'Value must be positive')
     .optional(),
   emissionDate: z
-    .date({
+    .string()
+    .datetime({
       message: 'Invalid emission date',
     })
     .optional(),
