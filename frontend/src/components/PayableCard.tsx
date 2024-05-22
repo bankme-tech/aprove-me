@@ -26,7 +26,7 @@ export function PayableCard({ id, value, date }: PayableCardProps) {
             href={`/payable/${id}`}
             className="text-blue-500 underline hover:text-blue-400 mt-4"
         >
-            <SquareArrowOutUpRight/>
+            Details
         </Link>
         
     </div>
