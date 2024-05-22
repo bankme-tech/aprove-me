@@ -34,7 +34,7 @@ export class UpdatePayableByIdController {
 
       const input = new UpdatePayableByIdInputDTO(requestBody);
 
-      const updatedPayable = await this.prisma.payable.update({
+      await this.prisma.payable.update({
         data: {
           value: input.value,
           emissionDate: input.emissionDate,
@@ -46,10 +46,10 @@ export class UpdatePayableByIdController {
       });
 
       return new UpdatePayableByIdOutputDTO(
-        updatedPayable.id,
-        updatedPayable.value,
-        updatedPayable.emissionDate,
-        updatedPayable.assignorId,
+        id,
+        input.value,
+        input.emissionDate,
+        input.assignorId,
       );
     } catch (error) {
       if (error instanceof ValidationError) {
