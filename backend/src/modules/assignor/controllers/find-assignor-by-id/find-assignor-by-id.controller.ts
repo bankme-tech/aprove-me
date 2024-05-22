@@ -10,9 +10,19 @@ import {
 } from '@nestjs/common';
 import { FindAssignorByIdService } from '../../services/find-assignor-by-id/find-assignor-by-id.service';
 import { NotFoundResource } from '~/common/exceptions/not-found-resource.exception';
-import { ResponsePresenter } from './response.presenter';
 import { AuthGuard } from '~/modules/auth/guards/auth.guard';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { FindAssignorByIdResponseSchema } from './respose.schema';
+import { plainToInstance } from 'class-transformer';
 
+@ApiTags('Assignor')
+@ApiBearerAuth()
 @Controller('/integrations/assignor')
 export class FindAssignorByIdController {
   constructor(private service: FindAssignorByIdService) {}
@@ -20,7 +30,15 @@ export class FindAssignorByIdController {
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
-  async handle(@Param('id', ParseUUIDPipe) id: string) {
+  @ApiOkResponse({
+    description: 'Assignor found.',
+    type: FindAssignorByIdResponseSchema,
+  })
+  @ApiNotFoundResponse({ description: 'Assignor not found.' })
+  @ApiBadRequestResponse({ description: 'Bad request.' })
+  async handle(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<FindAssignorByIdResponseSchema> {
     const result = await this.service.execute({ id: id });
 
     if (result.isLeft()) {
@@ -33,6 +51,6 @@ export class FindAssignorByIdController {
       }
     }
 
-    return ResponsePresenter.toHTTP(result.value);
+    return plainToInstance(FindAssignorByIdResponseSchema, result.value);
   }
 }

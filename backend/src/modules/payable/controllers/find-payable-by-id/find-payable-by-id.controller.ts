@@ -10,9 +10,18 @@ import {
 } from '@nestjs/common';
 import { FindPayableByIdService } from '../../services/find-payable-by-id/find-payable-by-id.service';
 import { NotFoundResource } from '~/common/exceptions/not-found-resource.exception';
-import { ResponsePresenter } from './response.presenter';
 import { AuthGuard } from '~/modules/auth/guards/auth.guard';
+import {
+  ApiBearerAuth,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { FindByPayableIdResponseSchema } from './response.schema';
+import { plainToInstance } from 'class-transformer';
 
+@ApiTags('Payable')
+@ApiBearerAuth()
 @Controller('/integrations/payable')
 export class FindPayableByIdController {
   constructor(private service: FindPayableByIdService) {}
@@ -20,7 +29,14 @@ export class FindPayableByIdController {
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
-  async handle(@Param('id', ParseUUIDPipe) id: string) {
+  @ApiOkResponse({
+    description: 'Payable found.',
+    type: FindByPayableIdResponseSchema,
+  })
+  @ApiNotFoundResponse({ description: 'Payable not found.' })
+  async handle(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<FindByPayableIdResponseSchema> {
     const result = await this.service.execute({ id: id });
 
     if (result.isLeft()) {
@@ -33,6 +49,6 @@ export class FindPayableByIdController {
       }
     }
 
-    return ResponsePresenter.toHTTP(result.value);
+    return plainToInstance(FindByPayableIdResponseSchema, result.value);
   }
 }

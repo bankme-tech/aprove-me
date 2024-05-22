@@ -7,9 +7,18 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { GetAssignorsService } from '../../services/get-assignors/get-assignors.service';
-import { ResponsePresenter } from './response.presenter';
 import { AuthGuard } from '~/modules/auth/guards/auth.guard';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { GetAssignorsResponseSchema } from './respose.schema';
+import { plainToInstance } from 'class-transformer';
 
+@ApiTags('Assignor')
+@ApiBearerAuth()
 @Controller('/integrations/assignors')
 export class GetAssignorsController {
   constructor(private service: GetAssignorsService) {}
@@ -17,7 +26,12 @@ export class GetAssignorsController {
   @Get()
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
-  async handle() {
+  @ApiOkResponse({
+    description: 'Assignors found.',
+    type: [GetAssignorsResponseSchema],
+  })
+  @ApiBadRequestResponse({ description: 'Bad request.' })
+  async handle(): Promise<GetAssignorsResponseSchema[]> {
     const result = await this.service.execute();
 
     if (result.isLeft()) {
@@ -27,6 +41,6 @@ export class GetAssignorsController {
       }
     }
 
-    return ResponsePresenter.toHttp(result.value);
+    return plainToInstance(GetAssignorsResponseSchema, result.value);
   }
 }

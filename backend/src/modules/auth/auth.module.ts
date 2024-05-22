@@ -11,7 +11,7 @@ import { HashProvider } from '~/common/providers/hash.provider';
     JwtModule.register({
       global: true,
       secret: process.env.SECRET_KEY,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '30d' },
     }),
   ],
   controllers: [AuthenticateAccountController],

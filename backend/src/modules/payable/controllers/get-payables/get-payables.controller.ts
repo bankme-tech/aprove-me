@@ -7,9 +7,18 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { GetPayablesService } from '../../services/get-payables/get-payables.service';
-import { ResponsePresenter } from './response.presenter';
 import { AuthGuard } from '~/modules/auth/guards/auth.guard';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { GetPayablesResponseSchema } from './response.schema';
+import { plainToInstance } from 'class-transformer';
 
+@ApiTags('Payable')
+@ApiBearerAuth()
 @Controller('/integrations/payables')
 export class GetPayablesController {
   constructor(private service: GetPayablesService) {}
@@ -17,7 +26,12 @@ export class GetPayablesController {
   @Get()
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
-  async handle() {
+  @ApiOkResponse({
+    description: 'Payables found.',
+    type: [GetPayablesResponseSchema],
+  })
+  @ApiBadRequestResponse({ description: 'Bad request.' })
+  async handle(): Promise<GetPayablesResponseSchema[]> {
     const result = await this.service.execute();
 
     if (result.isLeft()) {
@@ -27,6 +41,6 @@ export class GetPayablesController {
       }
     }
 
-    return ResponsePresenter.toHttp(result.value);
+    return plainToInstance(GetPayablesResponseSchema, result.value);
   }
 }

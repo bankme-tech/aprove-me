@@ -10,9 +10,18 @@ import {
 import { RegisterAssignorRequestSchema } from './request.schema';
 import { RegisterAssignorService } from '../../services/register-assignor/register-assignor.service';
 import { InvalidEntityEntry } from '~/common/exceptions/invalid-entity-entry.exception';
-import { ResponsePresenter } from './response.presenter';
 import { AuthGuard } from '~/modules/auth/guards/auth.guard';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { RegisterAssignorResponseSchema } from './response.schema';
+import { plainToInstance } from 'class-transformer';
 
+@ApiTags('Assignor')
+@ApiBearerAuth()
 @Controller('integrations/assignor')
 export class RegisterAssignorController {
   constructor(private service: RegisterAssignorService) {}
@@ -20,7 +29,14 @@ export class RegisterAssignorController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(AuthGuard)
-  async handle(@Body() data: RegisterAssignorRequestSchema) {
+  @ApiCreatedResponse({
+    description: 'Assignor registered.',
+    type: RegisterAssignorResponseSchema,
+  })
+  @ApiBadRequestResponse({ description: 'Bad request.' })
+  async handle(
+    @Body() data: RegisterAssignorRequestSchema,
+  ): Promise<RegisterAssignorResponseSchema> {
     const result = await this.service.execute(data);
 
     if (result.isLeft()) {
@@ -31,6 +47,6 @@ export class RegisterAssignorController {
       }
     }
 
-    return ResponsePresenter.toHTTP(result.value);
+    return plainToInstance(RegisterAssignorResponseSchema, result.value);
   }
 }

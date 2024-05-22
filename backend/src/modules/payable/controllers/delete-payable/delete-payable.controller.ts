@@ -11,7 +11,15 @@ import {
 import { DeletePayableService } from '../../services/delete-payable/delete-payable.service';
 import { NotFoundResource } from '~/common/exceptions/not-found-resource.exception';
 import { AuthGuard } from '~/modules/auth/guards/auth.guard';
+import {
+  ApiBearerAuth,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('Payable')
+@ApiBearerAuth()
 @Controller('/integrations/payable')
 export class DeletePayableController {
   constructor(private service: DeletePayableService) {}
@@ -19,6 +27,8 @@ export class DeletePayableController {
   @Delete('/:id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
+  @ApiOkResponse({ description: 'Payable deleted.' })
+  @ApiNotFoundResponse({ description: 'Payable not found.' })
   async handle(@Param('id', ParseUUIDPipe) id: string) {
     const result = await this.service.execute({
       id,

@@ -10,9 +10,19 @@ import {
 import { RegisterPayableRequestSchema } from './request.schema';
 import { RegisterPayableService } from '../../services/register-payable/register-payable.service';
 import { NotFoundResource } from '~/common/exceptions/not-found-resource.exception';
-import { ResponsePresenter } from './response.presenter';
 import { AuthGuard } from '~/modules/auth/guards/auth.guard';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { RegisterPayableResponseSchema } from './response.schema';
+import { plainToInstance } from 'class-transformer';
 
+@ApiTags('Payable')
+@ApiBearerAuth()
 @Controller('/integrations/payable')
 export class RegisterPayableController {
   constructor(private service: RegisterPayableService) {}
@@ -20,9 +30,15 @@ export class RegisterPayableController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(AuthGuard)
+  @ApiCreatedResponse({
+    description: 'Payable registered.',
+    type: RegisterPayableRequestSchema,
+  })
+  @ApiNotFoundResponse({ description: 'Assignor not found.' })
+  @ApiBadRequestResponse({ description: 'Bad request.' })
   async handle(
     @Body() { assignor, emissionDate, value }: RegisterPayableRequestSchema,
-  ) {
+  ): Promise<RegisterPayableResponseSchema> {
     const result = await this.service.execute({
       assignorId: assignor,
       emissionDate,
@@ -39,6 +55,6 @@ export class RegisterPayableController {
       }
     }
 
-    return ResponsePresenter.toHttp(result.value);
+    return plainToInstance(RegisterPayableResponseSchema, result.value);
   }
 }

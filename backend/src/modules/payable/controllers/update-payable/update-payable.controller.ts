@@ -12,9 +12,19 @@ import {
 import { UpdatePayableService } from '../../services/update-payable/update-payable.service';
 import { UpdatePayableRequestSchema } from './request.schema';
 import { NotFoundResource } from '~/common/exceptions/not-found-resource.exception';
-import { ResponsePresenter } from './response.presenter';
 import { AuthGuard } from '~/modules/auth/guards/auth.guard';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { UpdatePayableResponseSchema } from './response.schema';
+import { plainToInstance } from 'class-transformer';
 
+@ApiTags('Payable')
+@ApiBearerAuth()
 @Controller('/integrations/payable')
 export class UpdatePayableController {
   constructor(private service: UpdatePayableService) {}
@@ -22,10 +32,16 @@ export class UpdatePayableController {
   @Put('/:id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
+  @ApiOkResponse({
+    description: 'Payable updated.',
+    type: UpdatePayableRequestSchema,
+  })
+  @ApiNotFoundResponse({ description: 'Payable not found.' })
+  @ApiBadRequestResponse({ description: 'Bad request.' })
   async handle(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() { value, assignorId, emissionDate }: UpdatePayableRequestSchema,
-  ) {
+  ): Promise<UpdatePayableResponseSchema> {
     const result = await this.service.execute({
       id,
       assignorId,
@@ -43,6 +59,6 @@ export class UpdatePayableController {
       }
     }
 
-    return ResponsePresenter.toHttp(result.value);
+    return plainToInstance(UpdatePayableResponseSchema, result.value);
   }
 }
