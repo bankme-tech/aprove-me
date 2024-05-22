@@ -2,7 +2,7 @@ import { Err, Ok } from './../types/either';
 import { Result } from 'src/types/either';
 import { MONEY_EQUIVALENT_IN_CENTS } from './constants';
 import { ZodError } from 'zod';
-import { CustomError, CustomError } from 'src/validations/errors';
+import { CustomError } from 'src/validations/errors';
 import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
 
 export function get_env_var(name: string, defaultValue?: string) {
