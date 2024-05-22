@@ -31,14 +31,26 @@ export default function LoginForm({ handleSubmit, loading, isSignup }: LoginForm
     <main className="h-[100vh] w-full text-black flex justify-center items-center">
       <div className="p-8 w-4/5 max-w-[400px] bg-neutral-50 rounded-xl flex flex-col items-center">
 
-        <h1 className="text-xl font-semibold md:text-2xl lg:text-3xl">{isSignup ? 'Sign up for Aprove me' : 'Sign in for Aprove me'}</h1>
+        <h1 className="text-xl font-semibold md:text-2xl lg:text-3xl">
+          {isSignup ? 'Sign up' : 'Sign in'}
+        </h1>
 
         <form onSubmit={(e) => handleSubmit(e, userData)} className="flex flex-col mt-4 w-4/5">
-          <Input type="email" verifyValue={verifyEmail} value={userData.email} name="email" onChange={handleChange}>
+          <Input
+            type="email"
+            verifyValue={verifyEmail}
+            value={userData.email}
+            name="email"
+            onChange={handleChange}>
             Email
           </Input>
-          <Input verifyValue={verifyPassword} type="password" value={userData.password} name="password" onChange={handleChange}>
-            Senha
+          <Input
+            verifyValue={verifyPassword}
+            type="password"
+            value={userData.password}
+            name="password"
+            onChange={handleChange}>
+            Password
           </Input>
 
           <button
@@ -52,7 +64,9 @@ export default function LoginForm({ handleSubmit, loading, isSignup }: LoginForm
 
         <span className="text-xs font-light sm:text-sm">
           {isSignup ? "Already have an account? " : "No account? "}
-          <Link href={isSignup ? "/signIn" : "/signUp"} className="font-semibold underline">
+          <Link
+            href={isSignup ? "/signIn" : "/signUp"}
+            className="font-semibold underline">
             {isSignup ? "Log in " : "Create one "}
           </Link>
         </span>

@@ -17,7 +17,7 @@ export default function SignUp() {
 
     try {
       await api.post('/users', userData)
-      router.push('/signIn');
+      router.push('/signIn')
     } catch (error: unknown) {
       toast.error(error?.response?.data?.message || 'Internal server error');
     } finally {

@@ -47,7 +47,7 @@ export default function Input({ children, type, onChange, name, value, verifyVal
           className={`bg-zinc-50 w-full p-3 mt-1 rounded-xl ring-1 ${setBorderColor()} mb-5 outline-1 md:text-base `}
         />
 
-        {!isFirstRender && !isValueValid && <span className='absolute bottom-0 left-0 ml-2 text-xs text-red-500'>{errors[name]}</span>}
+        {!isFirstRender && !isValueValid && <span className='absolute bottom-0 left-0 ml-2 text-xs text-red-500'>{errors[name as keyof ErrorType]}</span>}
       </label>
     </>
   );
