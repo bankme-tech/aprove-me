@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Utilizando o docker
 
-## Getting Started
-
-First, run the development server:
-
+Para rodar a aplicação com o docker utilize este comando:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+$ yarn compose:up
+```
+E pronto! sua aplicação estará rodando no seu localhost na porta 8000.
+
+##
+
+Para parar o container, basta rodar:
+```bash
+$ yarn compose:dowm
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instalação sem o Docker
+Para rodar a aplicação sem o Docker, Execute os seguintes comandos:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Instale as dependências
+```bash
+$ npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Faça a build do NextJS
+```bash
+$ npm run build
+```
 
-## Learn More
+## Rodando o APP
+Se você seguiu os passos anteriores, então você está pronto para rodar a aplicação! Basta executar o comando
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# development
+$ npm run dev (aplicação rodará na porta 3001)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
