@@ -13,6 +13,7 @@ import { DeletePayableController } from './controllers/delete-payable/delete-pay
 import { BullModule } from '@nestjs/bull';
 import { QueuesName } from '~/common/types/queues';
 import { RegisterBatchPayableService } from './services/register-batch-payable/register-batch-payable.service';
+import { RegisterBatchPayableController } from './controllers/register-batch-payable/register-batch-payable.controller';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { RegisterBatchPayableService } from './services/register-batch-payable/r
   ],
   controllers: [
     RegisterPayableController,
+    RegisterBatchPayableController,
     FindPayableByIdController,
     GetPayablesController,
     UpdatePayableController,
