@@ -13,7 +13,7 @@ interface PayableCardProps {
 export function PayableCard({ id, value, date }: PayableCardProps) {
 
   return (
-    <div className="flex flex-col items-center p-4  gap-2 rounded-lg  border border-blue-800">
+    <div className="flex flex-col items-center p-4  gap-2 rounded-lg  border border-blue-800 overflow-hidden">
         <h4 className="text-sm">ID: {id}</h4>
         <h3 className="text-4xl font-semibold">{formatCurrency(value)}</h3>
         <time
