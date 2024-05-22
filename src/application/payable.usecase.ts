@@ -16,6 +16,8 @@ export class PayableUsecase {
         phone: input.phone,
         name: input.name
       });
+      
+      await this.assignorRepo.add(assignor);
     }
 
     input.receivables.forEach((receivable) => {
@@ -26,7 +28,6 @@ export class PayableUsecase {
       });
     });
 
-    await this.assignorRepo.add(assignor);
   }
 }
 
