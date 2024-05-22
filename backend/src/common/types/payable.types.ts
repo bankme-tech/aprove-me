@@ -7,3 +7,9 @@ export interface PayablePersistence {
   assignorId: string;
   assignor?: AssignorPersistence;
 }
+
+export type PayableJob = {
+  value: number;
+  emissionDate: Date;
+  assignorId: string;
+};
