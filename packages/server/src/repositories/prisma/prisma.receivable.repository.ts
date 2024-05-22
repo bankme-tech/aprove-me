@@ -1,7 +1,8 @@
-import { Err, Ok } from 'src/types/either';
+import { Err, Ok, Result } from 'src/types/either';
 import { PrismaService } from 'src/database/prisma.config';
 import { ReceivableRepository } from 'src/repositories/receivable.repository';
 import { Injectable } from '@nestjs/common';
+import { NotFoundError } from 'src/validations/errors';
 
 @Injectable()
 export class PrismaReceivableRepository implements ReceivableRepository {
@@ -11,6 +12,18 @@ export class PrismaReceivableRepository implements ReceivableRepository {
   }
   public async create_receivable(receivable: ReceivableRepository.bodyType): ReceivableRepository.responseType {
     try {
+      const assignor = await this.prisma_service.assignor.findUnique({
+        where: {
+          id: receivable.assignorId,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!assignor) {
+        return Err(new NotFoundError('Assignor not found'));
+      }
       const _receivable = await this.prisma_service.receivable.create({
         data: {
           value: receivable.value,
@@ -71,13 +84,17 @@ export class PrismaReceivableRepository implements ReceivableRepository {
     }
   }
 
-  public async delete_receivable(id: string): Promise<void> {
-    await this.prisma_service.receivable.delete({
-      where: {
-        id,
-      },
-    });
-    return;
+  public async delete_receivable(id: string): Promise<Result<Error, void>> {
+    try {
+      await this.prisma_service.receivable.delete({
+        where: {
+          id,
+        },
+      });
+      return Ok(undefined);
+    } catch (error) {
+      return Err(new Error(error));
+    }
   }
 
   public async update_receivable(
@@ -92,7 +109,7 @@ export class PrismaReceivableRepository implements ReceivableRepository {
         data: {
           value: receivable.value,
           emissionDate: receivable.emissionDate,
-          assignorId: receivable.assignorId,
+          // assignorId: receivable.assignorId,
         },
       });
 
