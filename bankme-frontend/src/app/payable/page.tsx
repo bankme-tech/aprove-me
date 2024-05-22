@@ -2,15 +2,19 @@
 import CreatePayableForm from "@/components/payable/create-payable";
 import PayableTable from "@/components/payable/payable-table";
 import { useAuth } from "@/hooks/useAuth";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function page() {
+  const router = useRouter();
   const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
-    redirect("/auth");
-  }
-  
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/auth");
+    }
+  }, []);
+
   return (
     isAuthenticated && (
       <div className="py-8 container flex flex-col justify-center">

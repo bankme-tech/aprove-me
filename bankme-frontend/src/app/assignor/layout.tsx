@@ -1,16 +1,20 @@
 "use client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
 export default function AssignorLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
-    redirect("/auth");
-  }
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/auth");
+    }
+  }, []);
 
   return isAuthenticated && children;
 }
