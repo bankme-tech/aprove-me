@@ -20,12 +20,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/bull": "^10.1.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.14.0",
     "bcryptjs": "^2.4.3",
+    "bull": "^4.12.7",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "reflect-metadata": "^0.1.13",
@@ -49,6 +51,7 @@
     "jest": "^29.5.0",
     "prettier": "^3.0.0",
     "prisma": "^5.14.0",
+    "redis-memory-server": "^0.10.0",
     "source-map-support": "^0.5.21",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
@@ -79,5 +82,8 @@
   },
   "prisma": {
     "seed": "node -r tsconfig-paths/register -r ts-node/register prisma/seed.ts"
+  },
+  "redisMemoryServer": {
+    "disablePostinstall": "1"
   }
 }

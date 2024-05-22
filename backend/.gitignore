@@ -37,3 +37,4 @@ lerna-debug.log*
 # Security files
 .env
 *.db
+data/*

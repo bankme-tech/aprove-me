@@ -10,10 +10,39 @@ import { UpdatePayableService } from './services/update-payable/update-payable.s
 import { GetPayablesController } from './controllers/get-payables/get-payables.controller';
 import { UpdatePayableController } from './controllers/update-payable/update-payable.controller';
 import { DeletePayableController } from './controllers/delete-payable/delete-payable.controller';
+import { BullModule } from '@nestjs/bull';
+import { QueuesName } from '~/common/types/queues';
+import { RegisterBatchPayableService } from './services/register-batch-payable/register-batch-payable.service';
 
 @Module({
-  imports: [DatabaseModule],
-  controllers: [RegisterPayableController, FindPayableByIdController, GetPayablesController, UpdatePayableController, DeletePayableController],
-  providers: [RegisterPayableService, FindPayableByIdService, GetPayablesService, DeletePayableService, UpdatePayableService],
+  imports: [
+    DatabaseModule,
+    BullModule.registerQueue({
+      name: QueuesName.PAYABLE,
+      limiter: {
+        max: 1,
+        duration: 10 * 1000, // 10 seconds
+      },
+      defaultJobOptions: {
+        attempts: 4,
+        backoff: 5 * 5000, // 5 seconds
+      },
+    }),
+  ],
+  controllers: [
+    RegisterPayableController,
+    FindPayableByIdController,
+    GetPayablesController,
+    UpdatePayableController,
+    DeletePayableController,
+  ],
+  providers: [
+    RegisterPayableService,
+    FindPayableByIdService,
+    GetPayablesService,
+    DeletePayableService,
+    UpdatePayableService,
+    RegisterBatchPayableService,
+  ],
 })
 export class PayableModule {}
