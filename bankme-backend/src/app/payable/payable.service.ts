@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePayableDto, UpdatePayableDto } from './dto/payable.dto';
 import { PayableRepository } from './payable.repository';
-import { AssignorService } from 'src/assignor/assignor.service';
+import { AssignorService } from 'src/app/assignor/assignor.service';
 
 @Injectable()
 export class PayableService {

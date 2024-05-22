@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CryptoService } from 'src/crypto/crypto.service';
+import { CryptoService } from 'src/app/crypto/crypto.service';
 import { UserRepository } from './user.repository';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/user.dto';

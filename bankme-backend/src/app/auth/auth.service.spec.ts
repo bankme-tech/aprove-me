@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UnauthorizedException } from '@nestjs/common';
 import { CredentialsDto } from './dto/auth.dto';
-import { UserService } from 'src/user/user.service';
-import { CryptoService } from 'src/crypto/crypto.service';
+import { UserService } from 'src/app/user/user.service';
+import { CryptoService } from 'src/app/crypto/crypto.service';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 
