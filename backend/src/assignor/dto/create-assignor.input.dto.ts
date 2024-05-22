@@ -1,11 +1,7 @@
-import { Assignor } from '../entities/assignor.entity';
-import { IsString, IsUUID, MaxLength } from 'class-validator';
-import { UUID } from 'crypto';
+import { AssignorEntity } from '../entities/assignor.entity';
+import { IsString, MaxLength } from 'class-validator';
 
-export class InputAssignorDTO extends Assignor {
-  @IsUUID('all', { message: 'id must be a valid UUID' })
-  public id: UUID;
-
+export class CreateAssignorInputDTO extends AssignorEntity {
   @MaxLength(30, {
     message: 'Document must be less than or equal to 30 characters',
   })
