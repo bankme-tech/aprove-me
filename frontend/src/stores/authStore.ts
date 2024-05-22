@@ -65,16 +65,16 @@ export const useAuthStore = create<AuthStoreTypes>()((set) => ({
 
     const parsedToken: AuthTokenTypes = JSON.parse(token);
 
-    // const minutesToken = new Date().getMinutes();
-    // const minutesNow = new Date(parsedToken.dateTime).getMinutes();
-    //
-    // const diffTime = minutesNow - minutesToken;
-    //
-    // if (diffTime !== 0) {
-    //   localStorage.removeItem("@auth");
-    //   toast.info("Seu login expirou, necessário realizá-lo novamente");
-    //   return router.navigate("/");
-    // }
+    const minutesToken = new Date().getMinutes();
+    const minutesNow = new Date(parsedToken.dateTime).getMinutes();
+
+    const diffTime = minutesNow - minutesToken;
+
+    if (diffTime !== 0) {
+      localStorage.removeItem("@auth");
+      toast.info("Seu login expirou, necessário realizá-lo novamente");
+      return router.navigate("/");
+    }
 
     set({ userToken: parsedToken.accessToken });
     api.defaults.headers.authorization = `Bearer ${parsedToken.accessToken}`;
