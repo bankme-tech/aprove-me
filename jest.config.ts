@@ -12,7 +12,7 @@ export default {
   roots: ['<rootDir>/test', '<rootDir>/src'],
   transform: { '.+\\.ts$': '@swc/jest' },
   watchPathIgnorePatterns: ['globalConfig'],
-  setupFiles: [],
+  setupFiles: ['<rootDir>/.jest/setup.ts'],
   testEnvironmentOptions: {
     timeZone: 'America/Sao_Paulo',
   },
