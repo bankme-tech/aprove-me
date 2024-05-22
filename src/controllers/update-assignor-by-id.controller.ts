@@ -8,8 +8,8 @@ import {
 
 import { UpdateAssignorByIdInputDTO } from "../dtos/update-assignor-by-id-input.dto";
 import { UpdateAssignorByIdOutputDTO } from "../dtos/update-assignor-by-id-output.dto";
-import { ValidationError } from "../errors/validation.error";
 import { PrismaProvider } from "../providers/prisma.provider";
+import { InputDTOPipe } from "../utils/input-dto.pipe";
 
 @Controller()
 export class UpdateAssignorByIdController {
@@ -20,41 +20,35 @@ export class UpdateAssignorByIdController {
   }
 
   @Put("integrations/assignor/:id")
-  async handle(@Param("id") id: string, @Body() requestBody: unknown) {
-    try {
-      const assignor = await this.prisma.assignor.findUnique({ where: { id } });
+  async handle(
+    @Param("id") id: string,
+    @Body(new InputDTOPipe(UpdateAssignorByIdInputDTO))
+    input: UpdateAssignorByIdInputDTO,
+  ) {
+    const assignor = await this.prisma.assignor.findUnique({ where: { id } });
 
-      if (assignor === null) {
-        throw new BadRequestException("assignor not found");
-      }
-
-      const input = new UpdateAssignorByIdInputDTO(requestBody);
-
-      await this.prisma.assignor.update({
-        data: {
-          document: input.document,
-          email: input.email,
-          phone: input.phone,
-          name: input.name,
-        },
-        where: {
-          id,
-        },
-      });
-
-      return new UpdateAssignorByIdOutputDTO(
-        id,
-        input.document,
-        input.email,
-        input.phone,
-        input.name,
-      );
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        throw new BadRequestException(error.message);
-      }
-
-      throw error;
+    if (assignor === null) {
+      throw new BadRequestException("assignor not found");
     }
+
+    await this.prisma.assignor.update({
+      data: {
+        document: input.document,
+        email: input.email,
+        phone: input.phone,
+        name: input.name,
+      },
+      where: {
+        id,
+      },
+    });
+
+    return new UpdateAssignorByIdOutputDTO(
+      id,
+      input.document,
+      input.email,
+      input.phone,
+      input.name,
+    );
   }
 }

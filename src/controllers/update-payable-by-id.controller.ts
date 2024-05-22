@@ -9,8 +9,8 @@ import {
 
 import { UpdatePayableByIdInputDTO } from "../dtos/update-payable-by-id-input.dto";
 import { UpdatePayableByIdOutputDTO } from "../dtos/update-payable-by-id-output.dto";
-import { ValidationError } from "../errors/validation.error";
 import { PrismaProvider } from "../providers/prisma.provider";
+import { InputDTOPipe } from "../utils/input-dto.pipe";
 
 @Controller()
 export class UpdatePayableByIdController {
@@ -23,50 +23,41 @@ export class UpdatePayableByIdController {
   @Put("/integrations/payable/:id")
   async handle(
     @Param("id", ParseUUIDPipe) id: string,
-    @Body() requestBody: unknown,
+    @Body(new InputDTOPipe(UpdatePayableByIdInputDTO))
+    input: UpdatePayableByIdInputDTO,
   ) {
-    try {
-      const payable = await this.prisma.payable.findUnique({ where: { id } });
+    const payable = await this.prisma.payable.findUnique({ where: { id } });
 
-      if (payable === null) {
-        throw new BadRequestException("payable not found");
-      }
+    if (payable === null) {
+      throw new BadRequestException("payable not found");
+    }
 
-      const input = new UpdatePayableByIdInputDTO(requestBody);
-
-      if (input.assignorId !== payable.assignorId) {
-        const assignor = await this.prisma.payable.findUnique({
-          where: { id },
-        });
-
-        if (assignor === null) {
-          throw new BadRequestException("assignor not found");
-        }
-      }
-
-      await this.prisma.payable.update({
-        data: {
-          value: input.value,
-          emissionDate: input.emissionDate,
-          assignorId: input.assignorId,
-        },
-        where: {
-          id,
-        },
+    if (input.assignorId !== payable.assignorId) {
+      const assignor = await this.prisma.payable.findUnique({
+        where: { id },
       });
 
-      return new UpdatePayableByIdOutputDTO(
-        id,
-        input.value,
-        input.emissionDate,
-        input.assignorId,
-      );
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        throw new BadRequestException(error.message);
+      if (assignor === null) {
+        throw new BadRequestException("assignor not found");
       }
-
-      throw error;
     }
+
+    await this.prisma.payable.update({
+      data: {
+        value: input.value,
+        emissionDate: input.emissionDate,
+        assignorId: input.assignorId,
+      },
+      where: {
+        id,
+      },
+    });
+
+    return new UpdatePayableByIdOutputDTO(
+      id,
+      input.value,
+      input.emissionDate,
+      input.assignorId,
+    );
   }
 }
