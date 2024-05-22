@@ -1,11 +1,16 @@
 import { throw_error } from 'src/shared/utils';
 import { ReceivableService } from '../services/receivable.service';
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+// import { InjectQueue } from '@nestjs/bull';
+// import { Queue } from 'bull';
 
 @Controller('integrations/payble')
 export class ReceivableController {
   private readonly receivableService: ReceivableService;
-  constructor(receivableService: ReceivableService) {
+  constructor(
+    receivableService: ReceivableService,
+    // @InjectQueue('receivables') private readonly receivablesQueue: Queue,
+  ) {
     this.receivableService = receivableService;
   }
 
@@ -50,4 +55,13 @@ export class ReceivableController {
     }
     return result.value;
   }
+
+  // @Post('batch')
+  // async createBatch(@Body() createReceivableDtos: any[]) {
+  //   if (createReceivableDtos.length > 10000) {
+  //     throw new Error('Batch size exceeds the limit of 10,000 receivables');
+  //   }
+  //   await this.receivablesQueue.add(createReceivableDtos);
+  //   return { message: 'Batch processing initiated' };
+  // }
 }
