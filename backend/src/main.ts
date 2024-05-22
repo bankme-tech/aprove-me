@@ -6,6 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Aprove Me API')
     .setDescription('API to manage payables and assignors')
     .setVersion('1.0')

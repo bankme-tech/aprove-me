@@ -11,8 +11,14 @@ import { AssignorsService } from './assignors.service';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { AssignorEntity } from './entities/assignor.entity';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('assignors')
 @ApiTags('assignors')
 export class AssignorsController {

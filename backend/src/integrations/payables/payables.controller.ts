@@ -10,9 +10,15 @@ import {
 import { PayablesService } from './payables.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PayableEntity } from './entities/payable.entity';
 
+@ApiBearerAuth()
 @Controller('payables')
 @ApiTags('payables')
 export class PayablesController {
