@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AssignorRepository } from 'src/repositories/assignor.repository';
 import { Err, Ok, Result } from 'src/types/either';
 import { ValidationService } from './validations.service';
-import { CustomError } from 'src/validations/errors';
+import { CustomError, NotFoundError } from 'src/validations/errors';
 
 @Injectable()
 export class AssignorService {
@@ -36,6 +36,9 @@ export class AssignorService {
         return is_error;
       }
       const assignor = is_error.value;
+      if (!assignor) {
+        return Err(new NotFoundError('Assignor not found'));
+      }
       return Ok(assignor);
     } catch (error) {
       return Err(error);
@@ -48,7 +51,12 @@ export class AssignorService {
   async delete_assignor(id: string): Promise<Result<Error, void>> {
     try {
       const id_result = this.validation_service.validateUuid(id);
+      const is_error = await this.get_assignor(id_result);
+      if (is_error.isError()) {
+        return Err(is_error.value);
+      }
       await this.assignor_repository.delete_assignor(id_result);
+      return Ok(undefined);
     } catch (error) {
       return Err(error);
     }
@@ -57,6 +65,10 @@ export class AssignorService {
     try {
       const id_result = this.validation_service.validateUuid(id);
       const data = this.validation_service.validateUpdateAssignor(assignor);
+      const is_error = await this.get_assignor(id_result);
+      if (is_error.isError()) {
+        return Err(is_error.value);
+      }
       const result = await this.assignor_repository.update_assignor(id_result, data);
       return result;
     } catch (error) {

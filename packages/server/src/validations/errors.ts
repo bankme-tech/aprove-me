@@ -4,3 +4,10 @@ export class CustomError extends Error {
     this.name = 'CustomError';
   }
 }
+
+export class NotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'NotFoundError';
+  }
+}
