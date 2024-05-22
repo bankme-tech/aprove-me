@@ -1,20 +1,19 @@
 import { Module } from "@nestjs/common";
 
-import { CreatePayableController } from "./controllers/create-payable.controller";
-import { FindAssignorByIdController } from "./controllers/find-assignor-by-id.controller";
-import { FindPayableByIdController } from "./controllers/find-payable-by-id.controller";
-import { UpdateAssignorByIdController } from "./controllers/update-assignor-by-id.controller";
-import { UpdatePayableByIdController } from "./controllers/update-payable-by-id.controller";
+import { AssignorModule } from "./assignor/assignor.module";
+import { PayableModule } from "./payable/payable.module";
 import { PrismaProvider } from "./providers/prisma.provider";
 
 @Module({
-  controllers: [
-    CreatePayableController,
-    FindPayableByIdController,
-    FindAssignorByIdController,
-    UpdatePayableByIdController,
-    UpdateAssignorByIdController,
+  imports: [
+    {
+      module: class PrismaModule {},
+      providers: [PrismaProvider],
+      exports: [PrismaProvider],
+      global: true,
+    },
+    PayableModule,
+    AssignorModule,
   ],
-  providers: [PrismaProvider],
 })
 export class AppModule {}

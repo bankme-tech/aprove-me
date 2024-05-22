@@ -1,11 +1,11 @@
 import { Body, Controller, Param, ParseUUIDPipe, Put } from "@nestjs/common";
 import type { Assignor } from "@prisma/client";
 
-import { UpdateAssignorByIdInputDTO } from "../dtos/update-assignor-by-id-input.dto";
-import { UpdateAssignorByIdOutputDTO } from "../dtos/update-assignor-by-id-output.dto";
-import { FindAssignorByIdPipe } from "../pipes/find-assignor-by-id.pipe";
-import { UpdateAssignorByIdInputPipe } from "../pipes/update-assignor-by-id-input.pipe";
-import { PrismaProvider } from "../providers/prisma.provider";
+import { PrismaProvider } from "../../providers/prisma.provider";
+import { FindAssignorByIdPipe } from "../find-by-id/find-assignor-by-id.pipe";
+import { UpdateAssignorByIdInputDTO } from "./update-assignor-by-id-input.dto";
+import { UpdateAssignorByIdInputPipe } from "./update-assignor-by-id-input.pipe";
+import { UpdateAssignorByIdOutputDTO } from "./update-assignor-by-id-output.dto";
 
 @Controller()
 export class UpdateAssignorByIdController {

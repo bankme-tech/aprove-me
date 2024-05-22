@@ -8,11 +8,11 @@ import {
 } from "@nestjs/common";
 import type { Payable } from "@prisma/client";
 
-import { UpdatePayableByIdInputDTO } from "../dtos/update-payable-by-id-input.dto";
-import { UpdatePayableByIdOutputDTO } from "../dtos/update-payable-by-id-output.dto";
-import { FindPayableByIdPipe } from "../pipes/find-payable-by-id.pipe";
-import { UpdatePayableByIdInputPipe } from "../pipes/update-payable-by-id-input.pipe";
-import { PrismaProvider } from "../providers/prisma.provider";
+import { PrismaProvider } from "../../providers/prisma.provider";
+import { FindPayableByIdPipe } from "../find-by-id/find-payable-by-id.pipe";
+import { UpdatePayableByIdInputDTO } from "./update-payable-by-id-input.dto";
+import { UpdatePayableByIdInputPipe } from "./update-payable-by-id-input.pipe";
+import { UpdatePayableByIdOutputDTO } from "./update-payable-by-id-output.dto";
 
 @Controller()
 export class UpdatePayableByIdController {

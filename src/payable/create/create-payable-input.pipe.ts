@@ -1,10 +1,10 @@
 import { BadRequestException, PipeTransform } from "@nestjs/common";
 import { isEmail, isISO8601, isUUID } from "validator";
 
-import { CreatePayableInputDTO } from "../dtos/create-payable-input.dto";
-import { isBrazilianPhoneNumber } from "../validators/isBrazilianPhoneNumber";
-import { isCNPJ } from "../validators/isCNPJ";
-import { isCPF } from "../validators/isCPF";
+import { isBrazilianPhoneNumber } from "../../validators/isBrazilianPhoneNumber";
+import { isCNPJ } from "../../validators/isCNPJ";
+import { isCPF } from "../../validators/isCPF";
+import { CreatePayableInputDTO } from "./create-payable-input.dto";
 
 export class CreatePayableInputPipe
   implements PipeTransform<unknown, CreatePayableInputDTO>

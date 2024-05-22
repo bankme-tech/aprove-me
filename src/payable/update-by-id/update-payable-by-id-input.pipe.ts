@@ -1,7 +1,7 @@
 import { BadRequestException, PipeTransform } from "@nestjs/common";
 import { isISO8601, isUUID } from "validator";
 
-import { UpdatePayableByIdInputDTO } from "../dtos/update-payable-by-id-input.dto";
+import { UpdatePayableByIdInputDTO } from "./update-payable-by-id-input.dto";
 
 export class UpdatePayableByIdInputPipe
   implements PipeTransform<unknown, UpdatePayableByIdInputDTO>

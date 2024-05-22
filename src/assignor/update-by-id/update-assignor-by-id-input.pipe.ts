@@ -1,10 +1,10 @@
 import { BadRequestException, PipeTransform } from "@nestjs/common";
 import isEmail from "validator/lib/isEmail";
 
-import { UpdateAssignorByIdInputDTO } from "../dtos/update-assignor-by-id-input.dto";
-import { isBrazilianPhoneNumber } from "../validators/isBrazilianPhoneNumber";
-import { isCNPJ } from "../validators/isCNPJ";
-import { isCPF } from "../validators/isCPF";
+import { isBrazilianPhoneNumber } from "../../validators/isBrazilianPhoneNumber";
+import { isCNPJ } from "../../validators/isCNPJ";
+import { isCPF } from "../../validators/isCPF";
+import { UpdateAssignorByIdInputDTO } from "./update-assignor-by-id-input.dto";
 
 export class UpdateAssignorByIdInputPipe
   implements PipeTransform<unknown, UpdateAssignorByIdInputDTO>

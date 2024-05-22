@@ -1,9 +1,9 @@
 import { Controller, Get, Param, ParseUUIDPipe } from "@nestjs/common";
 import type { Payable } from "@prisma/client";
 
-import { FindPayableByIdOutputDTO } from "../dtos/find-payable-by-id-output.dto";
-import { FindPayableByIdPipe } from "../pipes/find-payable-by-id.pipe";
-import { PrismaProvider } from "../providers/prisma.provider";
+import { PrismaProvider } from "../../providers/prisma.provider";
+import { FindPayableByIdPipe } from "./find-payable-by-id.pipe";
+import { FindPayableByIdOutputDTO } from "./find-payable-by-id-output.dto";
 
 @Controller()
 export class FindPayableByIdController {
