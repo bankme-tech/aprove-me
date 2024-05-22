@@ -11,8 +11,18 @@ export class PayableController {
     private readonly _createOnePayableUseCase: CreateOnePayableUseCase,
   ) {}
 
+  @EventPattern('payable.create.bulk.start')
+  async startCreateBulk(): Promise<void> {
+    // Create a record to save the results
+  }
+
   @EventPattern('payable.create.bulk')
-  async getHello(@Payload() payload: ICreatePayable): Promise<void> {
+  async createBulk(@Payload() payload: ICreatePayable): Promise<void> {
     await this._createOnePayableUseCase.create(payload);
+  }
+
+  @EventPattern('payable.create.bulk.end')
+  async endCreateBulk(): Promise<void> {
+    // Send the email
   }
 }

@@ -3,6 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { IOption, toOption } from '@bankme/monads';
 import { IPayableConstructor, Payable } from '@bankme/domain';
 
+import { IPageQuery } from '@domain/shared/page-query.interface';
+import { IPage } from '@domain/shared/page.interface';
+
 import { IPayableRepository } from '@infra/payable/repositories/payable.repository';
 import { PrismaService } from '@infra/prisma/services/prisma.service';
 import { PayableMapper } from '@infra/payable/repositories/prisma/payable.mapper';
@@ -41,6 +44,25 @@ export class PayablePrismaRepository implements IPayableRepository {
       where: { id },
     });
     return toOption(user).map(PayableMapper.toDomain);
+  }
+
+  async find(query: IPageQuery): Promise<IPage<Payable>> {
+    const { limit, page } = query;
+    const skip = (page - 1) * limit;
+    const totalCount = await this._prismaService.payable.count();
+    const hasNextPage = skip + limit < totalCount;
+    const payable = await this._prismaService.payable.findMany({
+      skip,
+      take: page,
+      include: { assignor: true },
+    });
+    return {
+      limit,
+      page,
+      hasNextPage,
+      totalCount,
+      data: payable.map(PayableMapper.toDomain),
+    };
   }
 
   async delete(payable: Payable): Promise<void> {

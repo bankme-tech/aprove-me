@@ -9,6 +9,7 @@ import { FindOnePayableUseCase } from '@application/payable/usecases/find-one-pa
 import { DeleteOnePayableUseCase } from '@application/payable/usecases/delete-one-payable.usecase';
 import { UpdateOnePayableUseCase } from '@application/payable/usecases/update-one-payable.usecase';
 import { CreateBulkPayableUseCase } from '@application/payable/usecases/create-bulk-payable.usecase';
+import { FindPayableUseCase } from '@application/payable/usecases/find-payable.usecase';
 
 const useCases: Provider[] = [
   CreateOnePayableUseCase,
@@ -16,6 +17,7 @@ const useCases: Provider[] = [
   UpdateOnePayableUseCase,
   DeleteOnePayableUseCase,
   CreateBulkPayableUseCase,
+  FindPayableUseCase,
 ];
 
 @Module({

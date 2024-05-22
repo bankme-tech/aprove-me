@@ -7,6 +7,7 @@ import {
   ParseArrayPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -25,10 +26,13 @@ import { FindOnePayableUseCase } from '@application/payable/usecases/find-one-pa
 import { DeleteOnePayableUseCase } from '@application/payable/usecases/delete-one-payable.usecase';
 import { UpdateOnePayableUseCase } from '@application/payable/usecases/update-one-payable.usecase';
 import { CreateBulkPayableUseCase } from '@application/payable/usecases/create-bulk-payable.usecase';
+import { FindPayableUseCase } from '@application/payable/usecases/find-payable.usecase';
 
 import { CreatePayableDto } from '@presentation/payable/dtos/create-payable.dto';
 import { PayablePresenter } from '@presentation/payable/presenters/payable.presenter';
 import { UpdatePayableDto } from '@presentation/payable/dtos/update-payable.dto';
+import { PayablePagePresenter } from '@presentation/payable/presenters/payable-page.presenter';
+import { PageQuery } from '@presentation/shared/queries/page.query';
 
 @ApiTags('integrations/payable')
 @Controller('integrations/payable')
@@ -37,6 +41,7 @@ export class PayableController {
     private readonly _createOnePayableUseCase: CreateOnePayableUseCase,
     private readonly _createBulkPayableUseCase: CreateBulkPayableUseCase,
     private readonly _findOnePayableUseCase: FindOnePayableUseCase,
+    private readonly _findPayableUseCase: FindPayableUseCase,
     private readonly _updateOnePayableUseCase: UpdateOnePayableUseCase,
     private readonly _deleteOnePayableUseCase: DeleteOnePayableUseCase,
   ) {}
@@ -61,11 +66,19 @@ export class PayableController {
   @ApiOkResponse({ type: PayablePresenter })
   @ApiParam({ name: 'id', type: String })
   @Get(':id')
-  async find(
+  async findOne(
     @Param('id', PayableByIdPipe) payable: Payable,
   ): Promise<PayablePresenter> {
     const result = await this._findOnePayableUseCase.find(payable);
     return new PayablePresenter(result);
+  }
+
+  @ApiOperation({ summary: 'Retrieves many payable' })
+  @ApiOkResponse({ type: PayablePagePresenter })
+  @Get()
+  async find(@Query() query: PageQuery): Promise<PayablePagePresenter> {
+    const page = await this._findPayableUseCase.find(query);
+    return new PayablePagePresenter(page);
   }
 
   @ApiOperation({ summary: 'Updates a single payable given its id' })

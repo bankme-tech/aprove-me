@@ -11,8 +11,10 @@ export class CreateBulkPayableUseCase {
   ) {}
 
   async create(dtos: ICreatePayable[]): Promise<void> {
+    this._client.emit('payable.create.bulk.start', {});
     for (const dto of dtos) {
       this._client.emit('payable.create.bulk', dto);
     }
+    this._client.emit('payable.create.bulk.end', {});
   }
 }
