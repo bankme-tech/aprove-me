@@ -9,6 +9,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CreatePayableDto, createPayableDto } from '../dtos/create-payable.dto';
 import { CreatePayableUseCase } from '@/modules/integrations/use-cases/create-payable.use-case';
@@ -28,6 +29,7 @@ import { DeletePayableUseCase } from '@/modules/integrations/use-cases/delete-pa
 import { DeleteAssignorUseCase } from '@/modules/integrations/use-cases/delete-assignor.use-case';
 import { AuthDto, authDto } from '../dtos/auth.dto';
 import { AuthUserUseCase } from '@/modules/integrations/use-cases/auth-user.use-case';
+import { AuthGuard } from '@/infra/http/guards/auth.guard';
 
 @Controller('/integrations')
 export class IntegrationsController {
@@ -45,6 +47,7 @@ export class IntegrationsController {
 
   @Get('/payables/:id')
   @HttpCode(HttpStatus.FOUND)
+  @UseGuards(AuthGuard)
   public async findPayableById(
     @Param(new ZodValidationPipe(uuidDto))
     params: UuidDto,
@@ -56,6 +59,7 @@ export class IntegrationsController {
 
   @Get('/assignors/:id')
   @HttpCode(HttpStatus.FOUND)
+  @UseGuards(AuthGuard)
   public async findAssignorById(
     @Param(new ZodValidationPipe(uuidDto))
     params: UuidDto,
@@ -67,6 +71,7 @@ export class IntegrationsController {
 
   @Post('/payables')
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(AuthGuard)
   public async createPayable(
     @Body(new ZodValidationPipe(createPayableDto))
     body: CreatePayableDto,
@@ -78,6 +83,7 @@ export class IntegrationsController {
 
   @Post('/assignors')
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(AuthGuard)
   public async createAssignor(
     @Body(new ZodValidationPipe(createAssignorDto))
     body: CreateAssignorDto,
@@ -89,6 +95,7 @@ export class IntegrationsController {
 
   @Patch('/payables/:id')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
   public async partialUpdatePayable(
     @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
     @Body(new ZodValidationPipe(patchPayableDto)) body: PatchPayableDto,
@@ -103,6 +110,7 @@ export class IntegrationsController {
 
   @Patch('/assignors/:id')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
   public async partialUpdateAssignor(
     @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
     @Body(new ZodValidationPipe(patchAssignorDto)) body: PatchAssignorDto,
@@ -117,6 +125,7 @@ export class IntegrationsController {
 
   @Delete('/payables/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(AuthGuard)
   public async deletePayable(
     @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
   ) {
@@ -125,6 +134,7 @@ export class IntegrationsController {
 
   @Delete('/assignors/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(AuthGuard)
   public async deleteAssignor(
     @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
   ) {
@@ -132,8 +142,14 @@ export class IntegrationsController {
   }
 
   @Post('/auth')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
   public async auth(@Body(new ZodValidationPipe(authDto)) body: AuthDto) {
-    await this.authUserUseCase.execute(body);
+    const response = await this.authUserUseCase.execute(body);
+
+    return {
+      assignor: AssignorsViewModel.toHTTP(response.assignor),
+      accessToken: response.accessToken,
+    };
   }
 }

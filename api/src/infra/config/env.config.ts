@@ -32,4 +32,22 @@ export const envConfig = () => ({
 
     return castedNumberRounds;
   },
+  get jwtSecret() {
+    const secret = process.env.JWT_SECRET;
+
+    if (!secret) {
+      throw new Error('Enviroment variable JWT_SECRET is not defined');
+    }
+
+    return secret;
+  },
+  get jwtExpiresIn() {
+    const expiresIn = process.env.JWT_EXPIRES_IN;
+
+    if (!expiresIn) {
+      throw new Error('Enviroment variable JWT_EXPIRES_IN is not defined');
+    }
+
+    return expiresIn;
+  },
 });
