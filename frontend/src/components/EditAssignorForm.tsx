@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { editAssignorFormSchema, EditAssignorFormData } from "@/schemas/assignor-schemas";
 import { editAssignor } from "@/actions/assignor-actions";
+import { getToken } from "@/lib/utils";
 
 
 
@@ -20,8 +21,10 @@ interface EditAssignorFormProps {
     assignor: Assignor;
 }
 
+
 export default function EditAssignorForm({ assignor }: EditAssignorFormProps) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [token, setToken] = useState<string>(getToken());
 
     const ref = useRef<HTMLFormElement>(null);
 
@@ -40,7 +43,7 @@ export default function EditAssignorForm({ assignor }: EditAssignorFormProps) {
     async function handleSubmit(formData: EditAssignorFormData) {
       setIsLoading(true);
       try {
-        await editAssignor(formData);
+        await editAssignor(formData, token);
       } catch (error) {
         
         console.error(error);

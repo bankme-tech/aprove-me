@@ -36,7 +36,7 @@ export default function EditAssignor({ params }: EditAssignorProps) {
         <h1 className="text-3xl">Edit Assignor</h1>
 
             {data ? (
-                <EditAssignorForm assignor={data} />
+                <EditAssignorForm assignor={data}/>
                 ) : (
                 <p>Loading...</p>
             )}
@@ -53,8 +53,5 @@ export default function EditAssignor({ params }: EditAssignorProps) {
       </div>
     </div>
   )
-}
-function readToken(arg0: string) {
-  throw new Error("Function not implemented.");
 }
 

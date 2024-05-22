@@ -6,11 +6,11 @@ import { CreateAssignorFormData, EditAssignorFormData } from "@/schemas/assignor
 import { redirect } from "next/navigation"
 
 
-export async function createAssignor({name, document, email, phone}: CreateAssignorFormData) {
-    await api.post<Assignor>('assignor', {name, document, email, phone})
+export async function createAssignor({name, document, email, phone}: CreateAssignorFormData, token: string) {
+    await api.post<Assignor>('assignor', {name, document, email, phone}, {headers: {Authorization: `Bearer ${token}`}} )
 }
 
-export async function editAssignor({id, name, document, email, phone}: EditAssignorFormData) {
-    await api.patch<Assignor>(`/assignor/${id}`, {name, document, email, phone})
+export async function editAssignor({id, name, document, email, phone}: EditAssignorFormData, token: string) {
+    await api.patch<Assignor>(`/assignor/${id}`, {name, document, email, phone}, {headers: {Authorization: `Bearer ${token}`}} )
     redirect(`/assignor/${id}`)
 }

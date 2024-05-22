@@ -16,12 +16,13 @@ import { createPayable } from "@/actions/payable-actions";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { CreateAssignorFormData, createAssignorFormSchema } from "@/schemas/assignor-schemas";
 import { createAssignor } from "@/actions/assignor-actions";
+import { getToken } from "@/lib/utils";
 
 
 
 export default function CreateAssignorForm() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
+    const [token, setToken] = useState<string>(getToken());
     const router = useRouter();
     const ref = useRef<HTMLFormElement>(null);
 
@@ -39,7 +40,7 @@ export default function CreateAssignorForm() {
     async function handleSubmit(formData: CreateAssignorFormData) {
       setIsLoading(true);
       try {
-        await createAssignor(formData);
+        await createAssignor(formData, token);
         router.refresh();
       } catch (error) {
         

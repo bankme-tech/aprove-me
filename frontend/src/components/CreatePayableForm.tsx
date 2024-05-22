@@ -14,13 +14,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreatePayableFormData, createPayableFormSchema } from "@/schemas/payable-schemas";
 import { createPayable } from "@/actions/payable-actions";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import { getToken } from "@/lib/utils";
 
 
 
 export default function CreatePayableForm() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [fetching, setFetching] = useState<boolean>(false);
-
+    const [token, setToken] = useState<string>(getToken());
     const [data, setData] = useState<Assignor[]>([])
 
     const router = useRouter();
@@ -38,7 +39,7 @@ export default function CreatePayableForm() {
     async function handleSubmit(formData: CreatePayableFormData) {
       setIsLoading(true);
       try {
-        await createPayable(formData);
+        await createPayable(formData, token);
         router.refresh();
       } catch (error) {
         
