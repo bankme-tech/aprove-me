@@ -1,8 +1,12 @@
+"use client";
 import React from "react";
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
+  const { isAuthenticated, logout } = useAuth();
+
   return (
     <header className="container flex items-center justify-between p-4">
       <Link href={"/payable"} className="text-3xl text-primary font-semibold">
@@ -10,7 +14,7 @@ export default function Header() {
       </Link>
 
       <nav>
-        <ul className="flex items-center gap-4">
+        <ul className="flex items-center gap-2">
           <li>
             <Link
               href={"/payable"}
@@ -18,6 +22,9 @@ export default function Header() {
             >
               payables
             </Link>
+          </li>
+
+          <li>
             <Link
               href={"/assignor"}
               className={buttonVariants({ variant: "link" })}
@@ -25,6 +32,14 @@ export default function Header() {
               assignors
             </Link>
           </li>
+
+          {isAuthenticated && (
+            <li>
+              <Button variant={"link"} size={"sm"} onClick={() => logout()}>
+                Logout
+              </Button>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
