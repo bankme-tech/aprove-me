@@ -26,7 +26,7 @@ describe('Auth (e2e)', () => {
   });
 
   afterAll(async () => {
-    await app.close(); // Close NestJS app after all tests
+    await app.close();
   });
 
   it('/integrations/auth/register (POST) success', async () => {

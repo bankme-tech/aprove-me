@@ -1,18 +1,30 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateAssignorDto, UpdateAssignorDto } from './dto';
+import { CreateAssignorDto } from './dto/create-assignor.dto';
+import { UpdateAssignorDto } from './dto/update-assignor.dto';
 
 @Injectable()
 export class AssignorService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create({ document, email, name, phone }: CreateAssignorDto) {
+  async create({
+    document,
+    email,
+    name,
+    phone,
+    userId,
+  }: CreateAssignorDto & { userId: string }) {
     return this.prisma.assignor.create({
       data: {
         document,
         email,
         name,
         phone,
+        userId,
       },
       select: {
         id: true,
@@ -24,14 +36,17 @@ export class AssignorService {
     });
   }
 
-  findAll() {
-    return this.prisma.assignor.findMany();
+  findAll(userId: string) {
+    return this.prisma.assignor.findMany({
+      where: { userId },
+    });
   }
 
-  async findById(id: string) {
+  async findById({ id, userId }: { id: string; userId: string }) {
     const assignor = await this.prisma.assignor.findUnique({
       where: {
         id,
+        userId,
       },
       select: {
         id: true,
@@ -43,24 +58,51 @@ export class AssignorService {
     });
 
     if (!assignor) {
-      throw new NotFoundException('Assignor not found');
+      throw new NotFoundException();
     }
 
     return assignor;
   }
 
-  async delete(id: string) {
-    await this.prisma.assignor.delete({
+  async delete({ id, userId }: { id: string; userId: string }) {
+    const assignorExists = await this.prisma.assignor.findUnique({
       where: {
         id,
+        userId,
+      },
+    });
+
+    if (!assignorExists) {
+      throw new NotFoundException();
+    }
+
+    return this.prisma.assignor.delete({
+      where: {
+        id,
+        userId,
       },
     });
   }
 
-  update(id: string, { document, email, name, phone }: UpdateAssignorDto) {
+  async update({
+    id,
+    userId,
+    document,
+    email,
+    name,
+    phone,
+  }: UpdateAssignorDto & { id: string; userId: string }) {
+    const assignorExists = await this.prisma.assignor.findFirst({
+      where: { id, userId },
+    });
+    if (!assignorExists) {
+      throw new NotFoundException();
+    }
+
     return this.prisma.assignor.update({
       where: {
         id,
+        userId,
       },
       data: {
         ...(document ? { document } : {}),

@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { AssignorService } from './assignor.service';
@@ -14,53 +15,68 @@ import { ZodValidationPipe } from '../zod-validation/zod-validation.pipe';
 import {
   CreateAssignorDto,
   createAssignorSchema,
+} from './dto/create-assignor.dto';
+import {
   UpdateAssignorDto,
   updateAssignorSchema,
-} from './dto';
+} from './dto/update-assignor.dto';
 import { uuidSchema } from '../common/zod';
 import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('/integrations/assignor')
+@UseGuards(AuthGuard)
 export class AssignorController {
   constructor(private readonly assignorService: AssignorService) {}
   @Post()
   create(
     @Body(new ZodValidationPipe(createAssignorSchema))
     createAssignorDto: CreateAssignorDto,
+    @Request()
+    request,
   ) {
-    return this.assignorService.create(createAssignorDto);
+    const userId = request.user.id;
+    return this.assignorService.create({ userId, ...createAssignorDto });
   }
 
-  @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    return this.assignorService.findAll();
+  findAll(@Request() request) {
+    const userId = request.user.id;
+    return this.assignorService.findAll(userId);
   }
 
-  @UseGuards(AuthGuard)
   @Get(':id')
   findById(
     @Param('id', new ZodValidationPipe(uuidSchema))
     id: string,
+    @Request()
+    request,
   ) {
-    return this.assignorService.findById(id);
+    const userId = request.user.id;
+    return this.assignorService.findById({ id, userId });
   }
 
-  @UseGuards(AuthGuard)
   @Delete(':id')
   @HttpCode(204)
-  delete(@Param('id', new ZodValidationPipe(uuidSchema)) id: string) {
-    return this.assignorService.delete(id);
+  delete(
+    @Param('id', new ZodValidationPipe(uuidSchema))
+    id: string,
+    @Request()
+    request,
+  ) {
+    const userId = request.user.id;
+    return this.assignorService.delete({ id, userId });
   }
 
-  @UseGuards(AuthGuard)
   @Patch(':id')
   update(
     @Param('id', new ZodValidationPipe(uuidSchema))
     id: string,
     @Body(new ZodValidationPipe(updateAssignorSchema))
     updateAssignorDto: UpdateAssignorDto,
+    @Request()
+    request,
   ) {
-    return this.assignorService.update(id, updateAssignorDto);
+    const userId = request.user.id;
+    return this.assignorService.update({ id, userId, ...updateAssignorDto });
   }
 }

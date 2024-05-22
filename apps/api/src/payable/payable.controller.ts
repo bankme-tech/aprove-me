@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../zod-validation/zod-validation.pipe';
@@ -21,22 +22,29 @@ import { uuidSchema } from '../common/zod';
 import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('integrations/payable')
+@UseGuards(AuthGuard)
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
-  @UseGuards(AuthGuard)
   @Post()
   create(
     @Body(new ZodValidationPipe(createPayableSchema))
     createPayableDto: CreatePayableDto,
+    @Request()
+    request,
   ) {
-    return this.payableService.create(createPayableDto);
+    const userId = request.user.id;
+    return this.payableService.create({ userId, ...createPayableDto });
   }
 
   @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    return this.payableService.findAll();
+  findAll(
+    @Request()
+    request,
+  ) {
+    const userId = request.user.id;
+    return this.payableService.findAll(userId);
   }
 
   @UseGuards(AuthGuard)
@@ -44,8 +52,11 @@ export class PayableController {
   findById(
     @Param('id', new ZodValidationPipe(uuidSchema))
     id: string,
+    @Request()
+    request,
   ) {
-    return this.payableService.findById(id);
+    const userId = request.user.id;
+    return this.payableService.findById({ id, userId });
   }
 
   @UseGuards(AuthGuard)
@@ -54,8 +65,11 @@ export class PayableController {
   delete(
     @Param('id', new ZodValidationPipe(uuidSchema))
     id: string,
+    @Request()
+    request,
   ) {
-    return this.payableService.delete(id);
+    const userId = request.user.id;
+    return this.payableService.delete({ id, userId });
   }
 
   @UseGuards(AuthGuard)
@@ -65,7 +79,10 @@ export class PayableController {
     id: string,
     @Body(new ZodValidationPipe(updatePayableSchema))
     updatePayableDto: UpdatePayableDto,
+    @Request()
+    request,
   ) {
-    return this.payableService.update(id, updatePayableDto);
+    const userId = request.user.id;
+    return this.payableService.update({ id, userId, ...updatePayableDto });
   }
 }

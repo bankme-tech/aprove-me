@@ -5,24 +5,35 @@ import { PrismaService } from '../prisma/prisma.service';
 @Injectable()
 export class PayableService {
   constructor(private readonly prisma: PrismaService) {}
-  create({ assignorId, emissionDate, value }: CreatePayableDto) {
+  create({
+    assignorId,
+    userId,
+    emissionDate,
+    value,
+  }: CreatePayableDto & { userId: string }) {
     return this.prisma.payable.create({
       data: {
         value,
+        userId,
         assignorId,
         emissionDate: new Date(emissionDate),
       },
     });
   }
 
-  findAll() {
-    return this.prisma.payable.findMany();
+  findAll(userId: string) {
+    return this.prisma.payable.findMany({
+      where: {
+        userId,
+      },
+    });
   }
 
-  async findById(id: string) {
+  async findById({ id, userId }: { id: string; userId: string }) {
     const payable = await this.prisma.payable.findUnique({
       where: {
         id,
+        userId,
       },
       select: {
         id: true,
@@ -33,21 +44,48 @@ export class PayableService {
     });
 
     if (!payable) {
-      throw new NotFoundException('Payable not found');
+      throw new NotFoundException();
     }
 
     return payable;
   }
 
-  async delete(id: string) {
-    await this.prisma.payable.delete({
+  async delete({ id, userId }: { id: string; userId: string }) {
+    const payableExists = this.prisma.payable.findFirst({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    if (!payableExists) {
+      throw new NotFoundException();
+    }
+
+    return this.prisma.payable.delete({
       where: {
         id,
       },
     });
   }
 
-  update(id: string, { emissionDate, value }: UpdatePayableDto) {
+  update({
+    id,
+    userId,
+    emissionDate,
+    value,
+  }: UpdatePayableDto & { id: string; userId: string }) {
+    const payableExists = this.prisma.payable.findFirst({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    if (!payableExists) {
+      throw new NotFoundException();
+    }
+
     return this.prisma.payable.update({
       where: {
         id,
