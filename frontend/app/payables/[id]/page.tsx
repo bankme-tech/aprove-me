@@ -6,13 +6,14 @@ import React from 'react'
 
 export default async function PayableId({ params }: { params: { id: string } }) {
 
-
   async function getPayable() {
     try {
-      api.defaults.headers['authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0Yjc1MzRlMi02NzUxLTRkNGUtYjIwNy03NWJlZDllYTQ2NTIiLCJlbWFpbCI6InRlc3RlQGdhaWwuY29tIiwiaWF0IjoxNzE2NDEyNTk0LCJleHAiOjE3MTY0MTYxOTR9.FfseyiazPepuSAgNgO07xRMV4kMovQWfXbkh_viwiBs'
+
       const { data } = await api.get(`integrations/payable/${params.id}`)
+      console.log('entrou try')
       return data
     } catch (error) {
+      console.log('entrou catch')
       console.error(error);
     }
   }

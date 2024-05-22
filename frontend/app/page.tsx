@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { api } from "./api/axios";
-import Input from "./components/Input/Input";
+import Input from "./components/ui/Input/Input";
 import toast from "react-hot-toast";
 import { handleChange } from "./utils/utils";
 import { useRouter } from "next/navigation";
@@ -38,7 +38,6 @@ export default function Home() {
   useEffect(() => {
     const getAssignors = async () => {
       try {
-        api.defaults.headers['authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0Yjc1MzRlMi02NzUxLTRkNGUtYjIwNy03NWJlZDllYTQ2NTIiLCJlbWFpbCI6InRlc3RlQGdhaWwuY29tIiwiaWF0IjoxNzE2NDEyNTk0LCJleHAiOjE3MTY0MTYxOTR9.FfseyiazPepuSAgNgO07xRMV4kMovQWfXbkh_viwiBs'
         const { data } = await api.get('integrations/assignor');
         setAssignors(data)
       } catch (error) {
