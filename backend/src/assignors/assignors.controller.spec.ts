@@ -1,19 +1,15 @@
-import { IntegrationsController } from './integrations.controller';
-import { IntegrationsService } from './integrations.service';
 import { NotFoundException } from '@nestjs/common';
-import {
-  CreateAssignorDto,
-  CreatePayableDto,
-  UpdateAssignorDto,
-  UpdatePayableDto,
-} from './dto/create-integration.dto';
 import { Test, TestingModule } from '@nestjs/testing';
 import { randomUUID } from 'crypto';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
+import { AssignorsController } from './assignors.controller';
+import { AssignorsService } from './assignors.service';
+import { CreateAssignorDto } from './dto/create-assignor.dto';
+import { UpdateAssignorDto } from './dto/update-assignor.dto';
 
-describe('IntegrationsController', () => {
-  let controller: IntegrationsController;
-  let service: DeepMockProxy<IntegrationsService>;
+describe('AssignorsController', () => {
+  let controller: AssignorsController;
+  let service: DeepMockProxy<AssignorsService>;
   // let payableDto: CreatePayableDto;
 
   beforeEach(async () => {
@@ -24,117 +20,23 @@ describe('IntegrationsController', () => {
     //   assignor: randomUUID(),
     // };
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [IntegrationsController],
+      controllers: [AssignorsController],
       providers: [
         {
-          provide: IntegrationsService,
-          useValue: mockDeep<IntegrationsService>(),
+          provide: AssignorsService,
+          useValue: mockDeep<AssignorsService>(),
         },
       ],
     }).compile();
 
-    controller = module.get<IntegrationsController>(IntegrationsController);
-    service = module.get<IntegrationsService>(
-      IntegrationsService,
-    ) as DeepMockProxy<IntegrationsService>;
+    controller = module.get<AssignorsController>(AssignorsController);
+    service = module.get<AssignorsService>(
+      AssignorsService,
+    ) as DeepMockProxy<AssignorsService>;
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
-  });
-
-  describe('createPayable', () => {
-    it('should create a payable', async () => {
-      const payableDto: CreatePayableDto = {
-        id: randomUUID(),
-        value: 100,
-        emissionDate: new Date(),
-        assignor: randomUUID(),
-      };
-      service.createPayable.mockResolvedValue(payableDto);
-
-      expect(await controller.createPayable(payableDto)).toBe(payableDto);
-    });
-  });
-
-  describe('getPayableById', () => {
-    it('should return a payable if it exists', async () => {
-      const payableDto: CreatePayableDto = {
-        id: randomUUID(),
-        value: 100,
-        emissionDate: new Date(),
-        assignor: randomUUID(),
-      };
-      service.getPayableById.mockResolvedValue(payableDto);
-
-      expect(await controller.getPayableById(payableDto.id)).toBe(payableDto);
-    });
-
-    it('should throw NotFoundException if payable does not exist', async () => {
-      service.getPayableById.mockResolvedValue(null);
-      await expect(
-        controller.getPayableById('non-existent-id'),
-      ).rejects.toThrow(NotFoundException);
-    });
-  });
-
-  describe('updatePayable', () => {
-    it('should update a payable', async () => {
-      const updatePayableDto: UpdatePayableDto = {
-        value: 200,
-        emissionDate: new Date(),
-        assignor: randomUUID(),
-      };
-
-      const data = {
-        ...updatePayableDto,
-        id: randomUUID(),
-      };
-      service.updatePayable.mockResolvedValue(data);
-
-      expect(await controller.updatePayable(updatePayableDto, data.id)).toBe(
-        data,
-      );
-    });
-
-    it('should throw NotFoundException if payable does not exist', async () => {
-      service.updatePayable.mockRejectedValue(
-        new NotFoundException('Payable not found'),
-      );
-      const updatePayableDto: UpdatePayableDto = {
-        value: 200,
-        emissionDate: new Date(),
-        assignor: randomUUID(),
-      };
-
-      await expect(
-        controller.updatePayable(updatePayableDto, 'non-existent-id'),
-      ).rejects.toThrow(NotFoundException);
-    });
-  });
-
-  describe('deletePayable', () => {
-    it('should delete a payable', async () => {
-      const payableDto: CreatePayableDto = {
-        id: randomUUID(),
-        value: 100,
-        emissionDate: new Date(),
-        assignor: randomUUID(),
-      };
-      service.deletePayable.mockResolvedValue(payableDto);
-
-      expect(await controller.deletePayable(payableDto.id)).toBe(payableDto);
-    });
-
-    it('should throw NotFoundException if payable does not exist', async () => {
-      service.deletePayable.mockRejectedValue(
-        new NotFoundException('Payable not found'),
-      );
-
-      await expect(controller.deletePayable('non-existent-id')).rejects.toThrow(
-        NotFoundException,
-      );
-    });
   });
 
   describe('getAssignorById', () => {

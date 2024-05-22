@@ -1,15 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import {
-  CreateAssignorDto,
-  CreatePayableDto,
-  UpdateAssignorDto,
-  UpdatePayableDto,
-} from './dto/create-integration.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { validateDto } from './../utils';
+import { validateDto } from '../utils';
+import { CreatePayableDto } from './dto/create.payable.dto';
+import { UpdatePayableDto } from './dto/update.payable.dto';
 
 @Injectable()
-export class IntegrationsService {
+export class PayablesService {
   constructor(private prisma: PrismaService) {}
 
   getPayableById(id: string) {
@@ -48,42 +44,6 @@ export class IntegrationsService {
     if (!payable) throw new NotFoundException('Payable not found');
 
     return this.prisma.payable.delete({
-      where: { id },
-    });
-  }
-
-  async createAssignor(assignorDto: CreateAssignorDto) {
-    const res = await validateDto(assignorDto, CreateAssignorDto);
-    return this.prisma.assignor.create({
-      data: res,
-    });
-  }
-
-  getAssignorById(id: string) {
-    return this.prisma.assignor.findUnique({
-      where: { id },
-    });
-  }
-
-  async updateAssignor(id: string, updateDto: UpdateAssignorDto) {
-    const res = await validateDto(updateDto, UpdateAssignorDto);
-
-    const assignor = await this.getAssignorById(id);
-
-    if (!assignor) throw new NotFoundException('Assignor not found');
-
-    return await this.prisma.assignor.update({
-      where: { id },
-      data: res,
-    });
-  }
-
-  async deleteAssignor(id: string) {
-    const assignor = await this.getAssignorById(id);
-
-    if (!assignor) throw new NotFoundException('Assignor not found');
-
-    return this.prisma.assignor.delete({
       where: { id },
     });
   }
