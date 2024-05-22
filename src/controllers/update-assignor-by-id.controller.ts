@@ -1,15 +1,11 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Param,
-  Put,
-} from "@nestjs/common";
+import { Body, Controller, Param, ParseUUIDPipe, Put } from "@nestjs/common";
+import type { Assignor } from "@prisma/client";
 
 import { UpdateAssignorByIdInputDTO } from "../dtos/update-assignor-by-id-input.dto";
 import { UpdateAssignorByIdOutputDTO } from "../dtos/update-assignor-by-id-output.dto";
+import { FindAssignorByIdPipe } from "../pipes/find-assignor-by-id.pipe";
+import { UpdateAssignorByIdInputPipe } from "../pipes/update-assignor-by-id-input.pipe";
 import { PrismaProvider } from "../providers/prisma.provider";
-import { InputDTOPipe } from "../utils/input-dto.pipe";
 
 @Controller()
 export class UpdateAssignorByIdController {
@@ -21,16 +17,10 @@ export class UpdateAssignorByIdController {
 
   @Put("integrations/assignor/:id")
   async handle(
-    @Param("id") id: string,
-    @Body(new InputDTOPipe(UpdateAssignorByIdInputDTO))
+    @Param("id", ParseUUIDPipe, FindAssignorByIdPipe) assignor: Assignor,
+    @Body(UpdateAssignorByIdInputPipe)
     input: UpdateAssignorByIdInputDTO,
   ) {
-    const assignor = await this.prisma.assignor.findUnique({ where: { id } });
-
-    if (assignor === null) {
-      throw new BadRequestException("assignor not found");
-    }
-
     await this.prisma.assignor.update({
       data: {
         document: input.document,
@@ -39,12 +29,12 @@ export class UpdateAssignorByIdController {
         name: input.name,
       },
       where: {
-        id,
+        id: assignor.id,
       },
     });
 
     return new UpdateAssignorByIdOutputDTO(
-      id,
+      assignor.id,
       input.document,
       input.email,
       input.phone,

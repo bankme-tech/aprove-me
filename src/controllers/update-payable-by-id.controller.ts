@@ -6,35 +6,26 @@ import {
   ParseUUIDPipe,
   Put,
 } from "@nestjs/common";
+import type { Payable } from "@prisma/client";
 
 import { UpdatePayableByIdInputDTO } from "../dtos/update-payable-by-id-input.dto";
 import { UpdatePayableByIdOutputDTO } from "../dtos/update-payable-by-id-output.dto";
+import { FindPayableByIdPipe } from "../pipes/find-payable-by-id.pipe";
+import { UpdatePayableByIdInputPipe } from "../pipes/update-payable-by-id-input.pipe";
 import { PrismaProvider } from "../providers/prisma.provider";
-import { InputDTOPipe } from "../utils/input-dto.pipe";
 
 @Controller()
 export class UpdatePayableByIdController {
-  private readonly prisma: PrismaProvider;
-
-  constructor(prisma: PrismaProvider) {
-    this.prisma = prisma;
-  }
+  constructor(private readonly prisma: PrismaProvider) {}
 
   @Put("/integrations/payable/:id")
   async handle(
-    @Param("id", ParseUUIDPipe) id: string,
-    @Body(new InputDTOPipe(UpdatePayableByIdInputDTO))
-    input: UpdatePayableByIdInputDTO,
+    @Param("id", ParseUUIDPipe, FindPayableByIdPipe) payable: Payable,
+    @Body(UpdatePayableByIdInputPipe) input: UpdatePayableByIdInputDTO,
   ) {
-    const payable = await this.prisma.payable.findUnique({ where: { id } });
-
-    if (payable === null) {
-      throw new BadRequestException("payable not found");
-    }
-
     if (input.assignorId !== payable.assignorId) {
       const assignor = await this.prisma.payable.findUnique({
-        where: { id },
+        where: { id: payable.assignorId },
       });
 
       if (assignor === null) {
@@ -49,12 +40,12 @@ export class UpdatePayableByIdController {
         assignorId: input.assignorId,
       },
       where: {
-        id,
+        id: payable.id,
       },
     });
 
     return new UpdatePayableByIdOutputDTO(
-      id,
+      payable.id,
       input.value,
       input.emissionDate,
       input.assignorId,

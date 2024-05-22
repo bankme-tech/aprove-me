@@ -1,30 +1,18 @@
-import {
-  BadRequestException,
-  Controller,
-  Get,
-  Param,
-  ParseUUIDPipe,
-} from "@nestjs/common";
+import { Controller, Get, Param, ParseUUIDPipe } from "@nestjs/common";
+import type { Payable } from "@prisma/client";
 
 import { FindPayableByIdOutputDTO } from "../dtos/find-payable-by-id-output.dto";
+import { FindPayableByIdPipe } from "../pipes/find-payable-by-id.pipe";
 import { PrismaProvider } from "../providers/prisma.provider";
 
 @Controller()
 export class FindPayableByIdController {
-  private readonly prisma: PrismaProvider;
-
-  constructor(prisma: PrismaProvider) {
-    this.prisma = prisma;
-  }
+  constructor(private readonly prisma: PrismaProvider) {}
 
   @Get("/integrations/payable/:id")
-  async handle(@Param("id", ParseUUIDPipe) id: string) {
-    const payable = await this.prisma.payable.findUnique({ where: { id } });
-
-    if (payable === null) {
-      throw new BadRequestException("payable not found");
-    }
-
+  async handle(
+    @Param("id", ParseUUIDPipe, FindPayableByIdPipe) payable: Payable,
+  ) {
     return new FindPayableByIdOutputDTO(
       payable.id,
       payable.value,

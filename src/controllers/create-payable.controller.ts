@@ -2,20 +2,16 @@ import { Body, Controller, Post } from "@nestjs/common";
 
 import { CreatePayableInputDTO } from "../dtos/create-payable-input.dto";
 import { CreatePayableOutputDTO } from "../dtos/create-payable-output.dto";
+import { CreatePayableInputPipe } from "../pipes/create-payable-input.pipe";
 import { PrismaProvider } from "../providers/prisma.provider";
-import { InputDTOPipe } from "../utils/input-dto.pipe";
 
 @Controller()
 export class CreatePayableController {
-  private readonly prisma: PrismaProvider;
-
-  constructor(prisma: PrismaProvider) {
-    this.prisma = prisma;
-  }
+  constructor(private readonly prisma: PrismaProvider) {}
 
   @Post("/integrations/payable")
   async handle(
-    @Body(new InputDTOPipe(CreatePayableInputDTO)) input: CreatePayableInputDTO,
+    @Body(CreatePayableInputPipe) input: CreatePayableInputDTO,
   ): Promise<CreatePayableOutputDTO> {
     const upsertAssignorPromise = this.prisma.assignor.upsert({
       where: {
