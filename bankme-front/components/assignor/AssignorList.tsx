@@ -1,29 +1,38 @@
+import { getAssignors } from "@/services/assignor";
+import { useEffect, useState } from "react";
 import TableItem from "./components/TableItem";
 
 export default function ListAssignor() {
-  const teste: any = [
-      {
-        "id": 1,
-        "document": "123.456.789-00",
-        "email": "cedente1@example.com",
-        "phone": "+55 11 98765-4321",
-        "name": "Cedente Um"
-    },
-    {
-        "id": 2,
-        "document": "12.345.678/0001-99",
-        "email": "cedente2@example.com",
-        "phone": "+55 21 91234-5678",
-        "name": "Empresa Dois Ltda"
-    },
-    {
-        "id": 3,
-        "document": "987.654.321-00",
-        "email": "cedente3@example.com",
-        "phone": "+55 31 99876-5432",
-        "name": "Cedente Três"
+  const [assignors, setAssignors] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem('user');
+      if (!token) {
+        setIsError(true);
+        setErrorMessage('Invalid token JWT!');
+
+        return;
+      }
+
+      const request = await getAssignors(JSON.parse(token));
+      if (request.status === 200) {
+        setIsError(false);
+        setAssignors(request.data);
+        return;
+      }
+
+      setIsError(true);
+
+      if ('message' in request) {
+        setErrorMessage(request.message);
+      }
     }
-  ];
+
+    fetchData();
+  });
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
@@ -48,10 +57,18 @@ export default function ListAssignor() {
           </tr>
         </thead>
         <tbody>
-            {teste.map((item: any) => {
+            {assignors.map((item: any) => {
               return <TableItem item={item} />
             })}
         </tbody>
+        {isError && <div role="alert">
+            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
+              Erro!
+            </div>
+            <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
+              <p>{errorMessage}</p>
+            </div>
+          </div>}
       </table>
     </div>
   );

@@ -24,6 +24,7 @@ export default function DeletePayable() {
     const request = await removePayables(JSON.parse(token), id);
 
     if (request.status === 200) {
+      setIsError(false);
       return;
     }
 

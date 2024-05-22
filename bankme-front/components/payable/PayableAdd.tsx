@@ -58,6 +58,7 @@ export default function AddPayable() {
     const request = await addPayables(JSON.parse(token), payable);
 
     if (request.status === 201) {
+      setIsError(false);
       return;
     }
 

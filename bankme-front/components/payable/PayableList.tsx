@@ -7,31 +7,32 @@ export default function ListPayable() {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-useEffect(() => {
-  const fetchData = async () => {
-    const token = localStorage.getItem('user');
-    if (!token) {
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem('user');
+      if (!token) {
+        setIsError(true);
+        setErrorMessage('Invalid token JWT!');
+
+        return;
+      }
+
+      const request = await getPayables(JSON.parse(token));
+      if (request.status === 200) {
+        setIsError(false);
+        setPayables(request.data);
+        return;
+      }
+
       setIsError(true);
-      setErrorMessage('Invalid token JWT!');
 
-      return;
+      if ('message' in request) {
+        setErrorMessage(request.message);
+      }
     }
 
-    const request = await getPayables(JSON.parse(token));
-    if (request.status === 200) {
-      setPayables(request.data);
-      return;
-    }
-
-    setIsError(true);
-
-    if ('message' in request) {
-      setErrorMessage(request.message);
-    }
-  }
-
-  fetchData();
-});
+    fetchData();
+  });
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">

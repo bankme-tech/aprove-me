@@ -59,6 +59,7 @@ export default function EditPayable() {
     const request = await editPayables(JSON.parse(token), payable, payable.id);
 
     if (request.status === 200) {
+      setIsError(false);
       return;
     }
 
