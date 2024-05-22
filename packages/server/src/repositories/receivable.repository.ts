@@ -2,7 +2,7 @@ import { receivableBodyDto, receivableListResponseDto, receivableResponseDto } f
 import { Result } from 'src/types/either';
 
 export abstract class ReceivableRepository {
-  abstract create_receivable(receivable: receivableBodyDto): ReceivableRepository.IdResponseType;
+  abstract create_receivable(receivable: receivableBodyDto): ReceivableRepository.responseType;
   abstract get_receivable(id: string): ReceivableRepository.responseType;
   abstract get_list_receivable(): ReceivableRepository.listResponseType;
   abstract delete_receivable(id: string): Promise<void>;

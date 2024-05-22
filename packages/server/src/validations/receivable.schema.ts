@@ -7,11 +7,9 @@ export const receivableSchema = z
         message: 'Invalid value',
       })
       .min(0, 'Value must be positive'),
-    emissionDate: z
-      .date({
-        message: 'Invalid emission date',
-      })
-      .min(new Date(), 'emission date must be in the future'),
+    emissionDate: z.string().datetime({
+      message: 'Invalid emission date',
+    }),
     assignorId: z.string().uuid({ message: 'Invalid assignor id' }),
     assignor: z.any().optional(),
   })

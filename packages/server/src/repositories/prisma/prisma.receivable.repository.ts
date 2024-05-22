@@ -9,20 +9,16 @@ export class PrismaReceivableRepository implements ReceivableRepository {
   constructor(prisma_service: PrismaService) {
     this.prisma_service = prisma_service;
   }
-  public async create_receivable(receivable: ReceivableRepository.bodyType): ReceivableRepository.IdResponseType {
+  public async create_receivable(receivable: ReceivableRepository.bodyType): ReceivableRepository.responseType {
     try {
-      const receivableId = await this.prisma_service.receivable.create({
+      const _receivable = await this.prisma_service.receivable.create({
         data: {
           value: receivable.value,
           emissionDate: receivable.emissionDate,
           assignorId: receivable.assignorId,
         },
-        select: {
-          id: true,
-        },
       });
-
-      return Ok(receivableId);
+      return Ok(_receivable);
     } catch (error) {
       return Err(new Error(error));
     }
@@ -35,13 +31,7 @@ export class PrismaReceivableRepository implements ReceivableRepository {
           id,
         },
       });
-      const data = {
-        id: receivable.id,
-        value: receivable.value,
-        emissionDate: receivable.emissionDate.toISOString(),
-        assignorId: receivable.assignorId,
-      };
-      return Ok(data);
+      return Ok(receivable);
     } catch (error) {
       return Err(new Error(error));
     }
@@ -56,13 +46,7 @@ export class PrismaReceivableRepository implements ReceivableRepository {
           assignorId: true,
         },
       });
-      const data = receivables.map((receivable) => ({
-        id: receivable.id,
-        value: receivable.value,
-        emissionDate: receivable.emissionDate.toISOString(),
-        assignorId: receivable.assignorId,
-      }));
-      return Ok(data);
+      return Ok(receivables);
     } catch (error) {
       return Err(new Error(error));
     }
@@ -81,13 +65,7 @@ export class PrismaReceivableRepository implements ReceivableRepository {
           assignorId: true,
         },
       });
-      const data = receivables.map((receivable) => ({
-        id: receivable.id,
-        value: receivable.value,
-        emissionDate: receivable.emissionDate.toISOString(),
-        assignorId: receivable.assignorId,
-      }));
-      return Ok(data);
+      return Ok(receivables);
     } catch (error) {
       return Err(new Error(error));
     }
@@ -107,7 +85,7 @@ export class PrismaReceivableRepository implements ReceivableRepository {
     receivable: ReceivableRepository.bodyType,
   ): ReceivableRepository.responseType {
     try {
-      const receivableId = await this.prisma_service.receivable.update({
+      const data = await this.prisma_service.receivable.update({
         where: {
           id,
         },
@@ -118,12 +96,6 @@ export class PrismaReceivableRepository implements ReceivableRepository {
         },
       });
 
-      const data = {
-        id: receivableId.id,
-        value: receivableId.value,
-        emissionDate: receivableId.emissionDate.toISOString(),
-        assignorId: receivableId.assignorId,
-      };
       return Ok(data);
     } catch (error) {
       return Err(new Error(error));

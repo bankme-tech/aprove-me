@@ -39,5 +39,6 @@ export function throw_error(error: Error | any) {
   if (error instanceof CustomError) {
     throw new BadRequestException(error.message);
   }
+  console.log(error);
   throw new InternalServerErrorException('Internal Server Error');
 }

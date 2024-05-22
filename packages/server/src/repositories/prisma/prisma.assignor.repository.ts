@@ -11,21 +11,17 @@ export class PrismaAssignorRepository implements AssignorRepository {
     this.prisma_service = prisma_service;
   }
 
-  async create_assignor(assignor: AssignorRepository.bodyType): AssignorRepository.IdResponseType {
+  async create_assignor(assignor: AssignorRepository.bodyType): AssignorRepository.responseType {
     try {
-      const assignorId = await this.prisma_service.assignor.create({
+      const data = await this.prisma_service.assignor.create({
         data: {
           document: assignor.document,
           email: assignor.email,
           phone: assignor.phone,
           name: assignor.name,
         },
-        select: {
-          id: true,
-        },
       });
-
-      return Ok(assignorId);
+      return Ok(data);
     } catch (error) {
       return Err(new Error(error));
     }
@@ -92,11 +88,12 @@ export class PrismaAssignorRepository implements AssignorRepository {
             id: true,
           },
         });
-
-        return Ok({
-          id: assignorId.id,
-          field: 'document',
-        });
+        if (assignorId) {
+          return Ok({
+            id: assignorId.id,
+            field: 'document',
+          });
+        }
       }
       if (assignor.email) {
         const assignorId = await this.prisma_service.assignor.findUnique({
@@ -107,10 +104,13 @@ export class PrismaAssignorRepository implements AssignorRepository {
             id: true,
           },
         });
-        return Ok({
-          id: assignorId.id,
-          field: 'email',
-        });
+
+        if (assignorId) {
+          return Ok({
+            id: assignorId.id,
+            field: 'email',
+          });
+        }
       }
       if (assignor.phone) {
         const assignorId = await this.prisma_service.assignor.findUnique({
@@ -121,10 +121,12 @@ export class PrismaAssignorRepository implements AssignorRepository {
             id: true,
           },
         });
-        return Ok({
-          id: assignorId.id,
-          field: 'phone',
-        });
+        if (assignorId) {
+          return Ok({
+            id: assignorId.id,
+            field: 'phone',
+          });
+        }
       }
       return Ok({
         id: null,
@@ -147,7 +149,6 @@ export class PrismaAssignorRepository implements AssignorRepository {
       });
       return Ok(assignors);
     } catch (error) {
-      console.log(error);
       return Err(new Error(error));
     }
   }

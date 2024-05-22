@@ -16,11 +16,11 @@ export class ReceivableService {
   async create_receivable(receivable: receivableBodyDto): Promise<ReceivableRepository.IdResponseType> {
     try {
       const data = this.validation_service.validateReceivable(receivable);
-      const cents_result = to_cents(data.value);
-      if (cents_result.isError()) {
-        return Err(cents_result.value);
-      }
-      data.value = cents_result.value;
+      // const cents_result = to_cents(data.value);
+      // if (cents_result.isError()) {
+      //   return Err(cents_result.value);
+      // }
+      // data.value = cents_result.value;
       const result = await this.receivable_repository.create_receivable(data);
       return result;
     } catch (error) {
@@ -34,15 +34,15 @@ export class ReceivableService {
       if (is_error.isError()) {
         return is_error;
       }
-      const receivable = is_error.value;
-      const money_result = to_money(receivable.value);
+      // const receivable = is_error.value;
+      // const money_result = to_money(receivable.value);
 
-      if (money_result.isError()) {
-        return Err(money_result.value);
-      }
-      receivable.value = money_result.value;
+      // if (money_result.isError()) {
+      //   return Err(money_result.value);
+      // }
+      // receivable.value = money_result.value;
 
-      return Ok(receivable);
+      return Ok(is_error.value);
     } catch (error) {
       return Err(error);
     }
@@ -52,18 +52,18 @@ export class ReceivableService {
     if (receivables.isError()) {
       return receivables;
     }
-    const result: receivableResponseDto[] = [];
+    // const result: receivableResponseDto[] = [];
 
-    for (const receivable of receivables.value) {
-      const money_result = to_money(receivable.value);
-      if (money_result.isError()) {
-        return Err(money_result.value);
-      }
-      receivable.value = money_result.value;
-      result.push(receivable);
-    }
+    // for (const receivable of receivables.value) {
+    //   const money_result = to_money(receivable.value);
+    //   if (money_result.isError()) {
+    //     return Err(money_result.value);
+    //   }
+    //   receivable.value = money_result.value;
+    //   result.push(receivable);
+    // }
 
-    return Ok(result);
+    return Ok(receivables.value);
   }
   async delete_receivable(id: string): Promise<Result<Error, void>> {
     try {

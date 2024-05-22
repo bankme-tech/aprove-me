@@ -7,7 +7,7 @@ export type receivableBodyDto = {
 export type receivableResponseDto = {
   id: string;
   value: number;
-  emissionDate: string;
+  emissionDate: Date;
   assignorId: string;
 };
 

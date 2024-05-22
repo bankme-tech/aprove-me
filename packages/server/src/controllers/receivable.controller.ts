@@ -1,3 +1,4 @@
+import { throw_error } from 'src/shared/utils';
 import { ReceivableService } from '../services/receivable.service';
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 
@@ -9,24 +10,44 @@ export class ReceivableController {
   }
 
   @Get(':id')
-  get_receivable(id: string): Promise<any> {
-    return this.receivableService.get_receivable(id);
+  async get_receivable(id: string): Promise<any> {
+    const result = await this.receivableService.get_receivable(id);
+    if (result.isError()) {
+      return throw_error(result.value);
+    }
+    return result.value;
   }
   @Get()
-  get_list_receivable(): Promise<any> {
-    return this.receivableService.get_list_receivable();
+  async get_list_receivable(): Promise<any> {
+    const result = await this.receivableService.get_list_receivable();
+    if (result.isError()) {
+      return throw_error(result.value);
+    }
+    return result.value;
   }
   @Delete(':id')
-  delete_receivable(@Param('id') id: string): Promise<any> {
-    return this.receivableService.delete_receivable(id);
+  async delete_receivable(@Param('id') id: string): Promise<any> {
+    const result = await this.receivableService.delete_receivable(id);
+    if (result.isError()) {
+      return throw_error(result.value);
+    }
+    return result.value;
   }
   @Put(':id')
-  update_receivable(@Param('id') id: string, @Body() receivable: any): Promise<any> {
-    return this.receivableService.update_receivable(id, receivable);
+  async update_receivable(@Param('id') id: string, @Body() receivable: any): Promise<any> {
+    const result = await this.receivableService.update_receivable(id, receivable);
+    if (result.isError()) {
+      return throw_error(result.value);
+    }
+    return result.value;
   }
 
   @Post()
-  create_receivable(@Body() receivable: any): Promise<any> {
-    return this.receivableService.create_receivable(receivable);
+  async create_receivable(@Body() receivable: any): Promise<any> {
+    const result = await this.receivableService.create_receivable(receivable);
+    if (result.isError()) {
+      return throw_error(result.value);
+    }
+    return result.value;
   }
 }
