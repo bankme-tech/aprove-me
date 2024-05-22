@@ -7,7 +7,7 @@ import { CoreInfraModule } from '@infra/core/core-infra.module';
 
 import { PayableRoutesModule } from '@presentation/payable/payable-routes.module';
 
-import path from 'path';
+import * as path from 'path';
 
 type Imports = (Type<unknown> | DynamicModule)[];
 

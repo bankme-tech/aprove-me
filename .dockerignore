@@ -1,7 +1,9 @@
-Dockerfile
-.dockerignore
-node_modules
-dist
-coverage
-test
+**/node_modules/
+**/dist
+.git
+**/.git
 .env
+**/.env
+test
+**/Dockerfile
+.dockerignore
