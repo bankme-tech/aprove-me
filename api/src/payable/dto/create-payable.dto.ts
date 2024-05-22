@@ -1,9 +1,11 @@
-import { IsUUID, IsNumber } from 'class-validator';
+import { IsUUID, IsNumber, IsNotEmpty } from 'class-validator';
 
 export class CreatePayableDto {
+  @IsNotEmpty()
   @IsNumber()
   value: number;
 
+  @IsNotEmpty()
   @IsUUID()
   assignor: string;
 }
