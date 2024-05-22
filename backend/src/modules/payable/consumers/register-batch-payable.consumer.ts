@@ -11,6 +11,7 @@ import { RegisterPayableService } from '../services/register-payable/register-pa
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { NotificationsName } from '~/common/types/events';
 import { NotificationSuccessPayableBatchEvent } from '~/modules/notification/events/notification-success-payable-batch.event';
+import { NotificationFailurePayableBatchEvent } from '~/modules/notification/events/notification-failure-payable-batch.event';
 
 @Processor(QueuesName.PAYABLE)
 export class RegisterBatchPayableConsumer {
@@ -69,7 +70,10 @@ export class RegisterBatchPayableConsumer {
   @OnQueueFailed()
   async onFailure(job: Job<PayableJob>) {
     // TODO: Implements event to send email to developer team
-    console.log('failed job', job);
+    this.eventEmitter.emit(
+      NotificationsName.FAILURE_PAYABLE_BATCH,
+      new NotificationFailurePayableBatchEvent(job.data),
+    );
   }
 
   private async countCompletedJobsFromBatch(
