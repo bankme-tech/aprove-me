@@ -16,41 +16,41 @@ export class CreatePayableController {
   @Post("/integrations/payable")
   async handle(@Body() requestBody: unknown): Promise<CreatePayableOutputDTO> {
     try {
-      const createPayableInputDTO = new CreatePayableInputDTO(requestBody);
+      const input = new CreatePayableInputDTO(requestBody);
 
       const upsertAssignorPromise = this.prisma.assignor.upsert({
         where: {
-          id: createPayableInputDTO.assignor.id,
+          id: input.assignor.id,
         },
         create: {
-          id: createPayableInputDTO.assignor.id,
-          document: createPayableInputDTO.assignor.document,
-          email: createPayableInputDTO.assignor.email,
-          phone: createPayableInputDTO.assignor.phone,
-          name: createPayableInputDTO.assignor.name,
+          id: input.assignor.id,
+          document: input.assignor.document,
+          email: input.assignor.email,
+          phone: input.assignor.phone,
+          name: input.assignor.name,
         },
         update: {
-          document: createPayableInputDTO.assignor.document,
-          email: createPayableInputDTO.assignor.email,
-          phone: createPayableInputDTO.assignor.phone,
-          name: createPayableInputDTO.assignor.name,
+          document: input.assignor.document,
+          email: input.assignor.email,
+          phone: input.assignor.phone,
+          name: input.assignor.name,
         },
       });
 
       const upsertPayablePromise = this.prisma.payable.upsert({
         where: {
-          id: createPayableInputDTO.id,
+          id: input.id,
         },
         create: {
-          id: createPayableInputDTO.id,
-          value: createPayableInputDTO.value,
-          emissionDate: createPayableInputDTO.emissionDate,
-          assignorId: createPayableInputDTO.assignor.id,
+          id: input.id,
+          value: input.value,
+          emissionDate: input.emissionDate,
+          assignorId: input.assignor.id,
         },
         update: {
-          value: createPayableInputDTO.value,
-          emissionDate: createPayableInputDTO.emissionDate,
-          assignorId: createPayableInputDTO.assignor.id,
+          value: input.value,
+          emissionDate: input.emissionDate,
+          assignorId: input.assignor.id,
         },
       });
 
@@ -60,14 +60,14 @@ export class CreatePayableController {
       ]);
 
       return new CreatePayableOutputDTO(
-        createPayableInputDTO.id,
-        createPayableInputDTO.value,
-        createPayableInputDTO.emissionDate,
-        createPayableInputDTO.assignor.id,
-        createPayableInputDTO.assignor.document,
-        createPayableInputDTO.assignor.email,
-        createPayableInputDTO.assignor.phone,
-        createPayableInputDTO.assignor.name,
+        input.id,
+        input.value,
+        input.emissionDate,
+        input.assignor.id,
+        input.assignor.document,
+        input.assignor.email,
+        input.assignor.phone,
+        input.assignor.name,
       );
     } catch (error) {
       if (error instanceof ValidationError) {
