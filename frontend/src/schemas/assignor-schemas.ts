@@ -7,4 +7,12 @@ export const createAssignorFormSchema = z.object({
     phone: z.string().max(20, "Phone must be less than 20 characters"),
 });
 
+
 export type CreateAssignorFormData = z.infer<typeof createAssignorFormSchema>;
+
+
+export const editAssignorFormSchema = createAssignorFormSchema.extend({
+    id: z.string().uuid("Invalid id"),
+});
+
+export type EditAssignorFormData = z.infer<typeof editAssignorFormSchema>;
