@@ -1,9 +1,12 @@
 import { faker } from '@faker-js/faker';
 
-import { ValueObject, deepFreeze } from '../../../src/domain/common/value-object/value-object';
+import {
+  ValueObject,
+  deepFreeze,
+} from '../../../src/domain/common/value-object/value-object';
 
 describe('# Teste de Unidade - ValueObject', () => {
-  class TestValueObject extends ValueObject<number> { }
+  class TestValueObject extends ValueObject<number> {}
 
   it('deve inicializar com o valor correto', () => {
     const expectedValue = 10;
@@ -13,14 +16,17 @@ describe('# Teste de Unidade - ValueObject', () => {
   });
 
   it('deve manter objeto quando chamado deepFreeze', () => {
-    const obj = { name: faker.person.fullName(), address: { country: faker.location.country() } };
+    const obj = {
+      name: faker.person.fullName(),
+      address: { country: faker.location.country() },
+    };
     const frozenObj = deepFreeze(obj);
 
     expect(Object.isFrozen(frozenObj)).toBe(true);
     expect(Object.isFrozen(frozenObj.address)).toBe(true);
 
-    expect(() => frozenObj.name = 'invalid_name').toThrow();
-    expect(() => frozenObj.address.country = 'invalid_country').toThrow();
+    expect(() => (frozenObj.name = 'invalid_name')).toThrow();
+    expect(() => (frozenObj.address.country = 'invalid_country')).toThrow();
   });
 
   it('deve retornar "true" quando for igual', () => {
@@ -45,7 +51,7 @@ describe('# Teste de Unidade - ValueObject', () => {
   });
 
   it('deve return "false" se comparado com um object de tipo diferente', () => {
-    class AnotherValueObject extends ValueObject<number> {};
+    class AnotherValueObject extends ValueObject<number> {}
 
     const vo1 = new TestValueObject(10);
     const vo2 = new AnotherValueObject(10);

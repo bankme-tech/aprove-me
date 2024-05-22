@@ -12,7 +12,7 @@ describe('# Test de Unidade - ReceivableEntity', () => {
     const receivable = ReceivableEntity.create({
       assignor: expectedAssignor.value,
       emissionDate: expectedEmissionDate,
-      value: expectedValue
+      value: expectedValue,
     });
 
     expect(receivable).toBeInstanceOf(ReceivableEntity);
@@ -27,8 +27,8 @@ describe('# Test de Unidade - ReceivableEntity', () => {
       id: expect.any(String),
       assignor: expectedAssignor.value,
       emissionDate: expectedEmissionDate,
-      value: expectedValue
-    })
+      value: expectedValue,
+    });
   });
 
   it('deve carregar um recebível corretamente', () => {
@@ -41,7 +41,7 @@ describe('# Test de Unidade - ReceivableEntity', () => {
       id: expectedId.value,
       assignor: expectedAssignor.value,
       emissionDate: expectedEmissionDate,
-      value: expectedValue
+      value: expectedValue,
     });
 
     expect(receivable).toBeInstanceOf(ReceivableEntity);
@@ -50,6 +50,6 @@ describe('# Test de Unidade - ReceivableEntity', () => {
     expect(receivable.assignor.value).toEqual(expectedAssignor.value);
     expect(receivable.assignor).toBeInstanceOf(UniqueEntityIdVO);
     expect(receivable.emissionDate).toStrictEqual(expectedEmissionDate);
-    expect(receivable.value).toStrictEqual(expectedValue);    
+    expect(receivable.value).toStrictEqual(expectedValue);
   });
 });

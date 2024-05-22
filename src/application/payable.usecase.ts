@@ -1,5 +1,5 @@
-import { AssignorEntity } from "../domain/entity";
-import { IAssignorRepository } from "../domain/repository/assignor-repository.interface";
+import { AssignorEntity } from '../domain/entity';
+import { IAssignorRepository } from '../domain/repository/assignor-repository.interface';
 
 export class PayableUsecase {
   constructor(private readonly assignorRepo: IAssignorRepository) {}
@@ -14,9 +14,9 @@ export class PayableUsecase {
         document: input.document,
         email: input.email,
         phone: input.phone,
-        name: input.name
+        name: input.name,
       });
-      
+
       await this.assignorRepo.add(assignor);
     }
 
@@ -24,10 +24,9 @@ export class PayableUsecase {
       assignor.addReceivable({
         value: receivable.value,
         emissionDate: receivable.emissionDate,
-        assignor: assignor.id.value
+        assignor: assignor.id.value,
       });
     });
-
   }
 }
 
@@ -39,5 +38,5 @@ type Input = {
   receivables: {
     value: number;
     emissionDate: Date;
-  }[]
-}
+  }[];
+};

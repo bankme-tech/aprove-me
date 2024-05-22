@@ -5,7 +5,7 @@ import { IAssignorRepository } from '../../domain/repository';
 import { assign } from 'lodash';
 
 export class PrismaAssignorRepository implements IAssignorRepository {
-  constructor(private readonly prisma: PrismaClient) { }
+  constructor(private readonly prisma: PrismaClient) {}
 
   async add(entity: AssignorEntity): Promise<void> {
     await this.prisma.assignor.create({
@@ -14,15 +14,15 @@ export class PrismaAssignorRepository implements IAssignorRepository {
         document: entity.document.value,
         email: entity.email.value,
         phone: entity.phone.value,
-        name: entity.name
-      }
+        name: entity.name,
+      },
     });
   }
 
   async findByDocument(document: string): Promise<AssignorEntity | null> {
     const assignor = await this.prisma.assignor.findUnique({
       where: { document },
-      include: { receivables: true }
+      include: { receivables: true },
     });
 
     return assignor ? new AssignorEntity({ ...assignor }) : null;
@@ -33,6 +33,8 @@ export class PrismaAssignorRepository implements IAssignorRepository {
       include: { receivables: true },
     });
 
-    return result.length ? result.map((assignor) => AssignorEntity.create({ ...assignor })) : null;
+    return result.length
+      ? result.map((assignor) => AssignorEntity.create({ ...assignor }))
+      : null;
   }
 }

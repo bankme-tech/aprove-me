@@ -1,15 +1,21 @@
 import { faker } from '@faker-js/faker';
 
 import { AssignorEntity, ReceivableEntity } from '../../../src/domain/entity';
-import { CnpjVO, CpfVO, EmailVO, PhoneVO, UniqueEntityIdVO } from '../../../src/domain/common/value-object';
+import {
+  CnpjVO,
+  CpfVO,
+  EmailVO,
+  PhoneVO,
+  UniqueEntityIdVO,
+} from '../../../src/domain/common/value-object';
 
 const makeReceivable = (assignorId: UniqueEntityIdVO) => {
   return ReceivableEntity.create({
     assignor: assignorId.value,
     emissionDate: faker.date.recent(),
-    value: faker.number.int({ min: 11111, max: 99999 })
+    value: faker.number.int({ min: 11111, max: 99999 }),
   });
-}
+};
 
 describe('Teste de Unidade - AssignorEntity', () => {
   it('deve criar um cedente com CPF quando chamado metodo "create"', () => {
@@ -22,7 +28,7 @@ describe('Teste de Unidade - AssignorEntity', () => {
       document: expectedCpf.value,
       email: expectedEmail.value,
       phone: expectedPhone.value,
-      name: expectedName
+      name: expectedName,
     });
 
     const expectedReceivable = makeReceivable(assignorPF.id);
@@ -42,8 +48,8 @@ describe('Teste de Unidade - AssignorEntity', () => {
       email: expectedEmail.value,
       phone: expectedPhone.value,
       name: expectedName,
-      receivables: [expectedReceivable.toJSON()]
-    });    
+      receivables: [expectedReceivable.toJSON()],
+    });
   });
 
   it('deve criar um cedente com CNPJ quando chamado metodo "create"', () => {
@@ -56,7 +62,7 @@ describe('Teste de Unidade - AssignorEntity', () => {
       document: expectedCnpj.value,
       email: expectedEmail.value,
       phone: expectedPhone.value,
-      name: expectedName
+      name: expectedName,
     });
 
     expect(assignorPJ).toBeInstanceOf(AssignorEntity);
@@ -73,8 +79,8 @@ describe('Teste de Unidade - AssignorEntity', () => {
       email: expectedEmail.value,
       phone: expectedPhone.value,
       name: expectedName,
-      receivables: []
-    });    
+      receivables: [],
+    });
   });
 
   it('deve carregar cedente corretamente', () => {
@@ -89,7 +95,7 @@ describe('Teste de Unidade - AssignorEntity', () => {
       document: expectedCnpj.value,
       email: expectedEmail.value,
       phone: expectedPhone.value,
-      name: expectedName
+      name: expectedName,
     });
 
     expect(assignorPF).toBeInstanceOf(AssignorEntity);
@@ -97,7 +103,7 @@ describe('Teste de Unidade - AssignorEntity', () => {
     expect(assignorPF.document.equals(expectedCnpj)).toBeTruthy();
     expect(assignorPF.email.equals(expectedEmail)).toBeTruthy();
     expect(assignorPF.phone.equals(expectedPhone)).toBeTruthy();
-    expect(assignorPF.name).toStrictEqual(expectedName);    
+    expect(assignorPF.name).toStrictEqual(expectedName);
   });
 
   it('deve lançar exceção quando informado CPF ou CNPJ invalido', () => {
@@ -106,11 +112,13 @@ describe('Teste de Unidade - AssignorEntity', () => {
     const expectedPhone = new PhoneVO('(11) 99657-1123');
     const expectedName = 'Joe Doe';
 
-    expect(() => AssignorEntity.create({
-      document: expectedCnpjOrCpfInvalid,
-      email: expectedEmail.value,
-      phone: expectedPhone.value,
-      name: expectedName
-    })).toThrow('Invalid Field: document.');
+    expect(() =>
+      AssignorEntity.create({
+        document: expectedCnpjOrCpfInvalid,
+        email: expectedEmail.value,
+        phone: expectedPhone.value,
+        name: expectedName,
+      })
+    ).toThrow('Invalid Field: document.');
   });
 });

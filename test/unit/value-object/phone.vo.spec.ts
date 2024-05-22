@@ -1,4 +1,4 @@
-import { PhoneVO } from "../../../src/domain/common/value-object";
+import { PhoneVO } from '../../../src/domain/common/value-object';
 
 describe('# Test de Unidade - PhoneNumber', () => {
   const invalidValues = [
@@ -14,9 +14,7 @@ describe('# Test de Unidade - PhoneNumber', () => {
   it.each(invalidValues)(
     'Deve lançar exceção quando telefone for inválido "%s"',
     (value) => {
-      expect(() => new PhoneVO(value as any)).toThrow(
-        'Invalid Field: phone.'
-      );
+      expect(() => new PhoneVO(value as any)).toThrow('Invalid Field: phone.');
     }
   );
 

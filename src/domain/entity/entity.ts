@@ -1,7 +1,7 @@
-import { UniqueEntityIdVO } from "../common/value-object";
+import { UniqueEntityIdVO } from '../common/value-object';
 
 export abstract class Entity {
-  readonly id: UniqueEntityIdVO;
+  readonly id: any;
 
   abstract toJSON(): any;
 

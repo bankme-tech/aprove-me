@@ -1,7 +1,7 @@
 import { isValidCPF, formatCPF } from '@brazilian-utils/brazilian-utils';
 
 import { InvalidFieldError } from '../exception';
-import { ValueObject } from "./value-object";
+import { ValueObject } from './value-object';
 
 export class CpfVO extends ValueObject<string> {
   constructor(cpf: string) {
@@ -15,7 +15,7 @@ export class CpfVO extends ValueObject<string> {
     if (!isValid) throw new InvalidFieldError('cpf');
   }
 
-  toString () {
+  toString() {
     return formatCPF(this._value, { pad: true });
-  };
-};
+  }
+}

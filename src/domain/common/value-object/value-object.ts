@@ -31,18 +31,20 @@ export abstract class ValueObject<Value = any> {
     if (this.value === null || this.value === undefined) {
       return String(this.value);
     }
-  
+
     if (typeof this.value !== 'object') {
       return String(this.value);
     }
-  
+
     try {
       const valueStr = this.value.toString();
-      return valueStr === '[object Object]' ? JSON.stringify(this.value) : valueStr;
+      return valueStr === '[object Object]'
+        ? JSON.stringify(this.value)
+        : valueStr;
     } catch (e) {
       return JSON.stringify(this.value);
     }
-  };
+  }
 }
 
 export function deepFreeze<T>(obj: T) {

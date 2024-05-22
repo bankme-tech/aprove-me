@@ -1,8 +1,14 @@
-import { AggregateRoot } from "./aggregate-root";
+import { AggregateRoot } from './aggregate-root';
 
-import { InvalidFieldError } from "../common/exception";
-import { CnpjVO, CpfVO, EmailVO, PhoneVO, UniqueEntityIdVO } from "../common/value-object";
-import { ReceivableProps, ReceivableEntity } from "./receivable.entity";
+import { InvalidFieldError } from '../common/exception';
+import {
+  CnpjVO,
+  CpfVO,
+  EmailVO,
+  PhoneVO,
+  UniqueEntityIdVO,
+} from '../common/value-object';
+import { ReceivableProps, ReceivableEntity } from './receivable.entity';
 
 export type AssignorProps = {
   id?: string;
@@ -10,7 +16,7 @@ export type AssignorProps = {
   email: string;
   phone: string;
   name: string;
-}
+};
 
 export class AssignorEntity extends AggregateRoot {
   readonly id: UniqueEntityIdVO;
@@ -20,9 +26,11 @@ export class AssignorEntity extends AggregateRoot {
   readonly name: string;
   private _receivables: ReceivableEntity[];
 
-  constructor(props: AssignorProps){
+  constructor(props: AssignorProps) {
     super();
-    this.id = props.id ? new UniqueEntityIdVO(props.id) : new UniqueEntityIdVO();
+    this.id = props.id
+      ? new UniqueEntityIdVO(props.id)
+      : new UniqueEntityIdVO();
     this.document = this.applyDocument(props.document);
     this.email = new EmailVO(props.email);
     this.phone = new PhoneVO(props.phone);
@@ -32,7 +40,7 @@ export class AssignorEntity extends AggregateRoot {
 
   static create(props: Omit<AssignorProps, 'id'>): AssignorEntity {
     return new AssignorEntity(props);
-  };
+  }
 
   addReceivable(command: ReceivableProps): void {
     this._receivables.push(ReceivableEntity.create(command));
@@ -49,11 +57,11 @@ export class AssignorEntity extends AggregateRoot {
       email: this.email.value,
       phone: this.phone.value,
       name: this.name,
-      receivables: this._receivables.map((receivable) => receivable.toJSON())
-    }
+      receivables: this._receivables.map((receivable) => receivable.toJSON()),
+    };
   }
 
-  private applyDocument (value: string): CpfVO | CnpjVO {
+  private applyDocument(value: string): CpfVO | CnpjVO {
     const cleanValue = value.replace(/\D/g, '');
 
     if (cleanValue.length === 11) return new CpfVO(cleanValue);
@@ -61,4 +69,4 @@ export class AssignorEntity extends AggregateRoot {
 
     throw new InvalidFieldError('document');
   }
-};
+}

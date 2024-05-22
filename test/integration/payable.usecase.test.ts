@@ -24,14 +24,18 @@ describe('# Test de Integração - Payable Usecase', () => {
       email: 'joe.doe@email.com',
       phone: '(11) 99657-1123',
       name: 'Joe Doe',
-      receivables: [{
-        value: faker.number.int({ min: 11111, max: 99999 }),
-        emissionDate: faker.date.recent()
-      }]
+      receivables: [
+        {
+          value: faker.number.int({ min: 11111, max: 99999 }),
+          emissionDate: faker.date.recent(),
+        },
+      ],
     };
 
     await usecase.execute(input);
-    const created = await prisma.assignor.findUnique({ where: { document: '54501989000146' } });
+    const created = await prisma.assignor.findUnique({
+      where: { document: '54501989000146' },
+    });
 
     expect(created).toBeDefined();
   });
@@ -44,10 +48,12 @@ describe('# Test de Integração - Payable Usecase', () => {
       email: 'joe.doe@email.com',
       phone: '(11) 99657-1123',
       name: 'Joe Doe',
-      receivables: [{
-        value: faker.number.int({ min: 11111, max: 99999 }),
-        emissionDate: faker.date.recent()
-      }]
+      receivables: [
+        {
+          value: faker.number.int({ min: 11111, max: 99999 }),
+          emissionDate: faker.date.recent(),
+        },
+      ],
     };
 
     await prisma.assignor.create({
@@ -57,11 +63,13 @@ describe('# Test de Integração - Payable Usecase', () => {
         email: input.email,
         phone: input.phone,
         name: input.name,
-      }
+      },
     });
 
     await usecase.execute(input);
-    const created = await prisma.assignor.findUnique({ where: { document: '54501989000146' } });
+    const created = await prisma.assignor.findUnique({
+      where: { document: '54501989000146' },
+    });
 
     expect(created).toBeDefined();
   });

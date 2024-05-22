@@ -1,1 +1,1 @@
-export *  from './assignor-repository.interface';
+export * from './assignor-repository.interface';
