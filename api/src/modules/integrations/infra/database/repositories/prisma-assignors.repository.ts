@@ -30,4 +30,17 @@ export class PrismaAssignorsRepository implements AssignorsRepository {
 
     return null;
   }
+
+  public async update(assignor: Assignor): Promise<Assignor> {
+    const { id, ...raw } = AssignorsMapper.toPersist(assignor);
+
+    const updatedAssignor = await this.prisma.assignor.update({
+      where: {
+        id: id,
+      },
+      data: raw,
+    });
+
+    return AssignorsMapper.toDomain(updatedAssignor);
+  }
 }

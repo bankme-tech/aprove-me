@@ -1,32 +1,32 @@
 import { IUseCase } from '@/core/use-cases/interfaces';
 import { Injectable } from '@nestjs/common';
-
-import { PayablesRepository } from '../domain/repositories/payables.repository';
-import { Payable } from '../domain/entities/payable.entity';
-import { PatchPayableDto } from '../infra/http/dtos/patch-payable.dto';
-import { FindPayableByIdUseCase } from './find-payable-by-id.use-case';
+import { FindAssignorByIdUseCase } from './find-assignor-by-id.use-case';
+import { AssignorsRepository } from '../domain/repositories/assignors.repository';
+import { Assignor } from '../domain/entities/assignor.entity';
+import { PatchAssignorDto } from '../infra/http/dtos/patch-assignor.dto';
 
 @Injectable()
-export class PatchPayableUseCase implements IUseCase {
+export class PatchAssignorUseCase implements IUseCase {
   constructor(
-    private payablesRepository: PayablesRepository,
-    private findPayableByIdUseCase: FindPayableByIdUseCase,
+    private assignorsRepository: AssignorsRepository,
+    private findAssignorByIdUseCase: FindAssignorByIdUseCase,
   ) {}
 
   public async execute(patch: {
     id: string;
-    patchPayableDto: PatchPayableDto;
+    patchAssignorDto: PatchAssignorDto;
   }) {
-    await this.findPayableByIdUseCase.execute(patch.id);
+    await this.findAssignorByIdUseCase.execute(patch.id);
 
-    const payable = new Payable({
+    const assignor = new Assignor({
       id: patch.id,
-      value: patch.patchPayableDto.value,
-      emissionDate: patch.patchPayableDto.emissionDate,
-      assignor: patch.patchPayableDto.assignor,
+      document: patch.patchAssignorDto.email,
+      email: patch.patchAssignorDto.email,
+      phone: patch.patchAssignorDto.phone,
+      name: patch.patchAssignorDto.name,
     });
 
-    const updatePayable = await this.payablesRepository.update(payable);
+    const updatePayable = await this.assignorsRepository.update(assignor);
 
     return updatePayable;
   }

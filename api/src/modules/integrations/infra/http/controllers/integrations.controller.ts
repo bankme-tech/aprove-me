@@ -15,13 +15,14 @@ import { PayablesViewModel } from '../view-models/payables.view-model';
 import { CreateAssignorUseCase } from '@/modules/integrations/use-cases/create-assignor.use-case';
 import { AssignorsViewModel } from '../view-models/assignors.view-model';
 import { FindPayableByIdUseCase } from '@/modules/integrations/use-cases/find-payable-by-id.use-case';
-
 import { createAssignorDto } from '../dtos/create-assignor.dto';
 import type { CreateAssignorDto } from '../dtos/create-assignor.dto';
 import { UuidDto, uuidDto } from '@/infra/http/dtos/id.dto';
 import { FindAssignorByIdUseCase } from '@/modules/integrations/use-cases/find-assignor-by-id.use-case';
 import { PatchPayableDto, patchPayableDto } from '../dtos/patch-payable.dto';
-import { PatchPayableUseCase } from '@/modules/integrations/use-cases/patch-assignor.use-case';
+import { PatchAssignorDto, patchAssignorDto } from '../dtos/patch-assignor.dto';
+import { PatchPayableUseCase } from '@/modules/integrations/use-cases/patch-payable.use-case';
+import { PatchAssignorUseCase } from '@/modules/integrations/use-cases/patch-assignor.use-case';
 
 @Controller('/integrations')
 export class IntegrationsController {
@@ -30,7 +31,8 @@ export class IntegrationsController {
     private createAssignorUseCase: CreateAssignorUseCase,
     private findPayableByIdUseCase: FindPayableByIdUseCase,
     private findAssignorByIdUseCase: FindAssignorByIdUseCase,
-    private updateAssignorUseCase: PatchPayableUseCase,
+    private updatePayableUseCase: PatchPayableUseCase,
+    private updateAssignorUseCase: PatchAssignorUseCase,
   ) {}
 
   @Get('/payables/:id')
@@ -83,11 +85,25 @@ export class IntegrationsController {
     @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
     @Body(new ZodValidationPipe(patchPayableDto)) body: PatchPayableDto,
   ) {
-    const updatedAssignor = await this.updateAssignorUseCase.execute({
+    const updatedAssignor = await this.updatePayableUseCase.execute({
       id: params.id,
       patchPayableDto: body,
     });
 
     return PayablesViewModel.toHTTP(updatedAssignor);
+  }
+
+  @Patch('/assignors/:id')
+  @HttpCode(HttpStatus.OK)
+  public async partialUpdateAssignor(
+    @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
+    @Body(new ZodValidationPipe(patchAssignorDto)) body: PatchAssignorDto,
+  ) {
+    const updatedAssignor = await this.updateAssignorUseCase.execute({
+      id: params.id,
+      patchAssignorDto: body,
+    });
+
+    return AssignorsViewModel.toHTTP(updatedAssignor);
   }
 }

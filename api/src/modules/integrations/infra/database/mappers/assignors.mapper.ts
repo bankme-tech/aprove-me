@@ -16,6 +16,7 @@ export class AssignorsMapper {
   }
   public static toPersist(assignor: Assignor): Prisma.AssignorCreateInput {
     return {
+      id: assignor.id,
       document: assignor.document,
       email: assignor.email,
       phone: assignor.phone,
