@@ -19,7 +19,7 @@ export class PayableService {
     const payable = await this.payableRepository.findPayableById(id);
 
     if (!payable) {
-      throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
     }
 
     return PayableDto.fromEntity(payable);
@@ -32,7 +32,7 @@ export class PayableService {
     );
 
     if (!updatedPayable) {
-      throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
     }
 
     return PayableDto.fromEntity(updatedPayable);
@@ -42,7 +42,7 @@ export class PayableService {
     const payable = await this.payableRepository.deletePayableById(id);
 
     if (!payable) {
-      throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Payable not found', HttpStatus.NOT_FOUND);
     }
 
     return;
