@@ -11,7 +11,8 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
-  HttpCode
+  HttpCode,
+  Query
 } from '@nestjs/common';
 import { ReceivableService } from '../services/receivable.service';
 import { AssignorService } from '../services/assignor.service';
@@ -19,7 +20,7 @@ import { UUID } from 'crypto';
 import { Receivable as ReceivableModel } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Queue } from 'bull';
-import { InjectQueue} from '@nestjs/bull';
+import { InjectQueue } from '@nestjs/bull';
 import { ReceivableDto } from 'src/dtos/receivable.dto';
 import { AssignorDto } from 'src/dtos/assignor.dto';
 
@@ -78,8 +79,18 @@ export class ReceivableController {
   }
 
   @Get()
-  async getAllReceivables(): Promise<ReceivableModel[]> {
-    return this.receivableService.receivables({});
+  async getAllReceivables(
+    @Query('skip') skip: number,
+    @Query('take') take: number,
+    @Query('orderDate') orderDate: "asc" | "desc"
+  ): Promise<ReceivableModel[]> {
+    return this.receivableService.receivables({
+      skip: +skip,
+      take: +take,
+      orderBy: {
+        emissionDate: orderDate
+      }
+    });
   }
 
   @Put(':id')
