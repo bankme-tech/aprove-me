@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { editAssignorFormSchema, EditAssignorFormData } from "@/schemas/assignor-schemas";
 import { editAssignor } from "@/actions/assignor-actions";
 import { getToken } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 
 
@@ -25,9 +26,8 @@ interface EditAssignorFormProps {
 export default function EditAssignorForm({ assignor }: EditAssignorFormProps) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [token, setToken] = useState<string>(getToken());
-
     const ref = useRef<HTMLFormElement>(null);
-
+    const router = useRouter();
 
     const form = useForm<EditAssignorFormData>({
       resolver: zodResolver(editAssignorFormSchema),
@@ -44,6 +44,7 @@ export default function EditAssignorForm({ assignor }: EditAssignorFormProps) {
       setIsLoading(true);
       try {
         await editAssignor(formData, token);
+        router.push(`/assignor/${assignor.id}`);
       } catch (error) {
         
         console.error(error);

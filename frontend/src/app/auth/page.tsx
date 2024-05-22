@@ -31,7 +31,6 @@ export default function Login() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const router = useRouter();
   const { updateSession } = useAuth();
-  console.log(updateSession)
   const form = useForm<AuthFormData>({
     resolver: zodResolver(authFormSchema),
     defaultValues: {

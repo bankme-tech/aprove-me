@@ -1,4 +1,4 @@
-"use server"
+"use client"
 
 import { api } from "@/api/api"
 import { Assignor } from "@/interfaces/interfaces"
@@ -12,5 +12,4 @@ export async function createAssignor({name, document, email, phone}: CreateAssig
 
 export async function editAssignor({id, name, document, email, phone}: EditAssignorFormData, token: string) {
     await api.patch<Assignor>(`/assignor/${id}`, {name, document, email, phone}, {headers: {Authorization: `Bearer ${token}`}} )
-    redirect(`/assignor/${id}`)
 }

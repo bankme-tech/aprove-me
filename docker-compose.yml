@@ -21,10 +21,19 @@ services:
     ports:
       - 3001:3001
 
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./backend/src:/app/backend/src
     depends_on:
       - rabbitmq
 
-
+  frontend:
+    build: ./frontend/
+    container_name: frontend
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    volumes:
+      - ./frontend/src:/app/frontend/src
+    depends_on:
+      - backend

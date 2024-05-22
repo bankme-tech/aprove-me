@@ -1,4 +1,4 @@
-"use server"
+"use client"
 
 import { api } from "@/api/api"
 import { Payable } from "@/interfaces/interfaces"
