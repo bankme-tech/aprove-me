@@ -11,8 +11,19 @@ export class ReceivableService {
   ): Promise<Receivable | null> {
     return this.prisma.receivable.findUnique({
       where: receivableWhereUniqueInput,
+      select: {
+        id: true,
+        value: true,
+        emissionDate: true,
+        assignor: true,
+        assignorRef: {
+          select: {
+            name: true
+          }
+        }
+      },
     });
-  }
+  } 
 
   async receivables(params: {
     skip?: number;
@@ -28,7 +39,19 @@ export class ReceivableService {
       cursor,
       where,
       orderBy,
-    });
+      select: {
+        id: true,
+        value: true,
+        emissionDate: true,
+        assignor: true,
+        assignorRef: {
+          select: {
+            name: true
+          }
+        }
+      },
+    },
+  );
   }
 
   async createReceivable(data: Prisma.ReceivableCreateInput): Promise<Receivable> {
