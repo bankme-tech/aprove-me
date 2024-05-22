@@ -69,3 +69,20 @@ export async function editPayables(token: any, payable: any, id: any) {
     return { status, message, data: '' };
   }
 }
+
+export async function removePayables(token: any, id: string) {
+  try {
+    const request = await axios.delete(`http://localhost:3000/integrations/payable/${id}`, {
+      headers: {
+        Authorization: token.token
+      }
+    });
+
+    return request;
+  } catch(e: any) {
+    const status = e.response ? e.response.data.statusCode : 'Network Error';
+    const message = e.response ? e.response.data.message : e.message;
+
+    return { status, message, data: '' };
+  }
+}
