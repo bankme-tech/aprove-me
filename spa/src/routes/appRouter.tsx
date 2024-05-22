@@ -25,7 +25,7 @@ export default function AppRouter() {
 				}
 			/>
 			<Route
-				path="/payables/view/"
+				path="/payable/view/:id"
 				element={
 					<ProtectedRoute>
 						<ViewPayables />
