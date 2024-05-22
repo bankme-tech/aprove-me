@@ -159,7 +159,7 @@ export class PrismaAssignorRepository implements AssignorRepository {
           id,
         },
       });
-      return;
+      return Ok(undefined);
     } catch (error) {
       return Err(new Error(error));
     }

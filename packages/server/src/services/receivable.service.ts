@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { receivableBodyDto, receivableResponseDto } from 'src/dtos/receivable.dto';
+import { receivableBodyDto } from 'src/dtos/receivable.dto';
 import { ReceivableRepository } from 'src/repositories/receivable.repository';
-import { to_cents, to_money } from 'src/shared/utils';
+// import { to_cents, to_money } from 'src/shared/utils';
 import { Err, Ok, Result } from 'src/types/either';
 import { ValidationService } from './validations.service';
 
@@ -69,6 +69,7 @@ export class ReceivableService {
     try {
       const id_result = this.validation_service.validateUuid(id);
       await this.receivable_repository.delete_receivable(id_result);
+      return Ok(undefined);
     } catch (error) {
       return Err(error);
     }
@@ -80,7 +81,10 @@ export class ReceivableService {
     try {
       const id_result = this.validation_service.validateUuid(id);
       const data = this.validation_service.validateUpdateReceivable(receivable);
-      const result = await this.receivable_repository.update_receivable(id_result, data);
+      const result = await this.receivable_repository.update_receivable(id_result, {
+        ...data,
+        emissionDate: new Date(data.emissionDate),
+      });
       return result;
     } catch (error) {
       return Err(error);

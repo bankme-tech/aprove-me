@@ -10,7 +10,7 @@ export class AssignorController {
   }
 
   @Get(':id')
-  async get_Assignor(id: string): Promise<any> {
+  async get_Assignor(@Param('id') id: string): Promise<any> {
     const result = await this.assignorService.get_assignor(id);
     if (result.isError()) {
       return throw_error(result.value);
@@ -31,7 +31,6 @@ export class AssignorController {
     if (result.isError()) {
       return throw_error(result.value);
     }
-    return result.value;
   }
   @Put(':id')
   async update_Assignor(@Param('id') id: string, @Body() assignor: any): Promise<any> {

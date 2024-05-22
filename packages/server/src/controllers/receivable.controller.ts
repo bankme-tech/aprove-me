@@ -4,7 +4,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 // import { InjectQueue } from '@nestjs/bull';
 // import { Queue } from 'bull';
 
-@Controller('integrations/payble')
+@Controller('integrations/payable')
 export class ReceivableController {
   private readonly receivableService: ReceivableService;
   constructor(
@@ -15,7 +15,7 @@ export class ReceivableController {
   }
 
   @Get(':id')
-  async get_receivable(id: string): Promise<any> {
+  async get_receivable(@Param('id') id: string): Promise<any> {
     const result = await this.receivableService.get_receivable(id);
     if (result.isError()) {
       return throw_error(result.value);
@@ -36,7 +36,6 @@ export class ReceivableController {
     if (result.isError()) {
       return throw_error(result.value);
     }
-    return result.value;
   }
   @Put(':id')
   async update_receivable(@Param('id') id: string, @Body() receivable: any): Promise<any> {
