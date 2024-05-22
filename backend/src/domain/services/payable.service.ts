@@ -10,6 +10,10 @@ export class PayableService {
     private readonly payableRepository: PayableRepository,
   ) {}
 
+  async findAll() {
+    return this.payableRepository.findAll();
+  }
+
   async createPayable(payable: CreatePayableDto) {
     return this.payableRepository.create(payable);
   }

@@ -8,6 +8,17 @@ import { CreatePayableDto } from 'src/application/dtos/create-payable.dto';
 export class PrismaPayableRepository implements PayableRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  async findAll() {
+    try {
+      return await this.prisma.payable.findMany();
+    } catch (error) {
+      const errorMessageLines = error.message.split('\n');
+      const formattedErrorMessage =
+        errorMessageLines[errorMessageLines.length - 1];
+      throw new HttpException(formattedErrorMessage, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async create(payable: CreatePayableDto): Promise<Payable> {
     try {
       const payload = {

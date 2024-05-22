@@ -12,6 +12,11 @@ export class PayableController {
     return 'Hello From Payable!';
   }
 
+  @Get("all")
+  async findAll() {
+    return this.payableService.findAll();
+  }
+
   @Post()
   async create(@Body() createPayableDto: CreatePayableDto) {
     return this.payableService.createPayable(createPayableDto);
