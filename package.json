@@ -1,0 +1,10 @@
+{
+  "name": "@aprove-me",
+  "version": "development-0.0.0",
+  "private": "true",
+  "author": "Gabriel Duarte <jds.gabrielduarte@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "turbo": "^1.13.3"
+  }
+}
