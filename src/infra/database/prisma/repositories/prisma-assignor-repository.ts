@@ -8,15 +8,34 @@ import { PrismaAssignorMapper } from "../mappers/prisma-assignor-mapper";
 export class PrismaAssignorsRepository implements AssignorsRepository {
   constructor(private readonly prisma: PrismaService) {}
   
-  save(data: Assignor): Promise<Assignor> {
-    throw new Error("Method not implemented.");
+  async save(data: Assignor) {
+    const dataToPrisma = PrismaAssignorMapper.toPrisma(data) 
+
+    await Promise.resolve(() => {
+      this.prisma.assignor.update({
+        where: {
+          id: data.id.toString()
+        },
+        data: dataToPrisma
+      })
+    })
+
+    return data
   }
 
-  create(data: Assignor): Promise<void> {
-    throw new Error("Method not implemented.");
+  async create(data: Assignor) {
+    const dataToPrisma = PrismaAssignorMapper.toPrisma(data) 
+    await this.prisma.assignor.create({
+      data: dataToPrisma,
+    })
   }
-  delete(assignorId: string): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async delete(assignorId: string) {
+    await this.prisma.assignor.delete({
+      where: {
+        id: assignorId
+      }
+    })
   }
 
   async findById(id: string): Promise<Assignor | null> {

@@ -1,25 +1,41 @@
 import { Either, right, left } from "src/core/either"
 import { ResourceNotFoundError } from "../../errors/resource-not-found-error"
 import { AssignorsRepository } from "../../../repositories/assignor-repository"
+import { Injectable } from "@nestjs/common"
+import { ReceivableRepository } from "../../../repositories/receivable-repository"
 
 interface DeleteAssignorUseCaseRequest {
   assignorId: string
 }
 
-type DeleteCedenteUseCaseResponse = Either<ResourceNotFoundError, {}>
+type DeleteCedenteUseCaseResponse = Either<
+  ResourceNotFoundError | Error
+  , 
+  {}
+>
 
+@Injectable()
 export class DeleteAssignorUseCase {
-  constructor(private assignorsRepository: AssignorsRepository) {}
+  constructor(
+    private assignorsRepository: AssignorsRepository,
+    private receivableRepository: ReceivableRepository
+  ) {}
 
   async execute({ assignorId }: DeleteAssignorUseCaseRequest): Promise<DeleteCedenteUseCaseResponse> {
-    const assignor = await this.assignorsRepository.findById(assignorId)
+    const assignor = await this.assignorsRepository.findById(assignorId);
 
     if (!assignor) {
-      return left(new ResourceNotFoundError())
+      return left(new ResourceNotFoundError());
     }
 
-    await this.assignorsRepository.delete(assignorId)
+    const receivablesWithAssignorId = await this.receivableRepository.findByAssignorId(assignor.id.toString());
 
-    return right({})
+    if (receivablesWithAssignorId.length > 0) {
+      return left(new Error('Cannot delete Assignor with Receivables'));
+    }
+
+    await this.assignorsRepository.delete(assignorId);
+
+    return right({});
   }
 }

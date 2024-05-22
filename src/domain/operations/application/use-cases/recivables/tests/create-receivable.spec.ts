@@ -1,23 +1,23 @@
 import { describe, beforeEach, it, expect } from 'vitest'
-import { InMemoryRecivableRepository } from 'test/repositories/in-memory-recivable-repository'
-import { CreateRecivableUseCase } from '../use-cases/create-recivable'
+import { InMemoryReceivableRepository } from 'test/repositories/in-memory-receivable-repository'
+import { CreateReceivableUseCase } from '../use-cases/create-receivable'
 import { InMemoryAssignorsRepository } from 'test/repositories/in-memory-assignor-repository'
 import { makeAssignor } from 'test/factories/make-assignor'
 
-describe('Create Recivable', () => {
+describe('Create Receivable', () => {
   
-  let recivableRepository: InMemoryRecivableRepository
+  let receivableRepository: InMemoryReceivableRepository
   let assignorsRepository: InMemoryAssignorsRepository
-  let sut: CreateRecivableUseCase
+  let sut: CreateReceivableUseCase
 
   beforeEach(() => {
-    recivableRepository = new InMemoryRecivableRepository()
+    receivableRepository = new InMemoryReceivableRepository()
     assignorsRepository = new InMemoryAssignorsRepository()
 
-    sut = new CreateRecivableUseCase(recivableRepository, assignorsRepository)
+    sut = new CreateReceivableUseCase(receivableRepository, assignorsRepository)
   })
 
-  it('should be able to create a recivable with a valid Assignor Id', async () => {
+  it('should be able to create a receivable with a valid Assignor Id', async () => {
     const assignor = makeAssignor()
     await assignorsRepository.create(assignor)
 
@@ -28,7 +28,7 @@ describe('Create Recivable', () => {
     })
 
     expect(value).toEqual(expect.objectContaining({
-      recivable: expect.any(Object)
+      receivable: expect.any(Object)
     }))
   })
 })

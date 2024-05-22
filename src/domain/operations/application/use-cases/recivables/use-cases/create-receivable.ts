@@ -1,45 +1,45 @@
 import { Either, right, left } from "src/core/either"
 import { Injectable } from "@nestjs/common"
-import { Recivable } from "../../../../enterprise/entities/recivable"
-import { RecivableRepository } from "../../../repositories/recebiveis-repository"
 import { AssignorsRepository } from "../../../repositories/assignor-repository"
 import { ResourceNotFoundError } from "../../errors/resource-not-found-error"
+import { ReceivableRepository } from "../../../repositories/receivable-repository"
+import { Receivable } from "src/domain/operations/enterprise/entities/receivable"
 
-interface CreateRecivableUseCaseRequest {
+interface CreateReceivableUseCaseRequest {
   value: number
   emissionDate: Date
   assignorId: string
 }
 
-type CreateRecivableUseCaseResponse = Either<
+type CreateReceivableUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    recivable: Recivable
+    receivable: Receivable
   }
 >
 
 @Injectable()
-export class CreateRecivableUseCase {
+export class CreateReceivableUseCase {
   constructor(
-    private recivablesRepository: RecivableRepository,
+    private receivablesRepository: ReceivableRepository,
     private assignorsRepository: AssignorsRepository
   ) {}
 
-  async execute({ value, emissionDate, assignorId }: CreateRecivableUseCaseRequest): Promise<CreateRecivableUseCaseResponse> {
+  async execute({ value, emissionDate, assignorId }: CreateReceivableUseCaseRequest): Promise<CreateReceivableUseCaseResponse> {
     const isAssignorIdValid = await this.assignorsRepository.findById(assignorId)
     
     if (!isAssignorIdValid) {
       return left(new ResourceNotFoundError())
     }
 
-    const recivable = Recivable.create({
+    const receivable = Receivable.create({
       value,
       emissionDate,
       assignor: assignorId
     })
 
-    await this.recivablesRepository.create(recivable)
+    await this.receivablesRepository.create(receivable)
 
-    return right({ recivable })
+    return right({ receivable })
   }
 }

@@ -2,21 +2,19 @@ import { Body, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
 import { z } from "zod";
 import { CreateAssignorUseCase } from "src/domain/operations/application/use-cases/assignors/use-cases/create-assignor";
+import { CreateReceivableUseCase } from "src/domain/operations/application/use-cases/recivables/use-cases/create-receivable";
 
 const createPayableBodySchema = z.object({
   receivable: z.object({
-    receivableId: z.string().uuid(),
     value: z.number(),
     emissionDate: z.date().default(new Date()),
-    assignor: z.string().uuid()
   }),
 
   assignor: z.object({
-    assignorId: z.string().uuid(),
-    document: z.string().max(30),
-    email: z.string().max(140),
-    phone: z.string().max(20),
-    name: z.string().max(140)
+    document: z.string().max(30).min(1),
+    email: z.string().max(140).min(1),
+    phone: z.string().max(20).min(1),
+    name: z.string().max(140).min(1)
   })
 })
 
@@ -26,16 +24,31 @@ type CreatePayableBodySchema = z.infer<typeof createPayableBodySchema>
 export class CreatePayableController {
   constructor(
     private createAssignor: CreateAssignorUseCase,
+    private createReceivable: CreateReceivableUseCase
   ) {}
 
   @Post()
-  @HttpCode(200)
+  @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createPayableBodySchema))
   async handle(@Body() body: CreatePayableBodySchema) {
     const { receivable, assignor } = body
 
-    
+    const { value: createdAssignor } = await this.createAssignor.execute({
+      document: assignor.document,
+      email: assignor.email,
+      phone: assignor.phone,
+      name: assignor.name
+    })
 
-    return {}
+    const { value: createdReceivable } = await this.createReceivable.execute({
+      assignorId: createdAssignor.assignor.id.toString(),
+      emissionDate: new Date(),
+      value: receivable.value
+    })
+
+    return { 
+      createdAssignor, 
+      createdReceivable 
+    }
   }
 }

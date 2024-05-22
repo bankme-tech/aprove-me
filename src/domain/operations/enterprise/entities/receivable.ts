@@ -2,7 +2,7 @@ import { Entity } from "src/core/entities/entity"
 import { UniqueEntityID } from "src/core/entities/unique-entity-id"
 import { Optional } from "src/core/types/optional"
 
-export interface RecivableProps {
+export interface ReceivableProps {
   value: number
   emissionDate: Date
   assignor: string
@@ -10,7 +10,7 @@ export interface RecivableProps {
   updatedAt?: Date | null
 }
 
-export class Recivable extends Entity<RecivableProps> {
+export class Receivable extends Entity<ReceivableProps> {
   get value() {
     return this.props.value
   }
@@ -50,8 +50,8 @@ export class Recivable extends Entity<RecivableProps> {
     this.touch()
   }
 
-  static create(props: Optional<RecivableProps, 'createdAt'>, id?: UniqueEntityID) {
-    const recivable = new Recivable({
+  static create(props: Optional<ReceivableProps, 'createdAt'>, id?: UniqueEntityID) {
+    const recivable = new Receivable({
       ...props,
       createdAt: new Date(),
     }, id)
