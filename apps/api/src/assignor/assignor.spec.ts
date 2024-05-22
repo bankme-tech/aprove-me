@@ -18,8 +18,8 @@ describe('Assignor (e2e)', () => {
     app = moduleFixture.createNestApplication();
     prismaService = moduleFixture.get<PrismaService>(PrismaService);
 
-    await prismaService.assignor.deleteMany({ where: {} });
-    await prismaService.user.deleteMany({ where: {} });
+    await prismaService.assignor.deleteMany();
+    await prismaService.user.deleteMany();
     await app.init();
 
     const response = await request(app.getHttpServer())
@@ -34,11 +34,11 @@ describe('Assignor (e2e)', () => {
   });
 
   afterEach(async () => {
-    await prismaService.assignor.deleteMany({ where: {} });
+    await prismaService.assignor.deleteMany();
   });
 
   afterAll(async () => {
-    await prismaService.user.deleteMany({ where: {} });
+    await prismaService.user.deleteMany();
     await app.close();
   });
 

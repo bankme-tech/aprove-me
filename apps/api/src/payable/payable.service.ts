@@ -40,6 +40,7 @@ export class PayableService {
         value: true,
         emissionDate: true,
         assignorId: true,
+        userId: true,
       },
     });
 
@@ -51,7 +52,7 @@ export class PayableService {
   }
 
   async delete({ id, userId }: { id: string; userId: string }) {
-    const payableExists = this.prisma.payable.findFirst({
+    const payableExists = await this.prisma.payable.findFirst({
       where: {
         id,
         userId,
@@ -69,13 +70,13 @@ export class PayableService {
     });
   }
 
-  update({
+  async update({
     id,
     userId,
     emissionDate,
     value,
   }: UpdatePayableDto & { id: string; userId: string }) {
-    const payableExists = this.prisma.payable.findFirst({
+    const payableExists = await this.prisma.payable.findFirst({
       where: {
         id,
         userId,

@@ -17,12 +17,12 @@ describe('Auth (e2e)', () => {
     app = moduleFixture.createNestApplication();
     prismaService = moduleFixture.get<PrismaService>(PrismaService);
 
-    await prismaService.user.deleteMany({ where: {} });
+    await prismaService.user.deleteMany();
     await app.init();
   });
 
   afterEach(async () => {
-    await prismaService.user.deleteMany({ where: {} });
+    await prismaService.user.deleteMany();
   });
 
   afterAll(async () => {
