@@ -7,11 +7,7 @@ module.exports = {
       files: ['*.tsx'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
-      },
-    },
-    {
-      files: ['*.tsx'],
-      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/naming-convention': [
           'error',
           {

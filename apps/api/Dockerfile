@@ -1,23 +1,25 @@
-FROM node:20-slim AS base
+FROM node:18-alpine AS base
 
+RUN apk add --no-cache libc6-compat
 RUN corepack enable
 RUN corepack prepare pnpm@9.1.1 --activate
 
 COPY . /app
 WORKDIR /app
 
-RUN apt-get update -y && apt-get install -y openssl
-
-ENV NODE_ENV="development"
-ENV PORT=3000
 ENV DATABASE_URL="file:./dev.db"
-ENV JWT_SECRET="bankme"
-ENV JWT_EXPIRES_IN="1m"
 
 FROM base AS build
 RUN pnpm install
 RUN npx prisma migrate dev
+
+ENV NODE_ENV=production
+
 RUN pnpm build
+
+ENV PORT=3000
+ENV JWT_SECRET="bankme"
+ENV JWT_EXPIRES_IN="1m"
 
 WORKDIR /app/apps/api
 EXPOSE 3000
