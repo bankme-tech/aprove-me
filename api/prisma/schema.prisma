@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 generator client {
@@ -17,6 +17,14 @@ model Payable {
   id          String   @id @default(uuid())
   value       Float
   emissionDate DateTime @default(now())
-  assignor    Assignor @relation(fields: [assignorId], references: [id])
-  assignorId  String
+  assignor    String
+  assignorId  Assignor @relation(fields: [assignor], references: [id])
+}
+
+model Assignor {
+  id       String    @id @default(uuid())
+  name     String
+  email    String
+  password String
+  payables Payable[]
 }
