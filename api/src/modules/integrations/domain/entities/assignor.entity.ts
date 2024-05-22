@@ -5,6 +5,7 @@ interface Props {
   email: string;
   phone: string;
   name: string;
+  password: string;
 }
 
 export class Assignor extends Entity<Props> {
@@ -26,5 +27,9 @@ export class Assignor extends Entity<Props> {
 
   get name() {
     return this.props.name;
+  }
+
+  get password() {
+    return this.props.password;
   }
 }

@@ -12,6 +12,8 @@ import { PatchPayableUseCase } from './use-cases/patch-payable.use-case';
 import { PatchAssignorUseCase } from './use-cases/patch-assignor.use-case';
 import { DeletePayableUseCase } from './use-cases/delete-payable.use-case';
 import { DeleteAssignorUseCase } from './use-cases/delete-assignor.use-case';
+import { FindAssignorByEmailCase } from './use-cases/find-assignor-by-email.use-case';
+import { AuthUserUseCase } from './use-cases/auth-user.use-case';
 
 @Module({
   imports: [],
@@ -33,6 +35,8 @@ import { DeleteAssignorUseCase } from './use-cases/delete-assignor.use-case';
     PatchAssignorUseCase,
     DeletePayableUseCase,
     DeleteAssignorUseCase,
+    FindAssignorByEmailCase,
+    AuthUserUseCase,
   ],
 })
 export class IntegrationsModule {}

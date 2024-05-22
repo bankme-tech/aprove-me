@@ -17,4 +17,19 @@ export const envConfig = () => ({
 
     return frontend;
   },
+  get cryptRounds() {
+    const rounds = process.env.CRYPT_ROUNDS;
+
+    if (!rounds) {
+      throw new Error('Enviroment variable CRYPT_ROUNDS is not defined');
+    }
+
+    const castedNumberRounds = Number(rounds);
+
+    if (Number.isNaN(castedNumberRounds)) {
+      throw new Error('It was no possible to cast CRYPT_ROUNDS to number');
+    }
+
+    return castedNumberRounds;
+  },
 });

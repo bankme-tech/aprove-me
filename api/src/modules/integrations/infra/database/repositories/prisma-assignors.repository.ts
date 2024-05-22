@@ -51,4 +51,18 @@ export class PrismaAssignorsRepository implements AssignorsRepository {
       },
     });
   }
+
+  public async findByEmail(email: string): Promise<Assignor | null> {
+    const assignor = await this.prisma.assignor.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (assignor) {
+      return AssignorsMapper.toDomain(assignor);
+    }
+
+    return null;
+  }
 }

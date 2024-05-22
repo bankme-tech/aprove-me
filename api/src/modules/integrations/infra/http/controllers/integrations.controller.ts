@@ -26,6 +26,8 @@ import { PatchPayableUseCase } from '@/modules/integrations/use-cases/patch-paya
 import { PatchAssignorUseCase } from '@/modules/integrations/use-cases/patch-assignor.use-case';
 import { DeletePayableUseCase } from '@/modules/integrations/use-cases/delete-payable.use-case';
 import { DeleteAssignorUseCase } from '@/modules/integrations/use-cases/delete-assignor.use-case';
+import { AuthDto, authDto } from '../dtos/auth.dto';
+import { AuthUserUseCase } from '@/modules/integrations/use-cases/auth-user.use-case';
 
 @Controller('/integrations')
 export class IntegrationsController {
@@ -38,6 +40,7 @@ export class IntegrationsController {
     private updateAssignorUseCase: PatchAssignorUseCase,
     private deletePayableUseCase: DeletePayableUseCase,
     private deleteAssignorUseCase: DeleteAssignorUseCase,
+    private authUserUseCase: AuthUserUseCase,
   ) {}
 
   @Get('/payables/:id')
@@ -130,5 +133,7 @@ export class IntegrationsController {
 
   @Post('/auth')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async auth() {}
+  public async auth(@Body(new ZodValidationPipe(authDto)) body: AuthDto) {
+    await this.authUserUseCase.execute(body);
+  }
 }
