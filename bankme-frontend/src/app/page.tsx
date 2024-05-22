@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link'
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,8 +54,8 @@ export default function page() {
   }
 
   return (
-    <div className="mx-auto max-w-md space-y-4 py-12">
-      <Card className="p-6">
+    <div className="h-screen flex justify-center items-center">
+      <Card className="p-6 w-[400px]">
         <CardHeader>
           <CardTitle>Bankme</CardTitle>
           <CardDescription>Register new account</CardDescription>
@@ -89,6 +90,14 @@ export default function page() {
                   </FormItem>
                 )}
               />
+              <div className="w-full flex justify-end">
+                <Link
+                  href={"/auth"}
+                  className="text-sm text-slate-700 font-semibold"
+                >
+                  Already have an account?
+                </Link>
+              </div>
               <Button className="w-full" type="submit">
                 Register
               </Button>
