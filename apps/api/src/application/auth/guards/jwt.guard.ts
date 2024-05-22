@@ -21,7 +21,8 @@ import { IS_PUBLIC } from '@application/auth/decorators/public.decorator';
 import { SKIP_JWT } from '@application/auth/decorators/skip-jwt.decorator';
 
 import { Request } from 'express';
-import jwt, { JsonWebTokenError, JwtPayload } from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
+import { JsonWebTokenError, JwtPayload } from 'jsonwebtoken';
 
 @Injectable()
 export class JwtGuard implements CanActivate {

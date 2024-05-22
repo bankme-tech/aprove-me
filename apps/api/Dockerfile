@@ -21,6 +21,9 @@ ENV PORT=3000
 ENV JWT_SECRET="bankme"
 ENV JWT_EXPIRES_IN="1m"
 
+ENV REDIS_HOST="localhost"
+ENV REDIS_PORT=6379
+
 WORKDIR /app/apps/api
 EXPOSE 3000
 CMD [ "node", "dist/main.js" ]

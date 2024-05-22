@@ -53,7 +53,7 @@ export class PayablePrismaRepository implements IPayableRepository {
     const hasNextPage = skip + limit < totalCount;
     const payable = await this._prismaService.payable.findMany({
       skip,
-      take: page,
+      take: limit,
       include: { assignor: true },
     });
     return {

@@ -21,7 +21,6 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-
 import { useForm } from 'react-hook-form';
 
 export default function Login() {
@@ -35,18 +34,13 @@ export default function Login() {
     try {
       const response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          login: username,
-          password,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
       });
       if (response.ok) {
-        const { token } = await response.json();
-        localStorage.setItem('token', token);
-        router.push('/dashboard'); // Redirect to dashboard page upon successful login
+        const { accessToken } = await response.json();
+        localStorage.setItem('accessToken', accessToken);
+        router.push('/dashboard');
       } else {
         setError('Invalid email or password');
       }
@@ -57,7 +51,7 @@ export default function Login() {
   }
 
   return (
-    <main className="flex justify-center items-center h-screen ">
+    <main className="flex justify-center items-center h-screen">
       <Card className="w-[25rem]">
         <CardHeader>
           <CardTitle>Login</CardTitle>
