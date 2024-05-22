@@ -9,11 +9,14 @@ import {
   NotFoundException,
   UsePipes,
   ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { AssignorsService } from './assignors.service';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('/assignor')
 export class AssignorsController {
   constructor(private readonly assignorsService: AssignorsService) {}

@@ -6,19 +6,13 @@ import { AssignorsController } from './assignors.controller';
 import { AssignorsService } from './assignors.service';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
 describe('AssignorsController', () => {
   let controller: AssignorsController;
   let service: DeepMockProxy<AssignorsService>;
-  // let payableDto: CreatePayableDto;
 
   beforeEach(async () => {
-    // payableDto = {
-    //   id: randomUUID(),
-    //   value: 100,
-    //   emissionDate: new Date(),
-    //   assignor: randomUUID(),
-    // };
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssignorsController],
       providers: [
@@ -27,7 +21,10 @@ describe('AssignorsController', () => {
           useValue: mockDeep<AssignorsService>(),
         },
       ],
-    }).compile();
+    })
+      .overrideGuard(AuthGuard)
+      .useValue({ canActivate: jest.fn().mockReturnValue(true) })
+      .compile();
 
     controller = module.get<AssignorsController>(AssignorsController);
     service = module.get<AssignorsService>(

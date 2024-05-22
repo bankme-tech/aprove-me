@@ -7,13 +7,16 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { PayablesService } from './payables.service';
 import { CreatePayableDto } from './dto/create.payable.dto';
 import { UpdatePayableDto } from './dto/update.payable.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('payable')
 export class PayablesController {
   constructor(private readonly payablesService: PayablesService) {}

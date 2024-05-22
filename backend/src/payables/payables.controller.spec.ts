@@ -6,6 +6,7 @@ import { PayablesController } from './payables.controller';
 import { PayablesService } from './payables.service';
 import { CreatePayableDto } from './dto/create.payable.dto';
 import { UpdatePayableDto } from './dto/update.payable.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
 describe('PayablesController', () => {
   let controller: PayablesController;
@@ -20,7 +21,10 @@ describe('PayablesController', () => {
           useValue: mockDeep<PayablesService>(),
         },
       ],
-    }).compile();
+    })
+      .overrideGuard(AuthGuard)
+      .useValue({ canActivate: jest.fn().mockReturnValue(true) })
+      .compile();
 
     controller = module.get<PayablesController>(PayablesController);
     service = module.get<PayablesService>(
