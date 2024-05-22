@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 
@@ -12,7 +13,7 @@ export class CrudStrategyService<T, C, U> {
     private readonly model: Prisma.ModelName,
   ) {}
 
-  async create(data: C): Promise<T> {
+  async create(data: C, req?): Promise<T> {
     return await this.prisma[this.model].create({ data });
   }
 
@@ -23,6 +24,7 @@ export class CrudStrategyService<T, C, U> {
   async findOne(query: PrismaQuery | string): Promise<T> {
     // TODO: Should extensible for new queries and closed to changes
     const findById = typeof query === 'string';
+    console.log('🚀 ~ CrudStrategyService<T, ~ findOne ~ findById:', findById);
     const data = await this.prisma[this.model].findUnique(
       findById
         ? {

@@ -1,12 +1,6 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiTags, OmitType } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { ApiBody, ApiTags, OmitType } from '@nestjs/swagger';
+import { JwtPayload } from 'src/types/jwt-payload.types';
 import { UserDto } from '../user/dto/user.dto';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
@@ -23,10 +17,9 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @ApiBearerAuth('access_token')
   @ApiBody({ type: OmitType(UserDto, ['id']) })
   @Get('user')
-  getProfile(@Request() req) {
-    return req.user;
+  getProfile(@Req() req) {
+    return req.user as JwtPayload;
   }
 }

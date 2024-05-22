@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    Param,
-    Patch,
-    Post,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+  Req,
 } from '@nestjs/common';
 import { CrudStrategyService } from './crud-strategy.service';
 
@@ -16,7 +18,7 @@ export class CrudStrategyController<T, C, U> {
 
   @HttpCode(201)
   @Post()
-  async create(@Body() createDto: C): Promise<T> {
+  async create(@Body() createDto: C, @Req() req?): Promise<T> {
     return await this.baseCrudService.create(createDto);
   }
 

@@ -5,17 +5,20 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBody, ApiTags, OmitType } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { AuthGuard } from '../auth/auth.guard';
 import { CrudStrategyController } from '../crud-strategy/crud-strategy.controller';
 import { UserDto } from './dto/user.dto';
 import { UserInterceptor } from './user.interceptors';
 import { UserService } from './user.service';
 
 @ApiTags('User')
+@UseGuards(AuthGuard)
 @Controller({ path: 'user', version: '1' })
 @UseInterceptors(UserInterceptor)
 export class UserController extends CrudStrategyController<

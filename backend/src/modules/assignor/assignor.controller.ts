@@ -1,10 +1,20 @@
-import { Body, Controller, HttpCode, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBody, ApiTags, OmitType } from '@nestjs/swagger';
 import { Assignor } from '@prisma/client';
+import { AuthGuard } from '../auth/auth.guard';
 import { CrudStrategyController } from '../crud-strategy/crud-strategy.controller';
 import { AssignorService } from './assignor.service';
 import { AssignorDto } from './dto/assignor.dto';
 
+@UseGuards(AuthGuard)
 @ApiTags('Assignor')
 @Controller({ path: 'integrations/assignor', version: '1' })
 export class AssignorController extends CrudStrategyController<
