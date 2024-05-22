@@ -1,26 +1,52 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class AssignorService {
-  create(createAssignorDto: CreateAssignorDto) {
-    return 'This action adds a new assignor';
+  constructor(private readonly prisma: PrismaService) {}
+  async create(createAssignorDto: CreateAssignorDto) {
+    const response = await this.prisma.assignor.create({
+      data: {
+        document: createAssignorDto.document,
+        email: createAssignorDto.email,
+        phone: createAssignorDto.phone,
+        name: createAssignorDto.name,
+      },
+    });
+    return response;
   }
 
-  findAll() {
-    return `This action returns all assignor`;
+  async findAll() {
+    const response = await this.prisma.assignor.findMany();
+    return response;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} assignor`;
+  async findOne(id: string) {
+    const response = await this.prisma.assignor.findUnique({
+      where: { id },
+    });
+    return response;
   }
 
-  update(id: number, updateAssignorDto: UpdateAssignorDto) {
-    return `This action updates a #${id} assignor`;
+  async update(id: string, updateAssignorDto: UpdateAssignorDto) {
+    const response = await this.prisma.assignor.update({
+      where: { id },
+      data: {
+        document: updateAssignorDto.document,
+        email: updateAssignorDto.email,
+        phone: updateAssignorDto.phone,
+        name: updateAssignorDto.name,
+      },
+    });
+    return response;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} assignor`;
+  async remove(id: string) {
+    const response = await this.prisma.assignor.delete({
+      where: { id },
+    });
+    return response;
   }
 }
