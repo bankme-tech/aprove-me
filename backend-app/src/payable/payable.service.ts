@@ -33,7 +33,10 @@ export class PayableService {
   async update(id: string, updatePayableDto: UpdatePayableDto) {
     const response = await this.prisma.payable.update({
       where: { id },
-      data: { value: updatePayableDto.value },
+      data: {
+        value: updatePayableDto.value,
+        assignorId: updatePayableDto.assignor,
+      },
     });
     return response;
   }
