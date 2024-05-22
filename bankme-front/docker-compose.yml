@@ -1,13 +1,12 @@
 version: '3.8'
+
 services:
-  web:
+  nextjs:
     build:
-      context: ./
-      target: runner
-    volumes:
-      - .:/app
-    command: npm run dev
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
+      PORT: 8000
