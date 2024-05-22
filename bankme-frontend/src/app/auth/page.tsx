@@ -24,6 +24,8 @@ import {
   CredentialsSchemaType,
 } from "@/schemas/credentials-schema";
 import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   const form = useForm<CredentialsSchemaType>({
@@ -33,8 +35,8 @@ export default function page() {
       password: "",
     },
   });
-
-  const { login } = useAuth();
+  const router = useRouter();
+  const { login, isAuthenticated } = useAuth();
 
   async function onSubmit(input: CredentialsSchemaType) {
     try {
@@ -43,6 +45,12 @@ export default function page() {
       toast("invalid credentials", { duration: 3000 });
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/payable");
+    }
+  }, []);
 
   return (
     <div className="mx-auto max-w-md space-y-4 py-12">
