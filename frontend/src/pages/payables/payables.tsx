@@ -6,7 +6,9 @@ export const Payables = () => {
   return (
     <main className="p-8 pt-16">
       <div className="flex justify-between w-full mb-2">
-        <h1 className="text-title text-primary font-bold">Lista de pagáveis</h1>
+        <h1 className="text-title text-primary font-bold">
+          Lista de recebíveis
+        </h1>
 
         <div className="gap-2 flex items-center flex-col md:flex-row">
           <AddPayableDialog />

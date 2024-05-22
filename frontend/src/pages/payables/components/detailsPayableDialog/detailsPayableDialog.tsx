@@ -112,12 +112,12 @@ export function DetailsPayableDialog({ payable }: DetailsPayableData) {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Detalhes do pagável e cedente</DialogTitle>
+          <DialogTitle>Detalhes do recebível e cedente</DialogTitle>
         </DialogHeader>
 
         <Tabs defaultValue="payable">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="payable">Pagável</TabsTrigger>
+            <TabsTrigger value="payable">Recebível</TabsTrigger>
             <TabsTrigger value="assignor">Cedente</TabsTrigger>
           </TabsList>
 

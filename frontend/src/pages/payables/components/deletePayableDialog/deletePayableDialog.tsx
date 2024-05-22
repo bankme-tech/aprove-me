@@ -38,14 +38,14 @@ export const DeletePayableDialog = ({ payable }: DeletedPayableData) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Apagar este pagável</AlertDialogTitle>
+          <AlertDialogTitle>Apagar este recebível</AlertDialogTitle>
           <AlertDialogDescription>
             Cuidado! Essa ação é irreversível
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <div>
-          <h1>Pagável a ser apagado:</h1>
+          <h1>Recebível a ser apagado:</h1>
 
           {assignor.assignor && (
             <p>Emitido por: {assignor.assignor.props?.name}</p>

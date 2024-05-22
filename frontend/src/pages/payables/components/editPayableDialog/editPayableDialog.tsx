@@ -41,7 +41,7 @@ export function EditPayableDialog({ payable }: EditPayableData) {
     <>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Atualize um pagável existente</DialogTitle>
+          <DialogTitle>Atualize um recebível existente</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">

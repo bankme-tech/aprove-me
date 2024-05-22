@@ -230,7 +230,7 @@ Toda a aplicação backend exceto as rotas de usuário (login/signup) está prot
 
 `DELETE /integrations/assignor/:assignorId`
 
-### Pagavéis
+### Recebíveis
 
 `POST /integrations/payable`
 

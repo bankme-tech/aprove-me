@@ -39,12 +39,12 @@ export function AddPayableDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="sm">Adicionar pagável</Button>
+        <Button size="sm">Adicionar recebível</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Adicione um novo pagável</DialogTitle>
+          <DialogTitle>Adicione um novo recebível</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">

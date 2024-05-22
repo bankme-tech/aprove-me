@@ -80,7 +80,7 @@ export const PayablesTable = () => {
           {payable.payables.length === 0 && (
             <TableRow>
               <TableCell colSpan={4} className="text-center">
-                Vazia no momento, adicione algum pagável para aparecer aqui!
+                Vazia no momento, adicione algum recebível para aparecer aqui!
               </TableCell>
             </TableRow>
           )}
