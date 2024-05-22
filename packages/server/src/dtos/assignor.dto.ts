@@ -1,5 +1,4 @@
 export type assignorBodyDto = {
-  id: string;
   name: string;
   email: string;
   phone: string;
@@ -19,3 +18,4 @@ export type assignorUniqueResponseType = {
   id: string | null;
   field: string | null;
 };
+// /payable

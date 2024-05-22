@@ -2,7 +2,8 @@ import { Err, Ok } from './../types/either';
 import { Result } from 'src/types/either';
 import { MONEY_EQUIVALENT_IN_CENTS } from './constants';
 import { ZodError } from 'zod';
-import { CustomError } from 'src/validations/errors';
+import { CustomError, CustomError } from 'src/validations/errors';
+import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
 
 export function get_env_var(name: string, defaultValue?: string) {
   const value = process.env[name];
@@ -31,9 +32,12 @@ export function to_money(cents: number): Result<Error, number> {
   return Ok(Number(money));
 }
 
-export function is_internal_error(error: Error): boolean {
-  if (error instanceof ZodError || error instanceof CustomError) {
-    return true;
+export function throw_error(error: Error | any) {
+  if (error instanceof ZodError) {
+    throw new BadRequestException(error.issues[0].message);
   }
-  return false;
+  if (error instanceof CustomError) {
+    throw new BadRequestException(error.message);
+  }
+  throw new InternalServerErrorException('Internal Server Error');
 }
