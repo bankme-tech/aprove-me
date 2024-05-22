@@ -12,6 +12,8 @@ import UpdateAssignor from "./update-assignor";
 import { deleteAssignor } from "@/services/assignor";
 import { useGetAssignorById } from "@/hooks/useGetAssignorById";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export default function AssignorDetails() {
   const router = useRouter();
@@ -26,6 +28,15 @@ export default function AssignorDetails() {
       });
       queryClient.invalidateQueries({ queryKey: ["get-all-assignor"] });
       router.push("/assignor");
+    },
+    onError(err: AxiosError) {
+      if (err.response?.status === 409) {
+        toast(
+          "assignor cannot be excluded because there is a payable who depends on it"
+        );
+        return;
+      }
+      toast("Unexpected error");
     },
   });
 

@@ -24,6 +24,8 @@ import AssignorCombobox from "./assignor-combobox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPayable } from "@/services/payable";
 import { payableSchema } from "@/schemas/payable-schema";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export default function CreatePayableForm() {
   const [open, setOpen] = useState(false);
@@ -49,6 +51,9 @@ export default function CreatePayableForm() {
       form.reset();
       setOpen(false);
       queryClient.invalidateQueries({ queryKey: ["get-all-payable"] });
+    },
+    onError(err: AxiosError<any>) {
+      toast(err.response?.data.message as string);
     },
   });
 

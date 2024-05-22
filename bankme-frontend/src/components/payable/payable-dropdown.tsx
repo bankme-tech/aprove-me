@@ -11,6 +11,8 @@ import UpdatePayableForm from "./update-payable";
 import PayableDetails from "./payable-details";
 import { Payable, deletePayable } from "@/services/payable";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 interface Props {
   payable: Payable;
@@ -26,6 +28,9 @@ export default function PayableDropdown({ payable }: Props) {
     mutationFn: deletePayable,
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ["get-all-payable"] });
+    },
+    onError(err: AxiosError<any>) {
+      toast(err.response?.data.message as string);
     },
   });
 

@@ -23,6 +23,8 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Assignor, updateAssignor } from "@/services/assignor";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { assignorSchema } from "@/schemas/assignor-schema";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 interface Props {
   assignor: Assignor;
@@ -50,6 +52,15 @@ export default function UpdateAssignor({ assignor }: Props) {
         queryKey: ["get-assignor-by-id", assignor.id],
       });
       queryClient.invalidateQueries({ queryKey: ["get-all-assignor"] });
+    },
+    onError(err: AxiosError<any>) {
+      if (err.response?.status === 409) {
+        const data = err.response?.data;
+        const fields: Array<string> = data.fields;
+        toast(`${fields} already registered`);
+        return;
+      }
+      toast("Unexpected error");
     },
   });
 

@@ -23,6 +23,8 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createAssignor } from "@/services/assignor";
 import { assignorSchema } from "@/schemas/assignor-schema";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export default function CreateAssignor() {
   const [open, setOpen] = useState(false);
@@ -45,6 +47,15 @@ export default function CreateAssignor() {
       form.reset();
       setOpen(false);
       queryClient.invalidateQueries({ queryKey: ["get-all-assignor"] });
+    },
+    onError(err: AxiosError<any>) {
+      if (err.response?.status === 409) {
+        const data = err.response?.data;
+        const fields: Array<string> = data.fields;
+        toast(`${fields} already registered`);
+        return;
+      }
+      toast("Unexpected error");
     },
   });
 

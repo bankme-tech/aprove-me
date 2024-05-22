@@ -22,6 +22,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Payable, updatePayable } from "@/services/payable";
 import { convertIsoToYyyyMmDd } from "@/utils/date-formatter";
 import { payableSchema } from "@/schemas/payable-schema";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 interface Props {
   payable: Payable;
@@ -54,6 +56,9 @@ export default function UpdatePayableForm({
       form.reset();
       onOpenChange(false);
       queryClient.invalidateQueries({ queryKey: ["get-all-payable"] });
+    },
+    onError(err: AxiosError<any>) {
+      toast(err.response?.data.message as string);
     },
   });
 
