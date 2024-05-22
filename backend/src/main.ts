@@ -10,6 +10,6 @@ async function bootstrap(): Promise<void> {
       transform: true,
     }),
   );
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
