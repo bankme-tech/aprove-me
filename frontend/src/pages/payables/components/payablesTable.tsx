@@ -21,7 +21,7 @@ export const PayablesTable = () => {
     async function handleFindPayables() {
       await payable.findAllPayables();
     }
-    console.log(payable);
+
     handleFindPayables();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payable.skip, payable.take]);
