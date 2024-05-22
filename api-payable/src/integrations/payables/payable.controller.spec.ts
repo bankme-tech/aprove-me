@@ -30,7 +30,7 @@ describe(PayableController.name, () => {
       name: 'dev-test',
       document: '111.222.333-44',
       phone: '+55 (21) 9 1111 4444',
-    }
+    };
     const response = await supertest(app.getHttpServer())
       .post('/integrations/assignors')
       .send(dto);
@@ -66,8 +66,9 @@ describe(PayableController.name, () => {
 
   describe('GET /integrations/payable/:id', () => {
     it('should return expected payable', async () => {
-      const response = await supertest(app.getHttpServer())
-        .get(`/integrations/payable/${id}`);
+      const response = await supertest(app.getHttpServer()).get(
+        `/integrations/payable/${id}`,
+      );
       type Body = Awaited<ReturnType<PayableController['findOne']>>;
       const body = response?.body as Body;
       expect(body.id).toBe(id);
@@ -78,12 +79,12 @@ describe(PayableController.name, () => {
     });
   });
 
-  describe("PATCH ", () => {
-    it("should update payable", async () => {
+  describe('PATCH ', () => {
+    it('should update payable', async () => {
       const newDto: PartialPayableDto = {
         value: 123_00,
         emissionDate: new Date('2024/01/01').toISOString(),
-      }
+      };
       const response = await supertest(app.getHttpServer())
         .patch(`/integrations/payable/${id}`)
         .send(newDto);
@@ -97,17 +98,19 @@ describe(PayableController.name, () => {
     });
   });
 
-  describe("DELETE /integrations/payable/:id", () => {
-    it("should delete expected payable", async () => {
-      const response = await supertest(app.getHttpServer())
-        .delete(`/integrations/payable/${id}`);
+  describe('DELETE /integrations/payable/:id', () => {
+    it('should delete expected payable', async () => {
+      const response = await supertest(app.getHttpServer()).delete(
+        `/integrations/payable/${id}`,
+      );
       expect(response.statusCode).toBe(HttpStatus.OK);
     });
 
-    describe("subsequent request", () => {
-      it("should return 404 not found", async () => {
-      const response = await supertest(app.getHttpServer())
-        .get(`/integrations/payable/${id}`);
+    describe('subsequent request', () => {
+      it('should return 404 not found', async () => {
+        const response = await supertest(app.getHttpServer()).get(
+          `/integrations/payable/${id}`,
+        );
         expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
       });
     });

@@ -8,4 +8,4 @@ import { InfrastructureModule } from 'src/infrastructure/infrastructure.module';
   controllers: [PayableController],
   providers: [PayableService],
 })
-export class PayableModule { }
+export class PayableModule {}

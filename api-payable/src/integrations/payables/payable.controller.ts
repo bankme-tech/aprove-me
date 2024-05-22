@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { Payable } from '@prisma/client';
 import { PayableService } from './payable.service';
 import { PayableDto } from './dtos/payables.dto';
@@ -6,7 +15,7 @@ import { PartialPayableDto } from './dtos/partial-payable.dto';
 
 @Controller('/integrations/payable')
 export class PayableController {
-  constructor(private readonly payableService: PayableService) { }
+  constructor(private readonly payableService: PayableService) {}
 
   @Post()
   async create(@Body() dto: PayableDto): Promise<Payable> {
@@ -35,4 +44,3 @@ export class PayableController {
     return this.payableService.deletePayable(id);
   }
 }
-

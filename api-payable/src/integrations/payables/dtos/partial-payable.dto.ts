@@ -20,4 +20,3 @@ export class PartialPayableDto {
   @IsOptional()
   assignor?: string;
 }
-

@@ -1,12 +1,21 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete, NotFoundException } from '@nestjs/common';
-import { AssignorService } from './assignor.service';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
+import { AssignorRepository } from './assignor.repository';
 import { Assignor } from '@prisma/client';
 import { AssignorDto } from './dtos/assignor.dto';
 import { PartialAssignorDto } from './dtos/partial-assignor.dto';
 
 @Controller('/integrations/assignors')
 export class AssignorController {
-  constructor(private readonly assignorService: AssignorService) { }
+  constructor(private readonly assignorService: AssignorRepository) {}
 
   @Post()
   async create(@Body() dto: AssignorDto): Promise<Assignor> {
@@ -33,4 +42,3 @@ export class AssignorController {
     return this.assignorService.delete(id);
   }
 }
-

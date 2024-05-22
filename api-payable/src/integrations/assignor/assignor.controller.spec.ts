@@ -1,6 +1,6 @@
 import 'jest-extended';
 import * as supertest from 'supertest';
-import { Test} from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { AssignorController } from './assignor.controller';
 import { AssignorDto } from './dtos/assignor.dto';
@@ -24,7 +24,7 @@ describe(AssignorController.name, () => {
     name: 'dev-test',
     document: '111.222.333-44',
     phone: '+55 (21) 9 1111 4444',
-  }
+  };
   let id: string;
   describe('POST /integrations/assignors', () => {
     it('should create a new assignor', async () => {
@@ -38,11 +38,12 @@ describe(AssignorController.name, () => {
     });
   });
 
-  describe("GET /integrations/assignors/:id", () => {
-    it("should return expected dto", async () => {
+  describe('GET /integrations/assignors/:id', () => {
+    it('should return expected dto', async () => {
       expect(id).toBeDefined();
-      const response = await supertest(app.getHttpServer())
-        .get(`/integrations/assignors/${id}`);
+      const response = await supertest(app.getHttpServer()).get(
+        `/integrations/assignors/${id}`,
+      );
       type Body = Awaited<ReturnType<AssignorController['create']>>;
       const body = response.body as Body;
       expect(body.id).toBe(id);
@@ -53,12 +54,12 @@ describe(AssignorController.name, () => {
     });
   });
 
-  describe("PATCH /integrations/assignors/:id", () => {
-    it("should update assignor", async () => {
-      const newDto: PartialAssignorDto = { 
+  describe('PATCH /integrations/assignors/:id', () => {
+    it('should update assignor', async () => {
+      const newDto: PartialAssignorDto = {
         name: `New Name ${rng()}`,
         email: `new.devtest.${rng()}@email.com`,
-      }
+      };
       const response = await supertest(app.getHttpServer())
         .patch(`/integrations/assignors/${id}`)
         .send(newDto);
@@ -74,17 +75,19 @@ describe(AssignorController.name, () => {
     });
   });
 
-  describe("DELETE /integrations/assignors/:id", () => {
-    it("should delete assignor", async () => {
-      const response = await supertest(app.getHttpServer())
-        .delete(`/integrations/assignors/${id}`);
-        expect(response.statusCode).toBe(HttpStatus.OK);
+  describe('DELETE /integrations/assignors/:id', () => {
+    it('should delete assignor', async () => {
+      const response = await supertest(app.getHttpServer()).delete(
+        `/integrations/assignors/${id}`,
+      );
+      expect(response.statusCode).toBe(HttpStatus.OK);
     });
 
-    describe("subsequente GET request", () => {
-      it("should throw 404 not found", async () => {
-      const response = await supertest(app.getHttpServer())
-        .get(`/integrations/assignors/${id}`);
+    describe('subsequente GET request', () => {
+      it('should throw 404 not found', async () => {
+        const response = await supertest(app.getHttpServer()).get(
+          `/integrations/assignors/${id}`,
+        );
         expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
       });
     });

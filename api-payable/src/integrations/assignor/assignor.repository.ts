@@ -3,7 +3,7 @@ import { Assignor, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/infrastructure/prisma.service';
 
 @Injectable()
-export class AssignorService {
+export class AssignorRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(data: Prisma.AssignorCreateInput): Promise<Assignor> {
@@ -14,7 +14,10 @@ export class AssignorService {
     return this.prisma.assignor.findUnique({ where: { id } });
   }
 
-  async update(id: string, data: Prisma.AssignorUpdateInput): Promise<Assignor> {
+  async update(
+    id: string,
+    data: Prisma.AssignorUpdateInput,
+  ): Promise<Assignor> {
     return this.prisma.assignor.update({ where: { id }, data });
   }
 
@@ -22,4 +25,3 @@ export class AssignorService {
     return this.prisma.assignor.delete({ where: { id } });
   }
 }
-

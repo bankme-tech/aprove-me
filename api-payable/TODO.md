@@ -5,17 +5,17 @@
     - [x] Validar dto.
     - [x] UUID
 2. Testes
-    - [] Tests.
+    - [x] Tests.
 3. Persistência
-    - [] `GET /integrations/payable/:id`
-    - [] `GET /integrations/payable/:id`
-    - [] PATCH, POST, DELETE
+    - [x] `GET /integrations/payable/:id`
+    - [x] `GET /integrations/payable/:id`
+    - [x] PATCH, POST, DELETE
 4. Auth
-    - [] Jwt com duração de 1 minuto
-    - [] Dto `{ "login": "aprovame", "password": "aprovame" }`
+    - [x] Jwt com duração de 1 minuto
+    - [x] Dto `{ "login": "aprovame", "password": "aprovame" }`
 5. Criar User
-    - [] User com login e password.
-    - [] Save Auth Dto.
+    - [x] User com login e password.
+    - [x] Save Auth Dto.
 6. Infra
     - [] Dockerfile API
     - [] docker-compose database.
