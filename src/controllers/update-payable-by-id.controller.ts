@@ -34,6 +34,16 @@ export class UpdatePayableByIdController {
 
       const input = new UpdatePayableByIdInputDTO(requestBody);
 
+      if (input.assignorId !== payable.assignorId) {
+        const assignor = await this.prisma.payable.findUnique({
+          where: { id },
+        });
+
+        if (assignor === null) {
+          throw new BadRequestException("assignor not found");
+        }
+      }
+
       await this.prisma.payable.update({
         data: {
           value: input.value,
