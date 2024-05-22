@@ -9,7 +9,7 @@ type FormField = {
 
 export const FormLogin = () => {
   return (
-    <div className="flex flex-col gap-8 w-1/2 h-full">
+    <div className="flex flex-col gap-12 w-1/2 h-full">
       <p className="text-6xl text-end mb-32">
         <span className="font-bold text-primary">Bankme</span> o seu banco
         preferido!
