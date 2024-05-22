@@ -16,12 +16,14 @@ model Payable {
   emissionDate DateTime @default(now())
   assignorId   String
   assignor     Assignor @relation(fields: [assignorId], references: [id])
+
+  @@index([assignorId], name: "assignor_idx")
 }
 
 model Assignor {
   id       String    @id @default(uuid())
-  document String
-  email    String
+  document String    @unique
+  email    String    @unique
   phone    String
   name     String
   Payable  Payable[]

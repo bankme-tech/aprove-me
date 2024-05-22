@@ -24,4 +24,13 @@ CREATE TABLE "User" (
 );
 
 -- CreateIndex
+CREATE INDEX "assignor_idx" ON "Payable"("assignorId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Assignor_document_key" ON "Assignor"("document");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Assignor_email_key" ON "Assignor"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_login_key" ON "User"("login");
