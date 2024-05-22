@@ -2,7 +2,7 @@
 
 Para rodar a aplicação com o docker utilize este comando:
 ```bash
-$ yarn compose:up
+$ npm run compose:up
 ```
 E pronto! sua aplicação estará rodando no seu localhost na porta 8000.
 
@@ -10,7 +10,7 @@ E pronto! sua aplicação estará rodando no seu localhost na porta 8000.
 
 Para parar o container, basta rodar:
 ```bash
-$ yarn compose:dowm
+$ npm run compose:dowm
 ```
 
 ## Instalação sem o Docker
