@@ -54,8 +54,8 @@ export default function ListPayable() {
           </tr>
         </thead>
         <tbody>
-            {payables.map((item) => {
-              return <TableItem item={item} />
+            {payables.map((item, index) => {
+              return <TableItem key={index} item={item} />
             })}
         </tbody>
         {isError && <div role="alert">

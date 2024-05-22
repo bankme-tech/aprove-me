@@ -57,8 +57,8 @@ export default function ListAssignor() {
           </tr>
         </thead>
         <tbody>
-            {assignors.map((item: any) => {
-              return <TableItem item={item} />
+            {assignors.map((item: any, index) => {
+              return <TableItem key={index} item={item} />
             })}
         </tbody>
         {isError && <div role="alert">
