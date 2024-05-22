@@ -37,3 +37,35 @@ export async function addPayables(token: any, payable: any) {
     return { status, message, data: '' };
   }
 }
+
+export async function editPayables(token: any, payable: any, id: any) {
+  try {
+    const filteredPayable = Object.keys(payable).reduce((acc, key) => {
+      if (key !== 'id' && payable[key] !== '') {
+        if (key === 'assignorId' || key === 'value') {
+          acc[key] = Number(payable[key]);
+        } else {
+          acc[key] = payable[key];
+        }
+      }
+      return acc;
+    }, {} as Record<string, any>);
+
+    console.log('Filtered Payable:', filteredPayable);
+    const request = await axios.put(`http://localhost:3000/integrations/payable/${payable.id}`, 
+    filteredPayable, 
+    {
+      headers: {
+        Authorization: token.token
+      }
+    }
+  );
+
+    return request;
+  } catch(e: any) {
+    const status = e.response ? e.response.data.statusCode : 'Network Error';
+    const message = e.response ? e.response.data.message : e.message;
+
+    return { status, message, data: '' };
+  }
+}
