@@ -21,7 +21,8 @@ export class FindPayableByIdController {
     return new FindPayableByIdOutputDTO(
       payable.id,
       payable.value,
-      payable.emissionDate
+      payable.emissionDate,
+      payable.assignorId
     );
   }
 }
