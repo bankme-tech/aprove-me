@@ -1,2 +1,4 @@
 node_modules/
 coverage/
+src/infra/repository/dev-test.db
+.env
