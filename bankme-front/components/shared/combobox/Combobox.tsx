@@ -5,12 +5,12 @@ export default function Combobox({ items, onSelect }: any) {
     <div className="relative inline-block w-64">
       <span className="text-white">Cedente</span>
       <select
-        name="assignor"
+        name="assignorId"
         className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mt-2"
         onChange={(e) => onSelect(e)}
       >
         {items.map((item: any, index: number) => (
-          <option key={index} value={item.name}>
+          <option key={index} value={item.id}>
             {item.name}
           </option>
         ))}

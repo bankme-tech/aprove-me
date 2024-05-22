@@ -8,7 +8,7 @@ export default function AddPayable() {
   const [payable, setPayable] = useState({
     value: '',
     emissionDate: '',
-    assignor: ''
+    assignorId: ''
   });
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');

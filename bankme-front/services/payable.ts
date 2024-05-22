@@ -21,10 +21,10 @@ export async function addPayables(token: any, payable: any) {
   try {
     console.log(payable);
     const request = await axios.post('http://localhost:3000/integrations/payable', 
-    { data: payable }, 
+    { value: parseFloat(payable.value), emissionDate: payable.emissionDate, assignorId: Number(payable.assignorId) }, 
     {
       headers: {
-        Authorization: token.token // Adicione Bearer se estiver usando tokens JWT
+        Authorization: token.token
       }
     }
   );
