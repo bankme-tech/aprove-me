@@ -14,11 +14,11 @@ import { AssignorsService } from './assignors.service';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 
-@Controller('assignors')
+@Controller('/assignor')
 export class AssignorsController {
   constructor(private readonly assignorsService: AssignorsService) {}
 
-  @Get('/assignor/:id')
+  @Get('/:id')
   async getAssignorById(@Param('id') id: string) {
     const assignor = await this.assignorsService.getAssignorById(id);
 
@@ -27,7 +27,7 @@ export class AssignorsController {
     return this.assignorsService.getAssignorById(id);
   }
 
-  @Put('/assignor/:id')
+  @Put('/:id')
   @UsePipes(new ValidationPipe({ transform: true }))
   async updateAssignor(
     @Param('id') id: string,
@@ -36,12 +36,12 @@ export class AssignorsController {
     return this.assignorsService.updateAssignor(id, assignorDto);
   }
 
-  @Post('/assignor')
+  @Post()
   create(@Body() assignorDto: CreateAssignorDto) {
     return this.assignorsService.createAssignor(assignorDto);
   }
 
-  @Delete('/assignor/:id')
+  @Delete('/:id')
   deleteAssignor(@Param('id') id: string) {
     return this.assignorsService.deleteAssignor(id);
   }
