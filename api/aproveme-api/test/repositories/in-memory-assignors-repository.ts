@@ -27,4 +27,20 @@ export class InMemoryAssignorsRepository implements AssignorsRepository {
 
     return assignor;
   }
+
+  async findByDocument(document: string): Promise<Assignor> {
+    const assignor = this.items.find((item) => item.document === document);
+
+    if (!assignor) return null;
+
+    return assignor;
+  }
+
+  async findByEmail(email: string): Promise<Assignor> {
+    const assignor = this.items.find((item) => item.email === email);
+
+    if (!assignor) return null;
+
+    return assignor;
+  }
 }

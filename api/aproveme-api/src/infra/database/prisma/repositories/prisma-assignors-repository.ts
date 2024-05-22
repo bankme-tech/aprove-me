@@ -49,4 +49,28 @@ export class PrismaAssignorsRepository implements AssignorsRepository {
 
     return PrismaAssignorMapper.toDomain(assignor);
   }
+
+  async findByDocument(document: string): Promise<Assignor> {
+    const assignor = await this.prisma.assignor.findUnique({
+      where: {
+        document,
+      },
+    });
+
+    if (!assignor) return null;
+
+    return PrismaAssignorMapper.toDomain(assignor);
+  }
+
+  async findByEmail(email: string): Promise<Assignor> {
+    const assignor = await this.prisma.assignor.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!assignor) return null;
+
+    return PrismaAssignorMapper.toDomain(assignor);
+  }
 }

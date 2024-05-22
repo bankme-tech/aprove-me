@@ -5,4 +5,6 @@ export abstract class AssignorsRepository {
   abstract update(assignor: Assignor): Promise<void>;
   abstract delete(assignor: Assignor): Promise<void>;
   abstract findById(id: string): Promise<Assignor | null>;
+  abstract findByEmail(email: string): Promise<Assignor | null>;
+  abstract findByDocument(document: string): Promise<Assignor | null>;
 }
