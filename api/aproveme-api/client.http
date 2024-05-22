@@ -1,0 +1,42 @@
+@baseUrl = http://localhost:3333
+@authToken = {{authenticate.response.body.access_token}}
+
+# @name create_account
+POST {{baseUrl}}/integrations/auth
+Content-Type:  application/json
+
+{
+	"login": "aproveme",
+	"password": "aproveme"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/integrations/sessions
+Content-Type:  application/json
+
+{
+    "login": "aproveme",
+    "password": "aproveme"
+}
+
+###
+
+# @name create_payable
+POST {{baseUrl}}/integrations/payable
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
+{
+	"payable": {
+    "value": 15.55,
+		"emissionDate": "2024-05-22T12:47:20.560Z"
+  },
+	"assignor": {
+		"document": "14444798955",
+		"email": "x@mail.com",
+		"phone": "31998895644",
+		"name": "teste name"
+	}
+}

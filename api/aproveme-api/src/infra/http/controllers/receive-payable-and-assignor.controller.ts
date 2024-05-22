@@ -10,9 +10,10 @@ import {
 import { z } from "zod";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
 import { randomUUID } from "crypto";
-import { Public } from "@/infra/auth/public";
 import { PayablePresenter } from "../presenters/payable-presenter";
 import { AssignorPresenter } from "../presenters/assignor-presenter";
+import { CurrentUser } from "@/infra/auth/current-user-decorator";
+import { UserPayload } from "@/infra/auth/jwt.strategy";
 
 const receivePayableAndAssignorSchema = z.object({
   payable: z.object({
@@ -32,7 +33,6 @@ type ReceivePayableAndAssignorBodySchema = z.infer<
 >;
 
 @Controller("/integrations/payable")
-@Public()
 export class ReceivePayableAndAssignorController {
   constructor(
     private createAssignor: CreateAssignorService,
@@ -42,14 +42,16 @@ export class ReceivePayableAndAssignorController {
   @Post()
   @HttpCode(200)
   async handle(
+    @CurrentUser() user: UserPayload,
     @Body(new ZodValidationPipe(receivePayableAndAssignorSchema))
     body: ReceivePayableAndAssignorBodySchema
   ) {
+    const userId = user.sub;
     const { assignor, payable } = body;
 
     const createAssignorResult = await this.createAssignor.execute({
       assignor: {
-        id: randomUUID(),
+        id: userId,
         document: assignor.document,
         email: assignor.email,
         name: assignor.name,
