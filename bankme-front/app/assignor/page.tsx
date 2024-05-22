@@ -1,7 +1,6 @@
 'use client'
 
 import AddAssignor from "@/components/assignor/AssignorAdd";
-import DeleteAssignor from "@/components/assignor/AssignorDelete";
 import EditAssignor from "@/components/assignor/AssignorEdit";
 import AssignorHeader from "@/components/assignor/AssignorHeader";
 import ListAssignor from "@/components/assignor/AssignorList";
@@ -12,7 +11,6 @@ export default function Assignor() {
   const [selectedComponent, setSelectedComponent] = useState('list');
 
   const renderComponent = () => {
-    console.log('rodou')
     switch (selectedComponent) {
       case 'list':
         return <ListAssignor />;
@@ -20,8 +18,6 @@ export default function Assignor() {
         return <AddAssignor />;
       case 'edit':
         return <EditAssignor />;
-      case 'del':
-        return <DeleteAssignor />;
       default:
         return <ListAssignor />;
     }

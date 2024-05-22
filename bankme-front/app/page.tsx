@@ -7,7 +7,7 @@ export default function Home() {
       <Header />
       <div className="flex flex-nowrap items-center justify-center justify-around mt-36">
         <HomeCard href="/payable" title="Recebíveis" text="Acesso ao controle de Recebíveis (Listar, Adicionar, Editar e Excluir)"/>
-        <HomeCard href="/assignor" title="Cedentes" text="Acesso ao controle de Cedentes (Listar, Adicionar, Editar e Excluir)"/>
+        <HomeCard href="/assignor" title="Cedentes" text="Acesso ao controle de Cedentes (Listar, Adicionar e Editar)"/>
       </div>
     </div>
   );

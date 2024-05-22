@@ -11,9 +11,6 @@ export default function AssignorHeader({onSelect}: any) {
         <li onClick={() => onSelect('edit')} className="text-center flex-1">
           <div className="text-center block border border-blue-600 rounded py-2 px-4 bg-blue-600 hover:bg-blue-800 text-white cursor-pointer">Editar Cedente</div>
         </li>
-        <li onClick={() => onSelect('del')} className="text-center flex-1">
-          <div className="text-center block border border-blue-600 rounded py-2 px-4 bg-blue-600 hover:bg-blue-800 text-white cursor-pointer">Remover Cedente</div>
-        </li>
       </ul>
     </div>
   )
