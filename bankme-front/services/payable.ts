@@ -1,4 +1,5 @@
 import axios from "axios";
+import { convertToISO8601 } from "./date";
 
 export async function getPayables(token: any) {
   try {
@@ -19,9 +20,9 @@ export async function getPayables(token: any) {
 
 export async function addPayables(token: any, payable: any) {
   try {
-    console.log(payable);
+    const formattedDate = convertToISO8601(payable.emissionDate)
     const request = await axios.post('http://localhost:3000/integrations/payable', 
-    { value: parseFloat(payable.value), emissionDate: payable.emissionDate, assignorId: Number(payable.assignorId) }, 
+    { value: parseFloat(payable.value), emissionDate: formattedDate, assignorId: Number(payable.assignorId) }, 
     {
       headers: {
         Authorization: token.token
@@ -43,9 +44,12 @@ export async function editPayables(token: any, payable: any, id: any) {
     const filteredPayable = Object.keys(payable).reduce((acc, key) => {
       if (key !== 'id' && payable[key] !== '') {
         if (key === 'assignorId' || key === 'value') {
+          console.log('entrou no if');
           acc[key] = Number(payable[key]);
-        } else {
-          acc[key] = payable[key];
+        } 
+        if (key === 'emissionDate') {
+            console.log('entrou no if 2');
+            acc[key] = convertToISO8601(payable[key]);
         }
       }
       return acc;

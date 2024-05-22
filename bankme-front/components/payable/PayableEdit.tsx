@@ -79,7 +79,7 @@ export default function EditPayable() {
       <form className="bg-gray-800 mt-16">
         <MyInput data={{name: 'id', text: 'UUID do Recebível que será alterado'}} onSelect={handleChange} />
         <MyInput type="number" data={{name: 'value', text: 'Valor do Recebível'}} onSelect={handleChange} />
-        <MyInput data={{name: 'emissionDate', text: 'Data de Emissão'}} onSelect={handleChange} />
+        <MyInput type="date" data={{name: 'emissionDate', text: 'Data de Emissão'}} onSelect={handleChange} />
         <div className="relative z-0 w-full mb-6 group">
           <Combobox items={comboboxItems} onSelect={handleChange} />
         </div>
