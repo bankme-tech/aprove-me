@@ -10,7 +10,7 @@ class Assignor {
     document: string,
     email: string,
     phone: string,
-    name: string
+    name: string,
   ) {
     this.id = id;
     this.document = document;
@@ -34,7 +34,7 @@ export class CreatePayableOutputDTO {
     assignorDocument: string,
     assignorEmail: string,
     assignorPhone: string,
-    assignorName: string
+    assignorName: string,
   ) {
     this.id = id;
     this.value = value;
@@ -45,7 +45,7 @@ export class CreatePayableOutputDTO {
       assignorDocument,
       assignorEmail,
       assignorPhone,
-      assignorName
+      assignorName,
     );
   }
 }

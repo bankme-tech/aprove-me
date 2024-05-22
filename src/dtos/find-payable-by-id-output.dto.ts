@@ -8,7 +8,7 @@ export class FindPayableByIdOutputDTO {
     id: string,
     value: number,
     emissionDate: Date,
-    assignorId: string
+    assignorId: string,
   ) {
     this.id = id;
     this.value = value;

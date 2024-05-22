@@ -1,6 +1,13 @@
-import { BadRequestException, Controller, Get, Param, ParseUUIDPipe } from "@nestjs/common";
-import { PrismaProvider } from "../providers/prisma.provider";
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+} from "@nestjs/common";
+
 import { FindPayableByIdOutputDTO } from "../dtos/find-payable-by-id-output.dto";
+import { PrismaProvider } from "../providers/prisma.provider";
 
 @Controller()
 export class FindPayableByIdController {
@@ -22,7 +29,7 @@ export class FindPayableByIdController {
       payable.id,
       payable.value,
       payable.emissionDate,
-      payable.assignorId
+      payable.assignorId,
     );
   }
 }

@@ -1,6 +1,13 @@
-import { BadRequestException, Controller, Get, Param, ParseUUIDPipe } from "@nestjs/common";
-import { PrismaProvider } from "../providers/prisma.provider";
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+} from "@nestjs/common";
+
 import { FindAssignorByIdOutputDTO } from "../dtos/find-assignor-by-id-output.dto";
+import { PrismaProvider } from "../providers/prisma.provider";
 
 @Controller()
 export class FindAssignorByIdController {
@@ -23,7 +30,7 @@ export class FindAssignorByIdController {
       assignor.document,
       assignor.email,
       assignor.phone,
-      assignor.name
+      assignor.name,
     );
   }
 }

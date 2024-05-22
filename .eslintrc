@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "env": { "node": true, "es2022": true },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "sourceType": "module" },
+  "plugins": ["regexp", "simple-import-sort", "@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:security/recommended-legacy",
+    "plugin:regexp/recommended",
+    "plugin:n/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "n/no-missing-import": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
+  }
+}

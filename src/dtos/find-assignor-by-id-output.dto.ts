@@ -10,7 +10,7 @@ export class FindAssignorByIdOutputDTO {
     document: string,
     email: string,
     phone: string,
-    name: string
+    name: string,
   ) {
     this.id = id;
     this.document = document;
