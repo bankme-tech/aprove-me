@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../infrastructure/prisma.service';
-import { Payable } from '@prisma/client';
-import { PayablesDto } from './dtos/payables.dto';
+import { Payable, Prisma } from '@prisma/client';
+import { PayableDto } from './dtos/payables.dto';
+import { PartialPayableDto } from './dtos/partial-payable.dto';
 
 @Injectable()
 export class PayableService {
   constructor(private prisma: PrismaService) { }
 
-  async createPayable(dto: PayablesDto): Promise<Payable> {
+  async createPayable(dto: PayableDto): Promise<Payable> {
     return this.prisma.payable.create({
       data: {
         value: dto.value,
@@ -17,7 +18,7 @@ export class PayableService {
     });
   }
 
-  async updatePayable(id: string, dto: PayablesDto): Promise<Payable> {
+  async updatePayable(id: string, dto: PartialPayableDto): Promise<Payable> {
     return this.prisma.payable.update({
       where: { id },
       data: {

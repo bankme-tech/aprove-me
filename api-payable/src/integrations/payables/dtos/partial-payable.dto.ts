@@ -1,20 +1,23 @@
-import { IsNumber, IsDate, IsUUID, IsDateString } from 'class-validator';
+import { IsNumber, IsUUID, IsDateString, IsOptional } from 'class-validator';
 
-export class PayableDto {
+export class PartialPayableDto {
   // /** É a identificação de um recebível */
   // @IsUUID()
   // id: string;
 
   /** É o valor do recebível */
   @IsNumber()
-  value: number;
+  @IsOptional()
+  value?: number;
 
   /** É a data de emissão do recebível */
   @IsDateString()
-  emissionDate: string;
+  @IsOptional()
+  emissionDate?: string;
 
   /** Representa a identificação de um cedente */
   @IsUUID()
-  assignor: string;
+  @IsOptional()
+  assignor?: string;
 }
 

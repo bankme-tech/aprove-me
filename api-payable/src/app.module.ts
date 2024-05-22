@@ -1,9 +1,16 @@
 import { Module } from '@nestjs/common';
-import { PayablesModule } from './integrations/payables/payable.module';
+ import { ConfigModule } from '@nestjs/config';
+
+import { PayableModule } from './integrations/payables/payable.module';
 import { AssignorModule } from './integrations/assignor/assignor.module';
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
 
 @Module({
-  imports: [PayablesModule, AssignorModule, InfrastructureModule],
+  imports: [
+    ConfigModule.forRoot({ envFilePath: `.${process.env.NODE_ENV}.env` }), 
+    PayableModule,
+    AssignorModule,
+    InfrastructureModule,
+  ],
 })
 export class AppModule { }

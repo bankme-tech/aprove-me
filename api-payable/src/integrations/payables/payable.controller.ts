@@ -1,29 +1,37 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
-import { PayableService } from './payable.service';
+import { Controller, Get, Post, Body, Param, Patch, Delete, NotFoundException } from '@nestjs/common';
 import { Payable } from '@prisma/client';
-import { PayablesDto } from './dtos/payables.dto';
+import { PayableService } from './payable.service';
+import { PayableDto } from './dtos/payables.dto';
+import { PartialPayableDto } from './dtos/partial-payable.dto';
 
 @Controller('/integrations/payable')
 export class PayableController {
   constructor(private readonly payableService: PayableService) { }
 
   @Post()
-  create(@Body() dto: PayablesDto): Promise<Payable> {
+  async create(@Body() dto: PayableDto): Promise<Payable> {
     return this.payableService.createPayable(dto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string): Promise<Payable | null> {
-    return this.payableService.getPayableById(id);
-  }
-
-  @Put(':id')
-  update(@Param('id') id: string, @Body() data: PayablesDto): Promise<Payable> {
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() data: PartialPayableDto,
+  ): Promise<Payable> {
     return this.payableService.updatePayable(id, data);
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Payable | null> {
+    const payable = await this.payableService.getPayableById(id);
+    if (!payable) {
+      throw new NotFoundException(`Payable not found. Id: ${id}`);
+    }
+    return payable;
+  }
+
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<Payable> {
+  async delete(@Param('id') id: string): Promise<Payable> {
     return this.payableService.deletePayable(id);
   }
 }
