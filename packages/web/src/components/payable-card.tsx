@@ -1,5 +1,3 @@
-"use client";
-
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
 
 export type Payable = {
@@ -14,7 +12,7 @@ type PayableCardProps = {
 
 export default function PayableCard({ payable }: PayableCardProps) {
   return (
-    <Card className="min-w-96">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>R${payable.value}</CardTitle>
       </CardHeader>

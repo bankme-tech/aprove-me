@@ -1,5 +1,4 @@
 import axios from "axios";
-import { redirect } from "next/navigation";
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:3333/integrations",
@@ -15,7 +14,7 @@ axiosInstance.interceptors.response.use(
 
     if (status === 401) {
       console.warn(status);
-      redirect("/");
+      window.location.replace('/')
     }
     return Promise.reject(err);
   },
