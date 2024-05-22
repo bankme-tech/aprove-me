@@ -3,7 +3,9 @@ import { AuthService } from './auth.service';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { SignInDto } from './dto/sign-in.dto';
 import { AuthEntity } from './entities/auth.entity';
+import { Public } from './public-strategy';
 
+@Public()
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
