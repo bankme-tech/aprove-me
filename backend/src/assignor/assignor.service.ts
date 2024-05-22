@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { randomUUID } from 'node:crypto';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 
 @Injectable()
 export class AssignorService {
   create(createAssignorDto: CreateAssignorDto) {
-    return 'This action adds a new assignor';
+    return {
+      id: randomUUID(),
+      ...createAssignorDto,
+    };
   }
 
   findAll() {
