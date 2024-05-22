@@ -2,8 +2,8 @@ import { Err, Ok } from './../types/either';
 import { Result } from 'src/types/either';
 import { MONEY_EQUIVALENT_IN_CENTS } from './constants';
 import { ZodError } from 'zod';
-import { CustomError } from 'src/validations/errors';
-import { BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { CustomError, NotFoundError } from 'src/validations/errors';
+import { BadRequestException, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 
 export function get_env_var(name: string, defaultValue?: string) {
   const value = process.env[name];
@@ -39,6 +39,8 @@ export function throw_error(error: Error | any) {
   if (error instanceof CustomError) {
     throw new BadRequestException(error.message);
   }
-  console.log(error);
+  if (error instanceof NotFoundError) {
+    throw new NotFoundException(error.message);
+  }
   throw new InternalServerErrorException('Internal Server Error');
 }
