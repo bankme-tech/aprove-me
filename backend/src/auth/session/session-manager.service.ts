@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client'; // Ajuste conforme necessário
+import { User } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Session {
@@ -10,11 +10,12 @@ interface Session {
 @Injectable()
 export class SessionManagerService {
   private sessions: Map<string, Session>;
-  private expiryDuration: number; // Em milissegundos
+  private expiryDuration: number;
+
 
   constructor() {
     this.sessions = new Map<string, Session>();
-    this.expiryDuration = 3600000; // 1 hora
+    this.expiryDuration = 60000;
   }
 
   createSession(user: User): string {
@@ -33,6 +34,8 @@ export class SessionManagerService {
     if (!session) {
       return null;
     }
+
+
 
     if (session.expiry < Date.now()) {
       this.sessions.delete(token);

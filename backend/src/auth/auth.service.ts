@@ -2,7 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { SessionManagerService } from './session-manager.service';
+import { SessionManagerService } from './session/session-manager.service';
+// import { SessionManagerService } from './session-manager.service';
 
 @Injectable()
 export class UserRepository {
@@ -11,10 +12,10 @@ export class UserRepository {
   async create(data: Prisma.UserCreateInput): Promise<User> {
 
     const user = this.prisma.user.create({
-        data: {
-          email: data.email,
-          password: data.password
-        }
+      data: {
+        email: data.email,
+        password: data.password
+      }
     })
     return user
   }

@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { SessionManagerService } from './session-manager.service';
+import { SessionManagerService } from './session/session-manager.service';
+// import { SessionManagerService } from './session-manager.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -25,6 +26,6 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    throw new HttpException('Session expired or invalid token. Total sessions: ' + this.sessionManager.getAllSessions(), HttpStatus.UNAUTHORIZED);
+    throw new HttpException('Not Authorized. Session expired or invalid token. Total sessions: ' + this.sessionManager.getAllSessions(), HttpStatus.UNAUTHORIZED);
   }
 }
