@@ -11,7 +11,7 @@ export default function TableItem({ item }: any ) {
           {item.emissionDate}
       </td>
       <td className="text-white px-6 py-4 px-6 py-4 whitespace-nowrap">
-          {item.assignor}
+          {item.assignorId}
       </td>
     </tr>
   )

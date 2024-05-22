@@ -13,7 +13,13 @@ export default function Header() {
   };
 
   useEffect(() =>{
-    console.log('Header useEffect', isLogged);
+    const token = localStorage.getItem('user');
+    if (token) {
+      setIsLogged(true);
+      return;
+    }
+    
+    setIsLogged(false);
   });
 
   return(

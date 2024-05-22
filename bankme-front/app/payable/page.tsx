@@ -12,7 +12,6 @@ export default function Payable() {
   const [selectedComponent, setSelectedComponent] = useState('list');
 
   const renderComponent = () => {
-    console.log('rodou')
     switch (selectedComponent) {
       case 'list':
         return <ListPayable />;

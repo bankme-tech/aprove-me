@@ -9,9 +9,9 @@ export default function Combobox({ items, onSelect }: any) {
         className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mt-2"
         onChange={(e) => onSelect(e)}
       >
-        {items.map((item: string, index: number) => (
-          <option key={index} value={item}>
-            {item}
+        {items.map((item: any, index: number) => (
+          <option key={index} value={item.name}>
+            {item.name}
           </option>
         ))}
       </select>

@@ -1,26 +1,37 @@
+import { getPayables } from "@/services/payable";
+import { useEffect, useState } from "react";
 import TableItem from "./components/TableItem";
 
 export default function ListPayable() {
-  const teste = [
-    {
-      "id": "258f1130-c287-4c6e-a737-ef9d64001da9",
-      "value": 1893.69,
-      "emissionDate": "2024-01-03",
-      "assignor": "bb739dd8-a428-4b04-be46-377d5a690f5f"
-    },
-    {
-      "id": "a7e10e77-8c49-4a91-87d0-dc5eef100552",
-      "value": 1527.67,
-      "emissionDate": "2023-12-18",
-      "assignor": "d485aa40-07b6-40bf-b423-50072a2b4f51"
-    },
-    {
-      "id": "08c7c5cd-8aa8-46e6-ad1c-22392662fcf5",
-      "value": 2535.17,
-      "emissionDate": "2023-10-18",
-      "assignor": "c4ddbf0f-769f-475d-b80a-e226d96db6ad"
+  const [payables, setPayables] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+useEffect(() => {
+  const fetchData = async () => {
+    const token = localStorage.getItem('user');
+    if (!token) {
+      setIsError(true);
+      setErrorMessage('Invalid token JWT!');
+
+      return;
     }
-  ];
+
+    const request = await getPayables(JSON.parse(token));
+    if (request.status === 200) {
+      setPayables(request.data);
+      return;
+    }
+
+    setIsError(true);
+
+    if ('message' in request) {
+      setErrorMessage(request.message);
+    }
+  }
+
+  fetchData();
+});
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
@@ -42,10 +53,18 @@ export default function ListPayable() {
           </tr>
         </thead>
         <tbody>
-            {teste.map((item) => {
+            {payables.map((item) => {
               return <TableItem item={item} />
             })}
         </tbody>
+        {isError && <div role="alert">
+            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
+              Erro!
+            </div>
+            <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
+              <p>{errorMessage}</p>
+            </div>
+          </div>}
       </table>
     </div>
   );
