@@ -1,7 +1,8 @@
-import { Body, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, UseGuards, UsePipes } from "@nestjs/common";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
 import { z } from "zod";
 import { CreateAssignorUseCase } from "src/domain/operations/application/use-cases/assignors/use-cases/create-assignor";
+import { JwtAuthGuard } from "src/infra/auth/jwt-auth.guard";
 
 const createAssignorBodySchema = z.object({
   document: z.string().max(30).min(1),
@@ -21,6 +22,7 @@ export class CreateAssignorController {
   @Post()
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createAssignorBodySchema))
+  @UseGuards(JwtAuthGuard)
   async handle(@Body() body: CreateAssignorBodySchema) {
     const assignor = body
 

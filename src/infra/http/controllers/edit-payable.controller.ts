@@ -1,6 +1,7 @@
-import { Body, Controller, HttpCode, Param, Patch } from "@nestjs/common";
+import { Body, Controller, HttpCode, Param, Patch, UseGuards } from "@nestjs/common";
 import { z } from "zod";
 import { EditReceivableUseCase } from "src/domain/operations/application/use-cases/recivables/use-cases/edit-receivable";
+import { JwtAuthGuard } from "src/infra/auth/jwt-auth.guard";
 
 const editReceivableParamsSchema = z.string().uuid()
 
@@ -19,6 +20,7 @@ export class EditRecevableController {
 
   @Patch('/:id')
   @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
   async handle(@Param('id') id: EditReceivableParamSchema, @Body() body: EditReceivableBodySchema) {
     const { value } = body;
 

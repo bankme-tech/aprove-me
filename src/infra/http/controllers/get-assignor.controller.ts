@@ -1,6 +1,7 @@
-import { Controller, Get, HttpCode, Param } from "@nestjs/common";
+import { Controller, Get, HttpCode, Param, UseGuards } from "@nestjs/common";
 import { z } from "zod";
 import { GetAssignorUseCase } from "src/domain/operations/application/use-cases/assignors/use-cases/get-assignor";
+import { JwtAuthGuard } from "src/infra/auth/jwt-auth.guard";
 
 const getAssignorBodySchema = z.string().uuid()
 
@@ -14,6 +15,7 @@ export class GetAssignorController {
 
   @Get('/:id')
   @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
   async handle(@Param('id') id: GetAssignorBodySchema) {
     const { value: receivable, isLeft } = await this.getReceivable.execute({
       assignorId: id

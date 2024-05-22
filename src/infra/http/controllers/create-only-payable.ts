@@ -1,7 +1,8 @@
-import { Body, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, UseGuards, UsePipes } from "@nestjs/common";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
 import { z } from "zod";
 import { CreateReceivableUseCase } from "src/domain/operations/application/use-cases/recivables/use-cases/create-receivable";
+import { JwtAuthGuard } from "src/infra/auth/jwt-auth.guard";
 
 const createPayableBodySchema = z.object({
   assignorId: z.string().uuid(),
@@ -20,6 +21,7 @@ export class CreateOnlyPayableController {
   @Post('/independent')
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createPayableBodySchema))
+  @UseGuards(JwtAuthGuard)
   async handle(@Body() body: CreatePayableBodySchema) {
     const receivable = body
 

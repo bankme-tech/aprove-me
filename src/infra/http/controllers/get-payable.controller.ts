@@ -1,6 +1,7 @@
-import { Controller, Get, HttpCode, Param } from "@nestjs/common";
+import { Controller, Get, HttpCode, Param, UseGuards } from "@nestjs/common";
 import { z } from "zod";
 import { GetReceivableUseCase } from "src/domain/operations/application/use-cases/recivables/use-cases/get-receivable";
+import { JwtAuthGuard } from "src/infra/auth/jwt-auth.guard";
 
 const getPayableBodySchema = z.string().uuid()
 
@@ -14,6 +15,7 @@ export class GetPayableController {
 
   @Get('/:id')
   @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
   async handle(@Param('id') id: GetPayableBodySchema) {
     const { value: receivable, isLeft } = await this.getReceivable.execute({
       receivableId: id

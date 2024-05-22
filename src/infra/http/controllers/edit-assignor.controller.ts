@@ -1,6 +1,7 @@
-import { Body, Controller, HttpCode, Param, Patch } from "@nestjs/common";
+import { Body, Controller, HttpCode, Param, Patch, UseGuards } from "@nestjs/common";
 import { z } from "zod";
 import { EditAssignorUseCase } from "src/domain/operations/application/use-cases/assignors/use-cases/edit-assignor";
+import { JwtAuthGuard } from "src/infra/auth/jwt-auth.guard";
 
 const editAssignorParamsSchema = z.string().uuid()
 
@@ -22,6 +23,7 @@ export class EditAssignorController {
 
   @Patch('/:id')
   @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
   async handle(@Param('id') id: EditAssignorParamSchema, @Body() body: EditAssignorBodySchema) {
     const { document, email, phone, name } = body;
 
