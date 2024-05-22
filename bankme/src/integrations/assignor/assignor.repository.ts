@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import Assignor from '../entity/Assignor';
-import { IAssignor } from '../types/IAssignor';
 
 @Injectable()
 export default class AssignorRepository {
   constructor(private prismaService: PrismaService) {}
 
-  async createAssignorRegister(assignor: Assignor): Promise<IAssignor> {
+  async createAssignorRegister(assignor: Assignor): Promise<Assignor> {
     const assignorFromDB = await this.findAssignorByDocument(assignor.document);
 
     if (assignorFromDB) {
@@ -18,10 +17,16 @@ export default class AssignorRepository {
       data: assignor.toCreate(),
     });
 
-    return createdAssignor;
+    return new Assignor(
+      createdAssignor.id,
+      createdAssignor.document,
+      createdAssignor.name,
+      createdAssignor.email,
+      createdAssignor.phone,
+    );
   }
 
-  async findAssignorByDocument(document: string): Promise<IAssignor | null> {
+  async findAssignorByDocument(document: string): Promise<Assignor | null> {
     const assignor = await this.prismaService.assignor.findFirst({
       where: {
         document,
@@ -41,7 +46,7 @@ export default class AssignorRepository {
     );
   }
 
-  async findAssignorById(id: string): Promise<IAssignor | null> {
+  async findAssignorById(id: string): Promise<Assignor | null> {
     const assignor = await this.prismaService.assignor.findUnique({
       where: {
         id,
@@ -64,7 +69,7 @@ export default class AssignorRepository {
   async updateAssignorById(
     id: string,
     assignor: Assignor,
-  ): Promise<IAssignor | null> {
+  ): Promise<Assignor | null> {
     const assignorFromDB = await this.findAssignorById(id);
 
     if (!assignorFromDB) {
@@ -87,7 +92,7 @@ export default class AssignorRepository {
     );
   }
 
-  async deleteAssignorById(id: string): Promise<IAssignor | null> {
+  async deleteAssignorById(id: string): Promise<Assignor | null> {
     const assignorFromDB = await this.findAssignorById(id);
 
     if (!assignorFromDB) {
