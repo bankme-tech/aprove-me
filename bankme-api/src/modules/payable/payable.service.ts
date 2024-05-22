@@ -31,6 +31,7 @@ export class PayableService {
 
   async edit(id: string, data: EditPayableDto) {
     try {
+      await this.findById(id);
       const updatedPayable = await prisma.payable.update({
         where: { id },
         data
@@ -45,6 +46,7 @@ export class PayableService {
 
   async delete(id: string) {
     try {
+      await this.findById(id);
       const deletedPayable = await prisma.payable.delete({
         where: { id }
       });

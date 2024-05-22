@@ -31,6 +31,7 @@ export class AssignorService {
 
   async edit(id: number, data: EditAssignorDto) {
     try {
+      await this.findById(id);
       const updatedAssignor = await prisma.assignor.update({
         where: { id },
         data
@@ -45,6 +46,7 @@ export class AssignorService {
 
   async delete(id: number) {
     try {
+      await this.findById(id);
       const deletedAssignor = await prisma.assignor.delete({
         where: { id }
       });
