@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { handleChange } from "./utils/utils";
 import { useRouter } from "next/navigation";
 
-interface Assignor {
+export interface Assignor {
   id: string;
   document: string;
   email: string;
@@ -14,7 +14,7 @@ interface Assignor {
   name: string;
 }
 
-interface Payable {
+export interface Payable {
   id: string;
   value: number;
   emissionDate: string;
@@ -38,7 +38,7 @@ export default function Home() {
   useEffect(() => {
     const getAssignors = async () => {
       try {
-        api.defaults.headers['authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0Yjc1MzRlMi02NzUxLTRkNGUtYjIwNy03NWJlZDllYTQ2NTIiLCJlbWFpbCI6InRlc3RlQGdhaWwuY29tIiwiaWF0IjoxNzE2NDAxNTc5LCJleHAiOjE3MTY0MDUxNzl9.iPPqAYQGuwvtjSBMckFa90voEfqubM503X-2v3YCJsM'
+        api.defaults.headers['authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0Yjc1MzRlMi02NzUxLTRkNGUtYjIwNy03NWJlZDllYTQ2NTIiLCJlbWFpbCI6InRlc3RlQGdhaWwuY29tIiwiaWF0IjoxNzE2NDEyNTk0LCJleHAiOjE3MTY0MTYxOTR9.FfseyiazPepuSAgNgO07xRMV4kMovQWfXbkh_viwiBs'
         const { data } = await api.get('integrations/assignor');
         setAssignors(data)
       } catch (error) {
