@@ -10,7 +10,8 @@
     "audit": "npm audit --audit-level=moderate",
     "test": "jest --passWithNoTests --runInBand --no-cache",
     "test:unit": "npm test -- --watchAll -c jest-unit-config.ts",
-    "test:ci": "npm run audit && ./node_modules/.bin/jest --runInBand --coverage --verbose"
+    "test:ci": "npm run audit && ./node_modules/.bin/jest --runInBand --coverage --verbose",
+    "prisma:gen": "npx prisma generate --schema=./src/infra/repository/schema.prisma"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
   },
   "dependencies": {
     "@brazilian-utils/brazilian-utils": "^1.0.0-rc.12",
+    "@prisma/client": "^5.14.0",
     "lodash": "^4.17.21"
   }
 }
