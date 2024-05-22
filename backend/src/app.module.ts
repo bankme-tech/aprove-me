@@ -3,6 +3,7 @@ import { AssignorModule } from './modules/assignor/assignor.module';
 import { PayableModule } from './modules/payable/payable.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BullModule } from '@nestjs/bull';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { BullModule } from '@nestjs/bull';
         password: process.env.REDIS_PASSWORD,
       },
     }),
+    EventEmitterModule.forRoot({ global: true }),
   ],
   providers: [],
 })
