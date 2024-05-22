@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UsePipes } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
 import { z } from "zod";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
 import { AuthenticateAccountUseCase } from "src/domain/operations/application/use-cases/authentication/use-cases/authenticate";
@@ -17,6 +17,7 @@ export class AuthenticateController {
   ) {}
 
   @Post()
+  @HttpCode(200)
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
   async handle(@Body() body: AuthenticateBodySchema) {
     const { login, password } = body
@@ -28,7 +29,7 @@ export class AuthenticateController {
 
     if (isLeft()) {
       return {
-        message: 'failed to authenticate account'
+        message: 'Failed to authenticate account'
       }
     }
 
