@@ -9,5 +9,5 @@ export class UpdatePayableDto extends PartialType(CreatePayableDto) {
 
   @IsNotEmpty()
   @IsString()
-  assignorId: string;
+  assignor: string;
 }

@@ -31,16 +31,16 @@ export class PayableController {
 
   @Get('payable/:id')
   findOne(@Param('id') id: string) {
-    return this.payableService.findOne(+id);
+    return this.payableService.findOne(id);
   }
 
   @Patch('payable/:id')
   update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
-    return this.payableService.update(+id, updatePayableDto);
+    return this.payableService.update(id, updatePayableDto);
   }
 
   @Delete('payable/:id')
   remove(@Param('id') id: string) {
-    return this.payableService.remove(+id);
+    return this.payableService.remove(id);
   }
 }
