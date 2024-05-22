@@ -17,6 +17,8 @@ describe('IntegrationsService', () => {
   let prismaMock: DeepMockProxy<PrismaClient>;
   let payables: CreatePayableDto[];
   let assignors: CreateAssignorDto[];
+  let updatePayableDto: UpdatePayableDto;
+  let updateAssignorDto: UpdateAssignorDto;
 
   beforeEach(async () => {
     payables = Array.from({ length: 10 }, (_, i) => ({
@@ -26,6 +28,10 @@ describe('IntegrationsService', () => {
       assignor: randomUUID(),
     }));
 
+    const { ...updatePayableDtoo } = payables[0];
+    delete updatePayableDtoo.id;
+    updatePayableDto = updatePayableDtoo as UpdatePayableDto;
+
     assignors = Array.from({ length: 10 }, (_, i) => ({
       id: randomUUID(),
       document: `${i + 1}2345678901`,
@@ -33,6 +39,12 @@ describe('IntegrationsService', () => {
       phone: `${i + 1}234567890`,
       name: `Assignor ${i + 1}`,
     }));
+
+    const { ...updateAssignorDtoo } = assignors[0];
+
+    delete updateAssignorDtoo.id;
+
+    updateAssignorDto = updateAssignorDtoo as UpdateAssignorDto;
 
     prismaMock = mockDeep<PrismaClient>();
     const module: TestingModule = await Test.createTestingModule({
@@ -92,12 +104,9 @@ describe('IntegrationsService', () => {
 
     it('should throw NotFoundException if payable not found', async () => {
       prismaMock.payable.update.mockRejectedValue({ code: 'P2025' });
-      const updateDto: UpdatePayableDto = {
-        ...payables[0],
-      };
 
       await expect(
-        service.updatePayable(randomUUID(), updateDto),
+        service.updatePayable(randomUUID(), updatePayableDto),
       ).rejects.toThrow(NotFoundException);
     });
 
@@ -146,15 +155,18 @@ describe('IntegrationsService', () => {
 
   describe('updateAssignor', () => {
     it('should update an assignor', async () => {
-      const updateDto: UpdateAssignorDto = {
-        ...assignors[0],
-      };
-
       prismaMock.assignor.findUnique.mockResolvedValue(assignors[0]);
 
-      prismaMock.assignor.update.mockResolvedValue(updateDto);
+      const data = {
+        ...updateAssignorDto,
+        id: 'uuid',
+      };
 
-      expect(await service.updateAssignor('uuid', updateDto)).toBe(updateDto);
+      prismaMock.assignor.update.mockResolvedValue(data as any);
+
+      expect(await service.updateAssignor('uuid', updateAssignorDto)).toBe(
+        data,
+      );
     });
 
     it('should throw NotFoundException if assignor not found', async () => {

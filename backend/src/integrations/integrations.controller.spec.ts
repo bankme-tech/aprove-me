@@ -81,16 +81,20 @@ describe('IntegrationsController', () => {
   describe('updatePayable', () => {
     it('should update a payable', async () => {
       const updatePayableDto: UpdatePayableDto = {
-        id: randomUUID(),
         value: 200,
         emissionDate: new Date(),
         assignor: randomUUID(),
       };
-      service.updatePayable.mockResolvedValue(updatePayableDto);
 
-      expect(
-        await controller.updatePayable(updatePayableDto, updatePayableDto.id),
-      ).toBe(updatePayableDto);
+      const data = {
+        ...updatePayableDto,
+        id: randomUUID(),
+      };
+      service.updatePayable.mockResolvedValue(data);
+
+      expect(await controller.updatePayable(updatePayableDto, data.id)).toBe(
+        data,
+      );
     });
 
     it('should throw NotFoundException if payable does not exist', async () => {
@@ -98,7 +102,6 @@ describe('IntegrationsController', () => {
         new NotFoundException('Payable not found'),
       );
       const updatePayableDto: UpdatePayableDto = {
-        id: randomUUID(),
         value: 200,
         emissionDate: new Date(),
         assignor: randomUUID(),
@@ -161,20 +164,22 @@ describe('IntegrationsController', () => {
   describe('updateAssignor', () => {
     it('should update an assignor', async () => {
       const updateAssignorDto: UpdateAssignorDto = {
-        id: randomUUID(),
         document: '12345678901',
         email: 'updated@example.com',
         phone: '1234567890',
         name: 'Updated Assignor Name',
       };
-      service.updateAssignor.mockResolvedValue(updateAssignorDto);
+      const randomId = randomUUID();
+      const data = {
+        ...updateAssignorDto,
+        id: randomId,
+      };
 
-      expect(
-        await controller.updateAssignor(
-          updateAssignorDto.id,
-          updateAssignorDto,
-        ),
-      ).toBe(updateAssignorDto);
+      service.updateAssignor.mockResolvedValue(data);
+
+      expect(await controller.updateAssignor(data.id, updateAssignorDto)).toBe(
+        data,
+      );
     });
 
     it('should throw NotFoundException if assignor does not exist', async () => {
@@ -182,7 +187,6 @@ describe('IntegrationsController', () => {
         new NotFoundException('Assignor not found'),
       );
       const updateAssignorDto: UpdateAssignorDto = {
-        id: randomUUID(),
         document: '12345678901',
         email: 'updated@example.com',
         phone: '1234567890',

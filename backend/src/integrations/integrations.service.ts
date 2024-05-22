@@ -19,19 +19,20 @@ export class IntegrationsService {
   }
 
   async createPayable(createDto: CreatePayableDto) {
-    await validateDto(createDto, CreatePayableDto);
+    const res = await validateDto(createDto, CreatePayableDto);
 
     return this.prisma.payable.create({
-      data: createDto,
+      data: res,
     });
   }
 
   async updatePayable(id: string, updateDto: UpdatePayableDto) {
-    await validateDto(updateDto, UpdatePayableDto);
+    const result = await validateDto(updateDto, UpdatePayableDto);
+
     try {
       return await this.prisma.payable.update({
         where: { id },
-        data: updateDto,
+        data: result,
       });
     } catch (error) {
       if (error?.code === 'P2025') {
@@ -52,9 +53,9 @@ export class IntegrationsService {
   }
 
   async createAssignor(assignorDto: CreateAssignorDto) {
-    await validateDto(assignorDto, CreateAssignorDto);
+    const res = await validateDto(assignorDto, CreateAssignorDto);
     return this.prisma.assignor.create({
-      data: assignorDto,
+      data: res,
     });
   }
 
@@ -65,7 +66,7 @@ export class IntegrationsService {
   }
 
   async updateAssignor(id: string, updateDto: UpdateAssignorDto) {
-    await validateDto(updateDto, UpdateAssignorDto);
+    const res = await validateDto(updateDto, UpdateAssignorDto);
 
     const assignor = await this.getAssignorById(id);
 
@@ -73,7 +74,7 @@ export class IntegrationsService {
 
     return await this.prisma.assignor.update({
       where: { id },
-      data: updateDto,
+      data: res,
     });
   }
 
