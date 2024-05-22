@@ -13,7 +13,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "DEBUG=eslint:cli-engine eslint src",
-    "test": "jest",
+    "test": "jest src",
     "migrate:dev": "prisma migrate dev",
     "db:push": "prisma db push"
   },
