@@ -6,7 +6,7 @@ import { signIn } from "@/services/auth";
 interface ContextProps {
   token: string | null;
   isAuthenticated: boolean;
-  login: (username: string, password: string) => void;
+  login: (username: string, password: string) => Promise<void>
   logout: () => void;
 }
 

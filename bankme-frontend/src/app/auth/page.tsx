@@ -38,9 +38,9 @@ export default function page() {
 
   async function onSubmit(input: CredentialsSchemaType) {
     try {
-      login(input.login, input.password);
+      await login(input.login, input.password);
     } catch (error) {
-      toast("invalid credentials");
+      toast("invalid credentials", { duration: 3000 });
     }
   }
 
