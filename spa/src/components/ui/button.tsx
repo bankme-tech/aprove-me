@@ -2,12 +2,15 @@ interface Props {
   children: React.ReactNode;
   type?: "submit" | "reset" | "button" | undefined
   onClick?: () => void;
+  className?: string
 }
 
 export default function Button(props: Props) {
   return (
     <button
-    className={'w-full py-2 px-3 rounded-2xl font-bold text-text hover:bg-opacity-90 duration-200 ease-out flex justify-center items-center gap-1 bg-themeColor text-HeaderBgColor'}
+      className={'w-full py-2 px-3 rounded-2xl font-bold text-text hover:bg-opacity-90 duration-200 ease-out flex justify-center items-center gap-1 bg-themeColor text-HeaderBgColor ' +
+        props.className
+      }
       type={props.type}
       onClick={props.onClick}
     >

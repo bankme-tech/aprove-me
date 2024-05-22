@@ -19,9 +19,7 @@ export default function Combobox(props: Props) {
       <select
         name="combobox"
         id="combobox"
-        className={"min-w-64 w-full py-2 px-3 placeholder:gray-400 rounded-2xl bg-HeaderBgColor outline-none border-2 border-gray-400 focus:border-themeColor focus:border-opacity-70 " +
-          (props.disabled ? 'opacity-20' : '')
-        }
+        className={"min-w-64 w-full py-2 px-3 placeholder:gray-400 rounded-2xl bg-HeaderBgColor outline-none border-2 border-gray-400 focus:border-themeColor focus:border-opacity-70 disabled:opacity-10"}
         {...props.register}
         {...props}
         disabled={props.disabled}
