@@ -28,11 +28,7 @@ export const AssignorCombobox = (props: AssignorComboboxProps) => {
   const assignors = useAssignorStore();
 
   useEffect(() => {
-    async function fetchAllAssignors() {
-      assignors.getAllAssignors();
-    }
-
-    fetchAllAssignors();
+    assignors.getAllAssignors();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -48,8 +44,8 @@ export const AssignorCombobox = (props: AssignorComboboxProps) => {
         >
           {props.value
             ? assignors.assignors.find(
-                (assignor) => assignor.props.name === props.value,
-              )?.props.name
+              (assignor) => assignor.props.name === props.value,
+            )?.props.name
             : "Procure por um cedente..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>

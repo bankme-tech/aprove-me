@@ -18,11 +18,7 @@ export const PayablesTable = () => {
   const payable = usePayableStore();
 
   useEffect(() => {
-    async function handleFindPayables() {
-      await payable.findAllPayables();
-    }
-
-    handleFindPayables();
+    payable.findAllPayables();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payable.skip, payable.take]);
 

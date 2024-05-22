@@ -34,11 +34,7 @@ export function DetailsPayableDialog({ payable }: DetailsPayableData) {
   const assignor = useAssignorStore();
 
   useEffect(() => {
-    async function handleFindAssignor() {
-      assignor.findById(payable.props.assignorId);
-    }
-
-    handleFindAssignor();
+    assignor.findById(payable.props.assignorId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
