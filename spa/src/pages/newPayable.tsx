@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import FormCard from "../components/formCard";
 import Title from "../components/ui/title";
 import Button from "../components/ui/button";
-import { AssignorSchema, AssignorType, PayableSchema, assignorSchema, payableSchema } from "../types";
+import { AssignorSchema, AssignorType, PayableSchema, PayableType, assignorSchema, payableSchema } from "../types";
 import { getAssignors } from "../services/assignor";
 import { createPayable } from "../services/payable";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,7 @@ export default function NewPayable() {
     formState: {
       errors: payableErrors
     },
+    setValue
   } = useForm<PayableSchema>({
     resolver: zodResolver(payableSchema),
   })
@@ -38,7 +39,6 @@ export default function NewPayable() {
   } = useForm<AssignorSchema>({
     resolver: zodResolver(assignorSchema),
   })
-
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const payableData = payableGetValues();
@@ -64,7 +64,7 @@ export default function NewPayable() {
     const payableData = payableGetValues();
     const assignorData = assignorGetValues();
     try {
-      const data = await createPayable({
+      const data: PayableType = await createPayable({
         receivableData: {
           value: Number(payableData.value),
           emissionDate: String(payableData.emissionDate),
@@ -72,7 +72,7 @@ export default function NewPayable() {
         },
         assignorData
       })
-      navigate('/payables/view/', { state: { res: data } })
+      navigate(`/payable/view/${data.id}`)
     } catch (error) {
       console.log(error)
       payableSetError("root", { message: 'Erro ao cadastrar pagável' })
@@ -132,6 +132,7 @@ export default function NewPayable() {
           </div>
           <Button type="submit" >Cadastrar</Button>
         </form>
+
       </FormCard>
     </div>
   )
