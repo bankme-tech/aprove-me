@@ -1,13 +1,13 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 export class CreateAssignorDto {
   @IsString()
-  @IsNotEmpty()
   @MaxLength(30)
+  @IsNotEmpty()
   document: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsEmail()
   @MaxLength(140)
   email: string;
 

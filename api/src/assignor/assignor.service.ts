@@ -1,26 +1,60 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Body, Injectable } from '@nestjs/common';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { plainToClass } from 'class-transformer';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class AssignorService {
-  create(createAssignorDto: CreateAssignorDto) {
-    return 'This action adds a new assignor';
+  constructor(private readonly prisma: PrismaService) {}
+  async create(@Body() createAssignorDto: CreateAssignorDto) {
+    const assignor = plainToClass(CreateAssignorDto, createAssignorDto);
+
+    const errors = await validate(assignor);
+    if (errors.length > 0) {
+      throw new BadRequestException(
+        errors.map(
+          (err) =>
+            `${err.property} has wrong value ${err.value}, ${Object.values(err.constraints).join(', ')}`,
+        ),
+      );
+    }
+
+    const { document } = createAssignorDto;
+    const assignorExists = await this.prisma.assignor.findUnique({
+      where: { document },
+    });
+
+    if (assignorExists) {
+      throw new BadRequestException('Assignor already exists');
+    }
+
+    return this.prisma.assignor.create({
+      data: createAssignorDto,
+    });
   }
 
   findAll() {
-    return `This action returns all assignor`;
+    return this.prisma.assignor.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} assignor`;
+  findOne(id: string) {
+    return this.prisma.assignor.findUniqueOrThrow({
+      where: { id },
+    });
   }
 
-  update(id: number, updateAssignorDto: UpdateAssignorDto) {
-    return `This action updates a #${id} assignor`;
+  update(id: string, updateAssignorDto: UpdateAssignorDto) {
+    return this.prisma.assignor.update({
+      where: { id },
+      data: updateAssignorDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} assignor`;
+  remove(id: string) {
+    return this.prisma.assignor.delete({
+      where: { id },
+    });
   }
 }
