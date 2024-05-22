@@ -10,14 +10,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Assignor {
-  id       String @id
+  id       String  @id
   document String
   email    String
   phone    String
   name     String
+  User     User?   @relation(fields: [userId], references: [username])
+  userId   String? @unique
 }
 
 model Payable {
@@ -27,3 +27,12 @@ model Payable {
   assignor     String
 }
 
+model User {
+  username   String    @id @default(uuid())
+  password   String
+  role       String
+  assignor   Assignor?
+  assignorId String?   @unique
+
+  @@unique([username])
+}
