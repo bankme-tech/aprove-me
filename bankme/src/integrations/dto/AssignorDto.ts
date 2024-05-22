@@ -1,19 +1,27 @@
 import Assignor from '../entity/Assignor';
-import { IAssignor } from '../types/IAssignor';
 
-export default class AssignorDto extends Assignor {
-  toEntity(): Assignor {
-    const payableEntity = new Assignor();
+export default class AssignorDto {
+  id: string;
+  document: string;
+  email: string;
+  phone: string;
+  name: string;
 
-    payableEntity.document = this.document;
-    payableEntity.email = this.email;
-    payableEntity.name = this.name;
-    payableEntity.phone = this.phone;
-
-    return payableEntity;
+  constructor(
+    id?: string,
+    document?: string,
+    email?: string,
+    phone?: string,
+    name?: string,
+  ) {
+    this.id = id;
+    this.document = document;
+    this.email = email;
+    this.phone = phone;
+    this.name = name;
   }
 
-  static fromEntity(assignor: IAssignor): AssignorDto {
+  static fromEntity(assignor: Assignor): AssignorDto {
     const assignorDto = new AssignorDto();
 
     assignorDto.id = assignor.id;
@@ -25,9 +33,8 @@ export default class AssignorDto extends Assignor {
     return assignorDto;
   }
 
-  toJSON() {
+  public toJSON() {
     return {
-      id: this.id,
       document: this.document,
       email: this.email,
       phone: this.phone,
