@@ -14,31 +14,32 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreatePayableFormData, createPayableFormSchema } from "@/schemas/payable-schemas";
 import { createPayable } from "@/actions/payable-actions";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import { CreateAssignorFormData, createAssignorFormSchema } from "@/schemas/assignor-schemas";
+import { createAssignor } from "@/actions/assignor-actions";
 
 
 
-export default function CreatePayableForm() {
+export default function CreateAssignorForm() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [fetching, setFetching] = useState<boolean>(false);
-
-    const [data, setData] = useState<Assignor[]>([])
 
     const router = useRouter();
     const ref = useRef<HTMLFormElement>(null);
 
 
-    const form = useForm<CreatePayableFormData>({
-      resolver: zodResolver(createPayableFormSchema),
+    const form = useForm<CreateAssignorFormData>({
+      resolver: zodResolver(createAssignorFormSchema),
       defaultValues: {
-        value: 0,
-        assignorId: "",
+        document: "",
+        email: "",
+        name: "",
+        phone: "",
       },
     });
 
-    async function handleSubmit(formData: CreatePayableFormData) {
+    async function handleSubmit(formData: CreateAssignorFormData) {
       setIsLoading(true);
       try {
-        await createPayable(formData);
+        await createAssignor(formData);
         router.refresh();
       } catch (error) {
         
@@ -49,17 +50,6 @@ export default function CreatePayableForm() {
     
     }
 
-    useEffect(() => {
-
-        const fetchAssignors = async () => {
-          setFetching(true)
-          const { data } = await api.get<Assignor[]>('assignor')
-          setData(data)
-          setFetching(false)
-        }
-    
-        fetchAssignors()
-      }, [])
 
   return (
     <Form {...form}>
@@ -70,46 +60,69 @@ export default function CreatePayableForm() {
     >
       <FormField
         control={form.control}
-        name="value"
+        name="name"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-right">Value</FormLabel>
+            <FormLabel className="text-right">Name</FormLabel>
             <FormControl>
               <Input
-                id="value"
-                placeholder="120.00"
+                id="name"
                 {...field}
               />
             </FormControl>
           </FormItem>
         )}
       />
-      <FormField
+
+        <FormField
             control={form.control}
-            name="assignorId"
+            name="document"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-right">Assignor</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormItem>
+                <FormLabel className="text-right">Document</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select an assignor" />
-                  </SelectTrigger>
+                <Input
+                    id="document"
+                    {...field}
+                />
                 </FormControl>
-                  <SelectContent>
-                    <SelectGroup>
-                        {fetching ? <SelectItem value="loading"><Loading/></SelectItem> :
-                        data?.map((assignor: Assignor) => (
-                            <SelectItem key={assignor.id} value={assignor.id}>
-                            {assignor.name}
-                            </SelectItem>
-                        ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormItem>
+            </FormItem>
             )}
-          />
+        />
+
+
+        <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+            <FormItem>
+                <FormLabel className="text-right">Email</FormLabel>
+                <FormControl>
+                <Input
+                    id="email"
+                    {...field}
+                />
+                </FormControl>
+            </FormItem>
+            )}
+        />
+
+        <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+            <FormItem>
+                <FormLabel className="text-right">Phone</FormLabel>
+                <FormControl>
+                <Input
+                    id="phone"
+                    {...field}
+                />
+                </FormControl>
+            </FormItem>
+            )}
+        />
+      
 
       <DialogFooter>
         <DialogClose asChild>
