@@ -1,10 +1,6 @@
 import { Button } from "../atoms/Button";
 import { FormField } from "../molecules/FormField";
 
-type FormField = {
-  name: string;
-};
-
 // TODO: To media lees than tablet the component has different
 
 export const FormLogin = () => {
