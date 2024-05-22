@@ -10,9 +10,9 @@ import type { Payable } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { FindPayableByIdPipe } from "../find-by-id/find-payable-by-id.pipe";
+import { PayableDTO } from "../payable.dto";
 import { UpdatePayableByIdInputDTO } from "./update-payable-by-id-input.dto";
 import { UpdatePayableByIdInputPipe } from "./update-payable-by-id-input.pipe";
-import { UpdatePayableByIdOutputDTO } from "./update-payable-by-id-output.dto";
 
 @Controller()
 export class UpdatePayableByIdController {
@@ -44,11 +44,11 @@ export class UpdatePayableByIdController {
       },
     });
 
-    return new UpdatePayableByIdOutputDTO(
-      payable.id,
-      input.value,
-      input.emissionDate,
-      input.assignorId,
-    );
+    return new PayableDTO({
+      id: payable.id,
+      value: input.value,
+      emissionDate: input.emissionDate,
+      assignorId: input.assignorId,
+    });
   }
 }

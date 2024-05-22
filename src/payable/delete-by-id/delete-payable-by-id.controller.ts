@@ -3,7 +3,7 @@ import type { Payable } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { FindPayableByIdPipe } from "../find-by-id/find-payable-by-id.pipe";
-import { DeletePayableByIdOutputDTO } from "./delete-payable-by-id-output.dto";
+import { PayableDTO } from "../payable.dto";
 
 @Controller()
 export class DeletePayableByIdController {
@@ -14,12 +14,6 @@ export class DeletePayableByIdController {
     @Param("id", ParseUUIDPipe, FindPayableByIdPipe) payable: Payable,
   ) {
     await this.prisma.payable.delete({ where: { id: payable.id } });
-
-    return new DeletePayableByIdOutputDTO(
-      payable.id,
-      payable.value,
-      payable.emissionDate,
-      payable.assignorId,
-    );
+    return new PayableDTO(payable);
   }
 }
