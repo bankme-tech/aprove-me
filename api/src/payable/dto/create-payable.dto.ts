@@ -18,4 +18,5 @@ export class CreatePayableDto {
       })
       @Type(() => Date)
       emissionDate: Date;
+
     }    
