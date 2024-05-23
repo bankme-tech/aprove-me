@@ -11,10 +11,23 @@ services:
       - .:/app
     environment:
       NODE_ENV: "production"
-
+      RABBITMQ_URI: "amqp://rabbitmq"
+      EMAIL_HOST: "mailhog"
+      EMAIL_PORT: 1025
+      EMAIL_USER: ""
+      EMAIL_PASS: ""
+    depends_on:
+      - rabbitmq
+      - mailhog
 
   rabbitmq:
     image: "rabbitmq:3-management"
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
