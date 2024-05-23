@@ -25,8 +25,12 @@ export class AssignorService {
     return this.prismaService.assignor.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} assignor`;
+  async findOne(id: string) {
+    return this.prismaService.assignor.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
   update(id: number, updateAssignorDto: UpdateAssignorDto) {

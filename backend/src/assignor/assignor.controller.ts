@@ -1,11 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { AssignorService } from './assignor.service';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 
 @Controller('assignor')
 export class AssignorController {
-  constructor(private readonly assignorService: AssignorService) {}
+  constructor(private readonly assignorService: AssignorService) { }
 
   @Post()
   create(@Body() createAssignorDto: CreateAssignorDto) {
@@ -18,12 +27,17 @@ export class AssignorController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.assignorService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const result = await this.assignorService.findOne(id);
+    if (!result) throw new NotFoundException();
+    return result;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAssignorDto: UpdateAssignorDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAssignorDto: UpdateAssignorDto,
+  ) {
     return this.assignorService.update(+id, updateAssignorDto);
   }
 
