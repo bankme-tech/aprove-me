@@ -8,6 +8,8 @@ import { AssignorMapper } from './mappers/assignor.mapper.interface';
 import { PrismaAssignorMapper } from './mappers/prisma-assignor.mapper';
 import { IFindAllAssignorsUseCase } from './usecases/find-all-assignors.usecase.interface';
 import { FindAllAssignorsUseCase } from './usecases/find-all-assignors.usecase';
+import { IFindAssignorUseCase } from './usecases/find-assignor.usecase.interface';
+import { FindAssignorUseCase } from './usecases/find-assignor.usecase';
 
 @Module({
   controllers: [AssignorController],
@@ -23,6 +25,10 @@ import { FindAllAssignorsUseCase } from './usecases/find-all-assignors.usecase';
     {
       provide: IFindAllAssignorsUseCase,
       useClass: FindAllAssignorsUseCase,
+    },
+    {
+      provide: IFindAssignorUseCase,
+      useClass: FindAssignorUseCase,
     },
     {
       provide: IAssignorRepository,
