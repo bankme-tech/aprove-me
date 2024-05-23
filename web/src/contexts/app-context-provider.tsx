@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const AppContextProvider: React.FC<Props> = ({ children }) => {
-  const [isLeftBarOpen, setIsLeftBarOpen] = React.useState<boolean>(false);
+  const [isLeftBarOpen, setIsLeftBarOpen] = React.useState<boolean>(true);
 
   const value = {
     isLeftBarOpen,

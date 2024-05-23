@@ -7,6 +7,13 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  theme: {
+    extend: {
+      minHeight: {
+        content: 'calc(100vh - 3rem)',
+      },
+    },
+  },
   daisyui: {
     themes: [
       {

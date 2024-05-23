@@ -13,7 +13,9 @@ export const ContentWrapper: React.FC<Props> = ({ children }) => {
   const { isLeftBarOpen } = useAppContext();
 
   return (
-    <div className={cn(isLeftBarOpen ? 'pl-64' : 'pl-0', 'transition-all')}>
+    <div
+      className={cn(isLeftBarOpen ? 'pl-64' : 'pl-0', 'pt-12 transition-all')}
+    >
       {children}
     </div>
   );
