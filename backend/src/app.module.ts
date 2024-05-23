@@ -5,6 +5,8 @@ import { PayableRepo } from './repositories/payable-repo';
 import { prismaPayableRepo } from './repositories/prisma/prisma-payable-repo';
 import { AssignorRepo } from './repositories/assignor-repo';
 import { prismaAssignorRepo } from './repositories/prisma/prisma-assignor-repo';
+import { UserRepo } from './repositories/user-repo';
+import { prismaUserRepo } from './repositories/prisma/prisma-user-repo';
 
 @Module({
   imports: [],
@@ -13,6 +15,7 @@ import { prismaAssignorRepo } from './repositories/prisma/prisma-assignor-repo';
     PrismaService,
     { provide: PayableRepo, useClass: prismaPayableRepo },
     { provide: AssignorRepo, useClass: prismaAssignorRepo },
+    { provide: UserRepo, useClass: prismaUserRepo },
   ],
 })
 export class AppModule {}

@@ -24,3 +24,9 @@ model cedente {
   phone String
   name String
 }
+
+model user {
+  id String @id
+  login String
+  password String
+}
