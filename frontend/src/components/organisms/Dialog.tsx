@@ -5,6 +5,7 @@ import { Button } from "../atoms/Button";
 import { DialogFooter } from "../molecules/DialogFooter";
 import { DialogHeader } from "../molecules/DialogHeader";
 
+// TODO: Dialog shoul observable routes changes to increase code
 export const Dialog = ({
   label,
   title,
@@ -12,6 +13,7 @@ export const Dialog = ({
   cancel,
   children,
   padding,
+  dialogForm,
 }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,7 +27,7 @@ export const Dialog = ({
 
   return (
     <>
-      <Button label={label} onClick={openModal} />
+      <Button onClick={openModal}>{label}</Button>
       {isModalOpen && (
         <div
           id="default-modal"
@@ -38,11 +40,13 @@ export const Dialog = ({
               {/* Modal header */}
               <DialogHeader title={title} onClose={closeModal} />
               <div className={padding ? "p-4 " : ""}>{children}</div>
-              <DialogFooter
-                confirm={confirm}
-                cancel={cancel}
-                onClose={closeModal}
-              />
+              {!dialogForm && (
+                <DialogFooter
+                  confirm={confirm}
+                  cancel={cancel}
+                  onClose={closeModal}
+                />
+              )}
             </div>
           </div>
         </div>

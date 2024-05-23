@@ -11,17 +11,18 @@ const Payable = () => {
 
   return (
     <>
-      <div className="flex w-2/3 justify-between gap-12 mb-8">
+      <div className="flex w-1/3 justify-between gap-12 mb-8 ">
         <Dialog
           label="Criar pagavéis"
           title="Pagavéis"
           confirm="Cadastrar"
           cancel="Cancelar"
           router={router}
+          dialogForm
         >
           <FormPayable />
         </Dialog>
-        <Button label="Importar pagavéis" />
+        <Button> Importar pagavéis</Button>
       </div>
       <Table></Table>
     </>

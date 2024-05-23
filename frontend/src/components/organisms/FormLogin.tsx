@@ -18,7 +18,6 @@ export const FormLogin = () => {
 
   const onSubmit = async (data: any) => {
     const authenticated = await authenticate(data);
-    console.log("🚀 ~ onSubmit ~ authenticated:", authenticated);
     if (isAxiosError(authenticated)) {
       return;
     }
@@ -55,7 +54,7 @@ export const FormLogin = () => {
           Esqueceu sua senha?
         </a>
         <div className="w-1/3">
-          <Button type="submit" label="Logar" />
+          <Button type="submit">Logar</Button>
         </div>
       </div>
     </form>

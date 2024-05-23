@@ -9,7 +9,7 @@ export const IntroductionLogin = () => {
       </div>
       <div className="flex-grow flex items-center justify-end  rounded-3xl bg-primary-dark min-h-28 px-4">
         <div className="w-1/3">
-          <Button label="Cadastrar" />
+          <Button> Cadastrar</Button>
         </div>
       </div>
     </div>
