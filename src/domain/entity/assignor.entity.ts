@@ -53,11 +53,11 @@ export class AssignorEntity extends AggregateRoot {
   toJSON() {
     return {
       id: this.id.value,
-      document: this.document.value,
+      document: this.document.toString(),
       email: this.email.value,
-      phone: this.phone.value,
+      phone: this.phone.toString(),
       name: this.name,
-      receivables: this._receivables.map((receivable) => receivable.toJSON()),
+      receivables: this._receivables?.map((receivable) => receivable.toJSON()),
     };
   }
 

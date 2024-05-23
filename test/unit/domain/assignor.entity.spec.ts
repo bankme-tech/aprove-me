@@ -44,9 +44,9 @@ describe('Teste de Unidade - AssignorEntity', () => {
     expect(assignorPF.receivables).toEqual([expectedReceivable]);
     expect(assignorPF.toJSON()).toEqual({
       id: expect.any(String),
-      document: expectedCpf.value,
+      document: expectedCpf.toString(),
       email: expectedEmail.value,
-      phone: expectedPhone.value,
+      phone: expectedPhone.toString(),
       name: expectedName,
       receivables: [expectedReceivable.toJSON()],
     });
@@ -75,9 +75,9 @@ describe('Teste de Unidade - AssignorEntity', () => {
     expect(assignorPJ.receivables).toEqual([]);
     expect(assignorPJ.toJSON()).toEqual({
       id: expect.any(String),
-      document: expectedCnpj.value,
+      document: expectedCnpj.toString(),
       email: expectedEmail.value,
-      phone: expectedPhone.value,
+      phone: expectedPhone.toString(),
       name: expectedName,
       receivables: [],
     });

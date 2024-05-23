@@ -29,13 +29,18 @@ export class PrismaReceivableRepository implements IReceivableRepository {
   }
 
   async findById(id: string): Promise<ReceivableEntity | null> {
-    const result = await this.prisma.receivable.findUnique({
+    const receivable = await this.prisma.receivable.findUnique({
       where: { id },
       include: { assignor: true },
     });
 
-    return result
-      ? new ReceivableEntity({ ...result })
-      : null;
+    if (receivable) {
+      const receivableWithAssignor = new ReceivableEntity({ ...receivable });
+      receivableWithAssignor.addAssignor(receivable?.assignor);
+
+      return receivableWithAssignor;
+    }
+
+    return null;
   }
 }

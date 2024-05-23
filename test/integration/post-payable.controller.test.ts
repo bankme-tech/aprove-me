@@ -5,7 +5,7 @@ import request from 'supertest';
 
 import { AppModule } from '../../src/app.module';
 
-describe('Teste de Integração - PayableController', () => {
+describe('Teste de Integração - POST: /integrations/payable', () => {
   let app: INestApplication;
   let prisma: PrismaClient;
 
@@ -33,7 +33,7 @@ describe('Teste de Integração - PayableController', () => {
     ]);
   });
 
-  it('deve criar um cedente com recebíveis quando chamado a rota "/integrations/payable', async () => {
+  it('deve criar um cedente com recebíveis corretamente', async () => {
     const input = {
       document: '389.967.700-51',
       email: 'joe.doe@email.com',

@@ -13,6 +13,7 @@ import { DatabaseModule } from './infra/database/database.module';
 
 import { PayableController } from './application/payable.controller';
 import { CreatePayableUsecase } from './application/create-payable.usecase';
+import { GetPayableUsecase } from './application/get-payable.usecase';
 
 @Module({
   imports: [
@@ -42,6 +43,12 @@ import { CreatePayableUsecase } from './application/create-payable.usecase';
         receivableRepo: PrismaReceivableRepository
       ) => new CreatePayableUsecase(assignorRepo, receivableRepo),
       inject: ['IAssignorRepository', 'IReceivableRepository'],
+    },
+    {
+      provide: GetPayableUsecase,
+      useFactory: (receivableRepo: PrismaReceivableRepository) =>
+        new GetPayableUsecase(receivableRepo),
+      inject: ['IReceivableRepository'],
     },
   ],
 })

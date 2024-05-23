@@ -8,7 +8,7 @@ export class GetPayableUsecase {
   async execute(id: string): Promise<ReceivableEntity> {
     const receivable = await this.receivableRepo.findById(id);
 
-    if(!receivable) throw new ReceivableNotFoundException(id);
+    if (!receivable) throw new ReceivableNotFoundException(id);
 
     return receivable;
   }

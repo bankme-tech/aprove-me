@@ -34,8 +34,6 @@ export class PrismaAssignorRepository implements IAssignorRepository {
       include: { receivables: true },
     });
 
-    return result
-      ? new AssignorEntity({ ...result })
-      : null;
+    return result ? new AssignorEntity({ ...result }) : null;
   }
 }

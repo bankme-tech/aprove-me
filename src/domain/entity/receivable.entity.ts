@@ -40,11 +40,7 @@ export class ReceivableEntity extends Entity {
       ...this,
       id: this.id.value,
       assignorId: this.assignorId.value,
-      assignor: this._assignor.toJSON()
+      assignor: this._assignor?.toJSON(),
     };
-  }
-
-  get assignor(): AssignorEntity {
-    return this._assignor;
   }
 }
