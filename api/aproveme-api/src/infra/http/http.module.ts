@@ -18,6 +18,7 @@ import { GetAssignorByIdController } from "./controllers/get-assignor-by-id.cont
 import { FindAssignorByIdService } from "@/domain/receivables/application/services/find-assignor-by-id";
 import { DeleteAssignorByIdController } from "./controllers/delete-assignor-by-id.controller";
 import { DeletePayableByIdController } from "./controllers/delete-payable-by-id.controller";
+import { EditAssignorController } from "./controllers/edit-assignor.controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -29,6 +30,7 @@ import { DeletePayableByIdController } from "./controllers/delete-payable-by-id.
     GetAssignorByIdController,
     DeleteAssignorByIdController,
     DeletePayableByIdController,
+    EditAssignorController,
   ],
   providers: [
     //Account Services

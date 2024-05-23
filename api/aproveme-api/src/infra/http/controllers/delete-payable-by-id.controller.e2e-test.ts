@@ -53,7 +53,12 @@ describe("Delete Payable By Id (E2E)", () => {
       .send();
 
     expect(response.statusCode).toBe(204);
-    const prismaPayable = await prisma.payable.findFirst();
+    const prismaPayable = await prisma.payable.findUnique({
+      where: {
+        id: payable.id.toString(),
+      },
+    });
+    console.log(prismaPayable);
     expect(prismaPayable).toBeNull();
   });
 });

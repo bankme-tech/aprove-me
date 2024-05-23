@@ -6,10 +6,10 @@ import { ResourceNotFoundError } from "@/core/errors/errors/resource-not-found-e
 
 interface EditAssignorServiceRequest {
   id: string;
-  document: string;
-  email: string;
-  phone: string;
-  name: string;
+  document?: string;
+  email?: string;
+  phone?: string;
+  name?: string;
 }
 type EditAssignorServiceResponse = Either<
   ResourceNotFoundError,
@@ -33,10 +33,10 @@ export class EditAssignorService {
 
     if (!assignor) return left(new ResourceNotFoundError());
 
-    assignor.document = document;
-    assignor.email = email;
-    assignor.name = name;
-    assignor.phone = phone;
+    assignor.document = document ?? assignor.document;
+    assignor.email = email ?? assignor.email;
+    assignor.name = name ?? assignor.name;
+    assignor.phone = phone ?? assignor.phone;
 
     await this.assignorsRepo.update(assignor);
 
