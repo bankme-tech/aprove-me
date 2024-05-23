@@ -4,8 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Inbox, Plus } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
+import { SelectAssignor } from '@/components/select-assignor';
 import {
   createPayableSchema,
   type CreatePayableSchema,
@@ -26,15 +27,21 @@ export const Form: React.FC<Props> = ({
 
   const {
     register,
+    handleSubmit,
     formState: { errors },
+    control,
   } = useForm<CreatePayableSchema>({
     defaultValues: df as CreatePayableSchema,
     resolver: zodResolver(createPayableSchema),
   });
 
+  const onSubmit = (data: CreatePayableSchema) => {
+    console.log('data: ', data);
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label className="form-control w-full">
           <div className="label">
             <span className="label-text">Value</span>
@@ -70,14 +77,22 @@ export const Form: React.FC<Props> = ({
           </div>
         </label>
 
+        <Controller
+          control={control}
+          name="assignor"
+          render={({ field: { onChange } }) => (
+            <SelectAssignor onChange={(id) => onChange(id)} />
+          )}
+        />
+
         <div className="flex w-full justify-end">
           {batch ? (
-            <button className="btn btn-outline btn-sm">
+            <button className="btn btn-outline btn-sm mt-8">
               <Plus size={18} />
               Add to batch
             </button>
           ) : (
-            <button type="button" className="btn btn-primary btn-sm">
+            <button type="button" className="btn btn-primary btn-sm mt-8">
               Create
             </button>
           )}

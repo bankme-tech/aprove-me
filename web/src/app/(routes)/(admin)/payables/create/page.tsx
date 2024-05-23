@@ -3,7 +3,7 @@ import type React from 'react';
 import { BatchToggle } from './components/batch-toggle';
 import { Form } from './components/form';
 
-const CreatePayables: React.FC = () => (
+export const CreatePayables: React.FC = () => (
   <main className="flex min-h-content flex-col items-center pt-20">
     <div className="w-full max-w-7xl">
       <div className="flex w-full justify-between">
