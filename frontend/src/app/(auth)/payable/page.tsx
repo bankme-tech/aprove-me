@@ -5,9 +5,18 @@ import { Dialog } from "@/components/organisms/Dialog";
 import { FormPayable } from "@/components/organisms/FormPayable";
 import { Table } from "@/components/organisms/Table";
 import { useRouter } from "next/navigation";
+import { usePayable } from "./hooks/usePayable";
 
 const Payable = () => {
+  const { payable } = usePayable();
+
   const router = useRouter();
+
+  const header = [
+    { key: "id", value: "id" },
+    { key: "value", value: "Valor" },
+    { key: "emissionDate", value: "Dt. de Emissão" },
+  ];
 
   return (
     <>
@@ -24,7 +33,7 @@ const Payable = () => {
         </Dialog>
         <Button> Importar pagavéis</Button>
       </div>
-      <Table></Table>
+      <Table headerContent={header} bodyContent={payable}></Table>
     </>
   );
 };
