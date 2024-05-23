@@ -9,19 +9,6 @@ export class AssignorService {
 
   async create(createAssignorDto: CreateAssignorDto) {
     try{
-     // if (typeof createAssignorDto.document !== 'string') {
-       // throw new Error('Favor informar um documento válido');
-      //}
-      //if (typeof createAssignorDto.email !== 'string') {
-       // throw new Error('Favor informar um email válido');
-     // }
-     // if (typeof createAssignorDto.phone !== 'string') {
-       /// throw new Error('Favor informar um telefone válido');
-      //}
-     // if (typeof createAssignorDto.name !== 'string') {
-       // throw new Error('Formato de nome inválido');
-      //}
-
       return await prisma.assignor.create({
         data: createAssignorDto,
       });
