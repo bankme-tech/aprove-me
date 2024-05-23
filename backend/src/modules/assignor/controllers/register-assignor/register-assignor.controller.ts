@@ -19,6 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { RegisterAssignorResponseSchema } from './response.schema';
 import { plainToInstance } from 'class-transformer';
+import { ConflictResource } from '~/common/exceptions/conflict-resource.exception';
 
 @ApiTags('Assignor')
 @ApiBearerAuth()
@@ -41,6 +42,9 @@ export class RegisterAssignorController {
 
     if (result.isLeft()) {
       switch (result.value.constructor) {
+        case ConflictResource:
+          throw new HttpException(result.value.message, HttpStatus.CONFLICT);
+
         case InvalidEntityEntry:
         default:
           throw new HttpException(result.value.message, HttpStatus.BAD_REQUEST);

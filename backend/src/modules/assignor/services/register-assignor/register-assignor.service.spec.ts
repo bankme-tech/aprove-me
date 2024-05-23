@@ -4,6 +4,8 @@ import { IAssignorRepository } from '../../repositories/interfaces/assignor.repo
 import { InMemoryAssignorRepository } from '../../repositories/in-memory/assignor.repository';
 import { InvalidEntityEntry } from '~/common/exceptions/invalid-entity-entry.exception';
 import { AssignorEntity } from '../../entities/assignor.entity';
+import { ConflictResource } from '~/common/exceptions/conflict-resource.exception';
+import { faker } from '@faker-js/faker';
 
 describe('RegisterAssignorService', () => {
   let service: RegisterAssignorService;
@@ -46,6 +48,23 @@ describe('RegisterAssignorService', () => {
         }),
       ]),
     );
+  });
+
+  it('should register an assignor twice', async () => {
+    const data = {
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      document: '123.456.789-00',
+      phone: '+55 11 90000-0000',
+    };
+
+    repository.items.push({ id: faker.string.uuid(), ...data });
+
+    const result = await service.execute(data);
+
+    expect(result.isLeft()).toBeTruthy();
+
+    expect(result.value).toBeInstanceOf(ConflictResource);
   });
 
   it('should not register an assignor with invalid entry', async () => {
