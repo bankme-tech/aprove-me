@@ -34,6 +34,16 @@ Sistema de gestão de recebíveis: A aplicação permite que usuários cadastrem
 - Jest
 - RabbitMQ
 
+### Frontend
+
+- ReactJS
+- Next
+- Axios
+- shadcnUi
+- TailwindCSS
+
+## 🚀 Como executar
+
 ## Executando o projeto
 
 1 - Altere o arquivo `.env.example` para `.env` e preencha as variáveis de ambiente.
@@ -49,7 +59,15 @@ mv ~/.env.example ~/.env
 docker compose up --build
 ```
 
+3 - Verificar o projeto rodando
+Acesse `http://localhost:3000` e faça o login com o usuário `aprovame` e a senha `aprovame`
+
 Dentro da pasta`packages/api/http` existem arquivos demonstrando o que as rotas aceitam de parâmetros
+
+## Pontos para melhoria
+1 - Criar um github actions para testes unitários juntamente com CI
+2 - Melhorar os Dockerfile para ter 2 estágios de build e economizar espaço em produção
+3 - Melhorar gerenciamento de estados no frontend com zustand
 
 ## Contato
 
