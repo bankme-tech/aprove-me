@@ -23,7 +23,7 @@ import {
 import { BatchPayableDto } from './dtos/batch-payable.dto';
 import { PaginationDto } from 'src/dtos/pagination.dto';
 import { ROUTE_PAYABLE_BATCH_DEAD_LETTER } from 'src/microservices/rmq/payable-dead-letter-queue.service';
-import { EmailService } from 'src/microservices/email/email.service';
+import { EmailService } from 'src/services/email/email.service';
 
 @Controller('/integrations/payable')
 export class PayableController {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Payable, Prisma } from '@prisma/client';
+import { Payable } from '@prisma/client';
 import { PrismaService } from '../../infrastructure/prisma.service';
 import { PayableDto } from './dtos/payables.dto';
 import { PartialPayableDto } from './dtos/partial-payable.dto';
@@ -9,7 +9,6 @@ export class PayableService {
   constructor(private prisma: PrismaService) { }
 
   async createPayable(dto: PayableDto): Promise<Payable> {
-      throw new Error('Force error');
     return this.prisma.payable.create({
       data: {
         value: dto.value,

@@ -21,7 +21,7 @@ services:
   api-migration-setup:
     container_name: api-migration-container
     environment:
-      DOCKER_SERVICE_NAME_PG: db-payable-service # Database service name
+      DOCKER_SERVICE_NAME_PG: db-payable-service
     networks: [backend]
     build:
       context: ../../
@@ -37,7 +37,7 @@ services:
   api-payable-service:
     container_name: api-payable-container
     environment:
-      DOCKER_SERVICE_NAME_PG: db-payable-service # Database service name
+      DOCKER_SERVICE_NAME_PG: db-payable-service
     networks: [backend]
     build:
       context: ../../
@@ -48,7 +48,6 @@ services:
         condition: service_healthy
       api-migration-setup:
         condition: service_completed_successfully
-    # command: node dist/main
     ports: [3000:3000]
     command: ["yarn", "start:prod"]
 

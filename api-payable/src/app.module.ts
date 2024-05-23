@@ -5,7 +5,7 @@ import { AssignorModule } from './integrations/assignor/assignor.module';
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
 import { AuthModule } from './integrations/auth/auth.module';
 import { RabbitMQModule } from './microservices/rmq/rabbitmq.module';
-import { EmailModule } from './microservices/email/email.module';
+import { EmailModule } from './services/email/email.module';
 
 @Module({
   imports: [

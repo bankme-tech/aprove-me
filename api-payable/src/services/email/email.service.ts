@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import * as AWS from 'aws-sdk';
-import { PayableBatchMessage } from "../rmq/payable-queue.service";
+import { PayableBatchMessage } from "src/microservices/rmq/payable-queue.service";
 
 @Injectable()
 export class EmailService {
@@ -25,7 +25,6 @@ export class EmailService {
       // Expect comma separated emails
       .getOrThrow<string>('ADMIN_TEAM_EMAIL')
       .split(',');
-    console.log(`[Log:teamEmails]:`, teamEmails);
     if (!Array.isArray(teamEmails)) {
       throw new InternalServerErrorException('ADMIN_TEAM_EMAIL split() error');
     }

@@ -3,15 +3,15 @@ version: '3.8'
 services:
   db-dev-payable-service:
     container_name: db-dev-payable-container
-    networks: 
+    networks:
       - backend
     image: postgres:16.3-alpine3.19
-    ports: 
+    ports:
       - 5432:5432
     volumes:
       - ./container-data/postgres:/data/postgres
       - ./initial-sql/:/docker-entrypoint-initdb.d/
-    env_file: 
+    env_file:
       - ./.postgres.env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
@@ -30,6 +30,27 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+
+  aws-local-dev-service:
+    # Healthcheck `http://localhost:4566/_localstack/health`
+    container_name: aws-local-dev-container
+    image: localstack/localstack:3.4.0
+    networks:
+      - backend
+    ports:
+      - 4566:4566            # LocalStack Gateway
+      - 4510-4559:4510-4559  # External services port range
+    env_file:
+      - ./.aws-local.env
+
+    environment:
+      - AWS_ACCESS_KEY_ID=aws_payable_key_id
+      - AWS_SECRET_ACCESS_KEY=aws_payable_secret_key
+      - AWS_S3_ENDPOINT=localhost:4572
+    volumes:
+      - ./container-data/localstack:/var/lib/localstack
+      # - ${TEMPDIR:-/tmp/localstack}:/tmp/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   backend:

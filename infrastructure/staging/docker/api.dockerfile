@@ -1,8 +1,9 @@
-# NOTE: file created to be runned with `context: ../..` at the root folder
+# NOTE: file created to be runned with `context: ../..` at the root folder.
 FROM node:22-alpine as migration_target
 
 COPY ./api-payable/ /builder-code/
-COPY ./api-payable/.prod.env /builder-code/.env
+# COPY ./api-payable/.prod.env /builder-code/.env
+COPY ./infrastructure/staging-docker/.api.env /builder-code/.env
 
 ARG NODE_ENV=prod
 
