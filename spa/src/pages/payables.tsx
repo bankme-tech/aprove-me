@@ -20,7 +20,7 @@ export default function Payables() {
 
   const handleGetAllPayables = async (skip: number) => {
     const data = await getAllPayables(skip, rowsPerPage)
-    if(data.length === 0 && page !== 0) {
+    if(data.length === 0 && payables.length !== 0) {
       setPage(page)
     }
     else {
