@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <header
-      className="font-Nunito bg-HeaderBgColor flex w-full justify-between py-5 px-8 md:px-16 shadow-md text-textColor"
+      className="fixed font-Nunito bg-HeaderBgColor flex w-full justify-between py-5 px-8 md:px-16 shadow-md text-textColor"
     >
       <img
         src={process.env.PUBLIC_URL + '/logo-bankme.png'}

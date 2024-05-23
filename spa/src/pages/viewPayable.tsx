@@ -1,9 +1,9 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { PayableSchema, PayableType, payableSchema } from '../types';
+import { PayableSchema, payableSchema } from '../types';
 import { useState } from 'react';
 import Title from '../components/ui/title';
 import FormCard from '../components/formCard';
-import { SubmitHandler, set, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '../components/ui/input';
 import Button from '../components/ui/button';
@@ -13,6 +13,7 @@ import { UUID } from 'crypto';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+import DeleteButton from '../components/ui/deleteButton';
 
 export default function ViewPayable() {
   const { id } = useParams<{ id: UUID }>();
@@ -84,9 +85,9 @@ export default function ViewPayable() {
   const onDelete = async () => {
     try {
       const res = await deletePayable(id as UUID)
-      toast.success("Pagável deletado", {
+      toast.success("Pagável apagado!", {
         position: "top-center",
-        autoClose: 1000,
+        autoClose: 800,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
@@ -96,9 +97,9 @@ export default function ViewPayable() {
       });
       setTimeout(() => {
         navigate(-1);
-      }, 1100);
+      }, 850);
     } catch (error) {
-      setError("root", { message: 'Erro ao deletar o pagável.' })
+      setError("root", { message: 'Erro ao apagar o pagável.' })
     }
   }
 
@@ -142,12 +143,9 @@ export default function ViewPayable() {
             >
               Salvar alterações
             </Button>
-            <Button
+            <DeleteButton
               onClick={onDelete}
-              delete
-            >
-              Deletar
-            </Button>
+            />
           </div>
         </form>
       </FormCard>

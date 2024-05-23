@@ -1,4 +1,3 @@
-import path from "path";
 import Header from "./header";
 import { useLocation } from 'react-router-dom';
 interface Props {
@@ -13,7 +12,7 @@ export default function Layout(props: Props) {
       <> {props.children} </> :
       <>
         <Header />
-        <main className="px-6 py-3">
+        <main className="px-6 pt-20">
           {props.children}
         </main>
       </>

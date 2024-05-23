@@ -1,5 +1,4 @@
 import { UUID } from "crypto";
-import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AssignorSchema, assignorSchema } from "../types";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -68,9 +67,9 @@ export default function ViewAssignor() {
   // const onDelete = async () => {
   //   try {
   //     const res = await deleteAssignor(id as UUID)
-  //     toast.success("Cedente deletado", {
+  //     toast.success("Cedente apagado", {
   //       position: "top-center",
-  //       autoClose: 1000,
+  //       autoClose: 800,
   //       hideProgressBar: true,
   //       closeOnClick: true,
   //       pauseOnHover: false,
@@ -80,9 +79,9 @@ export default function ViewAssignor() {
   //     });
   //     setTimeout(() => {
   //       navigate(-1);
-  //     }, 1100);
+  //     }, 850);
   //   } catch (error) {
-  //     setError("root", { message: 'Erro ao deletar o pagável.' })
+  //     setError("root", { message: 'Erro ao apagar o pagável.' })
   //   }
   // }
 
@@ -100,23 +99,23 @@ export default function ViewAssignor() {
             disabled
           />
           <Input
-            label="CPF ou CNPJ do Cedente:"
+            label="CPF ou CNPJ do Cedente"
             placeholder="CPF ou CNPJ"
             register={register('document')}
             disabled
           />
           <Input
-            label="Email do Cedente:"
+            label="Email do Cedente"
             placeholder="Email"
             register={register('email')}
           />
           <Input
-            label="Telefone do cedente:"
+            label="Telefone do cedente"
             placeholder="Telefone"
             register={register('phone')}
           />
           <Input
-            label="Nome do cedente:"
+            label="Nome do cedente"
             placeholder="Nome"
             register={register('name')}
           />
