@@ -5,5 +5,6 @@ export abstract class IAssignorRepository {
   abstract save(
     createAssignorDTO: CreateAssignorInputDTO,
   ): Promise<AssignorEntity>;
+  abstract findAll(): Promise<AssignorEntity[]>;
   abstract findById(id: string): Promise<AssignorEntity>;
 }
