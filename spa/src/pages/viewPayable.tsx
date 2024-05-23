@@ -126,22 +126,17 @@ export default function ViewPayable() {
             register={register('assignor', { disabled: true })}
           />
           <Button
-            className={isDirty ?
-              '' :
-              'bg-opacity-40 hover:bg-opacity-40'
-            }
+            disabled={!isDirty}
           >
             Salvar alterações
           </Button>
           <Button
             onClick={onDelete}
-            className='bg-red-500'
+            delete
           >
             Deletar
           </Button>
         </form>
-
-
       </FormCard>
 
       <ToastContainer />

@@ -4,6 +4,8 @@ import Login from "../pages/login";
 import NewPayable from "../pages/newPayable";
 import ViewPayables from "../pages/viewPayable";
 import Payables from "../pages/payables";
+import NewAssignor from "../pages/newAssignor";
+import ViewAssignor from "../pages/viewAssignor";
 
 export default function AppRouter() {
 	return (
@@ -37,7 +39,7 @@ export default function AppRouter() {
 				path="/assignor/new/"
 				element={
 					<ProtectedRoute>
-						<span>cadastrar cedente</span>
+						<NewAssignor />
 					</ProtectedRoute>
 				}
 			/>
@@ -45,7 +47,7 @@ export default function AppRouter() {
 				path="/assignor/view/:id"
 				element={
 					<ProtectedRoute>
-						<span>cedente</span>
+						<ViewAssignor />
 					</ProtectedRoute>
 				}
 			/>
