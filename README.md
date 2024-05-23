@@ -1,261 +1,137 @@
-<p align="center">
-  <img src="./assets/logo-bankme.png" alt="Logo Bankme" width="91" height="108">
-</p>
-<h1 align="center">
-  Aprove-me
-</h1>
+# [API] Aprove-me
 
-## Sumário
+Cadastro de cedente e pagáveis.
 
-- [Sumário](#sumário)
-- [❤️ Bem vindos](#️-bem-vindos)
-- [🚀 Vamos nessa!](#-vamos-nessa)
-  - [Dicas](#dicas)
-  - [Como você deverá desenvolver?](#como-você-deverá-desenvolver)
-  - [Qual o tempo para entregar?](#qual-o-tempo-para-entregar)
-- [💻 O Problema](#-o-problema)
-  - [Estrutura de um recebível](#estrutura-de-um-recebível)
-  - [Estrutrua de um cedente](#estrutrua-de-um-cedente)
-- [💾 Back-end](#-back-end)
-  - [Nível 1 - Validação](#nível-1---validação)
-  - [Nível 2 - Persistência](#nível-2---persistência)
-  - [Nível 3 - Testes](#nível-3---testes)
-  - [Nível 4 - Autenticação](#nível-4---autenticação)
-  - [Nível 5 - Gerenciamento de permissões](#nível-5---gerenciamento-de-permissões)
-  - [Nível 6 - Infra e Doc](#nível-6---infra-e-doc)
-  - [Nível 7 - Lotes](#nível-7---lotes)
-  - [Nível 8 - Resiliência](#nível-8---resiliência)
-  - [Nível 9 - Cloud](#nível-9---cloud)
-  - [Nível 10 - Infra as a Code](#nível-10---infra-as-a-code)
-- [🖥️ Front-end](#️-front-end)
-  - [Nível 1 - Cadastro](#nível-1---cadastro)
-  - [Nível 2 - Conectando na API](#nível-2---conectando-na-api)
-  - [Nível 3 - Listando](#nível-3---listando)
-  - [Nível 4 - Autenticação](#nível-4---autenticação-1)
-  - [Nível 5 - Testes](#nível-5---testes)
+## RFC #1
 
-## ❤️ Bem vindos 
+Tema: Decisão de estrutura
 
-Olá, tudo certo?
+Esta RFC propõe uma estrutura de projeto para a aplicação `aprove-api` que prioriza o desacoplamento entre componentes e facilita a substituição de módulos individuais. A abordagem multiestágio e as boas práticas de arquitetura hexagonal garantirão a modularidade e escalabilidade da aplicação.
 
-Seja bem vindo ao teste de seleção para novos desenvolvedores na Bankme!
+**Motivação**
 
-Estamos honrados que você tenha chegado até aqui!
+Ao adotar uma abordagem que promova o desacoplamento e a substituição fácil de componentes, podemos responder às mudanças dos requisitos e tecnologias de forma ágil, sem impactar todo o sistema.
 
-Prepare aquele ☕️ , e venha conosco codar e se divertir!
+**Proposta**
 
-## 🚀 Vamos nessa!
+```
+project-folder/
+  |- src/
+  |    |- application/
+  |    |    |- use cases
+  |    |    |- ...
+  |    |- domain/
+  |    |    |- customer-enity.ts
+  |    |- infra/
+  |    |    |- server
+  |    |    |- ...
+  |    |- main.ts
 
-Este é um teste para analisarmos como você desempenha ao entender, traduzir, resolver e entregar um código que resolve um problema.
-
-### Dicas
-
-- Documente;
-- Pergunte;
-- Mostre a sua linha de reciocínio;
-- Trabalhe bem o seu README.md;
-
-### Como você deverá desenvolver?
-
-1. Faça um clone deste projeto em seu GitHub pessoal;
-2. Realize as implementações de acordo com cada um dos níveis;
-3. Faça pequenos commits;
-4. Depois de sentir que fez o seu máximo, faça um PR para o repositório original. (Para conseguir fazer isso, não se esqueça de fazer um Fork antes de iniciar tudo!)
-
-**IMPORTANTE!**
-
-Não significa que você precisa implementar todos os níveis para ser aprovado no processo!
-
-Faça até onde se sentir confortável.
-
-### Qual o tempo para entregar?
-
-Nós temos um período para fechar a vaga em questão. Então, quanto antes você enviar, mais cuidado podemos ter na revisão do seu teste.
-
-Mas sabemos que o dia a dia é corrido, faça de forma que fique confortável para você!
-
-Mas não desista! Envie até onde conseguir.
-
-## 💻 O Problema
-
-Um cliente da Bankme solicitou uma nova funcionalidade, relacionada a recebíveis.
-
-Todos os dias esse cliente movimenta vários recebíveis, e nosso time de operações estava ficando maluco tendo que cadastrar tudo isso de forma manual!
-
-Os recebíveis são representações digitais de um documento que simula uma dívida a ser recebida. E para Bankme, é importante ter essas informações como parte do fluxo comercial que temos com este cliente.
-
-### Estrutura de um recebível
-
-| CAMPO        | TIPO          | DESCRIÇÃO                                 |
-|--------------|---------------|-------------------------------------------|
-| id           | string (UUID) | É a identificação de um recebível.        |
-| value        | float         | É o valor do recebível.                   |
-| emissionDate | date          | É a data de emissão do recebível.         |
-| assignor     | string (UUID) | Representa a identificação de um cedente. |
-
-### Estrutrua de um cedente
-
-| CAMPO    | TIPO          | DESCRIÇÃO                             |
-|----------|---------------|---------------------------------------|
-| id       | string (UUID) | É a identificação de um cedente.      |
-| document | string(30)    | É o documento CPF ou CNPJ do cedente. |
-| email    | string(140)   | É o email do cedente.                 |
-| phone    | string(20)    | É o telefone do cedente.              |
-| name     | string(140)   | É a nome ou razão social do cedente.  |
-
-## 💾 Back-end
-
-### Nível 1 - Validação
-
-Implemente uma API utilizando NestJS que receba dados de um recebível e de um cedente.
-
-A rota para este cadastro é:
-
-`POST /integrations/payable`
-
-Essa rota deverá receber todas as informações. É importante garantir a validação destes dados:
-
-1. Nenhum campo pode ser nulo;
-2. Os ids devem ser do tipo UUID;
-3. As strings não podem ter caracteres a mais do que foi definido em sua estrutura;
-
-Se algum campo não estiver preenchido corretamente, deve-se retornar uma mensagem para o usuário mostrando qual o problema foi encontrado em qual campo.
-
-Se todos os dados estiverem validados. Apenas retorne todos os dados em um formato JSON.
-
-### Nível 2 - Persistência
-
-Utilize o Prisma, para incluir um novo banco de dados SQLite.
-
-Crie a estrutura de acordo com o que foi definido.
-
-Caso os dados estejam válidos, cadastre-os.
-
-Crie 2 novas rotas:
-
-`GET /integrations/payable/:id`
-
-`GET /integrations/assignor/:id`
-
-Para que seja possível retornar pagáveis e cedentes de forma independete.
-
-Inclua também rotas para as outras operações:
-
-- Edição;
-- Exclusão;
-- Cadastro;
-
-### Nível 3 - Testes
-
-Crie testes unitários para cada arquivo da aplicação. Para cada nova implementação a seguir, também deve-se criar os testes.
-
-### Nível 4 - Autenticação
-
-Inclua um sistema de autenticação em todas as rotas.
-
-Para isso, crie uma nova rota:
-
-`POST /integrations/auth` que deve receber:
-
-```json
-{
-  "login": "aprovame",
-  "password": "aprovame"
-}
 ```
 
-Com essas credenciais o endpoint deverá retornar um JWT com o tempo de expiração de 1 minuto.
+Esta estrutura reflete a organização modular da aplicação, com foco em manter o desacoplamento e facilitar a substituição de componentes. A descrição dos módulos é a seguinte:
 
-Reescreva as regras de todas as outras rotas para que o JWT seja enviado como parâmetro do `Header` da requisição.
+**- controllers:** Contém os controladores responsáveis por lidar com a interação entre as solicitações e os _use cases_ de _application_.
 
-Se o JWT estiver válido, então os dados devem ser mostrados, caso contrário, deve-se mostrar uma mensagem de "Não autorizado".
+**- domain/:** Este módulo abriga as regras de negócio relacionadas ao cliente. Essa camada inclui o serviços que encapsula a lógica de negócios e comportamentos.
 
-### Nível 5 - Gerenciamento de permissões
+**- applications/:** Representa a porta do mundo externo para o interno. É implementar a lógica de negócios da aplicação e coordenar a interação entre os diversos componentes do sistema.
 
-Agora, crie um sistema de gerenciamento de permissões.
+**- infra/:** Camada interna e tem a responsabilidade de lidar com os detalhes de implementação e as interações com componentes externos.
 
-Crie um novo cadastro de permissões. Esse cadastro deve armazenar: `login` e `password`.
+**- main.ts:** Ponto de entrada da aplicação.
 
-Refatore o endpoint de autenticação para que sempre se gere JWTs se login e senha estiverem cadastrados no Banco de Dados.
+**Benefícios**
 
-### Nível 6 - Infra e Doc
+**- Desacoplamento:** A estrutura modular mantém as diferentes partes da aplicação isoladas, permitindo desenvolvimento independente e menos dependências.
 
-Crie um `Dockerfile` para sua API.
+**- Substituição de Componentes:** A modularidade facilita a substituição de módulos individuais, minimizando o impacto em outras partes do sistema.
 
-Crie um `docker-compose.yaml` para iniciar o seu projeto.
+**- Manutenção Fácil de Regras de Negócio:** Colocar as regras de negócio dentro do módulo de domínio promove uma organização clara e facilita a manutenção e evolução das regras.
 
-Documente tudo o que foi feito até aqui:
+# Sumário
 
-- Como preparar o ambiente;
-- Como instalar as dependência;
-- Como rodar o projeto;
+- [Stack](#stack)
+- [Instalação e execução da API](#instalação-e-execução-da-api)
+- [Comandos adicionais](#comandos-adicionais)
+- [Gerar imagem Docker](#gerar-imagem-docker)
 
-### Nível 7 - Lotes
+# Stack
 
-Crie um novo recurso de processamento de pagáveis por lotes.
+Para criação desse projeto utilizamos as seguintes bibliotecas e framework
 
-A ideia é que o cliente possa enviar um GRANDE número de pagáveis de uma única vez. E isso, não poderá ser processado de forma síncrona.
+- [TypeScript](https://www.typescriptlang.org/) - Linguagem fortemente tipada
+- [Docker CE](https://www.docker.com/) - Plataforma de deploy
+- [Jest](https://jestjs.io/pt-BR/docs/getting-started) - Framework de teste Javascript
 
-Crie um novo endpoint:
+# Instalação e execução da API
 
-`POST integrations/payable/batch`
+### Use a mesma versão de node do projeto
 
-Neste endpoint deve ser possível receber lotes de até 10.000 pagáveis.
+Para execução deste step tenha [nvm](https://github.com/nvm-sh/nvm) instalado em sua máquina e execute os comandos abaixo:
 
-Ao receber todos os pagáveis, deve-se postá-los em uma fila.
+```
+  nvm use
+```
 
-Crie um consumidor para esta fila que deverá pegar pagável por pagável, criar seu registro no banco de dados, e ao final do processamento do lote enviar um e-mail de lote processado, com o número de sucesso e falhas.
+### Instale as dependências do projeto
 
-### Nível 8 - Resiliência
+Utilize o [yarn](https://yarnpkg.com/):
+Utilize o [npm](https://www.npmjs.com/)
 
-Caso não seja possível processar algum ítem do lote, coloque-o novamente na fila. Isso deve ocorrer por até 4 vezes. Depois, esse ítem deve ir para uma "Fila Morta" e um e-mail deve ser disparado para o time de operações.
+```
+  npm install
+```
 
-### Nível 9 - Cloud
+### Execute o projeto local
 
-Crie uma pipeline de deploy da aplicação em alguma estrutura de Cloud. (AWS, Google, Azure...)
+Então execute o seguinte comando. Para execução local é preciso ter o docker instalado para que assim um MongoDB seja instânciado.
 
-### Nível 10 - Infra as a Code
+Tem uma `/documents` que contem os `curl` dos endpoint para a API.
 
-Crie uma estrutura em terraforma que monte a infra-estrutura desejada.
+```
+  npm run start:dev
+```
 
-## 🖥️ Front-end
+# Comandos adicionais
 
-### Nível 1 - Cadastro
+### Teste
 
-Crie uma interface na qual é possível cadastrar os pagáveis.
+Para executar a stack de testes basta executar o seguinte comando:
 
-É importante que sua interface previna o cadastro de campos vazios, ou que não estejam nas regras definidas anteriormente.
+```
+  npm test
+```
 
-Exiba o pagável cadastrado em uma nova tela.
+Para executar um teste específico fica assim:
 
-### Nível 2 - Conectando na API
+```
+  npm run test:unit
+  npm run test:integration
+  npm run test:ci
+```
 
-Conecte a seu Front-end a API que foi criada, e faça o cadastro de um pagável refletir na sua API.
+# Gerar imagem Docker
 
-Faça também uma tela para cadastro do cedente.
+Este projeto contém uma imagem Docker para geração de **api-aprove**.
 
-Altere o cadastro inicial para que o campo `assignor` seja um `combobox` no qual seja possível selecionar um cedente.
+## Pré-requisitos
 
-### Nível 3 - Listando
+Certifique-se de ter o Docker e [docker-compose](https://docs.docker.com/compose/install/) instalado em seu sistema.
 
-Agora faça um sistema de listagens de pagáveis. Mostrando apenas: `id`, `value` e `emissionDate`.
+1. Crie a imagem: 
+```
+  docker build -t aprove-api .
+```
 
-Para cada ítem da lista, coloque um link que mostra os detalhes do pagável.
+## Configuração
 
-Além disso, coloque opções de editar e excluir.
+- **PORT**: Porta na qual o servidor web ficará disponível (default: 3000);
+- **DATABASE_URL**: URI para conexão com o mongodb;
 
-Nessa página de detalhes, inclua um novo link para exibir os dados do cedente.
+Basta cópiar o arquivo `.env.example` e renomear para `.env`.
 
-Todos os dados devem vir da API.
-
-### Nível 4 - Autenticação
-
-Implemente agora o sistema de login e senha para poder acessar as suas rotas de forma autenticada.
-
-Armazene o token no `localStorage` do seu navegador.
-
-Caso o token expire, redirecione o usuário para a página de login.
-
-### Nível 5 - Testes
-
-Crie testes para sua aplicação Front-end.
+2. Construa um contâiner
+```
+docker-compose up -d
+```
