@@ -1,6 +1,5 @@
 import { PrismaService } from '@/database/prisma.service'
 import { Test, TestingModule } from '@nestjs/testing'
-import { cleanupDatabase } from '@test/helpers/cleanup.database'
 import { vi } from 'vitest'
 import { AssignorsService } from './assignors.service'
 import { AssignorCreateSchema } from './dto/create.assignor'
@@ -9,7 +8,6 @@ import { AssignorRepository } from './repository/assignor.repository'
 describe('Assignor Service Tests', () => {
   let assignorService: AssignorsService
   let assignorRepository: AssignorRepository
-  let prismaService: PrismaService
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -18,10 +16,6 @@ describe('Assignor Service Tests', () => {
 
     assignorService = module.get<AssignorsService>(AssignorsService)
     assignorRepository = module.get<AssignorRepository>(AssignorRepository)
-    prismaService = module.get<PrismaService>(PrismaService)
-
-    await cleanupDatabase(prismaService)
-    vi.clearAllMocks()
   })
 
   it('should be defined', () => {

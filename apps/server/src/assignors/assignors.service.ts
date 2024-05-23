@@ -22,12 +22,4 @@ export class AssignorsService {
     const assignor = this.repo.findById(id)
     return assignor
   }
-
-  // update(id: number, updateAssignorDto: UpdateAssignorDto) {
-  //   return `This action updates a #${id} assignor`
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} assignor`
-  // }
 }
