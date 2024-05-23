@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # When changing this name remember to also change `DOCKER_SERVICE_NAME_PG` env vars.
+  db-payable-service:
+    container_name: db-payable-container
+    networks: [backend]
+    image: postgres:16.3-alpine3.19
+    ports: [5432:5432]
+    volumes:
+      - ./container-data/postgres:/data/postgres
+      - ./initial-sql/:/docker-entrypoint-initdb.d/
+    env_file: [./.postgres.env]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  api-migration-setup:
+    container_name: api-migration-container
+    environment:
+      DOCKER_SERVICE_NAME_PG: db-payable-service # Database service name
+    networks: [backend]
+    build:
+      context: ../../
+      dockerfile: ./infrastructure/docker/api.dockerfile
+      target: migration_target
+    env_file: [./.postgres.env, ./.api.env]
+    depends_on:
+      db-payable-service:
+        condition: service_healthy
+    restart: "no" # Run once per docker run.
+    command: ["yarn", "migrate:prod"]
+
+  api-payable-service:
+    container_name: api-payable-container
+    environment:
+      DOCKER_SERVICE_NAME_PG: db-payable-service # Database service name
+    networks: [backend]
+    build:
+      context: ../../
+      dockerfile: ./infrastructure/docker/api.dockerfile
+    env_file: [./.postgres.env, ./.api.env]
+    depends_on:
+      db-payable-service:
+        condition: service_healthy
+      api-migration-setup:
+        condition: service_completed_successfully
+    # command: node dist/main
+    ports: [3000:3000]
+    command: ["yarn", "start:prod"]
+
+
+networks:
+  backend:
+    name: payable-network

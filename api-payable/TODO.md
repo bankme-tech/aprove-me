@@ -17,8 +17,8 @@
     - [x] User com login e password.
     - [x] Save Auth Dto.
 6. Infra
-    - [] Dockerfile API
-    - [] docker-compose database.
+    - [x] Dockerfile API
+    - [x] docker-compose database.
 7. Batch
     - [] `POST integrations/payable/batch`
     - [] RabbitMQ file: send batch
@@ -26,7 +26,7 @@
 8. Resiliência
     - [] RabbitMQ: dead-letter queue
 9. Cloud
-    - [] sair de casa e olhar as nuvens.
+    - [] Pipeline
 10. IoC
     - [] docker-compose localstack
     - [] docker-compose terraform or openToFu
