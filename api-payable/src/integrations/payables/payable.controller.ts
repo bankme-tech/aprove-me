@@ -8,7 +8,6 @@ import {
   Delete,
   NotFoundException,
   Query,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { Payable } from '@prisma/client';
 import { PayableService } from './payable.service';
@@ -17,15 +16,19 @@ import { PartialPayableDto } from './dtos/partial-payable.dto';
 import { MessagePattern } from '@nestjs/microservices';
 import {
   PayableQueueProvider,
-  PATTERN_PAYABLE_BATCH,
+  ROUTE_PAYABLE_BATCH,
   PayableBatchMessage,
+  PAYABLE_BATCH_QUEUE,
 } from 'src/microservices/rmq/payable-queue.service';
 import { BatchPayableDto } from './dtos/batch-payable.dto';
 import { PaginationDto } from 'src/dtos/pagination.dto';
+import { ROUTE_PAYABLE_BATCH_DEAD_LETTER } from 'src/microservices/rmq/payable-dead-letter-queue.service';
+import { EmailService } from 'src/microservices/email/email.service';
 
 @Controller('/integrations/payable')
 export class PayableController {
   constructor(
+    private readonly emailService: EmailService,
     private readonly payableService: PayableService,
     private readonly payableQueueProvider: PayableQueueProvider,
   ) { }
@@ -55,7 +58,6 @@ export class PayableController {
   @Get()
   async getPage(@Query() queryDto: PaginationDto) {
     const { page, limit, cursorId } = queryDto;
-    console.log(`[Log:queryDto]:`, queryDto);
     const pagination = await this.payableService.getPage({
       page,
       limit,
@@ -72,33 +74,28 @@ export class PayableController {
 
   @Post('batch')
   async emitPayableBatch(@Body() dto: BatchPayableDto) {
-    const promises = dto.payables.map(async (p) => {
-      return this.payableQueueProvider.sendBatch({ data: p });
+    const FIRST_TRY = 0;
+
+    dto.payables.forEach(async (p) => {
+      void this.payableQueueProvider.sendBatch({ data: p, tryCount: FIRST_TRY });
     });
 
-    let fulfilledCount = 0;
-    const rejectedValues: PromiseSettledResult<PayableDto>[] = [];
-    const promiseResults = await Promise.allSettled(promises);
-    for (const result of promiseResults) {
-      if (result.status === 'fulfilled') {
-        fulfilledCount++;
-      }
-      else if (result.status === 'rejected') {
-        const throwedErrorMessage = result.reason.message;
-        if (throwedErrorMessage) {
-          rejectedValues.push(throwedErrorMessage);
-        } else {
-          rejectedValues.push(result.reason);
-        }
-      }
-    }
-
-    return { fulfilledCount, rejectedValues };
+    return { sent: true, queueName: PAYABLE_BATCH_QUEUE };
   }
 
   /** Consume values emitted by {@link PayableQueueProvider['sendBatch']}. */
-  @MessagePattern(PATTERN_PAYABLE_BATCH)
+  @MessagePattern(ROUTE_PAYABLE_BATCH)
   public async consumePayableBatch(msg: PayableBatchMessage): Promise<void> {
-    await this.payableService.createPayable(msg.data);
+    try {
+      await this.payableService.createPayable(msg.data);
+    } catch (err: any) {
+      return this.payableQueueProvider.sendBatch(msg);
+    }
+  }
+
+  /** Consume values emitted by {@link PayableDeadLetterQueueProvider['send']}. */
+  @MessagePattern(ROUTE_PAYABLE_BATCH_DEAD_LETTER)
+  public async sendPayableBatchEmail(msg: PayableBatchMessage): Promise<void> {
+    await this.emailService.sendAssignorEmailToAdmin(msg);
   }
 }

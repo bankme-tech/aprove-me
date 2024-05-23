@@ -5,12 +5,12 @@ export class PaginationDto {
   @Type(() => Number)
   @IsOptional()
   @IsInt()
-  page?: number = 1;
+  page: number = 1;
 
   @Type(() => Number)
   @IsOptional()
   @IsInt()
-  limit?: number = 10;
+  limit: number = 10;
 
   @IsOptional()
   @IsString()

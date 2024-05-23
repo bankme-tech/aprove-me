@@ -21,7 +21,7 @@ UserRepository should have the following methods:
 - findOne: get by login but don't hide password and salt.
 - findOneWithUnsafeData: get user with all data.
 
-## Chat
+## ChatGPT
 Here's an example of how you can create a `UserRepository` following the NestJS `@Injectable()` pattern using Prisma for the database operations:
 
 ```typescript
@@ -70,3 +70,60 @@ Explanation:
 - The `findOne` method retrieves a user by their login, without hiding the password and salt.
 - The `findOneWithUnsafeData` method retrieves a user with all data, including the password and salt.
 - The `findByCredentials` method retrieves a user by their login and password.
+
+--------------------------------------------------------------------------------
+## You
+On NestJS how to register the `import { ClientsModule } from "@nestjs/microservices";` rabbitmq rmq module accessing ConfigService .env variables?
+
+## ChatGPT
+In NestJS, when using the `@nestjs/microservices` package to work with RabbitMQ, you can indeed access environment variables using the `ConfigModule` and `ConfigService`. Here's how you can register the `ClientsModule` for RabbitMQ while accessing `.env` variables:
+
+First, ensure you have your `.env` file configured with RabbitMQ connection details. For example:
+
+```
+RABBITMQ_HOST=localhost
+RABBITMQ_PORT=5672
+RABBITMQ_USER=myuser
+RABBITMQ_PASSWORD=mypassword
+```
+
+Then, you need to set up your NestJS application to use the `ConfigModule` to load these variables. Here's how you can do it:
+
+```typescript
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot(), // Load environment variables from .env file
+    ClientsModule.registerAsync([{
+      name: 'RABBITMQ_CONNECTION', // Unique name for the connection
+      imports: [ConfigModule], // Import ConfigModule to access ConfigService
+      inject: [ConfigService], // Inject ConfigService to access environment variables
+      useFactory: async (configService: ConfigService) => ({
+        transport: Transport.RMQ,
+        options: {
+          urls: [`amqp://${configService.get('RABBITMQ_HOST')}:${configService.get('RABBITMQ_PORT')}`],
+          queue: 'your_queue_name',
+          queueOptions: {
+            durable: false,
+          },
+        },
+      }),
+    }]),
+  ],
+})
+export class AppModule {}
+```
+
+In this example:
+
+- `ConfigModule.forRoot()` is used to load environment variables from the `.env` file.
+- `ClientsModule.registerAsync()` is used to register the RabbitMQ client asynchronously, allowing you to inject and use the `ConfigService` to access environment variables.
+- The `useFactory` function within `registerAsync` is where you construct the RabbitMQ connection options using the values fetched from the `ConfigService`.
+
+Ensure you import the necessary modules and packages (`ConfigModule`, `ConfigService`, `ClientsModule`, `Transport`) from NestJS and `@nestjs/config`. Adjust the queue name and other options as per your requirements.
+
+--------------------------------------------------------------------------------
+

@@ -7,15 +7,16 @@ import {
 } from "@nestjs/microservices";
 import { RabbitmqConnection } from "./connect-queues";
 import { PayableDto } from "src/integrations/payables/dtos/payables.dto";
+import { ROUTE_PAYABLE_BATCH_DEAD_LETTER, PAYABLE_DEAD_LETTER_INJECT_TOKEN } from "./payable-dead-letter-queue.service";
 
 /** Unique name for the connection */
 export const PAYABLE_BATCH_INJECT_TOKEN = "PAYABLE_BATCH_INJECT_TOKEN";
 export const PAYABLE_BATCH_QUEUE = "q_payable_batch";
-/** Controller unique `@MessagePattern(patternPayableBatch)`. */
-export const PATTERN_PAYABLE_BATCH = "payable-batch";
+/** Controller unique `@MessagePattern(PATTERN_PAYABLE_BATCH)`. */
+export const ROUTE_PAYABLE_BATCH = "payable-batch";
 
 export interface PayableBatchMessage {
-  // tryCount: number;
+  tryCount: number;
   data: PayableDto;
 }
 
@@ -23,14 +24,21 @@ export interface PayableBatchMessage {
 export class PayableQueueProvider {
   public constructor(
     @Inject(PAYABLE_BATCH_INJECT_TOKEN) private readonly client: ClientProxy,
+    @Inject(PAYABLE_DEAD_LETTER_INJECT_TOKEN) private readonly deadLetterClient: ClientProxy,
   ) { }
 
-  // private readonly TRY_LIMIT = 4;
+  private readonly TRY_LIMIT = 4;
 
   /** Send payable to {@link PAYABLE_BATCH_QUEUE}. */
   async sendBatch(msg: PayableBatchMessage) {
-    // TODO: if (event.tryCount === TRY_LIMIT) { // send to dead letter. }
-    const sendBatch$ = this.client.send(PATTERN_PAYABLE_BATCH, msg);
+    if (this.TRY_LIMIT === msg.tryCount) {
+      console.log(`[LIMIT::Log:msg]:`, msg);
+      const sendBatch$ = this.client.send(ROUTE_PAYABLE_BATCH_DEAD_LETTER, msg);
+      return sendBatch$.toPromise();
+    }
+
+    msg.tryCount = msg.tryCount + 1;
+    const sendBatch$ = this.client.send(ROUTE_PAYABLE_BATCH, msg);
     // TODO: @deprecated replace and test with `return firstValueFrom(send$);`
     return sendBatch$.toPromise();
   }

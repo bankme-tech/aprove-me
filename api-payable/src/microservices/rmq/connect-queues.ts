@@ -1,3 +1,4 @@
+import { getPayableBatchDLQConsumer } from "./payable-dead-letter-queue.service";
 import { getPayableBatchConsumer } from "./payable-queue.service";
 import { INestApplication } from "@nestjs/common";
 
@@ -15,5 +16,8 @@ export function connectQueues(
 ): void {
   const payableBatchConsumer = getPayableBatchConsumer(rabbitmqConnection);
   app.connectMicroservice(payableBatchConsumer);
+
+  const payableBatchDLQConsumer= getPayableBatchDLQConsumer(rabbitmqConnection);
+  app.connectMicroservice(payableBatchDLQConsumer);
 };
 

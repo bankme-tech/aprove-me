@@ -9,6 +9,7 @@ export class PayableService {
   constructor(private prisma: PrismaService) { }
 
   async createPayable(dto: PayableDto): Promise<Payable> {
+      throw new Error('Force error');
     return this.prisma.payable.create({
       data: {
         value: dto.value,
@@ -31,8 +32,8 @@ export class PayableService {
 
   async getPage(params: {
     limit: number,
+    page: number,
     cursorId: string,
-    page?: number,
     includeAssignor: boolean,
   }) {
     const { limit, cursorId, page, includeAssignor } = params;
