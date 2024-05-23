@@ -2,17 +2,17 @@
 
 import { z } from "zod";
 import { AxiosError } from "axios";
-import { axiosInstance } from "@/api/api";
 import { useForm } from "react-hook-form";
 import { Assignor } from "./assignor-card";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import getAssignors from "@/api/getAssignors";
 import { Button } from "@/components/ui/button";
+import createPayable from "@/api/createPayable";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import createPayable from "@/api/createPayable";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   value: z.coerce.number().min(1),
@@ -35,7 +35,7 @@ export function CreatePayableForm() {
 
   useEffect(() => {
     const fetchAssignors = async () => {
-      const { data } = await axiosInstance.get<Assignor[]>("/assignor");
+      const data = await getAssignors();
       setAssignors(data);
       setFetching(false);
     };

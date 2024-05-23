@@ -12,7 +12,11 @@ export async function PayableList() {
         <Button className="mb-5">Cadastrar novo pagável</Button>
       </Link>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full mb-14">
-        {data?.map((payable) => <PayableCard payable={payable} key={payable.id} />)}
+        {data?.map((payable) => (
+          <Link href={`/payables/${payable.id}`} key={payable.id}>
+            <PayableCard payable={payable} key={payable.id} />
+          </Link>
+        ))}
       </div>
     </div>
   );
