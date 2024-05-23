@@ -19,14 +19,14 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: { login },
     });
-
+    // Caso, o usuário não exista no banco de dados, retorna mensagem de erro.
     if (!user) {
       return {
         status: 400,
         body: { message: 'Usuário não encontrado.' },
       } as AuthServiceResponse;
     }
-
+    // Caso o usuário exista, compara a senha submetida com a hash salva no banco. Se correto, retorna mensagem de sucesso e o novo token gerado.
     if (bcrypt.compareSync(password, user.password)) {
       const newToken = this.jwtService.sign({
         userId: user.id,
