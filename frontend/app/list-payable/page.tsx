@@ -33,12 +33,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, LogOut } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUpdatePayable } from "@/hooks/useUpdatePayable";
 import { useDeletePayable } from "@/hooks/useDeletePayable";
+import { useRouter } from "next/navigation";
+import Cookie from "js-cookie";
+
 const formSchema = z.object({
   value: z.string({
     required_error: "Valor não pode ser vazio",
@@ -49,6 +52,7 @@ const formSchema = z.object({
 });
 
 export default function Page() {
+  const router = useRouter();
   const { payables } = useListPayable();
   const { updatePayable } = useUpdatePayable();
   const { deletePayable } = useDeletePayable();
@@ -81,12 +85,25 @@ export default function Page() {
   }
 
   async function handleDeleteClick(id: any) {
-    await deletePayable({id});
+    await deletePayable({ id });
+  }
+
+  function handleLogout() {
+    Cookie.remove("user_token");
+    router.push("/login");
   }
 
   return (
     <div className="p-5">
-      <h1 className="text-2xl font-bold">Lista de Pagáveis</h1>
+      <div className="flex justify-between mb-10">
+        <h1 className="text-2xl font-bold">Lista de Pagáveis</h1>
+        <div className="mt-5">
+          <Button className="flex gap-2 bg-[#0a36b0]" onClick={handleLogout}>
+            Logout
+            <LogOut className="mr-2 h-4 w-4" />
+          </Button>
+        </div>
+      </div>
       <Table>
         <TableCaption>LIsta de todos seus pagáveis</TableCaption>
         <TableHeader>
