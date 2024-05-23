@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 model Payable {
@@ -18,7 +18,7 @@ model Payable {
   value        Float
   emissionDate DateTime @default(now())
   assignorId   String
-  assignor     Assignor @relation(fields: [assignorId], references: [id])
+  assignor     Assignor @relation(fields: [assignorId], references: [id], onDelete: Cascade)
 
   @@map("payables")
 }
