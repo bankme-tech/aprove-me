@@ -7,7 +7,10 @@ export class PayableMapper {
     let assignor: AssignorEntity;
 
     if (raw.assignor) {
-      const assignorOrError = AssignorEntity.create(raw.assignor);
+      const assignorOrError = AssignorEntity.create(
+        raw.assignor,
+        raw.assignorId,
+      );
 
       if (assignorOrError.isLeft())
         throw new Error(
