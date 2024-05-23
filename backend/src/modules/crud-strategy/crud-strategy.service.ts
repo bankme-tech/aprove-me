@@ -17,8 +17,8 @@ export class CrudStrategyService<T, C, U> {
     return await this.prisma[this.model].create({ data });
   }
 
-  async findAll(): Promise<T[]> {
-    return await this.prisma[this.model].findMany();
+  async findMany({ skip = 0, take = 10 }): Promise<T[]> {
+    return await this.prisma[this.model].findMany({ skip, take });
   }
 
   async findOne(query: PrismaQuery | string): Promise<T> {

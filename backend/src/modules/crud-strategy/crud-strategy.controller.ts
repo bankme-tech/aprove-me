@@ -6,10 +6,13 @@ import {
   Get,
   HttpCode,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
+  Query,
   Req,
 } from '@nestjs/common';
+import { ApiQuery } from '@nestjs/swagger';
 import { CrudStrategyService } from './crud-strategy.service';
 
 @Controller()
@@ -23,8 +26,24 @@ export class CrudStrategyController<T, C, U> {
   }
 
   @Get()
-  async findAll(): Promise<T[]> {
-    return await this.baseCrudService.findAll();
+  @ApiQuery({
+    name: 'page',
+    required: true,
+    type: Number,
+    description: 'Número da página',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: true,
+    type: Number,
+    description: 'Quantidade de itens por página',
+  })
+  async findAll(
+    @Query('page', ParseIntPipe) page = 1,
+    @Query('limit', ParseIntPipe) limit = 10,
+  ): Promise<T[]> {
+    const skip = (page - 1) * limit;
+    return await this.baseCrudService.findMany({ skip, take: limit });
   }
 
   @Get(':id')
