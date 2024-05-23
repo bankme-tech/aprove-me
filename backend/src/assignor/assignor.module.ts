@@ -23,5 +23,6 @@ import { PrismaAssignorMapper } from './mappers/prisma-assignor.mapper';
       useClass: PrismaAssignorRepository,
     },
   ],
+  exports: [IAssignorRepository],
 })
 export class AssignorModule {}
