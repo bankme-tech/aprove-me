@@ -38,8 +38,7 @@ npm run dev
 ```
 Pronto. O servidor irá inicializar na porta 3000.
 
-**BACKEND**
-O backend da aplicação tem dois modos de se usar, através do servidor Nest normal ou então através de um container docker, cujos arquivos encontram-se na pasta.
+**BACKEND:** O backend da aplicação tem dois modos de se usar, através do servidor Nest normal ou então através de um container docker, cujos arquivos encontram-se na pasta.
 Evidenciarei cada um deles, começando pelo servidor normal Nest.
 
 **SERVIDOR NEST**
