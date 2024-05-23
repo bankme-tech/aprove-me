@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/atoms/Button";
 import { Dialog } from "@/components/organisms/Dialog";
-import { FormAssignor } from "@/components/organisms/FormAssignor";
+import { FormPayable } from "@/components/organisms/FormPayable";
 import { Table } from "@/components/organisms/Table";
 import { useRouter } from "next/navigation";
 
@@ -18,9 +18,8 @@ const Payable = () => {
           confirm="Cadastrar"
           cancel="Cancelar"
           router={router}
-          padding
         >
-          <FormAssignor />
+          <FormPayable />
         </Dialog>
         <Button label="Importar pagavéis" />
       </div>

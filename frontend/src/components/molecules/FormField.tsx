@@ -4,11 +4,11 @@ type FormField = {
   title: string;
 };
 
-export const FormField = ({ title }: FormField) => {
+export const FormField = ({ title, form, name, ...props }: any) => {
   return (
     <div>
-      <p className="mb-2 text-lg font-semibold">{title}</p>
-      <Field />
+      <label className="text-lg font-semibold">{title}</label>
+      <Field form={form} {...props} />
     </div>
   );
 };

@@ -1,27 +1,63 @@
+"use client";
+
+import { authenticate } from "@/services";
+import { isAxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { Button } from "../atoms/Button";
 import { FormField } from "../molecules/FormField";
 
-// TODO: To media lees than tablet the component has different
-
+// TODO: To media less than tablet the component has different
 export const FormLogin = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const router = useRouter();
+
+  const onSubmit = async (data: any) => {
+    const authenticated = await authenticate(data);
+    console.log("🚀 ~ onSubmit ~ authenticated:", authenticated);
+    if (isAxiosError(authenticated)) {
+      return;
+    }
+
+    localStorage.setItem("token", authenticated.access_token);
+
+    router.push("/payable");
+  };
+
   return (
-    <div className="flex flex-col gap-12 w-1/2 h-full">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-12 w-1/2 h-full"
+    >
       <p className="text-6xl text-end mb-32">
         <span className="font-bold text-primary">Bankme</span> o seu banco
         preferido!
       </p>
 
-      <FormField title="Login" />
-      <FormField title="Senha" />
+      <FormField
+        title="Login"
+        placeholder="Digite seu login..."
+        form={{ name: "login", register }}
+      />
+      <FormField
+        title="Senha"
+        type="password"
+        placeholder="Digite sua senha..."
+        form={{ name: "password", register }}
+      />
 
       <div className="flex items-center justify-between">
         <p className="text-2xl text-primary-dark underline">
           Esqueceu sua senha ?
         </p>
         <div className="w-1/3">
-          <Button label="Logar" />
+          <Button type="submit" label="Logar" />
         </div>
       </div>
-    </div>
+    </form>
   );
 };
