@@ -9,8 +9,7 @@ services:
     ports:
       - 3333:3333
     volumes:
-      - ./packages/api:/home/node/app
-      - ./node_modules:/home/node/app/node_modules
+      - ./packages/api/prisma:/home/node/app/prisma
     depends_on:
       - rabbitmq
     networks:
@@ -23,9 +22,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
-    volumes:
-      - ./packages/web:/home/node/app
-      - ./node_modules:/home/node/app/node_modules
     depends_on:
       - api
     networks:

@@ -1,13 +1,15 @@
-FROM node:22
+FROM node:22 AS builder
 
 USER node
 
 WORKDIR /home/node/app
 
-COPY package.json .
+COPY package.json ./
 
-RUN yarn
+RUN yarn --frozen-lockfile
 
 COPY . .
 
-CMD ["yarn", "dev"]
+RUN yarn build
+
+CMD ["yarn", "start"]
