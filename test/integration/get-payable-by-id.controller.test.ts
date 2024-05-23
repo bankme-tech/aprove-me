@@ -81,15 +81,17 @@ describe('# Teste de Integração - GET: POST: /integrations/payable/:id', () =>
       .get(`/integrations/payable/${receivableFour.id}`)
       .expect(HttpStatus.OK);
 
-    expect(body).toEqual(    {
+    expect(body).toEqual({
       emissionDate: receivableFour.emissionDate,
       value: receivableFour.value,
       assignor: {
+        id: assignor.id,
         document: assignor.document,
         email: assignor.email,
         phone: assignor.phone,
-        name: assignor.name
-      }
+        name: assignor.name,
+        receivables: []
+      },
     });
   });
 });

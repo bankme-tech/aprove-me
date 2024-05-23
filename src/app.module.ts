@@ -14,6 +14,7 @@ import { DatabaseModule } from './infra/database/database.module';
 import { PayableController } from './application/payable.controller';
 import { CreatePayableUsecase } from './application/create-payable.usecase';
 import { GetPayableUsecase } from './application/get-payable.usecase';
+import { GetAssignorUsecase } from './application/get-assignor.usecase';
 
 @Module({
   imports: [
@@ -50,6 +51,12 @@ import { GetPayableUsecase } from './application/get-payable.usecase';
         new GetPayableUsecase(receivableRepo),
       inject: ['IReceivableRepository'],
     },
+    {
+      provide: GetAssignorUsecase,
+      useFactory: (assignorRepo: PrismaAssignorRepository) =>
+        new GetAssignorUsecase(assignorRepo),
+      inject: ['IAssignorRepository'],
+    },    
   ],
 })
 export class AppModule implements NestModule {

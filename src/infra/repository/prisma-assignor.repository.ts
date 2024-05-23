@@ -35,12 +35,14 @@ export class PrismaAssignorRepository implements IAssignorRepository {
     });
 
     if (assignor) {
-       const entity = new AssignorEntity({ ...assignor,  });
-       assignor.receivables?.forEach((receivable) => entity.addReceivable(receivable));
+      const entity = new AssignorEntity({ ...assignor });
+      assignor.receivables?.forEach((receivable) =>
+        entity.addReceivable(receivable)
+      );
 
-       return entity;
-    } 
-    
+      return entity;
+    }
+
     return null;
   }
 }
