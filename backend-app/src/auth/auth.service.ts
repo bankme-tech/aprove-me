@@ -1,8 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { AuthServiceResponse } from '../types';
 
 /**Camada de serviço da rota de autenticação. Responsável pelo processo de login do usuário.*/
 @Injectable()
@@ -11,26 +12,31 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
   ) {}
+
   /**Checa que o usuário existe no banco de dados e compara a senha encriptada. Se tudo estiver correto, retorna um novo token de autenticação. Se não, retorna um erro de "Usuário Inválido". */
   async login(loginAuthDto: LoginAuthDto) {
-    try {
-      const response = await this.prisma.user.findUnique({
-        where: {
-          login: loginAuthDto.login,
-        },
+    const { login, password } = loginAuthDto;
+    const user = await this.prisma.user.findUnique({
+      where: { login },
+    });
+
+    if (!user) {
+      return {
+        status: 400,
+        body: { message: 'Usuário não encontrado.' },
+      } as AuthServiceResponse;
+    }
+
+    if (bcrypt.compareSync(password, user.password)) {
+      const newToken = this.jwtService.sign({
+        userId: user.id,
+        username: login,
       });
-      if (
-        response &&
-        (await bcrypt.compare(loginAuthDto.password, response.password))
-      ) {
-        const newToken = this.jwtService.sign({
-          userId: response.id,
-          username: response.login,
-        });
-        return newToken;
-      }
-    } catch (err) {
-      throw new UnauthorizedException('Usuário inválido.');
+      return {
+        status: 200,
+        body: { message: 'Login efetuado com sucesso.' },
+        newToken,
+      } as AuthServiceResponse;
     }
   }
 }
