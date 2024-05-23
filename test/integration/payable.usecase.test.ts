@@ -1,12 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 
-import { PayableUsecase } from '../../src/application/payable.usecase';
 import { PrismaAssignorRepository } from '../../src/infra/repository/prisma-assignor.repository';
+import { PrismaReceivableRepository } from '../../src/infra/repository/prisma-receivable.repository';
+
+import { PayableUsecase } from '../../src/application/payable.usecase';
 
 describe('# Test de Integração - Payable Usecase', () => {
   let usecase: PayableUsecase;
-  let repository: PrismaAssignorRepository;
+  let assignorRepo: PrismaAssignorRepository;
+  let receivableRepo: PrismaReceivableRepository;
+
   const prisma = new PrismaClient();
 
   beforeAll(async () => {
@@ -14,8 +18,10 @@ describe('# Test de Integração - Payable Usecase', () => {
   });
 
   beforeEach(() => {
-    repository = new PrismaAssignorRepository(prisma);
-    usecase = new PayableUsecase(repository);
+    assignorRepo = new PrismaAssignorRepository(prisma);
+    receivableRepo = new PrismaReceivableRepository(prisma);
+
+    usecase = new PayableUsecase(assignorRepo, receivableRepo);
   });
 
   it('deve adicionar um novo cedente', async () => {
@@ -59,18 +65,29 @@ describe('# Test de Integração - Payable Usecase', () => {
     await prisma.assignor.create({
       data: {
         id,
-        document: input.document,
+        document: '54501989000146',
         email: input.email,
         phone: input.phone,
         name: input.name,
+        receivables: {
+          createMany: {
+            data: input.receivables.map((receivable) => ({
+              id,
+              emissionDate: receivable.emissionDate,
+              value: receivable.value,
+            })),
+          },
+        },
       },
     });
 
     await usecase.execute(input);
     const created = await prisma.assignor.findUnique({
       where: { document: '54501989000146' },
+      include: { receivables: true },
     });
 
     expect(created).toBeDefined();
+    expect(created?.receivables.length).toStrictEqual(1);
   });
 });

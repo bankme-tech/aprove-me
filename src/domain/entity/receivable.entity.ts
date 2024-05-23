@@ -5,14 +5,14 @@ export type ReceivableProps = {
   id?: string;
   value: number;
   emissionDate: Date | string;
-  assignor: string;
+  assignorId: string;
 };
 
 export class ReceivableEntity extends Entity {
   readonly id: UniqueEntityIdVO;
   readonly value: number;
   readonly emissionDate: Date;
-  readonly assignor: UniqueEntityIdVO;
+  readonly assignorId: UniqueEntityIdVO;
 
   constructor(props: ReceivableProps) {
     super();
@@ -21,7 +21,7 @@ export class ReceivableEntity extends Entity {
       : new UniqueEntityIdVO();
     this.value = props.value;
     this.emissionDate = new Date(props.emissionDate);
-    this.assignor = new UniqueEntityIdVO(props.assignor);
+    this.assignorId = new UniqueEntityIdVO(props.assignorId);
   }
 
   static create(input: Omit<ReceivableProps, 'id'>): ReceivableEntity {
@@ -32,7 +32,7 @@ export class ReceivableEntity extends Entity {
     return {
       ...this,
       id: this.id.value,
-      assignor: this.assignor.value,
+      assignor: this.assignorId.value,
     };
   }
 }

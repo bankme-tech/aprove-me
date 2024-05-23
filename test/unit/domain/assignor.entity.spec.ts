@@ -37,7 +37,7 @@ describe('Teste de Unidade - AssignorEntity', () => {
     expect(assignorPF).toBeInstanceOf(AssignorEntity);
     expect(assignorPF.id).toBeDefined();
     expect(assignorPF.id).toBeInstanceOf(UniqueEntityIdVO);
-    expect(assignorPF.document.equals(expectedCpf)).toBeTruthy();
+    expect(assignorPF.document.equals(expectedCpf as any)).toBeTruthy();
     expect(assignorPF.email.equals(expectedEmail)).toBeTruthy();
     expect(assignorPF.phone.equals(expectedPhone)).toBeTruthy();
     expect(assignorPF.name).toStrictEqual(expectedName);
@@ -68,7 +68,7 @@ describe('Teste de Unidade - AssignorEntity', () => {
     expect(assignorPJ).toBeInstanceOf(AssignorEntity);
     expect(assignorPJ.id).toBeDefined();
     expect(assignorPJ.id).toBeInstanceOf(UniqueEntityIdVO);
-    expect(assignorPJ.document.equals(expectedCnpj)).toBeTruthy();
+    expect(assignorPJ.document.equals(expectedCnpj as any)).toBeTruthy();
     expect(assignorPJ.email.equals(expectedEmail)).toBeTruthy();
     expect(assignorPJ.phone.equals(expectedPhone)).toBeTruthy();
     expect(assignorPJ.name).toStrictEqual(expectedName);
@@ -100,7 +100,7 @@ describe('Teste de Unidade - AssignorEntity', () => {
 
     expect(assignorPF).toBeInstanceOf(AssignorEntity);
     expect(assignorPF.id.equals(expectedId)).toBeTruthy();
-    expect(assignorPF.document.equals(expectedCnpj)).toBeTruthy();
+    expect(assignorPF.document.equals(expectedCnpj as any)).toBeTruthy();
     expect(assignorPF.email.equals(expectedEmail)).toBeTruthy();
     expect(assignorPF.phone.equals(expectedPhone)).toBeTruthy();
     expect(assignorPF.name).toStrictEqual(expectedName);

@@ -10,7 +10,8 @@ export default {
   ],
   coverageReporters: ['json', 'text', 'lcov', 'clover'],
   roots: ['<rootDir>/test', '<rootDir>/src'],
-  transform: { '.+\\.ts$': '@swc/jest' },
+  preset: 'ts-jest',
+  transform: { '.+\\.ts$': 'ts-jest' },
   watchPathIgnorePatterns: ['globalConfig'],
   setupFiles: ['<rootDir>/.jest/setup.ts'],
   testEnvironmentOptions: {

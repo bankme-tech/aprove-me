@@ -6,8 +6,8 @@ const prisma = new PrismaClient();
 
 async function setup() {
   try {
-    await prisma.assignor.deleteMany();
     await prisma.receivable.deleteMany();
+    await prisma.assignor.deleteMany();
   } catch (error) {
     console.error('Error during setup:', error);
   } finally {

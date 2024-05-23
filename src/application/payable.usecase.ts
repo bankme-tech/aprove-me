@@ -1,13 +1,20 @@
-import { AssignorEntity } from '../domain/entity';
-import { IAssignorRepository } from '../domain/repository/assignor-repository.interface';
+import {
+  IReceivableRepository,
+  IAssignorRepository,
+} from '../domain/repository';
+import { AssignorEntity, ReceivableEntity } from '../domain/entity';
 
 export class PayableUsecase {
-  constructor(private readonly assignorRepo: IAssignorRepository) {}
+  constructor(
+    private readonly assignorRepo: IAssignorRepository,
+    private readonly receivableRepo: IReceivableRepository
+  ) {}
 
   async execute(input: Input): Promise<void> {
     let assignor: AssignorEntity | null;
+    const sanitizedDocument = input.document.replace(/\D/g, '');
 
-    assignor = await this.assignorRepo.findByDocument(input.document);
+    assignor = await this.assignorRepo.findByDocument(sanitizedDocument);
 
     if (!assignor) {
       assignor = AssignorEntity.create({
@@ -20,13 +27,22 @@ export class PayableUsecase {
       await this.assignorRepo.add(assignor);
     }
 
-    input.receivables.forEach((receivable) => {
-      assignor.addReceivable({
-        value: receivable.value,
-        emissionDate: receivable.emissionDate,
-        assignor: assignor.id.value,
-      });
-    });
+    await this.addReceivables(assignor, input.receivables);
+  }
+
+  private async addReceivables(
+    assignor: AssignorEntity,
+    receivables: ReceivableInput[]
+  ): Promise<void> {
+    const entities = receivables.map((item) =>
+      ReceivableEntity.create({
+        assignorId: assignor.id.value,
+        emissionDate: item.emissionDate,
+        value: item.value,
+      })
+    );
+
+    this.receivableRepo.addMany(entities);
   }
 }
 
@@ -35,8 +51,10 @@ type Input = {
   email: string;
   phone: string;
   name: string;
-  receivables: {
-    value: number;
-    emissionDate: Date;
-  }[];
+  receivables: ReceivableInput[];
+};
+
+type ReceivableInput = {
+  value: number;
+  emissionDate: Date;
 };
