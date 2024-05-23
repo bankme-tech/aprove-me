@@ -17,6 +17,8 @@ model User {
   id       String @id @default(uuid())
   login    String @unique
   password String
+
+  Assignor Assignor?
 }
 
 model Assignor {
@@ -26,6 +28,9 @@ model Assignor {
   phone    String
   name     String
   payables Payable[]
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model Payable {

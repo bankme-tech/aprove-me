@@ -4,7 +4,7 @@ import { INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import request from "supertest";
 
-describe("Register Assignor (E2E)", () => {
+describe("Register Assignor User (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
 
@@ -20,24 +20,37 @@ describe("Register Assignor (E2E)", () => {
     await app.init();
   });
 
-  test("[POST] /integrations/assignor/register", async () => {
+  test("[POST] /integrations/auth", async () => {
     const response = await request(app.getHttpServer())
-      .post("/integrations/assignor/register")
+      .post("/integrations/auth")
       .send({
-        document: "01114569874",
-        email: "janedoe@mail.com",
-        name: "Jane Doe",
-        phone: "31998594864",
+        user: {
+          login: "jane.doe",
+          password: "jane123",
+        },
+        assignor: {
+          document: "01114569874",
+          email: "janedoe@mail.com",
+          name: "Jane Doe",
+          phone: "31998594864",
+        },
       });
 
     expect(response.statusCode).toBe(201);
 
-    const userOnDatabase = await prisma.assignor.findUnique({
+    const userOnDatabase = await prisma.user.findUnique({
+      where: {
+        login: "jane.doe",
+      },
+    });
+
+    const assignorOnDatabase = await prisma.assignor.findUnique({
       where: {
         document: "01114569874",
       },
     });
 
     expect(userOnDatabase).toBeTruthy();
+    expect(assignorOnDatabase).toBeTruthy();
   });
 });

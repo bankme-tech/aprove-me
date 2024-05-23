@@ -11,7 +11,6 @@ import { RemovePayableService } from "@/domain/receivables/application/services/
 import { RegisterUserService } from "@/domain/account/application/services/register-user";
 import { AuthenticateUserService } from "@/domain/account/application/services/authenticate-user";
 import { ReceivePayableAndAssignorController } from "./controllers/receive-payable-and-assignor.controller";
-import { CreateAccountController } from "./controllers/create-account.controller";
 import { AuthenticateController } from "./controllers/authenticate.controller";
 import { GetPayableByIdController } from "./controllers/get-payable-by-id.controller";
 import { GetAssignorByIdController } from "./controllers/get-assignor-by-id.controller";
@@ -20,13 +19,12 @@ import { DeleteAssignorByIdController } from "./controllers/delete-assignor-by-i
 import { DeletePayableByIdController } from "./controllers/delete-payable-by-id.controller";
 import { EditAssignorController } from "./controllers/edit-assignor.controller";
 import { EditPayableController } from "./controllers/edit-payable.controller";
-import { RegisterAssignorController } from "./controllers/regiter-assignor.controller";
+import { RegisterAssignorUserController } from "./controllers/regiter-assignor-user.controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
     ReceivePayableAndAssignorController,
-    CreateAccountController,
     AuthenticateController,
     GetPayableByIdController,
     GetAssignorByIdController,
@@ -34,7 +32,7 @@ import { RegisterAssignorController } from "./controllers/regiter-assignor.contr
     DeletePayableByIdController,
     EditAssignorController,
     EditPayableController,
-    RegisterAssignorController,
+    RegisterAssignorUserController,
   ],
   providers: [
     //Account Services

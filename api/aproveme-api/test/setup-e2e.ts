@@ -2,7 +2,6 @@ import { config } from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { execSync } from "node:child_process";
 import { envSchema } from "@/infra/env/env";
-import { before } from "node:test";
 
 // Carregar variáveis de ambiente para testes
 config({

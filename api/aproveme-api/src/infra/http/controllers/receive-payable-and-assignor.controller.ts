@@ -51,7 +51,6 @@ export class ReceivePayableAndAssignorController {
 
     const createAssignorResult = await this.createAssignor.execute({
       assignor: {
-        id: userId,
         document: assignor.document,
         email: assignor.email,
         name: assignor.name,
