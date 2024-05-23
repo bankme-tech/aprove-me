@@ -13,6 +13,7 @@ export class AuthController {
   @ApiBody({ type: OmitType(UserDto, ['id']) })
   @Post()
   signIn(@Body() signInDto: Omit<UserDto, 'id'>) {
+    console.log('🚀 ~ AuthController ~ signIn ~ signInDto:', signInDto);
     return this.authService.signIn(signInDto);
   }
 

@@ -1,3 +1,4 @@
+import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AppController } from './app.controller';
@@ -9,7 +10,18 @@ import { PayableModule } from './modules/payable/payable.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
-  imports: [PayableModule, AssignorModule, AuthModule, UserModule],
+  imports: [
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
+    PayableModule,
+    AssignorModule,
+    AuthModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,

@@ -32,7 +32,6 @@ export class PayableController extends CrudStrategyController<any, any, any> {
     @Body() createDto: Omit<PayableDto, 'id'>,
     @Req() req,
   ): Promise<Payable> {
-    console.log('🚀 ~ PayableController ~ req:', req);
     return await this.payableService.create(createDto, req.user as JwtPayload);
   }
 
