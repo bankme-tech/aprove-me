@@ -18,6 +18,7 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { api } from '@/services/api';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -40,15 +41,15 @@ export default function SignUp() {
     const fullName = `${name} ${formData['last-name']}`;
     setIsLoading(true); 
 
-  
+   
     try {
-      const response = await axios.post('http://localhost:3003/users', {
+      const response = await api.post('/users', {
         name: fullName,
         email,
         password,
       });
 
-
+      router.push('/payable-assignor-create');
       toast.success("Usuário cadastrado com sucesso!", {
       
         description: "Você foi cadastrado com sucesso!",
@@ -58,13 +59,13 @@ export default function SignUp() {
         }
       });
     } catch (error) {
-      console.error('Erro ao cadastrar usuário:', error);
+
       if ((error as any).response && (error as any).response.data && (error as any).response.data.message) {
         toast.error("Erro ao cadastrar usuário!", {
           description: (error as any).response.data.message,
           action: {   
             label: "Fechar",
-            onClick: () => console.log("Fechar"),
+            onClick: () => ("Fechar"),
           }
         });
       } else {
@@ -72,7 +73,7 @@ export default function SignUp() {
           description: "Erro desconhecido",
           action: {
             label: "Fechar",
-            onClick: () => console.log("Fechar"),
+            onClick: () => ("Fechar"),
           }
         });
       }
