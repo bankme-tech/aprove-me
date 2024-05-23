@@ -33,8 +33,19 @@ export class AssignorService {
     });
   }
 
-  update(id: number, updateAssignorDto: UpdateAssignorDto) {
-    return `This action updates a #${id} assignor`;
+  async update(id: string, updateAssignorDto: UpdateAssignorDto) {
+    const assignorData = await this.findOne(id);
+    if (!assignorData) return;
+    const assignor = new Assignor({ ...assignorData, ...updateAssignorDto });
+    return this.prismaService.assignor.update({
+      where: { id },
+      data: {
+        document: assignor.document,
+        email: assignor.email,
+        name: assignor.name,
+        phone: assignor.phone,
+      },
+    });
   }
 
   remove(id: number) {

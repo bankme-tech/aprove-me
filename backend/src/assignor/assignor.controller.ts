@@ -34,11 +34,13 @@ export class AssignorController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateAssignorDto: UpdateAssignorDto,
   ) {
-    return this.assignorService.update(+id, updateAssignorDto);
+    const result = await this.assignorService.update(id, updateAssignorDto);
+    if (!result) throw new NotFoundException();
+    return result;
   }
 
   @Delete(':id')
