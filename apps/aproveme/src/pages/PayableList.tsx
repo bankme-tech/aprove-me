@@ -1,11 +1,10 @@
-import { useEffect } from "react";
 import {
   useQuery,
   useMutation,
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { toast, Bounce } from "react-toastify";
@@ -18,18 +17,7 @@ import {
   deletePayable,
   fetchPayableList,
 } from "../lib/resolvers/payableResolvers";
-import { useAuth } from "../lib/context/AuthProvider";
-
 export default function PayableListPage() {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, []);
-
   const {
     data: payableList,
     error,

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:api": "pnpm --filter api start:dev",
+    "start:web": "pnpm --filter aproveme dev",
+    "prisma:migrate": "pnpm --filter api prisma migrate"
   },
   "keywords": [],
   "author": "",

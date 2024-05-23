@@ -220,6 +220,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
+      brazilian-utils:
+        specifier: link:@types/@brazilian-utils/brazilian-utils
+        version: link:@types/@brazilian-utils/brazilian-utils
       eslint:
         specifier: ^8.57.0
         version: 8.57.0

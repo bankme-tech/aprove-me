@@ -14,7 +14,9 @@ import Layout from "./components/Layout";
 import PayableInfoPage from "./pages/PayableInfo";
 import "./index.css";
 import AssignorInfoPage from "./pages/AssignorInfo";
-import { AuthProvider } from "./lib/context/AuthProvider";
+import { AuthProvider } from "./lib/context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import CreateAssignor from "./pages/CreateAssignor";
 
 const queryClient = new QueryClient();
 
@@ -30,33 +32,51 @@ const router = createBrowserRouter([
   {
     path: "/payable",
     element: (
-      <Layout>
-        <PayableListPage />
-      </Layout>
+      <ProtectedRoute>
+        <Layout>
+          <PayableListPage />
+        </Layout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/payable/create",
     element: (
-      <Layout>
-        <CreatePayable />
-      </Layout>
+      <ProtectedRoute>
+        <Layout>
+          <CreatePayable />
+        </Layout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/payable/:id",
     element: (
-      <Layout>
-        <PayableInfoPage />
-      </Layout>
+      <ProtectedRoute>
+        <Layout>
+          <PayableInfoPage />
+        </Layout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/assignor/:id",
     element: (
-      <Layout>
-        <AssignorInfoPage />
-      </Layout>
+      <ProtectedRoute>
+        <Layout>
+          <AssignorInfoPage />
+        </Layout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/assignor/create",
+    element: (
+      <ProtectedRoute>
+        <Layout>
+          <CreateAssignor />
+        </Layout>
+      </ProtectedRoute>
     ),
   },
   {

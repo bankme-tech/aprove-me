@@ -5,7 +5,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { setToken, removeToken, isLoggedIn } from "../../lib/utils";
+import { setToken, removeToken, isLoggedIn } from "../utils";
 
 interface AuthContextType {
   isAuthenticated: boolean;

@@ -6,9 +6,10 @@ const prisma = new PrismaClient();
 
 async function main() {
   const password = await hash('bankme123', 8);
-  await prisma.admin.create({
+  const user = await prisma.user.create({
     data: {
-      login: 'bankme',
+      email: 'admin@admin.com',
+      name: faker.person.fullName(),
       password,
     },
   });
@@ -16,12 +17,14 @@ async function main() {
   await prisma.assignor.createMany({
     data: [
       {
+        userId: user.id,
         document: '532.937.020-58',
         email: faker.internet.email(),
         name: faker.person.fullName(),
         phone: faker.phone.number(),
       },
       {
+        userId: user.id,
         document: '00.880.306/0001-80',
         email: faker.internet.email(),
         name: faker.person.fullName(),

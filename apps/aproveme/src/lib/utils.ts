@@ -15,11 +15,12 @@ export const transformDate = (value: string) =>
   new Intl.DateTimeFormat("pt-br").format(new Date(value));
 
 export const setToken = (token: string) =>
-  localStorage.setItem(import.meta.env.TOKEN_KEY, token);
+  localStorage.setItem(import.meta.env.VITE_TOKEN_KEY, token);
 
-export const getToken = () => localStorage.getItem(import.meta.env.TOKEN_KEY);
+export const getToken = () =>
+  localStorage.getItem(import.meta.env.VITE_TOKEN_KEY);
 
 export const removeToken = () =>
-  localStorage.removeItem(import.meta.env.TOKEN_KEY);
+  localStorage.removeItem(import.meta.env.VITE_TOKEN_KEY);
 
 export const isLoggedIn = () => !!getToken();

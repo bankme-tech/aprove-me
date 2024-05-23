@@ -5,12 +5,12 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { toast, Bounce } from "react-toastify";
 import { useEffect } from "react";
 import {
-  AuthFormData,
+  LoginFormData,
   AuthResponse,
-  authSchema,
+  loginSchema,
   login as loginResolver,
 } from "../lib/resolvers/authResolvers";
-import { useAuth } from "../lib/context/AuthProvider";
+import { useAuth } from "../lib/context/AuthContext";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -26,14 +26,14 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthFormData>({
-    resolver: zodResolver(authSchema),
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
   });
 
   const {
     mutate,
     isPending,
-  }: UseMutationResult<AuthResponse, Error, AuthFormData> = useMutation({
+  }: UseMutationResult<AuthResponse, Error, LoginFormData> = useMutation({
     mutationFn: loginResolver,
     onSuccess: (data) => {
       login(data.token);
@@ -54,7 +54,7 @@ export default function RegisterPage() {
     },
   });
 
-  const onSubmit = (data: AuthFormData) => {
+  const onSubmit = (data: LoginFormData) => {
     mutate(data);
   };
 
@@ -64,17 +64,17 @@ export default function RegisterPage() {
         <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block font-medium text-gray-700" htmlFor="login">
-              login
+            <label className="block font-medium text-gray-700" htmlFor="email">
+              Email
             </label>
             <input
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-              id="login"
+              id="email"
               placeholder="Enter your login"
-              {...register("login")}
+              {...register("email")}
             />
-            {errors.login && (
-              <p className="text-red-500">{errors.login.message}</p>
+            {errors.email && (
+              <p className="text-red-500">{errors.email.message}</p>
             )}
           </div>
           <div>

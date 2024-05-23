@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   useQuery,
   useMutation,
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { toast, Bounce } from "react-toastify";
@@ -13,11 +13,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import ErrorMessage from "../components/ErrorMessage";
 import { transformCurrency, transformDate } from "../lib/utils";
 import { Payable } from "../lib/types";
 import { fetchPayable, updatePayable } from "../lib/resolvers/payableResolvers";
-import { useAuth } from "../lib/context/AuthProvider";
 
 const editPayableSchema = z.object({
   value: z.coerce.number().min(0.1),
@@ -27,20 +25,12 @@ const editPayableSchema = z.object({
 type EditPayableFormData = z.infer<typeof editPayableSchema>;
 
 export default function PayableInfoPage() {
-  const navigate = useNavigate();
   const { id } = useParams();
-  const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [navigate]);
 
   const {
     data: payable,
-    error,
+
     isLoading,
   } = useQuery<Payable, Error>({
     queryKey: ["payable", id],
@@ -91,10 +81,6 @@ export default function PayableInfoPage() {
       updatePayableMutation({ ...payable, ...data });
     }
   };
-
-  if (error) {
-    return <ErrorMessage message={error.message} to="/payable" />;
-  }
 
   return (
     <main className="w-screen h-screen flex items-center justify-center bg-gray-100">

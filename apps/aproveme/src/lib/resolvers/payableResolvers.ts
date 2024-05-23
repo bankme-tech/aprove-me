@@ -83,7 +83,7 @@ export const createPayableSchema = z.object({
 
 export type CreatePayableFormData = z.infer<typeof createPayableSchema>;
 
-export const createPayable = async (body: Omit<Payable, "id">) => {
+export const createPayable = async (body: CreatePayableFormData) => {
   const token = getToken();
   const response = await fetch(`${import.meta.env.VITE_API_URL}payable`, {
     method: "POST",

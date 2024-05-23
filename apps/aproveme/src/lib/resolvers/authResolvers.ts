@@ -1,18 +1,18 @@
 import { z } from "zod";
 
-export const authSchema = z.object({
-  login: z.string().min(1, "login required"),
+export const loginSchema = z.object({
+  email: z.string().email(),
   password: z
     .string()
     .min(8, "password needs to be at least 8 characters long"),
 });
-export type AuthFormData = z.infer<typeof authSchema>;
+export type LoginFormData = z.infer<typeof loginSchema>;
 
 export type AuthResponse = {
   token: string;
 };
 
-export const login = async (data: AuthFormData): Promise<AuthResponse> => {
+export const login = async (data: LoginFormData): Promise<AuthResponse> => {
   const response = await fetch(`${import.meta.env.VITE_API_URL}auth/login`, {
     method: "POST",
     body: JSON.stringify(data),
@@ -28,7 +28,16 @@ export const login = async (data: AuthFormData): Promise<AuthResponse> => {
   return response.json();
 };
 
-export const singUp = async (data: AuthFormData): Promise<AuthFormData> => {
+export const registerSchema = z.object({
+  email: z.string().email(),
+  name: z.string().min(1, "name is required"),
+  password: z
+    .string()
+    .min(8, "password needs to be at least 8 characters long"),
+});
+export type RegisterFormData = z.infer<typeof registerSchema>;
+
+export const singUp = async (data: RegisterFormData): Promise<AuthResponse> => {
   const response = await fetch(`${import.meta.env.VITE_API_URL}auth/register`, {
     method: "POST",
     body: JSON.stringify(data),
