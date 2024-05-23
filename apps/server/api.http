@@ -1,0 +1,19 @@
+
+@url = http://localhost:3000
+
+# @name health_check
+GET {{url}}/integrations/healthz
+Content-Type: application/json
+
+###
+
+# @name create_assignor
+POST {{url}}/integrations/assignor
+Content-Type: application/json
+
+{
+  "name": "Jhon Doe",
+  "document": "123456789102",
+  "email": "jhon_doe@example.com",
+  "phone": "31999999999"
+}
