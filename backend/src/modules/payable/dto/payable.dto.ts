@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsPositive, IsUUID } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsUUID,
+} from 'class-validator';
 import { BaseModel } from 'src/models/baseModel.dto';
 
 export class PayableDto extends BaseModel {
@@ -13,4 +19,8 @@ export class PayableDto extends BaseModel {
   @IsNotEmpty()
   @ApiProperty()
   assignorId: string;
+
+  @ApiProperty()
+  @IsDateString()
+  emissionDate: Date;
 }
