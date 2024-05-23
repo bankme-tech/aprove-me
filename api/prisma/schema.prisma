@@ -27,6 +27,10 @@ model Assignor {
   phone    String
   name     String
   payables Payable[] // Um pra muitos -->  assignor pode ter varios payables
+  userId  String
+  user    User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 model User {
@@ -35,4 +39,6 @@ model User {
   password String
   name     String
   salt    String
+  assignor Assignor[]
+  
 }
