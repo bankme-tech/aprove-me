@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Payable {
+  id           String   @id @default(uuid())
+  value        Float
+  emissionDate DateTime
+  assignorId   String
+  assignor    Assignor @relation(fields: [assignorId], references: [id])
+
+  @@index([assignorId])
+}
+
+model Assignor {
+  id       String    @id @default(uuid())
+  document String
+  email    String
+  phone    String
+  name     String
+  payables Payable[] // Um pra muitos -->  assignor pode ter varios payables
+}
+
+model User {
+  id       String    @id @default(uuid())
+  email    String    @unique
+  password String
+  name     String
+  salt    String
+}
