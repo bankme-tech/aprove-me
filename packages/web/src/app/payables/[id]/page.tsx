@@ -14,15 +14,15 @@ import { z } from "zod";
 import getPayable from "@/api/getPayable";
 import { useForm } from "react-hook-form";
 import { WithAuth } from "@/lib/with-auth";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import updatePayable from "@/api/updatePayable";
 import deletePayable from "@/api/deletePayable";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Suspense, useEffect, useState } from "react";
 import PayableCard, { Payable } from "@/components/payable-card";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import updatePayable from "@/api/updatePayable";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 
 type PayablePageProps = {
   params: {

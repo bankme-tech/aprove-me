@@ -19,7 +19,7 @@ export default function PayableCard({ payable }: PayableCardProps) {
         <CardTitle>R$ {payable.value}</CardTitle>
       </CardHeader>
       <CardContent>
-        <Link href={`assignor/${payable.id}`}>
+        <Link href={`/assignors/${payable.id}`}>
           ID do cedente: <Button variant="link">{payable.id}</Button>
         </Link>
       </CardContent>

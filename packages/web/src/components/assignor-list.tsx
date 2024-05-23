@@ -12,7 +12,11 @@ export async function AssignorList() {
         <Button className="mb-5">Cadastrar novo cedente</Button>
       </Link>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full mb-14">
-        {data?.map((assignor) => <AssignorCard assignor={assignor} key={assignor.id} />)}
+        {data?.map((assignor) => (
+          <Link href={`assignors/${assignor.id}`} key={assignor.id}>
+            <AssignorCard assignor={assignor} key={assignor.id} />
+          </Link>
+        ))}
       </div>
     </div>
   );
