@@ -7,7 +7,7 @@ import { Test } from "@nestjs/testing";
 import request from "supertest";
 import { UserFactory } from "test/factories/makeUser";
 
-describe("Create Question (E2E)", () => {
+describe("Receive Payable and Assignor (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
@@ -31,7 +31,7 @@ describe("Create Question (E2E)", () => {
   });
 
   test("[POST] /integrations/payable", async () => {
-    const user = await prisma.assignor.findFirst();
+    const user = await userFactory.makePrismaUser();
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 

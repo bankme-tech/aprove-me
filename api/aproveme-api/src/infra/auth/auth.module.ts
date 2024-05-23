@@ -23,6 +23,7 @@ import { EnvModule } from "../env/env.module";
           signOptions: { algorithm: "RS256" },
           privateKey: Buffer.from(privateKey, "base64"),
           publicKey: Buffer.from(publicKey, "base64"),
+          // expiresIn: "1m",
         };
       },
     }),

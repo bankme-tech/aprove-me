@@ -36,11 +36,11 @@ describe("Get Payable By Id (E2E)", () => {
   });
 
   test("[GET] /integrations/assignor/:id", async () => {
-    const user = await prisma.assignor.findFirst();
+    const user = await userFactory.makePrismaUser();
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
-    const assignor = await prisma.assignor.findFirst();
+    const assignor = await assignorFactory.makePrismaAssignor();
 
     const response = await request(app.getHttpServer())
       .get(`/integrations/assignor/${assignor.id}`)
@@ -50,7 +50,7 @@ describe("Get Payable By Id (E2E)", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({
       assignor: expect.objectContaining({
-        id: assignor.id,
+        id: assignor.id.toString(),
         document: assignor.document,
         email: assignor.email,
         phone: assignor.phone,

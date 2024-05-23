@@ -38,11 +38,17 @@ describe("Get Payable By Id (E2E)", () => {
   });
 
   test("[GET] /integrations/payable/:id", async () => {
-    const user = await prisma.assignor.findFirst();
+    const user = await userFactory.makePrismaUser({
+      login: "testUser",
+      password: "testUser",
+    });
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
-    const payable = await prisma.payable.findFirst();
+    const assignor = await assignorFactory.makePrismaAssignor();
+    const payable = await payableFactory.makePrismaPayable({
+      assignorId: assignor.id,
+    });
 
     const response = await request(app.getHttpServer())
       .get(`/integrations/payable/${payable.id}`)
@@ -54,7 +60,7 @@ describe("Get Payable By Id (E2E)", () => {
       payable: expect.objectContaining({
         value: payable.value,
         emissionDate: payable.emissionDate.toISOString(),
-        assignorId: payable.assignorId,
+        assignorId: payable.assignorId.toString(),
       }),
     });
   });

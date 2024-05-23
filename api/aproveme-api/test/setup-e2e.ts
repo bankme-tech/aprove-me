@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { execSync } from "node:child_process";
 import { envSchema } from "@/infra/env/env";
+import { before } from "node:test";
 
 // Carregar variáveis de ambiente para testes
 config({
@@ -13,9 +14,10 @@ const env = envSchema.parse(process.env);
 
 const prisma = new PrismaClient();
 
-beforeEach(async () => {
-  prisma.$connect;
+beforeAll(async () => {
   try {
+    await prisma.$connect();
+
     // Executar migrações no banco de dados de teste
     execSync("npx prisma migrate deploy");
   } catch (error) {
@@ -23,21 +25,19 @@ beforeEach(async () => {
   }
 });
 
-afterEach(async () => {
+beforeEach(async () => {
   try {
-    // Apagar todas as linhas de todas as tabelas
-    const tables = await prisma.$queryRaw<{ name: string }[]>`
-      SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';
-    `;
-
-    for (const { name } of tables) {
-      await prisma.$executeRawUnsafe(`DELETE FROM "${name}";`);
-    }
+    // Deletar tabelas na ordem correta para evitar problemas de chave estrangeira
+    await prisma.payable.deleteMany();
+    await prisma.assignor.deleteMany();
+    await prisma.user.deleteMany();
   } catch (error) {
     console.error("Failed to clean up the database:", error);
-  } finally {
-    await prisma.$disconnect();
   }
+});
+
+afterAll(async () => {
+  await prisma.$disconnect();
 });
 
 export default prisma;

@@ -27,10 +27,10 @@ describe("Authenticate (E2E)", () => {
   });
 
   test("[POST] /integrations/sessions", async () => {
-    // await userFactory.makePrismaUser({
-    //   login: "aproveme",
-    //   password: await hash("aproveme", 8),
-    // });
+    await userFactory.makePrismaUser({
+      login: "aproveme",
+      password: await hash("aproveme", 8),
+    });
 
     const response = await request(app.getHttpServer())
       .post("/integrations/sessions")

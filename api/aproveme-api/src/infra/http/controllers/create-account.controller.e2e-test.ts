@@ -24,15 +24,15 @@ describe("Create Account (E2E)", () => {
     const response = await request(app.getHttpServer())
       .post("/integrations/auth")
       .send({
-        login: "aproveme",
-        password: "aproveme",
+        login: "test",
+        password: "test",
       });
 
     expect(response.statusCode).toBe(201);
 
     const userOnDatabase = await prisma.user.findUnique({
       where: {
-        login: "aproveme",
+        login: "test",
       },
     });
 
