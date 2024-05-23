@@ -42,7 +42,6 @@ export class ReceivableController {
   ): Promise<ReceivableModel> {
     const receivableData: ReceivableDto = data.receivableData;
     const assignorData: AssignorDto = data.assignorData;
-    console.log(receivableData, assignorData)
     let assignorId: UUID;
 
     // Se o assignor ainda não existe, cria um novo
@@ -64,10 +63,9 @@ export class ReceivableController {
     if(!assignor) {
       throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
     }
-
     return this.receivableService.createReceivable({
       value: receivableData.value,
-      emissionDate: new Date(receivableData.emissionDate),
+      emissionDate: new Date(receivableData.emissionDate).toISOString(),
       assignorRef: {
         connect: {
           id: assignorId
@@ -117,7 +115,7 @@ export class ReceivableController {
       where: { id },
       data: {
         value,
-        emissionDate: new Date(emissionDate),
+        emissionDate: new Date(receivableData.emissionDate).toISOString(),
       }
     });
   }
@@ -134,12 +132,12 @@ export class ReceivableController {
 
   @Post('/batch')
   @HttpCode(204)
-  async createBatch(@Body() payables: { receivableData: ReceivableDto, assignorData?: AssignorDto }[]): Promise<void> {
-    if (payables.length > 10000) {
+  async createBatch(@Body() data: CreateReceivableDto[]): Promise<void> {
+    if (data.length > 10000) {
       throw new Error('Too many payables in batch');
     }
     // add payables to a queue
-    for (const payable of payables) {
+    for (const payable of data) {
       this.queue.add('process-receivable', payable);
     }
   }

@@ -32,16 +32,21 @@ export class PayableConsumer {
       }
       // Se o assignor já existe e o id dele não foi passado
       else if (!receivableData.assignor) {
-        throw new Error('Assignor data is required');
+        throw new Error('Either Assignor data or an Assignor ID is required.');
       }
       // Se o assignor já existe, pega o id dele
       else {
         assignorId = receivableData.assignor;
       }
+      // Verifica se existe o assignor com esse id
+      const assignor = await this.assignorService.assignor({ id: assignorId });
+      if (!assignor) {
+        throw new Error('Assignor not found');
+      }
 
       await this.receivableService.createReceivable({
         value: receivableData.value,
-        emissionDate: new Date(receivableData.emissionDate),
+        emissionDate: new Date(receivableData.emissionDate).toISOString(),
         assignorRef: {
           connect: {
             id: assignorId

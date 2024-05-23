@@ -10,6 +10,12 @@ interface Props {
 
 export default function Table(props: Props) {
 
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    return localDate.toLocaleDateString();
+  }
+  
   return (
     <table className="table-fixed md:table-auto w-full max-w-2xl">
       <thead>
@@ -48,7 +54,7 @@ export default function Table(props: Props) {
                 group-hover:bg-opacity-40
                 group-hover:text-themeColor
                 ">
-              {new Date(payable.emissionDate).toLocaleDateString()}
+              {formatDate(payable.emissionDate)}
             </td>
           </tr>
         ))}
