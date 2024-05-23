@@ -9,7 +9,7 @@ datasource db {
 
 model Assignor {
   id       String    @id @default(uuid())
-  document String
+  document String    @unique
   email    String
   phone    String
   name     String
