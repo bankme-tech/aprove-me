@@ -22,6 +22,19 @@ export class PrismaAssignorRepository implements IAssignorRepository {
     return AssignorMapper.toDomain(entity);
   }
 
+  async findByEmailOrDocument(
+    email: string,
+    document: string,
+  ): Promise<AssignorEntity | null> {
+    const entity = await this.prisma.assignor.findFirst({
+      where: { email, OR: [{ document }] },
+    });
+
+    if (!entity) return null;
+
+    return AssignorMapper.toDomain(entity);
+  }
+
   async findAll(): Promise<AssignorEntity[]> {
     const entities = await this.prisma.assignor.findMany();
 

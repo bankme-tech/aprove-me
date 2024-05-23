@@ -22,6 +22,19 @@ export class InMemoryAssignorRepository implements IAssignorRepository {
     return AssignorMapper.toDomain(entity);
   }
 
+  async findByEmailOrDocument(
+    email: string,
+    document: string,
+  ): Promise<AssignorEntity | null> {
+    const entity = this.items.find(
+      (item) => item.email === email || item.document === document,
+    );
+
+    if (!entity) return null;
+
+    return AssignorMapper.toDomain(entity);
+  }
+
   async findAll(): Promise<AssignorEntity[]> {
     return this.items.map(AssignorMapper.toDomain);
   }
