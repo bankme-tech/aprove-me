@@ -1,4 +1,4 @@
-import { IsString, MaxLength } from 'class-validator';
+import { IsEmail, IsString, MaxLength } from 'class-validator';
 
 export class AssignorDto {
   // /** É a identificação de um cedente */
@@ -11,7 +11,7 @@ export class AssignorDto {
   document: string;
 
   /** É o email do cedente */
-  @IsString()
+  @IsEmail()
   @MaxLength(140)
   email: string;
 

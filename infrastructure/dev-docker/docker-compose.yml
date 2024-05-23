@@ -3,19 +3,33 @@ version: '3.8'
 services:
   db-dev-payable-service:
     container_name: db-dev-payable-container
-    networks: [backend]
+    networks: 
+      - backend
     image: postgres:16.3-alpine3.19
-    ports: [5432:5432]
+    ports: 
+      - 5432:5432
     volumes:
       - ./container-data/postgres:/data/postgres
       - ./initial-sql/:/docker-entrypoint-initdb.d/
-    env_file: [./.postgres.env]
+    env_file: 
+      - ./.postgres.env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 10s
       timeout: 10s
       retries: 3
       start_period: 5s
+
+  queue-dev-payable-service:
+    container_name: queue-dev-payable-container
+    image: rabbitmq:3.13.2-management
+    networks:
+      - backend
+    env_file:
+      - ./.rabbitmq.env
+    ports:
+      - 5672:5672
+      - 15672:15672
 
 networks:
   backend:

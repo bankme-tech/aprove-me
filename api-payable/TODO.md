@@ -20,9 +20,9 @@
     - [x] Dockerfile API
     - [x] docker-compose database.
 7. Batch
-    - [] `POST integrations/payable/batch`
-    - [] RabbitMQ file: send batch
-    - [] RabbitMQ Consumer: process batch
+    - [x] `POST integrations/payable/batch`
+    - [x] RabbitMQ file: send batch
+    - [x] RabbitMQ Consumer: process batch
 8. Resiliência
     - [] RabbitMQ: dead-letter queue
 9. Cloud

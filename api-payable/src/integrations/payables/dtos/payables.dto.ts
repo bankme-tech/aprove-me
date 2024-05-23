@@ -17,3 +17,4 @@ export class PayableDto {
   @IsUUID()
   assignor: string;
 }
+

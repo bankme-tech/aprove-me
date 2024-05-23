@@ -24,4 +24,3 @@ export class CryptoService {
     return password === user.password;
   }
 }
-
