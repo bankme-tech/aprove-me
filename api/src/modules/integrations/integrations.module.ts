@@ -24,6 +24,7 @@ import { BullModule } from '@nestjs/bull';
 import { AssignorsController } from './infra/http/controllers/assignors.controller';
 import { PayablesController } from './infra/http/controllers/payables.controller';
 import { AuthController } from './infra/http/controllers/auth.controller';
+import { FindAllAssignorsUseCase } from './use-cases/find-all-assignors.use-case';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { AuthController } from './infra/http/controllers/auth.controller';
     CreatePayablesBatchUseCase,
     CreatePayableProducerJob,
     CreatePayableConsumerJob,
+    FindAllAssignorsUseCase,
   ],
 })
 export class IntegrationsModule {}

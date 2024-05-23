@@ -23,6 +23,7 @@ import { CreateAssignorUseCase } from '@/modules/integrations/use-cases/create-a
 import { PatchAssignorDto, patchAssignorDto } from '../dtos/patch-assignor.dto';
 import { PatchAssignorUseCase } from '@/modules/integrations/use-cases/patch-assignor.use-case';
 import { DeleteAssignorUseCase } from '@/modules/integrations/use-cases/delete-assignor.use-case';
+import { FindAllAssignorsUseCase } from '@/modules/integrations/use-cases/find-all-assignors.use-case';
 
 @Controller('integrations/assignors')
 export class AssignorsController {
@@ -31,7 +32,17 @@ export class AssignorsController {
     private createAssignorUseCase: CreateAssignorUseCase,
     private updateAssignorUseCase: PatchAssignorUseCase,
     private deleteAssignorUseCase: DeleteAssignorUseCase,
+    private findAllAssignorsUseCase: FindAllAssignorsUseCase,
   ) {}
+
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  public async findAllAssignor() {
+    const assignors = await this.findAllAssignorsUseCase.execute();
+
+    return { assignors: assignors.map(AssignorsViewModel.toHTTP) };
+  }
 
   @Get(':id')
   @HttpCode(HttpStatus.FOUND)
