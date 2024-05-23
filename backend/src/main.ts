@@ -10,6 +10,9 @@ async function bootstrap() {
     .setTitle('Aprove-me API')
     .setDescription('Uma API para aprovação no processo seletivo.')
     .setVersion('v1')
+    .addTag('User', 'Endpoints relacionados a usuários')
+    .addTag('Assignors', 'Endpoints relacionados aos cedentes')
+    .addTag('Payables', 'Endpoints relacionados a recebíveis')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

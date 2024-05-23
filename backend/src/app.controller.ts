@@ -19,6 +19,7 @@ import { PayableRepo } from './repositories/payable-repo';
 import { AssignorRepo } from './repositories/assignor-repo';
 import { UserDto } from './DTOs/user';
 import { UserRepo } from './repositories/user-repo';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('integrations')
 export class AppController {
@@ -28,6 +29,7 @@ export class AppController {
     private user: UserRepo,
   ) {}
 
+  @ApiTags('User')
   @Post('user')
   async createUser(@Body() body: UserDto) {
     try {
@@ -48,6 +50,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('User')
   @Get('user/:id')
   @HttpCode(HttpStatus.OK)
   async getUserById(@Param('id') id: number) {
@@ -67,6 +70,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('User')
   @Get('user/login/search')
   @HttpCode(HttpStatus.OK)
   async getUserByLogin(@Query('login') login: string) {
@@ -86,6 +90,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('User')
   @Get('user')
   @HttpCode(HttpStatus.OK)
   async getUserAll() {
@@ -105,6 +110,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('User')
   @Put('user/:id')
   @HttpCode(HttpStatus.OK)
   async updateUser(@Param('id') id: number, @Body() body: UserDto) {
@@ -126,6 +132,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('User')
   @Delete('user/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUser(@Param('id') id: number) {
@@ -145,6 +152,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Payables')
   @Post('payable')
   async createReceivable(@Body() body: PayableDto) {
     try {
@@ -165,6 +173,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Payables')
   @Get('payable/:id')
   @HttpCode(HttpStatus.OK)
   async getReceivables(@Param('id') id: string) {
@@ -184,6 +193,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Payables')
   @Get('payable')
   @HttpCode(HttpStatus.OK)
   async getReceivablesAll() {
@@ -203,6 +213,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Payables')
   @Put('payable/:id')
   @HttpCode(HttpStatus.OK)
   async updatePayable(@Param('id') id: string, @Body() body: PayableDto) {
@@ -224,6 +235,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Payables')
   @Delete('payable/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deletePayable(@Param('id') id: string) {
@@ -245,6 +257,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Assignors')
   @Post('assignor')
   async createAssignor(@Body() body: AssignorDto) {
     try {
@@ -265,6 +278,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Assignors')
   @Get('assignor/:id')
   @HttpCode(HttpStatus.OK)
   async getAssignors(@Param('id') id: string) {
@@ -284,6 +298,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Assignors')
   @Get('assignor')
   @HttpCode(HttpStatus.OK)
   async getAssignorsAll() {
@@ -303,6 +318,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Assignors')
   @Put('assignor/:id')
   @HttpCode(HttpStatus.OK)
   async updateAssignor(@Param('id') id: string, @Body() body: AssignorDto) {
@@ -324,6 +340,7 @@ export class AppController {
     }
   }
 
+  @ApiTags('Assignors')
   @Delete('assignor/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteAssignor(@Param('id') id: string) {
