@@ -1,4 +1,6 @@
 import { UniqueEntityIdVO } from '../common/value-object';
+
+import { AssignorEntity, AssignorProps } from './assignor.entity';
 import { Entity } from './entity';
 
 export type ReceivableProps = {
@@ -13,6 +15,7 @@ export class ReceivableEntity extends Entity {
   readonly value: number;
   readonly emissionDate: Date;
   readonly assignorId: UniqueEntityIdVO;
+  private _assignor: AssignorEntity;
 
   constructor(props: ReceivableProps) {
     super();
@@ -28,11 +31,20 @@ export class ReceivableEntity extends Entity {
     return new ReceivableEntity(input);
   }
 
+  addAssignor(props: AssignorProps): void {
+    this._assignor = new AssignorEntity({ ...props });
+  }
+
   toJSON() {
     return {
       ...this,
       id: this.id.value,
       assignorId: this.assignorId.value,
+      assignor: this._assignor.toJSON()
     };
+  }
+
+  get assignor(): AssignorEntity {
+    return this._assignor;
   }
 }
