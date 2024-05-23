@@ -1,14 +1,15 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
-import { PayableUsecase } from './payable.usecase';
+import { CreatePayableUsecase } from './create-payable.usecase';
 import { CreatePayableDto } from './create-payable.dto';
+import { ReceivableEntity } from 'domain/entity';
 
-@Controller('/integrations/payable')
+@Controller('/integrations')
 export class PayableController {
-  constructor(private readonly usecase: PayableUsecase) {}
+  constructor(private readonly createPayableUsecase: CreatePayableUsecase) {}
 
-  @Post()
+  @Post('/payable')
   async create(@Body() body: CreatePayableDto): Promise<void> {
-    await this.usecase.execute(body);
+    await this.createPayableUsecase.execute(body);
   }
 }

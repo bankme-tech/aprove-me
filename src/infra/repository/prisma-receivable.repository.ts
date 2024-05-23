@@ -28,13 +28,14 @@ export class PrismaReceivableRepository implements IReceivableRepository {
     });
   }
 
-  async findAll(): Promise<ReceivableEntity[] | null> {
-    const result = await this.prisma.receivable.findMany({
+  async findById(id: string): Promise<ReceivableEntity | null> {
+    const result = await this.prisma.receivable.findUnique({
+      where: { id },
       include: { assignor: true },
     });
 
-    return result.length
-      ? result.map((receivable) => ReceivableEntity.create({ ...receivable }))
+    return result
+      ? new ReceivableEntity({ ...result })
       : null;
   }
 }
