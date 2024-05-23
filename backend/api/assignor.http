@@ -13,3 +13,7 @@ Content-Type: application/json
 
 ### Read all assignors
 GET {{baseUrl}}/integrations/assignor
+
+### Read one assignor
+GET {{baseUrl}}/integrations/assignor/84a822df-58c6-4dc8-b9a4-b63f500f2ba2
+
