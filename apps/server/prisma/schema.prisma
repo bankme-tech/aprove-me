@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Payable {
-  id           String   @unique @default(uuid())
+  id           String   @id @default(uuid())
   value        Float
   emissionDate DateTime @map("emission_date")
   assignorId   String   @map("assignor_id")
@@ -26,15 +26,29 @@ model Payable {
 }
 
 model Assignor {
-  id       String    @unique @default(uuid())
+  id       String    @id @default(uuid())
   document String
   email    String
   phone    String
   name     String
+  authId   String?   @map("auth_id")
+  auth     Auth?     @relation(fields: [authId], references: [id])
   payables Payable[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("assignors")
+}
+
+model Auth {
+  id       String     @id @default(uuid())
+  login    String     @unique
+  password String
+  assignor Assignor[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("auths")
 }
