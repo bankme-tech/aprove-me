@@ -6,7 +6,7 @@ export const FormPayable = () => {
       <div className="p-4">
         <FormField title="Cedente" />
       </div>
-      <div className="flex  bg-gray-200 gap-x-12 p-4 ">
+      <div className="flex  bg-gray-200 gap-x-12 p-4">
         <FormField title="Valor" />
         <FormField title="Data" />
       </div>
