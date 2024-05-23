@@ -28,12 +28,10 @@ async function main() {
     },
   ];
 
-  // Create assignors first
   const createdAssignors = await Promise.all(
     assignors.map((assignor) => prisma.assignor.create({ data: assignor })),
   );
 
-  // Creating 5 payables with reference to created assignors
   const payables: Payable[] = [
     {
       id: uuidv4(),
@@ -72,6 +70,14 @@ async function main() {
       data: payable,
     });
   }
+
+  await prisma.user.create({
+    data: {
+      id: uuidv4(),
+      login: 'aproveme',
+      password: 'aproveme',
+    },
+  });
 }
 
 main()
