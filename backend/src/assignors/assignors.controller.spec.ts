@@ -4,9 +4,9 @@ import { randomUUID } from 'crypto';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import { AssignorsController } from './assignors.controller';
 import { AssignorsService } from './assignors.service';
-import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { Assignor } from '@prisma/client';
 
 describe('AssignorsController', () => {
   let controller: AssignorsController;
@@ -38,12 +38,13 @@ describe('AssignorsController', () => {
 
   describe('getAssignorById', () => {
     it('should return an assignor if it exists', async () => {
-      const assignorDto: CreateAssignorDto = {
+      const assignorDto: Assignor = {
         id: randomUUID(),
         document: '12345678901',
         email: 'email@example.com',
         phone: '1234567890',
         name: 'Assignor Name',
+        userId: undefined,
       };
       service.getAssignorById.mockResolvedValue(assignorDto);
 
@@ -62,11 +63,13 @@ describe('AssignorsController', () => {
 
   describe('updateAssignor', () => {
     it('should update an assignor', async () => {
-      const updateAssignorDto: UpdateAssignorDto = {
+      const updateAssignorDto: Assignor = {
         document: '12345678901',
         email: 'updated@example.com',
         phone: '1234567890',
         name: 'Updated Assignor Name',
+        id: randomUUID(),
+        userId: undefined,
       };
       const randomId = randomUUID();
       const data = {
@@ -100,12 +103,13 @@ describe('AssignorsController', () => {
 
   describe('createAssignor', () => {
     it('should create an assignor', async () => {
-      const assignorDto: CreateAssignorDto = {
+      const assignorDto: Assignor = {
         id: randomUUID(),
         document: '12345678901',
         email: 'email@example.com',
         phone: '1234567890',
         name: 'Assignor Name',
+        userId: undefined,
       };
       service.createAssignor.mockResolvedValue(assignorDto);
 
@@ -115,13 +119,14 @@ describe('AssignorsController', () => {
 
   describe('deleteAssignor', () => {
     it('should delete an assignor', async () => {
-      const assignorDto: CreateAssignorDto = {
+      const assignorDto = {
         id: randomUUID(),
         document: '12345678901',
         email: 'email@example.com',
         phone: '1234567890',
         name: 'Assignor Name',
-      };
+        userId: randomUUID(),
+      } as Assignor;
       service.deleteAssignor.mockResolvedValue(assignorDto);
 
       expect(await controller.deleteAssignor(assignorDto.id)).toBe(assignorDto);

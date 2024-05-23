@@ -1,33 +1,33 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma/prisma.service';
-import { PrismaClient } from '@prisma/client';
+import { Assignor, PrismaClient } from '@prisma/client';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import { NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
-import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { AssignorsService } from './assignors.service';
+import { UpdateAssignorDto } from './dto/update-assignor.dto';
 
-describe('IntegrationsService', () => {
+describe('AssignorsService', () => {
   let service: AssignorsService;
   let prismaMock: DeepMockProxy<PrismaClient>;
-  let assignors: CreateAssignorDto[];
-  let updateAssignorDto: UpdateAssignorDto;
+  let assignor: CreateAssignorDto;
+  let findUniqueMock: Assignor;
 
   beforeEach(async () => {
-    assignors = Array.from({ length: 10 }, (_, i) => ({
+    assignor = {
       id: randomUUID(),
-      document: `${i + 1}2345678901`,
-      email: `email${i + 1}@email.com`,
-      phone: `${i + 1}234567890`,
-      name: `Assignor ${i + 1}`,
-    }));
+      document: `12345678901`,
+      email: `email@email.com`,
+      phone: `1234567890`,
+      name: `Assignor`,
+      userId: randomUUID(),
+    };
 
-    const { ...updateAssignorDtoo } = assignors[0];
-
-    delete updateAssignorDtoo.id;
-
-    updateAssignorDto = updateAssignorDtoo as UpdateAssignorDto;
+    findUniqueMock = {
+      ...assignor,
+      userId: undefined,
+    };
 
     prismaMock = mockDeep<PrismaClient>();
     const module: TestingModule = await Test.createTestingModule({
@@ -49,52 +49,63 @@ describe('IntegrationsService', () => {
   describe('createAssignor', () => {
     it('should create an assignor', async () => {
       // @ts-expect-error mock implementation
-      prismaMock.assignor.create.mockResolvedValue(assignors[0]);
+      prismaMock.assignor.create.mockResolvedValue(assignor);
 
-      expect(await service.createAssignor(assignors[0])).toBe(assignors[0]);
+      expect(await service.createAssignor(assignor)).toBe(assignor);
     });
   });
 
   describe('getAssignorById', () => {
     it('should return an assignor by id', async () => {
-      prismaMock.assignor.findUnique.mockResolvedValue(assignors[0]);
+      prismaMock.assignor.findUnique.mockResolvedValue(findUniqueMock);
 
-      expect(await service.getAssignorById('uuid')).toBe(assignors[0]);
+      expect(await service.getAssignorById('uuid')).toBe(findUniqueMock);
     });
   });
 
   describe('updateAssignor', () => {
     it('should update an assignor', async () => {
-      prismaMock.assignor.findUnique.mockResolvedValue(assignors[0]);
+      prismaMock.assignor.findUnique.mockResolvedValue(findUniqueMock);
 
-      const data = {
-        ...updateAssignorDto,
-        id: 'uuid',
-      };
+      const updateAssignorDto = {
+        name: 'Updated Name',
+        document: assignor.document,
+        email: assignor.email,
+        phone: assignor.phone,
+      } as UpdateAssignorDto;
 
-      prismaMock.assignor.update.mockResolvedValue(data as any);
-
-      expect(await service.updateAssignor('uuid', updateAssignorDto)).toBe(
-        data,
-      );
+      prismaMock.assignor.update.mockResolvedValue({
+        ...findUniqueMock,
+        name: 'Updated Name',
+      });
+      expect(
+        await service.updateAssignor(assignor.id, updateAssignorDto),
+      ).toStrictEqual({ ...findUniqueMock, name: 'Updated Name' });
     });
 
     it('should throw NotFoundException if assignor not found', async () => {
       prismaMock.assignor.update.mockRejectedValue(null);
       prismaMock.assignor.findUnique.mockResolvedValue(null);
 
+      const updateAssignorDto: UpdateAssignorDto = {
+        document: assignor.document,
+        email: assignor.email,
+        name: 'Updated Name',
+        phone: assignor.phone,
+      };
+
       await expect(
-        service.updateAssignor(randomUUID(), assignors[0]),
+        service.updateAssignor(randomUUID(), updateAssignorDto),
       ).rejects.toThrow(NotFoundException);
     });
   });
 
   describe('deleteAssignor', () => {
     it('should delete an assignor', async () => {
-      prismaMock.assignor.findUnique.mockResolvedValue(assignors[0]);
-      prismaMock.assignor.delete.mockResolvedValue(assignors[0]);
+      prismaMock.assignor.findUnique.mockResolvedValue(findUniqueMock);
+      prismaMock.assignor.delete.mockResolvedValue(findUniqueMock);
 
-      expect(await service.deleteAssignor('uuid')).toBe(assignors[0]);
+      expect(await service.deleteAssignor('uuid')).toBe(findUniqueMock);
     });
 
     it('should throw NotFoundException if assignor not found', async () => {
