@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
+import * as bcrypt from 'bcrypt';
 
 export async function validateDto<T>(dto: T, type: any) {
   const object = plainToInstance(type, dto) as T;
@@ -21,4 +22,12 @@ export async function validateDto<T>(dto: T, type: any) {
     }
     return object as T;
   });
+}
+
+export async function hashPassword(password: string) {
+  return bcrypt.hash(password, 10);
+}
+
+export async function comparePassword(password: string, hash: string) {
+  return bcrypt.compare(password, hash);
 }
