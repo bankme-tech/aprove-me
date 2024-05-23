@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  aprove-api:
+    image: aprove-api:latest
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./data:/opt/aprove-api/data
+      - ./.env:/opt/aprove-api/.env

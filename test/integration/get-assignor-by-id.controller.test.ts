@@ -15,7 +15,7 @@ const makeReceivable = (assignorId: string) => {
   };
 };
 
-describe('# Teste de Integração - GET: POST: /integrations/payable/:id', () => {
+describe('# Teste de Integração - GET: POST: /integrations/assignor/:id', () => {
   let app: INestApplication;
   let prisma: PrismaClient;
 
@@ -43,13 +43,13 @@ describe('# Teste de Integração - GET: POST: /integrations/payable/:id', () =>
     ]);
   });
 
-  it('deve retornar 404 quando não encontrado recebível por id', async () => {
+  it('deve retornar 404 quando não encontrado cedente por id', async () => {
     request(app.getHttpServer())
-      .get(`/integrations/payable/${faker.string.uuid()}`)
+      .get(`/integrations/assignor/${faker.string.uuid()}`)
       .expect(HttpStatus.NOT_FOUND);
   });
 
-  it('deve retornar 200 quando encontrado recebível por id com cedente embedado', async () => {
+  it('deve retornar 200 quando encontrado cedente por id com recebíveis embedado', async () => {
     const assignor = {
       id: faker.string.uuid(),
       document: '389.967.700-51',
@@ -58,40 +58,30 @@ describe('# Teste de Integração - GET: POST: /integrations/payable/:id', () =>
       phone: '(11) 99657-1123',
     };
 
-    const receivableOne = makeReceivable(assignor.id);
-    const receivableTwo = makeReceivable(assignor.id);
-    const receivableThree = makeReceivable(assignor.id);
-    const receivableFour = makeReceivable(assignor.id);
-    const receivableFive = makeReceivable(assignor.id);
+    const receivable = makeReceivable(assignor.id);
 
     await prisma.$transaction([
       prisma.assignor.create({ data: assignor }),
-      prisma.receivable.createMany({
-        data: [
-          receivableOne,
-          receivableTwo,
-          receivableThree,
-          receivableFour,
-          receivableFive,
-        ],
-      }),
+      prisma.receivable.createMany({ data: [receivable] }),
     ]);
 
     const { body } = await request(app.getHttpServer())
-      .get(`/integrations/payable/${receivableFour.id}`)
+      .get(`/integrations/assignor/${assignor.id}`)
       .expect(HttpStatus.OK);
 
     expect(body).toEqual({
-      emissionDate: receivableFour.emissionDate,
-      value: receivableFour.value,
-      assignor: {
-        id: assignor.id,
-        document: assignor.document,
-        email: assignor.email,
-        phone: assignor.phone,
-        name: assignor.name,
-        receivables: [],
-      },
+      document: assignor.document,
+      email: assignor.email,
+      phone: assignor.phone,
+      name: assignor.name,
+      receivables: [
+        {
+          id: receivable.id,
+          assignorId: assignor.id,
+          emissionDate: receivable.emissionDate,
+          value: receivable.value,
+        },
+      ],
     });
   });
 });

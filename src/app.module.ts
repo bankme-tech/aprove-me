@@ -56,7 +56,7 @@ import { GetAssignorUsecase } from './application/get-assignor.usecase';
       useFactory: (assignorRepo: PrismaAssignorRepository) =>
         new GetAssignorUsecase(assignorRepo),
       inject: ['IAssignorRepository'],
-    },    
+    },
   ],
 })
 export class AppModule implements NestModule {

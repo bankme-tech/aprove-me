@@ -30,7 +30,9 @@ export class PayableController {
   }
 
   @Get('/assignor/:id')
-  async getAssignorById(@Param('id') id: string): Promise<GetAssignorDto | null> {
+  async getAssignorById(
+    @Param('id') id: string
+  ): Promise<GetAssignorDto | null> {
     const assignor = await this.getAssignorByIdUsecase.execute(id);
     return new GetAssignorDto(assignor.toJSON());
   }
