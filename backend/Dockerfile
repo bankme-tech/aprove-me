@@ -3,7 +3,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build
+# RUN npm run build
+RUN chmod +x ./init.sh
 COPY prisma ./prisma
 RUN npx prisma generate
 EXPOSE 3000

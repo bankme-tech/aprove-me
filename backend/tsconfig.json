@@ -22,5 +22,7 @@
       "@auth/*": ["auth/*"],
       "@session/*": ["auth/session/*"]
     }
-  }
+  },
+  "include": ["src/**/*", "src/mailer/templates/**/*"],
+  "exclude": ["**/*.spec.ts"]
 }

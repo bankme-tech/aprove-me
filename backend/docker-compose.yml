@@ -14,8 +14,8 @@ services:
       RABBITMQ_URI: "amqp://rabbitmq"
       EMAIL_HOST: "mailhog"
       EMAIL_PORT: 1025
-      EMAIL_USER: ""
-      EMAIL_PASS: ""
+      EMAIL_USER: "anyuser"
+      EMAIL_PASS: "anypass"
     depends_on:
       - rabbitmq
       - mailhog
