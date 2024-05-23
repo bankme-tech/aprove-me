@@ -1,7 +1,7 @@
 'use client';
 import { payableService } from "@/services/api/payables";
 import { Payable } from "@/services/api/payables/types/Payable";
-import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
+import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, Spinner } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import moment from "@/utils/moment";
 import { Eye, PencilSimple, Plus, Trash } from "phosphor-react";
@@ -73,12 +73,17 @@ export default function PayablesTable() {
                 </TableColumn>
                 )}
             </TableHeader>
-            <TableBody items={payables} isLoading={isLoading} emptyContent={"Não há recebíveis para exibir."}>
-                {(item) => (
+            <TableBody
+              items={payables}
+              emptyContent={"Não há recebíveis para exibir."}
+              isLoading={isLoading}
+              loadingContent={<Spinner label="Carregando..." color="warning" />}
+            >
+              {(item) => (
                 <TableRow key={item.id}>
                     {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
                 </TableRow>
-                )}
+              )}
             </TableBody>
         </Table>
     )
