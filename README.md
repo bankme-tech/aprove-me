@@ -1,5 +1,7 @@
 # Aprove-me
 
+Este projeto é um teste de seleção para novos desenvolvedores na Bankme! O repositório do teste pode ser encontrado [aqui](https://github.com/bankme-tech/aprove-me).
+
 Este arquivo README fornece instruções sobre como configurar e testar o projeto Aprove-me em seu ambiente local.
 
 ## Pré-requisitos(para o backend)
