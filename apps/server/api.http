@@ -17,3 +17,34 @@ Content-Type: application/json
   "email": "jhon_doe@example.com",
   "phone": "31999999999"
 }
+
+###
+# @name get_payable_by_id
+GET {{url}}/integrations/payable/99155ac7-3d64-473b-9193-3b5285ba0ff2
+Content-Type: application/json
+
+###
+# @name create_payable
+POST {{url}}/integrations/payable
+Content-Type: application/json
+
+{
+  "assignorId": "2eda6873-39f6-44df-83f3-ac08e8385b8d",
+  "value": 150,
+  "emissionDate": "2024-05-23T13:56:23.948Z"
+}
+
+###
+# @name cancel_payable
+PUT {{url}}/integrations/payable/cancel/99155ac7-3d64-473b-9193-3b5285ba0ff2
+Content-Type: application/json
+
+###
+# @name pay_payable
+PUT {{url}}/integrations/payable/pay/99155ac7-3d64-473b-9193-3b5285ba0ff2
+Content-Type: application/json
+
+###
+# @name delete_payable
+DELETE {{url}}/integrations/payable/99155ac7-3d64-473b-9193-3b5285ba0ff2
+Content-Type: application/json
