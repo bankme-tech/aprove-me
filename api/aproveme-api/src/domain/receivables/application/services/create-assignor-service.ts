@@ -7,7 +7,6 @@ import { AssignorAlreadyExistsError } from "./errors/assignor-already-exists-err
 
 interface CreateAssignorServiceRequest {
   assignor: {
-    id: string;
     document: string;
     email: string;
     phone: string;
@@ -62,7 +61,7 @@ export class CreateAssignorService {
         phone: assignor.phone,
         name: assignor.name,
       },
-      new UniqueEntityId(assignor.id)
+      new UniqueEntityId()
     );
 
     await this.assignorsRepo.create(assignorEntity);

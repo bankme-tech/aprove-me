@@ -20,6 +20,7 @@ import { DeleteAssignorByIdController } from "./controllers/delete-assignor-by-i
 import { DeletePayableByIdController } from "./controllers/delete-payable-by-id.controller";
 import { EditAssignorController } from "./controllers/edit-assignor.controller";
 import { EditPayableController } from "./controllers/edit-payable.controller";
+import { RegisterAssignorController } from "./controllers/regiter-assignor.controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -33,6 +34,7 @@ import { EditPayableController } from "./controllers/edit-payable.controller";
     DeletePayableByIdController,
     EditAssignorController,
     EditPayableController,
+    RegisterAssignorController,
   ],
   providers: [
     //Account Services
