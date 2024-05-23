@@ -1,0 +1,61 @@
+import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { AppModule } from "@/infra/app.module";
+import { DatabaseModule } from "@/infra/database/prisma/database.module";
+import { PrismaService } from "@/infra/database/prisma/prisma.service";
+import { INestApplication } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { Test } from "@nestjs/testing";
+import request from "supertest";
+import { AssignorFactory } from "test/factories/makeAssignor";
+import { PayableFactory } from "test/factories/makePayable";
+import { UserFactory } from "test/factories/makeUser";
+
+describe("Get Payable By Id (E2E)", () => {
+  let app: INestApplication;
+  let prisma: PrismaService;
+  let jwt: JwtService;
+
+  let assignorFactory: AssignorFactory;
+  let userFactory: UserFactory;
+
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule, DatabaseModule],
+      providers: [PayableFactory, AssignorFactory, UserFactory],
+    }).compile();
+
+    app = moduleRef.createNestApplication();
+
+    prisma = moduleRef.get(PrismaService);
+    jwt = moduleRef.get(JwtService);
+
+    assignorFactory = moduleRef.get(AssignorFactory);
+    userFactory = moduleRef.get(UserFactory);
+
+    await app.init();
+  });
+
+  test("[GET] /integrations/assignor/:id", async () => {
+    const user = await prisma.assignor.findFirst();
+
+    const accessToken = jwt.sign({ sub: user.id.toString() });
+
+    const assignor = await prisma.assignor.findFirst();
+
+    const response = await request(app.getHttpServer())
+      .get(`/integrations/assignor/${assignor.id}`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send();
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({
+      assignor: expect.objectContaining({
+        id: assignor.id,
+        document: assignor.document,
+        email: assignor.email,
+        phone: assignor.phone,
+        name: assignor.name,
+      }),
+    });
+  });
+});

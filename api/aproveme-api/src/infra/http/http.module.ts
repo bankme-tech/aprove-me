@@ -14,6 +14,8 @@ import { ReceivePayableAndAssignorController } from "./controllers/receive-payab
 import { CreateAccountController } from "./controllers/create-account.controller";
 import { AuthenticateController } from "./controllers/authenticate.controller";
 import { GetPayableByIdController } from "./controllers/get-payable-by-id.controller";
+import { GetAssignorByIdController } from "./controllers/get-assignor-by-id.controller";
+import { FindAssignorByIdService } from "@/domain/receivables/application/services/find-assignor-by-id";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -22,6 +24,7 @@ import { GetPayableByIdController } from "./controllers/get-payable-by-id.contro
     CreateAccountController,
     AuthenticateController,
     GetPayableByIdController,
+    GetAssignorByIdController,
   ],
   providers: [
     //Account Services
@@ -31,6 +34,7 @@ import { GetPayableByIdController } from "./controllers/get-payable-by-id.contro
     //Assignor Services
     CreateAssignorService,
     EditAssignorService,
+    FindAssignorByIdService,
     RemoveAssignorService,
 
     //Payable Services
