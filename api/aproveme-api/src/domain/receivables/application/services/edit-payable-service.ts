@@ -8,7 +8,6 @@ import { ResourceNotFoundError } from "@/core/errors/errors/resource-not-found-e
 interface EditPayableServiceRequest {
   id: string;
   value: number;
-  assignorId: string;
 }
 type EditPayableServiceResponse = Either<
   ResourceNotFoundError,
@@ -24,14 +23,12 @@ export class EditPayableService {
   async execute({
     id,
     value,
-    assignorId,
   }: EditPayableServiceRequest): Promise<EditPayableServiceResponse> {
     const payable = await this.payablesRepo.findByid(id);
 
     if (!payable) return left(new ResourceNotFoundError());
 
     payable.value = value;
-    payable.assignorId = new UniqueEntityId(assignorId);
 
     await this.payablesRepo.update(payable);
 

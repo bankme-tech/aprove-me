@@ -27,12 +27,10 @@ export class EditAssignorController {
   @Put()
   @HttpCode(204)
   async handle(
-    @CurrentUser() user: UserPayload,
     @Body(new ZodValidationPipe(editAssignorBodySchema))
     body: EditAssignorBodySchema,
     @Param("id") id: string
   ) {
-    const userId = user.sub;
     const { document, email, name, phone } = body;
 
     const result = await this.editAssignorService.execute({

@@ -21,13 +21,11 @@ describe("Edit Payable", () => {
 
     const result = await sut.execute({
       id: fakePayable.id.toString(),
-      assignorId: "14655538540",
       value: 1500.5,
     });
 
     expect(result.isRight()).toBeTruthy();
 
     expect(result.value.payable.value).toEqual(1500.5);
-    expect(result.value.payable.assignorId.value).toEqual("14655538540");
   });
 });
