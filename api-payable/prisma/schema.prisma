@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -18,14 +18,21 @@ model Payable {
   value        Float
   emissionDate DateTime @default(now())
   assignor     Assignor @relation(fields: [assignorId], references: [id])
-  assignorId   String  
+  assignorId   String   @db.VarChar(36)
 }
 
 model Assignor {
   id       String    @id @default(uuid())
-  document String    
-  email    String    
-  phone    String    
-  name     String    
+  document String    @db.VarChar(30)
+  email    String    @db.VarChar(140)
+  phone    String    @db.VarChar(20)
+  name     String    @db.VarChar(140)
   payables Payable[]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  login     String   @unique
+  password  String
+  salt      String
 }
