@@ -10,6 +10,8 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
+import { jwtDecode } from 'jwt-decode';
+import { api, setAuthToken } from '@/services/api';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -31,7 +33,14 @@ export default function SignIn() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3003/integrations/auth', { email, password });
+        const response = await api.post('/integrations/auth', { email, password });
+        const {
+            accessToken : token
+        }  = response.data;
+        localStorage.setItem('authToken', token);
+        const decodedToken = jwtDecode(token);
+       
+    
       toast.success('Login realizado com sucesso!', {
         description: 'Você foi autenticado com sucesso!',
         action: {
@@ -48,7 +57,9 @@ export default function SignIn() {
             label: "Fechar",
             onClick: () => ("Fechar"),
           }
+       
         });
+     
       } else {
         toast.error('Erro ao realizar login!', {
           description: 'Erro desconhecido',
