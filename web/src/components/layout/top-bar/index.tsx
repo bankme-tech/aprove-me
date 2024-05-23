@@ -4,7 +4,7 @@ import { PanelLeft } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
-import { useAppContext } from '@/hooks/use-app-context';
+import { useAppContext } from '@/hooks/useAppContext';
 
 export const TopBar: React.FC = () => {
   const { setIsLeftBarOpen } = useAppContext();

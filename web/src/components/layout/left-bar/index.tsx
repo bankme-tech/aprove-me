@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import { AppRoutes } from '@/constants/app-routes';
-import { useAppContext } from '@/hooks/use-app-context';
+import { useAppContext } from '@/hooks/useAppContext';
 import { cn } from '@/utils/funcitons';
 
 export const LeftBar: React.FC = () => {
