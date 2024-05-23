@@ -5,10 +5,14 @@ import { IPayableRepository } from '../../repositories/interfaces/payable.reposi
 import { InMemoryPayableRepository } from '../../repositories/in-memory/payable.repository';
 import { UpdatePayableService } from '../../services/update-payable/update-payable.service';
 import { FakeAuthModule } from '~/common/test/fake-auth-module';
+import { IAssignorRepository } from '~/modules/assignor/repositories/interfaces/assignor.repository-interface';
+import { InMemoryAssignorRepository } from '~/modules/assignor/repositories/in-memory/assignor.repository';
+import { makeAssignor } from '~/modules/assignor/test/factories/make-assignor';
 
 describe('UpdatePayableController', () => {
   let controller: UpdatePayableController;
   let repository: InMemoryPayableRepository;
+  let assignorRepository: InMemoryAssignorRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,15 +25,24 @@ describe('UpdatePayableController', () => {
           provide: IPayableRepository,
           useClass: InMemoryPayableRepository,
         },
+        {
+          provide: IAssignorRepository,
+          useClass: InMemoryAssignorRepository,
+        },
       ],
     }).compile();
 
     controller = module.get<UpdatePayableController>(UpdatePayableController);
     repository = module.get(IPayableRepository);
+    assignorRepository = module.get(IAssignorRepository);
   });
 
   it('should update a payable', async () => {
-    const payable = makePayable();
+    const assignor = makeAssignor();
+
+    assignorRepository.items.push(assignor);
+
+    const payable = makePayable({ assignorId: assignor.id });
     const newValue = payable.value + 10;
 
     repository.items.push(payable);

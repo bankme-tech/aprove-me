@@ -3,6 +3,7 @@ import { Either, left, right } from '~/common/utils/either';
 import { PayableEntity } from '../../entities/payable.entity';
 import { IPayableRepository } from '../../repositories/interfaces/payable.repository-interface';
 import { NotFoundResource } from '~/common/exceptions/not-found-resource.exception';
+import { IAssignorRepository } from '~/modules/assignor/repositories/interfaces/assignor.repository-interface';
 
 interface RequestData {
   id: string;
@@ -15,7 +16,10 @@ type ResponseData = Either<Error, PayableEntity>;
 
 @Injectable()
 export class UpdatePayableService {
-  constructor(private repository: IPayableRepository) {}
+  constructor(
+    private repository: IPayableRepository,
+    private assignorPayable: IAssignorRepository,
+  ) {}
 
   async execute({
     id,
@@ -28,6 +32,14 @@ export class UpdatePayableService {
     if (!payable) {
       return left(
         new NotFoundResource(`Payable with id "${payable}" not found.`),
+      );
+    }
+
+    const assignor = await this.assignorPayable.findById(assignorId);
+
+    if (!assignor) {
+      return left(
+        new NotFoundResource(`Assignor with id "${assignorId}" not found.`),
       );
     }
 
