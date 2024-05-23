@@ -1,6 +1,6 @@
 import { isValidCNPJ, formatCNPJ } from '@brazilian-utils/brazilian-utils';
 
-import { InvalidFieldError } from '../exception';
+import { InvalidFieldException } from '../exception';
 import { ValueObject } from './value-object';
 
 export class CnpjVO extends ValueObject<string> {
@@ -12,7 +12,7 @@ export class CnpjVO extends ValueObject<string> {
   private validate() {
     const isValid = isValidCNPJ(this._value);
 
-    if (!isValid) throw new InvalidFieldError('cnpj');
+    if (!isValid) throw new InvalidFieldException('cnpj');
   }
 
   toString() {

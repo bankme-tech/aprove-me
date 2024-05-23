@@ -1,7 +1,7 @@
 import * as crypto from 'crypto';
 
 import { ValueObject } from './value-object';
-import { InvalidUuidError } from '../exception';
+import { InvalidUuidException } from '../exception';
 
 export class UniqueEntityIdVO extends ValueObject<string> {
   private readonly _uuidV4Regex =
@@ -16,7 +16,7 @@ export class UniqueEntityIdVO extends ValueObject<string> {
     const isValid = this._uuidV4Regex.test(this._value);
 
     if (!isValid) {
-      throw new InvalidUuidError(this.value);
+      throw new InvalidUuidException(this.value);
     }
   }
 }

@@ -1,6 +1,6 @@
 import { isValidCPF, formatCPF } from '@brazilian-utils/brazilian-utils';
 
-import { InvalidFieldError } from '../exception';
+import { InvalidFieldException } from '../exception';
 import { ValueObject } from './value-object';
 
 export class CpfVO extends ValueObject<string> {
@@ -12,7 +12,7 @@ export class CpfVO extends ValueObject<string> {
   private validate() {
     const isValid = isValidCPF(this._value);
 
-    if (!isValid) throw new InvalidFieldError('cpf');
+    if (!isValid) throw new InvalidFieldException('cpf');
   }
 
   toString() {

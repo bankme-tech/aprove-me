@@ -1,6 +1,6 @@
 import { isValidMobilePhone } from '@brazilian-utils/brazilian-utils';
 import { ValueObject } from './value-object';
-import { InvalidFieldError } from '../exception';
+import { InvalidFieldException } from '../exception';
 
 export class PhoneVO extends ValueObject<string> {
   constructor(number: string) {
@@ -11,7 +11,7 @@ export class PhoneVO extends ValueObject<string> {
   private validate() {
     const isValid = isValidMobilePhone(this._value);
 
-    if (!isValid) throw new InvalidFieldError('phone');
+    if (!isValid) throw new InvalidFieldException('phone');
   }
 
   toString() {

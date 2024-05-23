@@ -1,3 +1,3 @@
-export * from './invalid-uuid-error.exception';
-export * from './invalid-field-error.exception';
+export * from './invalid-uuid.exception';
+export * from './invalid-field.exception';
 export * from './receivable-not-found.exception';

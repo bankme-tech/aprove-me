@@ -1,6 +1,6 @@
 import { AggregateRoot } from './aggregate-root';
 
-import { InvalidFieldError } from '../common/exception';
+import { InvalidFieldException } from '../common/exception';
 import {
   CnpjVO,
   CpfVO,
@@ -67,6 +67,6 @@ export class AssignorEntity extends AggregateRoot {
     if (cleanValue.length === 11) return new CpfVO(cleanValue);
     if (cleanValue.length === 14) return new CnpjVO(cleanValue);
 
-    throw new InvalidFieldError('document');
+    throw new InvalidFieldException('document');
   }
 }
