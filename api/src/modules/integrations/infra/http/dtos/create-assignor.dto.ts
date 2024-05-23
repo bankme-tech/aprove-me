@@ -5,7 +5,6 @@ export const createAssignorDto = z.object({
   email: z.string().email().min(1).max(140),
   phone: z.string().min(1).max(20),
   name: z.string().min(1).max(140),
-  password: z.string().min(1),
 });
 
 export type CreateAssignorDto = z.infer<typeof createAssignorDto>;

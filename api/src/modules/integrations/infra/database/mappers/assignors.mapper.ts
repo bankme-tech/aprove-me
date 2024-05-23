@@ -10,7 +10,6 @@ export class AssignorsMapper {
       email: assignor.email,
       phone: assignor.phone,
       name: assignor.name,
-      password: assignor.password,
       createdAt: assignor.createdAt,
       updatedAt: assignor.updatedAt,
     });
@@ -22,7 +21,6 @@ export class AssignorsMapper {
       email: assignor.email,
       phone: assignor.phone,
       name: assignor.name,
-      password: assignor.password,
     };
   }
 }

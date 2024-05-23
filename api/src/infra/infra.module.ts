@@ -3,6 +3,7 @@ import { PrismaService } from './database/prisma/prisma.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { envConfig } from './config/env.config';
 import { JwtModule } from '@nestjs/jwt';
+import { BullModule } from '@nestjs/bull';
 
 @Global()
 @Module({
@@ -20,6 +21,12 @@ import { JwtModule } from '@nestjs/jwt';
           expiresIn: configService.get<string | number>('jwtExpiresIn'),
         },
       }),
+    }),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
     }),
   ],
   providers: [PrismaService],
