@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Backend
 
-## Getting Started
+## 💻 O Problema
+Um cliente da Bankme solicitou uma nova funcionalidade, relacionada a recebíveis.
 
-First, run the development server:
+Todos os dias esse cliente movimenta vários recebíveis, e nosso time de operações estava ficando maluco tendo que cadastrar tudo isso de forma manual!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Os recebíveis são representações digitais de um documento que simula uma dívida a ser recebida. E para Bankme, é importante ter essas informações como parte do fluxo comercial que temos com este cliente.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ▶️ Iniciar o projeto
+Para iniciar o projeto execute os comandos abaixo (tenha pelo menos o Node 18 instalado).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Crie um arquivo `.env.local` baseado no arquivo `.env.example`.
+2. Caso necessário, altere a variável de ambiente para apontar corretamente para o backend
+3. Execute o comando `npm run build` para gerar uma build do projeto
+4. Execute o comando `npm run start -- -p 3001` para executar o projeto na porta 3001.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## 🧱 Estrutura do Projeto
+Este projeto foi construído utilizando o NextJS 14 com o App folder. As funcionalidades e componentes são separados por segregação de responsabilidades, visando a letra S (Segregation Responsibility Principle) dos princípios SOLID, seria possível fazer uma segregação ainda maior, mas infelizmente por falta de tempo decidi não me aprofundar tanto.
+A aplicação conta com uma autenticação básica, aonde o token é armazenado no localStorage. Em uma aplicação para produção, recomendaria salvar o token nos cookies, pela facilidade de transição entre o lado do servidor e do cliente, e também por alguns aspectos de segurança.
+Foi também utilizado funcionalidades de cache tanto no lado do servidor quanto no lado do cliente.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👀 Níveis concluídos
+- [X] Nível 1 - Cadastro
+- [X] Nível 2 - Conectando na API
+- [X] Nível 3 - Listando
+- [X] Nível 4 - Autenticação
+- [ ] Nível 5 - Testes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## ⭐️ Funcionalidades
+- Design simples e rápido com Shadcn/UI
+- Utilização de caches
+- Segregação de responsabilidade dos arquivos
+- NextJS 14
