@@ -1,0 +1,12 @@
+# dependencies
+/node_modules
+/yarn.lock
+
+# next.js
+/.next
+/.public
+/next.config.js
+/next-env.d.ts
+
+# configuration
+/tailwind.config.js

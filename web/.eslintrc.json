@@ -1,3 +1,34 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "airbnb-base",
+    "prettier",
+    "eslint-config-prettier",
+    "next"
+  ],
+  "plugins": ["eslint-plugin-import-helpers"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": ["module", "/^@//", ["parent", "sibling", "index"]],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ],
+    "@typescript-eslint/consistent-type-imports": "error",
+    "import/prefer-default-export": "off",
+    "import/extensions": [
+      "warn",
+      {
+        "css": "always",
+        "json": "always"
+      }
+    ],
+    "import/no-anonymous-default-export": "off"
+  }
 }

@@ -1,0 +1,8 @@
+# dependencies
+/node_modules
+/yarn.lock
+
+# next.js
+/.next
+/.public
+/next-env.d.ts
