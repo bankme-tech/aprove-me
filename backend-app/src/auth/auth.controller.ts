@@ -12,7 +12,7 @@ export class AuthController {
   login(@Body() loginAuthDto: LoginAuthDto, @Res() response: Response) {
     const newToken = this.authService.login(loginAuthDto);
     return response
-      .header('authorization', `Bearer ${newToken}`)
+      .header('Authorization', `Bearer ${newToken}`)
       .status(200)
       .json({ message: 'Login efetuado com sucesso.' });
   }

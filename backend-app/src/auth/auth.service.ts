@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { PrismaService } from 'src/prisma.service';
 import { JwtService } from '@nestjs/jwt';
@@ -28,8 +24,8 @@ export class AuthService {
         (await bcrypt.compare(loginAuthDto.password, response.password))
       ) {
         const newToken = this.jwtService.sign({
-          id: response.id,
-          user: response.login,
+          userId: response.id,
+          username: response.login,
         });
         return newToken;
       }
