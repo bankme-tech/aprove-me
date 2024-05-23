@@ -32,7 +32,7 @@ import { PayableUsecase } from './application/payable.usecase';
     {
       provide: 'IReceivableRepository',
       useFactory: (prisma: PrismaClient) =>
-        new PrismaAssignorRepository(prisma),
+        new PrismaReceivableRepository(prisma),
       inject: [PrismaClient],
     },
     {

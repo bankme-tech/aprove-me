@@ -18,7 +18,7 @@
     "test": "npx prisma migrate deploy --schema=./src/infra/repository/schema.prisma && jest --passWithNoTests --runInBand --no-cache",
     "test:unit": "npm test -- --watchAll -c jest-unit-config.ts",
     "test:integration": "npm test -- --watchAll -c jest-integration-config.ts",
-    "test:ci": "npm run audit && ./node_modules/.bin/jest --runInBand --coverage --verbose",
+    "test:ci": "npm run audit && npx prisma migrate deploy --schema=./src/infra/repository/schema.prisma && ./node_modules/.bin/jest --runInBand --coverage --verbose",
     "prisma:gen": "npx prisma generate --schema=./src/infra/repository/schema.prisma",
     "prisma:migration": "npx prisma migrate dev --name init --schema=./src/infra/repository/schema.prisma"
   },

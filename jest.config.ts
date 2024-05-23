@@ -3,7 +3,13 @@ export default {
   clearMocks: true,
   detectOpenHandles: true,
   testEnvironment: 'node',
-  collectCoverageFrom: ['<rootDir>/src/**', '!<rootDir>/src/domain/common/exception/*'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**',
+    '!<rootDir>/src/main.ts',
+    '!<rootDir>/src/domain/common/exception/*',
+    '!<rootDir>/src/domain/repository/*',
+    '!<rootDir>/src/infra/repository/*'
+  ],
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [
     '/node_modules/'
