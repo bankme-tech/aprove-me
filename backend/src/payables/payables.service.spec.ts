@@ -77,7 +77,13 @@ describe('IntegrationsService', () => {
       };
       prismaMock.payable.update.mockResolvedValue(newPayable);
 
-      expect(await service.updatePayable(payables[0].id, payables[0])).toBe(
+      const updatedPayable: UpdatePayableDto = {
+        assignor: newPayable.assignor,
+        emissionDate: newPayable.emissionDate,
+        value: newPayable.value,
+      };
+
+      expect(await service.updatePayable(payables[0].id, updatedPayable)).toBe(
         newPayable,
       );
     });
