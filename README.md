@@ -49,7 +49,7 @@ npm install
 
 02. Em seguida rode o comando abaixo para subir a aplicação
 ```
-npm run dev
+npm run start:dev
 ```
 Pronto. O servidor irá inicializar na porta 3001.
 
