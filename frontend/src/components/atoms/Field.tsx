@@ -28,7 +28,7 @@ export const FieldSelect = ({ form, options, ...props }: any) => {
       {...form.register(form.name)}
     >
       {options.map((option: any) => (
-        <option key={option.value} value={option.value}>
+        <option key={option.key} value={option.value}>
           {option.label}
         </option>
       ))}

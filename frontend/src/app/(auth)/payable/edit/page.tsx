@@ -2,8 +2,8 @@
 
 import { FormPayable } from "@/components/organisms/FormPayable";
 
-const PayableRegister = () => {
+const PayableEdit = () => {
   return <FormPayable />;
 };
 
-export default PayableRegister;
+export default PayableEdit;

@@ -1,9 +1,10 @@
+import Link from "next/link";
+
 type TableLine = {
   edit?: boolean;
 };
 
-export const TableLine = ({ edit, content, keys, idx }: any) => {
-  console.log("🚀 ~ TableLine ~ keys:", keys, idx);
+export const TableLine = ({ edit, content, keys, link }: any) => {
   return (
     <tr className={edit ? "hover:bg-success  " : ""}>
       {keys
@@ -12,7 +13,6 @@ export const TableLine = ({ edit, content, keys, idx }: any) => {
               key={key}
               className="py-4 px-6 text-sm font-medium text-primary-dark whitespace-nowrap"
             >
-              {console.log("🚀 ~ TableLine ~ content[idx]:", content)}
               {content[key]}
             </td>
           ))
@@ -27,9 +27,9 @@ export const TableLine = ({ edit, content, keys, idx }: any) => {
 
       <td className="py-4 px-6 text-sm font-medium text-right whitespace-nowrap ">
         {edit && (
-          <a href="#" className="text-primary-dark hover:underline">
-            Edit
-          </a>
+          <Link href={link + "?id=" + content.id}>
+            <span className="text-primary-dark hover:underline">Edit</span>
+          </Link>
         )}
       </td>
     </tr>

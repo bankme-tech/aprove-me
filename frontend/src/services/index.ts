@@ -60,7 +60,7 @@ export const findManyAssignor = async ({
 }) => {
   try {
     const { data } = await axios.get(
-      `http://localhost:4000/v1/integrations/payable?limit=${limit}&page=${page}`,
+      `http://localhost:4000/v1/integrations/assignor?limit=${limit}&page=${page}`,
 
       {
         headers: {

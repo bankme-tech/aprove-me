@@ -3,8 +3,7 @@ import { TableHeader } from "../molecules/TableHeader";
 
 type Table = {};
 
-export const Table = ({ headerContent, bodyContent }: any) => {
-  console.log("🚀 ~ Table ~ headerContent:", headerContent);
+export const Table = ({ headerContent, bodyContent, linkToEdit }: any) => {
   return (
     <div className="flex flex-col ">
       <div className="overflow-x-auto shadow-md sm:rounded-lg">
@@ -16,6 +15,7 @@ export const Table = ({ headerContent, bodyContent }: any) => {
                 <TableBody
                   content={bodyContent}
                   keys={headerContent.map(({ key }: any) => key)}
+                  link={linkToEdit}
                 />
               )}
             </table>
