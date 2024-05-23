@@ -51,15 +51,27 @@ export class AuthService {
     return this.responseWithJWT(auth)
   }
 
+  async checkToken(token: string) {
+    const data = this.jwt.verify<{ login: string; sub: string }>(token, {
+      issuer: env.JWT_ISSUER,
+      audience: env.JWT_AUDIENCE,
+    })
+
+    if (!data) return null
+
+    const auth = await this.repo.findByLogin(data.login)
+
+    return auth
+  }
+
   private responseWithJWT(auth: Auth) {
     const token = this.jwt.sign(
       { login: auth.login },
       {
         expiresIn: '7d',
         subject: `${auth.id}`,
-        issuer: 'aprove-me-api',
-        audience: 'auth-user',
-        secret: env.JWT_SECRET,
+        issuer: env.JWT_ISSUER,
+        audience: env.JWT_AUDIENCE,
       },
     )
 

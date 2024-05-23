@@ -1,3 +1,4 @@
+import { AuthGuard } from '@/common/guards/auth.guard'
 import { ZodValidationPipe } from '@/common/pipe/zod-validation.pipe'
 import {
   Body,
@@ -9,6 +10,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common'
 import {
   PayableCreateSchema,
@@ -23,6 +25,7 @@ import { PayableService } from './payable.service'
 const createValidationPipe = new ZodValidationPipe(payableCreateSchema)
 const updateValidationPipe = new ZodValidationPipe(payableUpdateSchema)
 
+@UseGuards(AuthGuard)
 @Controller('payable')
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
