@@ -6,42 +6,38 @@ import {
 } from '@nestjs/bull';
 import { Payable } from '@prisma/client';
 import { Job } from 'bull';
-import { PrismaService } from 'src/config/prisma.service';
 import { JwtPayload } from 'src/types/jwt-payload.types';
-import { UserPayableService } from '../user-payable/user-payable.service';
-import { AssignorService } from './../assignor/assignor.service';
 import { PayableDto } from './dto/payable.dto';
 import { PayableService } from './payable.service';
 
 @Processor('payable')
 export class PayableProcessor {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly payableService: PayableService,
-
-    private readonly assignorService: AssignorService,
-    private readonly userPayableService: UserPayableService,
-  ) {}
+  constructor(private readonly payableService: PayableService) {}
 
   @Process('createPayable')
   async handleCreatePayable(
-    job: Job<{ data: Omit<PayableDto, 'id'>; user: JwtPayload }>,
+    job: Job<{ data: Omit<PayableDto, 'id'>[]; user: JwtPayload }>,
   ) {
     try {
       const { data, user } = job.data;
 
-      await this.assignorService.findOne(data.assignorId);
+      if (data.length > 10000) {
+        throw new Error('Exceeded the maximum allowed');
+      }
 
-      const payable = await this.prisma.payable.create({
-        data,
-      });
+      for (const payable of data) {
+        await this.payableService.create(payable, user);
+      }
 
-      await this.userPayableService.create({
-        payableId: payable.id,
-        userId: user.id,
-      });
+      if (data.length >= 10) {
+        return 'Successful';
+      }
 
-      return payable;
+      // return await this.mailerService.sendMail({
+      //   to: user.email,
+      //   subject: 'Payable Processing Complete',
+      //   text: `Yours Payable are saved successfully`,
+      // });
     } catch (error) {
       if (job.attemptsMade < 4) {
         await job.retry();
@@ -54,7 +50,7 @@ export class PayableProcessor {
     }
   }
   async sendEmailToOperations(data: {
-    data: Omit<PayableDto, 'id'>;
+    data: Omit<PayableDto, 'id'>[];
     user: JwtPayload;
   }) {
     console.log('🚀 ~ PayableProcessor ~ data:', data);
