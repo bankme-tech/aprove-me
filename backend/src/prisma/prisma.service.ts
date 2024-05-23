@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { hashPassword } from 'src/utils';
+import { hashPassword } from '../utils';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {

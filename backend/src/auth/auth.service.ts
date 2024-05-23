@@ -6,11 +6,12 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { SignInDto } from './dto/sign-in.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import {
   hashPassword as hashPasswordd,
   comparePassword as comparePasswordd,
-} from 'src/utils';
+} from '../utils';
+import { UserJWT } from './entities/userJTW.entity';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
       throw new UnauthorizedException('Não autorizado');
     }
 
-    const payload = { username: signInDto.login, role: user.role };
+    const payload = { username: signInDto.login, role: user.role } as UserJWT;
 
     return {
       access_token: await this.jwtService.signAsync(payload, {

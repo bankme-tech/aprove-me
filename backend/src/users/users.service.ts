@@ -1,9 +1,9 @@
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { validateDto } from 'src/utils';
-import { AuthService } from 'src/auth/auth.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { validateDto } from '../utils';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UsersService {
@@ -58,6 +58,10 @@ export class UsersService {
   }
 
   async update(username: string, updateUserDto: UpdateUserDto) {
+    if (username === 'aprovame') {
+      throw new Error('You cannot update the aprovame user');
+    }
+
     const data = await validateDto(updateUserDto, UpdateUserDto);
     return await this.prismaService.user.update({
       where: {
@@ -73,6 +77,10 @@ export class UsersService {
   }
 
   remove(username: string) {
+    if (username === 'aprovame') {
+      throw new Error('You cannot delete the aprovame user');
+    }
+
     return this.prismaService.user.delete({
       where: {
         username,
