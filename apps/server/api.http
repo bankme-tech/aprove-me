@@ -1,5 +1,6 @@
 
 @url = http://localhost:3000
+@token = {{auth_sign_in.request.body.$.token.access_token}}
 
 # @name health_check
 GET {{url}}/integrations/healthz
@@ -9,6 +10,7 @@ Content-Type: application/json
 # @name create_assignor
 POST {{url}}/integrations/assignor
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Impob25kb2UiLCJpYXQiOjE3MTY0OTA4OTksImV4cCI6MTcxNzA5NTY5OSwiYXVkIjoiYXV0aC11c2VyIiwiaXNzIjoiYXByb3ZlLW1lLWFwaSIsInN1YiI6IjJiNjRlYTFiLTFjYTgtNGY1NC05YjRiLThiM2IyMWZiMWI2YSJ9.1RVGf25rGM-SU8i-Jh_wXeIhaQxlMYod1yrAEs-KY0Q
 
 {
   "name": "Jhon Doe",
