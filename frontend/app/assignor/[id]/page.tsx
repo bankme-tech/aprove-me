@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <main className="p-5 h-full flex justify-center">
       <div className="flex gap-5 flex-col items-center bg-white w-[50%] h-[350px] p-8 rounded-xl">
-        <h1 className="text-2xl font-bold">Detalhes do Pagável</h1>
+        <h1 className="text-2xl font-bold">Detalhes do Assinante</h1>
         <div className="flex gap-3">
           <span className="font-bold">ID:</span>
           <span className="font-normal">{id}</span>

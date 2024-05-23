@@ -116,9 +116,9 @@ export default function Page() {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">ID</TableHead>
-            <TableHead>Data de emissão</TableHead>
-            <TableHead>Id do Assinante</TableHead>
             <TableHead className="text-right">Valor</TableHead>
+            <TableHead>Data de emissão</TableHead>
+            <TableHead>Assinante</TableHead>
             <TableHead className="text-center">Açoes</TableHead>
           </TableRow>
         </TableHeader>
@@ -128,9 +128,17 @@ export default function Page() {
               <TableCell className="font-medium">
                 <Link href={`/list-payable/${payable.id}`}>{payable.id}</Link>
               </TableCell>
-              <TableCell>{payable.emissionDate}</TableCell>
-              <TableCell>{payable.assignor}</TableCell>
               <TableCell className="text-right">${payable.value}</TableCell>
+              <TableCell>{payable.emissionDate}</TableCell>
+              <TableCell>
+                <Link
+                  href={
+                    payable.assignor ? `/assignor/${payable?.assignor}` : ""
+                  }
+                >
+                  <span className="font-normal">Ver assinante</span>
+                </Link>
+              </TableCell>
               <TableCell className="flex gap-3 justify-end items-end">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
