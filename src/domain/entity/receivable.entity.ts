@@ -32,7 +32,7 @@ export class ReceivableEntity extends Entity {
     return {
       ...this,
       id: this.id.value,
-      assignor: this.assignorId.value,
+      assignorId: this.assignorId.value,
     };
   }
 }

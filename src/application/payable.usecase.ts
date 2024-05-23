@@ -17,6 +17,7 @@ export class PayableUsecase {
     assignor = await this.assignorRepo.findByDocument(sanitizedDocument);
 
     if (!assignor) {
+      console.log('sczxcbdfsdfdgh');
       assignor = AssignorEntity.create({
         document: input.document,
         email: input.email,
