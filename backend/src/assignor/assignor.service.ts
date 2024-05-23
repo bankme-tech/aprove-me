@@ -21,8 +21,8 @@ export class AssignorService {
     return assignorData;
   }
 
-  findAll() {
-    return `This action returns all assignor`;
+  async findAll() {
+    return this.prismaService.assignor.findMany();
   }
 
   findOne(id: number) {
