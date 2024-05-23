@@ -11,7 +11,7 @@ interface ClientReactQueryProps {
 
 let browserQueryClient: QueryClient | undefined = undefined
 
-function getQueryClient() {
+export function getQueryClient() {
     if (typeof window === 'undefined') {
       return makeQueryClient()
     } else {
@@ -20,9 +20,9 @@ function getQueryClient() {
     }
 }
 
-export const ClientReactQuery: React.FunctionComponent<ClientReactQueryProps> = ({children}) => {
-    const queryClient = getQueryClient()
+export const queryClient = getQueryClient()
 
+export const ClientReactQuery: React.FunctionComponent<ClientReactQueryProps> = ({children}) => {
     return (
         <QueryClientProvider client={queryClient}>
             <ReactQueryStreamedHydration>

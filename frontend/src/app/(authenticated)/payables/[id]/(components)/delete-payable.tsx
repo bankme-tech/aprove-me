@@ -4,10 +4,11 @@ import { deletePayable } from "@/lib/server/routes/delete-payable";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { RedirectType, redirect, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import { toast } from "sonner";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { getToken } from "@/lib/utils/token";
+import { queryClient } from "@/providers/client-react-query";
 
 interface DeletePayableProps {
     payableId: string
@@ -19,13 +20,11 @@ export const DeletePayable: React.FunctionComponent<DeletePayableProps> = ({ pay
 
     if(!token) redirect('/', RedirectType.replace)
 
-    const { invalidateQueries } = useQueryClient()
-
     const {mutate, isPending} = useMutation({
         mutationFn: () => deletePayable(payableId, {token}),
         onError: (error) => toast.error(error.message),
         onSuccess: () => {
-            invalidateQueries({queryKey: ['payables'], exact: true})
+            queryClient.invalidateQueries({queryKey: ['payables'], exact: true})
             toast.success('Pagável removido com sucesso!')
             router.replace('/payables')
         },

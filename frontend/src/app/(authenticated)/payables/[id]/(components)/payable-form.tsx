@@ -12,10 +12,11 @@ import { FormComboBox } from '@/components/ui/form-combo-box'
 import { Label } from '@/components/ui/label'
 import { updatePayable } from '@/lib/server/routes/update-payable'
 import { DeletePayable } from './delete-payable'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { listAssignors } from '@/lib/server/routes/list-assignors'
 import { getToken, removeToken } from '@/lib/utils/token'
 import { RedirectType, redirect } from 'next/navigation'
+import { queryClient } from '@/providers/client-react-query'
 
 interface PayableFormProps {
     payableId: string
@@ -40,8 +41,6 @@ export const PayableForm: React.FunctionComponent<PayableFormProps> = ({ payable
 
     const assignors = data?.map(assignor => ({ value: assignor.id, label: assignor.name })) || []
 
-    const { invalidateQueries } = useQueryClient()
-
     const { mutate } = useMutation({
         retry: false,
         mutationFn: ({ emissionDate, ...data }: PayableData) => 
@@ -62,9 +61,7 @@ export const PayableForm: React.FunctionComponent<PayableFormProps> = ({ payable
             },
             onSuccess: () => {
                 toast.success('Pagável atualizado com sucesso!')
-                invalidateQueries({ queryKey: ['payables'], exact: true })
-                invalidateQueries({queryKey: ['payables', payableId], exact: true})
-
+                queryClient.invalidateQueries({ queryKey: ['payables']})
             }
         })
 

@@ -13,9 +13,10 @@ import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { FormComboBox } from '@/components/ui/form-combo-box'
 import { getToken, removeToken } from '@/lib/utils/token'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { listAssignors } from '@/lib/server/routes/list-assignors'
 import { RedirectType, redirect } from 'next/navigation'
+import { getQueryClient, queryClient } from '@/providers/client-react-query'
 
 export const NewPayable: React.FunctionComponent = () => {
     const [open, setOpen] = useState(false);
@@ -38,7 +39,6 @@ export const NewPayable: React.FunctionComponent = () => {
         defaultValues: { value: 0 }
     })
 
-    const { invalidateQueries } = useQueryClient()
 
     const { mutate } = useMutation({
         retry: false,
@@ -59,7 +59,7 @@ export const NewPayable: React.FunctionComponent = () => {
         },
         onSuccess: () => {
             toast.success('Pagável registrado com sucesso!')
-            invalidateQueries({queryKey: ['payables'], exact: true})
+            queryClient.invalidateQueries({queryKey: ['payables'], exact: true})
             setOpen(false)
         }
     })

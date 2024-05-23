@@ -13,9 +13,10 @@ import { registerAssignor } from '@/lib/server/routes/register-assignor'
 import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { Label } from '@/components/ui/label'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { getToken } from '@/lib/utils/token'
 import { redirect, RedirectType } from 'next/navigation'
+import { queryClient } from '@/providers/client-react-query'
 
 export const NewAssignor: React.FunctionComponent = () => {
     const token = getToken()
@@ -26,8 +27,6 @@ export const NewAssignor: React.FunctionComponent = () => {
     const form = useForm<AssignorData>({
         resolver: zodResolver(assignorValidationSchema),
     })
-
-    const { invalidateQueries } = useQueryClient()
     
     const {mutate} = useMutation({
         mutationFn: (data: AssignorData) => registerAssignor(data, {token}),
@@ -35,7 +34,7 @@ export const NewAssignor: React.FunctionComponent = () => {
 
         onSuccess: () => {
             toast.success('Cedente registrado com sucesso!')
-            invalidateQueries({queryKey: ['assignors'], exact: true})
+            queryClient.invalidateQueries({queryKey: ['assignors'], exact: true})
             setOpen(false)
         }
     })
