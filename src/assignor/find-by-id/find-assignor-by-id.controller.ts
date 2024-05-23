@@ -1,8 +1,7 @@
 import { Controller, Get, Param, ParseUUIDPipe } from "@nestjs/common";
 import type { Assignor } from "@prisma/client";
 
-import { AssignorDTO } from "../assignor.dto";
-import { FindAssignorByIdPipe } from "./find-assignor-by-id.pipe";
+import { FindAssignorByIdPipe } from "../find-assignor-by-id.pipe";
 
 @Controller()
 export class FindAssignorByIdController {
@@ -10,6 +9,6 @@ export class FindAssignorByIdController {
   async handle(
     @Param("id", ParseUUIDPipe, FindAssignorByIdPipe) assignor: Assignor,
   ) {
-    return new AssignorDTO(assignor);
+    return assignor;
   }
 }

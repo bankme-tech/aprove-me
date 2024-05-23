@@ -1,16 +1,18 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
+import { ZodPipe } from "../../pipes/zod.pipe";
 import { PrismaProvider } from "../../providers/prisma.provider";
-import { AssignorDTO } from "../assignor.dto";
-import { CreateAssignorInputDTO } from "./create-assignor-input.dto";
-import { CreateAssignorInputPipe } from "./create-assignor-input.pipe";
+import { UpsertAssignorInputDTO } from "../upsert-assignor-input.dto";
+import { UpsertAssignorInputSchema } from "../upsert-assignor-input.schema";
 
 @Controller()
 export class CreateAssignorController {
   constructor(private readonly prisma: PrismaProvider) {}
 
   @Post("/integrations/assignor")
-  async handle(@Body(CreateAssignorInputPipe) input: CreateAssignorInputDTO) {
+  async handle(
+    @Body(new ZodPipe(UpsertAssignorInputSchema)) input: UpsertAssignorInputDTO,
+  ) {
     const assignor = await this.prisma.assignor.create({
       data: {
         document: input.document,
@@ -20,6 +22,6 @@ export class CreateAssignorController {
       },
     });
 
-    return new AssignorDTO(assignor);
+    return assignor;
   }
 }

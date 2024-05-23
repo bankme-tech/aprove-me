@@ -1,11 +1,11 @@
 import { Body, Controller, Param, ParseUUIDPipe, Put } from "@nestjs/common";
 import type { Assignor } from "@prisma/client";
 
+import { ZodPipe } from "../../pipes/zod.pipe";
 import { PrismaProvider } from "../../providers/prisma.provider";
-import { AssignorDTO } from "../assignor.dto";
-import { FindAssignorByIdPipe } from "../find-by-id/find-assignor-by-id.pipe";
-import { UpdateAssignorByIdInputDTO } from "./update-assignor-by-id-input.dto";
-import { UpdateAssignorByIdInputPipe } from "./update-assignor-by-id-input.pipe";
+import { FindAssignorByIdPipe } from "../find-assignor-by-id.pipe";
+import { UpsertAssignorInputDTO } from "../upsert-assignor-input.dto";
+import { UpsertAssignorInputSchema } from "../upsert-assignor-input.schema";
 
 @Controller()
 export class UpdateAssignorByIdController {
@@ -18,10 +18,10 @@ export class UpdateAssignorByIdController {
   @Put("integrations/assignor/:id")
   async handle(
     @Param("id", ParseUUIDPipe, FindAssignorByIdPipe) assignor: Assignor,
-    @Body(UpdateAssignorByIdInputPipe)
-    input: UpdateAssignorByIdInputDTO,
+    @Body(new ZodPipe(UpsertAssignorInputSchema))
+    input: UpsertAssignorInputDTO,
   ) {
-    await this.prisma.assignor.update({
+    return await this.prisma.assignor.update({
       data: {
         document: input.document,
         email: input.email,
@@ -31,14 +31,6 @@ export class UpdateAssignorByIdController {
       where: {
         id: assignor.id,
       },
-    });
-
-    return new AssignorDTO({
-      id: assignor.id,
-      document: input.document,
-      email: input.email,
-      phone: input.phone,
-      name: input.name,
     });
   }
 }

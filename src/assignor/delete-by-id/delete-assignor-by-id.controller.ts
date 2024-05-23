@@ -8,8 +8,7 @@ import {
 import type { Assignor } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
-import { AssignorDTO } from "../assignor.dto";
-import { FindAssignorByIdPipe } from "../find-by-id/find-assignor-by-id.pipe";
+import { FindAssignorByIdPipe } from "../find-assignor-by-id.pipe";
 
 @Controller()
 export class DeleteAssignorByIdController {
@@ -29,7 +28,6 @@ export class DeleteAssignorByIdController {
       );
     }
 
-    await this.prisma.assignor.delete({ where: { id: assignor.id } });
-    return new AssignorDTO(assignor);
+    return await this.prisma.assignor.delete({ where: { id: assignor.id } });
   }
 }
