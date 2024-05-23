@@ -67,4 +67,6 @@ export class CreatePayableAssignorDto {
     message: 'O nome não pode ter mais de 140 caracteres',
   })
   name: string;
+
+
 }
