@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Input from "../ui/Input/Input";
+import Input from "./ui/Input/Input";
 import Link from "next/link";
 
 export interface UserData { email: string; password: string; }

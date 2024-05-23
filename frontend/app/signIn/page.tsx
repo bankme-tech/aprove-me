@@ -1,6 +1,6 @@
 'use client'
 
-import LoginForm, { UserData } from '../components/LoginForm/LoginForm'
+import LoginForm, { UserData } from '../components/LoginForm'
 import { api } from '../api/axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
