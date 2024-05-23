@@ -1,0 +1,15 @@
+{
+  "short_name": "Aprove-me",
+  "name": "Aprove-me bankme",
+  "icons": [
+    {
+      "src": "logo-bankme.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0a36b0",
+  "background_color": "#fdfefe"
+}
