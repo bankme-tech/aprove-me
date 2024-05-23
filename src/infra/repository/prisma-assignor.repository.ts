@@ -29,11 +29,18 @@ export class PrismaAssignorRepository implements IAssignorRepository {
   }
 
   async findById(id: string): Promise<AssignorEntity | null> {
-    const result = await this.prisma.assignor.findUnique({
+    const assignor = await this.prisma.assignor.findUnique({
       where: { id },
       include: { receivables: true },
     });
 
-    return result ? new AssignorEntity({ ...result }) : null;
+    if (assignor) {
+       const entity = new AssignorEntity({ ...assignor,  });
+       assignor.receivables?.forEach((receivable) => entity.addReceivable(receivable));
+
+       return entity;
+    } 
+    
+    return null;
   }
 }
