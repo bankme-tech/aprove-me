@@ -1,10 +1,7 @@
-import { IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class UserDto {
-  @IsUUID()
-  @IsNotEmpty()
-  @IsString()
-  id: string;
+  id: number;
 
   @Length(5, 30)
   @IsNotEmpty()

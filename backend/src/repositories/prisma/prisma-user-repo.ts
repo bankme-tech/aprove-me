@@ -8,21 +8,43 @@ export class prismaUserRepo implements UserRepo {
   constructor(private prisma: PrismaService) {}
 
   createUser(body: UserDto): Promise<UserDto> {
-    throw new Error('Method not implemented.');
+    const createNewUser = this.prisma.user.create({
+      data: body,
+    });
+    return createNewUser;
   }
-  getUserById(id: string): Promise<UserDto> {
-    throw new Error('Method not implemented.');
+
+  getUserById(id: number): Promise<UserDto> {
+    const getUserById = this.prisma.user.findUnique({
+      where: { id },
+    });
+    return getUserById;
   }
+
   getUserByLogin(login: string): Promise<UserDto> {
-    throw new Error('Method not implemented.');
+    const getUserByLogin = this.prisma.user.findFirst({
+      where: { login },
+    });
+    return getUserByLogin;
   }
-  getUsers(): Promise<UserDto[]> {
-    throw new Error('Method not implemented.');
+
+  getUsersAll(): Promise<UserDto[]> {
+    const getUsers = this.prisma.user.findMany();
+    return getUsers;
   }
-  updateUser(id: string, body: UserDto): Promise<UserDto> {
-    throw new Error('Method not implemented.');
+
+  updateUser(id: number, body: UserDto): Promise<UserDto> {
+    const updateUser = this.prisma.user.update({
+      where: { id },
+      data: body,
+    });
+    return updateUser;
   }
-  deleteUser(id: string): Promise<UserDto> {
-    throw new Error('Method not implemented.');
+
+  deleteUser(id: number): Promise<null> {
+    this.prisma.user.delete({
+      where: { id },
+    });
+    return null;
   }
 }

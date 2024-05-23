@@ -26,7 +26,7 @@ model cedente {
 }
 
 model user {
-  id String @id
-  login String
+  id Int @id @default(autoincrement()) 
+  login String @unique
   password String
 }

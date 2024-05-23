@@ -14,3 +14,13 @@ CREATE TABLE "cedente" (
     "phone" TEXT NOT NULL,
     "name" TEXT NOT NULL
 );
+
+-- CreateTable
+CREATE TABLE "user" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "login" TEXT NOT NULL,
+    "password" TEXT NOT NULL
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_login_key" ON "user"("login");
