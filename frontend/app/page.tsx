@@ -42,14 +42,6 @@ export default function Home() {
               jornada de nossos clientes, entregando rentabilidade e segurança
               em suas operações.
             </p>
-            <div className="mt-5">
-              <Link href="/register-payable">
-                <Button className="flex gap-2 bg-[#0a36b0]">
-                  Cadastrar Pagável
-                  <ArrowBigRight className="mr-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
 

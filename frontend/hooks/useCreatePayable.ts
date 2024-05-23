@@ -14,7 +14,7 @@ export function useCreatePayable() {
     },
     onSuccess: () => {
       toast.success("Cadastro realizado com sucesso!");
-      router.push('/');
+      router.push('/list-payable');
     },
     onError(error) {
       console.log("Caiu no onError do useCreatePayable");

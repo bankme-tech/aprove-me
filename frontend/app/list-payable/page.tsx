@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash2, LogOut } from "lucide-react";
+import { Pencil, Trash2, LogOut, SaveIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -97,8 +97,15 @@ export default function Page() {
     <div className="p-5">
       <div className="flex justify-between mb-10">
         <h1 className="text-2xl font-bold">Lista de Pagáveis</h1>
-        <div className="mt-5">
-          <Button className="flex gap-2 bg-[#0a36b0]" onClick={handleLogout}>
+        <div className="flex gap-8">
+          <Link href="/register-payable">
+            <Button className="flex gap-2 bg-[#0a36b0]">
+              Cadastrar Pagável
+              <SaveIcon className="mr-2 h-4 w-4" />
+            </Button>
+          </Link>
+
+          <Button className="flex gap-2 bg-[#b00a0a]" onClick={handleLogout}>
             Logout
             <LogOut className="mr-2 h-4 w-4" />
           </Button>
@@ -187,12 +194,33 @@ export default function Page() {
                   </AlertDialogContent>
                 </AlertDialog>
 
-                <Button
-                  className="bg-[#b00a18]"
-                  onClick={() => handleDeleteClick(payable.id)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className="bg-[#b00a18]">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Tem certeza que deseja fazer isto?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Esta ação é irreversível e apagará seu registro do banco
+                        de dados.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleDeleteClick(payable.id)}
+                        className="bg-[#b00a18]"
+                      >
+                        Excluir
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </TableCell>
             </TableRow>
           ))}

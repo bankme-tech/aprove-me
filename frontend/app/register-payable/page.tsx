@@ -126,21 +126,6 @@ export default function Page() {
               </Button>
             </form>
           </Form>
-
-          <div className="flex items-start flex-col gap-2 mt-2">
-            <p className="text-center text-sm text-gray-800">
-              Já possui conta?
-              <Link
-                href="/login"
-                className="font-semibold leading-6 text-gray-800 ml-1"
-              >
-                Faça Login
-              </Link>
-            </p>
-            <Link className="text-sm" href="/">
-              Voltar para home
-            </Link>
-          </div>
         </div>
       </div>
     </>
