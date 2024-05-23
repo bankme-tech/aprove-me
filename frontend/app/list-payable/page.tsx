@@ -38,7 +38,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUpdatePayable } from "@/hooks/useUpdatePayable";
-
+import { useDeletePayable } from "@/hooks/useDeletePayable";
 const formSchema = z.object({
   value: z.string({
     required_error: "Valor não pode ser vazio",
@@ -51,6 +51,7 @@ const formSchema = z.object({
 export default function Page() {
   const { payables } = useListPayable();
   const { updatePayable } = useUpdatePayable();
+  const { deletePayable } = useDeletePayable();
   const [selectedPayable, setSelectedPayable] = useState<any>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -77,6 +78,10 @@ export default function Page() {
       value: payable.value,
       assignor: payable.assignor,
     });
+  }
+
+  async function handleDeleteClick(id: any) {
+    await deletePayable({id});
   }
 
   return (
@@ -167,7 +172,7 @@ export default function Page() {
 
                 <Button
                   className="bg-[#b00a18]"
-                  onClick={() => alert("removeu")}
+                  onClick={() => handleDeleteClick(payable.id)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

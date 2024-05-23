@@ -8,7 +8,7 @@ import { UpdateAssignorDto } from 'src/application/dtos/update-assignor.dto';
 @Injectable()
 export class PrismaAssignorRepository implements AssignorRepository {
   constructor(private readonly prisma: PrismaService) {}
-  async findAll() {
+  async findAll(): Promise<Assignor[]> {
     try {
       return await this.prisma.assignor.findMany();
     } catch (error) {
