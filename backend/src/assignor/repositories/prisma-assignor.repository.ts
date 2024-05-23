@@ -36,15 +36,11 @@ export class PrismaAssignorRepository implements IAssignorRepository {
   }
 
   async findById(id: string): Promise<AssignorEntity> {
-    const assignor = await this.prisma.assignor.findUnique({
+    const assignor = await this.prisma.assignor.findUniqueOrThrow({
       where: {
         id,
       },
     });
-
-    if (!assignor) {
-      return null;
-    }
 
     return this.mapper.toDomainEntity(assignor);
   }

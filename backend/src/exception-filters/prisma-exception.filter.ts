@@ -8,6 +8,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 enum PrismaErrorCodes {
   UniqueConstraintViolation = 'P2002',
+  RecordDoesNotExist = 'P2025',
 }
 
 @Catch(PrismaClientKnownRequestError)
@@ -21,6 +22,14 @@ export class PrismaExceptionFilter implements ExceptionFilter {
       response.status(HttpStatus.CONFLICT).json({
         statusCode: HttpStatus.CONFLICT,
         message: `${meta.modelName} with the same ${meta.target} already exists`,
+      });
+      return;
+    }
+
+    if (exception.code === PrismaErrorCodes.RecordDoesNotExist) {
+      response.status(HttpStatus.NOT_FOUND).json({
+        statusCode: HttpStatus.NOT_FOUND,
+        message: exception.message,
       });
       return;
     }
