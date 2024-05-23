@@ -1,18 +1,24 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { PayableController } from './payable.controller';
 import { PayableService } from './payable.service';
 import { PayableRepository } from './repository/repository.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SessionModule } from 'src/auth/session/session-manager.module';
-import { PayableProcessor } from 'src/rabbit-mq/consumer.service';
-import { RabbitMqService } from 'src/rabbit-mq/rabbit-mq.service';
+import { MailerService } from 'src/mailer/mailer.service';
 import { RabbitMqModule } from 'src/rabbit-mq/rabbit-mq.module';
-// import { SessionManagerService } from 'src/auth/session-manager.service';
 
-// the Session Manager Service should stay in a shared module?
 @Module({
-  imports: [SessionModule, RabbitMqModule],
+  imports: [
+    SessionModule, 
+    forwardRef(() => RabbitMqModule) // I solve the circular dependency later
+  ],
   controllers: [PayableController],
-  providers: [PayableService, PayableRepository, PayableProcessor,  PrismaService, RabbitMqService],
+  providers: [
+    PayableService, 
+    PayableRepository, 
+    PrismaService, 
+    MailerService
+  ],
+  exports: [PayableService]
 })
 export class PayableModule {}

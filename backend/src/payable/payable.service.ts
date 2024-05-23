@@ -6,6 +6,7 @@ import { CreatePayableAssignorDto, CreatePayableDto } from './payable.dto';
 import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager';
 import amqp from 'amqp-connection-manager';
 import { PayableProcessor } from 'src/rabbit-mq/consumer.service';
+
 // import {AmqpConnection} from "@nestjs/microservices"
 
 @Injectable()
@@ -13,7 +14,7 @@ export class PayableService {
   private connection: AmqpConnectionManager;
   private channelManager: ChannelWrapper;
 
-  constructor(private readonly payableRepository: PayableRepository, readonly payableProcessor  : PayableProcessor) { }
+  constructor(private readonly payableRepository: PayableRepository) { }
 
   async create(data: CreatePayableAssignorDto): Promise<Payable> {
     return this.payableRepository.create(data);

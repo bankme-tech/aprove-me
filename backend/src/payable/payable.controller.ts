@@ -7,10 +7,10 @@ import { RabbitMqService } from 'src/rabbit-mq/rabbit-mq.service';
 
 @Controller('integrations/payable')
 export class PayableController {
-  constructor(readonly payableService: PayableService, readonly rabbitMQ : RabbitMqService) {
-    this.payableService = payableService
-    this.rabbitMQ = rabbitMQ
-  }
+  constructor(
+    private readonly payableService: PayableService,
+    private readonly rabbitMqService: RabbitMqService
+  ) {}
 
   @Post()
   create(@Body() createPayableDto: CreatePayableAssignorDto) {
@@ -18,12 +18,12 @@ export class PayableController {
   }
 
   @Post("batch")
-  async createBatchToBeProcessed(@Body() payables : Array<Payable>) {
+  async createBatchToBeProcessed(@Body() payables: Payable[]) {
     if (payables.length > 1000) {
       throw new Error('Batch size exceed.');
     }
 
-    await this.rabbitMQ.addPayableToQueue(payables)
+    await this.rabbitMqService.addPayableToQueue(payables)
 
     return {
       message: "all payable is being processed"
