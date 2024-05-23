@@ -51,9 +51,9 @@ export const FormLogin = () => {
       />
 
       <div className="flex items-center justify-between">
-        <p className="text-2xl text-primary-dark underline">
-          Esqueceu sua senha ?
-        </p>
+        <a href="#" className="text-2xl text-primary-dark underline">
+          Esqueceu sua senha?
+        </a>
         <div className="w-1/3">
           <Button type="submit" label="Logar" />
         </div>
