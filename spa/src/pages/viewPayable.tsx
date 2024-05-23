@@ -12,6 +12,7 @@ import { deletePayable, editPayable, getPayable } from '../services/payable';
 import { UUID } from 'crypto';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 export default function ViewPayable() {
   const { id } = useParams<{ id: UUID }>();
@@ -19,6 +20,7 @@ export default function ViewPayable() {
   const title = location.state?.title;
   const [isDirty, setIsDirty] = useState(false)
   const navigate = useNavigate()
+  const [assignorId, setAssignorId] = useState<UUID>('' as UUID)
   const {
     register,
     handleSubmit,
@@ -33,6 +35,7 @@ export default function ViewPayable() {
     resolver: zodResolver(payableSchema),
     defaultValues: async () => {
       const data = await getPayable(id as UUID)
+      setAssignorId(data.assignor)
       return {
         value: data.value,
         emissionDate: new Date(data.emissionDate).toISOString().substring(0, 10) as unknown as Date,
@@ -121,21 +124,31 @@ export default function ViewPayable() {
             type="date"
             register={register('emissionDate', { onChange: () => setIsDirty(true) })}
           />
-          <Input
-            label='Cedente'
-            register={register('assignor', { disabled: true })}
-          />
-          <Button
-            disabled={!isDirty}
-          >
-            Salvar alterações
-          </Button>
-          <Button
-            onClick={onDelete}
-            delete
-          >
-            Deletar
-          </Button>
+          <div className='flex flex-col items-end gap-1'>
+            <Input
+              label='Cedente'
+              register={register('assignor', { disabled: true })}
+            />
+            <Link to={`/assignor/view/${assignorId}`}
+            state={{title: 'Dados do cedente:'}}
+            className='text-themeColor hover:text-opacity-90 ease-in-out duration-200'
+            >
+              Ver dados do cedente.
+            </Link>
+          </div>
+          <div className='flex flex-col gap-1'>
+            <Button
+              disabled={!isDirty}
+            >
+              Salvar alterações
+            </Button>
+            <Button
+              onClick={onDelete}
+              delete
+            >
+              Deletar
+            </Button>
+          </div>
         </form>
       </FormCard>
 

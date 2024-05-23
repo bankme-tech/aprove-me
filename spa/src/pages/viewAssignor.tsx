@@ -26,6 +26,7 @@ export default function ViewAssignor() {
     reset,
     formState: {
       errors,
+      defaultValues,
       isDirty
     },
   } = useForm<AssignorSchema>({
@@ -34,7 +35,15 @@ export default function ViewAssignor() {
   })
 
   const onSubmit: SubmitHandler<AssignorSchema> = async (data) => {
-
+    if (
+      data.email === defaultValues?.email &&
+      data.name === defaultValues.name &&
+      data.phone === defaultValues.phone
+    ) {
+      reset();
+      return
+    }
+    
     try {
       const res = await editAssignor({...data, id})
       toast.success("Alterações salvas", {
@@ -112,7 +121,7 @@ export default function ViewAssignor() {
             register={register('name')}
           />
           <Button
-            disabled={isDirty}
+            disabled={!isDirty}
           >
             Salvar alterações
           </Button>

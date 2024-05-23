@@ -76,7 +76,7 @@ export default function NewPayable() {
       })
       toast.loading("Cadastrando pagável...", {
         position: "top-center",
-        autoClose: 1000,
+        autoClose: 800,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
@@ -86,7 +86,7 @@ export default function NewPayable() {
       });
       setTimeout(() => {
         navigate(`/payable/view/${data.id}`, {state: {title: 'Pagável criado:'}});
-      }, 1400);
+      }, 850);
     } catch (error) {
       console.log(error)
       payableSetError("root", { message: 'Erro ao cadastrar pagável' })
@@ -127,7 +127,7 @@ export default function NewPayable() {
       <FormCard>
 
         <form onSubmit={(e) => onSubmit(e)} className="flex flex-col gap-3">
-          <div className="flex gap-6">
+          <div className="flex gap-6 sm:flex-row flex-col">
             <PayableFormInputs
               register={payableRegister}
               newAssignor={newAssignor}

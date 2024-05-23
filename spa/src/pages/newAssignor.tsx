@@ -30,7 +30,7 @@ export default function NewAssignor() {
       const res = await createAssignor(data);
       toast.loading("Cadastrando cedente...", {
         position: "top-center",
-        autoClose: 1000,
+        autoClose: 800,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
@@ -40,7 +40,7 @@ export default function NewAssignor() {
       });
       setTimeout(() => {
         navigate(`/assignor/view/${res.id}`, { state: { title: 'Cedente criado:' } });
-      }, 1400);
+      }, 850);
     } catch (error) {
       console.log(error)
       setError("root", { message: 'Erro ao cadastrar pagável' })
