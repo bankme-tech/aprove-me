@@ -1,5 +1,6 @@
 import { PrismaClient, Payable, Assignor } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -75,7 +76,7 @@ async function main() {
     data: {
       id: uuidv4(),
       login: 'aproveme',
-      password: 'aproveme',
+      password: bcrypt.hashSync('aproveme', 10),
     },
   });
 }
