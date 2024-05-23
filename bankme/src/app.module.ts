@@ -4,10 +4,24 @@ import { AppService } from './app.service';
 import { PayableModule } from './integrations/payable/payable.module';
 import { AssignorModule } from './integrations/assignor/assignor.module';
 import { PrismaService } from './prisma/prisma.service';
+import { AuthModule } from './auth/auth.module';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [PayableModule, AssignorModule],
+  imports: [
+    PayableModule,
+    AssignorModule,
+    AuthModule,
+    UsersModule,
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET || 'secret',
+      signOptions: { expiresIn: '1d', algorithm: 'HS256' },
+    }),
+  ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, UsersService],
 })
 export class AppModule {}
