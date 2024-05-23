@@ -72,7 +72,7 @@ describe('PayableService', () => {
     };
 
   
-    prisma.assignor.update = jest.fn().mockResolvedValue(updatedPayable);
+    prisma.payable.update = jest.fn().mockResolvedValue(updatedPayable);
 
     const result = await payableService.update(
       '1db81bd7-03dd-43dc-b3b0-ee4334e54999',
