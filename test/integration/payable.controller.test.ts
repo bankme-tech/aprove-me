@@ -4,7 +4,6 @@ import { PrismaClient } from '@prisma/client';
 import request from 'supertest';
 
 import { AppModule } from '../../src/app.module';
-import { PrismaAssignorRepository } from '../../src/infra/repository/prisma-assignor.repository';
 
 describe('Teste de Integração - PayableController', () => {
   let app: INestApplication;
@@ -25,6 +24,13 @@ describe('Teste de Integração - PayableController', () => {
 
   afterAll(async () => {
     app.close();
+  });
+
+  afterEach(async () => {
+    await prisma.$transaction([
+      prisma.receivable.deleteMany(),
+      prisma.assignor.deleteMany(),
+    ]);
   });
 
   it('deve criar um cedente com recebíveis quando chamado a rota "/integrations/payable', async () => {
@@ -52,6 +58,6 @@ describe('Teste de Integração - PayableController', () => {
     });
 
     expect(created).toBeDefined();
-    expect(created.receivables.length).toStrictEqual(1);
+    expect(created?.receivables.length).toStrictEqual(1);
   });
 });

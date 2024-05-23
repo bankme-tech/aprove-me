@@ -17,11 +17,22 @@ describe('# Test de Integração - Payable Usecase', () => {
     await prisma.$connect();
   });
 
+  afterAll(async () => {
+    await prisma.$disconnect();
+  });
+
   beforeEach(() => {
     assignorRepo = new PrismaAssignorRepository(prisma);
     receivableRepo = new PrismaReceivableRepository(prisma);
 
     usecase = new PayableUsecase(assignorRepo, receivableRepo);
+  });
+
+  afterEach(async () => {
+    await prisma.$transaction([
+      prisma.receivable.deleteMany(),
+      prisma.assignor.deleteMany(),
+    ]);
   });
 
   it('deve adicionar um novo cedente', async () => {
@@ -69,15 +80,6 @@ describe('# Test de Integração - Payable Usecase', () => {
         email: input.email,
         phone: input.phone,
         name: input.name,
-        receivables: {
-          createMany: {
-            data: input.receivables.map((receivable) => ({
-              id,
-              emissionDate: receivable.emissionDate,
-              value: receivable.value,
-            })),
-          },
-        },
       },
     });
 

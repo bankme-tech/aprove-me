@@ -11,7 +11,7 @@ import {
 
 const makeReceivable = (assignorId: UniqueEntityIdVO) => {
   return ReceivableEntity.create({
-    assignor: assignorId.value,
+    assignorId: assignorId.value,
     emissionDate: faker.date.recent(),
     value: faker.number.int({ min: 11111, max: 99999 }),
   });

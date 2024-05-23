@@ -10,7 +10,7 @@ describe('# Test de Unidade - ReceivableEntity', () => {
     const expectedValue = faker.number.int({ min: 11111, max: 99999 });
 
     const receivable = ReceivableEntity.create({
-      assignor: expectedAssignor.value,
+      assignorId: expectedAssignor.value,
       emissionDate: expectedEmissionDate,
       value: expectedValue,
     });
@@ -18,14 +18,14 @@ describe('# Test de Unidade - ReceivableEntity', () => {
     expect(receivable).toBeInstanceOf(ReceivableEntity);
     expect(receivable.id).toBeDefined();
     expect(receivable.id).toBeInstanceOf(UniqueEntityIdVO);
-    expect(receivable.assignor.value).toEqual(expectedAssignor.value);
-    expect(receivable.assignor).toBeInstanceOf(UniqueEntityIdVO);
+    expect(receivable.assignorId.value).toEqual(expectedAssignor.value);
+    expect(receivable.assignorId).toBeInstanceOf(UniqueEntityIdVO);
     expect(receivable.emissionDate).toStrictEqual(expectedEmissionDate);
     expect(receivable.value).toStrictEqual(expectedValue);
 
     expect(receivable.toJSON()).toEqual({
       id: expect.any(String),
-      assignor: expectedAssignor.value,
+      assignorId: expectedAssignor.value,
       emissionDate: expectedEmissionDate,
       value: expectedValue,
     });
@@ -39,7 +39,7 @@ describe('# Test de Unidade - ReceivableEntity', () => {
 
     const receivable = new ReceivableEntity({
       id: expectedId.value,
-      assignor: expectedAssignor.value,
+      assignorId: expectedAssignor.value,
       emissionDate: expectedEmissionDate,
       value: expectedValue,
     });
@@ -47,8 +47,8 @@ describe('# Test de Unidade - ReceivableEntity', () => {
     expect(receivable).toBeInstanceOf(ReceivableEntity);
     expect(receivable.id).toBeDefined();
     expect(receivable.id).toBeInstanceOf(UniqueEntityIdVO);
-    expect(receivable.assignor.value).toEqual(expectedAssignor.value);
-    expect(receivable.assignor).toBeInstanceOf(UniqueEntityIdVO);
+    expect(receivable.assignorId.value).toEqual(expectedAssignor.value);
+    expect(receivable.assignorId).toBeInstanceOf(UniqueEntityIdVO);
     expect(receivable.emissionDate).toStrictEqual(expectedEmissionDate);
     expect(receivable.value).toStrictEqual(expectedValue);
   });
