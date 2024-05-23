@@ -6,5 +6,9 @@ export abstract class UserRepo {
   abstract getUserByLogin(login: string): Promise<UserDto>;
   abstract getUsersAll(): Promise<UserDto[]>;
   abstract updateUser(id: number, body: UserDto): Promise<UserDto>;
-  abstract deleteUser(id: number): Promise<void>;
+  abstract deleteUser(id: number): Promise<{
+    id: number;
+    login: string;
+    password: string;
+  }>;
 }

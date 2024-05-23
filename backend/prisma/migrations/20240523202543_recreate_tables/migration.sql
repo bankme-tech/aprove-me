@@ -17,7 +17,7 @@ CREATE TABLE "cedente" (
 
 -- CreateTable
 CREATE TABLE "user" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "login" TEXT NOT NULL,
     "password" TEXT NOT NULL
 );

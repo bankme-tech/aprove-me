@@ -41,10 +41,14 @@ export class prismaUserRepo implements UserRepo {
     return updateUser;
   }
 
-  deleteUser(id: number): Promise<null> {
-    this.prisma.user.delete({
+  deleteUser(id: number): Promise<{
+    id: number;
+    login: string;
+    password: string;
+  }> {
+    const del = this.prisma.user.delete({
       where: { id },
     });
-    return null;
+    return del;
   }
 }

@@ -28,8 +28,8 @@ export class AppController {
     private user: UserRepo,
   ) {}
 
-  @Post('auth')
-  async auth(@Body() body: UserDto) {
+  @Post('user')
+  async createUser(@Body() body: UserDto) {
     try {
       const userExist = await this.user.getUserByLogin(body.login);
 
@@ -48,7 +48,7 @@ export class AppController {
     }
   }
 
-  @Get('auth/:id')
+  @Get('user/:id')
   @HttpCode(HttpStatus.OK)
   async getUserById(@Param('id') id: number) {
     try {
@@ -67,7 +67,7 @@ export class AppController {
     }
   }
 
-  @Get('auth/login/search')
+  @Get('user/login/search')
   @HttpCode(HttpStatus.OK)
   async getUserByLogin(@Query('login') login: string) {
     try {
@@ -86,7 +86,7 @@ export class AppController {
     }
   }
 
-  @Get('auth')
+  @Get('user')
   @HttpCode(HttpStatus.OK)
   async getUserAll() {
     try {
@@ -105,7 +105,7 @@ export class AppController {
     }
   }
 
-  @Put('auth/:id')
+  @Put('user/:id')
   @HttpCode(HttpStatus.OK)
   async updateUser(@Param('id') id: number, @Body() body: UserDto) {
     try {
@@ -126,7 +126,7 @@ export class AppController {
     }
   }
 
-  @Delete('auth/:id')
+  @Delete('user/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUser(@Param('id') id: number) {
     try {
