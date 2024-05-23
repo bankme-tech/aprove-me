@@ -1,15 +1,15 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import { useFindPayable } from "@/hooks/useFindPayable";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { useParams } from "next/navigation";
+import { useFindAssignor } from "@/hooks/useFindAssignor";
 import { ArrowBigLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Page() {
   const { id } = useParams<{ id: string }>();
-  const { payable } = useFindPayable(id);
-  console.log(payable);
+  const { assignor } = useFindAssignor(id);
+  console.log(assignor);
 
   return (
     <main className="p-5 h-full flex justify-center">
@@ -20,18 +20,16 @@ export default function Page() {
           <span className="font-normal">{id}</span>
         </div>
         <div className="flex gap-3">
-          <span className="font-bold">Data de emissão:</span>
-          <span className="font-normal">{payable?.emissionDate}</span>
+          <span className="font-bold">Nome:</span>
+          <span className="font-normal">{assignor?.name}</span>
         </div>
         <div className="flex gap-3">
-          <span className="font-bold">ID do Assinante:</span>
-          <Link href={`/assignor/${payable?.assignor}`}>
-            <span className="font-normal">{payable?.assignor}</span>
-          </Link>
+          <span className="font-bold">Email:</span>
+          <span className="font-normal">{assignor?.email}</span>
         </div>
         <div className="flex gap-3">
-          <span className="font-bold">Valor:</span>
-          <span className="font-normal">{payable?.value}</span>
+          <span className="font-bold">Telefone:</span>
+          <span className="font-normal">{assignor?.phone}</span>
         </div>
         <div>
           <Link href="/list-payable">
