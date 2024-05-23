@@ -1,11 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, NotFoundException, UseGuards } from '@nestjs/common';
 import { AssignorService } from './assignor.service';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
+import { RolesGuard } from 'src/auth/auth.guard';
+import { Request } from "@nestjs/common";
 
 @Controller('integrations')
 export class AssignorController {
   constructor(private readonly assignorService: AssignorService) {}
 
+  @UseGuards(RolesGuard)
   @Get('/assignor/:id')
   async findOne(@Param('id') id: string) {
     try {
@@ -17,13 +20,14 @@ export class AssignorController {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
       } else {
-        console.log(error);
+      
         throw new BadRequestException('Erro inesperado ao buscar os dados do cedente.');
 
       }
     }
   }
 
+  @UseGuards(RolesGuard)
   @Delete('/assignor/:id')
   async deleteAssignor(@Param('id') id: string) {
     try {
@@ -40,6 +44,7 @@ export class AssignorController {
     }
   }
 
+  @UseGuards(RolesGuard)
   @Patch('/assignor/:id')
   async updateAssignor(@Param('id') id: string, @Body() updateAssignorDto: UpdateAssignorDto) {
     try {
