@@ -3,7 +3,12 @@ import { faker, id_ID } from '@faker-js/faker';
 
 import { GetAssignorUsecase } from '../../src/application/get-assignor.usecase';
 import { PrismaAssignorRepository } from '../../src/infra/repository/prisma-assignor.repository';
-import { CnpjVO, EmailVO, PhoneVO, UniqueEntityIdVO } from '../../src/domain/common/value-object';
+import {
+  CnpjVO,
+  EmailVO,
+  PhoneVO,
+  UniqueEntityIdVO,
+} from '../../src/domain/common/value-object';
 import { AssignorEntity, ReceivableEntity } from '../../src/domain/entity';
 
 const makeReceiable = () => {
@@ -12,7 +17,7 @@ const makeReceiable = () => {
     emissionDate: faker.date.past().toISOString(),
     value: faker.number.int({ min: 11111, max: 99999 }),
   };
-}
+};
 
 describe('Teste de Integração - GetAssignorUsecase', () => {
   let usecase: GetAssignorUsecase;
@@ -57,14 +62,14 @@ describe('Teste de Integração - GetAssignorUsecase', () => {
     };
 
     const receivableOne = makeReceiable();
-    const receivableTwo = makeReceiable(); 
+    const receivableTwo = makeReceiable();
 
     await prisma.assignor.create({
       data: {
         ...assignor,
         receivables: {
           createMany: {
-            data: [receivableOne, receivableTwo]
+            data: [receivableOne, receivableTwo],
           },
         },
       },
@@ -79,19 +84,19 @@ describe('Teste de Integração - GetAssignorUsecase', () => {
       phone: new PhoneVO(assignor.phone),
       name: assignor.name,
       _receivables: [
-        new ReceivableEntity({ 
+        new ReceivableEntity({
           id: receivableOne.id,
-          assignorId:  assignor.id,
+          assignorId: assignor.id,
           emissionDate: receivableOne.emissionDate,
-          value: receivableOne.value
-        }), 
-        new ReceivableEntity({ 
+          value: receivableOne.value,
+        }),
+        new ReceivableEntity({
           id: receivableTwo.id,
-          assignorId:  assignor.id,
+          assignorId: assignor.id,
           emissionDate: receivableTwo.emissionDate,
-          value: receivableTwo.value
-        }), 
-      ]
+          value: receivableTwo.value,
+        }),
+      ],
     });
   });
 });
