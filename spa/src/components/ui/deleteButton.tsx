@@ -26,7 +26,7 @@ export default function DeleteButton(props: Props) {
             <h1 className="text-textColor">Tem certeza que deseja apagar?</h1>
             <div className="flex gap-1 font-medium text-sm">
               <button className="w-full p-2 border rounded border-borderColor text-textColor" onClick={() => setModalIsOpen(false)}>Cancelar</button>
-              <button className="w-full p-2 bg-red-600 rounded hover:bg-opacity-80 text-text-HeaderBgColor" onClick={props.onClick}>Apagar</button>
+              <button className="w-full p-2 bg-red-600 rounded hover:bg-opacity-80 text-HeaderBgColor" onClick={props.onClick}>Apagar</button>
             </div>
           </div>
         </ConfirmModal>
