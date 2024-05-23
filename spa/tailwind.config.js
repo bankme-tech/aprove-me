@@ -17,6 +17,9 @@ module.exports = {
         cardBgColorFrom: '#EAF1FC',
         cardBgColorto: '#F1F5F9',
         borderInputColor: '#767676'
+      },
+      width: {
+        'custom': '330px'
       }
     },
   },
