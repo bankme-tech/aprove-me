@@ -10,7 +10,7 @@ import { AssignorFactory } from "test/factories/makeAssignor";
 import { PayableFactory } from "test/factories/makePayable";
 import { UserFactory } from "test/factories/makeUser";
 
-describe("Get Assignor By Id (E2E)", () => {
+describe("Delete Assignor By Id (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
@@ -35,7 +35,7 @@ describe("Get Assignor By Id (E2E)", () => {
     await app.init();
   });
 
-  test("[GET] /integrations/assignor/:id", async () => {
+  test("[DELETE] /integrations/assignor/:id", async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
@@ -43,19 +43,12 @@ describe("Get Assignor By Id (E2E)", () => {
     const assignor = await assignorFactory.makePrismaAssignor();
 
     const response = await request(app.getHttpServer())
-      .get(`/integrations/assignor/${assignor.id}`)
+      .delete(`/integrations/assignor/${assignor.id}`)
       .set("Authorization", `Bearer ${accessToken}`)
       .send();
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual({
-      assignor: expect.objectContaining({
-        id: assignor.id.toString(),
-        document: assignor.document,
-        email: assignor.email,
-        phone: assignor.phone,
-        name: assignor.name,
-      }),
-    });
+    expect(response.statusCode).toBe(204);
+    const prismaAssignor = await prisma.assignor.findFirst();
+    expect(prismaAssignor).toBeNull();
   });
 });
