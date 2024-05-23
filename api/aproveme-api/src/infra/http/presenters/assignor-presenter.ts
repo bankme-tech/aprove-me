@@ -1,4 +1,4 @@
-import { Assignor } from "@prisma/client";
+import { Assignor } from "@/domain/receivables/enterprise/entities/assignor";
 
 export class AssignorPresenter {
   static toHTTP(assignor: Assignor) {

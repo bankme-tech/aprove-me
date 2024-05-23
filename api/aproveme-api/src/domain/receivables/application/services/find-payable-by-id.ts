@@ -2,7 +2,7 @@ import { Either, left, right } from "@/core/either";
 import { Injectable } from "@nestjs/common";
 import { PayablesRepository } from "../repositories/payables-repository";
 import { ResourceNotFoundError } from "@/core/errors/errors/resource-not-found-error";
-import { PayableWithAssignor } from "../../enterprise/entities/value-object/payable-with-assignor";
+import { Payable } from "../../enterprise/entities/payable";
 
 interface FindPayableByIdServiceRequest {
   id: string;
@@ -10,7 +10,7 @@ interface FindPayableByIdServiceRequest {
 type FindPayableByIdServiceResponse = Either<
   ResourceNotFoundError,
   {
-    payableWithAssignor: PayableWithAssignor;
+    payable: Payable;
   }
 >;
 
@@ -21,13 +21,12 @@ export class FindPayableByIdService {
   async execute({
     id,
   }: FindPayableByIdServiceRequest): Promise<FindPayableByIdServiceResponse> {
-    const payableWithAssignor =
-      await this.payablesRepo.findWithAssignorById(id);
+    const payable = await this.payablesRepo.findByid(id);
 
-    if (!payableWithAssignor) return left(new ResourceNotFoundError());
+    if (!payable) return left(new ResourceNotFoundError());
 
     return right({
-      payableWithAssignor,
+      payable,
     });
   }
 }

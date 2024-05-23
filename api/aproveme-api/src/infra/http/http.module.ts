@@ -13,6 +13,7 @@ import { AuthenticateUserService } from "@/domain/account/application/services/a
 import { ReceivePayableAndAssignorController } from "./controllers/receive-payable-and-assignor.controller";
 import { CreateAccountController } from "./controllers/create-account.controller";
 import { AuthenticateController } from "./controllers/authenticate.controller";
+import { GetPayableByIdController } from "./controllers/get-payable-by-id.controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -20,6 +21,7 @@ import { AuthenticateController } from "./controllers/authenticate.controller";
     ReceivePayableAndAssignorController,
     CreateAccountController,
     AuthenticateController,
+    GetPayableByIdController,
   ],
   providers: [
     //Account Services
