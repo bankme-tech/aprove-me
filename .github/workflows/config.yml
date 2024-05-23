@@ -1,0 +1,40 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  DOCKER_USER: ${{ secrets.DOCKER_USER }}
+  GITHUB_REPOSITORY: ${{ github.repository }}
+  BRANCH_NAME: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.13.0
+
+      - name: Install NPM Modules
+        run: npm ci
+
+      - name: Execute Tests
+        run: npm run test:ci
+
+      - name: Build and Publish Docker Image
+        run: bash ./scripts/publish-docker-image.sh
+
+      - name: Upload Test Coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: coverage
