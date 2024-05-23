@@ -33,7 +33,7 @@ cp .env.example .env
 ### Executando o Projeto
 1. Construa a imagem Docker e inicie os serviços usando docker-compose.
 ```bash
-docker-compose up --build
+docker-compose up --build -d
 ```
 
 Agora, seu projeto deve estar rodando no localhost na porta especificada no arquivo .env
