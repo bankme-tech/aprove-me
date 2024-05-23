@@ -1,6 +1,5 @@
 
 @url = http://localhost:3000
-@token = {{auth_sign_in.request.body.$.token.access_token}}
 
 # @name health_check
 GET {{url}}/integrations/healthz

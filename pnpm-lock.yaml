@@ -14,11 +14,8 @@ importers:
 
   apps/server:
     dependencies:
-      '@aprove-me/env':
-        specifier: workspace:*
-        version: link:../../packages/env
       '@aprove-me/eslint-config':
-        specifier: workspace:*
+        specifier: link:../../packages/eslint-config
         version: link:../../packages/eslint-config
       '@nestjs/common':
         specifier: ^10.0.0
@@ -135,16 +132,6 @@ importers:
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.12.12)
-
-  packages/env:
-    dependencies:
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
-    devDependencies:
-      '@types/node':
-        specifier: ^20.3.1
-        version: 20.12.12
 
   packages/eslint-config:
     dependencies:
