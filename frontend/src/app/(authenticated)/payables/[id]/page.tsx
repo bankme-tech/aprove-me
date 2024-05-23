@@ -42,7 +42,7 @@ export default function Payable({ params }: PayableProps) {
             <PayableForm
                 payableId={payable.id}
                 initialValues={{
-                    assignor: payable.assignorId,
+                    assignorId: payable.assignorId,
                     emissionDate: new Date(payable.emissionDate),
                     value: payable.value
                 }}

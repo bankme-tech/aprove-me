@@ -23,7 +23,7 @@ interface PayableFormProps {
     initialValues: {
         value: number
         emissionDate: Date
-        assignor: string
+        assignorId: string
     }
 }
 
