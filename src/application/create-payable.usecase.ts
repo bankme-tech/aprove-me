@@ -4,7 +4,7 @@ import {
 } from '../domain/repository';
 import { AssignorEntity, ReceivableEntity } from '../domain/entity';
 
-export class PayableUsecase {
+export class CreatePayableUsecase {
   constructor(
     private readonly assignorRepo: IAssignorRepository,
     private readonly receivableRepo: IReceivableRepository

@@ -4,10 +4,10 @@ import { faker } from '@faker-js/faker';
 import { PrismaAssignorRepository } from '../../src/infra/repository/prisma-assignor.repository';
 import { PrismaReceivableRepository } from '../../src/infra/repository/prisma-receivable.repository';
 
-import { PayableUsecase } from '../../src/application/payable.usecase';
+import { CreatePayableUsecase } from '../../src/application/create-payable.usecase';
 
-describe('# Test de Integração - Payable Usecase', () => {
-  let usecase: PayableUsecase;
+describe('# Test de Integração - Create Payable Usecase', () => {
+  let usecase: CreatePayableUsecase;
   let assignorRepo: PrismaAssignorRepository;
   let receivableRepo: PrismaReceivableRepository;
 
@@ -25,7 +25,7 @@ describe('# Test de Integração - Payable Usecase', () => {
     assignorRepo = new PrismaAssignorRepository(prisma);
     receivableRepo = new PrismaReceivableRepository(prisma);
 
-    usecase = new PayableUsecase(assignorRepo, receivableRepo);
+    usecase = new CreatePayableUsecase(assignorRepo, receivableRepo);
   });
 
   afterEach(async () => {

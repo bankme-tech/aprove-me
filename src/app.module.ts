@@ -12,7 +12,7 @@ import { PrismaReceivableRepository } from './infra/repository/prisma-receivable
 import { DatabaseModule } from './infra/database/database.module';
 
 import { PayableController } from './application/payable.controller';
-import { PayableUsecase } from './application/payable.usecase';
+import { CreatePayableUsecase } from './application/create-payable.usecase';
 
 @Module({
   imports: [
@@ -36,11 +36,11 @@ import { PayableUsecase } from './application/payable.usecase';
       inject: [PrismaClient],
     },
     {
-      provide: PayableUsecase,
+      provide: CreatePayableUsecase,
       useFactory: (
         assignorRepo: PrismaAssignorRepository,
         receivableRepo: PrismaReceivableRepository
-      ) => new PayableUsecase(assignorRepo, receivableRepo),
+      ) => new CreatePayableUsecase(assignorRepo, receivableRepo),
       inject: ['IAssignorRepository', 'IReceivableRepository'],
     },
   ],
