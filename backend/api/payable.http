@@ -1,23 +1,13 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:8080
 @uuidPayable = af0eb8ad-ea06-488b-bec5-e501c11d3db7
 @uuidAssignor = af0eb8ad-ea06-488b-bec5-e501c11d3db8
 
-### Display payable and assignor data
+### Create a new payable
 POST {{baseUrl}}/integrations/payable
 Content-Type: application/json
 
 {
-    "payable": {
-        "id": "{{uuidPayable}}",
-        "value": 620.92,
-        "emissionDate": "2024-01-01",
-        "assignor": "{{uuidAssignor}}"
-    },
-    "assignor": {
-        "id": "{{uuidAssignor}}",
-        "document": "123.456.789-00",
-        "email": "joao@mail.com",
-        "phone": "99 99999-9999",
-        "name": "João da Silva"
-    }
+    "value": 620.93,
+    "assignorId": "c49b4bef-ab2a-48dd-990e-af3c2e1e7c08",
+    "emissionDate": "2024-08-01"
 }
