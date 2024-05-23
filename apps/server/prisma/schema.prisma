@@ -17,9 +17,9 @@ model Payable {
   assignorId   String   @map("assignor_id")
   assignor     Assignor @relation(fields: [assignorId], references: [id])
 
-  createdAt  DateTime @default(now()) @map("created_at")
-  payedAt    DateTime @map("payed_at")
-  canceledAt DateTime @map("canceled_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  payedAt    DateTime? @map("payed_at")
+  canceledAt DateTime? @map("canceled_at")
 
   @@index([assignorId])
   @@map("payables")
