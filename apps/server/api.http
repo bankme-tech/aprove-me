@@ -6,7 +6,6 @@ GET {{url}}/integrations/healthz
 Content-Type: application/json
 
 ###
-
 # @name create_assignor
 POST {{url}}/integrations/assignor
 Content-Type: application/json
@@ -48,3 +47,23 @@ Content-Type: application/json
 # @name delete_payable
 DELETE {{url}}/integrations/payable/99155ac7-3d64-473b-9193-3b5285ba0ff2
 Content-Type: application/json
+
+###
+# @name auth_sign_up
+POST {{url}}/integrations/auth/sign-up
+Content-Type: application/json
+
+{
+  "login": "jhondoe",
+  "password": "010203"
+}
+
+###
+# @name auth_sign_in
+POST {{url}}/integrations/auth/sign-in
+Content-Type: application/json
+
+{
+  "login": "jhondoe",
+  "password": "010203"
+}
