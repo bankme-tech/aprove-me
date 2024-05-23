@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import LoginForm, { UserData } from '../components/LoginForm'
+import LoginForm, { UserData } from '../components/LoginForm';
 import { api } from '../api/axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -11,23 +11,23 @@ export default function SignIn() {
 
   const router = useRouter();
 
-  const handleSignIn = async (event: React.FormEvent<HTMLFormElement>, userData: UserData) => {
+  const handleSignIn = async (
+    event: React.FormEvent<HTMLFormElement>,
+    userData: UserData
+  ) => {
     event.preventDefault();
     setLoading(true);
 
     try {
-      const response = await api.post('/auth', userData)
-      console.log(response)
-      router.push('/')
-
+      const response = await api.post('/auth', userData);
+      console.log(response);
+      router.push('/');
     } catch (error: unknown) {
-      toast.error(error?.response?.data?.message || 'Internal server error');
+      toast.error((error as { response: { data: { message: string } } })?.response?.data?.message || 'Internal server error');
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  return (
-    <LoginForm handleSubmit={handleSignIn} loading={loading} />
-  )
+  return <LoginForm handleSubmit={handleSignIn} loading={loading} />;
 }
