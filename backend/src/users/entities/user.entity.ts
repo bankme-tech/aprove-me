@@ -4,7 +4,7 @@ export enum Role {
 }
 
 export class User {
-  assignorId: number;
+  assignorId?: string;
   role: Role;
   username: string;
   password: string;

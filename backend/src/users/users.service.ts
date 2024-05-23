@@ -1,4 +1,9 @@
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  forwardRef,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -76,9 +81,9 @@ export class UsersService {
     });
   }
 
-  remove(username: string) {
+  async remove(username: string) {
     if (username === 'aprovame') {
-      throw new Error('You cannot delete the aprovame user');
+      throw new ForbiddenException('You cannot delete the aprovame user');
     }
 
     return this.prismaService.user.delete({

@@ -10,14 +10,18 @@ import { Role } from '../entities/user.entity';
 export class UpdateUserDto {
   @IsOptional()
   @IsUUID()
-  assignorId: string;
+  assignorId?: string;
 
   @IsOptional()
   @IsNotEmpty()
   @IsEnum(Role)
-  role: Role;
+  role?: Role;
 
   @IsNotEmpty()
   @IsString()
-  password: string;
+  password?: string;
+
+  @IsOptional()
+  @IsUUID()
+  userId?: string;
 }
