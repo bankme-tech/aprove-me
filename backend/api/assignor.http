@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:8080
+
+### Create a new assignor
+POST {{baseUrl}}/integrations/assignor
+Content-Type: application/json
+
+{
+    "document": "123.456.789-00",
+    "email": "joao@mail.com",
+    "phone": "99 99999-9999",
+    "name": "João da Silva"
+}
