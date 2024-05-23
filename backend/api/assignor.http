@@ -10,3 +10,6 @@ Content-Type: application/json
     "phone": "99 99999-9999",
     "name": "João da Silva"
 }
+
+### Read all assignors
+GET {{baseUrl}}/integrations/assignor
