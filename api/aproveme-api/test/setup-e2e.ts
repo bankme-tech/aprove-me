@@ -15,21 +15,20 @@ const prisma = new PrismaClient();
 
 beforeAll(async () => {
   try {
-    await prisma.$connect();
-
-    // Executar migrações no banco de dados de teste
-    execSync("npx prisma migrate deploy");
+    execSync("npx prisma migrate dev");
   } catch (error) {
     console.error("Failed to run migrations:", error);
+  } finally {
+    await prisma.$connect();
   }
 });
 
 beforeEach(async () => {
   try {
     // Deletar tabelas na ordem correta para evitar problemas de chave estrangeira
-    await prisma.payable.deleteMany();
     await prisma.assignor.deleteMany();
     await prisma.user.deleteMany();
+    await prisma.payable.deleteMany();
   } catch (error) {
     console.error("Failed to clean up the database:", error);
   }

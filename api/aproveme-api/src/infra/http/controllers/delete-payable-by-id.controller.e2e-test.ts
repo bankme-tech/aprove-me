@@ -39,7 +39,9 @@ describe("Delete Payable By Id (E2E)", () => {
   test("[DELETE] /integrations/payable/:id", async () => {
     const user = await userFactory.makePrismaUser();
 
-    const assignor = await assignorFactory.makePrismaAssignor();
+    const assignor = await assignorFactory.makePrismaAssignor({
+      userId: user.id,
+    });
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 

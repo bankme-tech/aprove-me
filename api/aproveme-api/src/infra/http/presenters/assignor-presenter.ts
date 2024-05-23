@@ -8,6 +8,7 @@ export class AssignorPresenter {
       email: assignor.email,
       name: assignor.name,
       phone: assignor.phone,
+      userId: assignor.userId.toString(),
     };
   }
 }

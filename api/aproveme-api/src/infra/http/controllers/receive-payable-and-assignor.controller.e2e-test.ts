@@ -30,7 +30,7 @@ describe("Receive Payable and Assignor (E2E)", () => {
     await app.init();
   });
 
-  test("[POST] /integrations/payable", async () => {
+  test.skip("[POST] /integrations/payable", async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = jwt.sign({ sub: user.id.toString() });

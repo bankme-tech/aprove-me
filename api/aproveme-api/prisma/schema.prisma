@@ -30,7 +30,7 @@ model Assignor {
   payables Payable[]
 
   userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Payable {

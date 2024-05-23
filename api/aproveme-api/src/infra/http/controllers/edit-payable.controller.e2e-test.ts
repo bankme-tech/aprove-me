@@ -1,4 +1,3 @@
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { AppModule } from "@/infra/app.module";
 import { DatabaseModule } from "@/infra/database/prisma/database.module";
 import { PrismaService } from "@/infra/database/prisma/prisma.service";
@@ -42,7 +41,9 @@ describe("Edit Payable (E2E)", () => {
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
-    const assignor = await assignorFactory.makePrismaAssignor();
+    const assignor = await assignorFactory.makePrismaAssignor({
+      userId: user.id,
+    });
 
     const payable = await payableFactory.makePrismaPayable({
       assignorId: assignor.id,

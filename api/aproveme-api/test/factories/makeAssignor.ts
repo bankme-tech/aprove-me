@@ -20,6 +20,7 @@ export const makeAssignor = (
       email: faker.internet.email(),
       name: faker.person.fullName(),
       phone: faker.phone.number(),
+      userId: override.userId,
       ...override,
     },
     id

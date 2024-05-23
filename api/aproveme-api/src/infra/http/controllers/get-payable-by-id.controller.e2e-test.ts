@@ -1,4 +1,3 @@
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { AppModule } from "@/infra/app.module";
 import { DatabaseModule } from "@/infra/database/prisma/database.module";
 import { PrismaService } from "@/infra/database/prisma/prisma.service";
@@ -38,14 +37,14 @@ describe("Get Payable By Id (E2E)", () => {
   });
 
   test("[GET] /integrations/payable/:id", async () => {
-    const user = await userFactory.makePrismaUser({
-      login: "testUser",
-      password: "testUser",
-    });
+    const user = await userFactory.makePrismaUser();
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
-    const assignor = await assignorFactory.makePrismaAssignor();
+    const assignor = await assignorFactory.makePrismaAssignor({
+      userId: user.id,
+    });
+
     const payable = await payableFactory.makePrismaPayable({
       assignorId: assignor.id,
     });
