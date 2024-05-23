@@ -11,7 +11,8 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
-  HttpCode
+  HttpCode,
+  Query
 } from '@nestjs/common';
 import { ReceivableService } from '../services/receivable.service';
 import { AssignorService } from '../services/assignor.service';
@@ -19,9 +20,10 @@ import { UUID } from 'crypto';
 import { Receivable as ReceivableModel } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Queue } from 'bull';
-import { InjectQueue} from '@nestjs/bull';
+import { InjectQueue } from '@nestjs/bull';
 import { ReceivableDto } from 'src/dtos/receivable.dto';
 import { AssignorDto } from 'src/dtos/assignor.dto';
+import { CreateReceivableDto } from 'src/dtos/createReceivable.dto';
 
 @UseGuards(AuthGuard)
 @Controller('/integrations/payable')
@@ -36,11 +38,11 @@ export class ReceivableController {
   @Post()
   @UsePipes(new ValidationPipe())
   async create(
-    @Body() data: { receivableData: ReceivableDto, assignorData?: AssignorDto }
+    @Body() data: CreateReceivableDto
   ): Promise<ReceivableModel> {
     const receivableData: ReceivableDto = data.receivableData;
     const assignorData: AssignorDto = data.assignorData;
-
+    console.log(receivableData, assignorData)
     let assignorId: UUID;
 
     // Se o assignor ainda não existe, cria um novo
@@ -50,11 +52,17 @@ export class ReceivableController {
     }
     // Se o assignor já existe e o id dele não foi passado
     else if (!receivableData.assignor) {
-      throw new Error('Assignor data is required');
+      throw new HttpException('Either Assignor data or an Assignor ID is required.', HttpStatus.BAD_REQUEST);
     }
     // Se o assignor já existe, pega o id dele
     else {
       assignorId = receivableData.assignor;
+    }
+
+    // Verifica se existe o assignor com esse id
+    const assignor = await this.assignorService.assignor({ id: assignorId });
+    if(!assignor) {
+      throw new HttpException('Assignor not found', HttpStatus.NOT_FOUND);
     }
 
     return this.receivableService.createReceivable({
@@ -78,8 +86,18 @@ export class ReceivableController {
   }
 
   @Get()
-  async getAllReceivables(): Promise<ReceivableModel[]> {
-    return this.receivableService.receivables({});
+  async getAllReceivables(
+    @Query('skip') skip: number,
+    @Query('take') take: number,
+    @Query('orderDate') orderDate: "asc" | "desc"
+  ): Promise<ReceivableModel[]> {
+    return this.receivableService.receivables({
+      skip: +skip,
+      take: +take,
+      orderBy: {
+        emissionDate: orderDate
+      }
+    });
   }
 
   @Put(':id')

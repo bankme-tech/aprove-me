@@ -18,7 +18,7 @@ export class AuthService {
         access_token: await this.jwtService.signAsync(payload),
       };
     } else {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException({message: 'Login ou senha inválidos.', status: 401});
     }
   }
 }
