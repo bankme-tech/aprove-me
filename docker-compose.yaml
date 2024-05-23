@@ -1,0 +1,39 @@
+# The version of docker-compose being used.
+version: '3'
+
+services:
+  backend:
+    # Build the Dockerfile image
+    build: ./backend-app/
+    # Name the container
+    container_name: bankme_backend
+    # Expose the port 3000 to the host machine
+    ports:
+      - 3001:3001
+    # Creates an interactive terminal in the container
+    tty: true
+    stdin_open: true
+    # Restarts the container if it crashes
+    restart: always
+    # Mount the backend directory in the machine and in the container
+    volumes:
+      - ./backend-app/src:/app/backend/src
+  frontend:
+    # Build the Dockerfile image
+    build: ./frontend-app/
+    # Name the container
+    container_name: bankme_frontend
+    # Expose the port 3000 to the host machine
+    ports:
+      - 3000:3000
+    # Creates an interactive terminal in the container
+    tty: true
+    stdin_open: true
+    # Restarts the container if it crashes
+    restart: always
+    # Mount the backend directory in the machine and in the container.
+    volumes:
+      - ./frontend-app/src:/app/frontend/src
+    # Depends on the backend container to run.
+    depends_on:
+      - backend
