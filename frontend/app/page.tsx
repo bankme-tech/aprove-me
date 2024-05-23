@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowBigRight } from "lucide-react";
+
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <nav className="sm:flex flex sm:flex-row w-full flex-col justify-between items-center shadow-sm px-8 sm:mb-0 mb-10 text-white bg-white h-[100px]">
+      <nav className="sm:flex flex sm:flex-row w-full flex-col justify-between items-center shadow-xl px-8 sm:mb-0 mb-10 text-white bg-fefefe h-[100px]">
         <div className="flex items-center">
           <img
             src="/logo-bankme.png"
