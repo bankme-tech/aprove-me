@@ -17,8 +17,9 @@ export class PayableController {
   ) {}
 
   @Post('/payable')
-  async create(@Body() body: CreatePayableDto): Promise<void> {
-    await this.createPayableUsecase.execute(body);
+  async create(@Body() body: CreatePayableDto): Promise<{ assignorId: string }> {
+    const id = await this.createPayableUsecase.execute(body);
+    return { assignorId: id };
   }
 
   @Get('/payable/:id')

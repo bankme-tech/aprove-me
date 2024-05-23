@@ -10,7 +10,7 @@ export class CreatePayableUsecase {
     private readonly receivableRepo: IReceivableRepository
   ) {}
 
-  async execute(input: Input): Promise<void> {
+  async execute(input: Input): Promise<string> {
     let assignor: AssignorEntity | null;
     const sanitizedDocument = input.document.replace(/\D/g, '');
 
@@ -28,6 +28,8 @@ export class CreatePayableUsecase {
     }
 
     await this.addReceivables(assignor, input.receivables);
+
+    return assignor.id.value;
   }
 
   private async addReceivables(

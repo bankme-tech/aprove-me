@@ -47,13 +47,13 @@ describe('Teste de Integração - POST: /integrations/payable', () => {
       ],
     };
 
-    await request(app.getHttpServer())
+    const { body } = await request(app.getHttpServer())
       .post('/integrations/payable')
       .send(input)
       .expect(HttpStatus.CREATED);
 
     const created = await prisma.assignor.findUnique({
-      where: { document: input.document.replace(/\D/g, '') },
+      where: { id: body.assignorId },
       include: { receivables: true },
     });
 
