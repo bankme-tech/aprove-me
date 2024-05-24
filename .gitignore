@@ -4,8 +4,8 @@
 ### NextJS ###
 # dependencies
 /node_modules
-/pgdata
 /.pnp
+/pgdata
 .pnp.js
 
 # testing
