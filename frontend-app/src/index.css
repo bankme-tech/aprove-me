@@ -21,7 +21,7 @@
 * {
     margin: 0;
     padding: 0;
-    border: 0;
+    /* border: 0; */
     box-sizing: border-box;
     color: var(--text-color);
     font-family: 'Arial Narrow Bold', sans-serif;
@@ -37,4 +37,8 @@ body {
 main form {
     display: flex;
     flex-direction: column;
+}
+
+button {
+    color: var(--gray)
 }
