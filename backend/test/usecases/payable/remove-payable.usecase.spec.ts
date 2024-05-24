@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PayableRepositoryStub } from '../../mocks/repositories/payable.repository.mock';
 import { IPayableRepository } from 'src/payable/repositories/payable.repository.interface';
-import { makePayableDTO } from 'test/mocks/dtos.mock';
 import { RemovePayableUseCase } from 'src/payable/usecases/remove-payable-usecase';
 import { RemovePayableInputDTO } from 'src/payable/dto/remove-payable.input.dto';
 import { RecordNotFoundError } from 'src/persistence/errors/record-not-found.error';
