@@ -6,6 +6,7 @@ on:
       - main
 
 env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }} 
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   DOCKER_USER: ${{ secrets.DOCKER_USER }}
   GITHUB_REPOSITORY: ${{ github.repository }}
