@@ -40,7 +40,7 @@ export default function SignIn() {
       const { accessToken: token } = response.data;
       localStorage.setItem("authToken", token);
       const decodedToken = jwtDecode(token);
-      router.push("/payable-assignor-create");
+      router.push("/dashboard");
       toast.success("Login realizado com sucesso!", {
         description: "Você foi autenticado com sucesso!",
         action: {
