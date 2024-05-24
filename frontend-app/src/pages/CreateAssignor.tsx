@@ -20,7 +20,7 @@ function CreateAssignor() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const config = { headers: { Authorization: `Bearer ${token}` } };
+      const config = { headers: { 'Authorization': `Bearer ${token}` } };
 
       const response = await axios.post('/assignor', formData, config);
       setFormData(initialState);

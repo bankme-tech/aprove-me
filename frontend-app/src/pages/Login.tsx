@@ -18,6 +18,7 @@ function Login() {
     e.preventDefault();
     try {      
       const { data } = await axios.post('/auth', formData);
+      localStorage.setItem('token', `Bearer ${data.token}`);
       alert(data.message);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
