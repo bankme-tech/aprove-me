@@ -66,3 +66,4 @@ docker-compose down
 
 Infelizmente tive que criar outro repositório para fazer o deploy pois as secrets (variáveis de deploy do Github) não são aplicadas em forks.
 
+repositório: https://github.com/spanol/bankme-api
