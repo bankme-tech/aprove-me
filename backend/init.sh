@@ -1,7 +1,8 @@
 #!/bin/sh
 
-# Build the NestJS application
-nest build
+echo "Copying Handlebars templates to dist directory"
+mkdir -p dist/mailer/templates
+cp -r ./src/mailer/templates/* ./dist/mailer/templates
+echo "Templates copied successfully"
 
-# Copy the Handlebars templates to the dist directory
-cp -r src/mailer/templates dist/mailer
+npm run start:dev

@@ -9,8 +9,9 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
+      - /app/node_modules
     environment:
-      NODE_ENV: "production"
+      NODE_ENV: "development"
       RABBITMQ_URI: "amqp://rabbitmq"
       EMAIL_HOST: "mailhog"
       EMAIL_PORT: 1025
@@ -25,9 +26,11 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    restart: always
 
   mailhog:
     image: mailhog/mailhog
     ports:
       - "1025:1025"
       - "8025:8025"
+    restart: always
