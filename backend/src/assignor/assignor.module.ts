@@ -10,6 +10,8 @@ import { IFindAllAssignorsUseCase } from './usecases/find-all-assignors.usecase.
 import { FindAllAssignorsUseCase } from './usecases/find-all-assignors.usecase';
 import { IFindAssignorUseCase } from './usecases/find-assignor.usecase.interface';
 import { FindAssignorUseCase } from './usecases/find-assignor.usecase';
+import { IUpdateAssignorUseCase } from './usecases/update-assignor.usecase.interface';
+import { UpdateAssignorUseCase } from './usecases/update-assignor.usecase';
 
 @Module({
   controllers: [AssignorController],
@@ -29,6 +31,10 @@ import { FindAssignorUseCase } from './usecases/find-assignor.usecase';
     {
       provide: IFindAssignorUseCase,
       useClass: FindAssignorUseCase,
+    },
+    {
+      provide: IUpdateAssignorUseCase,
+      useClass: UpdateAssignorUseCase,
     },
     {
       provide: IAssignorRepository,

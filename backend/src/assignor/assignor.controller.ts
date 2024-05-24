@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateAssignorInputDTO } from './dto/create-assignor.input.dto';
 import { ICreateAssignorUseCase } from './usecases/create-assignor.usecase.interface';
 import { CreateAssignorOutputDTO } from './dto/create-assignor.ouput.dto';
@@ -6,6 +6,12 @@ import { IFindAllAssignorsUseCase } from './usecases/find-all-assignors.usecase.
 import { FindAssignorOutputDTO } from './dto/find-assignor.output.dto';
 import { IFindAssignorUseCase } from './usecases/find-assignor.usecase.interface';
 import { FindAssignorInputDTO } from './dto/find-assignor.input.dto';
+import { UpdateAssignorOutputDTO } from './dto/update-assignor.output.dto';
+import { IUpdateAssignorUseCase } from './usecases/update-assignor.usecase.interface';
+import {
+  UpdateAssignorInputBodyDTO,
+  UpdateAssignorInputParamsDTO,
+} from './dto/update-assignor.input.dto';
 
 @Controller('assignor')
 export class AssignorController {
@@ -13,6 +19,7 @@ export class AssignorController {
     private readonly createAssignorUseCase: ICreateAssignorUseCase,
     private readonly findAllAssignorsUseCase: IFindAllAssignorsUseCase,
     private readonly findAssignorUseCase: IFindAssignorUseCase,
+    private readonly updateAssignorUseCase: IUpdateAssignorUseCase,
   ) {}
 
   @Post()
@@ -32,5 +39,16 @@ export class AssignorController {
     @Param() findAssignorDTO: FindAssignorInputDTO,
   ): Promise<FindAssignorOutputDTO> {
     return await this.findAssignorUseCase.execute(findAssignorDTO);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param() updateAssignorInputParamsDTO: UpdateAssignorInputParamsDTO,
+    @Body() updateAssignorDTO: UpdateAssignorInputBodyDTO,
+  ): Promise<UpdateAssignorOutputDTO> {
+    return await this.updateAssignorUseCase.execute({
+      id: updateAssignorInputParamsDTO.id,
+      ...updateAssignorDTO,
+    });
   }
 }
