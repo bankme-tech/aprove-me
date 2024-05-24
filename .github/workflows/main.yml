@@ -44,7 +44,7 @@ jobs:
           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 099289132084.dkr.ecr.us-east-2.amazonaws.com
       
       - name: Build Docker Images
-        run: docker-compose -f ../server/docker-compose.yml build
+        run: docker-compose -f ../../server/docker-compose.yml build
         working-directory: ./.github/workflows
         
       - name: Push Docker Image to ECR
