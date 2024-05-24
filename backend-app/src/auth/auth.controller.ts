@@ -17,10 +17,12 @@ export class AuthController {
     // Se a propriedade "newToken" existe, o login foi bem sucedido.
     // Caso contrário, o usuário recebe a mensagem de erro definida na camada de serviço.
     if (body.token) {
-      return response
-        .header('Authorization', `Bearer ${body.token}`)
-        .status(status)
-        .json(body);
+      return (
+        response
+          // .header('Authorization', `Bearer ${body.token}`)
+          .status(status)
+          .json(body)
+      );
     } else {
       return response.status(status).json(body);
     }
