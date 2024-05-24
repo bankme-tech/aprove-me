@@ -85,7 +85,7 @@ export default function CreatePage() {
   };
 
   const handleClick = () => {
-    window.location.href = 'http://localhost:3000';
+    window.location.href = '/dashboard';
   };
 
   return (
