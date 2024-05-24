@@ -10,7 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    
     steps:
+      - name: Debug action
+       uses: hmarr/debug-action@v3.0.0
       - name: Checkout Repository
         uses: actions/checkout@v2
 
@@ -24,27 +27,12 @@ jobs:
           aws-secret-access-key: czndHKyk056TdtxqOUyPe1w4pdWIjvBQdpmk0eku
           aws-region: sa-east-1
         
-      - name: Print current directory
-        run: pwd
-
-      - name: List files in current directory
-        run: ls -al
-
-      - name: List files in parent directory
-        run: ls -al ..
-
-      - name: List files in grandparent directory
-        run: ls -al ../..
-
-      - name: List files in ../../server directory
-        run: ls -al ../../server
-
       - name: Log in to Amazon ECR
         run: |
           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 099289132084.dkr.ecr.us-east-2.amazonaws.com
       
       - name: Build Docker Images
-        run: docker-compose -f ../server/docker-compose.yml build
+        run: docker-compose -f /server/docker-compose.yml build
         
       - name: Push Docker Image to ECR
         run: |
