@@ -12,7 +12,7 @@ export class AuthService {
 
   async signIn(login: string, pass: string): Promise<AuthEntity> {
     const user = await this.usersService.findByLogin(login);
-    if (user?.password !== pass) {
+    if (!user || user.password !== pass) {
       throw new UnauthorizedException({
         status: HttpStatus.UNAUTHORIZED,
         error: 'Não autorizado',
