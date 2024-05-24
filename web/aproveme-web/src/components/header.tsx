@@ -1,4 +1,4 @@
-import { Home, Landmark, UtensilsCrossed } from 'lucide-react'
+import { FilePlus, Landmark, ScrollText, UserRoundPlus } from 'lucide-react'
 
 import { AccountMenu } from './account-menu'
 import { NavLink } from './nav-link'
@@ -15,13 +15,18 @@ export const Header = () => {
 
         <nav className="flex items-center space-x-4 lg:space-x-6">
           <NavLink to="/payable">
-            <Home className="h-4 w-4" />
+            <ScrollText className="h-4 w-4" />
             Lista de Recebíveis
           </NavLink>
 
           <NavLink to="/payable/register">
-            <UtensilsCrossed className="h-4 w-4" />
+            <FilePlus className="h-4 w-4" />
             Cadastrar Recebível
+          </NavLink>
+
+          <NavLink to="/assignor/register">
+            <UserRoundPlus className="h-4 w-4" />
+            Cadastrar Cedente
           </NavLink>
         </nav>
 

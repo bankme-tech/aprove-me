@@ -25,25 +25,24 @@ export const SignUp = () => {
           </div>
 
           <form className="space-y-3">
-            <div className="flex w-full justify-center gap-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="login">Seu login</Label>
-                  <Input id="login" type="text" />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="password">Sua senha</Label>
-                  <Input id="password" type="password" />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirmar senha</Label>
-                  <Input id="confirmPassword" type="password" />
-                </div>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="login">Seu login</Label>
+                <Input id="login" type="text" />
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="password">Sua senha</Label>
+                <Input id="password" type="password" />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirmar senha</Label>
+                <Input id="confirmPassword" type="password" />
+              </div>
+            </div>
+            <div className="flex w-full justify-center gap-6">
+              {/* <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Seu nome</Label>
                   <Input id="name" type="text" />
@@ -58,29 +57,24 @@ export const SignUp = () => {
                   <Label htmlFor="phone"> Seu telefone</Label>
                   <Input id="phone" type="tel" />
                 </div>
-              </div>
+              </div> */}
             </div>
 
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <Label htmlFor="document">Seu documento</Label>
               <span className="text-xs text-muted-foreground">
                 {' '}
                 (CPF | CNPJ)
               </span>
               <Input id="document" type="text" />
-            </div>
+            </div> */}
 
             <Button type="submit" className="w-full" disabled={false}>
               Finalizar cadastro
             </Button>
 
             <p className="px-6 text-center text-sm leading-relaxed text-muted-foreground">
-              Ao continuar, você concorda com nossos
-              <Link className="underline underline-offset-4" to="#">
-                {' '}
-                Termos de Serviço{' '}
-              </Link>
-              e
+              Ao continuar, você concorda com nossas
               <Link className="underline underline-offset-4" to="#">
                 {' '}
                 Políticas de Privacidade
