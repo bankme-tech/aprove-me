@@ -61,6 +61,12 @@ docker compose up
 02. Aguarde a subida dos containers e acesse o servidor na porta 3001, que é a porta onde a aplicação foi exposta pelo docker. Isto por conta que o
 Next sobre na porta 3000, então foi escolhida a 3001 para o backend
 
+**TESTES**
+01. Em cada uma das pastas que for preciso rodar os testes, basta rodar o seguinte comando
+```
+npm run test
+```
+
 
 ## ✒️ Autor
 
