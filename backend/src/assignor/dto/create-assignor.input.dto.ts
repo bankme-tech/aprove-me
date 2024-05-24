@@ -1,7 +1,13 @@
+import { PickType } from '@nestjs/mapped-types';
 import { AssignorEntity } from '../entities/assignor.entity';
 import { IsString, MaxLength } from 'class-validator';
 
-export class CreateAssignorInputDTO extends AssignorEntity {
+export class CreateAssignorInputDTO extends PickType(AssignorEntity, [
+  'document',
+  'email',
+  'phone',
+  'name',
+]) {
   @MaxLength(30, {
     message: 'Document must be less than or equal to 30 characters',
   })
