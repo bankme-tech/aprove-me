@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../../prisma.service';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 
@@ -12,17 +12,17 @@ export class PayablesService {
     @InjectQueue('payablesBatch') private readonly payablesBatch: Queue,
   ) {}
 
-  create(createPayableDto: CreatePayableDto) {
+  async create(createPayableDto: CreatePayableDto) {
     return this.prisma.payable.create({
       data: createPayableDto,
     });
   }
 
-  findAll() {
+  async findAll() {
     return this.prisma.payable.findMany();
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     return this.prisma.payable.findUnique({
       where: { id },
     });
