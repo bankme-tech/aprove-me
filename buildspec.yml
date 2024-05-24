@@ -1,5 +1,11 @@
 version: 0.2
 
+on:
+  worflow_dispatch:
+  push:
+    branches:
+      - main
+
 phases:
   pre_build:
     commands:
