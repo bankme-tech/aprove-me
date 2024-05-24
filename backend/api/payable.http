@@ -16,3 +16,12 @@ GET {{baseUrl}}/integrations/payable
 ### Get payable by id
 GET {{baseUrl}}/integrations/payable/9a888b65-fe9a-472b-9f30-bc8fa7c3e118
 
+### Update payable by id
+PATCH {{baseUrl}}/integrations/payable/9a888b65-fe9a-472b-9f30-bc8fa7c3e118
+Content-Type: application/json
+
+{
+    "value": 620.93,
+    "assignorId": "bd0695f9-7b5a-4518-b436-810bc75fb718"
+}
+
