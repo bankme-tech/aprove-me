@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma/prisma.service';
 import { Assignor, PrismaClient } from '@prisma/client';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { AssignorsService } from './assignors.service';
@@ -14,6 +14,8 @@ describe('AssignorsService', () => {
   let assignor: CreateAssignorDto;
   let findUniqueMock: Assignor;
 
+  let updateAssignorDto: UpdateAssignorDto;
+
   beforeEach(async () => {
     assignor = {
       id: randomUUID(),
@@ -22,6 +24,13 @@ describe('AssignorsService', () => {
       phone: `1234567890`,
       name: `Assignor`,
       userId: randomUUID(),
+    };
+
+    updateAssignorDto = {
+      document: assignor.document,
+      email: assignor.email,
+      name: 'Updated Name',
+      phone: assignor.phone,
     };
 
     findUniqueMock = {
@@ -48,10 +57,18 @@ describe('AssignorsService', () => {
 
   describe('createAssignor', () => {
     it('should create an assignor', async () => {
-      // @ts-expect-error mock implementation
-      prismaMock.assignor.create.mockResolvedValue(assignor);
+      //@ts-ignore
+      prismaMock.assignor.create.mockResolvedValue(assignor as any);
 
       expect(await service.createAssignor(assignor)).toBe(assignor);
+    });
+
+    it('should throw BadRequestException if invalid input data', async () => {
+      const invalidAssignor = { ...assignor, name: null };
+
+      await expect(service.createAssignor(invalidAssignor)).rejects.toThrow(
+        BadRequestException,
+      );
     });
   });
 
@@ -60,6 +77,14 @@ describe('AssignorsService', () => {
       prismaMock.assignor.findUnique.mockResolvedValue(findUniqueMock);
 
       expect(await service.getAssignorById('uuid')).toBe(findUniqueMock);
+    });
+
+    it('should null if assignor not found', async () => {
+      prismaMock.assignor.findUnique.mockResolvedValue(null);
+
+      await expect(
+        service.getAssignorById('non-existent-id'),
+      ).resolves.toBeNull();
     });
   });
 
@@ -87,16 +112,25 @@ describe('AssignorsService', () => {
       prismaMock.assignor.update.mockRejectedValue(null);
       prismaMock.assignor.findUnique.mockResolvedValue(null);
 
-      const updateAssignorDto: UpdateAssignorDto = {
-        document: assignor.document,
-        email: assignor.email,
-        name: 'Updated Name',
-        phone: assignor.phone,
-      };
-
       await expect(
         service.updateAssignor(randomUUID(), updateAssignorDto),
       ).rejects.toThrow(NotFoundException);
+    });
+
+    it('should throw NotFoundException if assignor not found', async () => {
+      prismaMock.assignor.findUnique.mockResolvedValue(null);
+
+      await expect(
+        service.updateAssignor('non-existent-id', updateAssignorDto),
+      ).rejects.toThrow(NotFoundException);
+    });
+
+    it('should throw BadRequestException if invalid input data', async () => {
+      const invalidUpdateDto = { ...updateAssignorDto, name: null };
+
+      await expect(
+        service.updateAssignor(assignor.id, invalidUpdateDto),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 
