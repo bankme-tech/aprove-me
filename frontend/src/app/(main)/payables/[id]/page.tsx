@@ -1,29 +1,41 @@
-
+'use client';
 import { api } from '@/api/axios';
 import PayableCard from '@/components/payables/PayableCard';
+
 import { Payable } from '@/types/PayableType';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
-export default async function PayableId({
-  params
-}: {
-  params: { id: string };
-}) {
-  async function getPayable() {
+export default function PayableId({ params }: { params: { id: string } }) {
+  const [payable, setPayable] = useState<Payable>();
+  const [loading, setLoading] = useState(true);
 
-    try {
-      const { data } = await api.get(`integrations/payable/${params.id}`);
-      return data;
-    } catch (error) {
-      // toast.error('Error fetching payable');
-    }
-  }
-  getPayable();
+  const router = useRouter();
 
-  const payable: Payable = await getPayable();
+  useEffect(() => {
+    const getPayable = async () => {
+      try {
+        const { data } = await api.get(`integrations/payable/${params.id}`);
+        setPayable(data);
+        setLoading(false);
+      } catch (error) {
+        toast.error('Error getting payable');
+        if (((error as AxiosError)?.response?.status) === 401) {
+          toast.error('Session expired')
+          router.push('/signIn')
+        }
+      }
+    };
+    getPayable();
+  }, [params, router]);
 
   return (
-    <section className="h-[100vh] w-full flex justify-center items-center ">
-      {<PayableCard payable={payable} isDetails />}
+    <section className=" w-full flex justify-center items-center ">
+      {!loading && (
+        <PayableCard initialPayable={payable as Payable} isDetails />
+      )}
     </section>
   );
 }

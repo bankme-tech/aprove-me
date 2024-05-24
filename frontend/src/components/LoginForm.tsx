@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Input from './ui/Input/Input';
 import Link from 'next/link';
+import { handleChange } from '@/utils/utils';
 
 export interface UserData {
   email: string;
@@ -26,14 +27,6 @@ export default function LoginForm({
     password: ''
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      [name]: value
-    }));
-  };
-
   const verifyEmail = (email: string) =>
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   const verifyPassword = (password: string) => password.length >= 4;
@@ -44,7 +37,7 @@ export default function LoginForm({
     !verifyPassword(userData.password);
 
   return (
-    <main className="h-[100vh] w-full text-black flex justify-center items-center">
+    <main className=" w-full text-black flex justify-center items-center">
       <div className="p-8 w-4/5 max-w-[400px] bg-neutral-50 rounded-xl flex flex-col items-center">
         <h1 className="text-xl font-semibold md:text-2xl lg:text-3xl">
           {isSignup ? 'Sign up' : 'Sign in'}
@@ -59,8 +52,8 @@ export default function LoginForm({
             verifyValue={verifyEmail}
             value={userData.email}
             name="email"
-            onChange={handleChange}
-            placeholder='example@email.com'
+            onChange={(e) => handleChange(e, setUserData)}
+            placeholder="example@email.com"
           >
             Email
           </Input>
@@ -69,9 +62,8 @@ export default function LoginForm({
             type="password"
             value={userData.password}
             name="password"
-            onChange={handleChange}
-            placeholder='********'
-
+            onChange={(e) => handleChange(e, setUserData)}
+            placeholder="********"
           >
             Password
           </Input>
@@ -79,7 +71,7 @@ export default function LoginForm({
           <button
             type="submit"
             disabled={isAllowedToClick}
-            className={`p-3 bg-zinc-900 text-white hover:bg-zinc-900/90 transition mb-4 rounded-lg ${isAllowedToClick && 'cursor-not-allowed'} md:text-lg`}
+            className={`p-2 bg-zinc-900 text-white hover:bg-zinc-900/90 transition mb-4 rounded-lg ${isAllowedToClick && 'cursor-not-allowed'} md:text-lg`}
           >
             {isSignup ? 'Create account' : 'Log in'}
           </button>

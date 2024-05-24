@@ -1,24 +1,18 @@
 'use client';
 
 import LoginForm, { UserData } from '../../../components/LoginForm';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useAuth } from '@/hooks/UseAuth';
 
 export default function SignIn() {
-
-  const { login, isAuthenticated } = useAuth()
+  const { login } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/payables');
-    }
-  }, [router, isAuthenticated]);
 
   const handleSignIn = async (
     event: React.FormEvent<HTMLFormElement>,
@@ -31,7 +25,9 @@ export default function SignIn() {
       await login(userData.email, userData.password);
       router.push('/payables');
     } catch (error: unknown) {
-      toast.error((error as { response: { data: { message: string } } })?.response?.data?.message || 'Internal server error');
+      toast.error(
+        (error as { response: { data: { message: string } } })?.response?.data?.message || 'Internal server error'
+      );
     } finally {
       setLoading(false);
     }

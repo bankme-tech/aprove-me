@@ -10,16 +10,19 @@ import { useRouter } from 'next/navigation';
 import PayableForm from './PayableForm';
 import { api } from '@/api/axios';
 import { Payable } from '@/types/PayableType';
-
+import { AxiosError } from 'axios';
 
 export default function PayableCard({
-  payable,
-  isDetails
+  initialPayable,
+  isDetails,
+  setPayables
 }: {
-  payable: Payable;
+  initialPayable: Payable;
   isDetails?: boolean;
+  setPayables?: React.Dispatch<React.SetStateAction<Payable[]>>;
 }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [payable, setPayable] = useState(initialPayable);
 
   const router = useRouter();
 
@@ -48,11 +51,15 @@ export default function PayableCard({
     try {
       await api.delete(`integrations/payable/${payable.id}`);
       toast.success('Payable deleted successfully');
+      setPayables?.((prev) => prev.filter((p) => p.id !== payable.id));
       router.push('/payables');
       router.refresh();
     } catch (error) {
-
-      console.error(error);
+      toast.error('Error deleting payable');
+      if (((error as AxiosError)?.response?.status) === 401) {
+        toast.error('Session expired')
+        router.push('/signIn')
+      }
     }
   };
 
@@ -85,17 +92,22 @@ export default function PayableCard({
         ...payableInfo,
         value: Number(payableInfo.value)
       });
-      toast.success('Payable updated successfully');
+      setPayable({ ...payableInfo, value: Number(payableInfo.value) });
       setIsEditing(false);
+      toast.success('Payable updated successfully');
       router.refresh();
-    } catch (error) {
+    } catch (error: unknown) {
       toast.error('Error updating payable');
+      if (((error as AxiosError)?.response?.status) === 401) {
+        toast.error('Session expired')
+        router.push('/signIn')
+      }
     }
   };
 
   return (
     <div
-      className={`bg-neutral-50 w-[95%] max-w-[${isDetails ? '600' : '500'}px] flex flex-col gap-2 sm:gap-4 p-4 sm:p-6 rounded-lg relative ${isEditing && 'justify-center items-center'}`}
+      className={`bg-neutral-50 w-full max-w-[${isDetails ? '600' : '500'}px] flex flex-col gap-2 sm:gap-4 p-4 sm:p-6 rounded-lg relative ${isEditing && 'justify-center items-center'}`}
     >
       {isEditing ? (
         <PayableForm
@@ -125,7 +137,10 @@ export default function PayableCard({
           </h1>
           <CardInfo label="Id" value={payable?.id} />
           <CardInfo label="Value" value={payable?.value.toFixed(2)} />
-          <CardInfo label="Emission Date" value={formatDate()} />
+          <CardInfo
+            label="Emission Date"
+            value={payable?.emissionDate ? formatDate() : ''}
+          />
           {isDetails && (
             <CardInfo label="Assignor Id" value={payable?.assignorId} />
           )}

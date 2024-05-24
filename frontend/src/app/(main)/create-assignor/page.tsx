@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { handleChange } from '../../../utils/utils';
 import Input from '../../../components/ui/Input/Input';
 import { Assignor } from '@/types/AssignorType';
-
+import { AxiosError } from 'axios';
 
 interface InitialAssignor extends Omit<Assignor, 'id'> { }
 
@@ -18,7 +18,8 @@ export default function AssignorForm() {
     phone: ''
   };
 
-  const [assignorInfo, setAssignorInfo] = useState<InitialAssignor>(initialAssignor);
+  const [assignorInfo, setAssignorInfo] =
+    useState<InitialAssignor>(initialAssignor);
 
   const router = useRouter();
 
@@ -31,11 +32,14 @@ export default function AssignorForm() {
         ...assignorInfo,
         phone: assignorInfo.phone.trim().replace(/\D/g, ''),
         document: assignorInfo.document.trim().replace(/\D/g, '')
-
       });
       router.push(`/assignor/${data.id}`);
     } catch (error) {
-      toast.error((error as { response: { data: { message: string } } })?.response?.data?.message || 'Internal server error');
+      toast.error('Error creating payable');
+      if (((error as AxiosError)?.response?.status) === 401) {
+        toast.error('Session expired')
+        router.push('/signIn')
+      }
     }
   };
 
@@ -53,8 +57,8 @@ export default function AssignorForm() {
     if (!Number(value)) return false;
 
     const numericValue = value.replace(/[^\d]+/g, '');
-    return numericValue.length === 11 || numericValue.length === 14
-  }
+    return numericValue.length === 11 || numericValue.length === 14;
+  };
 
   function isPhoneNumberValid(phoneNumber: string) {
     const phoneRegex = /^\d{11}$/;
@@ -69,10 +73,10 @@ export default function AssignorForm() {
       isCPFOrCNPJValid(assignorInfo.document) &&
       isPhoneNumberValid(assignorInfo.phone)
     );
-  }
+  };
 
   return (
-    <main className="h-[100vh] w-full text-white flex justify-center items-center ">
+    <main className=" w-full text-white flex justify-center items-center ">
       <div className="bg-neutral-50 w-4/5 max-w-[500px] p-4 rounded-lg flex items-center justify-center">
         <form
           className="flex flex-col gap-4 text-black items-center justify-center w-full"
@@ -121,7 +125,10 @@ export default function AssignorForm() {
             Phone
           </Input>
 
-          <button disabled={!isInputsValid()} className="p-2 bg-zinc-900 text-white hover:bg-zinc-900/90 transition mb-4 rounded-lg md:text-lg w-full disabled:cursor-not-allowed">
+          <button
+            disabled={!isInputsValid()}
+            className="p-2 bg-zinc-900 text-white hover:bg-zinc-900/90 transition mb-4 rounded-lg md:text-lg w-full disabled:cursor-not-allowed"
+          >
             Create
           </button>
         </form>

@@ -10,6 +10,7 @@ import { api } from '@/api/axios';
 import { handleChange } from '@/utils/utils';
 import { Payable } from '@/types/PayableType';
 import { Assignor } from '@/types/AssignorType';
+import { useRouter } from 'next/navigation';
 
 type PayableFormProps = {
   payable: Payable;
@@ -35,6 +36,8 @@ export default function PayableForm({
   });
   const [assignors, setAssignors] = useState<Assignor[]>([]);
 
+  const router = useRouter();
+
   useEffect(() => {
     const getAssignors = async () => {
       try {
@@ -43,6 +46,7 @@ export default function PayableForm({
         await api.get(`integrations/payable/${payable.id}`);
       } catch (error) {
         toast.error('Error fetching assignors');
+        if (error?.response?.status === 401) router.push('/signIn');
       }
     };
     getAssignors();
@@ -58,7 +62,8 @@ export default function PayableForm({
     setPayableInfo({ ...payableInfo, emissionDate: date as unknown as string });
   };
 
-  const verifyNumber = (value: string) => !(isNaN(Number(value)) || +value <= 0)
+  const verifyNumber = (value: string) =>
+    !(isNaN(Number(value)) || +value <= 0);
 
   return (
     <form
