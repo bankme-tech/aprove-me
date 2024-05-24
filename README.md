@@ -7,7 +7,7 @@ Antes de iniciar, você precisa ter os seguintes softwares instalados:
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-#Estrutura do projeto
+## Estrutura do projeto
 
 ├── client
 │   ├── Dockerfile
@@ -52,7 +52,7 @@ Backend: http://localhost:3000
 Frontend: http://localhost:4200
 RabbitMQ Management: http://localhost:15672
 
-##Parando os Serviços
+## Parando os Serviços
 
 Para parar e remover os contêineres, execute:
 
