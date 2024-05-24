@@ -30,7 +30,6 @@ jobs:
       
       - name: Build Docker Images
         run: docker-compose -f ../../server/docker-compose.yml build
-        working-directory: ./.github/workflows
         
       - name: Push Docker Image to ECR
         run: |
