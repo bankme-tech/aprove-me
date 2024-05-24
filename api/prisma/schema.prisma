@@ -11,6 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model Payable {
   id           String   @id @default(uuid())
   value        Float
