@@ -62,3 +62,7 @@ Para parar e remover os contêineres, execute:
 docker-compose down
 ```
 
+## Aviso
+
+Infelizmente tive que criar outro repositório para fazer o deploy pois as secrets (variáveis de deploy do Github) não são aplicadas em forks.
+
