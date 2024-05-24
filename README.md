@@ -45,9 +45,11 @@ No diretório raiz do projeto, execute o seguinte comando para iniciar todos os 
 
 docker-compose up --build
 
-Este comando irá construir as imagens Docker e iniciar os contêineres para o RabbitMQ, backend e frontend.Acesse a aplicação:Backend:
+Este comando irá construir as imagens Docker e iniciar os contêineres para o RabbitMQ, backend e frontend.Acesse a aplicação:
 
-http://localhost:3000Frontend: http://localhost:4200RabbitMQ Management: http://localhost:15672
+Backend: http://localhost:3000
+Frontend: http://localhost:4200
+RabbitMQ Management: http://localhost:15672
 
 ##Parando os Serviços
 
