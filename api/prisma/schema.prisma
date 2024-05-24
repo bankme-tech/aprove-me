@@ -17,8 +17,8 @@ model Payable {
   id          String   @id @default(uuid())
   value       Float
   emissionDate DateTime @default(now())
-  assignor    String
-  assignorId  Assignor @relation(fields: [assignor], references: [id])
+  assignorId    String
+  assignor  Assignor @relation(fields: [assignorId], references: [id])
 }
 
 model Assignor {
