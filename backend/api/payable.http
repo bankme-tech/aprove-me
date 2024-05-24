@@ -11,3 +11,7 @@ Content-Type: application/json
     "assignorId": "c49b4bef-ab2a-48dd-990e-af3c2e1e7c08",
     "emissionDate": "2024-08-01"
 }
+
+### Get all payables
+GET {{baseUrl}}/integrations/payable
+
