@@ -30,30 +30,30 @@ export class AssignorService {
       throw new BadRequestException('Assignor already exists');
     }
 
-    return this.prisma.assignor.create({
+    return await this.prisma.assignor.create({
       data: createAssignorDto,
     });
   }
 
-  findAll() {
-    return this.prisma.assignor.findMany();
+  async findAll() {
+    return await this.prisma.assignor.findMany();
   }
 
-  findOne(id: string) {
-    return this.prisma.assignor.findUniqueOrThrow({
+  async findOne(id: string) {
+    return await this.prisma.assignor.findUniqueOrThrow({
       where: { id },
     });
   }
 
-  update(id: string, updateAssignorDto: UpdateAssignorDto) {
-    return this.prisma.assignor.update({
+  async update(id: string, updateAssignorDto: UpdateAssignorDto) {
+    return await this.prisma.assignor.update({
       where: { id },
       data: updateAssignorDto,
     });
   }
 
-  remove(id: string) {
-    return this.prisma.assignor.delete({
+  async remove(id: string) {
+    return await this.prisma.assignor.delete({
       where: { id },
     });
   }
