@@ -7,9 +7,23 @@ services:
       POSTGRES_PASSWORD: aproveme
       POSTGRES_DB: aproveme
     ports:
-      - '5432:5432'
+      - '5433:5432'
     volumes:
       - db-data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-docker
+    environment:
+      - PORT=3000
+    ports:
+      - '3001:3003'
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app/src
 
 volumes:
   db-data:
