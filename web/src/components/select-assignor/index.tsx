@@ -24,7 +24,7 @@ export const SelectAssignor: React.FC<Props> = ({ onChange }) => {
         toast.error('It was not possible to fetch assignors');
       }
     })();
-  }, []);
+  }, [api.assignors]);
 
   return (
     <>
@@ -32,8 +32,8 @@ export const SelectAssignor: React.FC<Props> = ({ onChange }) => {
         <div className="label">
           <span className="label-text">Assignor</span>
         </div>
-        <div className="input input-sm w-full cursor-pointer rounded-md border border-zinc-800">
-          selecionado
+        <div className="input input-sm flex w-full cursor-pointer items-center rounded-md border border-gray-800">
+          {assignors.find((a) => a.id === selectedId)?.name ?? 'Selecione'}
         </div>
       </label>
 
@@ -55,7 +55,7 @@ export const SelectAssignor: React.FC<Props> = ({ onChange }) => {
                     type="radio"
                     name="radio-10"
                     className="radio radio-sm checked:bg-primary"
-                    checked
+                    checked={selectedId === a.id}
                   />
                 </label>
               </button>

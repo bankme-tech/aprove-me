@@ -35,7 +35,7 @@ export const LeftBar: React.FC = () => {
                 <Link href={AppRoutes.payables.create}>Create</Link>
               </li>
               <li>
-                <a>List</a>
+                <Link href={AppRoutes.payables.index}>List</Link>
               </li>
             </ul>
           </details>

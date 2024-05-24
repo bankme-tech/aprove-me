@@ -1,8 +1,18 @@
+import dayjs from 'dayjs';
 import { z } from 'zod';
 
 export const createPayableSchema = z.object({
-  value: z.number().min(0),
-  emissionDate: z.date(),
+  value: z
+    .string()
+    .min(0)
+    .transform(Number)
+    .refine((value) => !Number.isNaN(value), {
+      message: 'Value must be a number',
+    }),
+  emissionDate: z.string().transform((stringDate) => {
+    const date = dayjs(stringDate);
+    return date.toDate();
+  }),
   assignor: z.string().uuid(),
 });
 
