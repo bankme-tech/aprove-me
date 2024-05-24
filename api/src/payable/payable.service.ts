@@ -21,9 +21,9 @@ export class PayableService {
       );
     }
 
-    const { assignor } = createPayableDto;
+    const { assignorId } = createPayableDto;
     const assignorExists = await this.prisma.assignor.findUnique({
-      where: { id: assignor },
+      where: { id: assignorId },
     });
 
     if (!assignorExists) {

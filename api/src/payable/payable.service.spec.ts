@@ -84,14 +84,11 @@ describe('PayableService', () => {
     it('should create a payable', async () => {
       // Arrange
       const payableInsert = {
-        data: {
-          value: 100,
-          assignor: '123e4567-e89b-12d3-a456-426614174000',
-        },
+        value: 100,
+        assignorId: '123e4567-e89b-12d3-a456-426614174000',
       };
-
       // Act
-      const result = await prismaService.payable.create(payableInsert);
+      const result = await payableService.create(payableInsert);
 
       // Assert
       expect(result).toEqual(payableEntityList[0]);
@@ -122,7 +119,7 @@ describe('PayableService', () => {
       // Arrange
       const payableInsert = {
         value: '100',
-        assignor: '1',
+        assignorId: '1',
       };
 
       // Act
@@ -133,7 +130,7 @@ describe('PayableService', () => {
         expect(error.message).toBe('Bad Request Exception');
         expect(error.response.message).toEqual([
           'value has wrong value 100, value must be a number conforming to the specified constraints',
-          'assignor has wrong value 1, assignor must be a UUID',
+          'assignorId has wrong value 1, assignorId must be a UUID',
         ]);
       }
     });
