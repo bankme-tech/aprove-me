@@ -9,6 +9,8 @@ import { ICreatePayableUseCase } from './usecases/create-payable.usecase.interfa
 import { AssignorModule } from 'src/assignor/assignor.module';
 import { IFindAllPayablesUseCase } from './usecases/find-all-payables.usecase.interface';
 import { FindAllPayablesUseCase } from './usecases/find-all-payables.usecase';
+import { IFindPayableUseCase } from './usecases/find-payable.usecase.interface';
+import { FindPayableUseCase } from './usecases/find-payable.usecase';
 
 @Module({
   controllers: [PayableController],
@@ -24,6 +26,10 @@ import { FindAllPayablesUseCase } from './usecases/find-all-payables.usecase';
     {
       provide: IPayableRepository,
       useClass: PrismaPayableRepository,
+    },
+    {
+      provide: IFindPayableUseCase,
+      useClass: FindPayableUseCase,
     },
     {
       provide: PayableMapper,
