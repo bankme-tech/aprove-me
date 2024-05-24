@@ -18,36 +18,29 @@ O projeto é um desafio técnico da BankMe que pedr a criação de uma RESTful A
 - Sistema de Cadastro de Usuários para o Sistema
 
 
-
 ## Instruções para Inicializar o Projeto
 
 ## Pré-requisitos:
 
-- Certifique-se de ter o Yarn instalado em sua máquina.
-- Instale o Docker e a imagem do PostgreSQL se ainda não os tiver.
+- Prisma
+- Instale o Docker 
 
 ## Instalação das Dependências:
 
-Execute o seguinte comando para instalar as dependências do projeto:
-
-Certifique-se de ter Yarn instalado em sua máquina
-```bash
-  yarn install 
-```
-Inicie os containers do Docker com o comando:
-```bash
-docker-compose up -d
-```
 Abra o arquivo .env.
 Altere o parâmetro DATABASE_URL para refletir suas credenciais de banco de dados PostgreSQL:
 ```bash
-DATABASE_URL = postgresql://yourUser:password@localhost:5432/databaseName
+DATABASE_URL="postgresql://aproveme:aproveme@api-db-1:5432/aproveme?schema=public"
 ```
 
-Execute o comando abaixo para aplicar as migrações do Prisma:
+
+Inicie os containers do Docker com o comando:
 ```bash
-yarn prisma migrate dev --name add docker-compose.yml
+docker-compose up
 ```
+
+Caso não tenha o ```yarn  ``` instalado ao rodar o comando acima o mesmo irá instalar via pacote ```npm . ```
+
 ## Funcionalidades da API
 
 
