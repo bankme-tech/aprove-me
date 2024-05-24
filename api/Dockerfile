@@ -9,5 +9,9 @@ COPY package*.json ./
 RUN  yarn
 
 COPY . .
+RUN yarn prisma generate
+
+RUN yarn prisma migrate
 
 CMD [ "yarn", "start" ]
+
