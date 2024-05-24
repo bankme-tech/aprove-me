@@ -1,38 +1,176 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PayableController } from '../../src/payable/payable.controller';
-import { InputPayableDTO } from '../../src/payable/dto/input-payable.dto';
-import { InputAssignorDTO } from 'src/assignor/dto/input-assignor.dto';
-import { makeAssignorDTO, makePayableDTO } from '../../test/mocks/dtos.mock';
+import { CreatePayableInputDTO } from 'src/payable/dto/create-payable.input.dto';
+import { CreatePayableUseCaseStub } from 'test/mocks/usecases/payable/create-payable.usecase.mock';
+import { FindAllPayablesUseCaseStub } from 'test/mocks/usecases/payable/find-all-payable.usecase.mock';
+import { FindPayableUseCaseStub } from 'test/mocks/usecases/payable/find-payable.usecase.mock';
+import { UpdatePayableUseCaseStub } from 'test/mocks/usecases/payable/update-payable.usecase.mock';
+import { RemovePayableUseCaseStub } from 'test/mocks/usecases/payable/remove-payable.usecase.mock';
+import { PayableEntity } from 'src/payable/entities/payable.entity';
+import { FindPayableInputDTO } from 'src/payable/dto/find-payable.input.dto';
+import {
+  UpdatePayableInputBodyDTO,
+  UpdatePayableInputParamsDTO,
+} from 'src/payable/dto/update-payable.input.dto';
+import { ICreatePayableUseCase } from 'src/payable/usecases/create-payable.usecase.interface';
+import { IFindAllPayablesUseCase } from 'src/payable/usecases/find-all-payables.usecase.interface';
+import { IFindPayableUseCase } from 'src/payable/usecases/find-payable.usecase.interface';
+import { IUpdatePayableUseCase } from 'src/payable/usecases/update-payable.usecase.interface';
+import { IRemovePayableUseCase } from 'src/payable/usecases/remove-payable.usecase.interface';
+import { makePayableEntity } from 'test/mocks/entities/payable.entity.mock';
+import { RemovePayableInputDTO } from 'src/payable/dto/remove-payable.input.dto';
 
 describe('PayableController', () => {
   let sut: PayableController;
-  let assignorDTO: InputAssignorDTO;
-  let payableDTO: InputPayableDTO;
+
+  let createPayableUseCaseStub: CreatePayableUseCaseStub;
+  let findAllPayablesUseCaseStub: FindAllPayablesUseCaseStub;
+  let findPayableUseCaseStub: FindPayableUseCaseStub;
+  let updatePayableUseCaseStub: UpdatePayableUseCaseStub;
+  let removePayableUseCaseStub: RemovePayableUseCaseStub;
+
+  let entity: PayableEntity;
+  let createPayableDTO: CreatePayableInputDTO;
+  let findPayableDTO: FindPayableInputDTO;
+  let updatePayableParamsDTO: UpdatePayableInputParamsDTO;
+  let updatePayableBodyDTO: UpdatePayableInputBodyDTO;
+  let removePayableDTO: RemovePayableInputDTO;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PayableController],
-      providers: [],
-      imports: [],
+      providers: [
+        {
+          provide: ICreatePayableUseCase,
+          useClass: CreatePayableUseCaseStub,
+        },
+        {
+          provide: IFindAllPayablesUseCase,
+          useClass: FindAllPayablesUseCaseStub,
+        },
+        {
+          provide: IFindPayableUseCase,
+          useClass: FindPayableUseCaseStub,
+        },
+        {
+          provide: IUpdatePayableUseCase,
+          useClass: UpdatePayableUseCaseStub,
+        },
+        {
+          provide: IRemovePayableUseCase,
+          useClass: RemovePayableUseCaseStub,
+        },
+      ],
     }).compile();
 
     sut = module.get<PayableController>(PayableController);
+    createPayableUseCaseStub = module.get<CreatePayableUseCaseStub>(
+      ICreatePayableUseCase,
+    );
+    findAllPayablesUseCaseStub = module.get<FindAllPayablesUseCaseStub>(
+      IFindAllPayablesUseCase,
+    );
+    findPayableUseCaseStub =
+      module.get<FindPayableUseCaseStub>(IFindPayableUseCase);
+    updatePayableUseCaseStub = module.get<UpdatePayableUseCaseStub>(
+      IUpdatePayableUseCase,
+    );
+    removePayableUseCaseStub = module.get<RemovePayableUseCaseStub>(
+      IRemovePayableUseCase,
+    );
 
-    assignorDTO = makeAssignorDTO();
-    payableDTO = makePayableDTO();
+    entity = makePayableEntity();
+    createPayableDTO = {
+      value: entity.value,
+      assignorId: entity.assignorId,
+      emissionDate: entity.emissionDate,
+    };
+    findPayableDTO = {
+      id: entity.id,
+    };
+    updatePayableParamsDTO = findPayableDTO;
+    updatePayableBodyDTO = createPayableDTO;
+    removePayableDTO = findPayableDTO;
   });
 
-  describe('POST', () => {
-    test('should return all data from Payable and Assignor', () => {
-      const response = sut.display({
-        payable: payableDTO,
-        assignor: assignorDTO,
-      });
+  describe('create()', () => {
+    test('should call createPayableUseCase with correct values', async () => {
+      await sut.create(createPayableDTO);
 
-      expect(response).toStrictEqual({
-        payable: payableDTO,
-        assignor: assignorDTO,
+      expect(createPayableUseCaseStub.data).toEqual(createPayableDTO);
+    });
+
+    test('should return a new payable', async () => {
+      createPayableUseCaseStub.response = {
+        ...entity,
+      };
+      const response = await sut.create(createPayableDTO);
+
+      expect(response).toEqual(createPayableUseCaseStub.response);
+    });
+  });
+
+  describe('findAll()', () => {
+    test('should call findAllPayableUseCase with correct values', async () => {
+      const findAllSpy = jest.spyOn(findAllPayablesUseCaseStub, 'execute');
+
+      await sut.findAll();
+
+      expect(findAllSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('should return a list of payables', async () => {
+      const response = await sut.findAll();
+
+      expect(response).toEqual(findAllPayablesUseCaseStub.response);
+    });
+  });
+
+  describe('findOne()', () => {
+    test('should call findOnePayableUseCase with correct values', async () => {
+      await sut.findOne(findPayableDTO);
+
+      expect(findPayableUseCaseStub.data).toBe(findPayableDTO);
+    });
+
+    test('should return payable', async () => {
+      const response = await sut.findOne(findPayableDTO);
+
+      expect(response).toEqual(findPayableUseCaseStub.response);
+    });
+  });
+
+  describe('update()', () => {
+    test('should call updatePayableUseCase with correct values', async () => {
+      await sut.update(updatePayableParamsDTO, updatePayableBodyDTO);
+
+      expect(updatePayableUseCaseStub.data).toEqual({
+        ...updatePayableParamsDTO,
+        ...updatePayableBodyDTO,
       });
+    });
+
+    test('should return a new payable', async () => {
+      const response = await sut.update(
+        updatePayableParamsDTO,
+        updatePayableBodyDTO,
+      );
+
+      expect(response).toEqual(updatePayableUseCaseStub.response);
+    });
+  });
+
+  describe('remove()', () => {
+    test('should call removePayableUseCase with correct values', async () => {
+      await sut.remove(removePayableDTO);
+
+      expect(removePayableUseCaseStub.data).toEqual(removePayableDTO);
+    });
+
+    test('should return undefined', async () => {
+      const response = await sut.remove(removePayableDTO);
+
+      expect(response).toBeUndefined();
     });
   });
 });
