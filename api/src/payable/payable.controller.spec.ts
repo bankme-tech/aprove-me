@@ -47,7 +47,7 @@ describe('PayableController', () => {
             findAll: jest.fn().mockResolvedValue(payableEntityList),
             findOne: jest.fn().mockResolvedValue(payableEntityList[1]),
             update: jest.fn().mockResolvedValue(payableEntityList[2]),
-            remove: jest.fn(),
+            remove: jest.fn().mockResolvedValue({}),
           },
         },
       ],
@@ -172,6 +172,112 @@ describe('PayableController', () => {
         expect(error.message).toBe('Payable not found');
       }
       expect(payableService.findOne).toHaveBeenCalledWith(id);
+    });
+  });
+
+  describe('update', () => {
+    it('should update a payable', async () => {
+      // Arrange
+      const id = '3';
+      const payableUpdate = {
+        value: 300,
+        assignor: '3',
+      };
+
+      // Act
+      const result = await payableControler.update(id, payableUpdate);
+
+      // Assert
+      expect(result).toEqual(payableEntityList[2]);
+      expect(payableService.update).toHaveBeenCalledWith(id, payableUpdate);
+    });
+
+    it('should throw an error if payable does not exist', async () => {
+      // Arrange
+      jest
+        .spyOn(payableService, 'update')
+        .mockRejectedValueOnce(new BadRequestException('Payable not found'));
+
+      const id = '5';
+      const payableUpdate = {
+        value: 300,
+        assignor: '3',
+      };
+
+      // Act
+      try {
+        await payableControler.update(id, payableUpdate);
+      } catch (error) {
+        // Assert
+        expect(error.message).toBe('Payable not found');
+      }
+      expect(payableService.update).toHaveBeenCalledWith(id, payableUpdate);
+    });
+
+    it('should throw an error if validation fails', async () => {
+      // Arrange
+      jest
+        .spyOn(payableService, 'update')
+        .mockRejectedValueOnce(
+          new BadRequestException([
+            'value has wrong value 1000, value must be a number conforming to the specified constraints',
+            'assignor has wrong value 1, assignor must be a UUID',
+          ]),
+        );
+
+      const id = '3';
+      const payableUpdate = {
+        value: '300',
+        assignor: 1,
+      };
+
+      // Act
+      try {
+        await payableControler.update(
+          id,
+          payableUpdate as unknown as CreatePayableDto,
+        );
+      } catch (error) {
+        // Assert
+        expect(error.message).toBe('Bad Request Exception');
+        expect(error.response.message).toEqual([
+          'value has wrong value 1000, value must be a number conforming to the specified constraints',
+          'assignor has wrong value 1, assignor must be a UUID',
+        ]);
+      }
+      expect(payableService.update).toHaveBeenCalledWith(id, payableUpdate);
+    });
+  });
+
+  describe('remove', () => {
+    it('should remove a payable', async () => {
+      // Arrange
+      const id = '4';
+
+      // Act
+      const result = await payableControler.remove(id);
+
+      // Assert
+      expect(result).toEqual({});
+      expect(payableService.remove).toHaveBeenCalledWith(id);
+    });
+
+    it('should throw an error if payable does not exist', async () => {
+      // Arrange
+      jest
+        .spyOn(payableService, 'remove')
+        .mockRejectedValueOnce(new BadRequestException('Payable not found'));
+
+      const id = '5';
+
+      // Act
+      try {
+        await payableControler.remove(id);
+      } catch (error) {
+        // Assert
+        expect(error.message).toBe('Payable not found');
+      }
+      expect(payableService.remove).toHaveBeenCalledWith(id);
     });
   });
 });
