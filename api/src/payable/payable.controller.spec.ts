@@ -67,7 +67,7 @@ describe('PayableController', () => {
       // Arrange
       const payableInsert = {
         value: 100,
-        assignor: '1',
+        assignorId: '1',
       };
 
       // Act
@@ -86,7 +86,7 @@ describe('PayableController', () => {
 
       const payableInsert = {
         value: 100,
-        assignor: '5',
+        assignorId: '5',
       };
 
       // Act
