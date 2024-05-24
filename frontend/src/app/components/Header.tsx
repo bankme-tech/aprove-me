@@ -10,7 +10,7 @@ export default function Header() {
           </NavbarBrand>
           <NavbarContent justify="end">
             <NavbarItem>
-              <Button as={Link} color="primary" href="#" variant="flat">
+              <Button as={Link} color="primary" href="login" variant="flat">
                 Entrar
               </Button>
             </NavbarItem>
