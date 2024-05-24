@@ -36,7 +36,7 @@ model Assignor {
 
 model User {
   id       String @id @default(uuid())
-  login    String
+  login    String @unique
   password String
 
   @@map("users")
