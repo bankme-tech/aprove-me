@@ -11,12 +11,15 @@ import { toast } from "sonner";
 import { api } from "@/services/api";
 
 export default function CreatePage() {
+
+ 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     value: '',
     document: '',
     phone: '',
+    emissionDate: new Date().toISOString().substring(0, 10),
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,16 +27,17 @@ export default function CreatePage() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  //const router = useRouter();
+
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    const { name, email, value, document, phone } = formData;
-
+    const { name, email, value, document, phone, emissionDate } = formData;
+  
     setIsLoading(true);
     const token = localStorage.getItem('authToken');
-
+    
     try {
+      
       const response = await api.post('/integrations/payable',
       {
         name,
@@ -41,21 +45,22 @@ export default function CreatePage() {
         value: parseFloat(value.replace(',', '.')),
         document,
         phone,
-        emissionDate: new Date(), 
+        emissionDate: new Date(emissionDate), 
       },{
         headers: {
           Authorization: `Bearer ${token}`,
         },
       
       });
-
-      toast.success("Movimentação cadastrada com sucesso!", {
+    
+      toast.success("Movimentação cadastrada com sucesso!",
+       {
         action: {
           label: "Fechar",
           onClick: () => ("Fechar"),
         },
       });
-  //  router.push('/success-page'); 
+
     } catch (error) {
       if ((error as any).response && (error as any).response.data && (error as any).response.data.message) {
         toast.error("Erro ao cadastrar movimentação!", {
@@ -65,6 +70,7 @@ export default function CreatePage() {
           },
         });
       } else {
+        console.log(error);
         toast.error("Erro ao cadastrar!", {
           description: "Erro desconhecido",
           action: {
@@ -88,7 +94,7 @@ export default function CreatePage() {
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Tabs defaultValue="account" className="w-[400px]">
           <TabsList className="grid w-full grid-cols-1">
-            <TabsTrigger value="account">Dados do Cedente</TabsTrigger>
+            <TabsTrigger value="data">Cadastro</TabsTrigger>
           </TabsList>
           <TabsContent value="account">
             <Card>
@@ -155,6 +161,18 @@ export default function CreatePage() {
                       required
                     />
                   </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="date">Data de Emissão</Label>
+                    <Input
+                      id="date"
+                      name="date"
+                      placeholder=""
+                      value={formData.emissionDate}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  
                   <CardFooter className="mt-4 flex justify-center">
                 <Button style={{ margin: 'auto' }}>Salvar Cadastro</Button>
                   </CardFooter>
