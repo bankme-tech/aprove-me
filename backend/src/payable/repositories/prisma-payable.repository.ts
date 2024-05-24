@@ -35,7 +35,7 @@ export class PrismaPayableRepository implements IPayableRepository {
   }
 
   async findById(findPayableDTO: FindPayableInputDTO): Promise<PayableEntity> {
-    const payable = await this.prisma.payable.findUnique({
+    const payable = await this.prisma.payable.findUniqueOrThrow({
       where: {
         id: findPayableDTO.id,
       },
