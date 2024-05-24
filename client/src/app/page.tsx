@@ -20,7 +20,7 @@ export default function HomePage() {
         
         <div className="text-center mx-auto px-10 flex flex-col justify-center items-center h-screen">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-5">
-          Cdastro de Recebíveis e Cedentes
+          Caastro de Recebíveis e Cedentes
             <br></br><strong>AproveMe</strong>
           </h1>
           <h2 className="text-xl text-muted-foreground">
