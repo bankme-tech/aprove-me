@@ -18,7 +18,7 @@ export class PayableController {
   }
 
   @Post("batch")
-  async createBatchToBeProcessed(@Body() payables: Payable[]) {
+  async createBatchToBeProcessed(@Body() payables: Omit<Payable, 'id'>[]) {
     if (payables.length > 1000) {
       throw new Error('Batch size exceed.');
     }

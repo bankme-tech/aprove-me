@@ -20,6 +20,10 @@ export class PayableService {
     return this.payableRepository.create(data);
   }
 
+  async createOne(data: Omit<Payable, 'id'>): Promise<Payable> {
+    return this.payableRepository.createOne(data);
+  }
+
   async findAll(): Promise<Payable[]> {
     return this.payableRepository.findAll();
   }

@@ -2,10 +2,32 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Payable, Prisma } from '@prisma/client';
 import { CreatePayableAssignorDto } from '../payable.dto';
+// import { PayableType } from 'src/rabbit-mq/consumer.service';
+
+type PayableType =  {
+  "assignorId": string,
+  "amount": number,
+  "description": string,
+  "dueDate": Date
+}
 
 @Injectable()
 export class PayableRepository {
   constructor(private readonly prisma: PrismaService) {}
+
+  async createOne(data: PayableType): Promise<any> {
+    
+    const result = await this.prisma.payable.create({
+      data: {
+        description: data.description,
+        amount: data.amount,
+        dueDate: data.dueDate,
+        assignorId: data.assignorId, 
+      }
+    })
+
+    return result
+  }
 
   async create(data: CreatePayableAssignorDto): Promise<any> {
     
