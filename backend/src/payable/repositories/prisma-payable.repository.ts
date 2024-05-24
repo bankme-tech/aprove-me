@@ -5,6 +5,7 @@ import { IPayableRepository } from './payable.repository.interface';
 import { Injectable } from '@nestjs/common';
 import { PayableMapper } from '../mappers/payable.mapper.interface';
 import { Payable } from '@prisma/client';
+import { FindPayableInputDTO } from '../dto/find-payable.input.dto';
 
 @Injectable()
 export class PrismaPayableRepository implements IPayableRepository {
@@ -27,5 +28,15 @@ export class PrismaPayableRepository implements IPayableRepository {
   async findAll(): Promise<PayableEntity[]> {
     const payables = await this.prisma.payable.findMany();
     return payables.map((payable) => this.mapper.toDomainEntity(payable));
+  }
+
+  async findOne(findPayableDTO: FindPayableInputDTO): Promise<PayableEntity> {
+    const payable = await this.prisma.payable.findUnique({
+      where: {
+        id: findPayableDTO.id,
+      },
+    });
+
+    return this.mapper.toDomainEntity(payable);
   }
 }
