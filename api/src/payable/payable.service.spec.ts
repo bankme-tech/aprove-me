@@ -221,4 +221,33 @@ describe('PayableService', () => {
       }
     });
   });
+
+  describe('remove', () => {
+    it('should remove a payable', async () => {
+      // Arrange
+      const id = '4';
+
+      // Act
+      const result = await payableService.remove(id);
+
+      // Assert
+      expect(result).toEqual({});
+    });
+
+    it('should throw an error if payable does not exist', async () => {
+      // Arrange
+      const id = '5';
+      jest
+        .spyOn(prismaService.payable, 'delete')
+        .mockRejectedValueOnce(new BadRequestException('Payable not found'));
+
+      // Act
+      try {
+        await payableService.remove(id);
+      } catch (error) {
+        // Assert
+        expect(error.message).toBe('Payable not found');
+      }
+    });
+  });
 });
