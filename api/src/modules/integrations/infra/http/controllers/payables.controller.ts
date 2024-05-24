@@ -4,6 +4,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -24,6 +25,7 @@ import { CreatePayablesBatchUseCase } from '@/modules/integrations/use-cases/cre
 import { PatchPayableDto, patchPayableDto } from '../dtos/patch-payable.dto';
 import { PatchPayableUseCase } from '@/modules/integrations/use-cases/patch-payable.use-case';
 import { FindAllPayablesUseCase } from '@/modules/integrations/use-cases/find-all-payables.use-case';
+import { DeletePayableUseCase } from '@/modules/integrations/use-cases/delete-payable.use-case';
 
 @Controller('integrations/payables')
 export class PayablesController {
@@ -33,6 +35,7 @@ export class PayablesController {
     private createPayablesBatchUseCase: CreatePayablesBatchUseCase,
     private updatePayableUseCase: PatchPayableUseCase,
     private findAllPayablesUseCase: FindAllPayablesUseCase,
+    private deletePayableUseCase: DeletePayableUseCase,
   ) {}
 
   @Get()
@@ -91,5 +94,14 @@ export class PayablesController {
     });
 
     return PayablesViewModel.toHTTP(updatedAssignor);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(AuthGuard)
+  public async deletePayable(
+    @Param(new ZodValidationPipe(uuidDto)) params: UuidDto,
+  ) {
+    await this.deletePayableUseCase.execute(params.id);
   }
 }

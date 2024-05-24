@@ -15,6 +15,7 @@ export class PayablesMapper {
   }
   public static toPersist(payable: Payable): Prisma.PayableCreateInput {
     return {
+      id: payable.id,
       value: payable.value,
       emissionDate: payable.emissionDate,
       assignor: payable.assignor,

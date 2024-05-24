@@ -39,4 +39,8 @@ export class PayablesClient extends Client {
     );
     return data;
   }
+
+  public async delete(id: string) {
+    await this.api.delete(`/${id}`);
+  }
 }
