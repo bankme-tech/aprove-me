@@ -39,7 +39,10 @@ export class UsersService {
         login,
         password: hashedPassword,
       },
-      select: { id: true, login: true },
+      select: {
+        id: true,
+        login: true,
+      },
     });
   }
 
@@ -47,6 +50,10 @@ export class UsersService {
     return await this.prisma.user.findUniqueOrThrow({
       where: { login },
     });
+  }
+
+  async comparePasswords(password: string, hashedPassword: string) {
+    return await bcrypt.compare(password, hashedPassword);
   }
 
   async update(id: string, password: string) {
