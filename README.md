@@ -9,7 +9,6 @@ Antes de iniciar, você precisa ter os seguintes softwares instalados:
 
 #Estrutura do projeto
 
-.
 ├── client
 │   ├── Dockerfile
 │   ├── package.json
@@ -25,7 +24,7 @@ Antes de iniciar, você precisa ter os seguintes softwares instalados:
 
 ## Configuração
 
-1. Clone o repositório para a sua máquina local:
+Clone o repositório para a sua máquina local:
 
 ```sh
 git clone https://github.com/seu-usuario/seu-repositorio.git
@@ -43,7 +42,9 @@ RABBITMQ_URL=amqp://rabbitmq
 
 No diretório raiz do projeto, execute o seguinte comando para iniciar todos os serviços usando:
 
+```sh
 docker-compose up --build
+```
 
 Este comando irá construir as imagens Docker e iniciar os contêineres para o RabbitMQ, backend e frontend.Acesse a aplicação:
 
