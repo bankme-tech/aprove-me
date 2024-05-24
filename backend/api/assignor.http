@@ -17,3 +17,11 @@ GET {{baseUrl}}/integrations/assignor
 ### Read one assignor
 GET {{baseUrl}}/integrations/assignor/84a822df-58c6-4dc8-b9a4-b63f500f2ba2
 
+### Update an assignor 
+PATCH {{baseUrl}}/integrations/assignor/0f23f87f-d760-4169-8df0-02d8af8d2215
+Content-Type: application/json
+
+{
+    "email": "joao.silva@mail.com"
+}
+
