@@ -5,4 +5,5 @@ export abstract class IPayableRepository {
   abstract save(
     createPayableDTO: CreatePayableInputDTO,
   ): Promise<PayableEntity>;
+  abstract findAll(): Promise<PayableEntity[]>;
 }

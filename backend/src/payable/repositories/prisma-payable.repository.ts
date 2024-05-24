@@ -23,4 +23,9 @@ export class PrismaPayableRepository implements IPayableRepository {
 
     return this.mapper.toDomainEntity(response);
   }
+
+  async findAll(): Promise<PayableEntity[]> {
+    const payables = await this.prisma.payable.findMany();
+    return payables.map((payable) => this.mapper.toDomainEntity(payable));
+  }
 }
