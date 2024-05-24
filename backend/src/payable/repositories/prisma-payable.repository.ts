@@ -34,7 +34,7 @@ export class PrismaPayableRepository implements IPayableRepository {
     return payables.map((payable) => this.mapper.toDomainEntity(payable));
   }
 
-  async findOne(findPayableDTO: FindPayableInputDTO): Promise<PayableEntity> {
+  async findById(findPayableDTO: FindPayableInputDTO): Promise<PayableEntity> {
     const payable = await this.prisma.payable.findUnique({
       where: {
         id: findPayableDTO.id,
@@ -58,7 +58,7 @@ export class PrismaPayableRepository implements IPayableRepository {
         },
       });
 
-      return this.findOne({ id: updatePayableDTO.id });
+      return this.findById({ id: updatePayableDTO.id });
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.meta?.field_name) throw new RecordNotFoundError('Assignor');

@@ -9,6 +9,6 @@ export class FindPayableUseCase implements IFindPayableUseCase {
   constructor(private readonly assignorRepository: IPayableRepository) {}
 
   async execute(findPayableDTO: FindPayableInputDTO): Promise<PayableEntity> {
-    return await this.assignorRepository.findOne(findPayableDTO);
+    return await this.assignorRepository.findById(findPayableDTO);
   }
 }

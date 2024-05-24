@@ -9,7 +9,9 @@ export abstract class IPayableRepository {
     createPayableDTO: CreatePayableInputDTO,
   ): Promise<PayableEntity>;
   abstract findAll(): Promise<PayableEntity[]>;
-  abstract findOne(findPayableDTO: FindPayableInputDTO): Promise<PayableEntity>;
+  abstract findById(
+    findPayableDTO: FindPayableInputDTO,
+  ): Promise<PayableEntity>;
   abstract update(
     updatePayableDTO: UpdatePayableInputDTO,
   ): Promise<PayableEntity>;
