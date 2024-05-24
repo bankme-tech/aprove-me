@@ -1,4 +1,4 @@
-import { PrismaService } from 'src/database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 import { PayableRepo } from '../payable-repo';
 import { PayableDto } from 'src/DTOs/payable';
 import { Injectable } from '@nestjs/common';

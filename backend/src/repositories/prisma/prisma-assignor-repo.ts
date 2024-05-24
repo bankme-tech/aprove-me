@@ -1,4 +1,4 @@
-import { PrismaService } from 'src/database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 import { AssignorRepo } from '../assignor-repo';
 import { AssignorDto } from 'src/DTOs/assignor';
 import { Injectable } from '@nestjs/common';

@@ -24,7 +24,7 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('integrations')
 export class AppController {
   constructor(
-    private receivable: PayableRepo,
+    private payable: PayableRepo,
     private assignor: AssignorRepo,
     private user: UserRepo,
   ) {}
@@ -34,6 +34,10 @@ export class AppController {
   async createUser(@Body() body: UserDto) {
     try {
       const userExist = await this.user.getUserByLogin(body.login);
+
+      if (!body.login || !body.password) {
+        throw new BadRequestException('Login and password are required');
+      }
 
       if (userExist) {
         throw new BadRequestException('User already exists');
@@ -154,15 +158,15 @@ export class AppController {
 
   @ApiTags('Payables')
   @Post('payable')
-  async createReceivable(@Body() body: PayableDto) {
+  async createPayable(@Body() body: PayableDto) {
     try {
-      const payableExist = await this.receivable.getPayableById(body.id);
+      const payableExist = await this.payable.getPayableById(body.id);
 
       if (payableExist) {
         throw new BadRequestException('Payable already exists');
       }
 
-      const newReceived = await this.receivable.createPayable(body);
+      const newReceived = await this.payable.createPayable(body);
 
       return newReceived;
     } catch (error) {
@@ -176,9 +180,9 @@ export class AppController {
   @ApiTags('Payables')
   @Get('payable/:id')
   @HttpCode(HttpStatus.OK)
-  async getReceivables(@Param('id') id: string) {
+  async getPayableById(@Param('id') id: string) {
     try {
-      const payable = await this.receivable.getPayableById(id);
+      const payable = await this.payable.getPayableById(id);
 
       if (!payable) {
         throw new NotFoundException(`Payable with ID ${id} not found`);
@@ -196,9 +200,9 @@ export class AppController {
   @ApiTags('Payables')
   @Get('payable')
   @HttpCode(HttpStatus.OK)
-  async getReceivablesAll() {
+  async getPayableAll() {
     try {
-      const payables = await this.receivable.getAllPayables();
+      const payables = await this.payable.getAllPayables();
 
       if (!payables) {
         throw new NotFoundException('Payables not found');
@@ -218,13 +222,13 @@ export class AppController {
   @HttpCode(HttpStatus.OK)
   async updatePayable(@Param('id') id: string, @Body() body: PayableDto) {
     try {
-      const payableExist = await this.receivable.getPayableById(id);
+      const payableExist = await this.payable.getPayableById(id);
 
       if (!payableExist) {
         throw new NotFoundException(`Payable with ID ${id} not found`);
       }
 
-      const payableUpdated = await this.receivable.updatePayable(id, body);
+      const payableUpdated = await this.payable.updatePayable(id, body);
 
       return payableUpdated;
     } catch (error) {
@@ -240,13 +244,13 @@ export class AppController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async deletePayable(@Param('id') id: string) {
     try {
-      const payableExist = await this.receivable.getPayableById(id);
+      const payableExist = await this.payable.getPayableById(id);
 
       if (!payableExist) {
         throw new NotFoundException(`Payable with ID ${id} not found`);
       }
 
-      await this.receivable.deletePayable(id);
+      await this.payable.deletePayable(id);
 
       return null;
     } catch (error) {
@@ -281,7 +285,7 @@ export class AppController {
   @ApiTags('Assignors')
   @Get('assignor/:id')
   @HttpCode(HttpStatus.OK)
-  async getAssignors(@Param('id') id: string) {
+  async getAssignorById(@Param('id') id: string) {
     try {
       const assignors = await this.assignor.getAssignorById(id);
 
