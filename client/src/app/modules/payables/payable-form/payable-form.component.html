@@ -1,0 +1,67 @@
+<form class="container" [formGroup]="payableForm" (ngSubmit)="onSubmit()">
+  <h1 class="title">Add payable</h1>
+
+  <div class="input-wrapper">
+    <label for="value">Value</label>
+    <input
+      class="input"
+      id="value"
+      type="tel"
+      currencyMask
+      formControlName="value"
+      [ngClass]="{ error: value.invalid && value.touched }"
+      [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+    />
+
+    <div
+      class="error-message"
+      *ngIf="value.invalid && (value.dirty || value.touched)"
+    >
+      <span *ngIf="value.errors?.['required']">Value is required.</span>
+      <span *ngIf="value.errors?.['min']">Value must be a positive value.</span>
+    </div>
+  </div>
+
+  <div class="input-wrapper">
+    <label for="assignorId">Assignor</label>
+    <select formControlName="assignorId" class="input select-assignor">
+      <option selected value="0">Select assignor...</option>
+      <ng-container *ngFor="let assignor of assignors">
+        <option [value]="assignor.id">{{ assignor.name }}</option>
+      </ng-container>
+    </select>
+
+    <div class="error-message" *ngIf="assignorId.invalid && assignorId.touched">
+      <span *ngIf="assignorId.errors?.['required']">Assignor is required.</span>
+    </div>
+  </div>
+
+  <div class="input-wrapper">
+    <label for="emissionDate">Emission Date</label>
+    <input
+      class="input"
+      id="emissionDate"
+      type="date"
+      formControlName="emissionDate"
+      [ngClass]="{ error: emissionDate.invalid && emissionDate.touched }"
+    />
+    <div
+      class="error-message"
+      *ngIf="emissionDate.invalid && emissionDate.touched"
+    >
+      <span *ngIf="emissionDate.errors?.['required']"
+        >Emission Date is required.</span
+      >
+      <span *ngIf="emissionDate.errors?.['min']"
+        >Emission Date must be a valid date.</span
+      >
+    </div>
+  </div>
+
+  <div class="button-wrapper">
+    <button class="button" type="button" (click)="onCancel()">Cancel</button>
+    <button class="button" type="submit" [disabled]="payableForm.invalid">
+      Submit
+    </button>
+  </div>
+</form>

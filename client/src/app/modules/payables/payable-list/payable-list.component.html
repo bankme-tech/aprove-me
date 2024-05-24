@@ -1,0 +1,64 @@
+<div class="list-wrapper">
+  <ng-container *ngIf="payables.length === 0; else list">
+    <div class="title">
+      <h1>No payables found</h1>
+      <button routerLink="/payables/new" class="button">
+        Add some right now!
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-template #list>
+    <div class="container">
+      <div class="list-card-header title">
+        Payables List
+
+        <button routerLink="/payables/new" class="button">Add +</button>
+      </div>
+      <!-- <div class="list-card-header">
+        <button class="button">Add in mass</button>
+      </div> -->
+      <ng-container
+        *ngFor="
+          let payable of payables
+            | paginate : { itemsPerPage: 10, currentPage: actualPage }
+        "
+      >
+        <div class="list-card" [routerLink]="['/payables', payable.id]">
+          <div class="payable-data">
+            <p>ID: {{ payable.id }}</p>
+
+            <div class="payable-infos">
+              <p>
+                Valor:
+                <strong class="budget">
+                  {{ payable.value | currency : "BRL" }}
+                </strong>
+              </p>
+              -
+              <p>{{ payable.emissionDate | date : "dd/MM/yyyy" }}</p>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button
+              class="button-sm edit"
+              (click)="editPayable($event, payable.id)"
+            >
+              Edit ✏️
+            </button>
+            <button
+              class="button-sm delete"
+              (click)="deletePayable($event, payable.id)"
+            >
+              Delete ❌
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <pagination-controls
+      (pageChange)="actualPage = $event"
+    ></pagination-controls>
+  </ng-template>
+</div>

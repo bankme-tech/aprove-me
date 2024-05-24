@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: 'rabbitmq'
+    command: rabbitmq-server
+    hostname: rabbitmq
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - rabbitmq-log:/var/log/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:
+      - rabbitmq-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: 'app'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    env_file:
+      - .env
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - sqlite-data:/app/prisma
+    networks:
+      - rabbitmq-network
+
+volumes:
+  sqlite-data:
+  rabbitmq-data:
+  rabbitmq-log:
+
+networks:
+  rabbitmq-network:
+    external: true

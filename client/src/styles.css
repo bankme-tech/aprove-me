@@ -1,0 +1,318 @@
+:root {
+  --input-focus: #2d8cf0;
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: #fff;
+  --main-color: #323232;
+  --background-color: lightgrey;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 2px;
+  background-color: var(--background-color);
+  font-family: var(--font-family);
+  min-height: 94vh !important;
+  border-radius: 1px;
+  border: 20px solid var(--main-color);
+  box-shadow: 4px var(--main-color);
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    border: 10px solid var(--main-color);
+  }
+}
+
+.container {
+  padding: 20px;
+  margin: 20px auto;
+  background: lightgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* mall bellow */
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+}
+
+.title {
+  color: var(--font-color);
+  font-weight: 900;
+  font-size: 35px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input:disabled{
+  background-color: lightgrey;
+}
+
+.button-wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.input-wrapper label {
+  color: var(--font-color);
+  font-weight: 600;
+  font-size: 20px;
+}
+
+/* elements reset */
+
+ul {
+  padding: 0;
+}
+
+.title span {
+  color: var(--font-color-sub);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.normal-text {
+  color: var(--font-color);
+  font-weight: 600;
+  font-size: 17px;
+}
+
+/* buttons */
+
+.button-sm.edit {
+  border-radius: 5px 0 0 5px;
+}
+
+.button-sm.delete {
+  border-radius: 0 5px 5px 0;
+}
+
+.button-sm.edit:hover {
+  background-color: yellow;
+}
+
+.button-sm.delete:hover {
+  background-color: red;
+}
+
+.button {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  color: var(--font-color);
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-sm {
+  cursor: pointer;
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  color: var(--font-color);
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.button:active,
+.button-confirm:active {
+  transform: translate(3px, 3px);
+}
+
+.button-sm:active {
+  transform: translate(3px, 3px);
+}
+
+.button-sm:hover {
+  background-color: var(--main-color);
+  color: var(--bg-color);
+}
+
+.button-sm .edit {
+  color: var(--font-color);
+  background-color: yellow;
+  font-size: 20px;
+}
+
+.button {
+  margin: 50px auto 0 auto;
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--font-color);
+  cursor: pointer;
+}
+
+.button:active {
+  box-shadow: 0px 0px var(--main-color);
+  transform: translate(3px, 3px);
+}
+
+.button:hover {
+  background-color: var(--main-color);
+  color: var(--bg-color);
+}
+
+.button:disabled {
+  background-color: var(--font-color-sub);
+  color: var(--bg-color);
+  /* block click */
+
+  cursor: not-allowed;
+}
+
+/* inputs */
+
+.input {
+  width: 250px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--font-color);
+  padding: 5px 10px;
+  outline: none;
+}
+
+/* erros */
+
+.input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+.error-message {
+  color: red !important;
+  margin-inline: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.error-message span {
+  color: red;
+}
+
+/* list card */
+
+.list-card {
+  width: 350px;
+  height: 60px;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-size: 15px;
+  margin: 10px;
+  font-weight: 600;
+  color: var(--font-color);
+  padding: 5px 10px;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-card-header {
+  /* will have a name on left and a create more icon on right */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.list-card-header .button {
+  margin-top: 0;
+}
+
+.list-card:hover {
+  background-color: var(--main-color);
+  color: var(--bg-color);
+}
+
+.input::placeholder {
+  color: var(--font-color-sub);
+  opacity: 0.8;
+}
+
+.input:focus {
+  border: 2px solid var(--input-focus);
+}
+
+.login-with {
+  display: flex;
+  gap: 20px;
+}
+
+.info-wrapper {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.scrollable {
+  margin-top: 30px;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.ngx-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.ngx-pagination li {
+  list-style: none;
+  padding: 5px;
+  border: 2px solid var(--main-color);
+  color: var(--font-color);
+  font-weight: 600;
+  border-radius: 5px !important;
+  background-color: var(--bg-color);
+}
+
+.ngx-pagination li.current {
+  background-color: var(--main-color);
+  color: var(--bg-color);
+}
+
+.ngx-pagination li:hover {
+  background-color: var(--main-color);
+  color: var(--bg-color);
+}

@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="title">Payable Details</div>
+  <div class="info-wrapper" *ngIf="payable">
+    <p><strong>Value:</strong> {{ payable.value | currency: 'BRL' }}</p>
+    <p><strong>Emission Date:</strong> {{ payable.emissionDate | date:"dd/MM/yyyy" }}</p>
+
+    <ng-container *ngIf="payable.assignor">
+      <div>
+        <p>
+          <strong>Assignor Document: </strong> {{ payable.assignor.document | document }}
+        </p>
+        <p><strong>Assignor Name: </strong> {{ payable.assignor.name }}</p>
+        <button class="button button-sm view-assignor" routerLink="/assignors/{{ payable.assignor.id }}"
+          >View Assignor Details</button
+        >
+      </div>
+    </ng-container>
+    <button class="button" (click)="goBack()">Back</button>
+  </div>
+</div>

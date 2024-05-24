@@ -1,0 +1,90 @@
+<form class="container" [formGroup]="assignorForm" (ngSubmit)="onSubmit()">
+  <h1 class="title">Add assignor</h1>
+  <div class="input-wrapper">
+    <label for="name">Name</label>
+    <input
+      class="input"
+      id="name"
+      [ngClass]="{ error: name?.invalid && name?.touched }"
+      formControlName="name"
+    />
+    <div
+      class="error-message"
+      *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+    >
+      <span *ngIf="name?.errors?.['required']">Name is required.</span>
+      <span *ngIf="name?.errors?.['maxlength']"
+        >Name cannot exceed 140 characters.</span
+      >
+    </div>
+  </div>
+  <div class="input-wrapper">
+    <label for="document">Document</label>
+    <input
+      class="input"
+      id="document"
+      DocumentMask
+      formControlName="document"
+      maxlength="17"
+      [ngClass]="{ error: document?.invalid && document?.touched }"
+    />
+    <div
+      class="error-message"
+
+      *ngIf="document?.invalid && (document?.dirty || document?.touched)"
+    >
+      <span *ngIf="document?.errors?.['required']">
+        Document is required.
+      </span>
+      <span *ngIf="document?.errors?.['maxlength']">
+        Document cannot exceed 30 characters.
+      </span>
+    </div>
+  </div>
+  <div class="input-wrapper">
+    <label for="email">Email</label>
+    <input
+      class="input"
+      id="email"
+      formControlName="email"
+      [ngClass]="{ error: email?.invalid && email?.touched }"
+    />
+    <div
+      class="error-message"
+      *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+    >
+      <div *ngIf="email?.errors?.['required']">Email is required.</div>
+      <div *ngIf="email?.errors?.['email']">Invalid email format.</div>
+      <div *ngIf="email?.errors?.['maxlength']">
+        Email cannot exceed 140 characters.
+      </div>
+    </div>
+  </div>
+  <div class="input-wrapper">
+    <label for="phone">Phone</label>
+    <input
+      class="input"
+      id="phone"
+      type="tel"
+      PhoneMask
+      maxlength="15"
+      formControlName="phone"
+      [ngClass]="{ error: phone?.invalid && phone?.touched }"
+    />
+    <div
+      class="error-message"
+      *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)"
+    >
+      <div *ngIf="phone?.errors?.['required']">Phone is required.</div>
+      <div *ngIf="phone?.errors?.['maxlength']">
+        Phone cannot exceed 20 characters.
+      </div>
+    </div>
+  </div>
+  <div class="button-wrapper">
+    <button class="button" type="button" (click)="onCancel()">Cancel</button>
+    <button class="button" type="submit" [disabled]="assignorForm.invalid">
+      Submit
+    </button>
+  </div>
+</form>

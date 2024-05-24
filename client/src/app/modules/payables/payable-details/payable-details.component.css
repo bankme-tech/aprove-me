@@ -1,0 +1,12 @@
+.view-assignor{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-inline: 0px;
+    width: auto;
+    padding: 0px;
+}
+
+.button-sm{
+  padding-inline: 10px;
+}

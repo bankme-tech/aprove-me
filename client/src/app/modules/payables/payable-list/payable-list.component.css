@@ -1,0 +1,59 @@
+.action-buttons{
+  display: flex;
+}
+
+.list-card{
+  padding-top: 0;
+  padding-right: 0;
+}
+
+.list-card-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-sm{
+  cursor: pointer;
+  border: 1.8px solid var(--main-color);
+  padding-right: 10px;
+  background-color: var(--bg-color);
+  color: var(--font-color);
+  text-wrap: nowrap;
+  height: 40px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+p{
+  margin: 0;
+}
+
+.button{
+  margin: 0;
+}
+
+.payable-data{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.budget{
+  color: green;
+}
+
+.list-card{
+  width: auto;
+}
+.list-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+.payable-infos{
+  padding-top: 10px;
+  display: flex;
+  gap: 10px;
+}

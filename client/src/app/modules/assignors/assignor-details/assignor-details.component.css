@@ -1,0 +1,34 @@
+.no-hover
+{
+  pointer-events: none;
+}
+
+.action-buttons{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.list-card{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--font-color);
+  border-radius: 5px;
+
+}
+
+.info-wrapper p strong {
+  font-size: 1.2em;
+}
+
+.info-wrapper p {
+  font-size: 1.1em;
+}

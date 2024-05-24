@@ -1,0 +1,20 @@
+
+FROM node:alpine as development
+
+RUN apk add --no-cache make g++ python3
+
+WORKDIR /app
+
+RUN npm cache clean --force
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npx prisma migrate dev --name 'initial migration'
+RUN npm run seed
+
+# Execute a aplicação
+CMD ["npm", "start"]

@@ -1,0 +1,48 @@
+<div class="container" *ngIf="assignor">
+  <h1 class="title">Assignor Details</h1>
+  <div class="action-buttons">
+    <button class="button-sm edit" (click)="editAssignor($event, assignor.id)">
+      Edit ✏️
+    </button>
+    <button
+      class="button-sm delete"
+      (click)="deleteAssignor($event, assignor.id)"
+    >
+      Delete ❌
+    </button>
+  </div>
+
+  <div *ngIf="assignor" class="info-wrapper">
+    <p><strong>Name:</strong> {{ assignor.name }}</p>
+    <p><strong>Document:</strong> {{ assignor.document | document }}</p>
+    <p><strong>Email:</strong> {{ assignor.email }}</p>
+    <p><strong>Phone:</strong> {{ assignor.phone | phone }}</p>
+
+    <div class="payables-wrapper">
+      <div class="title">Payables</div>
+
+      <div class="scrollable container">
+        <ng-container *ngIf="assignor.payables?.length === 0; else list">
+          <div class="list-card no-hover">
+            This assignor has no payables yet.
+          </div>
+        </ng-container>
+
+        <ng-template #list>
+          <div *ngFor="let payable of assignor.payables" class="payable">
+            <div [routerLink]="['/payables', payable.id]" class="list-card">
+              <p>
+                <strong>Value:</strong> {{ payable.value | currency : "BRL" }}
+              </p>
+              <p>
+                <strong>Emission Date:</strong>
+                {{ payable.emissionDate | date : "dd/MM/yyyy" }}
+              </p>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <button class="button" (click)="goBack()">Back</button>
+  </div>
+</div>

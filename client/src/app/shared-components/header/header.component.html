@@ -1,0 +1,13 @@
+<header class="header">
+  <div class="header-content">
+    <div class="user-info">
+      Welcome, {{ username }}
+    </div>
+    <nav class="nav-bar">
+      <a class="navigation-item" routerLink="/payables" routerLinkActive="active">Payables</a>
+      <a class="navigation-item" routerLink="/assignors" routerLinkActive="active">Assignors</a>
+      <a class="navigation-item" routerLink="/permissions" routerLinkActive="active">Permissions</a>
+      <a style="cursor: pointer;" class="navigation-item" (click)="logout()">Logout</a>
+    </nav>
+  </div>
+</header>
