@@ -10,11 +10,13 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { Public } from '../decorators/public.decorator';
 
 @Controller('integrations/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Public()
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.create(createUserDto);
