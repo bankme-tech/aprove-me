@@ -95,7 +95,7 @@ export default function Page() {
 
   return (
     <div className="p-5">
-      <div className="flex justify-between mb-10">
+      <div className="flex items-center flex-col sm:flex-row sm:justify-between mb-10">
         <h1 className="text-2xl font-bold">Lista de Pagáveis</h1>
         <div className="flex gap-8">
           <Link href="/register-payable">
