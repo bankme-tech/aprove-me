@@ -1,0 +1,74 @@
+name: "Build and Deploy"
+
+on:
+  pull_request:
+    types:
+      - closed
+
+env:
+  DOCKER_URL: ${{ secrets.DOCKERHUB_ORGANIZATION }}/aprove-me-server
+
+jobs:
+  lint-dockerfile:
+    name: "Dockerfile Linter"
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Dockerfile Linter"
+        uses: hadolint/hadolint-action@v1.6.0
+        with:
+          dockerfile: ./Dockerfile
+
+  build-scan-push:
+    name: "Build, Scan and Push Image"
+    needs: lint-dockerfile
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v2
+
+      # IMPLEMENTS DOCKER HUB SECRETS IN MAIN REPOSITORY
+      # - name: Login to DockerHub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: dorny/paths-filter@v3
+        id: deploy
+        with:
+          filters: |
+            server:
+              - 'apps/server/**'
+            client:
+              - 'apps/client/**'
+
+      - name: "Build Server Image"
+        if: steps.changes.deploy.server == 'true'
+        run: docker build -t image -f Dockerfile --target server .
+      
+      # - name: "Build Client Image"
+      #   if: steps.changes.deploy.client == 'true'
+      #   run: docker build -t image -f Dockerfile --target client .
+
+      - name: "Image Scan with Trivy"
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "image"
+          format: "table"
+          exit-code: "0"
+          ignore-unfixed: true
+          vuln-type: "os,library"
+          severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+
+      - name: Create Image Tag
+        run: echo "IMAGE_TAG=${GITHUB_SHA::7}-$(date --utc +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+
+      # IMPLEMENTS DOCKER HUB SECRETS IN MAIN REPOSITORY
+      # - name: "Push Image"
+      #   run: |
+      #     docker tag image docker.io/${{ env.DOCKER_URL }}:latest
+      #     docker tag image docker.io/${{ env.DOCKER_URL }}:${{ env.IMAGE_TAG }}
+      #     docker push docker.io/${{env.DOCKER_URL }} --all-tags
