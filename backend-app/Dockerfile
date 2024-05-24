@@ -4,7 +4,7 @@ FROM node:20-alpine
 WORKDIR /app/backend
 
 # Expôe a porta
-EXPOSE 3333
+EXPOSE 3001
 
 # Instala as dependências
 COPY package.json ./
@@ -19,8 +19,8 @@ RUN npx prisma generate
 # Roda as migrações
 RUN npx prisma migrate deploy
 
-# Builda o app
-RUN npm run build
+# Popula o banco
+RUN npx prisma db seed
 
-# Roda a aplicação em modo de produção
-CMD [ "npm", "run", "start:prod" ]
+# Roda a aplicação
+CMD [ "npm", "start"]

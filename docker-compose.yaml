@@ -1,34 +1,42 @@
 # The version of docker-compose being used.
 version: '3'
-
 services:
   backend:
-    # Build the Dockerfile image
-    build: ./backend-app/
     # Name the container
     container_name: bankme_backend
-    # Expose the port 3000 to the host machine
+    # Build the Dockerfile image
+    build: ./backend-app/
+    # Expose the port 3001 to the host machine
     ports:
       - 3001:3001
-    # Creates an interactive terminal in the container
-    tty: true
-    stdin_open: true
+    # Sets the working directory
+    working_dir: /app/backend
+    # Checks if the container is up and healthy
+    healthcheck:
+      test: [ "CMD", "lsof", "-t", "-i:3001" ]
+      timeout: 10s
+      retries: 5
     # Restarts the container if it crashes
     restart: always
     # Mount the backend directory in the machine and in the container
     volumes:
       - ./backend-app/src:/app/backend/src
+    environment:
+      - DATABASE_URL="file:.dev.db"
   frontend:
-    # Build the Dockerfile image
-    build: ./frontend-app/
     # Name the container
     container_name: bankme_frontend
+    # Build the Dockerfile image
+    build: ./frontend-app/
     # Expose the port 3000 to the host machine
     ports:
       - 3000:3000
-    # Creates an interactive terminal in the container
-    tty: true
-    stdin_open: true
+    working_dir: /app/frontend
+    # Checks if the container is up and healthy
+    healthcheck:
+      test: [ "CMD", "lsof", "-t", "-i:3001" ]
+      timeout: 10s
+      retries: 5
     # Restarts the container if it crashes
     restart: always
     # Mount the backend directory in the machine and in the container.
