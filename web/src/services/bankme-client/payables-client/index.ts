@@ -20,4 +20,23 @@ export class PayablesClient extends Client {
     const { data } = await this.api.get<{ payables: PayableModel[] }>('');
     return data;
   }
+
+  public async find(id: string) {
+    const { data } = await this.api.get<PayableModel>(`/${id}`);
+    return data;
+  }
+
+  public async update({
+    partialCreatePayable,
+    id,
+  }: {
+    partialCreatePayable: Partial<CreatePayableSchema>;
+    id: string;
+  }) {
+    const { data } = await this.api.patch<PayableModel>(
+      `${id}`,
+      partialCreatePayable,
+    );
+    return data;
+  }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,16 +16,21 @@ import {
   createPayableSchema,
   type CreatePayableSchema,
 } from '@/schemas/payables/create-payable-schema';
-import type { Nullable } from '@/utils/types';
+import type { Nullable, Replace } from '@/utils/types';
 
 interface Props {
   mode?: 'EDIT' | 'CREATE';
-  defaultValues: Nullable<CreatePayableSchema>;
+  defaultValues: Replace<
+    Nullable<CreatePayableSchema>,
+    { emissionDate: string }
+  >;
+  id?: string;
 }
 
 export const Form: React.FC<Props> = ({
   mode = 'CREATE',
   defaultValues: df,
+  id,
 }) => {
   const [payablesBatch, setPayablesBatch] = React.useState<
     CreatePayableSchema[]
@@ -42,28 +49,48 @@ export const Form: React.FC<Props> = ({
     control,
     reset,
   } = useForm<CreatePayableSchema>({
-    defaultValues: df as CreatePayableSchema,
+    defaultValues: df as any,
     resolver: zodResolver(createPayableSchema),
   });
 
   const onSubmit = async (data: CreatePayableSchema) => {
-    if (batch) {
-      setPayablesBatch((prevState) => {
-        const newState = [...prevState];
-        newState.push(data);
-        return newState;
-      });
-    } else {
-      try {
-        setIsLoading(true);
-        await api.payables.create(data);
-        toast.success('Payable successfully created');
-        reset();
-      } catch (error) {
-        toast.error('An error ocurred while trying to create payable');
-      } finally {
-        setIsLoading(false);
-      }
+    switch (mode) {
+      case 'CREATE':
+        if (batch) {
+          setPayablesBatch((prevState) => {
+            const newState = [...prevState];
+            newState.push(data);
+            return newState;
+          });
+        } else {
+          try {
+            setIsLoading(true);
+            await api.payables.create(data);
+            toast.success('Payable successfully created');
+            reset();
+          } catch (error) {
+            toast.error('An error ocurred while trying to create payable');
+          } finally {
+            setIsLoading(false);
+          }
+        }
+        break;
+      case 'EDIT':
+        try {
+          setIsLoading(true);
+          await api.payables.update({
+            partialCreatePayable: data,
+            id: id as string,
+          });
+          toast.success('Payable successfully created');
+        } catch (error) {
+          toast.error('An error occured while trying to update');
+        } finally {
+          setIsLoading(false);
+        }
+        break;
+      default:
+        break;
     }
   };
 
@@ -128,7 +155,7 @@ export const Form: React.FC<Props> = ({
           name="assignor"
           render={({ field: { onChange } }) => (
             <>
-              <SelectAssignor onChange={(id) => onChange(id)} />
+              <SelectAssignor defaultValue={df.assignor} onChange={onChange} />
               {errors.assignor && (
                 <div className="label">
                   <span className="label-text-alt text-error">
@@ -151,7 +178,7 @@ export const Form: React.FC<Props> = ({
               {isLoading ? (
                 <span className="loading loading-spinner" />
               ) : (
-                'Create'
+                <>{mode === 'CREATE' ? 'Create' : 'Update'}</>
               )}
             </button>
           )}

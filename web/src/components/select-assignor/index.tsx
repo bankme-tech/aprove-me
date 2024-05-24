@@ -8,12 +8,18 @@ import type { AssignorModel } from '@/services/models/assignor-model';
 
 interface Props {
   onChange: (id: string | null) => void;
+  defaultValue?: string | null;
 }
 
-export const SelectAssignor: React.FC<Props> = ({ onChange }) => {
+export const SelectAssignor: React.FC<Props> = ({
+  onChange,
+  defaultValue = null,
+}) => {
   const { api } = useAPI();
   const [assignors, setAssignors] = React.useState<AssignorModel[]>([]);
-  const [selectedId, setSelectedId] = React.useState<string | null>(null);
+  const [selectedId, setSelectedId] = React.useState<string | null>(
+    defaultValue,
+  );
 
   React.useEffect(() => {
     (async () => {

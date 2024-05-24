@@ -8,6 +8,8 @@ import { toast } from 'sonner';
 
 import { useAPI } from '@/hooks/useAPI';
 import type { PayableModel } from '@/services/models/payable-model';
+import Link from 'next/link';
+import { AppRoutes } from '@/constants/app-routes';
 
 export const PayablesListPage: NextPage = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -19,11 +21,6 @@ export const PayablesListPage: NextPage = () => {
     (async () => {
       try {
         setIsLoading(true);
-        await new Promise<void>((resolve, reject) => {
-          setTimeout(() => {
-            resolve();
-          }, 10000); // 10000 milissegundos equivalem a 10 segundos
-        });
         const data = await api.payables.findAll();
         setPayables(data.payables);
       } catch (error) {
@@ -56,7 +53,6 @@ export const PayablesListPage: NextPage = () => {
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
             {payables.map((p, idx) => (
               <tr key={p.id}>
                 <th>{idx + 1}</th>
@@ -68,9 +64,12 @@ export const PayablesListPage: NextPage = () => {
                     <button className="btn btn-outline btn-error btn-sm">
                       <Trash size={18} />
                     </button>
-                    <button className="btn btn-primary btn-sm">
+                    <Link
+                      href={AppRoutes.payables.edit.replace(':id', p.id)}
+                      className="btn btn-primary btn-sm"
+                    >
                       <Pen size={18} />
-                    </button>
+                    </Link>
                   </div>
                 </td>
               </tr>
