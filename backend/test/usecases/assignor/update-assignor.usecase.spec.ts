@@ -4,6 +4,7 @@ import { IAssignorRepository } from 'src/assignor/repositories/assignor.reposito
 import { UpdateAssignorUseCase } from 'src/assignor/usecases/update-assignor.usecase';
 import { UpdateAssignorInputDTO } from 'src/assignor/dto/update-assignor.input.dto';
 import { makeAssignorEntity } from 'test/mocks/entities/assignor.entity.mock';
+import { RecordNotFoundError } from 'src/persistence/errors/record-not-found.error';
 
 describe('UpdateAssignorUseCase', () => {
   let sut: UpdateAssignorUseCase;
@@ -39,6 +40,14 @@ describe('UpdateAssignorUseCase', () => {
     await sut.execute(dto);
 
     expect(assignorRepositoryStub.data).toEqual(dto);
+  });
+
+  test('should throw if no assignor is found', async () => {
+    assignorRepositoryStub.response = null;
+
+    const promise = sut.execute(dto);
+
+    await expect(promise).rejects.toThrow(new RecordNotFoundError('Assignor'));
   });
 
   test('should return a new assignor', async () => {

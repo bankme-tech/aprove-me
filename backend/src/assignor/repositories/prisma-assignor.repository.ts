@@ -6,8 +6,6 @@ import { Injectable } from '@nestjs/common';
 import { AssignorMapper } from '../mappers/assignor.mapper.interface';
 import { Assignor } from '@prisma/client';
 import { UpdateAssignorInputDTO } from '../dto/update-assignor.input.dto';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { RecordNotFoundError } from 'src/persistence/errors/record-not-found.error';
 
 @Injectable()
 export class PrismaAssignorRepository implements IAssignorRepository {
@@ -49,26 +47,19 @@ export class PrismaAssignorRepository implements IAssignorRepository {
   }
 
   async update(assignor: UpdateAssignorInputDTO): Promise<AssignorEntity> {
-    try {
-      await this.prisma.assignor.update({
-        where: {
-          id: assignor.id,
-        },
-        data: {
-          document: assignor.document,
-          email: assignor.email,
-          phone: assignor.phone,
-          name: assignor.name,
-        },
-      });
+    await this.prisma.assignor.update({
+      where: {
+        id: assignor.id,
+      },
+      data: {
+        document: assignor.document,
+        email: assignor.email,
+        phone: assignor.phone,
+        name: assignor.name,
+      },
+    });
 
-      return this.findById(assignor.id);
-    } catch (error) {
-      if (error instanceof PrismaClientKnownRequestError) {
-        throw new RecordNotFoundError('Assignor');
-      }
-      throw error;
-    }
+    return this.findById(assignor.id);
   }
 
   async remove(id: string): Promise<void> {
