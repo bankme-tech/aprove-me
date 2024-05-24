@@ -15,3 +15,11 @@ services:
     ports:
       - 3000:3000
 
+  redis:
+    container_name: "app-redis"
+    image: bitnami/redis
+    restart: always
+    ports:
+      - '6379:6379'
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
