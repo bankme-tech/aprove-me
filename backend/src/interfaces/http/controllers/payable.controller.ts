@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { PayableService } from 'src/domain/services/payable.service';
 import { CreatePayableDto } from 'src/application/dtos/create-payable.dto';
 import { Payable } from 'src/domain/entities/payable.entity';
@@ -14,7 +23,7 @@ export class PayableController {
   }
 
   @UseGuards(AuthGuard)
-  @Get("all")
+  @Get('all')
   async findAll() {
     return this.payableService.findAll();
   }

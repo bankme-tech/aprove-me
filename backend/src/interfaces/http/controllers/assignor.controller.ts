@@ -1,24 +1,32 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateAssignorDto } from 'src/application/dtos/create-assignor.dto';
-import { UpdateAssignorDto } from 'src/application/dtos/update-assignor.dto';
 import { Assignor } from 'src/domain/entities/assignor.entity';
 import { AssignorService } from 'src/domain/services/assignor.service';
 import { AuthGuard } from 'src/interfaces/auth/auth.guard';
 
 @Controller('integrations/assignor')
 export class AssignorController {
-  constructor(private readonly assignorService: AssignorService){}
+  constructor(private readonly assignorService: AssignorService) {}
   @Get()
   initial(): string {
-    return "Hello From Assignor!"
+    return 'Hello From Assignor!';
   }
-  
+
   @Post()
   async create(@Body() createAssignorDto: CreateAssignorDto) {
     return this.assignorService.createAssignor(createAssignorDto);
   }
 
-  @Get("all")
+  @Get('all')
   async findAll() {
     return this.assignorService.findAll();
   }

@@ -11,9 +11,9 @@ export class AuthService {
 
   async validateToken(token: string) {
     try {
-        return this.jwtService.verify(token.replace("Bearer ", ""));
+      return this.jwtService.verify(token.replace('Bearer ', ''));
     } catch (error) {
-        return false;
+      return false;
     }
   }
 }

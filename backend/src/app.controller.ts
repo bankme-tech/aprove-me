@@ -1,4 +1,10 @@
-import { Body, Controller, Get, Post, UnauthorizedException } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from './application/auth/auth.service';
 
@@ -6,7 +12,7 @@ import { AuthService } from './application/auth/auth.service';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
   ) {}
 
   @Get()
@@ -22,7 +28,7 @@ export class AppController {
       return {
         auth: true,
         token: token,
-      }
+      };
     }
     throw new UnauthorizedException();
   }
