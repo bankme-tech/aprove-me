@@ -21,7 +21,7 @@ export class AssignorController {
   async findAll() {
     return this.assignorService.findAll();
   }
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findById(@Param('id') id: string) {
     return this.assignorService.findById(id);

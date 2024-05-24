@@ -11,7 +11,7 @@ export function useLogin() {
     mutationFn: async (body : any) => {
       const response = await api.post("/login", body);
       console.log(response?.data?.token);
-      Cookie.set("user_token", response.data?.token, { expires: 1 / 1440 });
+      Cookie.set("user_token", response.data?.token, { expires: 1 / 24 });
       return response.data;
     },
     onSuccess: () => {
