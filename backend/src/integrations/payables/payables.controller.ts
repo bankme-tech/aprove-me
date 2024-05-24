@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { PayablesService } from './payables.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
@@ -65,6 +66,10 @@ export class PayablesController {
   @Post('batch')
   @ApiOkResponse()
   async batchCreate(@Body() createPayableDto: CreatePayableDto[]) {
+    if (createPayableDto.length > 10000)
+      throw new BadRequestException(
+        'O número máximo de registros por requisição é 10000.',
+      );
     return this.payablesService.batchCreate(createPayableDto);
   }
 }
