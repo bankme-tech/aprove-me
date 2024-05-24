@@ -32,7 +32,14 @@ export const itShouldThrowIfFieldIsEmpty = ({
   }
 };
 
-type KeyType = 'number' | 'string' | 'boolean' | 'date' | 'uuid' | 'email';
+type KeyType =
+  | 'number'
+  | 'string'
+  | 'boolean'
+  | 'date'
+  | 'uuid'
+  | 'email'
+  | 'enum';
 
 export const itShouldThrowIfFieldIsNotOfType = <T>({
   fields,
@@ -50,6 +57,7 @@ export const itShouldThrowIfFieldIsNotOfType = <T>({
     date: undefined,
     uuid: 123,
     email: 123,
+    enum: 'invalid',
   };
   for (const field of fields) {
     if (!Object.keys(dto).includes(String(field.key))) {

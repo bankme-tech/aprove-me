@@ -1,53 +1,123 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import { SignInDto } from './dto/sign-in.dto';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
+import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
+import { SignInDto } from './dto/sign-in.dto';
 import { UnauthorizedException } from '@nestjs/common';
+import * as utils from '../utils';
+
+jest.mock('../utils', () => ({
+  hashPassword: jest.fn(),
+  comparePassword: jest.fn(),
+}));
 
 describe('AuthService', () => {
-  let service: AuthService;
-  let jwtServiceMock = mockDeep<JwtService>();
+  let authService: AuthService;
+  let usersServiceMock: DeepMockProxy<UsersService>;
+  let jwtServiceMock: DeepMockProxy<JwtService>;
 
   beforeEach(async () => {
+    usersServiceMock = mockDeep<UsersService>();
+    jwtServiceMock = mockDeep<JwtService>();
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
+        { provide: UsersService, useValue: usersServiceMock },
         { provide: JwtService, useValue: jwtServiceMock },
       ],
     }).compile();
 
-    service = module.get<AuthService>(AuthService);
-    jwtServiceMock = module.get<JwtService>(
-      JwtService,
-    ) as DeepMockProxy<JwtService>;
-  });
-  it('should return a token when login and password are correct', async () => {
-    const signInDto: SignInDto = { login: 'aprovame', password: 'aprovame' };
-    jwtServiceMock.signAsync.mockResolvedValueOnce('mocked-token');
-
-    const result = await service.signIn(signInDto);
-
-    expect(result).toEqual({ access_token: 'mocked-token' });
-    expect(jwtServiceMock.signAsync).toHaveBeenCalledWith(
-      { username: 'aprovame' },
-      { expiresIn: '1m' },
-    );
+    authService = module.get<AuthService>(AuthService);
   });
 
-  it('should throw UnauthorizedException when login is incorrect', async () => {
-    const signInDto: SignInDto = { login: 'wrong', password: 'aprovame' };
-
-    await expect(service.signIn(signInDto)).rejects.toThrow(
-      UnauthorizedException,
-    );
+  it('should be defined', () => {
+    expect(authService).toBeDefined();
   });
 
-  it('should throw UnauthorizedException when password is incorrect', async () => {
-    const signInDto: SignInDto = { login: 'aprovame', password: 'wrong' };
+  describe('signIn', () => {
+    it('should return an access token for valid credentials', async () => {
+      const signInDto: SignInDto = { login: 'testuser', password: 'password' };
+      const user = {
+        username: 'testuser',
+        password: 'hashedpassword',
+        role: 'user',
+      };
 
-    await expect(service.signIn(signInDto)).rejects.toThrow(
-      UnauthorizedException,
-    );
+      usersServiceMock.findByUsername.mockResolvedValue(user as any);
+      (utils.comparePassword as jest.Mock).mockResolvedValue(true);
+      jwtServiceMock.signAsync.mockResolvedValue('token');
+
+      const result = await authService.signIn(signInDto);
+
+      expect(result).toEqual({ access_token: 'token' });
+      expect(usersServiceMock.findByUsername).toHaveBeenCalledWith(
+        'testuser',
+        true,
+      );
+      expect(utils.comparePassword).toHaveBeenCalledWith(
+        'password',
+        'hashedpassword',
+      );
+      expect(jwtServiceMock.signAsync).toHaveBeenCalledWith(
+        { username: 'testuser', role: 'user' },
+        { expiresIn: '1m' },
+      );
+    });
+
+    it('should throw UnauthorizedException if user is not found', async () => {
+      const signInDto: SignInDto = { login: 'testuser', password: 'password' };
+
+      usersServiceMock.findByUsername.mockResolvedValue(null);
+
+      await expect(authService.signIn(signInDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+
+    it('should throw UnauthorizedException if password is invalid', async () => {
+      const signInDto: SignInDto = { login: 'testuser', password: 'password' };
+      const user = {
+        username: 'testuser',
+        password: 'hashedpassword',
+        role: 'user',
+      };
+
+      usersServiceMock.findByUsername.mockResolvedValue(user as any);
+      (utils.comparePassword as jest.Mock).mockResolvedValue(false);
+
+      await expect(authService.signIn(signInDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+  });
+
+  describe('hashPassword', () => {
+    it('should hash the password', async () => {
+      const password = 'password';
+      const hashedPassword = 'hashedpassword';
+
+      (utils.hashPassword as jest.Mock).mockResolvedValue(hashedPassword);
+
+      const result = await authService.hashPassword(password);
+
+      expect(result).toEqual(hashedPassword);
+      expect(utils.hashPassword).toHaveBeenCalledWith(password);
+    });
+  });
+
+  describe('comparePassword', () => {
+    it('should compare the password with the hash', async () => {
+      const password = 'password';
+      const hash = 'hashedpassword';
+
+      (utils.comparePassword as jest.Mock).mockResolvedValue(true);
+
+      const result = await authService.comparePassword(password, hash);
+
+      expect(result).toBe(true);
+      expect(utils.comparePassword).toHaveBeenCalledWith(password, hash);
+    });
   });
 });
