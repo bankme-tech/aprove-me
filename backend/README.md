@@ -1,73 +1,67 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Documentação de Execução do Projeto
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Esta documentação destina-se a fornecer instruções detalhadas para a execução do projeto.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Requisitos do Sistema
 
-## Description
+Antes de prosseguir com a execução do projeto, verifique se o seu sistema atende aos seguintes requisitos:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node versão 16 ou superior instalado e configurado corretamente
+- Conexão com a Internet para baixar as dependencias necessárias
 
-## Installation
+
+## Execução do Projeto
+
+A seguir, estão as instruções para a execução do projeto.
+
+Navegue até o diretório do projeto:
+
+   ```bash
+   cd /caminho/para/o/projeto
+   ```
+   
+## Instação
+Execute o comando abaixo para instalar as depencencias: 
 
 ```bash
-$ yarn install
+npm install
+ou
+yarn 
 ```
 
-## Running the app
+### Executar a aplicação 
 
 ```bash
-# development
+# modo desenvolvimento
 $ yarn run start
 
-# watch mode
+# modo desenvolvimento utilizando hot reload
 $ yarn run start:dev
 
-# production mode
+# modo produção
 $ yarn run start:prod
 ```
 
-## Test
+## Modo teste
 
 ```bash
-# unit tests
+# testes unitarios
 $ yarn run test
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
+# teste cobertura
 $ yarn run test:cov
 ```
 
-## Support
+## Acesso ao Projeto
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Depois que os serviços forem iniciados com sucesso, você poderá acessar o projeto por meio do navegador da Web ou de outros clientes, conforme apropriado. As informações específicas de acesso (URLs, portas, etc.) dependerão da configuração do projeto.
 
-## Stay in touch
+o acesso principal api é na url http://localhost:3000
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+## Considerações Finais
+
+Este documento fornece as instruções básicas para a execução do projeto. Certifique-se de ajustar as configurações de acordo com os requisitos específicos do seu projeto.
+
+Se encontrar problemas durante a execução do projeto ou precisar de assistência adicional, consulte a documentação do projeto ou entre em contato com a equipe de desenvolvimento para obter suporte.
