@@ -1,23 +1,11 @@
 'use client'
-import { api } from "./api/axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import PayableForm from "./components/payables/PayableForm";
+import { api } from "../../../api/axios";
+import PayableForm from "../../../components/payables/PayableForm";
+import { Payable } from "@/types/PayableType";
 
-export interface Assignor {
-  id: string;
-  document: string;
-  email: string;
-  phone: string;
-  name: string;
-}
 
-export interface Payable {
-  id: string;
-  value: number;
-  emissionDate: string | Date;
-  assignorId: string;
-}
 
 export default function Home() {
 
@@ -54,7 +42,6 @@ export default function Home() {
       <div
         className={`bg-neutral-50 w-[95%] max-w-[600px] flex flex-col gap-2 sm:gap-4 p-4 sm:p-6 rounded-lg relative `}
       >
-
         <PayableForm payable={initialPayable} handleForm={handleCreatePayable} />
       </div>
     </main>

@@ -52,7 +52,7 @@ export default function LoginForm({
 
         <form
           onSubmit={(e) => handleSubmit(e, userData)}
-          className="flex flex-col mt-4 w-4/5"
+          className="flex flex-col mt-4 w-full gap-4"
         >
           <Input
             type="email"
@@ -60,6 +60,7 @@ export default function LoginForm({
             value={userData.email}
             name="email"
             onChange={handleChange}
+            placeholder='example@email.com'
           >
             Email
           </Input>
@@ -69,6 +70,8 @@ export default function LoginForm({
             value={userData.password}
             name="password"
             onChange={handleChange}
+            placeholder='********'
+
           >
             Password
           </Input>

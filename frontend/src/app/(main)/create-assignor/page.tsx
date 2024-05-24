@@ -1,18 +1,14 @@
 'use client';
 import { useState } from 'react';
-import { api } from '../api/axios';
+import { api } from '../../../api/axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { handleChange } from '../utils/utils';
-import Input from '../components/ui/Input/Input';
+import { handleChange } from '../../../utils/utils';
+import Input from '../../../components/ui/Input/Input';
+import { Assignor } from '@/types/AssignorType';
 
-export interface Assignor {
-  id?: string;
-  document: string;
-  email: string;
-  phone: string;
-  name: string;
-}
+
+interface InitialAssignor extends Omit<Assignor, 'id'> { }
 
 export default function AssignorForm() {
   const initialAssignor = {
@@ -22,7 +18,7 @@ export default function AssignorForm() {
     phone: ''
   };
 
-  const [assignorInfo, setAssignorInfo] = useState<Assignor>(initialAssignor);
+  const [assignorInfo, setAssignorInfo] = useState<InitialAssignor>(initialAssignor);
 
   const router = useRouter();
 

@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import LoginForm, { UserData } from '../components/LoginForm';
+import LoginForm, { UserData } from '../../../components/LoginForm';
 import { useRouter } from 'next/navigation';
-import { api } from '../api/axios';
+import { api } from '../../../api/axios';
 import toast from 'react-hot-toast';
 
 export default function SignUp() {

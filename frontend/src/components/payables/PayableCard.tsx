@@ -1,14 +1,16 @@
 'use client';
 
-import { Payable } from '@/app/page';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import CardInfo from './CardInfo';
-import { api } from '@/app/api/axios';
+
 import { Edit, Trash } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import PayableForm from './PayableForm';
+import { api } from '@/api/axios';
+import { Payable } from '@/types/PayableType';
+
 
 export default function PayableCard({
   payable,
@@ -49,6 +51,7 @@ export default function PayableCard({
       router.push('/payables');
       router.refresh();
     } catch (error) {
+
       console.error(error);
     }
   };

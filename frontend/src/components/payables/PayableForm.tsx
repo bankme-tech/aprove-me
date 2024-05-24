@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import Input from '../ui/Input/Input';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { handleChange } from '@/app/utils/utils';
-import { Assignor, Payable } from '@/app/page';
-import { api } from '@/app/api/axios';
+
 import { X } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { api } from '@/api/axios';
+import { handleChange } from '@/utils/utils';
+import { Payable } from '@/types/PayableType';
+import { Assignor } from '@/types/AssignorType';
 
 type PayableFormProps = {
   payable: Payable;
@@ -56,7 +58,7 @@ export default function PayableForm({
     setPayableInfo({ ...payableInfo, emissionDate: date as unknown as string });
   };
 
-  const verifyNumber = (value: string) => (isNaN(Number(value)) || +value <= 0)
+  const verifyNumber = (value: string) => !(isNaN(Number(value)) || +value <= 0)
 
   return (
     <form

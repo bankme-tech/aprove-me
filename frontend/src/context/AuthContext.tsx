@@ -1,0 +1,62 @@
+'use client';
+
+import { api } from "@/api/axios";
+
+import { createContext, useCallback, useEffect, useState } from "react";
+
+interface AuthContextType {
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  login: (email: string, password: string) => Promise<string | void>;
+  logout: () => void;
+}
+
+interface Props {
+  children: React.ReactNode;
+}
+
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+
+
+export const AuthProvider: React.FC<Props> = ({ children }) => {
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [token, setToken] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
+  useEffect(() => {
+    const storageToken = localStorage.getItem('token');
+    if (storageToken) {
+      api.defaults.headers['authorization'] = `Bearer ${storageToken}`;
+      setIsAuthenticated(true);
+      setToken(storageToken as string);
+    }
+
+    setIsLoading(false);
+  }, [token])
+
+  const Login = useCallback(async (email: string, password: string) => {
+    const respAuth = await api.post('/auth', { email, password });
+
+    if (respAuth instanceof Error) {
+      return respAuth.message;
+    }
+    localStorage.setItem('token', respAuth.data.token);
+    api.defaults.headers['authorization'] = `Bearer ${respAuth.data.token}`;
+    setToken(respAuth.data.token);
+  }, [])
+
+  const Logout = useCallback(() => {
+    localStorage.removeItem('token');
+    api.defaults.headers['authorization'] = '';
+    setToken('');
+
+  }, [])
+
+  return (
+    <AuthContext.Provider value={{ isLoading, isAuthenticated, login: Login, logout: Logout }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
