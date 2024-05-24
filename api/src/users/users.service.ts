@@ -39,29 +39,43 @@ export class UsersService {
         login,
         password: hashedPassword,
       },
-      select: {
-        id: true,
-        login: true,
-      },
+      select: { id: true, login: true },
     });
   }
 
-  async findOne(login: string) {
+  async findOneByLogin(login: string) {
     return await this.prisma.user.findUniqueOrThrow({
       where: { login },
     });
   }
 
   async update(id: string, password: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new BadRequestException('User does not exist');
+    }
+
     const hashedPassword = await bcrypt.hash(password, salt);
 
     return await this.prisma.user.update({
       where: { id },
       data: { password: hashedPassword },
+      select: { id: true, login: true },
     });
   }
 
   async remove(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new BadRequestException('User does not exist');
+    }
+
     return await this.prisma.user.delete({
       where: { id },
     });
