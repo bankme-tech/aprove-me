@@ -229,7 +229,7 @@ export default function DataTableDemo() {
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
           <div className="flex-1 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
+            {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} linha(s) selecionada.
           </div>
           <div className="space-x-2">
             <Button
@@ -251,10 +251,10 @@ export default function DataTableDemo() {
             <Button
               variant="outline"
               size="sm"
-         //     onClick={() => table.nextPage()}
+              onClick={handleClick}
         
             >
-             Cadastrar Movimentaçãp
+             Cadastrar Movimentação
             </Button>
           </div>
         </div>
@@ -262,3 +262,7 @@ export default function DataTableDemo() {
     </div>
   );
 }
+
+const handleClick = () => {
+  window.location.href = '/payable-assignor-create';
+};
