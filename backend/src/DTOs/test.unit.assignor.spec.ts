@@ -12,9 +12,12 @@ import {
 } from '../../test/mocks/mock-assignor';
 import { UserRepo } from '../repositories/user-repo';
 import {
+  BadRequestException,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthService } from '../auth/auth-service';
 
 describe('Cedente', () => {
   let controller: AppController;
@@ -22,12 +25,19 @@ describe('Cedente', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        JwtModule.register({
+          secret: process.env.JWT_SECRET,
+          signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
+        }),
+      ],
       controllers: [AppController],
       providers: [
         PrismaService,
         { provide: PayableRepo, useClass: prismaPayableRepo },
         { provide: AssignorRepo, useClass: prismaAssignorRepo },
         { provide: UserRepo, useClass: prismaUserRepo },
+        AuthService,
       ],
     }).compile();
 
@@ -54,6 +64,16 @@ describe('Cedente', () => {
       expect(result.id).toEqual(MOCK_NOVO_CEDENTE.id);
     });
 
+    it('Deve falhar ao criar cedente que já existe', async () => {
+      jest.spyOn(service, 'createAssignor');
+
+      try {
+        await controller.createAssignor(MOCK_NOVO_CEDENTE);
+      } catch (error) {
+        expect(error).toBeInstanceOf(BadRequestException);
+      }
+    });
+
     it('Deve listar todos os cedentes', async () => {
       jest.spyOn(service, 'getAllAssignors');
 
@@ -70,16 +90,6 @@ describe('Cedente', () => {
 
       expect(result).toBeDefined();
       expect(result).toEqual(MOCK_NOVO_CEDENTE);
-    });
-
-    it('Deve falhar ao tentar buscar um cedente por id inválido', async () => {
-      try {
-        jest.spyOn(service, 'getAssignorById');
-
-        controller.getAssignorById;
-      } catch (error) {
-        expect(error).toBeInstanceOf(InternalServerErrorException);
-      }
     });
 
     it('Deve retornar um arry de cedentes', async () => {
@@ -111,6 +121,7 @@ describe('Cedente', () => {
         await controller.getAssignorById(id);
       } catch (error) {
         expect(error).toBeInstanceOf(NotFoundException);
+        expect(error.message).toEqual(`Assignor with ID ${id} not found`);
       }
     });
 
@@ -146,6 +157,16 @@ describe('Cedente', () => {
       try {
         jest.spyOn(controller, 'getAssignorsAll');
         await controller.getAssignorsAll();
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
+    });
+
+    it('Deve falhar ao tentar buscar um cedente por id inválido', async () => {
+      try {
+        jest.spyOn(service, 'getAssignorById');
+
+        controller.getAssignorById('invalid-id');
       } catch (error) {
         expect(error).toBeInstanceOf(NotFoundException);
       }

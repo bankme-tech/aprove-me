@@ -7,7 +7,6 @@ export class UserDto {
     description:
       'Requerido apenas para buscar um usuário pelo ID ou atualizar um usuário',
     type: Number,
-    example: 1,
   })
   id: number;
 

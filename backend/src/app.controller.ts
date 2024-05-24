@@ -20,6 +20,7 @@ import { AssignorRepo } from './repositories/assignor-repo';
 import { UserDto } from './DTOs/user';
 import { UserRepo } from './repositories/user-repo';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthService } from './auth/auth-service';
 
 @Controller('integrations')
 export class AppController {
@@ -27,17 +28,35 @@ export class AppController {
     private payable: PayableRepo,
     private assignor: AssignorRepo,
     private user: UserRepo,
+    private authService: AuthService,
   ) {}
+
+  @ApiTags('Auth')
+  @Post('auth')
+  async auth(@Body() body: UserDto) {
+    try {
+      const response = await this.authService.authenticate(body);
+
+      if (response) {
+        return response;
+      }
+      throw new NotFoundException('Login or password incorrect');
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
   @ApiTags('User')
   @Post('user')
   async createUser(@Body() body: UserDto) {
     try {
       const userExist = await this.user.getUserByLogin(body.login);
-
-      if (!body.login || !body.password) {
-        throw new BadRequestException('Login and password are required');
-      }
 
       if (userExist) {
         throw new BadRequestException('User already exists');

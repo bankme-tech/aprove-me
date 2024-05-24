@@ -4,6 +4,11 @@ export const MOCK_NOVO_USUARIO = {
   password: 'XXXXX',
 };
 
+export const MOCK_NOVO_USUARIO_RESPONSE = {
+  id: 1,
+  login: 'teste',
+};
+
 export const MOCK_NOVO_USUARIO_SEM_SENHA = {
   id: 1,
   login: 'teste',
