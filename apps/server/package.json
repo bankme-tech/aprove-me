@@ -18,6 +18,7 @@
     "test:e2e": "pnpm load:env vitest run --config ./vitest.config.e2e.ts",
     "test:e2e:watch": "pnpm load:env vitest --config ./vitest.config.e2e.ts",
     "db:migrate:dev": "pnpm load:env prisma migrate dev",
+    "db:deploy": "pnpm load:env prisma migrate deploy",
     "load:env": "dotenv -e ../../.env --"
   },
   "dependencies": {
