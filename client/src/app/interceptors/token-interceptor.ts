@@ -4,6 +4,7 @@ import {
   HttpInterceptor,
   HttpInterceptorFn,
   HttpRequest,
+  HttpStatusCode,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../modules/auth/auth.service';
@@ -27,7 +28,7 @@ export const TokenInterceptor: HttpInterceptorFn = (
 
   return next(authRequest).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401) {
+      if (error.status === HttpStatusCode.Unauthorized) {
         authService.logout();
         alertService.error('Sessão expirada, faça login novamente');
         router.navigate(['/login']);

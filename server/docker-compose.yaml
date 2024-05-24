@@ -47,4 +47,3 @@ volumes:
 
 networks:
   rabbitmq-network:
-    external: true

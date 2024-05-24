@@ -1,38 +1,15 @@
 version: 0.2
-# phases:
-#   install:
-#     runtime-versions:
-#       docker: 18
-#   pre_build:
-#     commands:
-#       - echo Logging in to Amazon ECR...
-#       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-#   build:
-#     commands:
-#       - echo Build started on `date`
-#       - echo Building Docker test image...
-#       - docker build -t $IMAGE_REPO_NAME:$TEST_IMAGE_TAG -f Dockerfile.dev .
-#       - docker run -e CI=true $IMAGE_REPO_NAME:$TEST_IMAGE_TAG npm run test
-#       - echo Build started on `date`
-#       - echo Building the Docker image...
-#       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-#       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-#   post_build:
-#     commands:
-#       - echo Build completed on `date`
-#       - echo Pushing the Docker image...
-#       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
 
-  phases:
-    pre_build:
-        commands:
-         -  aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 099289132084.dkr.ecr.us-east-2.amazonaws.com
-    
-    build:
-        commands:
-        - docker-compose build -t challenge -f .
-        - docker tag challenge:latest 099289132084.dkr.ecr.us-east-2.amazonaws.com/challenge:latest
+phases:
+  pre_build:
+    commands:
+     -  aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 099289132084.dkr.ecr.us-east-2.amazonaws.com
 
-    post_build:
-        commands:
-        - docker push 099289132084.dkr.ecr.us-east-2.amazonaws.com/challenge:latest
+  build:
+    commands:
+    - docker-compose build -t challenge
+    - docker tag challenge:latest 099289132084.dkr.ecr.us-east-2.amazonaws.com/challenge:latest
+
+  post_build:
+    commands:
+    - docker push 099289132084.dkr.ecr.us-east-2.amazonaws.com/challenge:latest
