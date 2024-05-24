@@ -7,8 +7,6 @@ import { PayableMapper } from '../mappers/payable.mapper.interface';
 import { Payable } from '@prisma/client';
 import { FindPayableInputDTO } from '../dto/find-payable.input.dto';
 import { UpdatePayableInputDTO } from '../dto/update-payable.input.dto';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { RecordNotFoundError } from 'src/persistence/errors/record-not-found.error';
 import { RemovePayableInputDTO } from '../dto/remove-payable.input.dto';
 
 @Injectable()
@@ -47,25 +45,17 @@ export class PrismaPayableRepository implements IPayableRepository {
   async update(
     updatePayableDTO: UpdatePayableInputDTO,
   ): Promise<PayableEntity> {
-    try {
-      await this.prisma.payable.update({
-        where: {
-          id: updatePayableDTO.id,
-        },
-        data: {
-          assignorId: updatePayableDTO.assignorId,
-          value: updatePayableDTO.value,
-        },
-      });
+    await this.prisma.payable.update({
+      where: {
+        id: updatePayableDTO.id,
+      },
+      data: {
+        assignorId: updatePayableDTO.assignorId,
+        value: updatePayableDTO.value,
+      },
+    });
 
-      return this.findById({ id: updatePayableDTO.id });
-    } catch (error) {
-      if (error instanceof PrismaClientKnownRequestError) {
-        if (error.meta?.field_name) throw new RecordNotFoundError('Assignor');
-        if (error.meta?.cause) throw new RecordNotFoundError('Payable');
-      }
-      throw error;
-    }
+    return this.findById({ id: updatePayableDTO.id });
   }
 
   async remove(removePayableDTO: RemovePayableInputDTO): Promise<void> {
