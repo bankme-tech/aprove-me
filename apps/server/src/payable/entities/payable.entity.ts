@@ -1,10 +1,18 @@
 import { Entity } from '@/common/entity/entity.base'
 import { Optional } from '@/common/types'
 
+export type PayableStatus =
+  | 'complete'
+  | 'waiting'
+  | 'processing'
+  | 'error'
+  | 'canceled'
+
 export interface PayableProps {
   assignorId: string
   value: number
   emissionDate?: Date | null
+  status: PayableStatus
   createdAt?: Date | null
   payedAt?: Date | null
   canceledAt?: Date | null
@@ -35,6 +43,14 @@ export class Payable extends Entity<PayableProps> {
     this.props.emissionDate = emissionDate
   }
 
+  get status() {
+    return this.props.status
+  }
+
+  set status(status: PayableStatus) {
+    this.props.status = status
+  }
+
   get createdAt() {
     return this.props.createdAt
   }
@@ -49,6 +65,7 @@ export class Payable extends Entity<PayableProps> {
 
   pay() {
     this.props.payedAt = new Date()
+    this.props.status = 'complete'
     this.props.canceledAt = null
   }
 
@@ -63,6 +80,7 @@ export class Payable extends Entity<PayableProps> {
   cancel() {
     this.props.canceledAt = new Date()
     this.props.payedAt = null
+    this.props.status = 'canceled'
   }
 
   isCanceled() {
@@ -70,7 +88,10 @@ export class Payable extends Entity<PayableProps> {
   }
 
   static create(
-    props: Optional<PayableProps, 'createdAt' | 'canceledAt' | 'payedAt'>,
+    props: Optional<
+      PayableProps,
+      'createdAt' | 'canceledAt' | 'payedAt' | 'status'
+    >,
     id?: string,
   ) {
     const payable = new Payable(
@@ -78,6 +99,7 @@ export class Payable extends Entity<PayableProps> {
         ...props,
         createdAt: props.emissionDate ?? new Date(),
         canceledAt: props.canceledAt ?? null,
+        status: props.status ?? 'waiting',
         payedAt: props.payedAt ?? null,
       },
       id,

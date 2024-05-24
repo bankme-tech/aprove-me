@@ -1,6 +1,11 @@
 import { AssignorRepository } from '@/assignors/repository/assignor.repository'
+import { InjectQueue } from '@nestjs/bull'
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { PayableCreateSchema } from './dto/create-payable.dto'
+import { Queue } from 'bull'
+import {
+  PayableCreateSchema,
+  PayableCreateSchemaBatch,
+} from './dto/create-payable.dto'
 import { PayableUpdateSchema } from './dto/update-payable.dto'
 import { Payable } from './entities/payable.entity'
 import { PayableRepository } from './repository/payable.repository'
@@ -11,6 +16,7 @@ export class PayableService {
   constructor(
     private repo: PayableRepository,
     private assignorRepository: AssignorRepository,
+    @InjectQueue('process-data') private audioQueue: Queue,
   ) {}
 
   async get(payableId: string) {
@@ -35,6 +41,15 @@ export class PayableService {
     })
     await this.repo.create(payable)
     return PayablePresenter.toResponseHttp(payable)
+  }
+
+  async createMany(payableBatch: PayableCreateSchemaBatch) {
+    const jobs = payableBatch.map((data) => ({
+      data: {
+        payable: data,
+      },
+    }))
+    await this.audioQueue.addBulk(jobs)
   }
 
   async cancel(payableId: string) {

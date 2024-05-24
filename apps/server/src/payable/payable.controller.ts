@@ -14,7 +14,9 @@ import {
 } from '@nestjs/common'
 import {
   PayableCreateSchema,
+  PayableCreateSchemaBatch,
   payableCreateSchema,
+  payableCreateSchemaBatch,
 } from './dto/create-payable.dto'
 import {
   PayableUpdateSchema,
@@ -23,6 +25,9 @@ import {
 import { PayableService } from './payable.service'
 
 const createValidationPipe = new ZodValidationPipe(payableCreateSchema)
+const createValidationPipeBatch = new ZodValidationPipe(
+  payableCreateSchemaBatch,
+)
 const updateValidationPipe = new ZodValidationPipe(payableUpdateSchema)
 
 @UseGuards(AuthGuard)
@@ -63,5 +68,13 @@ export class PayableController {
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('payableId') payableId: string) {
     this.payableService.destroy(payableId)
+  }
+
+  @Post('batch')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  createProcess(
+    @Body(createValidationPipeBatch) data: PayableCreateSchemaBatch,
+  ) {
+    return this.payableService.createMany(data)
   }
 }

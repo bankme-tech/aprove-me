@@ -18,13 +18,14 @@ export class PrismaPayableMapper {
 
   static toPrisma(payable: Payable): Prisma.PayableUncheckedCreateInput {
     return {
-      id: payable.id,
+      // id: payable.id,
       value: payable.value,
       assignorId: payable.assignorId,
       emissionDate: payable.emissionDate,
       createdAt: payable.createdAt,
-      canceledAt: payable.canceledAt,
-      payedAt: payable.payedAt,
+      status: payable.status,
+      canceledAt: payable.canceledAt ?? undefined,
+      payedAt: payable.payedAt ?? undefined,
     }
   }
 }
