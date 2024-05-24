@@ -4,6 +4,7 @@
     "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^10.3.8",
     "@nestjs/jwt": "^10.2.0",
+    "@nestjs/cli": "^10.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.3.8",
