@@ -28,6 +28,9 @@ jobs:
       - name: Install NPM Modules
         run: npm ci
 
+      - name: Prisma Generate
+        run: npm run prisma:gen
+
       - name: Execute Tests
         run: npm run test:ci
 
