@@ -19,6 +19,7 @@ import { Role } from './entities/user.entity';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { UserJWT } from '../auth/entities/userJTW.entity';
+import { SafeUserDto } from './dto/safe-user.dto';
 
 @Controller('users')
 @UseGuards(AuthGuard, RolesGuard)
@@ -27,7 +28,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateUserDto): Promise<SafeUserDto> {
     return this.usersService.create(createUserDto);
   }
   @Get()
@@ -36,7 +37,7 @@ export class UsersController {
   }
 
   @Patch(':username')
-  update(
+  async update(
     @Param('username') username: string,
     @Body() updateUserDto: UpdateUserDto,
     @Request() req,
@@ -51,7 +52,7 @@ export class UsersController {
   }
 
   @Delete(':username')
-  remove(@Param('username') username: string) {
+  async remove(@Param('username') username: string) {
     return this.usersService.remove(username);
   }
 

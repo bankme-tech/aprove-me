@@ -9,6 +9,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { validateDto } from '../utils';
 import { AuthService } from '../auth/auth.service';
+import { SafeUserDto } from './dto/safe-user.dto';
+import { Role } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -18,14 +20,14 @@ export class UsersService {
     private authService: AuthService,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<SafeUserDto> {
     const data = await validateDto(createUserDto, CreateUserDto);
 
     const passwordEncrypted = await this.authService.hashPassword(
       data.password,
     );
 
-    return this.prismaService.user.create({
+    const userCreated = await this.prismaService.user.create({
       data: {
         ...data,
         password: passwordEncrypted,
@@ -36,6 +38,14 @@ export class UsersService {
         username: true,
       },
     });
+
+    const response: SafeUserDto = {
+      role: userCreated.role as Role,
+      username: userCreated.username,
+      assignorId: userCreated.assignorId,
+    };
+
+    return response;
   }
 
   findByUsername(username: string, includePassword = false) {
@@ -52,23 +62,32 @@ export class UsersService {
     });
   }
 
-  findAll() {
-    return this.prismaService.user.findMany({
+  async findAll(): Promise<SafeUserDto[]> {
+    const data = await this.prismaService.user.findMany({
       select: {
         assignorId: true,
         role: true,
         username: true,
       },
     });
+
+    return data.map((user) => ({
+      role: user.role as Role,
+      username: user.username,
+      assignorId: user.assignorId,
+    }));
   }
 
-  async update(username: string, updateUserDto: UpdateUserDto) {
+  async update(
+    username: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<SafeUserDto> {
     if (username === 'aprovame') {
       throw new Error('You cannot update the aprovame user');
     }
 
     const data = await validateDto(updateUserDto, UpdateUserDto);
-    return await this.prismaService.user.update({
+    const response = await this.prismaService.user.update({
       where: {
         username,
       },
@@ -79,17 +98,29 @@ export class UsersService {
         username: true,
       },
     });
+
+    return {
+      role: response.role as Role,
+      username: response.username,
+      assignorId: response.assignorId,
+    };
   }
 
-  async remove(username: string) {
+  async remove(username: string): Promise<SafeUserDto> {
     if (username === 'aprovame') {
       throw new ForbiddenException('You cannot delete the aprovame user');
     }
 
-    return this.prismaService.user.delete({
+    const data = await this.prismaService.user.delete({
       where: {
         username,
       },
     });
+
+    return {
+      role: data.role as Role,
+      username: data.username,
+      assignorId: data.assignorId,
+    };
   }
 }

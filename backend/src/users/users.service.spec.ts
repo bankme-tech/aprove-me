@@ -2,13 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { AuthService } from '../auth/auth.service';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { validateDto } from '../utils';
 import { Role } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ForbiddenException } from '@nestjs/common';
+import { SafeUserDto } from './dto/safe-user.dto';
 
 jest.mock('../utils', () => ({
   validateDto: jest.fn(),
@@ -19,7 +20,7 @@ describe('UsersService', () => {
   let usersService: UsersService;
   let authServiceMock = mockDeep<AuthService>();
   let createUserDto: CreateUserDto;
-  let responseDto: User;
+  let responseDto: SafeUserDto;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -34,11 +35,13 @@ describe('UsersService', () => {
       username: 'testuser',
       password: 'password',
       role: Role.USER,
+      assignorId: undefined,
     };
 
     responseDto = {
-      ...createUserDto,
-      assignorId: null,
+      role: createUserDto.role,
+      username: createUserDto.username,
+      assignorId: undefined,
     };
 
     usersService = module.get<UsersService>(UsersService);
@@ -87,7 +90,7 @@ describe('UsersService', () => {
   describe('findByUsername', () => {
     it('should return a user without password', async () => {
       const username = 'testuser';
-      prismaServiceMock.user.findUnique.mockResolvedValue(responseDto);
+      prismaServiceMock.user.findUnique.mockResolvedValue(responseDto as any);
 
       const result = await usersService.findByUsername(username);
 
@@ -106,7 +109,7 @@ describe('UsersService', () => {
 
     it('should return a user with password', async () => {
       const username = 'testuser';
-      prismaServiceMock.user.findUnique.mockResolvedValue(responseDto);
+      prismaServiceMock.user.findUnique.mockResolvedValue(responseDto as any);
 
       const result = await usersService.findByUsername(username, true);
 
