@@ -25,3 +25,5 @@ Content-Type: application/json
     "assignorId": "bd0695f9-7b5a-4518-b436-810bc75fb718"
 }
 
+### Delete payable by id
+DELETE {{baseUrl}}/integrations/payable/9a888b65-fe9a-472b-9f30-bc8fa7c3e118
