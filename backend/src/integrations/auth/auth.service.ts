@@ -18,7 +18,7 @@ export class AuthService {
         error: 'Não autorizado',
       });
     }
-    const payload = { sub: user.userId, login: user.login };
+    const payload = { sub: user.id, login: user.login };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
