@@ -1,18 +1,23 @@
 import { randomUUID } from 'crypto';
-import { InputAssignorDTO } from 'src/assignor/dto/input-assignor.dto';
-import { InputPayableDTO } from 'src/payable/dto/input-payable.dto';
+import { CreateAssignorInputDTO } from 'src/assignor/dto/create-assignor.input.dto';
+import { CreatePayableInputDTO } from 'src/payable/dto/create-payable.input.dto';
+import { makeAssignorEntity } from './entities/assignor.entity.mock';
+import { faker } from '@faker-js/faker';
 
-export const makeAssignorDTO = (): InputAssignorDTO => ({
-  id: randomUUID(),
-  document: 'any_document',
-  email: 'any_email',
-  phone: 'any_phone',
-  name: 'any_name',
+export const makeAssignorDTO = (): CreateAssignorInputDTO => ({
+  document: faker.string.numeric(20),
+  email: faker.string.alpha(130),
+  phone: faker.string.alpha(18),
+  name: faker.string.alpha(130),
 });
 
-export const makePayableDTO = (): InputPayableDTO => ({
+export const makePayableDTO = (): CreatePayableInputDTO => ({
   id: randomUUID(),
-  value: 31321.21,
-  emissionDate: new Date(),
-  assignor: makeAssignorDTO().id,
+  value: faker.number.float({
+    min: 0,
+    max: 10000,
+    multipleOf: 0.01,
+  }),
+  emissionDate: faker.date.recent(),
+  assignorId: makeAssignorEntity().id,
 });
