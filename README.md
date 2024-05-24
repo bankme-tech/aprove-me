@@ -58,5 +58,7 @@ RabbitMQ Management: http://localhost:15672
 
 Para parar e remover os contêineres, execute:
 
+```sh
 docker-compose down
+```
 
