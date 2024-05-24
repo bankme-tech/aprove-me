@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PayableRepositoryStub } from '../../mocks/repositories/payable.repository.mock';
 import { IPayableRepository } from 'src/payable/repositories/payable.repository.interface';
-import { makePayableDTO } from 'test/mocks/dtos.mock';
 import { UpdatePayableUseCase } from 'src/payable/usecases/update-payable.usecase';
 import { UpdatePayableInputDTO } from 'src/payable/dto/update-payable.input.dto';
+import { makePayableEntity } from 'test/mocks/entities/payable.entity.mock';
 
 describe('UpdatePayableUseCase', () => {
   let sut: UpdatePayableUseCase;
@@ -26,7 +26,7 @@ describe('UpdatePayableUseCase', () => {
     payableRepositoryStub =
       module.get<PayableRepositoryStub>(IPayableRepository);
 
-    const { id } = makePayableDTO();
+    const { id } = makePayableEntity();
     dto = { id };
   });
 

@@ -5,6 +5,7 @@ import { makePayableDTO } from 'test/mocks/dtos.mock';
 import { RemovePayableUseCase } from 'src/payable/usecases/remove-payable-usecase';
 import { RemovePayableInputDTO } from 'src/payable/dto/remove-payable.input.dto';
 import { RecordNotFoundError } from 'src/persistence/errors/record-not-found.error';
+import { makePayableEntity } from 'test/mocks/entities/payable.entity.mock';
 
 describe('RemovePayableUseCase', () => {
   let sut: RemovePayableUseCase;
@@ -27,7 +28,7 @@ describe('RemovePayableUseCase', () => {
     payableRepositoryStub =
       module.get<PayableRepositoryStub>(IPayableRepository);
 
-    const { id } = makePayableDTO();
+    const { id } = makePayableEntity();
     dto = { id };
   });
 

@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { CreateAssignorInputDTO } from 'src/assignor/dto/create-assignor.input.dto';
 import { CreatePayableInputDTO } from 'src/payable/dto/create-payable.input.dto';
 import { makeAssignorEntity } from './entities/assignor.entity.mock';
@@ -12,7 +11,6 @@ export const makeAssignorDTO = (): CreateAssignorInputDTO => ({
 });
 
 export const makePayableDTO = (): CreatePayableInputDTO => ({
-  id: randomUUID(),
   value: faker.number.float({
     min: 0,
     max: 10000,

@@ -3,7 +3,7 @@ import { PayableRepositoryStub } from '../../mocks/repositories/payable.reposito
 import { IPayableRepository } from 'src/payable/repositories/payable.repository.interface';
 import { FindPayableUseCase } from 'src/payable/usecases/find-payable.usecase';
 import { FindPayableInputDTO } from 'src/payable/dto/find-payable.input.dto';
-import { makePayableDTO } from 'test/mocks/dtos.mock';
+import { makePayableEntity } from 'test/mocks/entities/payable.entity.mock';
 
 describe('FindPayableUseCase', () => {
   let sut: FindPayableUseCase;
@@ -26,7 +26,7 @@ describe('FindPayableUseCase', () => {
     payableRepositoryStub =
       module.get<PayableRepositoryStub>(IPayableRepository);
 
-    const { id } = makePayableDTO();
+    const { id } = makePayableEntity();
     dto = { id };
   });
 

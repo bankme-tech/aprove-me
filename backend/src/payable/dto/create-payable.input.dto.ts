@@ -1,8 +1,13 @@
 import { IsDateString, IsNumber, IsUUID } from 'class-validator';
 import { PayableEntity } from '../entities/payable.entity';
 import { UUID } from 'crypto';
+import { PickType } from '@nestjs/mapped-types';
 
-export class CreatePayableInputDTO extends PayableEntity {
+export class CreatePayableInputDTO extends PickType(PayableEntity, [
+  'value',
+  'assignorId',
+  'emissionDate',
+]) {
   @IsNumber({}, { message: 'Value must be a number' })
   public value: number;
 
