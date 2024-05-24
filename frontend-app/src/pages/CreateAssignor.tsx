@@ -10,7 +10,6 @@ const initialState = {
 
 function CreateAssignor() {
   const [formData, setFormData] = useState(initialState);
-  let message;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
@@ -21,17 +20,14 @@ function CreateAssignor() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      }
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+
       const response = await axios.post('/assignor', formData, config);
       setFormData(initialState);
-      console.log(response.data);
-      message = "Cadastrado com sucesso."
+      console.log(response);
+      alert('Sucesso')
     } catch (err) {
-      message = "Algo deu errado."
+      alert("Algo deu errado.")
       console.log(err);
     }
   }
@@ -70,7 +66,6 @@ function CreateAssignor() {
           />
           <button>Cadastrar</button>
         </form>
-        <p>{message}</p>
     </main>
   )
 }
