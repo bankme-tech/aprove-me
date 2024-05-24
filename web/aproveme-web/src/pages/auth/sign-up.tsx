@@ -16,11 +16,11 @@ export const SignUp = () => {
         <div className="flex w-[400px] flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center ">
             <h1 className="text-2xl font-semibold tracking-tight">
-              Criar conta como cedente
+              Criar conta de operações
             </h1>
 
             <p className="text-sm text-muted-foreground">
-              Compartilhe o fluxo de informações de forma prática.
+              Opere sobre o fluxo de informações de forma prática.
             </p>
           </div>
 
