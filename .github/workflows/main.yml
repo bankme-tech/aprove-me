@@ -20,8 +20,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: AKIAROHQX5Q2OH3LFGFX
+          aws-secret-access-key: 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
           aws-region: us-east-2
 
       - name: Log in to Amazon ECR
@@ -30,7 +30,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker-compose build -t challenge
+          docker-compose -f ../server/docker-compose.yml build
           docker tag challenge:latest 099289132084.dkr.ecr.us-east-2.amazonaws.com/challenge:latest
 
       - name: Push Docker Image to ECR
