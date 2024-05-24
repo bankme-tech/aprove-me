@@ -19,8 +19,5 @@ RUN npx prisma generate
 # Roda as migrações
 RUN npx prisma migrate deploy
 
-# Popula o banco
-RUN npx prisma db seed
-
 # Roda a aplicação
 CMD [ "npm", "start"]

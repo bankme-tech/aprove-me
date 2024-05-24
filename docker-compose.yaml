@@ -22,7 +22,7 @@ services:
     volumes:
       - ./backend-app/src:/app/backend/src
     environment:
-      - DATABASE_URL="file:.dev.db"
+      - JWT_SECRET="banckmesecretkey"
   frontend:
     # Name the container
     container_name: bankme_frontend
