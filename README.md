@@ -13,12 +13,41 @@ O projeto é um desafio técnico da BankMe que pedr a criação de uma RESTful A
 ## Funcionalidades
 
 - Cadastro de Cedentes e Pagantes
-- Endpoints autenticados com Tokens JWT que expiram após 60s
+- Endpoints autenticados com Tokens JWT que expiram após 60s, relacionados ao Id do User que fez a requisição
 - Interface de Cadastro de Pagáveis, Cedentes e Visualizar as informações
 - Sistema de Cadastro de Usuários para o Sistema
 
 
 
+## Instruções para Inicializar o Projeto
+
+## Pré-requisitos:
+
+- Certifique-se de ter o Yarn instalado em sua máquina.
+- Instale o Docker e a imagem do PostgreSQL se ainda não os tiver.
+
+## Instalação das Dependências:
+
+Execute o seguinte comando para instalar as dependências do projeto:
+
+Certifique-se de ter Yarn instalado em sua máquina
+```bash
+  yarn install 
+```
+Inicie os containers do Docker com o comando:
+```bash
+docker-compose up -d
+```
+Abra o arquivo .env.
+Altere o parâmetro DATABASE_URL para refletir suas credenciais de banco de dados PostgreSQL:
+```bash
+DATABASE_URL = postgresql://yourUser:password@localhost:5432/databaseName
+```
+
+Execute o comando abaixo para aplicar as migrações do Prisma:
+```bash
+yarn prisma migrate dev --name add docker-compose.yml
+```
 ## Funcionalidades da API
 
 
