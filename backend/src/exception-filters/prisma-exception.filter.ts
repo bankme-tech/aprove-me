@@ -6,8 +6,9 @@ import {
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
-enum PrismaErrorCodes {
+export enum PrismaErrorCodes {
   UniqueConstraintViolation = 'P2002',
+  ForeignKeyConstraintViolation = 'P2003',
   RecordDoesNotExist = 'P2025',
 }
 
