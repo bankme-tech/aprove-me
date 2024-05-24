@@ -7,6 +7,6 @@ export class RemovePayableUseCaseStub implements IRemovePayableUseCase {
 
   async execute(removePayableDTO: RemovePayableInputDTO): Promise<void> {
     this.data = removePayableDTO;
-    return null;
+    return;
   }
 }

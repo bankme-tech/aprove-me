@@ -7,6 +7,6 @@ export class RemoveAssignorUseCaseStub implements IRemoveAssignorUseCase {
 
   async execute(removeAssignorDTO: RemoveAssignorInputDTO): Promise<void> {
     this.data = removeAssignorDTO;
-    return null;
+    return;
   }
 }
