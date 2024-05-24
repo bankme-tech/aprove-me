@@ -349,12 +349,6 @@ export class AppController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteAssignor(@Param('id') id: string) {
     try {
-      const assignorExist = await this.assignor.getAssignorById(id);
-
-      if (!assignorExist) {
-        throw new NotFoundException(`Assignor with ID ${id} not found`);
-      }
-
       await this.assignor.deleteAssignor(id);
 
       return null;

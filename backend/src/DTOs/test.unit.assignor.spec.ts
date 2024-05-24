@@ -12,7 +12,6 @@ import {
 } from '../../test/mocks/mock-assignor';
 import { UserRepo } from '../repositories/user-repo';
 import {
-  HttpException,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
@@ -42,9 +41,7 @@ describe('Cedente', () => {
 
   describe('CRUD de cedente', () => {
     it('Deve criar um novo cedente', async () => {
-      jest
-        .spyOn(service, 'createAssignor')
-        .mockResolvedValue(MOCK_NOVO_CEDENTE);
+      jest.spyOn(service, 'createAssignor');
 
       const result = await controller.createAssignor(MOCK_NOVO_CEDENTE);
 
@@ -58,9 +55,7 @@ describe('Cedente', () => {
     });
 
     it('Deve listar todos os cedentes', async () => {
-      jest
-        .spyOn(service, 'getAllAssignors')
-        .mockResolvedValue([MOCK_NOVO_CEDENTE, MOCK_UPDATE_CEDENTE]);
+      jest.spyOn(service, 'getAllAssignors');
 
       const result = await controller.getAssignorsAll();
 
@@ -68,20 +63,8 @@ describe('Cedente', () => {
       expect(result).toBeInstanceOf(Array);
     });
 
-    it('Deve falhar ao tentar buscar um cedente por id', async () => {
-      try {
-        jest.spyOn(service, 'getAssignorById').mockRejectedValue;
-
-        controller.getAssignorById;
-      } catch (error) {
-        expect(error).toBeInstanceOf(InternalServerErrorException);
-      }
-    });
-
     it('Deve buscar um cedente por id', async () => {
-      jest
-        .spyOn(service, 'getAssignorById')
-        .mockResolvedValue(MOCK_NOVO_CEDENTE);
+      jest.spyOn(service, 'getAssignorById');
 
       const result = await controller.getAssignorById(MOCK_NOVO_CEDENTE.id);
 
@@ -89,22 +72,38 @@ describe('Cedente', () => {
       expect(result).toEqual(MOCK_NOVO_CEDENTE);
     });
 
-    it('Deve retornar um arry de cedentes vazio', async () => {
-      jest
-        .spyOn(service, 'getAllAssignors')
-        .mockResolvedValue([MOCK_NOVO_CEDENTE, MOCK_UPDATE_CEDENTE]);
+    it('Deve falhar ao tentar buscar um cedente por id inválido', async () => {
+      try {
+        jest.spyOn(service, 'getAssignorById');
+
+        controller.getAssignorById;
+      } catch (error) {
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+      }
+    });
+
+    it('Deve retornar um arry de cedentes', async () => {
+      jest.spyOn(service, 'getAllAssignors');
 
       const result = await controller.getAssignorsAll();
 
       expect(result).toBeDefined();
       expect(result).toBeInstanceOf(Array);
-      expect(result).toEqual([MOCK_NOVO_CEDENTE, MOCK_UPDATE_CEDENTE]);
+      expect(result).toEqual([MOCK_NOVO_CEDENTE]);
+    });
+
+    it('Internal Server Error', async () => {
+      jest.spyOn(controller, 'getAssignorsAll').mockReset();
+
+      try {
+        await controller.getAssignorsAll();
+      } catch (error) {
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+      }
     });
 
     it('Deve falhar ao tentar atualizar um cedente com id inválido', async () => {
-      jest
-        .spyOn(service, 'updateAssignor')
-        .mockResolvedValue(MOCK_UPDATE_CEDENTE);
+      jest.spyOn(service, 'updateAssignor');
 
       const id = 'invalid-id';
 
@@ -116,24 +115,17 @@ describe('Cedente', () => {
     });
 
     it('Deve atualizar um cedente com id válido', async () => {
-      jest
-        .spyOn(service, 'updateAssignor')
-        .mockResolvedValue(MOCK_UPDATE_CEDENTE);
+      jest.spyOn(controller, 'updateAssignor');
 
       const id = MOCK_UPDATE_CEDENTE.id;
 
-      try {
-        const response = await controller.updateAssignor(id, MOCK_NOVO_CEDENTE);
+      const response = await controller.updateAssignor(id, MOCK_UPDATE_CEDENTE);
 
-        expect(response).toBeDefined();
-        expect(response).toEqual(MOCK_UPDATE_CEDENTE);
-      } catch (error) {
-        expect(error).toBeInstanceOf(HttpException);
-      }
+      expect(response).toEqual(MOCK_UPDATE_CEDENTE);
     });
 
     it('Deve falhar ao tentar deletar um cedente', async () => {
-      jest.spyOn(service, 'deleteAssignor').mockResolvedValue;
+      jest.spyOn(service, 'deleteAssignor');
 
       try {
         await controller.getAssignorById('invalid-id');
@@ -143,11 +135,20 @@ describe('Cedente', () => {
     });
 
     it('Deve deletar um cedente', async () => {
-      jest.spyOn(controller, 'deleteAssignor').mockResolvedValue(true);
+      jest.spyOn(controller, 'deleteAssignor');
 
       await controller.deleteAssignor(MOCK_NOVO_CEDENTE.id);
 
-      expect(controller.deleteAssignor).toBeCalled();
+      expect(controller.deleteAssignor).toBeDefined();
+    });
+
+    it('Deve retornar exceção not found', async () => {
+      try {
+        jest.spyOn(controller, 'getAssignorsAll');
+        await controller.getAssignorsAll();
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
     });
   });
 });

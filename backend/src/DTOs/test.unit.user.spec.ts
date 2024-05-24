@@ -39,7 +39,7 @@ describe('Usuário', () => {
 
   describe('Crianção de usuário', () => {
     it('Deve criar um novo usuário', async () => {
-      jest.spyOn(service, 'createUser').mockResolvedValue(MOCK_NOVO_USUARIO);
+      jest.spyOn(service, 'createUser');
 
       const result = await controller.createUser(MOCK_NOVO_USUARIO);
 
@@ -62,7 +62,7 @@ describe('Usuário', () => {
     });
 
     it('Deve obter um usuário pelo id', async () => {
-      jest.spyOn(service, 'getUserById').mockResolvedValue(MOCK_NOVO_USUARIO);
+      jest.spyOn(service, 'getUserById');
 
       const result = await controller.getUserById(MOCK_NOVO_USUARIO.id);
 
@@ -76,7 +76,7 @@ describe('Usuário', () => {
     });
 
     it('Deve falhar ao tentar obter um usuário pelo id', async () => {
-      jest.spyOn(service, 'getUserById').mockResolvedValue(MOCK_NOVO_USUARIO);
+      jest.spyOn(service, 'getUserById');
 
       try {
         await controller.getUserById(10);
@@ -86,9 +86,7 @@ describe('Usuário', () => {
     });
 
     it('Deve obter um usuário pelo login', async () => {
-      jest
-        .spyOn(service, 'getUserByLogin')
-        .mockResolvedValue(MOCK_NOVO_USUARIO);
+      jest.spyOn(service, 'getUserByLogin');
 
       const result = await controller.getUserByLogin(MOCK_NOVO_USUARIO.login);
 
@@ -102,9 +100,7 @@ describe('Usuário', () => {
     });
 
     it('Deve falhar ao tentar obter um usuário pelo login', async () => {
-      jest
-        .spyOn(service, 'getUserByLogin')
-        .mockResolvedValue(MOCK_NOVO_USUARIO);
+      jest.spyOn(service, 'getUserByLogin');
 
       try {
         await controller.getUserByLogin('teste2');
@@ -132,13 +128,11 @@ describe('Usuário', () => {
     });
 
     it('Deve atualizar um usuário', async () => {
-      jest
-        .spyOn(controller, 'updateUser')
-        .mockResolvedValue(MOCK_UPDATE_USUARIO);
+      jest.spyOn(service, 'updateUser');
 
       const { id } = MOCK_NOVO_USUARIO;
 
-      const result = await controller.updateUser(id, MOCK_NOVO_USUARIO);
+      const result = await controller.updateUser(id, MOCK_UPDATE_USUARIO);
 
       expect(result).toEqual(MOCK_UPDATE_USUARIO);
       expect(result.password).toBeDefined();
@@ -150,7 +144,7 @@ describe('Usuário', () => {
     });
 
     it('Deve falhar ao tentar atualizar um usuário com id inválido', async () => {
-      jest.spyOn(service, 'updateUser').mockResolvedValue(null);
+      jest.spyOn(service, 'updateUser');
 
       try {
         await controller.updateUser(10, MOCK_NOVO_USUARIO);
@@ -160,13 +154,21 @@ describe('Usuário', () => {
     });
 
     it('Deve falhar ao deletar um usuário com id inválido', async () => {
-      jest.spyOn(service, 'deleteUser').mockResolvedValue(null);
+      jest.spyOn(service, 'deleteUser');
 
       try {
         await controller.deleteUser(10);
       } catch (error) {
         expect(error).toBeInstanceOf(NotFoundException);
       }
+    });
+
+    it('Deve deletar um usuário com id válido', async () => {
+      jest.spyOn(service, 'deleteUser');
+
+      const result = await controller.deleteUser(MOCK_NOVO_USUARIO.id);
+
+      expect(result).toBeUndefined();
     });
   });
 });
