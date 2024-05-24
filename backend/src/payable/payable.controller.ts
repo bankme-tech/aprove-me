@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
 import { CreatePayableInputDTO } from './dto/create-payable.input.dto';
 import { CreatePayableOutputDTO } from './dto/create-payable.output.dto';
 import { ICreatePayableUseCase } from './usecases/create-payable.usecase.interface';
@@ -6,6 +6,11 @@ import { FindPayableOutputDTO } from './dto/find-payable.output.dto';
 import { IFindAllPayablesUseCase } from './usecases/find-all-payables.usecase.interface';
 import { FindPayableInputDTO } from './dto/find-payable.input.dto';
 import { IFindPayableUseCase } from './usecases/find-payable.usecase.interface';
+import {
+  UpdatePayableInputBodyDTO,
+  UpdatePayableInputParamsDTO,
+} from './dto/update-payable.input.dto';
+import { IUpdatePayableUseCase } from './usecases/update-payable.usecase.interface';
 
 @Controller('payable')
 export class PayableController {
@@ -13,6 +18,7 @@ export class PayableController {
     private readonly createPayableUseCase: ICreatePayableUseCase,
     private readonly findAllPayablesUseCase: IFindAllPayablesUseCase,
     private readonly findPayableUseCase: IFindPayableUseCase,
+    private readonly updatePayableUseCase: IUpdatePayableUseCase,
   ) {}
 
   @Post()
@@ -32,5 +38,16 @@ export class PayableController {
     @Param() findPayableDTO: FindPayableInputDTO,
   ): Promise<FindPayableOutputDTO> {
     return await this.findPayableUseCase.execute(findPayableDTO);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param() updatePayableInputParamsDTO: UpdatePayableInputParamsDTO,
+    @Body() updatePayableInputBodyDTO: UpdatePayableInputBodyDTO,
+  ): Promise<FindPayableOutputDTO> {
+    return await this.updatePayableUseCase.execute({
+      id: updatePayableInputParamsDTO.id,
+      ...updatePayableInputBodyDTO,
+    });
   }
 }
