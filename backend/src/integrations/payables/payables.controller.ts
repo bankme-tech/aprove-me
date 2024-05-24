@@ -61,4 +61,10 @@ export class PayablesController {
   async remove(@Param('id') id: string) {
     return new PayableEntity(await this.payablesService.remove(id));
   }
+
+  @Post('batch')
+  @ApiOkResponse()
+  async batchCreate(@Body() createPayableDto: CreatePayableDto[]) {
+    return this.payablesService.batchCreate(createPayableDto);
+  }
 }

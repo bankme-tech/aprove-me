@@ -2,10 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { PrismaService } from 'src/prisma.service';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 @Injectable()
 export class PayablesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    @InjectQueue('payablesBatch') private readonly payablesBatch: Queue,
+  ) {}
 
   create(createPayableDto: CreatePayableDto) {
     return this.prisma.payable.create({
@@ -33,6 +38,13 @@ export class PayablesService {
   remove(id: string) {
     return this.prisma.payable.delete({
       where: { id },
+    });
+  }
+
+  batchCreate(createPayableDtos: CreatePayableDto[]) {
+    return this.payablesBatch.add('process-payables', createPayableDtos, {
+      attempts: 4,
+      lifo: true,
     });
   }
 }
