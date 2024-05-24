@@ -1,18 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PayableRepo } from './repositories/payable-repo';
-import { prismaPayableRepo } from './repositories/prisma/prisma-payable-repo';
-import { prismaAssignorRepo } from './repositories/prisma/prisma-assignor-repo';
-import { AssignorRepo } from './repositories/assignor-repo';
-import { prismaUserRepo } from './repositories/prisma/prisma-user-repo';
-import { PrismaService } from './database/prisma.service';
-import { AppController } from './app.controller';
+import { PayableRepo } from '../repositories/payable-repo';
+import { prismaPayableRepo } from '../repositories/prisma/prisma-payable-repo';
+import { prismaAssignorRepo } from '../repositories/prisma/prisma-assignor-repo';
+import { AssignorRepo } from '../repositories/assignor-repo';
+import { prismaUserRepo } from '../repositories/prisma/prisma-user-repo';
+import { PrismaService } from '../database/prisma.service';
+import { AppController } from '../app.controller';
 import {
   MOCK_NOVO_RECEBIVEIS,
   MOCK_UPDATE_RECEBIVEIS,
-} from '../test/mocks/mock-payable';
-import { UserRepo } from './repositories/user-repo';
-import { plainToClass } from 'class-transformer';
-import { validate } from 'class-validator';
+} from '../../test/mocks/mock-payable';
+import { UserRepo } from '../repositories/user-repo';
 
 describe('Cedente', () => {
   let controller: AppController;
@@ -40,7 +38,7 @@ describe('Cedente', () => {
   describe('CRUD de cedente', () => {
     it('Deve criar um novo cedente', async () => {
       jest
-        .spyOn(controller, 'createPayable')
+        .spyOn(service, 'createPayable')
         .mockResolvedValue(MOCK_NOVO_RECEBIVEIS);
 
       const result = await controller.createPayable(MOCK_NOVO_RECEBIVEIS);
@@ -55,7 +53,7 @@ describe('Cedente', () => {
     });
 
     it('Deve listar todos os cedentes', async () => {
-      jest.spyOn(controller, 'getPayableAll');
+      jest.spyOn(service, 'getAllPayables');
 
       const result = await controller.getPayableAll();
 
@@ -65,7 +63,7 @@ describe('Cedente', () => {
 
     it('Deve buscar um cedente por id', async () => {
       jest
-        .spyOn(controller, 'getPayableById')
+        .spyOn(service, 'getPayableById')
         .mockResolvedValue(MOCK_NOVO_RECEBIVEIS);
 
       const result = await controller.getPayableById(MOCK_NOVO_RECEBIVEIS.id);

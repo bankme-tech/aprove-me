@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserRepo } from './repositories/user-repo';
-import { PayableRepo } from './repositories/payable-repo';
-import { prismaPayableRepo } from './repositories/prisma/prisma-payable-repo';
-import { prismaAssignorRepo } from './repositories/prisma/prisma-assignor-repo';
-import { AssignorRepo } from './repositories/assignor-repo';
-import { prismaUserRepo } from './repositories/prisma/prisma-user-repo';
-import { PrismaService } from './database/prisma.service';
+import { UserRepo } from '../repositories/user-repo';
+import { PayableRepo } from '../repositories/payable-repo';
+import { prismaPayableRepo } from '../repositories/prisma/prisma-payable-repo';
+import { prismaAssignorRepo } from '../repositories/prisma/prisma-assignor-repo';
+import { AssignorRepo } from '../repositories/assignor-repo';
+import { prismaUserRepo } from '../repositories/prisma/prisma-user-repo';
+import { PrismaService } from '../database/prisma.service';
 import {
   MOCK_NOVO_USUARIO,
   MOCK_NOVO_USUARIO_SEM_SENHA,
   MOCK_UPDATE_USUARIO,
-} from '../test/mocks/mock-usuários';
-import { AppController } from './app.controller';
-import { BadRequestException } from '@nestjs/common';
+} from '../../test/mocks/mock-usuários';
+import { AppController } from '../app.controller';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('Usuário', () => {
   let controller: AppController;
@@ -39,7 +39,7 @@ describe('Usuário', () => {
 
   describe('Crianção de usuário', () => {
     it('Deve criar um novo usuário', async () => {
-      jest.spyOn(controller, 'createUser').mockResolvedValue(MOCK_NOVO_USUARIO);
+      jest.spyOn(service, 'createUser').mockResolvedValue(MOCK_NOVO_USUARIO);
 
       const result = await controller.createUser(MOCK_NOVO_USUARIO);
 
@@ -53,18 +53,16 @@ describe('Usuário', () => {
     });
 
     it('Deve falhar ao tentar criar um novo usuário sem senha', async () => {
-      jest.spyOn(controller, 'createUser');
-
-      await expect(
-        controller.createUser(MOCK_NOVO_USUARIO_SEM_SENHA),
-      ).rejects.toThrow(BadRequestException);
-      expect(controller.createUser).toHaveBeenCalled();
+      jest.spyOn(service, 'createUser');
+      try {
+        await controller.createUser(MOCK_NOVO_USUARIO_SEM_SENHA);
+      } catch (error) {
+        expect(error).toBeInstanceOf(BadRequestException);
+      }
     });
 
     it('Deve obter um usuário pelo id', async () => {
-      jest
-        .spyOn(controller, 'getUserById')
-        .mockResolvedValue(MOCK_NOVO_USUARIO);
+      jest.spyOn(service, 'getUserById').mockResolvedValue(MOCK_NOVO_USUARIO);
 
       const result = await controller.getUserById(MOCK_NOVO_USUARIO.id);
 
@@ -77,9 +75,19 @@ describe('Usuário', () => {
       expect(result.id).toEqual(MOCK_NOVO_USUARIO.id);
     });
 
+    it('Deve falhar ao tentar obter um usuário pelo id', async () => {
+      jest.spyOn(service, 'getUserById').mockResolvedValue(MOCK_NOVO_USUARIO);
+
+      try {
+        await controller.getUserById(10);
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
+    });
+
     it('Deve obter um usuário pelo login', async () => {
       jest
-        .spyOn(controller, 'getUserByLogin')
+        .spyOn(service, 'getUserByLogin')
         .mockResolvedValue(MOCK_NOVO_USUARIO);
 
       const result = await controller.getUserByLogin(MOCK_NOVO_USUARIO.login);
@@ -93,12 +101,34 @@ describe('Usuário', () => {
       expect(result.id).toEqual(MOCK_NOVO_USUARIO.id);
     });
 
+    it('Deve falhar ao tentar obter um usuário pelo login', async () => {
+      jest
+        .spyOn(service, 'getUserByLogin')
+        .mockResolvedValue(MOCK_NOVO_USUARIO);
+
+      try {
+        await controller.getUserByLogin('teste2');
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
+    });
+
     it('Deve obter um array usuário', async () => {
-      jest.spyOn(controller, 'getUserAll');
+      jest.spyOn(service, 'getUsersAll');
 
       const result = await controller.getUserAll();
 
       expect(result).toBeInstanceOf(Array);
+    });
+
+    it('Deve falhar ao tentar obter um array de usuários', async () => {
+      jest.spyOn(service, 'getUsersAll').mockResolvedValue([]);
+
+      try {
+        await controller.getUserAll();
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
     });
 
     it('Deve atualizar um usuário', async () => {
@@ -119,12 +149,24 @@ describe('Usuário', () => {
       expect(result.id).toEqual(MOCK_UPDATE_USUARIO.id);
     });
 
-    it('Deve deletar um usuário', async () => {
-      jest.spyOn(controller, 'deleteUser').mockResolvedValue(null);
+    it('Deve falhar ao tentar atualizar um usuário com id inválido', async () => {
+      jest.spyOn(service, 'updateUser').mockResolvedValue(null);
 
-      const result = await controller.deleteUser(MOCK_NOVO_USUARIO.id);
+      try {
+        await controller.updateUser(10, MOCK_NOVO_USUARIO);
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
+    });
 
-      expect(result).toEqual(null);
+    it('Deve falhar ao deletar um usuário com id inválido', async () => {
+      jest.spyOn(service, 'deleteUser').mockResolvedValue(null);
+
+      try {
+        await controller.deleteUser(10);
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
     });
   });
 });

@@ -309,7 +309,7 @@ export class AppController {
     try {
       const assignors = await this.assignor.getAllAssignors();
 
-      if (!assignors) {
+      if (assignors.length === 0 || !assignors) {
         throw new NotFoundException('Assignors not found');
       }
 
