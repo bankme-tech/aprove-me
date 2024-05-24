@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   /**Checa que o usuário existe no banco de dados e compara a senha encriptada. Se tudo estiver correto, retorna um novo token de autenticação. Se não, retorna um erro de "Usuário Inválido". */
-  async login(loginAuthDto: LoginAuthDto) {
+  async login(loginAuthDto: LoginAuthDto): Promise<AuthServiceResponse> {
     const { login, password } = loginAuthDto;
     const user = await this.prisma.user.findUnique({
       where: { login },
@@ -24,7 +24,7 @@ export class AuthService {
       return {
         status: 400,
         body: { message: 'Usuário não encontrado.' },
-      } as AuthServiceResponse;
+      };
     }
     // Caso o usuário exista, compara a senha submetida com a hash salva no banco. Se correto, retorna mensagem de sucesso e o novo token gerado.
     if (bcrypt.compareSync(password, user.password)) {
@@ -34,9 +34,11 @@ export class AuthService {
       });
       return {
         status: 200,
-        body: { message: 'Login efetuado com sucesso.' },
-        newToken,
-      } as AuthServiceResponse;
+        body: {
+          message: 'Login efetuado com sucesso.',
+          token: newToken,
+        },
+      };
     }
   }
 }
