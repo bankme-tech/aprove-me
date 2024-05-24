@@ -43,4 +43,9 @@ export class PayablesController {
   deletePayable(@Param('id') id: string) {
     return this.payablesService.deletePayable(id);
   }
+
+  @Post('batch')
+  async batchCreatePayables(@Body() createDtos: CreatePayableDto[]) {
+    return this.payablesService.batchCreatePayables(createDtos);
+  }
 }
