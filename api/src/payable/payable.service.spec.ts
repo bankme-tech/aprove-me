@@ -2,17 +2,20 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PayableService } from './payable.service';
 
 describe('PayableService', () => {
-  let service: PayableService;
+  let payableService: PayableService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [PayableService],
     }).compile();
 
-    service = module.get<PayableService>(PayableService);
+    payableService = module.get<PayableService>(PayableService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  describe('findAll', () => {
+    it('should return an array of payables', async () => {
+      const result = await payableService.findAll();
+      expect(result).toEqual([]);
+    });
   });
 });
