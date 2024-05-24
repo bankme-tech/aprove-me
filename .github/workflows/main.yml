@@ -9,11 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    
     steps:
-      - name: Debug action
-       uses: hmarr/debug-action@v3.0.0
       - name: Checkout Repository
         uses: actions/checkout@v2
 
