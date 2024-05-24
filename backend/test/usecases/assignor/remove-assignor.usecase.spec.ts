@@ -4,6 +4,7 @@ import { makeAssignorEntity } from '../../mocks/entities/assignor.entity.mock';
 import { AssignorRepositoryStub } from '../../mocks/repositories/assignor.repository.mock';
 import { RemoveAssignorUseCase } from 'src/assignor/usecases/remove-assignor-usecase';
 import { RemoveAssignorInputDTO } from 'src/assignor/dto/remove-assignor.input.dto';
+import { RecordNotFoundError } from 'src/persistence/errors/record-not-found.error';
 
 describe('RemoveAssignorUseCase', () => {
   let sut: RemoveAssignorUseCase;
@@ -37,5 +38,13 @@ describe('RemoveAssignorUseCase', () => {
     await sut.execute(dto);
 
     expect(removeSpy).toHaveBeenCalledTimes(1);
+  });
+
+  test('should throw if no assignor is found', async () => {
+    jest.spyOn(assignorRepositoryStub, 'findById').mockResolvedValue(null);
+
+    const promise = sut.execute(dto);
+
+    await expect(promise).rejects.toThrow(new RecordNotFoundError('Assignor'));
   });
 });
