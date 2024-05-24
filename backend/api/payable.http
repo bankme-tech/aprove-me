@@ -1,6 +1,4 @@
 @baseUrl = http://localhost:8080
-@uuidPayable = af0eb8ad-ea06-488b-bec5-e501c11d3db7
-@uuidAssignor = af0eb8ad-ea06-488b-bec5-e501c11d3db8
 
 ### Create a new payable
 POST {{baseUrl}}/integrations/payable
@@ -16,5 +14,5 @@ Content-Type: application/json
 GET {{baseUrl}}/integrations/payable
 
 ### Get payable by id
-GET {{baseUrl}}/integrations/payable/{{uuidPayable}}
+GET {{baseUrl}}/integrations/payable/9a888b65-fe9a-472b-9f30-bc8fa7c3e118
 
