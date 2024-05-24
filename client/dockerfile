@@ -1,0 +1,31 @@
+# Etapa 1: Build do aplicativo Angular
+FROM node:alpine as build
+
+WORKDIR /app
+
+# Copiar os arquivos package.json e package-lock.json
+COPY package*.json ./
+
+# Instalar as dependências do Angular
+RUN npm install
+
+# Copiar o código-fonte do aplicativo
+COPY . .
+
+# Construir o aplicativo Angular
+RUN npm run build --prod
+
+# Etapa 2: Servir o aplicativo usando o Nginx
+FROM nginx:alpine
+
+# Copiar os arquivos construídos do Angular para o diretório padrão do Nginx
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Copiar o arquivo de configuração do Nginx (se houver)
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expor a porta 80 para o Nginx
+EXPOSE 80
+
+# Iniciar o Nginx
+CMD ["nginx", "-g", "daemon off;"]

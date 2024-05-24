@@ -20,23 +20,34 @@ services:
     networks:
       - rabbitmq-network
 
-  app:
+  app-back:
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile
-    container_name: 'app'
+    container_name: 'app-back'
     depends_on:
       rabbitmq:
         condition: service_healthy
     env_file:
-      - .env
+      - ./server/.env
     restart: on-failure
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
+      - ./server:/app
       - /app/node_modules
       - sqlite-data:/app/prisma
+    networks:
+      - rabbitmq-network
+
+  app-front:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: 'app-front'
+    restart: on-failure
+    ports:
+      - "4200:4200"
     networks:
       - rabbitmq-network
 
