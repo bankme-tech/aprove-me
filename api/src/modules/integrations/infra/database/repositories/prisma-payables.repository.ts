@@ -50,4 +50,9 @@ export class PrismaPayablesRepository implements PayablesRepository {
       },
     });
   }
+
+  public async findAll(): Promise<Payable[]> {
+    const payables = await this.prisma.payable.findMany();
+    return payables.map(PayablesMapper.toDomain);
+  }
 }

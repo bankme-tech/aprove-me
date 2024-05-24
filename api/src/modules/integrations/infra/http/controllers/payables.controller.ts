@@ -23,6 +23,7 @@ import {
 import { CreatePayablesBatchUseCase } from '@/modules/integrations/use-cases/create-payables-batch.use-case';
 import { PatchPayableDto, patchPayableDto } from '../dtos/patch-payable.dto';
 import { PatchPayableUseCase } from '@/modules/integrations/use-cases/patch-payable.use-case';
+import { FindAllPayablesUseCase } from '@/modules/integrations/use-cases/find-all-payables.use-case';
 
 @Controller('integrations/payables')
 export class PayablesController {
@@ -31,10 +32,20 @@ export class PayablesController {
     private createPayableUseCase: CreatePayableUseCase,
     private createPayablesBatchUseCase: CreatePayablesBatchUseCase,
     private updatePayableUseCase: PatchPayableUseCase,
+    private findAllPayablesUseCase: FindAllPayablesUseCase,
   ) {}
 
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  public async findAllPayable() {
+    const payables = await this.findAllPayablesUseCase.execute();
+
+    return { payables: payables.map(PayablesViewModel.toHTTP) };
+  }
+
   @Get(':id')
-  @HttpCode(HttpStatus.FOUND)
+  @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
   public async findPayableById(
     @Param(new ZodValidationPipe(uuidDto))

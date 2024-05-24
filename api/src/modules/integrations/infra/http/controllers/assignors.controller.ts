@@ -45,7 +45,7 @@ export class AssignorsController {
   }
 
   @Get(':id')
-  @HttpCode(HttpStatus.FOUND)
+  @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
   public async findAssignorById(
     @Param(new ZodValidationPipe(uuidDto))

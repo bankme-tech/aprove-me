@@ -25,6 +25,7 @@ import { AssignorsController } from './infra/http/controllers/assignors.controll
 import { PayablesController } from './infra/http/controllers/payables.controller';
 import { AuthController } from './infra/http/controllers/auth.controller';
 import { FindAllAssignorsUseCase } from './use-cases/find-all-assignors.use-case';
+import { FindAllPayablesUseCase } from './use-cases/find-all-payables.use-case';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { FindAllAssignorsUseCase } from './use-cases/find-all-assignors.use-case
     CreatePayableProducerJob,
     CreatePayableConsumerJob,
     FindAllAssignorsUseCase,
+    FindAllPayablesUseCase,
   ],
 })
 export class IntegrationsModule {}

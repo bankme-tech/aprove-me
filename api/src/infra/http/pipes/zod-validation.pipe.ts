@@ -13,7 +13,6 @@ export class ZodValidationPipe implements PipeTransform {
         const issues = error.flatten().fieldErrors;
         const objectHasNoKeys = Object.keys(issues).length === 0;
         if (objectHasNoKeys) {
-          console.log('ISSUEESS: ', error);
           throw new BadRequestException({
             issues: error.issues,
             message: 'Validation failed',
