@@ -8,7 +8,9 @@ import { PayableEntity } from '../entities/payable.entity';
 export class UpdatePayableUseCase implements IUpdatePayableUseCase {
   constructor(private readonly payableRepository: IPayableRepository) {}
 
-  execute(updatePayableDTO: UpdatePayableInputDTO): Promise<PayableEntity> {
+  async execute(
+    updatePayableDTO: UpdatePayableInputDTO,
+  ): Promise<PayableEntity> {
     return this.payableRepository.update(updatePayableDTO);
   }
 }
