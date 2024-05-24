@@ -11,15 +11,15 @@ datasource db {
 }
 
 model Payable {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   value        Float
-  emissionDate DateTime @map("emission_date")
-  assignorId   String   @map("assignor_id")
-  assignor     Assignor @relation(fields: [assignorId], references: [id])
-
-  createdAt  DateTime  @default(now()) @map("created_at")
-  payedAt    DateTime? @map("payed_at")
-  canceledAt DateTime? @map("canceled_at")
+  emissionDate DateTime  @map("emission_date")
+  assignorId   String    @map("assignor_id")
+  assignor     Assignor  @relation(fields: [assignorId], references: [id])
+  status       String    @default("waiting") // CHANGE TO ENUM IN MYSQL OR POSTGRESS
+  createdAt    DateTime  @default(now()) @map("created_at")
+  payedAt      DateTime? @map("payed_at")
+  canceledAt   DateTime? @map("canceled_at")
 
   @@index([assignorId])
   @@map("payables")
