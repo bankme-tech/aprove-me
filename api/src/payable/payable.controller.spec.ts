@@ -1,272 +1,177 @@
-import { PrismaService } from '../db/prisma.service';
+import { Test, TestingModule } from '@nestjs/testing';
 import { PayableController } from './payable.controller';
 import { PayableService } from './payable.service';
+import { Payable } from './entities/payable.entity';
+import { BadRequestException } from '@nestjs/common';
+import { CreatePayableDto } from './dto/create-payable.dto';
 
-jest.mock('./payable.controller');
+const payableEntityList = [
+  new Payable({
+    id: '1',
+    value: 100,
+    emissionDate: new Date(),
+    assignorId: '1',
+  }),
+  new Payable({
+    id: '2',
+    value: 200,
+    emissionDate: new Date(),
+    assignorId: '2',
+  }),
+  new Payable({
+    id: '3',
+    value: 300,
+    emissionDate: new Date(),
+    assignorId: '3',
+  }),
+  new Payable({
+    id: '4',
+    value: 400,
+    emissionDate: new Date(),
+    assignorId: '2',
+  }),
+];
 
 describe('PayableController', () => {
-  let mockPayableController: jest.Mocked<PayableController>;
+  let payableControler: PayableController;
+  let payableService: PayableService;
 
-  beforeEach(() => {
-    mockPayableController = new PayableController(
-      new PayableService(new PrismaService()),
-    ) as jest.Mocked<PayableController>;
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [PayableController],
+      providers: [
+        {
+          provide: PayableService,
+          useValue: {
+            create: jest.fn().mockResolvedValue(payableEntityList[0]),
+            findAll: jest.fn().mockResolvedValue(payableEntityList),
+            findOne: jest.fn().mockResolvedValue(payableEntityList[1]),
+            update: jest.fn().mockResolvedValue(payableEntityList[2]),
+            remove: jest.fn(),
+          },
+        },
+      ],
+    }).compile();
+
+    payableControler = module.get<PayableController>(PayableController);
+    payableService = module.get<PayableService>(PayableService);
+  });
+
+  it('should be defined', () => {
+    expect(payableControler).toBeDefined();
+    expect(payableService).toBeDefined();
   });
 
   describe('createPayable', () => {
     it('should create a payable', async () => {
       // Arrange
-      const mockData = {
+      const payableInsert = {
         value: 100,
-        assignor: '123e456-12b3-a456-426614174000',
+        assignor: '1',
       };
-
-      const expectedResult = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        value: 100,
-        assignor: '123e456-12b3-a456-426614174000',
-        emissionDate: new Date('2021-09-01'),
-      };
-
-      mockPayableController.create.mockResolvedValue(expectedResult);
 
       // Act
-      const result = await mockPayableController.create(mockData);
+      const result = await payableControler.create(payableInsert);
 
       // Assert
-      expect(mockPayableController.create).toHaveBeenCalledWith(mockData);
-      expect(result).toEqual(expectedResult);
+      expect(result).toEqual(payableEntityList[0]);
+      expect(payableService.create).toHaveBeenCalledWith(payableInsert);
     });
 
     it('should throw an error if assignor does not exist', async () => {
       // Arrange
-      const mockData = {
+      jest
+        .spyOn(payableService, 'create')
+        .mockRejectedValueOnce(new Error('Assignor not found'));
+
+      const payableInsert = {
         value: 100,
-        assignor: '123e456-12b3-a456-426614174000',
+        assignor: '5',
       };
 
-      const expectedResult = 'Assignor not found';
-
-      mockPayableController.create.mockRejectedValue(new Error(expectedResult));
       // Act
       try {
-        await mockPayableController.create(mockData);
+        await payableControler.create(payableInsert);
       } catch (error) {
         // Assert
-        expect(error.message).toBe(expectedResult);
+        expect(error.message).toBe('Assignor not found');
       }
-
-      expect(mockPayableController.create).toHaveBeenCalledWith(mockData);
+      expect(payableService.create).toHaveBeenCalledWith(payableInsert);
     });
 
     it('should throw an error if validation fails', async () => {
       // Arrange
-      const mockData = {
+      jest
+        .spyOn(payableService, 'create')
+        .mockRejectedValueOnce(
+          new BadRequestException([
+            'value has wrong value 1000, value must be a number conforming to the specified constraints',
+            'assignor has wrong value 1, assignor must be a UUID',
+          ]),
+        );
+
+      const payableInsert = {
         value: '100',
-        assignor: '123e456-12b3-a456-426614174000',
+        assignor: 1,
       };
-
-      const expectedResult = [
-        'value has wrong value 100, must be a number string',
-      ];
-
-      mockPayableController.create.mockRejectedValue(
-        new Error(expectedResult.join(', ')),
-      );
 
       // Act
       try {
-        await mockPayableController.create(mockData as any);
+        await payableControler.create(
+          payableInsert as unknown as CreatePayableDto,
+        );
       } catch (error) {
         // Assert
-        expect(error.message).toBe(expectedResult.join(', '));
+        expect(error.message).toBe('Bad Request Exception');
+        expect(error.response.message).toEqual([
+          'value has wrong value 1000, value must be a number conforming to the specified constraints',
+          'assignor has wrong value 1, assignor must be a UUID',
+        ]);
       }
-
-      expect(mockPayableController.create).toHaveBeenCalledWith(mockData);
+      expect(payableService.create).toHaveBeenCalledWith(payableInsert);
     });
   });
 
-  describe('findAllPayables', () => {
-    it('should return all payables', async () => {
-      // Arrange
-      const expectedResult = [
-        {
-          id: '123e4567-e89b-12d3-a456-426614174000',
-          value: 100,
-          assignor: '123e456-12b3-a456-426614174000',
-          emissionDate: new Date('2021-09-01'),
-        },
-      ];
-
-      mockPayableController.findAll.mockResolvedValue(expectedResult);
-
+  describe('findAll', () => {
+    it('should return an array of payables', async () => {
       // Act
-      const result = await mockPayableController.findAll();
+      const result = await payableControler.findAll();
 
       // Assert
-      expect(mockPayableController.findAll).toHaveBeenCalled();
-      expect(result).toEqual(expectedResult);
-    });
-
-    it('should return an empty array if there are no payables', async () => {
-      // Arrange
-      const expectedResult = [];
-
-      mockPayableController.findAll.mockResolvedValue(expectedResult);
-
-      // Act
-      const result = await mockPayableController.findAll();
-
-      // Assert
-      expect(mockPayableController.findAll).toHaveBeenCalled();
-      expect(result).toEqual(expectedResult);
+      expect(result).toEqual(payableEntityList);
+      expect(payableService.findAll).toHaveBeenCalledWith();
     });
   });
 
-  describe('findPayableById', () => {
-    it('should return a payable by id', async () => {
+  describe('findOne', () => {
+    it('should return a payable', async () => {
       // Arrange
-      const mockId = '123e4567-e89b-12d3-a456-426614174000';
-
-      const expectedResult = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        value: 100,
-        assignor: '123e456-12b3-a456-426614174000',
-        emissionDate: new Date('2021-09-01'),
-      };
-
-      mockPayableController.findOne.mockResolvedValue(expectedResult);
+      const id = '1';
 
       // Act
-      const result = await mockPayableController.findOne(mockId);
+      const result = await payableControler.findOne(id);
 
       // Assert
-      expect(mockPayableController.findOne).toHaveBeenCalledWith(mockId);
-      expect(result).toEqual(expectedResult);
+      expect(payableService.findOne).toHaveBeenCalledWith(id);
+      expect(result).toEqual(payableEntityList[1]);
     });
 
     it('should throw an error if payable does not exist', async () => {
       // Arrange
-      const mockId = '123e4567-e89b-12d3-a456-426614174015';
+      jest
+        .spyOn(payableService, 'findOne')
+        .mockRejectedValueOnce(new BadRequestException('Payable not found'));
 
-      const expectedResult = 'Payable not found';
-
-      mockPayableController.findOne.mockRejectedValue(
-        new Error(expectedResult),
-      );
+      const id = '5';
 
       // Act
       try {
-        await mockPayableController.findOne(mockId);
+        await payableControler.findOne(id);
       } catch (error) {
         // Assert
-        expect(error.message).toBe(expectedResult);
+        expect(error.message).toBe('Payable not found');
       }
-
-      expect(mockPayableController.findOne).toHaveBeenCalledWith(mockId);
-    });
-  });
-
-  describe('updatePayable', () => {
-    it('should update a payable', async () => {
-      // Arrange
-      const mockId = '123e4567-e89b-12d3-a456-426614174000';
-
-      const mockData = {
-        value: 200,
-        assignor: '123e456-12b3-a456-426614174555',
-      };
-
-      const expectedResult = {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        value: 200,
-        assignor: '123e456-12b3-a456-426614174555',
-        emissionDate: new Date('2021-09-01'),
-      };
-
-      mockPayableController.update.mockResolvedValue(expectedResult);
-
-      // Act
-      const result = await mockPayableController.update(mockId, mockData);
-
-      // Assert
-      expect(mockPayableController.update).toHaveBeenCalledWith(
-        mockId,
-        mockData,
-      );
-      expect(result).toEqual(expectedResult);
-    });
-
-    it('should throw an error if payable does not exist', async () => {
-      // Arrange
-      const mockId = '123e4567-e89b-12d3-a456-426614174015';
-
-      const mockData = {
-        value: 200,
-        assignor: '123e456-12b3-a456-426614174555',
-      };
-
-      const expectedResult = 'Payable not found';
-
-      mockPayableController.update.mockRejectedValue(new Error(expectedResult));
-
-      // Act
-      try {
-        await mockPayableController.update(mockId, mockData);
-      } catch (error) {
-        // Assert
-        expect(error.message).toBe(expectedResult);
-      }
-
-      expect(mockPayableController.update).toHaveBeenCalledWith(
-        mockId,
-        mockData,
-      );
-    });
-
-    it('should throw an error if validation fails', async () => {
-      // Arrange
-      const mockId = '123e4567-e89b-12d3-a456-426614174000';
-
-      const mockData = {
-        value: '200',
-        assignor: '123e456-12b3-a456-426614174555',
-      };
-
-      const expectedResult = [
-        'value has wrong value 200, must be a number string',
-      ];
-
-      mockPayableController.update.mockRejectedValue(
-        new Error(expectedResult.join(', ')),
-      );
-
-      // Act
-      try {
-        await mockPayableController.update(mockId, mockData as any);
-      } catch (error) {
-        // Assert
-        expect(error.message).toBe(expectedResult.join(', '));
-      }
-
-      expect(mockPayableController.update).toHaveBeenCalledWith(
-        mockId,
-        mockData,
-      );
-    });
-  });
-
-  describe('deletePayable', () => {
-    it('should delete a payable', async () => {
-      // Arrange
-      const mockId = '123e4567-e89b-12d3-a456-426614174000';
-      mockPayableController.remove.mockResolvedValue(undefined);
-
-      // Act
-      await mockPayableController.remove(mockId);
-
-      // Assert
-      expect(mockPayableController.remove).toHaveBeenCalledWith(mockId);
+      expect(payableService.findOne).toHaveBeenCalledWith(id);
     });
   });
 });
