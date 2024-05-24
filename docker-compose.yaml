@@ -12,6 +12,8 @@ services:
       JWT_SECRET: "mz5kapt42bbzyy462xjz6uprw3wrbogznfztf65j4ub7gxr9z9d8k9xy6tf75pvwvhme49lb"
       JWT_ISSUER: "aprove-me-api"
       JWT_AUDIENCE: "auth-user"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
     ports:
       - 3000:3000
 
