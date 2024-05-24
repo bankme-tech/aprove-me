@@ -124,7 +124,7 @@ export default function Page() {
         </TableHeader>
         <TableBody>
           {payables?.map((payable: any) => (
-            <TableRow>
+            <TableRow key={payable?.id}>
               <TableCell className="font-medium">
                 <Link href={`/list-payable/${payable.id}`}>{payable.id}</Link>
               </TableCell>
