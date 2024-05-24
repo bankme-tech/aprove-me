@@ -17,21 +17,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Print current directory
-        run: pwd
-
-      - name: List files in current directory
-        run: ls -al
-
-      - name: List files in parent directory
-        run: ls -al ..
-  
-      - name: List files in grandparent directory
-        run: ls -al ../..
-  
-      - name: List files in ../../server directory
-        run: ls -al ../../server
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
