@@ -1,4 +1,4 @@
-version: '3.8'
+
 services:
   db:
     image: postgres:13
@@ -19,7 +19,7 @@ services:
     environment:
       - PORT=3000
     ports:
-      - '3001:3003'
+      - '3003:3003'
     depends_on:
       - db
     volumes:
