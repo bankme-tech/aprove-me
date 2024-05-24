@@ -30,30 +30,34 @@ export class PayableService {
       throw new BadRequestException('Assignor not found');
     }
 
-    return this.prisma.payable.create({
+    return await this.prisma.payable.create({
       data: createPayableDto,
     });
   }
 
-  findAll() {
-    return this.prisma.payable.findMany();
+  async findAll() {
+    return await this.prisma.payable.findMany();
   }
 
-  findOne(id: string) {
-    return this.prisma.payable.findUniqueOrThrow({
+  async findOne(id: string) {
+    const payable = await this.prisma.payable.findUnique({
       where: { id },
     });
+    if (!payable) {
+      throw new BadRequestException('Payable not found');
+    }
+    return payable;
   }
 
-  update(id: string, updatePayableDto: UpdatePayableDto) {
-    return this.prisma.payable.update({
+  async update(id: string, updatePayableDto: UpdatePayableDto) {
+    return await this.prisma.payable.update({
       where: { id },
       data: updatePayableDto,
     });
   }
 
-  remove(id: string) {
-    return this.prisma.payable.delete({
+  async remove(id: string) {
+    return await this.prisma.payable.delete({
       where: { id },
     });
   }

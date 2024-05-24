@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
@@ -17,28 +18,31 @@ export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
   @Post()
-  create(@Body() createPayableDto: CreatePayableDto) {
-    return this.payableService.create(createPayableDto);
+  async create(@Body() createPayableDto: CreatePayableDto) {
+    return await this.payableService.create(createPayableDto);
   }
 
   @Get()
-  findAll() {
-    return this.payableService.findAll();
+  async findAll() {
+    return await this.payableService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.payableService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    return await this.payableService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
-    return this.payableService.update(id, updatePayableDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updatePayableDto: UpdatePayableDto,
+  ) {
+    return await this.payableService.update(id, updatePayableDto);
   }
 
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.payableService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.payableService.remove(id);
   }
 }
