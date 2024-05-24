@@ -39,9 +39,7 @@ describe("Edit Assignor (E2E)", () => {
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
-    const assignor = await assignorFactory.makePrismaAssignor({
-      userId: user.id,
-    });
+    const assignor = await assignorFactory.makePrismaAssignor();
 
     const response = await request(app.getHttpServer())
       .put(`/integrations/assignor/${assignor.id.toString()}`)

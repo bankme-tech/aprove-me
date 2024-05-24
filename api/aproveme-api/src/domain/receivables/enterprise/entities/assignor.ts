@@ -2,7 +2,6 @@ import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 export interface AssignorProps {
-  userId: UniqueEntityId;
   document: string;
   email: string;
   phone: string;
@@ -14,10 +13,6 @@ export class Assignor extends Entity<AssignorProps> {
     const assignor = new Assignor(props, id);
 
     return assignor;
-  }
-
-  get userId() {
-    return this.props.userId;
   }
 
   get document() {

@@ -6,7 +6,6 @@ export class PrismaAssignorMapper {
   static toDomain(raw: PrismaAssignor): Assignor {
     return Assignor.create(
       {
-        userId: new UniqueEntityId(raw.userId),
         document: raw.document,
         email: raw.email,
         name: raw.name,
@@ -23,7 +22,6 @@ export class PrismaAssignorMapper {
       email: assignor.email,
       name: assignor.name,
       phone: assignor.phone,
-      userId: assignor.userId.toString(),
     };
   }
 }

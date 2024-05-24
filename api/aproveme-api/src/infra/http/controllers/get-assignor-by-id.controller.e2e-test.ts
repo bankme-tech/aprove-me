@@ -39,9 +39,7 @@ describe("Get Assignor By Id (E2E)", () => {
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
-    const assignor = await assignorFactory.makePrismaAssignor({
-      userId: user.id,
-    });
+    const assignor = await assignorFactory.makePrismaAssignor();
 
     const response = await request(app.getHttpServer())
       .get(`/integrations/assignor/${assignor.id}`)
@@ -56,7 +54,6 @@ describe("Get Assignor By Id (E2E)", () => {
         email: assignor.email,
         phone: assignor.phone,
         name: assignor.name,
-        userId: assignor.userId.toString(),
       }),
     });
   });

@@ -41,9 +41,7 @@ describe("Edit Payable (E2E)", () => {
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
-    const assignor = await assignorFactory.makePrismaAssignor({
-      userId: user.id,
-    });
+    const assignor = await assignorFactory.makePrismaAssignor();
 
     const payable = await payableFactory.makePrismaPayable({
       assignorId: assignor.id,

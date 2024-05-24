@@ -6,25 +6,25 @@ import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
 import { CreatePayableService } from "@/domain/receivables/application/services/create-payable-service";
 import { PayablePresenter } from "../presenters/payable-presenter";
 
-const receivePayableAndAssignorSchema = z.object({
+const receivePayableSchema = z.object({
   value: z.number(),
   emissionDate: z.string(),
   assignorId: z.string().uuid(),
 });
 
-type ReceivePayableAndAssignorBodySchema = z.infer<
-  typeof receivePayableAndAssignorSchema
+type ReceivePayableBodySchema = z.infer<
+  typeof receivePayableSchema
 >;
 
 @Controller("/integrations/payable")
-export class ReceivePayableAndAssignorController {
+export class ReceivePayableController {
   constructor(private createPayable: CreatePayableService) {}
 
   @Post()
   @HttpCode(200)
   async handle(
-    @Body(new ZodValidationPipe(receivePayableAndAssignorSchema))
-    body: ReceivePayableAndAssignorBodySchema
+    @Body(new ZodValidationPipe(receivePayableSchema))
+    body: ReceivePayableBodySchema
   ) {
     const { assignorId, emissionDate, value } = body;
 

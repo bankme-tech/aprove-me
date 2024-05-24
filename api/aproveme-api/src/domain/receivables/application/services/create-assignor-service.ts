@@ -7,7 +7,6 @@ import { AssignorAlreadyExistsError } from "./errors/assignor-already-exists-err
 
 interface CreateAssignorServiceRequest {
   assignor: {
-    userId: string;
     document: string;
     email: string;
     phone: string;
@@ -57,7 +56,6 @@ export class CreateAssignorService {
     // Caso não exista o documento nem o email, cria um assignor novo.
     const assignorEntity = Assignor.create(
       {
-        userId: new UniqueEntityId(assignor.userId),
         document: assignor.document,
         email: assignor.email,
         phone: assignor.phone,
