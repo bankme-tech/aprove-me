@@ -25,3 +25,5 @@ Content-Type: application/json
     "email": "joao.silva@mail.com"
 }
 
+### Delete an assignor
+DELETE {{baseUrl}}/integrations/assignor/0f23f87f-d760-4169-8df0-02d8af8d2215
