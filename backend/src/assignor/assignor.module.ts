@@ -12,6 +12,8 @@ import { IFindAssignorUseCase } from './usecases/find-assignor.usecase.interface
 import { FindAssignorUseCase } from './usecases/find-assignor.usecase';
 import { IUpdateAssignorUseCase } from './usecases/update-assignor.usecase.interface';
 import { UpdateAssignorUseCase } from './usecases/update-assignor.usecase';
+import { IRemoveAssignorUseCase } from './usecases/remove-assignor.usecase.interface';
+import { RemoveAssignorUseCase } from './usecases/remove-assignor-usecase';
 
 @Module({
   controllers: [AssignorController],
@@ -35,6 +37,10 @@ import { UpdateAssignorUseCase } from './usecases/update-assignor.usecase';
     {
       provide: IUpdateAssignorUseCase,
       useClass: UpdateAssignorUseCase,
+    },
+    {
+      provide: IRemoveAssignorUseCase,
+      useClass: RemoveAssignorUseCase,
     },
     {
       provide: IAssignorRepository,

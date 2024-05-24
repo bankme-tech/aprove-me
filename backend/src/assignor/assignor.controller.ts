@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CreateAssignorInputDTO } from './dto/create-assignor.input.dto';
 import { ICreateAssignorUseCase } from './usecases/create-assignor.usecase.interface';
 import { CreateAssignorOutputDTO } from './dto/create-assignor.ouput.dto';
@@ -12,6 +20,8 @@ import {
   UpdateAssignorInputBodyDTO,
   UpdateAssignorInputParamsDTO,
 } from './dto/update-assignor.input.dto';
+import { IRemoveAssignorUseCase } from './usecases/remove-assignor.usecase.interface';
+import { RemoveAssignorInputDTO } from './dto/remove-assignor.input.dto';
 
 @Controller('assignor')
 export class AssignorController {
@@ -20,6 +30,7 @@ export class AssignorController {
     private readonly findAllAssignorsUseCase: IFindAllAssignorsUseCase,
     private readonly findAssignorUseCase: IFindAssignorUseCase,
     private readonly updateAssignorUseCase: IUpdateAssignorUseCase,
+    private readonly removeAssignorUseCase: IRemoveAssignorUseCase,
   ) {}
 
   @Post()
@@ -50,5 +61,12 @@ export class AssignorController {
       id: updateAssignorInputParamsDTO.id,
       ...updateAssignorDTO,
     });
+  }
+
+  @Delete(':id')
+  async remove(
+    @Param() removeAssignorInputDTO: RemoveAssignorInputDTO,
+  ): Promise<void> {
+    return await this.removeAssignorUseCase.execute(removeAssignorInputDTO);
   }
 }
