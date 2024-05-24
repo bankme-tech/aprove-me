@@ -149,9 +149,9 @@ export default function DataTableDemo() {
         <div className="flex items-center py-4">
           <Input
             placeholder="Filtrar movimentações"
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
+              table.getColumn("id")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
