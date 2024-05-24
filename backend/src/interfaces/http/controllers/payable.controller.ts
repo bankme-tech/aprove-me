@@ -13,16 +13,19 @@ export class PayableController {
     return 'Hello From Payable!';
   }
 
+  @UseGuards(AuthGuard)
   @Get("all")
   async findAll() {
     return this.payableService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createPayableDto: CreatePayableDto) {
     return this.payableService.createPayable(createPayableDto);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findById(@Param('id') id: string) {
     return this.payableService.findById(id);
@@ -33,6 +36,7 @@ export class PayableController {
   async update(@Param('id') id: string, @Body() payable: Payable) {
     return this.payableService.update(id, payable);
   }
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return this.payableService.delete(id);

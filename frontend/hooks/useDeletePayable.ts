@@ -2,13 +2,15 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { isAxiosError } from "axios";
 import api from "../services/api";
+import { fetchHeaders } from "@/utils";
 
 export function useDeletePayable() {
-  
   const { mutateAsync } = useMutation({
-    mutationFn: async ({id }: any): Promise<any> => {
+    mutationFn: async ({ id }: any): Promise<any> => {
       console.log("Id recebido no mutationFn():", id);
-      const response = await api.delete(`/integrations/payable/${id}`);
+      const response = await api.delete(`/integrations/payable/${id}`, {
+        headers: fetchHeaders(),
+      });
       return response.data;
     },
     onSuccess: () => {

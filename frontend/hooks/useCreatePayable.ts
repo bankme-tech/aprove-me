@@ -3,13 +3,16 @@ import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation'
 import { isAxiosError } from "axios";
 import api from "../services/api";
+import { fetchHeaders } from "@/utils";
 
 export function useCreatePayable() {
   const router = useRouter()
   const { mutateAsync } = useMutation({
     mutationFn: async (body : any) => {
       console.log("Body recebido no mutationFn():", body);
-      const response = await api.post("/integrations/payable", body);
+      const response = await api.post("/integrations/payable", body, {
+        headers: fetchHeaders(),
+      });
       return response.data;
     },
     onSuccess: () => {

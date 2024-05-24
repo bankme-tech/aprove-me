@@ -12,6 +12,7 @@ export class AssignorController {
   initial(): string {
     return "Hello From Assignor!"
   }
+  
   @Post()
   async create(@Body() createAssignorDto: CreateAssignorDto) {
     return this.assignorService.createAssignor(createAssignorDto);
@@ -27,11 +28,13 @@ export class AssignorController {
     return this.assignorService.findById(id);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() assignor: Assignor) {
     return this.assignorService.update(id, assignor);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return this.assignorService.delete(id);
