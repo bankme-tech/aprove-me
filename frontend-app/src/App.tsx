@@ -1,11 +1,14 @@
-import './App.css'
+import React from 'react';
+import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import CreatePayable from './pages/CreatePayable';
 
 function App() {
   return (
-    <>
-      <h1>App</h1>
-    </>
+    <Routes>
+      <Route path='/integrations/payable' element={ <CreatePayable /> } />
+    </Routes>
   )
 }
 
-export default App
+export default App;
