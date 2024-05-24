@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { AssignorService } from './assignor.service';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
@@ -16,30 +18,31 @@ export class AssignorController {
   constructor(private readonly assignorService: AssignorService) {}
 
   @Post()
-  create(@Body() createAssignorDto: CreateAssignorDto) {
-    return this.assignorService.create(createAssignorDto);
+  async create(@Body() createAssignorDto: CreateAssignorDto) {
+    return await this.assignorService.create(createAssignorDto);
   }
 
   @Get()
-  findAll() {
-    return this.assignorService.findAll();
+  async findAll() {
+    return await this.assignorService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.assignorService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    return await this.assignorService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateAssignorDto: UpdateAssignorDto,
   ) {
-    return this.assignorService.update(id, updateAssignorDto);
+    return await this.assignorService.update(id, updateAssignorDto);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.assignorService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.assignorService.remove(id);
   }
 }

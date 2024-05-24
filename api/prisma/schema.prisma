@@ -29,3 +29,9 @@ model Assignor {
   phone    String
   Payable  Payable[]
 }
+
+model User {
+  id       String @id @default(uuid())
+  login    String @unique
+  password String
+}
