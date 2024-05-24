@@ -8,12 +8,12 @@ import { SignUp } from './pages/auth/sign-up'
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/payable',
     element: <AppLayout />,
     errorElement: <NotFound />,
     children: [
-      { path: '/', element: <h1>payable</h1> },
-      { path: '/', element: <h1>assignor</h1> },
+      { path: '/payable', element: <h1>payable</h1> },
+      { path: '/payable/register', element: <h1>assignor</h1> },
     ],
   },
 
