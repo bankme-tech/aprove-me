@@ -9,4 +9,5 @@ export abstract class IAssignorRepository {
   abstract findAll(): Promise<AssignorEntity[]>;
   abstract findById(id: string): Promise<AssignorEntity>;
   abstract update(assignor: UpdateAssignorInputDTO): Promise<AssignorEntity>;
+  abstract remove(id: string): Promise<void>;
 }

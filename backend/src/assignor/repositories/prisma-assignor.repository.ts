@@ -70,4 +70,12 @@ export class PrismaAssignorRepository implements IAssignorRepository {
       throw error;
     }
   }
+
+  async remove(id: string): Promise<void> {
+    await this.prisma.assignor.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
