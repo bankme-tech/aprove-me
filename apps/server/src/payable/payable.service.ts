@@ -16,7 +16,7 @@ export class PayableService {
   constructor(
     private repo: PayableRepository,
     private assignorRepository: AssignorRepository,
-    @InjectQueue('process-data') private audioQueue: Queue,
+    @InjectQueue('process-data') private payableQueue: Queue,
   ) {}
 
   async get(payableId: string) {
@@ -49,7 +49,7 @@ export class PayableService {
         payable: data,
       },
     }))
-    await this.audioQueue.addBulk(jobs)
+    await this.payableQueue.addBulk(jobs)
   }
 
   async cancel(payableId: string) {

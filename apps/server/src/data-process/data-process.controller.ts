@@ -3,9 +3,9 @@ import { PayableRepository } from '@/payable/repository/payable.repository'
 import {
   OnQueueActive,
   OnQueueCompleted,
-  OnQueueError,
+  OnQueueFailed,
   Process,
-  Processor,
+  Processor
 } from '@nestjs/bull'
 import { Logger } from '@nestjs/common'
 import { Job } from 'bull'
@@ -46,7 +46,7 @@ export class DataProcessConsumer {
     job.update({ payable: result })
   }
 
-  @OnQueueError()
+  @OnQueueFailed()
   async errorProcess(job: Job<PayableJob>) {
     this.logger.log(`Process payable with ${job.id} error`)
     const { payable } = job.data
