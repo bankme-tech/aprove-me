@@ -23,6 +23,21 @@ jobs:
           aws-access-key-id: AKIAROHQX5Q2OH3LFGFX
           aws-secret-access-key: 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
           aws-region: sa-east-1
+        
+      - name: Print current directory
+        run: pwd
+
+      - name: List files in current directory
+        run: ls -al
+
+      - name: List files in parent directory
+        run: ls -al ..
+
+      - name: List files in grandparent directory
+        run: ls -al ../..
+
+      - name: List files in ../../server directory
+        run: ls -al ../../server
 
       - name: Log in to Amazon ECR
         run: |
