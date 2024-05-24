@@ -1,4 +1,14 @@
-import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { CreatePayableInputDTO } from './dto/create-payable.input.dto';
 import { CreatePayableOutputDTO } from './dto/create-payable.output.dto';
 import { ICreatePayableUseCase } from './usecases/create-payable.usecase.interface';
@@ -11,6 +21,8 @@ import {
   UpdatePayableInputParamsDTO,
 } from './dto/update-payable.input.dto';
 import { IUpdatePayableUseCase } from './usecases/update-payable.usecase.interface';
+import { RemovePayableInputDTO } from './dto/remove-payable.input.dto';
+import { IRemovePayableUseCase } from './usecases/remove-payable.usecase.interface';
 
 @Controller('payable')
 export class PayableController {
@@ -19,6 +31,7 @@ export class PayableController {
     private readonly findAllPayablesUseCase: IFindAllPayablesUseCase,
     private readonly findPayableUseCase: IFindPayableUseCase,
     private readonly updatePayableUseCase: IUpdatePayableUseCase,
+    private readonly removePayableUseCase: IRemovePayableUseCase,
   ) {}
 
   @Post()
@@ -49,5 +62,13 @@ export class PayableController {
       id: updatePayableInputParamsDTO.id,
       ...updatePayableInputBodyDTO,
     });
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(
+    @Param() removePayableInputDTO: RemovePayableInputDTO,
+  ): Promise<void> {
+    return await this.removePayableUseCase.execute(removePayableInputDTO);
   }
 }

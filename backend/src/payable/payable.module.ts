@@ -13,6 +13,8 @@ import { IFindPayableUseCase } from './usecases/find-payable.usecase.interface';
 import { FindPayableUseCase } from './usecases/find-payable.usecase';
 import { IUpdatePayableUseCase } from './usecases/update-payable.usecase.interface';
 import { UpdatePayableUseCase } from './usecases/update-payable.usecase';
+import { IRemovePayableUseCase } from './usecases/remove-payable.usecase.interface';
+import { RemovePayableUseCase } from './usecases/remove-payable-usecase';
 
 @Module({
   controllers: [PayableController],
@@ -36,6 +38,10 @@ import { UpdatePayableUseCase } from './usecases/update-payable.usecase';
     {
       provide: IUpdatePayableUseCase,
       useClass: UpdatePayableUseCase,
+    },
+    {
+      provide: IRemovePayableUseCase,
+      useClass: RemovePayableUseCase,
     },
     {
       provide: PayableMapper,
