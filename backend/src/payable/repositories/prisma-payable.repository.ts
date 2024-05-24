@@ -9,6 +9,7 @@ import { FindPayableInputDTO } from '../dto/find-payable.input.dto';
 import { UpdatePayableInputDTO } from '../dto/update-payable.input.dto';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { RecordNotFoundError } from 'src/persistence/errors/record-not-found.error';
+import { RemovePayableInputDTO } from '../dto/remove-payable.input.dto';
 
 @Injectable()
 export class PrismaPayableRepository implements IPayableRepository {
@@ -65,5 +66,13 @@ export class PrismaPayableRepository implements IPayableRepository {
       }
       throw error;
     }
+  }
+
+  async remove(removePayableDTO: RemovePayableInputDTO): Promise<void> {
+    await this.prisma.payable.delete({
+      where: {
+        id: removePayableDTO.id,
+      },
+    });
   }
 }
