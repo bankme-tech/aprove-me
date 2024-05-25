@@ -1,27 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Payable, Prisma } from '@prisma/client';
+import { Assignor, Payable, Prisma } from '@prisma/client';
 import { CreatePayableAssignorDto } from '../payable.dto';
-// import { PayableType } from 'src/rabbit-mq/consumer.service';
 
-type PayableType =  {
-  "assignorId": string,
-  "amount": number,
-  "description": string,
-  "dueDate": Date
-}
+
 
 @Injectable()
 export class PayableRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createOne(data: PayableType): Promise<any> {
+  async createOne(data: Partial<Payable>): Promise<any> {
     
     const result = await this.prisma.payable.create({
       data: {
-        description: data.description,
         amount: data.amount,
-        dueDate: data.dueDate,
+        emissionDate: data.emissionDate,
         assignorId: data.assignorId, 
       }
     })
@@ -31,17 +24,29 @@ export class PayableRepository {
 
   async create(data: CreatePayableAssignorDto): Promise<any> {
     
-    const createdAssignor = await this.prisma.assignor.create({
-      data: {
-        name: data.assignor.name,
-      },
-    });
+    let createdAssignor : Assignor;
+    if (typeof(data.assignor) == "string") {
+      createdAssignor = await this.prisma.assignor.findUnique({
+        where: {
+          id : data.assignor
+        }
+      })
+    } else {
+      createdAssignor = await this.prisma.assignor.create({
+        data: {
+          name: data.assignor.name,
+          document: data.assignor.document,
+          email: data.assignor.email,
+          phone: data.assignor.phone, 
+        },
+      });
+    }
 
     await this.prisma.payable.createMany({
       data: data.payables.map((el) => ({
-        description: el.description,
+        // description: el.description,
         amount: el.amount,
-        dueDate: new Date(), // Ajuste conforme necessário
+        emissionDate: el.emissionDate,
         assignorId: createdAssignor.id, // Usa o ID gerado para o Assignor
       })),
     });

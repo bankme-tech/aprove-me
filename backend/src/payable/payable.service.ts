@@ -4,8 +4,6 @@ import { PayableRepository } from "./repository/repository.service";
 import { Prisma, Payable } from '@prisma/client';
 import { CreatePayableAssignorDto, CreatePayableDto } from './payable.dto';
 import { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager';
-import amqp from 'amqp-connection-manager';
-import { PayableProcessor } from 'src/rabbit-mq/consumer.service';
 
 // import {AmqpConnection} from "@nestjs/microservices"
 
@@ -20,7 +18,7 @@ export class PayableService {
     return this.payableRepository.create(data);
   }
 
-  async createOne(data: Omit<Payable, 'id'>): Promise<Payable> {
+  async createOne(data: Partial<Payable>): Promise<Payable> {
     return this.payableRepository.createOne(data);
   }
 

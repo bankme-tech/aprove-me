@@ -14,7 +14,7 @@ export class RabbitMqService {
         this.connection = amqp.connect([process.env.RABBITMQ_URI || 'amqp://localhost:5672']);
     }
 
-    async addPayableToQueue(payables : Array<Omit<Payable, 'id'>>) {
+    async addPayableToQueue(payables : Partial<Payable>[]) {
         this.logger.log("Adding to queue")
         payables.forEach(el => {
             this.client.emit('payables_queue', el)

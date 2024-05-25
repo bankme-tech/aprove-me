@@ -17,6 +17,7 @@ services:
       EMAIL_PORT: 1025
       EMAIL_USER: "anyuser"
       EMAIL_PASS: "anypass"
+      SESSION_EXPIRY_MINUTES: "1"
     depends_on:
       - rabbitmq
       - mailhog

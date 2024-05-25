@@ -6,12 +6,12 @@ import { PayableService } from "../payable/payable.service";
 import { Logger } from '@nestjs/common';
 import { Payable } from "@prisma/client";
 
-type PayableType =  {
-    "assignorId": string,
-    "amount": number,
-    "description": string,
-    "dueDate": Date
+
+// Type guard function
+function isPatternedPayable(payable: any): payable is { pattern: string, data: Partial<Payable> } {
+    return (payable as { pattern: string, data: Partial<Payable> }).pattern !== undefined;
 }
+
 
 @Injectable()
 export class PayableProcessor implements OnModuleInit {
@@ -46,11 +46,11 @@ export class PayableProcessor implements OnModuleInit {
                     this.logger.log("Message received, msg:", msg);
                     if (msg !== null) {
                         this.logger.log("Message is not null");
-                        const payable: any = JSON.parse(msg.content.toString());
+                        const payable: Partial<Payable> | { pattern: string, data: Partial<Payable> } = JSON.parse(msg.content.toString());
                         this.logger.log("Payable:", payable);
-
-                        // why I'm receiving in different format? Take a look when I have patiente. 
-                        if (payable.pattern == "payables_queue") {
+        
+                        // Type guard to check if payable has pattern property
+                        if (isPatternedPayable(payable)) {
                             await this.handleProcessPayable(payable.data, msg, channel);
                         } else {
                             await this.handleProcessPayable(payable, msg, channel);            
@@ -59,16 +59,17 @@ export class PayableProcessor implements OnModuleInit {
                 });
             },
         });
+        
         this.logger.log('RabbitMQ connection established');
     }
 
-    async handleProcessPayable(payable: PayableType, msg, channel) {
+    async handleProcessPayable(payable: Partial<Payable>, msg, channel) {
         const headers = msg.properties.headers || {};
         const retryCount = headers['x-retry-count'] || 0;
         this.logger.log(`Processing payable: ${JSON.stringify(payable)}, Retry Count: ${retryCount}`);
 
         // Verificação dos campos obrigatórios
-        if (!payable.description || !payable.amount || !payable.dueDate || !payable.assignorId) {
+        if (!payable.amount || !payable.emissionDate || !payable.assignorId) {
             this.logger.error(`Invalid payable data: ${JSON.stringify(payable)}`);
             channel.ack(msg);
             this.totalFailures += 1;
@@ -87,7 +88,7 @@ export class PayableProcessor implements OnModuleInit {
             this.logger.log(`Payable processed successfully: ${JSON.stringify(payable)}`);
             await this.handleBatchCompleted(this.totalProcessed, this.totalSuccess, this.totalFailures);
         } catch (error) {
-            // this.logger.error(`Error processing payable: ${JSON.stringify(payable)}, Error: ${error.message}`);
+            this.logger.error(`Error processing payable: ${JSON.stringify(payable)}, Error: ${error.message}`);
             this.tentatives += 1;
             this.totalFailures += 1;
             this.totalProcessed += 1;
@@ -97,7 +98,7 @@ export class PayableProcessor implements OnModuleInit {
                     to: 'operations@example.com',
                     subject: 'Payable Processing Failed',
                     template: './payable-failed',
-                    context: { payable: JSON.stringify(payable, null, 2) },
+                    context: { payable: JSON.stringify(payable, null, 2), reason: error.message },
                 });
                 channel.ack(msg);
             } else {

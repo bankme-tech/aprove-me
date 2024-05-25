@@ -15,7 +15,8 @@ export class SessionManagerService {
 
   constructor() {
     this.sessions = new Map<string, Session>();
-    this.expiryDuration = 60000;
+    const expiryMinutes = parseInt(process.env.SESSION_EXPIRY_MINUTES || '60');
+    this.expiryDuration = expiryMinutes * 60 * 1000;
   }
 
   createSession(user: User): string {
@@ -24,7 +25,6 @@ export class SessionManagerService {
     this.sessions.set(token, { user, expiry });
     return token;
   }
-
   getAllSessions(): number {
     return this.sessions.size;
   }
