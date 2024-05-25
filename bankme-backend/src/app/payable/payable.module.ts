@@ -6,6 +6,7 @@ import { PayableController } from './payable.controller';
 import { PayableService } from './payable.service';
 import { PayableRepository } from './payable.repository';
 import { PayableProducerController } from './queue/payable-producer.controller';
+import { PayableConsumerController } from './queue/payable-consumer.controller';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { PayableProducerController } from './queue/payable-producer.controller';
       },
     ]),
   ],
-  controllers: [PayableController, PayableProducerController],
+  controllers: [PayableController, PayableProducerController, PayableConsumerController],
   providers: [PayableService, PayableRepository],
 })
 export class PayableModule {}
