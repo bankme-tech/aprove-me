@@ -1,0 +1,53 @@
+services:
+  frontend:
+    container_name: app_frontend
+    build: ./frontend
+    ports:
+      - 3001:3001
+    working_dir: /app-frontend
+    volumes: 
+      - ./frontend/src:/app-frontend/src
+    command: dev
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"] 
+      timeout: 10s
+      retries: 5
+    depends_on:
+      - backend
+  backend:
+    container_name: app_backend
+    build: ./backend
+    ports:
+      - 3000:3000
+    working_dir: /app-backend
+    depends_on:
+      - redis
+    command: start:dev
+    networks:
+      - queue-network
+    volumes: 
+      - ./backend/src:/app-backend/src
+      - ./backend/prisma:/app-backend/prisma
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3000"] 
+      timeout: 10s
+      retries: 5
+    environment:
+      - DATABASE_URL=file:/app-backend/prisma/dev.db
+  redis:
+    image: redis:7.2.5-alpine
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=123456
+    networks:
+      - queue-network
+    container_name: redis
+    command: redis-server --loglevel warning
+    # volumes:
+    #   - cache: cache:/data
+
+networks:
+  queue-network:
+    driver: bridge
