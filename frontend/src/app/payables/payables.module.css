@@ -1,0 +1,31 @@
+.container {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+}
+
+.link {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  margin: 20px;
+  width: 300px;
+  height: 300px;
+  background-color: blueviolet;
+  color: white;
+  transition: 0.5s all ease;
+}
+
+.link:hover {
+  transform: scale(1.05);
+  transition: 0.5s all ease;
+}

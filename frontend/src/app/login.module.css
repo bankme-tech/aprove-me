@@ -1,0 +1,26 @@
+.logo {
+  width: 100px;
+}
+
+.login {
+  background-color: rgb(1, 1, 32);
+  color: white;
+}
+
+.button {
+  background-color: blueviolet;
+  color: white;
+  padding: 18px;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem
+}
+
+.button:hover {
+  background-color: purple;
+}
