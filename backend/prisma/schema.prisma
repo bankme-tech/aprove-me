@@ -13,22 +13,26 @@ datasource db {
 
 
 model Payable {
-  id          String   @id @default(uuid())
-  description String
-  amount      Float
-  dueDate     DateTime
-  assignorId  String
-  assignor    Assignor @relation(fields: [assignorId], references: [id], onDelete: Cascade)
+  id           String   @id @default(uuid())
+  // description  String
+  amount       Float
+  emissionDate DateTime
+  assignorId   String
+  assignor     Assignor @relation(fields: [assignorId], references: [id], onDelete: Cascade)
 }
 
 model Assignor {
   id       String     @id @default(uuid())
-  name     String
+  name     String     // @db.VarChar(140) // varchar(140) // Native type VarChar is not supported for sqlite connector.Prisma
+  document String     // @db.VarChar(30)  // varchar(30)
+  email    String     // @db.VarChar(140) // varchar(140)
+  phone    String     // @db.VarChar(20)  // varchar(20)
   payables Payable[]
 }
 
+
 model User {
-  id String @id @default(uuid())
-  email String @unique
+  id       String @id @default(uuid())
+  email    String @unique
   password String
 }
