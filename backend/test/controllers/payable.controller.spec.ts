@@ -22,6 +22,10 @@ import { RemovePayableInputDTO } from 'src/payable/dto/remove-payable.input.dto'
 import { AuthModule } from 'src/auth/auth.module';
 import { PrismaModule } from 'src/persistence/prisma.module';
 import { PrismaClient } from '@prisma/client';
+import { batchOutputDTO } from 'src/payable/dto/batch.output.dto';
+import { makeBatchInputDTO } from 'test/mocks/dtos.mock';
+import { IProducer } from 'src/rabbitmq/interfaces/producer.interface';
+import { BatchInputDTO } from 'src/payable/dto/batch.input.dto';
 
 describe('PayableController', () => {
   let sut: PayableController;
@@ -32,6 +36,7 @@ describe('PayableController', () => {
   let findPayableUseCaseStub: FindPayableUseCaseStub;
   let updatePayableUseCaseStub: UpdatePayableUseCaseStub;
   let removePayableUseCaseStub: RemovePayableUseCaseStub;
+  let producerSpy: jest.SpyInstance;
 
   let entity: PayableEntity;
   let createPayableDTO: CreatePayableInputDTO;
@@ -65,6 +70,12 @@ describe('PayableController', () => {
           provide: IRemovePayableUseCase,
           useClass: RemovePayableUseCaseStub,
         },
+        {
+          provide: IProducer,
+          useValue: {
+            publishMessage: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
@@ -82,6 +93,10 @@ describe('PayableController', () => {
     );
     removePayableUseCaseStub = module.get<RemovePayableUseCaseStub>(
       IRemovePayableUseCase,
+    );
+    producerSpy = jest.spyOn(
+      module.get<IProducer<BatchInputDTO>>(IProducer),
+      'publishMessage',
     );
 
     entity = makePayableEntity();
@@ -176,6 +191,22 @@ describe('PayableController', () => {
       const response = await sut.remove(removePayableDTO);
 
       expect(response).toBeUndefined();
+    });
+  });
+
+  describe('createBatch()', () => {
+    test('should call producer with correct values', async () => {
+      const batchInputDTO = makeBatchInputDTO();
+
+      await sut.createBatch(batchInputDTO);
+
+      expect(producerSpy).toHaveBeenCalledWith(batchInputDTO);
+    });
+
+    test('should return correct message', async () => {
+      const result = await sut.createBatch(makeBatchInputDTO());
+
+      expect(result).toEqual(batchOutputDTO);
     });
   });
 });

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { PayableModule } from 'src/payable/payable.module';
 import { CreatePayableInputDTO } from 'src/payable/dto/create-payable.input.dto';
@@ -28,9 +28,14 @@ import { AuthModule } from 'src/auth/auth.module';
 import { makeAuthHeader } from './helpers/auth.e2e';
 import { AuthService } from 'src/auth/auth.service';
 import { IUserEncrypter } from 'src/user/encrypters/user.encrypter.interface';
+import { BatchInputDTO } from 'src/payable/dto/batch.input.dto';
+import { makeBatchInputDTO } from 'test/mocks/dtos.mock';
+import { batchOutputDTO } from 'src/payable/dto/batch.output.dto';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { RabbitMQProducer } from 'src/rabbitmq/rabbitmq.producer';
 
 describe('PayableController (e2e)', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
   const prismaClient = new PrismaClient();
   const prismaDatabaseHelper = new PrismaDatabaseHelper(prismaClient);
 
@@ -39,6 +44,7 @@ describe('PayableController (e2e)', () => {
   let updatePayableParamsDTO: UpdatePayableInputParamsDTO;
   let updatePayableBodyDTO: UpdatePayableInputBodyDTO;
   let removePayableDTO: RemovePayableInputDTO;
+  let batchInputDTO: BatchInputDTO;
 
   let authToken: string;
 
@@ -59,10 +65,13 @@ describe('PayableController (e2e)', () => {
       .setLogger(new CustomLogger())
       .compile();
 
-    app = moduleFixture.createNestApplication();
+    app =
+      moduleFixture.createNestApplication<NestExpressApplication>() as NestExpressApplication;
     app.useGlobalPipes(new ValidationPipe());
     app.useGlobalFilters(new PersistenceExceptionFilter());
     app.useGlobalFilters(new PrismaExceptionFilter());
+    app.getHttpServer();
+    app.useBodyParser('json', { limit: '50mb' });
     await app.init();
 
     const authService = app.get(AuthService);
@@ -94,6 +103,7 @@ describe('PayableController (e2e)', () => {
       value,
       assignorId,
     };
+    batchInputDTO = makeBatchInputDTO();
   });
 
   afterEach(async () => {
@@ -458,6 +468,77 @@ describe('PayableController (e2e)', () => {
         .delete(`/payable/${payable.id}`)
         .set('Authorization', `${authToken}`)
         .expect(204);
+    });
+  });
+
+  describe('POST /payable/batch', () => {
+    test('should return 400 if any payable required field is not provided', async () => {
+      const removeRandomProperty = (dto: BatchInputDTO): void => {
+        const keys = Object.keys(dto.payables[0]);
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        const randomIndex = Math.floor(Math.random() * dto.payables.length);
+        delete dto.payables[randomIndex][randomKey];
+      };
+
+      removeRandomProperty(batchInputDTO);
+
+      await request(app.getHttpServer())
+        .post('/payable/batch')
+        .set('Authorization', `${authToken}`)
+        .send({ ...batchInputDTO })
+        .expect(400)
+        .expect((res) => {
+          expect(res.body.statusCode).toBe(400);
+          expect(res.body.message[0]).toMatch(
+            /(must be a string|must be a number|must be a valid UUID|must be a valid date)/,
+          );
+        });
+    });
+
+    test('should return 400 if payables length is higher than limit', async () => {
+      const limit = 10000;
+      const dto = makeBatchInputDTO({ min: limit + 1, max: limit + 2 });
+
+      await request(app.getHttpServer())
+        .post('/payable/batch')
+        .set('Authorization', `${authToken}`)
+        .send({ ...dto })
+        .expect(400)
+        .expect((res) => {
+          expect(res.body.statusCode).toBe(400);
+          expect(res.body.message[0]).toMatch(
+            /payables must contain no more than 10000 elements/,
+          );
+        });
+    });
+
+    test("should return 500 if something goes wrong on the server's side", async () => {
+      jest
+        .spyOn(RabbitMQProducer.prototype, 'publishMessage')
+        .mockImplementationOnce(() => {
+          throw new Error();
+        });
+
+      await request(app.getHttpServer())
+        .post('/payable/batch')
+        .set('Authorization', `${authToken}`)
+        .send({ ...batchInputDTO })
+        .expect(500)
+        .expect((res) => {
+          expect(res.body.statusCode).toBe(500);
+          expect(res.body.message).toMatch(/Internal server error/);
+        });
+    });
+
+    test('should return 200 on success', async () => {
+      await request(app.getHttpServer())
+        .post('/payable/batch')
+        .set('Authorization', `${authToken}`)
+        .send({ ...batchInputDTO })
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toEqual(batchOutputDTO);
+        });
     });
   });
 });

@@ -4,6 +4,7 @@ import { makeAssignorEntity } from './entities/assignor.entity.mock';
 import { faker } from '@faker-js/faker';
 import { AuthInputDTO } from 'src/auth/dto/auth.input.dto';
 import { CreateUserInputDTO } from 'src/user/dto/create-user.input.dto';
+import { BatchInputDTO } from 'src/payable/dto/batch.input.dto';
 
 export const makeAssignorDTO = (): CreateAssignorInputDTO => ({
   document: faker.string.numeric(20),
@@ -32,3 +33,21 @@ export const makeAuthDTO = (): AuthInputDTO => ({
 });
 
 export const makeUserDTO = (): CreateUserInputDTO => makeAuthDTO();
+
+export const makeBatchInputDTO = (
+  { min = 1, max = 1000 } = {
+    min: 1,
+    max: 1000,
+  },
+): BatchInputDTO => {
+  const size = faker.number.int({
+    min,
+    max,
+  });
+
+  const batch = {
+    payables: Array.from({ length: size }, makePayableDTO),
+  };
+
+  return batch;
+};

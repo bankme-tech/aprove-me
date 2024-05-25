@@ -25,6 +25,9 @@ import { IUpdatePayableUseCase } from './usecases/update-payable.usecase.interfa
 import { RemovePayableInputDTO } from './dto/remove-payable.input.dto';
 import { IRemovePayableUseCase } from './usecases/remove-payable.usecase.interface';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { BatchOutputDTO, batchOutputDTO } from './dto/batch.output.dto';
+import { BatchInputDTO } from './dto/batch.input.dto';
+import { IProducer } from 'src/rabbitmq/interfaces/producer.interface';
 
 @Controller('payable')
 export class PayableController {
@@ -34,6 +37,7 @@ export class PayableController {
     private readonly findPayableUseCase: IFindPayableUseCase,
     private readonly updatePayableUseCase: IUpdatePayableUseCase,
     private readonly removePayableUseCase: IRemovePayableUseCase,
+    private readonly producer: IProducer<BatchInputDTO>,
   ) {}
 
   @UseGuards(AuthGuard)
@@ -77,5 +81,16 @@ export class PayableController {
     @Param() removePayableInputDTO: RemovePayableInputDTO,
   ): Promise<void> {
     return await this.removePayableUseCase.execute(removePayableInputDTO);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('batch')
+  @HttpCode(HttpStatus.OK)
+  async createBatch(
+    @Body() batchInputDTO: BatchInputDTO,
+  ): Promise<BatchOutputDTO> {
+    await this.producer.publishMessage(batchInputDTO);
+
+    return batchOutputDTO;
   }
 }

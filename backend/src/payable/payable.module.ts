@@ -15,6 +15,9 @@ import { IUpdatePayableUseCase } from './usecases/update-payable.usecase.interfa
 import { UpdatePayableUseCase } from './usecases/update-payable.usecase';
 import { IRemovePayableUseCase } from './usecases/remove-payable.usecase.interface';
 import { RemovePayableUseCase } from './usecases/remove-payable-usecase';
+import { RabbitMQModule } from 'src/rabbitmq/rabbitmq.module';
+import { RabbitMQProducer } from 'src/rabbitmq/rabbitmq.producer';
+import { IProducer } from 'src/rabbitmq/interfaces/producer.interface';
 
 @Module({
   controllers: [PayableController],
@@ -47,7 +50,11 @@ import { RemovePayableUseCase } from './usecases/remove-payable-usecase';
       provide: IPayableMapper,
       useClass: PrismaPayableMapper,
     },
+    {
+      provide: IProducer,
+      useClass: RabbitMQProducer,
+    },
   ],
-  imports: [AssignorModule],
+  imports: [AssignorModule, RabbitMQModule],
 })
 export class PayableModule {}
