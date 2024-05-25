@@ -9,6 +9,7 @@ import {
   Post,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import { NotFound, UnprocessableEntity } from 'src/shared/domain/errors';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { PayableService } from './payable.service';
@@ -22,7 +23,7 @@ export class PayableController {
     const result = await this.payableService.create(createPayableDto);
     if (!result)
       throw new UnprocessableEntityException(
-        `The provided assignor ${createPayableDto.assignor} doesn't exists`,
+        `The provided assignor ${createPayableDto.assignorId} doesn't exists`,
       );
     return result;
   }
@@ -40,8 +41,20 @@ export class PayableController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePayableDto: UpdatePayableDto) {
-    return this.payableService.update(+id, updatePayableDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updatePayableDto: UpdatePayableDto,
+  ) {
+    const result = await this.payableService.update(id, updatePayableDto);
+    if (result.isLeft() && result.value instanceof NotFound) {
+      throw new NotFoundException();
+    }
+    if (result.isLeft() && result.value instanceof UnprocessableEntity) {
+      throw new UnprocessableEntityException(
+        `The provided assignor ${updatePayableDto.assignorId} doesn't exists`,
+      );
+    }
+    return result.value;
   }
 
   @Delete(':id')
