@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import amqp, { ChannelWrapper } from 'amqp-connection-manager';
 import { ConfirmChannel } from 'amqplib';
-import { PayablesService } from 'src/payables/payables.service';
+import { PayablesService } from '../payables/payables.service';
 import { BatchTrackerService } from './batch-tracker.service';
 import { PayableQueueMessage } from './producer.service';
 

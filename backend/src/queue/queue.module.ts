@@ -1,7 +1,7 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { ProducerService } from './producer.service';
 import { ConsumerService } from './consumer.service';
-import { PayablesModule } from 'src/payables/payables.module';
+import { PayablesModule } from '../payables/payables.module';
 import { BatchTrackerModule } from './batch-tracker.module';
 
 @Module({
