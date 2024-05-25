@@ -1,5 +1,15 @@
 @baseUrl = http://localhost:8080
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFwcm92YW1lIiwicGFzc3dvcmQiOiJhcHJvdmFtZSIsImlhdCI6MTcxNjU5NTc5OCwiZXhwIjoxNzE2NTk1ODU4fQ.TjTnnl5LwAK3JH9dypiRUpI2K1AEiuiK2VvQCf35bxo
+@token = {{tokenAPI.response.body.token}}
+
+### Auth helper
+# @name tokenAPI
+POST {{baseUrl}}/integrations/auth
+Content-Type: application/json
+
+{
+    "login": "aprovame",
+    "password": "aprovame"
+}
 
 ### Create a new assignor
 POST {{baseUrl}}/integrations/assignor

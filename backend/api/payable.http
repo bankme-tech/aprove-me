@@ -1,6 +1,15 @@
 @baseUrl = http://localhost:8080
-@token = 00e44aec-4fd6-43d0-b151-625e429ff995.fi-CSW3fBQRdMrtmDbJ2p7P4fmp_jPka3MUB6GMuM5c
+@token = {{tokenAPI.response.body.token}}
 
+### Auth helper
+# @name tokenAPI
+POST {{baseUrl}}/integrations/auth
+Content-Type: application/json
+
+{
+    "login": "aprovame",
+    "password": "aprovame"
+}
 
 ### Create a new payable
 POST {{baseUrl}}/integrations/payable
