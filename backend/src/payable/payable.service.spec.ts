@@ -121,7 +121,13 @@ describe('basic CRUD operation (payable)', () => {
   })
 
   it('should delete a payable', async () => {
-    const mockPayable = { id: '1', description: 'Test Payable', amount: 1000, assignorId: '1', dueDate: new Date()};
+    const mockPayable = { 
+        id: '1',
+        description: 'Test Payable',
+        amount: 1000,
+        assignorId: '1',
+        // dueDate: new Date()
+    };
 
     mockPayableRepository.delete.mockResolvedValue(mockPayable);
 

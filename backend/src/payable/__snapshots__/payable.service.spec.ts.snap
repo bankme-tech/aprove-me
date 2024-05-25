@@ -12,7 +12,6 @@ exports[`basic CRUD operation (payable) should delete a payable 1`] = `
   "amount": 1000,
   "assignorId": "1",
   "description": "Test Payable",
-  "dueDate": 2024-05-22T19:28:29.378Z,
   "id": "1",
 }
 `;
