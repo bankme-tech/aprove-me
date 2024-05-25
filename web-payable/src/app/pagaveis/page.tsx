@@ -22,23 +22,27 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import React from "react";
-import { numberToCurrency } from "@/lib/format-currency";
-
+import { currencyToNumber, numberToCurrency } from "@/lib/format-currency";
+import { Combobox } from "@/components/combobox";
+import { useRouter } from "next/navigation";
+import { Slot } from "@radix-ui/react-slot";
+import { apiCall } from "@/lib/api-call";
 
 const formSchema = z.object({
   value: z.string({ message: "Por favor digite um valor positivo" }),
   emissionDate: z.string(),
   assignor: z.string().uuid(),
 });
-const DEV_TEST = "7ce5d0a8-153e-4c18-be0a-68c4928a9573";
 
+type Payable = z.infer<typeof formSchema>;
 export default function Page() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const router = useRouter();
+  const form = useForm<Payable>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       value: "R$ 0",
       emissionDate: new Date().toISOString(),
-      assignor: DEV_TEST,
+      assignor: "",
     },
   });
 
@@ -48,15 +52,45 @@ export default function Page() {
     form.setValue("value", currency);
   }
 
+  const items = [
+    { value: "09661545-54f1-4d3b-92c3-066332ff2c22", label: "UUID" },
+    { value: "invalid 1", label: "invalid 1" },
+    { value: "invalid 2", label: "invalid 2" },
+    { value: "invalid 3", label: "invalid 3" },
+  ];
+
+  async function onSubmit(
+    payable: Payable,
+    e?: React.BaseSyntheticEvent<object, any, any>,
+  ) {
+    e?.preventDefault();
+    const dto: Payable | { value: number } = {
+      ...payable,
+      value: currencyToNumber(payable.value),
+      emissionDate: new Date(payable.emissionDate).toISOString(),
+    }
+
+    try {
+      const res = await apiCall({
+        endpoint: '/integrations/payable',
+        method: 'POST',
+        body: dto,
+      });
+      if (res.redirect) {
+        router.push(res.redirect);
+      } else if (res.result) {
+        router.push(`/pagaveis/${res.result.id}`);
+      }
+    } catch (err: any) {
+      console.log(err); // TODO: add toaster o other message;
+    }
+  }
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div className="flex min-h-screen flex-col justify-between p-12">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit((value, e) => {
-            e?.preventDefault();
-            console.log(`[Log:values]:`, value);
-
-          })}
+          onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8">
           <Card>
             <CardHeader>
@@ -67,6 +101,27 @@ export default function Page() {
             </CardHeader>
 
             <CardContent className="space-y-2">
+              <FormField
+                control={form.control}
+                name="assignor"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="assignor" className="block">Cedente</FormLabel>
+                    <Slot>
+                      <Combobox
+                        pickLabel="Escolha cedente..."
+                        searchLabel="Digite nome do cedente"
+                        notFoundLabel="Cedente não encontrado"
+                        items={items}
+                        onSelect={(value) => { form.setValue('assignor', value) }}
+                      />
+                    </Slot>
+                    <input id="value" type="hidden" {...field} />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <div className="space-y-1">
                 <FormField
                   control={form.control}
@@ -105,7 +160,7 @@ export default function Page() {
             </CardContent>
 
             <CardFooter>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">Salvar pagável</Button>
             </CardFooter>
           </Card>
         </ form >

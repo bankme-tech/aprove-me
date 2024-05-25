@@ -8,8 +8,8 @@ interface NavItem {
 
 export default function Navbar() {
   const navItem: NavItem[] = [
-    { path: 'pagaveis', label: 'Pagáveis' },
-    { path: 'cedentes', label: 'Cedentes' },
+    { path: '/cedentes', label: 'Cedentes' },
+    { path: '/pagaveis', label: 'Pagáveis' },
   ];
 
   return (
@@ -17,7 +17,7 @@ export default function Navbar() {
       <div className="w-full flex-grow flex sm:items-center sm:w-auto">
         <div className="text-sm flex-grow">
           {navItem.map((l) =>
-            <Link href={l.path}
+            <Link key={l.path} href={l.path}
               className="block mt-4 sm:inline-block sm:mt-0 sm:mx-5 text-secondary hover:font-semibold mr-4">
               {l.label}
             </Link >)}

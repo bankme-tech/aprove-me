@@ -1,4 +1,4 @@
-import { IsNumber, IsDate, IsUUID, IsDateString } from 'class-validator';
+import { IsNumber, IsUUID, IsDateString, Min } from 'class-validator';
 
 export class PayableDto {
   // /** É a identificação de um recebível */
@@ -7,6 +7,7 @@ export class PayableDto {
 
   /** É o valor do recebível */
   @IsNumber()
+  @Min(0)
   value: number;
 
   /** É a data de emissão do recebível */
@@ -17,4 +18,3 @@ export class PayableDto {
   @IsUUID()
   assignor: string;
 }
-

@@ -22,11 +22,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import React from "react";
-
+import { apiCall } from "@/lib/api-call";
+import { useRouter } from "next/navigation";
 
 function limitMessage(key: string, limit: number) {
-  return `${key} com caracteres acima do limite ${limit} caracteres`
-
+  return `${key} com caracteres acima do limite ${limit} caracteres`;
 }
 const formSchema = z.object({
   name: z.string().max(140, { message: limitMessage("Email", 140) }),
@@ -36,9 +36,11 @@ const formSchema = z.object({
   email: z.string().email().max(140, { message: limitMessage("Email", 140) }),
   phone: z.string().max(20, { message: limitMessage("Telefone", 20) }),
 });
+type Assignor = z.infer<typeof formSchema>;
 
 export default function Page() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const router = useRouter();
+  const form = useForm<Assignor>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
@@ -48,14 +50,33 @@ export default function Page() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("VALUES: ", values);
+  async function onSubmit(
+    assignor: Assignor,
+    e?: React.BaseSyntheticEvent<object, any, any>,
+  ) {
+    e?.preventDefault();
+    try {
+      const res = await apiCall({
+        endpoint: '/integrations/assignors',
+        method: 'POST',
+        body: assignor,
+      });
+      if (res.redirect) {
+        router.push(res.redirect);
+      } else if (res.result) {
+        router.push(`/integrations/assignors/${res.result.id}`);
+      }
+    } catch (err: any) {
+      console.error(err); // TODO: add toaster or other message;
+    }
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div className="flex min-h-screen flex-col justify-between p-12">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8">
           <Card>
             <CardHeader>
               <CardTitle className="text-center">Cedentes</CardTitle>
@@ -128,10 +149,9 @@ export default function Page() {
             </CardContent>
 
             <CardFooter>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">Salvar cedente</Button>
             </CardFooter>
           </Card>
-
         </ form >
       </ Form >
     </div>

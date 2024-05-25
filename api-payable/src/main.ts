@@ -9,6 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
+  app.enableCors();
+
   const configService = app.get<ConfigService>(ConfigService);
   const rabbitMQConn = getRabbitMQConn(configService);
   connectQueues(app, rabbitMQConn);
