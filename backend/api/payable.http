@@ -43,3 +43,28 @@ Authorization: Bearer {{token}}
 ### Delete payable by id
 DELETE {{baseUrl}}/integrations/payable/9a888b65-fe9a-472b-9f30-bc8fa7c3e118
 Authorization: Bearer {{token}}
+
+### Batch create payables
+POST {{baseUrl}}/integrations/payable/batch
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "payables": [
+        {
+            "value": 620.93,
+            "assignorId": "c49b4bef-ab2a-48dd-990e-af3c2e1e7c08",
+            "emissionDate": "2024-08-01"
+        },
+        {
+            "value": 620.93,
+            "assignorId": "c49b4bef-ab2a-48dd-990e-af3c2e1e7c08",
+            "emissionDate": "2024-08-01"
+        },
+        {
+            "value": 620.93,
+            "assignorId": "c49b4bef-ab2a-48dd-990e-af3c2e1e7c08",
+            "emissionDate": "2024-08-01"
+        }
+    ]
+}
