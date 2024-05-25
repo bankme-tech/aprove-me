@@ -22,7 +22,7 @@ const registerAssignorBodySchema = z.object({
 
 type RegisterAssignorSchema = z.infer<typeof registerAssignorBodySchema>;
 
-@Controller("/integrations/assignor/register")
+@Controller("/integrations/assignor")
 @Public()
 export class RegisterAssignorController {
   constructor(private createAssignorService: CreateAssignorService) {}

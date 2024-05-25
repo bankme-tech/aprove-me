@@ -20,9 +20,9 @@ describe("Register Assignor (E2E)", () => {
     await app.init();
   });
 
-  test("[POST] /integrations/assignor/register", async () => {
+  test("[POST] /integrations/assignor", async () => {
     const response = await request(app.getHttpServer())
-      .post("/integrations/assignor/register")
+      .post("/integrations/assignor")
       .send({
         document: "01114569874",
         email: "janedoe@mail.com",
