@@ -6,6 +6,7 @@ import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/va
 import { PayablesRepository } from "@/domain/receivables/application/repositories/payables-repository";
 import { PrismaPayableMapper } from "../mappers/prisma-payable-mapper";
 import { PrismaPayableWithAssignorMapper } from "../mappers/prisma-payable-with-assignor-mapper";
+import { PaginationParams } from "@/core/repositories/pagination-params";
 
 @Injectable()
 export class PrismaPayablesRepository implements PayablesRepository {
@@ -68,5 +69,14 @@ export class PrismaPayablesRepository implements PayablesRepository {
       PrismaPayableWithAssignorMapper.toDomain(payable);
 
     return payableWithAssignor;
+  }
+
+  async findManyPaginated({ page }: PaginationParams): Promise<Payable[]> {
+    const payables = await this.prisma.payable.findMany({
+      take: 5,
+      skip: (page - 1) * 20,
+    });
+
+    return payables.map(PrismaPayableMapper.toDomain);
   }
 }

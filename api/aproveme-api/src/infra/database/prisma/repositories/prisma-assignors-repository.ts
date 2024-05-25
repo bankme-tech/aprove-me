@@ -4,6 +4,8 @@ import { PrismaService } from "../prisma.service";
 import { Assignor } from "@/domain/receivables/enterprise/entities/assignor";
 import { AssignorsRepository } from "@/domain/receivables/application/repositories/assignors-repository";
 import { PrismaAssignorMapper } from "../mappers/prisma-assignor-mapper";
+import { AssignorName } from "@/domain/receivables/enterprise/entities/value-object/assignor-name";
+import { PrismaAssignorNameMapper } from "../mappers/prisma-assignor-name-mapper";
 
 @Injectable()
 export class PrismaAssignorsRepository implements AssignorsRepository {
@@ -72,5 +74,11 @@ export class PrismaAssignorsRepository implements AssignorsRepository {
     if (!assignor) return null;
 
     return PrismaAssignorMapper.toDomain(assignor);
+  }
+
+  async findManyNames(): Promise<AssignorName[]> {
+    const assignors = await this.prisma.assignor.findMany();
+
+    return assignors.map(PrismaAssignorNameMapper.toDomain);
   }
 }
