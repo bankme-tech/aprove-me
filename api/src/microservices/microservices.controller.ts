@@ -7,7 +7,7 @@ export class MicroservicesController {
   constructor(private readonly microservicesService: MicroservicesService) {}
 
   @MessagePattern('payable_queue')
-  async handlePayableQueue(@Ctx() data: RmqContext) {
+  async getPayableNotifications(@Ctx() data: RmqContext) {
     const channel = data.getChannelRef();
     const message = data.getMessage();
     const payablesToCreate = JSON.parse(message.content.toString());
