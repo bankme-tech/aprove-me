@@ -1,0 +1,5 @@
+node_modules
+npm-debug.log
+dist
+prisma/dev.db
+docker-compose.yml
