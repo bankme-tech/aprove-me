@@ -2,6 +2,7 @@ import { CreateAssignorInputDTO } from 'src/assignor/dto/create-assignor.input.d
 import { CreatePayableInputDTO } from 'src/payable/dto/create-payable.input.dto';
 import { makeAssignorEntity } from './entities/assignor.entity.mock';
 import { faker } from '@faker-js/faker';
+import { AuthInputDTO } from 'src/auth/dto/auth.input.dto';
 
 export const makeAssignorDTO = (): CreateAssignorInputDTO => ({
   document: faker.string.numeric(20),
@@ -18,4 +19,9 @@ export const makePayableDTO = (): CreatePayableInputDTO => ({
   }),
   emissionDate: faker.date.recent(),
   assignorId: makeAssignorEntity().id,
+});
+
+export const makeAuthDTO = (): AuthInputDTO => ({
+  login: faker.string.alpha(),
+  password: faker.string.alpha(),
 });
