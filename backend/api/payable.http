@@ -1,8 +1,11 @@
 @baseUrl = http://localhost:8080
+@token = 00e44aec-4fd6-43d0-b151-625e429ff995.fi-CSW3fBQRdMrtmDbJ2p7P4fmp_jPka3MUB6GMuM5c
+
 
 ### Create a new payable
 POST {{baseUrl}}/integrations/payable
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "value": 620.93,
@@ -12,13 +15,16 @@ Content-Type: application/json
 
 ### Get all payables
 GET {{baseUrl}}/integrations/payable
+Authorization: Bearer {{token}}
 
 ### Get payable by id
 GET {{baseUrl}}/integrations/payable/9a888b65-fe9a-472b-9f30-bc8fa7c3e118
+Authorization: Bearer {{token}}
 
 ### Update payable by id
 PATCH {{baseUrl}}/integrations/payable/9a888b65-fe9a-472b-9f30-bc8fa7c3e118
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "value": 620.93,
@@ -27,3 +33,4 @@ Content-Type: application/json
 
 ### Delete payable by id
 DELETE {{baseUrl}}/integrations/payable/9a888b65-fe9a-472b-9f30-bc8fa7c3e118
+Authorization: Bearer {{token}}
