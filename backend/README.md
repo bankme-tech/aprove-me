@@ -6,9 +6,9 @@ Esta documentação destina-se a fornecer instruções detalhadas para a execuç
 
 Antes de prosseguir com a execução do projeto, verifique se o seu sistema atende aos seguintes requisitos:
 
-- Node versão 16 ou superior instalado e configurado corretamente
+- Docker e Docker Compose instalados e configurados corretamente
+- Node versão 18 ou superior instalado e configurado corretamente
 - Conexão com a Internet para baixar as dependencias necessárias
-
 
 ## Execução do Projeto
 
@@ -16,20 +16,47 @@ A seguir, estão as instruções para a execução do projeto.
 
 Navegue até o diretório do projeto:
 
-   ```bash
-   cd /caminho/para/o/projeto
-   ```
-   
+```bash
+cd /caminho/para/o/projeto
+```
+
+crie um arquivo .env na raiz do projeto, .env.example é um exemplo de como deve ser feito, com as seguintes variaveis de ambiente
+
+```bash
+DATABASE_URL=nome do caminho que salvara o banco de dados, exemplo file:./dev.db
+
+SMTP_HOST= host do servidor de email
+SMTP_PORT= porta do servidor de email
+SMTP_USER= usuario do servidor de email
+SMTP_PASSWORD= senha do servidor de email
+SMTP_FROM= email de origem
+```
+
 ## Instação
-Execute o comando abaixo para instalar as depencencias: 
+
+Execute o comando abaixo para instalar as depencencias:
 
 ```bash
 npm install
 ou
-yarn 
+yarn
 ```
 
-### Executar a aplicação 
+### Executar as dependencias
+
+Para executar a aplicação é necessario subir dependencias docker, para isso execute na pasta raiz do projeto o comando abaixo:
+
+```bash
+docker-compose up -d
+```
+
+Para parar as dependencias execute o comando abaixo:
+
+```bash
+docker-compose down
+```
+
+### Executar a aplicação
 
 ```bash
 # modo desenvolvimento
@@ -57,8 +84,6 @@ $ yarn run test:cov
 Depois que os serviços forem iniciados com sucesso, você poderá acessar o projeto por meio do navegador da Web ou de outros clientes, conforme apropriado. As informações específicas de acesso (URLs, portas, etc.) dependerão da configuração do projeto.
 
 o acesso principal api é na url http://localhost:3000
-
-
 
 ## Considerações Finais
 

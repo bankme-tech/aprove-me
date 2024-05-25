@@ -4,6 +4,27 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: nest-docker
     ports:
       - "3000:3000"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq_go_net
+    healthcheck:
+      test: "rabbitmqctl status"
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge
