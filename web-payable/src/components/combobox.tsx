@@ -18,17 +18,17 @@ import {
 } from "@/components/ui/popover"
 
 
-interface Props {
+export interface ComboboxProps {
   pickLabel: string;
   searchLabel: string;
   notFoundLabel: string;
-  items: { value: string; label: string; }[];
-  onSelect?: (value: string) => void;
+  items: { key: string; label: string; }[];
+  onSelect?: (key: string) => void;
 }
 
-export function Combobox(p: Props) {
+export function Combobox(p: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [key, setKey] = React.useState("");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -39,8 +39,8 @@ export function Combobox(p: Props) {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value
-            ? p.items.find((item) => item.value === value)?.label
+          {key
+            ? p.items.find((item) => item.key === key)?.label
             : p.pickLabel}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -52,10 +52,10 @@ export function Combobox(p: Props) {
           <CommandGroup>
             {p.items.map((item) => (
               <CommandItem
-                key={item.value}
-                value={item.value}
+                key={item.key}
+                value={item.key}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
+                  setKey(currentValue === key ? "" : currentValue);
                   setOpen(false);
                   if (p.onSelect) p.onSelect(currentValue);
                 }}
@@ -64,7 +64,7 @@ export function Combobox(p: Props) {
                 <CheckIcon
                   className={cn(
                     "ml-auto h-4 w-4",
-                    value === item.value ? "opacity-100" : "opacity-0"
+                    key === item.key ? "opacity-100" : "opacity-0"
                   )}
                 />
               </CommandItem>

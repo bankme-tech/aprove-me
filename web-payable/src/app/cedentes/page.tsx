@@ -38,6 +38,9 @@ const formSchema = z.object({
 });
 type Assignor = z.infer<typeof formSchema>;
 
+/**
+ * @todo create request to check if email exists after user typed on the form.
+ */
 export default function Page() {
   const router = useRouter();
   const form = useForm<Assignor>({
@@ -64,7 +67,7 @@ export default function Page() {
       if (res.redirect) {
         router.push(res.redirect);
       } else if (res.result) {
-        router.push(`/integrations/assignors/${res.result.id}`);
+        router.push(`/cedentes/${res.result.id}`);
       }
     } catch (err: any) {
       console.error(err); // TODO: add toaster or other message;

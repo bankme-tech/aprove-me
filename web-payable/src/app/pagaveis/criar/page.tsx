@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/card"
 import React from "react";
 import { currencyToNumber, numberToCurrency } from "@/lib/format-currency";
-import { Combobox } from "@/components/combobox";
+import { Combobox, ComboboxProps } from "@/components/combobox";
 import { useRouter } from "next/navigation";
 import { Slot } from "@radix-ui/react-slot";
 import { apiCall } from "@/lib/api-call";
@@ -34,9 +34,21 @@ const formSchema = z.object({
   assignor: z.string().uuid(),
 });
 
+interface Assignor {
+  id: string
+  name: string;
+  email: string;
+}
+
 type Payable = z.infer<typeof formSchema>;
 export default function Page() {
   const router = useRouter();
+  const [assignors, setAssignors] = React.useState<Assignor[]>([]);
+  React.useEffect(() => {
+    apiCall({ endpoint: `/integrations/assignors`, method: "GET" })
+      .then((res) => setAssignors(res.result.assignors));
+  }, [])
+
   const form = useForm<Payable>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,13 +63,6 @@ export default function Page() {
     const currency = numberToCurrency(digitOnly);
     form.setValue("value", currency);
   }
-
-  const items = [
-    { value: "09661545-54f1-4d3b-92c3-066332ff2c22", label: "UUID" },
-    { value: "invalid 1", label: "invalid 1" },
-    { value: "invalid 2", label: "invalid 2" },
-    { value: "invalid 3", label: "invalid 3" },
-  ];
 
   async function onSubmit(
     payable: Payable,
@@ -82,16 +87,26 @@ export default function Page() {
         router.push(`/pagaveis/${res.result.id}`);
       }
     } catch (err: any) {
-      console.log(err); // TODO: add toaster o other message;
+      console.log(err); // TODO: add toaster or other message;
     }
+  }
+
+  function buildComboboxValue(assignor: Assignor): ComboboxProps['items'][number] {
+    const label = `${assignor.name} ${assignor.email}`;
+    return {
+      key: label.toLowerCase(),
+      label,
+    }
+  }
+  function onComboboxSelect(key: string) {
+    const assignorFound = assignors.find((a) => key === buildComboboxValue(a).key);
+    if (assignorFound) form.setValue('assignor', assignorFound.id);
   }
 
   return (
     <div className="flex min-h-screen flex-col justify-between p-12">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <Card>
             <CardHeader>
               <CardTitle className="text-center">Pagável</CardTitle>
@@ -112,8 +127,8 @@ export default function Page() {
                         pickLabel="Escolha cedente..."
                         searchLabel="Digite nome do cedente"
                         notFoundLabel="Cedente não encontrado"
-                        items={items}
-                        onSelect={(value) => { form.setValue('assignor', value) }}
+                        items={assignors.map((a) => buildComboboxValue(a))}
+                        onSelect={onComboboxSelect}
                       />
                     </Slot>
                     <input id="value" type="hidden" {...field} />
