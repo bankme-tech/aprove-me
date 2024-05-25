@@ -82,7 +82,15 @@ Foram criados testes unitários e testes de integração.
     npm install
     ```
 
-3. Para executar os testes, utilize o comando:
+3. Executar migrations
+
+    > Necessário para os testes de integração
+
+    ```bash
+    npm run migrate:dev
+    ```
+
+4. Para executar os testes, utilize o comando:
 
     ```bash
     npm run test
