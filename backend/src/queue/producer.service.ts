@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import amqp, { ChannelWrapper } from 'amqp-connection-manager';
 import { Channel } from 'amqplib';
-import { CreatePayableDto } from 'src/payables/dto/create.payable.dto';
+import { CreatePayableDto } from '../payables/dto/create.payable.dto';
 
 export class PayableQueueMessage {
   batchId: string;

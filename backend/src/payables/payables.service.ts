@@ -7,10 +7,10 @@ import { PrismaService } from '../prisma/prisma.service';
 import { validateDto } from '../utils';
 import { CreatePayableDto } from './dto/create.payable.dto';
 import { UpdatePayableDto } from './dto/update.payable.dto';
-import { ProducerService } from 'src/queue/producer.service';
-import { BatchTrackerService } from 'src/queue/batch-tracker.service';
+import { ProducerService } from '../queue/producer.service';
+import { BatchTrackerService } from '../queue/batch-tracker.service';
 import { randomUUID } from 'crypto';
-import { EmailService } from 'src/email/email.service';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class PayablesService {
