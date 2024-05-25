@@ -9,7 +9,7 @@ export class PayableService {
 
   async create(createPayableDto: CreatePayableDto) {
     const assignor = await this.checkIfAssignorExists(
-      createPayableDto.assignor,
+      createPayableDto.assignorId,
     );
     if (!assignor) return;
     const payableData = await this.prismaService.payable.create({
@@ -18,7 +18,7 @@ export class PayableService {
         emissionDate: new Date(createPayableDto.emissionDate),
         assignor: {
           connect: {
-            id: createPayableDto.assignor,
+            id: createPayableDto.assignorId,
           },
         },
       },
