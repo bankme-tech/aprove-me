@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3001:3001"
+      - "5555:5555"
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    hostname: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
