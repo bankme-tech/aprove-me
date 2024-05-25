@@ -22,12 +22,14 @@ const user_1 = require("./DTOs/user");
 const user_repo_1 = require("./repositories/user-repo");
 const swagger_1 = require("@nestjs/swagger");
 const auth_service_1 = require("./auth/auth-service");
+const toke_1 = require("./auth/toke");
 let AppController = class AppController {
-    constructor(payable, assignor, user, authService) {
+    constructor(payable, assignor, user, authService, tokenService) {
         this.payable = payable;
         this.assignor = assignor;
         this.user = user;
         this.authService = authService;
+        this.tokenService = tokenService;
     }
     async auth(body) {
         try {
@@ -61,8 +63,13 @@ let AppController = class AppController {
             throw new common_1.HttpException(error.message, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async getUserById(id) {
+    async getUserById(id, authorization) {
         try {
+            const hasValidToken = this.tokenService.validate(authorization);
+            console.log(hasValidToken);
+            if (!hasValidToken) {
+                throw new common_1.BadRequestException('Invalid token');
+            }
             const user = await this.user.getUserById(+id);
             if (!user) {
                 throw new common_1.NotFoundException(`User with ID ${id} not found`);
@@ -312,8 +319,9 @@ __decorate([
     (0, common_1.Get)('user/:id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Headers)('authorization')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Number, String]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "getUserById", null);
 __decorate([
@@ -445,6 +453,7 @@ exports.AppController = AppController = __decorate([
     __metadata("design:paramtypes", [payable_repo_1.PayableRepo,
         assignor_repo_1.AssignorRepo,
         user_repo_1.UserRepo,
-        auth_service_1.AuthService])
+        auth_service_1.AuthService,
+        toke_1.TokenValidator])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

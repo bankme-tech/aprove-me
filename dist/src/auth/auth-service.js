@@ -13,7 +13,7 @@ exports.AuthService = void 0;
 const user_repo_1 = require("../repositories/user-repo");
 const bcrypt = require("bcrypt");
 const common_1 = require("@nestjs/common");
-const jwt_1 = require("@nestjs/jwt");
+const toke_1 = require("./toke");
 let AuthService = class AuthService {
     constructor(user, jwt) {
         this.user = user;
@@ -26,7 +26,7 @@ let AuthService = class AuthService {
             if (user) {
                 const unHashedPassword = await bcrypt.compare(password, user.password);
                 if (unHashedPassword) {
-                    const token = this.jwt.sign({ username: user.login, sub: user.id });
+                    const token = await this.jwt.generate(user.login, user.id);
                     return { token };
                 }
                 throw new common_1.BadRequestException('Senha incorreta');
@@ -44,6 +44,6 @@ exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [user_repo_1.UserRepo,
-        jwt_1.JwtService])
+        toke_1.TokenValidator])
 ], AuthService);
 //# sourceMappingURL=auth-service.js.map

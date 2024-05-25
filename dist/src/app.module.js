@@ -18,6 +18,8 @@ const user_repo_1 = require("./repositories/user-repo");
 const prisma_user_repo_1 = require("./repositories/prisma/prisma-user-repo");
 const auth_service_1 = require("./auth/auth-service");
 const jwt_1 = require("@nestjs/jwt");
+const welcome_1 = require("./welcome");
+const toke_1 = require("./auth/toke");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -29,13 +31,14 @@ exports.AppModule = AppModule = __decorate([
                 signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
             }),
         ],
-        controllers: [app_controller_1.AppController],
+        controllers: [app_controller_1.AppController, welcome_1.Welcome],
         providers: [
             prisma_service_1.PrismaService,
             { provide: payable_repo_1.PayableRepo, useClass: prisma_payable_repo_1.prismaPayableRepo },
             { provide: assignor_repo_1.AssignorRepo, useClass: prisma_assignor_repo_1.prismaAssignorRepo },
             { provide: user_repo_1.UserRepo, useClass: prisma_user_repo_1.prismaUserRepo },
             auth_service_1.AuthService,
+            toke_1.TokenValidator,
         ],
     })
 ], AppModule);

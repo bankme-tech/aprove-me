@@ -1,261 +1,90 @@
-<p align="center">
-  <img src="./assets/logo-bankme.png" alt="Logo Bankme" width="91" height="108">
-</p>
-<h1 align="center">
-  Aprove-me
-</h1>
+# API de Gerenciamento de Recebíveis e Cedentes
 
-## Sumário
+Esta é uma API desenvolvida em NestJS para gerenciamento de recebíveis. Ela permite realizar operações CRUD (Create, Read, Update, Delete) em recebíveis, cedentes e usuários, utilizando um banco de dados SQLite e implementando autenticação com JWT e criptografia de senha com bcrypt.
 
-- [Sumário](#sumário)
-- [❤️ Bem vindos](#️-bem-vindos)
-- [🚀 Vamos nessa!](#-vamos-nessa)
-  - [Dicas](#dicas)
-  - [Como você deverá desenvolver?](#como-você-deverá-desenvolver)
-  - [Qual o tempo para entregar?](#qual-o-tempo-para-entregar)
-- [💻 O Problema](#-o-problema)
-  - [Estrutura de um recebível](#estrutura-de-um-recebível)
-  - [Estrutrua de um cedente](#estrutrua-de-um-cedente)
-- [💾 Back-end](#-back-end)
-  - [Nível 1 - Validação](#nível-1---validação)
-  - [Nível 2 - Persistência](#nível-2---persistência)
-  - [Nível 3 - Testes](#nível-3---testes)
-  - [Nível 4 - Autenticação](#nível-4---autenticação)
-  - [Nível 5 - Gerenciamento de permissões](#nível-5---gerenciamento-de-permissões)
-  - [Nível 6 - Infra e Doc](#nível-6---infra-e-doc)
-  - [Nível 7 - Lotes](#nível-7---lotes)
-  - [Nível 8 - Resiliência](#nível-8---resiliência)
-  - [Nível 9 - Cloud](#nível-9---cloud)
-  - [Nível 10 - Infra as a Code](#nível-10---infra-as-a-code)
-- [🖥️ Front-end](#️-front-end)
-  - [Nível 1 - Cadastro](#nível-1---cadastro)
-  - [Nível 2 - Conectando na API](#nível-2---conectando-na-api)
-  - [Nível 3 - Listando](#nível-3---listando)
-  - [Nível 4 - Autenticação](#nível-4---autenticação-1)
-  - [Nível 5 - Testes](#nível-5---testes)
+## Como Usar
 
-## ❤️ Bem vindos 
+### Instalação local
 
-Olá, tudo certo?
+1. Certifique-se de ter o Node.js e o npm instalados.
+2. Clone este repositório.
+3. Entre na pasta backend ou digite no terminal, `cd aprove-me/backend`, logo apois terminar o clone.
+4. Execute `npm install` para instalar as dependências.
+5. Execute `npm run start:dev` para iniciar o servidor local.
 
-Seja bem vindo ao teste de seleção para novos desenvolvedores na Bankme!
+### Instalação via container (Docker)
+Caso você prefira rodar via container, o que é mais adequado para evitar conflitos de versões de dependências, siga as instruções a baixo.
 
-Estamos honrados que você tenha chegado até aqui!
+1. Certifique-se de ter o docker, Node.js e o npm instalados.
+2. Clone este repositório.
+3. Entre na pasta backend, ou no terminal, digite `cd aprove-me/backend`, logo apois o clone.
+4. Execute `npm install` para instalar as dependências.
+5.  Abra o terminal, certifique-se de que esteja na pasta raiz do projeto ou em um de seus subdiretórios, digitando `pwd`. Se o final do endereço for `/aprove-me` ou `/aprove-me/**`, tudo certo.
+6. Após confirmar que está no local certo, digite no terminal `docker-compose up --build`. Aguarde o procedimento acabar, se tudo estiver certo, aparecerá no terminal algo tipo: `aprove-me-app-1  | [Nest] 29  - 05/25/2024, 3:25:36 AM     LOG [NestApplication] Nest application successfully started +31ms`.
+7. O servidor e o banco de dados estará rodando no container `aprove-me-app-1`. Você pode ter acesso ao terminal interativo do container, digitando ` docker exec -it aprove-me-app-1 /bin/sh`.
 
-Prepare aquele ☕️ , e venha conosco codar e se divertir!
+### Execução
+Tanto na execução local quanto na execução via container docker, vocẽ pode ver o resultado no navegador. Ao digitar a URL `http://localhost:3000/` você verá uma mensagem de boas vindas.
 
-## 🚀 Vamos nessa!
+### Documentação da API
 
-Este é um teste para analisarmos como você desempenha ao entender, traduzir, resolver e entregar um código que resolve um problema.
+A documentação da API está disponível através do Swagger UI.
+Você pode acessá-la e testar as rotas em [http://localhost:3000/api](http://localhost:3000/api).
 
-### Dicas
+Opitei por usar o Swagger, pois é a melhor escolha no que disrespeito a documentação de API's. Além de ver todas os endpoints existentes e quais opções de entrada eles recebem, você pode testar cada um deles de forma prática.
 
-- Documente;
-- Pergunte;
-- Mostre a sua linha de reciocínio;
-- Trabalhe bem o seu README.md;
+## Endpoints Disponíveis
 
-### Como você deverá desenvolver?
+### Recebíveis
 
-1. Faça um clone deste projeto em seu GitHub pessoal;
-2. Realize as implementações de acordo com cada um dos níveis;
-3. Faça pequenos commits;
-4. Depois de sentir que fez o seu máximo, faça um PR para o repositório original. (Para conseguir fazer isso, não se esqueça de fazer um Fork antes de iniciar tudo!)
+- `GET /integrations/payable`: Retorna todos os recebíveis.
+- `GET /integrations/payable/:id`: Retorna um recebível específico pelo ID.
+- `POST /integrations/payable`: Cria um novo recebível.
+- `PUT /integrations/payable/:id`: Atualiza um recebível existente pelo ID.
+- `DELETE /integrations/payable/:id`: Exclui um recebível pelo ID.
 
-**IMPORTANTE!**
+### Cedentes
 
-Não significa que você precisa implementar todos os níveis para ser aprovado no processo!
+- `GET /integrations/assignor`: Retorna todos os cedentes.
+- `GET /integrations/assignor/:id`: Retorna um cedente específico pelo ID.
+- `POST /integrations/assignor`: Cria um novo cedente.
+- `PUT /integrations/assignor/:id`: Atualiza um cedente existente pelo ID.
+- `DELETE /integrations/assignor/:id`: Exclui um cedente pelo ID.
 
-Faça até onde se sentir confortável.
+### Usuários
 
-### Qual o tempo para entregar?
+- `GET /integrations/user`: Retorna todos os usuários.
+- `GET /integrations/user/:id`: Retorna um usuário específico pelo ID.
+- `GET /integrations/user/login/search`: Retorna um usuário específico pelo login, passando o email como string via `@Query`. Ex: `/integrations/user/login/search?login=test@test.com`
+- `POST /integrations/user`: Cria um novo usuário.
+- `PUT /integrations/user/:id`: Atualiza um usuário existente pelo ID.
+- `DELETE /integrations/user/:id`: Exclui um usuário pelo ID.
 
-Nós temos um período para fechar a vaga em questão. Então, quanto antes você enviar, mais cuidado podemos ter na revisão do seu teste.
+## Autenticação
 
-Mas sabemos que o dia a dia é corrido, faça de forma que fique confortável para você!
+A autenticação é necessária para acessar os endpoints de cedentes, recebíveis e usuários.
+A API utiliza tokens JWT para autenticação, que devem ser incluídos no cabeçalho da solicitação.
 
-Mas não desista! Envie até onde conseguir.
+## Tecnologias Utilizadas
 
-## 💻 O Problema
+- NestJS
+- ORM Prisma
+- SQLite
+- JWT (JSON Web Tokens)
+- bcrypt
+- Docker
+- Swagger
+## Linguagens Utilizadas
+- TypeScript
 
-Um cliente da Bankme solicitou uma nova funcionalidade, relacionada a recebíveis.
+## Testes
 
-Todos os dias esse cliente movimenta vários recebíveis, e nosso time de operações estava ficando maluco tendo que cadastrar tudo isso de forma manual!
+Os testes estão localizados no diretório `/src/DTOs`, acompanhando seus respectivos alvos de testes.
 
-Os recebíveis são representações digitais de um documento que simula uma dívida a ser recebida. E para Bankme, é importante ter essas informações como parte do fluxo comercial que temos com este cliente.
+#### Como testar?
 
-### Estrutura de um recebível
+Estando no diretório `backend`, execulte no terminal `npm run test:unit`. Isso era rodar todos os testes existente no projeto. 
 
-| CAMPO        | TIPO          | DESCRIÇÃO                                 |
-|--------------|---------------|-------------------------------------------|
-| id           | string (UUID) | É a identificação de um recebível.        |
-| value        | float         | É o valor do recebível.                   |
-| emissionDate | date          | É a data de emissão do recebível.         |
-| assignor     | string (UUID) | Representa a identificação de um cedente. |
+Para testar a cobertatura, execulte no terminal `npm run test:cover`.
 
-### Estrutrua de um cedente
-
-| CAMPO    | TIPO          | DESCRIÇÃO                             |
-|----------|---------------|---------------------------------------|
-| id       | string (UUID) | É a identificação de um cedente.      |
-| document | string(30)    | É o documento CPF ou CNPJ do cedente. |
-| email    | string(140)   | É o email do cedente.                 |
-| phone    | string(20)    | É o telefone do cedente.              |
-| name     | string(140)   | É a nome ou razão social do cedente.  |
-
-## 💾 Back-end
-
-### Nível 1 - Validação
-
-Implemente uma API utilizando NestJS que receba dados de um recebível e de um cedente.
-
-A rota para este cadastro é:
-
-`POST /integrations/payable`
-
-Essa rota deverá receber todas as informações. É importante garantir a validação destes dados:
-
-1. Nenhum campo pode ser nulo;
-2. Os ids devem ser do tipo UUID;
-3. As strings não podem ter caracteres a mais do que foi definido em sua estrutura;
-
-Se algum campo não estiver preenchido corretamente, deve-se retornar uma mensagem para o usuário mostrando qual o problema foi encontrado em qual campo.
-
-Se todos os dados estiverem validados. Apenas retorne todos os dados em um formato JSON.
-
-### Nível 2 - Persistência
-
-Utilize o Prisma, para incluir um novo banco de dados SQLite.
-
-Crie a estrutura de acordo com o que foi definido.
-
-Caso os dados estejam válidos, cadastre-os.
-
-Crie 2 novas rotas:
-
-`GET /integrations/payable/:id`
-
-`GET /integrations/assignor/:id`
-
-Para que seja possível retornar pagáveis e cedentes de forma independete.
-
-Inclua também rotas para as outras operações:
-
-- Edição;
-- Exclusão;
-- Cadastro;
-
-### Nível 3 - Testes
-
-Crie testes unitários para cada arquivo da aplicação. Para cada nova implementação a seguir, também deve-se criar os testes.
-
-### Nível 4 - Autenticação
-
-Inclua um sistema de autenticação em todas as rotas.
-
-Para isso, crie uma nova rota:
-
-`POST /integrations/auth` que deve receber:
-
-```json
-{
-  "login": "aprovame",
-  "password": "aprovame"
-}
-```
-
-Com essas credenciais o endpoint deverá retornar um JWT com o tempo de expiração de 1 minuto.
-
-Reescreva as regras de todas as outras rotas para que o JWT seja enviado como parâmetro do `Header` da requisição.
-
-Se o JWT estiver válido, então os dados devem ser mostrados, caso contrário, deve-se mostrar uma mensagem de "Não autorizado".
-
-### Nível 5 - Gerenciamento de permissões
-
-Agora, crie um sistema de gerenciamento de permissões.
-
-Crie um novo cadastro de permissões. Esse cadastro deve armazenar: `login` e `password`.
-
-Refatore o endpoint de autenticação para que sempre se gere JWTs se login e senha estiverem cadastrados no Banco de Dados.
-
-### Nível 6 - Infra e Doc
-
-Crie um `Dockerfile` para sua API.
-
-Crie um `docker-compose.yaml` para iniciar o seu projeto.
-
-Documente tudo o que foi feito até aqui:
-
-- Como preparar o ambiente;
-- Como instalar as dependência;
-- Como rodar o projeto;
-
-### Nível 7 - Lotes
-
-Crie um novo recurso de processamento de pagáveis por lotes.
-
-A ideia é que o cliente possa enviar um GRANDE número de pagáveis de uma única vez. E isso, não poderá ser processado de forma síncrona.
-
-Crie um novo endpoint:
-
-`POST integrations/payable/batch`
-
-Neste endpoint deve ser possível receber lotes de até 10.000 pagáveis.
-
-Ao receber todos os pagáveis, deve-se postá-los em uma fila.
-
-Crie um consumidor para esta fila que deverá pegar pagável por pagável, criar seu registro no banco de dados, e ao final do processamento do lote enviar um e-mail de lote processado, com o número de sucesso e falhas.
-
-### Nível 8 - Resiliência
-
-Caso não seja possível processar algum ítem do lote, coloque-o novamente na fila. Isso deve ocorrer por até 4 vezes. Depois, esse ítem deve ir para uma "Fila Morta" e um e-mail deve ser disparado para o time de operações.
-
-### Nível 9 - Cloud
-
-Crie uma pipeline de deploy da aplicação em alguma estrutura de Cloud. (AWS, Google, Azure...)
-
-### Nível 10 - Infra as a Code
-
-Crie uma estrutura em terraforma que monte a infra-estrutura desejada.
-
-## 🖥️ Front-end
-
-### Nível 1 - Cadastro
-
-Crie uma interface na qual é possível cadastrar os pagáveis.
-
-É importante que sua interface previna o cadastro de campos vazios, ou que não estejam nas regras definidas anteriormente.
-
-Exiba o pagável cadastrado em uma nova tela.
-
-### Nível 2 - Conectando na API
-
-Conecte a seu Front-end a API que foi criada, e faça o cadastro de um pagável refletir na sua API.
-
-Faça também uma tela para cadastro do cedente.
-
-Altere o cadastro inicial para que o campo `assignor` seja um `combobox` no qual seja possível selecionar um cedente.
-
-### Nível 3 - Listando
-
-Agora faça um sistema de listagens de pagáveis. Mostrando apenas: `id`, `value` e `emissionDate`.
-
-Para cada ítem da lista, coloque um link que mostra os detalhes do pagável.
-
-Além disso, coloque opções de editar e excluir.
-
-Nessa página de detalhes, inclua um novo link para exibir os dados do cedente.
-
-Todos os dados devem vir da API.
-
-### Nível 4 - Autenticação
-
-Implemente agora o sistema de login e senha para poder acessar as suas rotas de forma autenticada.
-
-Armazene o token no `localStorage` do seu navegador.
-
-Caso o token expire, redirecione o usuário para a página de login.
-
-### Nível 5 - Testes
-
-Crie testes para sua aplicação Front-end.
+Para rodar apenas um arquivo de test, basta acrescentar no final o nome do arquivo de teste, exemplo `npm run test:unit test.unit.main.spec.ts`

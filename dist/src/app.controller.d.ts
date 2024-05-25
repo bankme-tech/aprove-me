@@ -5,17 +5,19 @@ import { AssignorRepo } from './repositories/assignor-repo';
 import { UserDto } from './DTOs/user';
 import { UserRepo } from './repositories/user-repo';
 import { AuthService } from './auth/auth-service';
+import { TokenValidator } from './auth/toke';
 export declare class AppController {
     private payable;
     private assignor;
     private user;
     private authService;
-    constructor(payable: PayableRepo, assignor: AssignorRepo, user: UserRepo, authService: AuthService);
+    private tokenService;
+    constructor(payable: PayableRepo, assignor: AssignorRepo, user: UserRepo, authService: AuthService, tokenService: TokenValidator);
     auth(body: UserDto): Promise<{
         token: string;
     }>;
     createUser(body: UserDto): Promise<UserDto>;
-    getUserById(id: number): Promise<UserDto>;
+    getUserById(id: number, authorization: string): Promise<UserDto>;
     getUserByLogin(login: string): Promise<UserDto>;
     getUserAll(): Promise<UserDto[]>;
     updateUser(id: number, body: UserDto): Promise<UserDto>;
