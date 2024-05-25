@@ -9,7 +9,12 @@ import amqp, { ChannelWrapper } from 'amqp-connection-manager';
 import { ConfirmChannel } from 'amqplib';
 import { PayablesService } from '../payables/payables.service';
 import { BatchTrackerService } from './batch-tracker.service';
-import { PayableQueueMessage } from './producer.service';
+import {
+  PayableQueueMessage,
+  QueueMessageStatus,
+} from './entities/payable-queue-message.entity';
+import { ProducerService } from './producer.service';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class ConsumerService implements OnModuleInit {
@@ -18,6 +23,7 @@ export class ConsumerService implements OnModuleInit {
   constructor(
     @Inject(forwardRef(() => PayablesService))
     private payableService: PayablesService,
+    private producerService: ProducerService,
 
     private batchTracker: BatchTrackerService,
   ) {
@@ -31,22 +37,46 @@ export class ConsumerService implements OnModuleInit {
         await channel.assertQueue('payableQueue', { durable: true });
         await channel.consume('payableQueue', async (message) => {
           if (message) {
-            const content = JSON.parse(
-              message.content.toString(),
-            ) as PayableQueueMessage;
-
-            let processSuccess = false;
-
             try {
-              await this.payableService.processBatchCreatePayable(
-                content.payable,
+              let content = JSON.parse(
+                message.content.toString(),
+              ) as PayableQueueMessage;
+
+              content = plainToInstance(PayableQueueMessage, content);
+
+              let processSuccess = false;
+
+              try {
+                await this.payableService.processBatchCreatePayable(
+                  content.payable,
+                );
+                content.status = QueueMessageStatus.SUCCESS;
+                processSuccess = true;
+              } catch (error) {
+                if (content.retryCount < 4) {
+                  content.incrementRetryCount();
+                  await this.producerService.addToPayableQueue(content);
+                  channel.ack(message);
+
+                  return;
+                } else {
+                  content.status = QueueMessageStatus.FAILED;
+                  await this.producerService.addToDeadLetterQueue(content);
+                }
+              }
+
+              this.batchTracker.messageProcessed(
+                content.batchId,
+                processSuccess,
               );
-              processSuccess = true;
-            } catch (error) {}
 
-            this.batchTracker.messageProcessed(content.batchId, processSuccess);
-
-            channel.ack(message);
+              channel.ack(message);
+            } catch (error) {
+              await this.producerService.addToDeadLetterQueue(
+                message.content.toString(),
+              );
+              channel.nack(message);
+            }
           }
         });
       });

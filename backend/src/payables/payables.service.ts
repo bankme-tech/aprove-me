@@ -11,6 +11,7 @@ import { ProducerService } from '../queue/producer.service';
 import { BatchTrackerService } from '../queue/batch-tracker.service';
 import { randomUUID } from 'crypto';
 import { EmailService } from '../email/email.service';
+import { PayableQueueMessage } from '../queue/entities/payable-queue-message.entity';
 
 @Injectable()
 export class PayablesService {
@@ -78,10 +79,9 @@ export class PayablesService {
 
     this.batchTracker.addBatch(batchId, createDtos.length);
     createDtos.forEach(async (createDto) => {
-      await this.produceQueue.addToPayableQueue({
-        batchId: batchId,
-        payable: createDto,
-      });
+      await this.produceQueue.addToPayableQueue(
+        new PayableQueueMessage(batchId, createDto),
+      );
     });
 
     this.batchTracker.onBatchComplete(batchId, (result) => {

@@ -1,19 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProducerService } from './producer.service';
 import { ChannelWrapper } from 'amqp-connection-manager';
-
-jest.mock('amqp-connection-manager', () => {
-  const originalModule = jest.requireActual('amqp-connection-manager');
-  return {
-    ...originalModule,
-    connect: jest.fn().mockReturnValue({
-      createChannel: jest.fn().mockReturnValue({
-        assertQueue: jest.fn().mockResolvedValue(null),
-        sendToQueue: jest.fn().mockResolvedValue(null),
-      }),
-    }),
-  };
-});
+import { EmailService } from '../email/email.service';
+import { mockDeep } from 'jest-mock-extended';
 
 describe('ProducerService', () => {
   let service: ProducerService;
@@ -31,6 +20,10 @@ describe('ProducerService', () => {
         {
           provide: 'ChannelWrapper', // Use string token instead of actual class
           useValue: channelWrapperMock, // Use the mocked object
+        },
+        {
+          provide: EmailService,
+          useValue: mockDeep<EmailService>(),
         },
       ],
     }).compile();

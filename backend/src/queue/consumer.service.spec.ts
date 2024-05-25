@@ -5,6 +5,7 @@ import { BatchTrackerService } from './batch-tracker.service';
 import { Logger } from '@nestjs/common';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import { ChannelWrapper } from 'amqp-connection-manager';
+import { ProducerService } from './producer.service';
 
 describe('ConsumerService', () => {
   let service: ConsumerService;
@@ -29,6 +30,10 @@ describe('ConsumerService', () => {
         {
           provide: 'ChannelWrapper',
           useValue: mockDeep<ChannelWrapper>(),
+        },
+        {
+          provide: ProducerService,
+          useValue: mockDeep<ProducerService>(),
         },
       ],
     }).compile();
