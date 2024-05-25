@@ -5,7 +5,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { RecordNotFoundError } from 'src/persistence/errors/record-not-found.error';
-import { ReferencedRecordError } from 'src/persistence/errors/referenced-record-error';
+import { ReferencedRecordError } from 'src/persistence/errors/referenced-record.error';
 
 @Catch(RecordNotFoundError, ReferencedRecordError)
 export class PersistenceExceptionFilter implements ExceptionFilter {

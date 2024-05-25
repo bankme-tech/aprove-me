@@ -7,7 +7,7 @@ import { AssignorMapper } from '../mappers/assignor.mapper.interface';
 import { Assignor } from '@prisma/client';
 import { UpdateAssignorInputDTO } from '../dto/update-assignor.input.dto';
 import { PrismaErrorCodes } from 'src/exception-filters/prisma-exception.filter';
-import { ReferencedRecordError } from 'src/persistence/errors/referenced-record-error';
+import { ReferencedRecordError } from 'src/persistence/errors/referenced-record.error';
 
 @Injectable()
 export class PrismaAssignorRepository implements IAssignorRepository {
