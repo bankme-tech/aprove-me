@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PayableModule } from './payable/payable.module';
 import { PrismaModule } from './persistence/prisma.module';
 import { AssignorModule } from './assignor/assignor.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { AssignorModule } from './assignor/assignor.module';
     PrismaModule,
     PayableModule,
     AssignorModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [],
