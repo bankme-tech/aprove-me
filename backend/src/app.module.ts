@@ -5,6 +5,7 @@ import { PayableModule } from './payable/payable.module';
 import { PrismaModule } from './persistence/prisma.module';
 import { AssignorModule } from './assignor/assignor.module';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
     PayableModule,
     AssignorModule,
     AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [],
