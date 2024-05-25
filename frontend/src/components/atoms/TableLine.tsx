@@ -2,11 +2,14 @@ import Link from "next/link";
 
 type TableLine = {
   edit?: boolean;
+  content: any; // TODO: to fix
+  keys?: string[];
+  link?: string; // TODO: add type conditional
 };
 
-export const TableLine = ({ edit, content, keys, link }: any) => {
+export const TableLine = ({ edit, content, keys, link }: TableLine) => {
   return (
-    <tr className={edit ? "hover:bg-success  " : ""}>
+    <tr className={edit ? "hover:bg-success" : ""}>
       {keys
         ? keys.map((key: any) => (
             <td
@@ -16,15 +19,14 @@ export const TableLine = ({ edit, content, keys, link }: any) => {
               {content[key]}
             </td>
           ))
-        : content.map(({ key, value }: any) => (
+        : content.map(({ id, value }: any) => (
             <td
-              key={key}
+              key={id}
               className="py-4 px-6 text-sm font-medium text-primary-dark whitespace-nowrap"
             >
               {value}
             </td>
           ))}
-
       <td className="py-4 px-6 text-sm font-medium text-right whitespace-nowrap ">
         {edit && (
           <Link href={link + "?id=" + content.id}>

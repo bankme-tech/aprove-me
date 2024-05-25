@@ -76,3 +76,64 @@ export const findManyAssignor = async ({
     return error;
   }
 };
+
+export const findOnePayable = async (id: string) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4000/v1/integrations/payable/${id}`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return data.data;
+  } catch (error) {
+    console.error("Erro na solicitação:", error);
+    return error;
+  }
+};
+
+export const findOneAssignor = async (assignorId: string) => {
+  console.log("🚀 ~ findOneAssignor ~ assignorId:", assignorId);
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4000/v1/integrations/assignor/${assignorId}`,
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return data.data;
+  } catch (error) {
+    console.error("Erro na solicitação:", error);
+    return error;
+  }
+};
+
+export const createPayable = async (body: any) => {
+  try {
+    const { data } = await axios.post(
+      `http://localhost:4000/v1/integrations/payable/`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return data.data;
+  } catch (error) {
+    console.error("Erro na solicitação:", error);
+    return error;
+  }
+};

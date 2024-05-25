@@ -1,8 +1,13 @@
-type Button = {
-  label: string;
+import React, { ButtonHTMLAttributes } from "react";
+
+type Button = ButtonHTMLAttributes<HTMLButtonElement> & {
+  children: React.ReactNode;
+  secondary?: boolean;
 };
 
-export const Button = ({ children, secondary, ...props }: any) => {
+// TODO: Avoid props drippiling
+// Solutions: Use Ref or Context
+export const Button = ({ children, secondary = false, ...props }: Button) => {
   return (
     <button
       type="button"
