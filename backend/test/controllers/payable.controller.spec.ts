@@ -19,6 +19,7 @@ import { IUpdatePayableUseCase } from 'src/payable/usecases/update-payable.useca
 import { IRemovePayableUseCase } from 'src/payable/usecases/remove-payable.usecase.interface';
 import { makePayableEntity } from 'test/mocks/entities/payable.entity.mock';
 import { RemovePayableInputDTO } from 'src/payable/dto/remove-payable.input.dto';
+import { AuthModule } from 'src/auth/auth.module';
 
 describe('PayableController', () => {
   let sut: PayableController;
@@ -39,6 +40,7 @@ describe('PayableController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PayableController],
+      imports: [AuthModule],
       providers: [
         {
           provide: ICreatePayableUseCase,

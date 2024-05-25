@@ -23,6 +23,9 @@ import { RemoveAssignorUseCase } from 'src/assignor/usecases/remove-assignor-use
 import { PrismaDatabaseHelper } from './helpers/prisma-database.e2e';
 import { makePayableEntity } from 'test/mocks/entities/payable.entity.mock';
 import { CustomLogger } from './helpers/custom-logger.e2e';
+import { AuthModule } from 'src/auth/auth.module';
+import { makeAuthHeader } from './helpers/auth.e2e';
+import { AuthService } from 'src/auth/auth.service';
 
 describe('AssignorController (e2e)', () => {
   let app: INestApplication;
@@ -35,6 +38,8 @@ describe('AssignorController (e2e)', () => {
   let updateAssignorBodyDTO: UpdateAssignorInputBodyDTO;
   let removeAssignorDTO: RemoveAssignorInputDTO;
 
+  let authToken: string;
+
   beforeAll(async () => {
     await prismaDatabaseHelper.dropDatabase();
     await prismaDatabaseHelper.createDatabase();
@@ -42,7 +47,7 @@ describe('AssignorController (e2e)', () => {
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AssignorModule, PrismaModule.forTest(prismaClient)],
+      imports: [AssignorModule, AuthModule, PrismaModule.forTest(prismaClient)],
     })
       .setLogger(new CustomLogger())
       .compile();
@@ -52,6 +57,8 @@ describe('AssignorController (e2e)', () => {
     app.useGlobalFilters(new PrismaExceptionFilter());
     app.useGlobalFilters(new PersistenceExceptionFilter());
     await app.init();
+
+    authToken = await makeAuthHeader(app.get(AuthService));
 
     const { id, document, email, name, phone } = makeAssignorEntity();
     createAssignorDTO = makeAssignorDTO();
@@ -93,6 +100,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .post('/assignor')
+        .set('Authorization', `${authToken}`)
         .send({
           ...createAssignorDTO,
         })
@@ -134,6 +142,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .post('/assignor')
+        .set('Authorization', `${authToken}`)
         .send({
           ...createAssignorDTO,
         })
@@ -152,6 +161,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .post('/assignor')
+        .set('Authorization', `${authToken}`)
         .send({
           ...createAssignorDTO,
           document: assignor.document,
@@ -174,6 +184,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .post('/assignor')
+        .set('Authorization', `${authToken}`)
         .send({
           ...createAssignorDTO,
         })
@@ -187,6 +198,7 @@ describe('AssignorController (e2e)', () => {
     test('should return 201 on success', async () => {
       await request(app.getHttpServer())
         .post('/assignor')
+        .set('Authorization', `${authToken}`)
         .send({
           ...createAssignorDTO,
         })
@@ -213,6 +225,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get('/assignor')
+        .set('Authorization', `${authToken}`)
         .expect(500)
         .expect((res) => {
           expect(res.body.statusCode).toBe(500);
@@ -231,6 +244,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get('/assignor')
+        .set('Authorization', `${authToken}`)
         .expect(200)
         .expect((res) => {
           for (const item of res.body) {
@@ -250,6 +264,7 @@ describe('AssignorController (e2e)', () => {
     test('should return 400 if id is not a valid UUID', async () => {
       await request(app.getHttpServer())
         .get('/assignor/123')
+        .set('Authorization', `${authToken}`)
         .expect(400)
         .expect((res) => {
           expect(res.body.statusCode).toBe(400);
@@ -260,6 +275,7 @@ describe('AssignorController (e2e)', () => {
     test('should return 404 if assignor does not exist', async () => {
       await request(app.getHttpServer())
         .get(`/assignor/${findAssignorDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(404)
         .expect((res) => {
           expect(res.body.statusCode).toBe(404);
@@ -276,6 +292,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get(`/assignor/${findAssignorDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(500)
         .expect((res) => {
           expect(res.body.statusCode).toBe(500);
@@ -289,6 +306,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get(`/assignor/${assignor.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(200)
         .expect((res) => {
           expect(res.body).toEqual({
@@ -306,6 +324,7 @@ describe('AssignorController (e2e)', () => {
     test('should return 400 if id is not a valid UUID', async () => {
       await request(app.getHttpServer())
         .patch('/assignor/123')
+        .set('Authorization', `${authToken}`)
         .send({
           ...updateAssignorBodyDTO,
         })
@@ -333,6 +352,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .patch(`/assignor/${updatedAssignorParamsDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .send({
           ...updateAssignorBodyDTO,
         })
@@ -372,6 +392,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .patch(`/assignor/${updatedAssignorParamsDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .send({
           ...updateAssignorBodyDTO,
         })
@@ -387,6 +408,7 @@ describe('AssignorController (e2e)', () => {
     test('should return 404 if assignor does not exist', async () => {
       await request(app.getHttpServer())
         .patch(`/assignor/${updatedAssignorParamsDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .send({
           ...updateAssignorBodyDTO,
         })
@@ -406,6 +428,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .patch(`/assignor/${updatedAssignorParamsDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .send({
           ...updateAssignorBodyDTO,
         })
@@ -429,6 +452,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .patch(`/assignor/${assignor.id}`)
+        .set('Authorization', `${authToken}`)
         .send({
           ...updatedAssignor,
         })
@@ -449,6 +473,7 @@ describe('AssignorController (e2e)', () => {
     test('should return 400 if id is not a valid UUID', async () => {
       await request(app.getHttpServer())
         .delete('/assignor/123')
+        .set('Authorization', `${authToken}`)
         .expect(400)
         .expect((res) => {
           expect(res.body.statusCode).toBe(400);
@@ -459,6 +484,7 @@ describe('AssignorController (e2e)', () => {
     test('should return 404 if assignor does not exist', async () => {
       await request(app.getHttpServer())
         .delete(`/assignor/${removeAssignorDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(404)
         .expect((res) => {
           expect(res.body.statusCode).toBe(404);
@@ -477,6 +503,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .delete(`/assignor/${assignor.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(409)
         .expect((res) => {
           expect(res.body.statusCode).toBe(409);
@@ -495,6 +522,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .delete(`/assignor/${removeAssignorDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(500)
         .expect((res) => {
           expect(res.body.statusCode).toBe(500);
@@ -508,6 +536,7 @@ describe('AssignorController (e2e)', () => {
 
       await request(app.getHttpServer())
         .delete(`/assignor/${assignor.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(204);
     });
   });

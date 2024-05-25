@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateAssignorInputDTO } from './dto/create-assignor.input.dto';
 import { ICreateAssignorUseCase } from './usecases/create-assignor.usecase.interface';
@@ -24,6 +25,7 @@ import {
 } from './dto/update-assignor.input.dto';
 import { IRemoveAssignorUseCase } from './usecases/remove-assignor.usecase.interface';
 import { RemoveAssignorInputDTO } from './dto/remove-assignor.input.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('assignor')
 export class AssignorController {
@@ -35,6 +37,7 @@ export class AssignorController {
     private readonly removeAssignorUseCase: IRemoveAssignorUseCase,
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(
     @Body() createAssignorDTO: CreateAssignorInputDTO,
@@ -42,11 +45,13 @@ export class AssignorController {
     return await this.createAssignorUseCase.execute(createAssignorDTO);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(): Promise<FindAssignorOutputDTO[]> {
     return await this.findAllAssignorsUseCase.execute();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(
     @Param() findAssignorDTO: FindAssignorInputDTO,
@@ -54,6 +59,7 @@ export class AssignorController {
     return await this.findAssignorUseCase.execute(findAssignorDTO);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async update(
     @Param() updateAssignorInputParamsDTO: UpdateAssignorInputParamsDTO,
@@ -65,6 +71,7 @@ export class AssignorController {
     });
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(

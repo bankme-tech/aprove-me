@@ -24,6 +24,9 @@ import { UpdatePayableUseCase } from 'src/payable/usecases/update-payable.usecas
 import { RemovePayableInputDTO } from 'src/payable/dto/remove-payable.input.dto';
 import { RemovePayableUseCase } from 'src/payable/usecases/remove-payable-usecase';
 import { CustomLogger } from './helpers/custom-logger.e2e';
+import { AuthModule } from 'src/auth/auth.module';
+import { makeAuthHeader } from './helpers/auth.e2e';
+import { AuthService } from 'src/auth/auth.service';
 
 describe('PayableController (e2e)', () => {
   let app: INestApplication;
@@ -36,6 +39,8 @@ describe('PayableController (e2e)', () => {
   let updatePayableBodyDTO: UpdatePayableInputBodyDTO;
   let removePayableDTO: RemovePayableInputDTO;
 
+  let authToken: string;
+
   beforeAll(async () => {
     await prismaDatabaseHelper.dropDatabase();
     await prismaDatabaseHelper.createDatabase();
@@ -46,6 +51,7 @@ describe('PayableController (e2e)', () => {
       imports: [
         PayableModule,
         AssignorModule,
+        AuthModule,
         PrismaModule.forTest(prismaClient),
       ],
     })
@@ -57,6 +63,8 @@ describe('PayableController (e2e)', () => {
     app.useGlobalFilters(new PersistenceExceptionFilter());
     app.useGlobalFilters(new PrismaExceptionFilter());
     await app.init();
+
+    authToken = await makeAuthHeader(app.get(AuthService));
 
     const { id, value, emissionDate, assignorId } = makePayableEntity();
     createPayableDTO = {
@@ -81,7 +89,6 @@ describe('PayableController (e2e)', () => {
 
   afterEach(async () => {
     await prismaDatabaseHelper.clearDatabase();
-    // await app.close();
   });
 
   afterAll(async () => {
@@ -100,6 +107,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .post('/payable')
+        .set('Authorization', `${authToken}`)
         .send({
           ...createPayableDTO,
         })
@@ -115,6 +123,7 @@ describe('PayableController (e2e)', () => {
     test('should return 404 if assignor is not found in database', async () => {
       await request(app.getHttpServer())
         .post('/payable')
+        .set('Authorization', `${authToken}`)
         .send({
           ...createPayableDTO,
         })
@@ -134,6 +143,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .post('/payable')
+        .set('Authorization', `${authToken}`)
         .send({
           ...createPayableDTO,
         })
@@ -152,6 +162,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .post('/payable')
+        .set('Authorization', `${authToken}`)
         .send({
           ...createPayableDTO,
         })
@@ -175,6 +186,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get('/payable')
+        .set('Authorization', `${authToken}`)
         .expect(500)
         .expect((res) => {
           expect(res.body.statusCode).toBe(500);
@@ -200,6 +212,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get('/payable')
+        .set('Authorization', `${authToken}`)
         .expect(200)
         .expect((res) => {
           for (const item of res.body) {
@@ -220,6 +233,7 @@ describe('PayableController (e2e)', () => {
     test('should return 400 if id is not a valid UUID', async () => {
       await request(app.getHttpServer())
         .get('/payable/123')
+        .set('Authorization', `${authToken}`)
         .expect(400)
         .expect((res) => {
           expect(res.body.statusCode).toBe(400);
@@ -230,6 +244,7 @@ describe('PayableController (e2e)', () => {
     test('should return 404 if payable does not exist', async () => {
       await request(app.getHttpServer())
         .get(`/payable/${findPayableDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(404)
         .expect((res) => {
           expect(res.body.statusCode).toBe(404);
@@ -246,6 +261,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get(`/payable/${findPayableDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(500)
         .expect((res) => {
           expect(res.body.statusCode).toBe(500);
@@ -263,6 +279,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get(`/payable/${payable.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(200)
         .expect((res) => {
           expect(res.body).toEqual({
@@ -279,6 +296,7 @@ describe('PayableController (e2e)', () => {
     test('should return 400 if id is not a valid UUID', async () => {
       await request(app.getHttpServer())
         .patch('/payable/123')
+        .set('Authorization', `${authToken}`)
         .send({
           ...updatePayableBodyDTO,
         })
@@ -304,6 +322,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .patch(`/payable/${updatePayableParamsDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .send({
           ...updatePayableBodyDTO,
         })
@@ -323,6 +342,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .patch(`/payable/${updatePayableParamsDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .send({
           ...updatePayableBodyDTO,
         })
@@ -343,6 +363,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .patch(`/payable/${payable.id}`)
+        .set('Authorization', `${authToken}`)
         .send({
           ...updatePayableBodyDTO,
           assignorId: randomUUID(),
@@ -363,6 +384,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .patch(`/payable/${updatePayableParamsDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .send({
           ...updatePayableBodyDTO,
         })
@@ -378,6 +400,7 @@ describe('PayableController (e2e)', () => {
     test('should return 400 if id is not a valid UUID', async () => {
       await request(app.getHttpServer())
         .delete('/payable/123')
+        .set('Authorization', `${authToken}`)
         .expect(400)
         .expect((res) => {
           expect(res.body.statusCode).toBe(400);
@@ -388,6 +411,7 @@ describe('PayableController (e2e)', () => {
     test('should return 404 if payable does not exist', async () => {
       await request(app.getHttpServer())
         .delete(`/payable/${removePayableDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(404)
         .expect((res) => {
           expect(res.body.statusCode).toBe(404);
@@ -404,6 +428,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .delete(`/payable/${removePayableDTO.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(500)
         .expect((res) => {
           expect(res.body.statusCode).toBe(500);
@@ -422,6 +447,7 @@ describe('PayableController (e2e)', () => {
 
       await request(app.getHttpServer())
         .delete(`/payable/${payable.id}`)
+        .set('Authorization', `${authToken}`)
         .expect(204);
     });
   });

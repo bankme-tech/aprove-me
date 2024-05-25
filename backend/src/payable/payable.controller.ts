@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { CreatePayableInputDTO } from './dto/create-payable.input.dto';
 import { CreatePayableOutputDTO } from './dto/create-payable.output.dto';
@@ -23,6 +24,7 @@ import {
 import { IUpdatePayableUseCase } from './usecases/update-payable.usecase.interface';
 import { RemovePayableInputDTO } from './dto/remove-payable.input.dto';
 import { IRemovePayableUseCase } from './usecases/remove-payable.usecase.interface';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('payable')
 export class PayableController {
@@ -34,6 +36,7 @@ export class PayableController {
     private readonly removePayableUseCase: IRemovePayableUseCase,
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(
     @Body() createPayableDTO: CreatePayableInputDTO,
@@ -41,11 +44,13 @@ export class PayableController {
     return await this.createPayableUseCase.execute(createPayableDTO);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(): Promise<FindPayableOutputDTO[]> {
     return await this.findAllPayablesUseCase.execute();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(
     @Param() findPayableDTO: FindPayableInputDTO,
@@ -53,6 +58,7 @@ export class PayableController {
     return await this.findPayableUseCase.execute(findPayableDTO);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async update(
     @Param() updatePayableInputParamsDTO: UpdatePayableInputParamsDTO,
@@ -64,6 +70,7 @@ export class PayableController {
     });
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(

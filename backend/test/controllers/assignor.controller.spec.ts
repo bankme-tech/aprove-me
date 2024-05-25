@@ -19,6 +19,7 @@ import {
 import { IRemoveAssignorUseCase } from 'src/assignor/usecases/remove-assignor.usecase.interface';
 import { RemoveAssignorUseCaseStub } from 'test/mocks/usecases/assignor/remove-assignor.usecase.mock';
 import { RemoveAssignorInputDTO } from 'src/assignor/dto/remove-assignor.input.dto';
+import { AuthModule } from 'src/auth/auth.module';
 
 describe('AssignorController', () => {
   let sut: AssignorController;
@@ -39,6 +40,7 @@ describe('AssignorController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssignorController],
+      imports: [AuthModule],
       providers: [
         {
           provide: ICreateAssignorUseCase,
