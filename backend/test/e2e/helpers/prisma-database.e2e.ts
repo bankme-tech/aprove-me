@@ -1,6 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import { Assignor, Payable, PrismaClient, User } from '@prisma/client';
 import { exec } from 'child_process';
 import { AssignorEntity } from 'src/assignor/entities/assignor.entity';
+import { PayableEntity } from 'src/payable/entities/payable.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 export class PrismaDatabaseHelper {
   constructor(private readonly prismaClient: PrismaClient) {}
@@ -56,7 +58,7 @@ export class PrismaDatabaseHelper {
     }
   }
 
-  async findAssignor(id: string): Promise<any> {
+  async findAssignor(id: string): Promise<Assignor> {
     return await this.prismaClient.assignor.findUnique({
       where: {
         id,
@@ -64,7 +66,7 @@ export class PrismaDatabaseHelper {
     });
   }
 
-  async findAllAssignors(): Promise<any> {
+  async findAllAssignors(): Promise<Assignor[]> {
     try {
       const assignors = await this.prismaClient.assignor.findMany();
       return assignors;
@@ -77,7 +79,7 @@ export class PrismaDatabaseHelper {
     await this.prismaClient.assignor.deleteMany();
   }
 
-  async addPayable(payable: any): Promise<void> {
+  async addPayable(payable: PayableEntity): Promise<void> {
     await this.prismaClient.payable.create({
       data: {
         id: payable.id,
@@ -88,7 +90,7 @@ export class PrismaDatabaseHelper {
     });
   }
 
-  async findPayable(id: string): Promise<any> {
+  async findPayable(id: string): Promise<Payable> {
     return await this.prismaClient.payable.findUnique({
       where: {
         id,
@@ -100,8 +102,34 @@ export class PrismaDatabaseHelper {
     await this.prismaClient.payable.deleteMany();
   }
 
+  async addUser(user: UserEntity): Promise<void> {
+    try {
+      await this.prismaClient.user.create({
+        data: {
+          login: user.login,
+          password: user.password,
+        },
+      });
+    } catch (error) {
+      console.error({ user });
+    }
+  }
+
+  async findUser(login: string): Promise<User> {
+    return await this.prismaClient.user.findUnique({
+      where: {
+        login,
+      },
+    });
+  }
+
+  async clearUsers(): Promise<void> {
+    await this.prismaClient.user.deleteMany();
+  }
+
   async clearDatabase(): Promise<void> {
     await this.clearPayables();
     await this.clearAssignors();
+    await this.clearUsers();
   }
 }
