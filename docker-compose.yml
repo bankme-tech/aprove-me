@@ -13,27 +13,32 @@ services:
       - ./api/prisma:/app/prisma
     networks:
       - bankme-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3000"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
       timeout: 10s
       retries: 5
-    depends_on:
-      - rabbitmq
-    
+
   rabbitmq:
     container_name: 'bankme_rabbitmq'
     image: rabbitmq:management
     ports:
       - "5672:5672"
-      - "15672:15672" 
+      - "15672:15672"
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq 
+      - rabbitmq_data:/var/lib/rabbitmq
     environment:
-      RABBITMQ_DEFAULT_USER: rabbitmq  
+      RABBITMQ_DEFAULT_USER: rabbitmq
       RABBITMQ_DEFAULT_PASS: rabbitmq
       RABBITMQ_DEFAULT_VHOST: "/"
     networks:
       - bankme-network
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      timeout: 10s
+      retries: 5
 
 volumes:
   rabbitmq_data:

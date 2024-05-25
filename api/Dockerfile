@@ -12,6 +12,8 @@ RUN npx prisma generate
 
 RUN npx prisma migrate dev --name init
 
+RUN npm run build
+
 EXPOSE 3000
 
-CMD ["npm", "run", "start:dev" ]
+CMD ["npm", "run", "start:prod" ]
