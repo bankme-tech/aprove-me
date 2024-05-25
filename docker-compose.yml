@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: 'bankme_api'
+    env_file:
+      - ./api/.env
+    build: ./api
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api/src:/app/src
+      - ./api/prisma:/app/prisma
+    networks:
+      - bankme-network
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3000"]
+      timeout: 10s
+      retries: 5
+
+
+networks:
+  bankme-network:
+    driver: bridge

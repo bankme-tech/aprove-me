@@ -11,6 +11,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 model Payable {
@@ -27,7 +28,7 @@ model Assignor {
   name     String
   email    String
   phone    String
-  Payable  Payable[]
+  payables  Payable[]
 }
 
 model User {
