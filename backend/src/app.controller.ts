@@ -12,6 +12,7 @@ import {
   NotFoundException,
   HttpException,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { PayableDto } from './DTOs/payable';
 import { AssignorDto } from './DTOs/assignor';
@@ -21,6 +22,7 @@ import { UserDto } from './DTOs/user';
 import { UserRepo } from './repositories/user-repo';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth/auth-service';
+import { JwtAuthGuard } from './auth/AuthGuard';
 
 @Controller('integrations')
 export class AppController {

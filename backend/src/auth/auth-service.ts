@@ -7,13 +7,13 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { CreateToken } from './toke';
 
 @Injectable()
 export class AuthService {
   constructor(
     private user: UserRepo,
-    private jwt: JwtService,
+    private jwt: CreateToken,
   ) {}
 
   async authenticate(body: UserDto): Promise<{ token: string }> {
@@ -24,7 +24,7 @@ export class AuthService {
         const unHashedPassword = await bcrypt.compare(password, user.password);
 
         if (unHashedPassword) {
-          const token = this.jwt.sign({ username: user.login, sub: user.id });
+          const token = await this.jwt.generate(user.login, user.id);
           return { token };
         }
         throw new BadRequestException('Senha incorreta');

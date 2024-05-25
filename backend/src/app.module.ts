@@ -9,21 +9,28 @@ import { UserRepo } from './repositories/user-repo';
 import { prismaUserRepo } from './repositories/prisma/prisma-user-repo';
 import { AuthService } from './auth/auth-service';
 import { JwtModule } from '@nestjs/jwt';
+import { Welcome } from './welcome';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './auth/jwt';
+import { CreateToken } from './auth/toke';
 
 @Module({
   imports: [
+    PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, Welcome],
   providers: [
     PrismaService,
     { provide: PayableRepo, useClass: prismaPayableRepo },
     { provide: AssignorRepo, useClass: prismaAssignorRepo },
     { provide: UserRepo, useClass: prismaUserRepo },
     AuthService,
+    JwtStrategy,
+    CreateToken,
   ],
 })
 export class AppModule {}
