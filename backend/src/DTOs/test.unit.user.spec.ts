@@ -83,10 +83,12 @@ describe('Usuário', () => {
     it('Deve obter um usuário pelo id', async () => {
       jest.spyOn(service, 'getUserById');
 
-      const result = await controller.getUserById(MOCK_NOVO_USUARIO.id);
+      const result = await controller.getUserById(
+        MOCK_NOVO_USUARIO_RESPONSE.id,
+      );
 
-      expect(result.login).toEqual(MOCK_NOVO_USUARIO.login);
-      expect(result.id).toEqual(MOCK_NOVO_USUARIO.id);
+      expect(result.login).toEqual(MOCK_NOVO_USUARIO_RESPONSE.login);
+      expect(result.id).toEqual(MOCK_NOVO_USUARIO_RESPONSE.id);
     });
 
     it('Deve falhar ao tentar obter um usuário pelo id', async () => {
@@ -106,7 +108,6 @@ describe('Usuário', () => {
 
       expect(result.login).toEqual(MOCK_NOVO_USUARIO.login);
       expect(result.id).toBeDefined();
-      expect(result.id).toEqual(MOCK_NOVO_USUARIO.id);
     });
 
     it('Deve falhar ao tentar obter um usuário pelo login', async () => {

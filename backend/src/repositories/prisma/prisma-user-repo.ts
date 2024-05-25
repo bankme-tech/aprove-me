@@ -9,28 +9,22 @@ export class prismaUserRepo implements UserRepo {
   constructor(private prisma: PrismaService) {}
 
   async createUser(body: UserDto) {
-    try {
-      const salt = parseInt(process.env.SALT_ROUND, 10);
-      const hashingPassword = await bcrypt.hash(body.password, salt);
+    const salt = parseInt(process.env.SALT_ROUND, 10);
+    const hashingPassword = await bcrypt.hash(body.password, salt);
 
-      const createNewUser = await this.prisma.user.create({
-        data: {
-          login: body.login,
-          password: hashingPassword,
-        },
-      });
+    const createNewUser = await this.prisma.user.create({
+      data: {
+        login: body.login,
+        password: hashingPassword,
+      },
+    });
 
-      const newUser = {
-        login: createNewUser.login,
-        id: createNewUser.id,
-      } as any;
+    const newUser = {
+      login: createNewUser.login,
+      id: createNewUser.id,
+    } as any;
 
-      return newUser;
-    } catch (error) {
-      // Lidar com qualquer erro que possa surgir durante o processo
-      console.error('Erro ao criar usuário:', error);
-      throw new Error('Erro ao criar usuário');
-    }
+    return newUser;
   }
 
   async getUserById(id: number): Promise<UserDto> {

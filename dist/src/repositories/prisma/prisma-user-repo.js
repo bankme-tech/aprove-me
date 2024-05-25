@@ -18,25 +18,19 @@ let prismaUserRepo = class prismaUserRepo {
         this.prisma = prisma;
     }
     async createUser(body) {
-        try {
-            const salt = parseInt(process.env.SALT_ROUND, 10);
-            const hashingPassword = await bcrypt.hash(body.password, salt);
-            const createNewUser = await this.prisma.user.create({
-                data: {
-                    login: body.login,
-                    password: hashingPassword,
-                },
-            });
-            const newUser = {
-                login: createNewUser.login,
-                id: createNewUser.id,
-            };
-            return newUser;
-        }
-        catch (error) {
-            console.error('Erro ao criar usuário:', error);
-            throw new Error('Erro ao criar usuário');
-        }
+        const salt = parseInt(process.env.SALT_ROUND, 10);
+        const hashingPassword = await bcrypt.hash(body.password, salt);
+        const createNewUser = await this.prisma.user.create({
+            data: {
+                login: body.login,
+                password: hashingPassword,
+            },
+        });
+        const newUser = {
+            login: createNewUser.login,
+            id: createNewUser.id,
+        };
+        return newUser;
     }
     async getUserById(id) {
         const getUserById = await this.prisma.user.findUnique({

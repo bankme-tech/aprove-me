@@ -22,12 +22,12 @@ export class AuthService {
       const user = await this.user.getUserByLogin(login);
       if (user) {
         const unHashedPassword = await bcrypt.compare(password, user.password);
-        console.log(unHashedPassword);
+
         if (unHashedPassword) {
           const token = this.jwt.sign({ username: user.login, sub: user.id });
-          console.log(token);
           return { token };
         }
+        throw new BadRequestException('Senha incorreta');
       }
     } catch (error) {
       if (error instanceof BadRequestException) {

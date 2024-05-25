@@ -1,6 +1,6 @@
 export const MOCK_NOVO_USUARIO = {
   id: 1,
-  login: 'teste',
+  login: 'papagaios',
   password: 'XXXXX',
 };
 

@@ -8,7 +8,7 @@ export class UserDto {
       'Requerido apenas para buscar um usuário pelo ID ou atualizar um usuário',
     type: Number,
   })
-  id: number;
+  id?: number;
 
   @ApiProperty({
     required: true,

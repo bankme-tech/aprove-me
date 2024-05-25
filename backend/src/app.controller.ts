@@ -36,7 +36,6 @@ export class AppController {
   async auth(@Body() body: UserDto) {
     try {
       const response = await this.authService.authenticate(body);
-
       if (response) {
         return response;
       }

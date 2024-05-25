@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MOCK_UPDATE_USUARIO = exports.MOCK_NOVO_USUARIO_SEM_SENHA = exports.MOCK_NOVO_USUARIO_RESPONSE = exports.MOCK_NOVO_USUARIO = void 0;
 exports.MOCK_NOVO_USUARIO = {
     id: 1,
-    login: 'teste',
+    login: 'papagaios',
     password: 'XXXXX',
 };
 exports.MOCK_NOVO_USUARIO_RESPONSE = {

@@ -8,8 +8,8 @@ const assignor_repo_1 = require("../repositories/assignor-repo");
 const prisma_user_repo_1 = require("../repositories/prisma/prisma-user-repo");
 const prisma_service_1 = require("../database/prisma.service");
 const app_controller_1 = require("../app.controller");
-const mock_assignor_1 = require("../../test/mocks/mock-assignor");
 const user_repo_1 = require("../repositories/user-repo");
+const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const auth_service_1 = require("../auth/auth-service");
 describe('Cedente', () => {
@@ -33,22 +33,59 @@ describe('Cedente', () => {
             ],
         }).compile();
         controller = module.get(app_controller_1.AppController);
-        service = module.get(assignor_repo_1.AssignorRepo);
+        service = module.get(auth_service_1.AuthService);
     });
-    it('Deve estar definido', () => {
-        expect(service).toBeDefined();
-    });
-    describe('CRUD de cedente', () => {
-        it('Deve criar um novo cedente', async () => {
-            jest.spyOn(service, 'createAssignor');
-            const result = await controller.createAssignor(mock_assignor_1.MOCK_NOVO_CEDENTE);
-            expect(result).toBeDefined();
-            expect(result).toEqual(mock_assignor_1.MOCK_NOVO_CEDENTE);
-            expect(result.document).toEqual('aaaaaaaaaaaaa');
-            expect(result.email).toBeDefined();
-            expect(result.email).toEqual(mock_assignor_1.MOCK_NOVO_CEDENTE.email);
-            expect(result.id).toBeDefined();
-            expect(result.id).toEqual(mock_assignor_1.MOCK_NOVO_CEDENTE.id);
+    describe('Autenticação', () => {
+        it('Deve conseguir logar', async () => {
+            jest.spyOn(service, 'authenticate');
+            const login = {
+                login: 'teste',
+                password: 'XXXXX',
+            };
+            await controller.createUser(login);
+            const { token } = await controller.auth(login);
+            expect(token).toBeDefined();
+            expect(service.authenticate).toHaveBeenCalled();
+            expect(typeof token).toBe('string');
+        });
+        it('Deve falhar ao logar com senha errada', async () => {
+            jest.spyOn(service, 'authenticate');
+            const login2 = {
+                login: 'teste',
+                password: 'zzzzzz',
+            };
+            try {
+                await controller.auth(login2);
+            }
+            catch (error) {
+                expect(error).toBeInstanceOf(common_1.BadRequestException);
+            }
+        });
+        it('Internal Error', async () => {
+            jest.spyOn(service, 'authenticate').mockRejectedValue(new Error());
+            const login2 = {
+                login: 'teste',
+                password: 'zzzzzz',
+            };
+            try {
+                await controller.auth(login2);
+            }
+            catch (error) {
+                expect(error).toBeInstanceOf(common_1.HttpException);
+            }
+        });
+        it('Deve falhar ao logar com login errado', async () => {
+            jest.spyOn(service, 'authenticate');
+            const login = {
+                login: 'teste32',
+                password: 'XXXXX',
+            };
+            try {
+                await controller.auth(login);
+            }
+            catch (error) {
+                expect(error).toBeInstanceOf(common_1.NotFoundException);
+            }
         });
     });
 });
