@@ -5,6 +5,7 @@ import { AssignorModule } from 'src/app/assignor/assignor.module';
 import { PayableController } from './payable.controller';
 import { PayableService } from './payable.service';
 import { PayableRepository } from './payable.repository';
+import { PayableProducerController } from './queue/payable-producer.controller';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { PayableRepository } from './payable.repository';
       },
     ]),
   ],
-  controllers: [PayableController],
+  controllers: [PayableController, PayableProducerController],
   providers: [PayableService, PayableRepository],
 })
 export class PayableModule {}
