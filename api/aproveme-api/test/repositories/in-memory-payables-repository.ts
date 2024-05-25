@@ -2,6 +2,7 @@ import { PayablesRepository } from "@/domain/receivables/application/repositorie
 import { Payable } from "@/domain/receivables/enterprise/entities/payable";
 import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/payable-with-assignor";
 import { InMemoryAssignorsRepository } from "./in-memory-assignors-repository";
+import { PaginationParams } from "@/core/repositories/pagination-params";
 
 export class InMemoryPayablesRepository implements PayablesRepository {
   public items: Payable[] = [];
@@ -63,5 +64,16 @@ export class InMemoryPayablesRepository implements PayablesRepository {
         phone: assignor.name,
       },
     });
+  }
+
+  async findManyPaginated({ page }: PaginationParams): Promise<Payable[]> {
+    const MAX_ITEMS_PER_PAGE = 5;
+
+    const payables = this.items.slice(
+      (page - 1) * MAX_ITEMS_PER_PAGE,
+      page * MAX_ITEMS_PER_PAGE
+    );
+
+    return payables;
   }
 }

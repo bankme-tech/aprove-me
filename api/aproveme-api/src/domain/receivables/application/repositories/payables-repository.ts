@@ -1,3 +1,4 @@
+import { PaginationParams } from "@/core/repositories/pagination-params";
 import { Payable } from "../../enterprise/entities/payable";
 import { PayableWithAssignor } from "../../enterprise/entities/value-object/payable-with-assignor";
 
@@ -10,4 +11,6 @@ export abstract class PayablesRepository {
   abstract findWithAssignorById(
     id: string
   ): Promise<PayableWithAssignor | null>;
+
+  abstract findManyPaginated(params: PaginationParams): Promise<Payable[]>;
 }
