@@ -11,6 +11,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Public } from '../decorators/public.decorator';
+import UpdateUserDto from './dto/update-user.dto';
 
 @Controller('integrations/users')
 export class UsersController {
@@ -23,8 +24,8 @@ export class UsersController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() password: string) {
-    return await this.usersService.update(id, password);
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return await this.usersService.update(id, updateUserDto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)

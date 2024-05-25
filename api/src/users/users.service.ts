@@ -4,6 +4,7 @@ import { PrismaService } from '../db/prisma.service';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import * as bcrypt from 'bcrypt';
+import UpdateUserDto from './dto/update-user.dto';
 
 const salt = process.env.BRCRYPT_SALT || 10;
 
@@ -56,7 +57,8 @@ export class UsersService {
     return await bcrypt.compare(password, hashedPassword);
   }
 
-  async update(id: string, password: string) {
+  async update(id: string, updateUserData: UpdateUserDto) {
+    const { password } = updateUserData;
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
