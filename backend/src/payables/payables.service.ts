@@ -8,12 +8,17 @@ import { validateDto } from '../utils';
 import { CreatePayableDto } from './dto/create.payable.dto';
 import { UpdatePayableDto } from './dto/update.payable.dto';
 import { ProducerService } from 'src/queue/producer.service';
+import { BatchTrackerService } from 'src/queue/batch-tracker.service';
+import { randomUUID } from 'crypto';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class PayablesService {
   constructor(
     private prisma: PrismaService,
     private produceQueue: ProducerService,
+    private batchTracker: BatchTrackerService,
+    private emailService: EmailService,
   ) {}
 
   getPayableById(id: string) {
@@ -68,29 +73,32 @@ export class PayablesService {
         'You can only create a maximum of 10000 payables at a time',
       );
     }
-    await this.produceQueue.addToPayableQueue(createDtos);
+
+    const batchId = randomUUID();
+
+    this.batchTracker.addBatch(batchId, createDtos.length);
+    createDtos.forEach(async (createDto) => {
+      await this.produceQueue.addToPayableQueue({
+        batchId: batchId,
+        payable: createDto,
+      });
+    });
+
+    this.batchTracker.onBatchComplete(batchId, (result) => {
+      this.emailService.sendEmail({
+        email: `Your batch create payables is complete, ${result.sucessfulMessages} payables were created successfully and ${result.failedMessages} payables failed.`,
+        html: `<p>Your batch create payables is complete, ${result.sucessfulMessages} payables were created successfully and ${result.failedMessages} payables failed.</p>`,
+        subject: 'Batch create payables complete',
+      });
+    });
 
     return {
       message: 'Your batch create payables is in progress',
     };
   }
 
-  async processBatchCreatePayables(createDtos: CreatePayableDto[] | any[]) {
-    let createSuccess = 0;
-    let createFailed = 0;
-
-    for (const createDto of createDtos) {
-      try {
-        await this.createPayable(createDto);
-        createSuccess++;
-      } catch (error) {
-        createFailed++;
-      }
-    }
-
-    return {
-      createSuccess,
-      createFailed,
-    };
+  async processBatchCreatePayable(createDto: CreatePayableDto | any) {
+    await validateDto(createDto, CreatePayableDto);
+    await this.createPayable(createDto);
   }
 }

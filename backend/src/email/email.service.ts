@@ -12,6 +12,8 @@ export class EmailService {
         html: options.html,
       };
 
+      console.log(message);
+
       return message;
 
       //works only with a valid email account

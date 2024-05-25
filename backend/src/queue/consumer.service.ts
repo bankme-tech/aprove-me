@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import amqp, { ChannelWrapper } from 'amqp-connection-manager';
 import { ConfirmChannel } from 'amqplib';
-import { EmailService } from 'src/email/email.service';
-import { CreatePayableDto } from 'src/payables/dto/create.payable.dto';
 import { PayablesService } from 'src/payables/payables.service';
+import { BatchTrackerService } from './batch-tracker.service';
+import { PayableQueueMessage } from './producer.service';
 
 @Injectable()
 export class ConsumerService implements OnModuleInit {
@@ -19,7 +19,7 @@ export class ConsumerService implements OnModuleInit {
     @Inject(forwardRef(() => PayablesService))
     private payableService: PayablesService,
 
-    private emailService: EmailService,
+    private batchTracker: BatchTrackerService,
   ) {
     const connection = amqp.connect(['amqp://localhost']);
     this.channelWrapper = connection.createChannel();
@@ -33,18 +33,18 @@ export class ConsumerService implements OnModuleInit {
           if (message) {
             const content = JSON.parse(
               message.content.toString(),
-            ) as CreatePayableDto[];
+            ) as PayableQueueMessage;
 
-            const result =
-              await this.payableService.processBatchCreatePayables(content);
+            let processSuccess = false;
 
-            await this.emailService.sendEmail({
-              email: `Os pagamentos foram processados, ${result.createSuccess} pagamentos foram processados com sucesso e ${result.createFailed} pagamentos falharam.`,
-              html: `<p>Os pagamentos foram processados, ${result.createSuccess} pagamentos foram processados com sucesso e ${result.createFailed} pagamentos falharam.</p>`,
-              subject: 'Pagamentos processados',
-            });
+            try {
+              await this.payableService.processBatchCreatePayable(
+                content.payable,
+              );
+              processSuccess = true;
+            } catch (error) {}
 
-            console.log('Received message:', result);
+            this.batchTracker.messageProcessed(content.batchId, processSuccess);
 
             channel.ack(message);
           }

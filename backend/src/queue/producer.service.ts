@@ -3,6 +3,11 @@ import amqp, { ChannelWrapper } from 'amqp-connection-manager';
 import { Channel } from 'amqplib';
 import { CreatePayableDto } from 'src/payables/dto/create.payable.dto';
 
+export class PayableQueueMessage {
+  batchId: string;
+  payable: CreatePayableDto;
+}
+
 @Injectable()
 export class ProducerService {
   private channelWrapper: ChannelWrapper;
@@ -15,7 +20,7 @@ export class ProducerService {
     });
   }
 
-  async addToPayableQueue(payable: CreatePayableDto[]) {
+  async addToPayableQueue(payable: PayableQueueMessage) {
     try {
       await this.channelWrapper.sendToQueue(
         'payableQueue',
