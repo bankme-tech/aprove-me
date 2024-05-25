@@ -4,7 +4,7 @@ import { InMemoryAssignorsRepository } from "test/repositories/in-memory-assigno
 import { makeAssignor } from "test/factories/makeAssignor";
 import { FindPayableByIdService } from "./find-payable-by-id";
 import { FindAssignorByIdService } from "./find-assignor-by-id";
-import { FetchAssignorsNamesService } from "./fetch-assignors";
+import { FetchAssignorsNamesService } from "./fetch-assignors-names";
 
 let inMemoAssignorRepo: InMemoryAssignorsRepository;
 let sut: FetchAssignorsNamesService;
