@@ -1,4 +1,5 @@
 import { ChevronDown, LogOut, User } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from './ui/button'
 import {
@@ -11,6 +12,13 @@ import {
 } from './ui/dropdown-menu'
 
 export const AccountMenu = () => {
+  const navigate = useNavigate()
+
+  const handleSignOut = () => {
+    localStorage.removeItem('@aproveme/access_token')
+    navigate('/sign-in')
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,7 +46,7 @@ export const AccountMenu = () => {
           asChild
           disabled={false}
         >
-          <button className="w-full">
+          <button onClick={handleSignOut} className="w-full">
             <LogOut className="mr-2 h-4 w-4" />
             <span>Sair</span>
           </button>
