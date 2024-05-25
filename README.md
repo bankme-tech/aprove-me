@@ -45,6 +45,25 @@ As dependências do projeto serão instaladas automaticamente dentro do contêin
 
 Durante o desenvolvimento, as mudanças feitas nos arquivos do projeto serão refletidas imediatamente no contêiner, graças ao volume montado (`volumes` no `docker-compose.yml`).
 
+## Utilização
+
+Para utilizar as rotas da API, você pode seguir as solicitações HTTP definidas no arquivo `api/src/http/start-here.http` localizado na raiz do projeto. Este arquivo contém exemplos de solicitações para cada rota da API, incluindo detalhes sobre os dados necessários e as respostas esperadas.
+
+### Passos:
+
+1. Certifique-se de ter o [VS Code](https://code.visualstudio.com/) instalado na sua máquina e também a extensão do [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) instalada no seu VSCode, pois o arquivo `api.http` é um arquivo de solicitações HTTP compatível com o VS Code.
+
+2. Abra o arquivo `api.http` no VS Code.
+
+3. Navegue pelas solicitações HTTP definidas no arquivo para encontrar a rota que deseja testar.
+
+4. Clique no botão `Send Request` ao lado de cada solicitação para enviar a solicitação HTTP para o servidor.
+
+5. Observe as respostas retornadas pelo servidor para verificar se a solicitação foi processada com sucesso.
+
+Ao seguir esses passos, você poderá testar todas as funcionalidades da API e entender como interagir com ela usando solicitações HTTP.
+
+
 ## Notas
 
 - Certifique-se de que a porta 3000 não esteja sendo usada por outra aplicação no seu host.
@@ -52,5 +71,6 @@ Durante o desenvolvimento, as mudanças feitas nos arquivos do projeto serão re
 
 ## Me Conheça mais
 [Linkedin](https://www.linkedin.com/in/feroddev/)
+
 [Portfólio](portfolio-feroddev.vercel.app)
 

@@ -1,0 +1,38 @@
+### Get all Assignors
+GET http://localhost:3000/integrations/assignor
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+### Get Assignor by ID
+GET http://localhost:3000/integrations/assignor/d9ebb252-f177-4751-8385-a611bf8758b8
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+### Create Assignor
+POST http://localhost:3000/integrations/assignor
+Content-Type: application/json
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+{
+  "document": "12345678901",
+  "email": "teste@teste.com",
+  "phone": "31 99999-9999",
+  "name": "Teste do teste"
+}
+
+### Update Assignor
+PATCH  http://localhost:3000/integrations/assignor/d9ebb252-f177-4751-8385-a611bf8758b8
+Content-Type: application/json
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+{
+  "document": "12345678951",
+  "email": "teste2@teste.com"
+}
+
+### Delete Assignor
+DELETE http://localhost:3000/integrations/assignor/d9ebb252-f177-4751-8385-a611bf8758b8
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ

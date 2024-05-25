@@ -1,0 +1,10 @@
+### Get Token
+POST http://localhost:3000/integrations/auth 
+Content-Type: application/json
+
+{
+  "login": "neath",
+  "password": "secret_password"
+}
+
+### Copy your token from the response and use it in the next requests
