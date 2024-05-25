@@ -26,8 +26,8 @@ export class PayableService {
     return payableData;
   }
 
-  findAll() {
-    return `This action returns all payable`;
+  async findAll() {
+    return this.prismaService.payable.findMany();
   }
 
   findOne(id: number) {
