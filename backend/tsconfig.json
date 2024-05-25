@@ -17,12 +17,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "types": ["node", "jest"],
     "paths": {
       "@prisma/content/*": ["prisma/*"],
       "@auth/*": ["auth/*"],
       "@session/*": ["auth/session/*"]
     }
   },
-  "include": ["src/**/*", "src/mailer/templates/**/*"],
+  "include": ["src/**/*", "src/mailer/templates/**/*", "test/**/*.ts"],
   "exclude": ["**/*.spec.ts"]
 }

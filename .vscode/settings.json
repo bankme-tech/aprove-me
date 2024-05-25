@@ -1,0 +1,8 @@
+{
+    "typescript.tsdk": "./back-end/node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "eslint.workingDirectories": [
+        "./back-end"
+    ],
+    "jest.pathToJest": "back-end/node_modules/.bin/jest"
+}
