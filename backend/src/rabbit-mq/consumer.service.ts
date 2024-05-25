@@ -1,7 +1,8 @@
 import { Injectable, OnModuleInit, Inject, forwardRef } from "@nestjs/common";
 import amqp, { AmqpConnectionManager, ChannelWrapper } from "amqp-connection-manager";
-import { MailerService } from "src/mailer/mailer.service";
-import { PayableService } from "src/payable/payable.service";
+// import { MailerService } from "src/mailer/mailer.service";
+import { MailerService } from "../mailer/mailer.service";
+import { PayableService } from "../payable/payable.service";
 import { Logger } from '@nestjs/common';
 import { Payable } from "@prisma/client";
 
@@ -86,7 +87,7 @@ export class PayableProcessor implements OnModuleInit {
             this.logger.log(`Payable processed successfully: ${JSON.stringify(payable)}`);
             await this.handleBatchCompleted(this.totalProcessed, this.totalSuccess, this.totalFailures);
         } catch (error) {
-            this.logger.error(`Error processing payable: ${JSON.stringify(payable)}, Error: ${error.message}`);
+            // this.logger.error(`Error processing payable: ${JSON.stringify(payable)}, Error: ${error.message}`);
             this.tentatives += 1;
             this.totalFailures += 1;
             this.totalProcessed += 1;
