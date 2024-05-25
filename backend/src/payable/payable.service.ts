@@ -70,8 +70,14 @@ export class PayableService {
     return Right.create(updatedPayable);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} payable`;
+  async remove(id: string) {
+    const payableData = await this.findOne(id);
+    if (!payableData) return;
+    return this.prismaService.payable.delete({
+      where: {
+        id,
+      },
+    });
   }
 
   private async checkIfAssignorExists(assignorId: string) {

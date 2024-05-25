@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   NotFoundException,
   Param,
   Patch,
@@ -58,7 +60,10 @@ export class PayableController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.payableService.remove(+id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id') id: string) {
+    const result = await this.payableService.remove(id);
+    if (!result) throw new NotFoundException();
+    return;
   }
 }
