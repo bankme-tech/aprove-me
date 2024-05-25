@@ -6,7 +6,7 @@ import { ConsumerService } from './consumer.service';
 export class MicroServicesController {
   constructor(private readonly consumerService: ConsumerService) {}
 
-  @MessagePattern('payable-queue')
+  @MessagePattern('payable_queue')
   async getNotifications(@Ctx() context: RmqContext) {
     const message = context.getMessage();
     const content = JSON.parse(message.content);

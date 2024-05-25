@@ -4,25 +4,25 @@ import { Channel } from 'amqplib';
 import { CreatePayableDto } from '../payable/dto/create-payable.dto';
 
 @Injectable()
-export class ProducerService {
+export class DeadProducerService {
   private channelWrapper: ChannelWrapper;
   constructor() {
     const connection = amqp.connect(['amqp://rabbitmq:rabbitmq@rabbitmq:5672']);
     this.channelWrapper = connection.createChannel({
       setup: (channel: Channel) => {
-        return channel.assertQueue('payable_queue', { durable: true });
+        return channel.assertQueue('dead_queue', { durable: true });
       },
     });
   }
 
-  async addPayableToQueue(payables: CreatePayableDto[]) {
+  async addToDeadQueue(payable: CreatePayableDto) {
     try {
       const message = JSON.stringify({
-        pattern: 'payable_queue',
-        payables: payables,
+        pattern: 'dead_queue',
+        payable,
       });
       await this.channelWrapper.sendToQueue(
-        'payable_queue',
+        'dead_queue',
         Buffer.from(message),
         {
           persistent: true,
@@ -30,8 +30,7 @@ export class ProducerService {
       );
       Logger.log('Sent To Queue');
     } catch (error) {
-      console.log('Error sending payable to queue', error);
-
+      Logger.error('Error sending payable to queue', error);
       throw new HttpException(
         'Error sending payable to queue',
         HttpStatus.INTERNAL_SERVER_ERROR,
