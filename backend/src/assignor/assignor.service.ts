@@ -6,7 +6,7 @@ import { Assignor } from './entities/assignor.entity';
 
 @Injectable()
 export class AssignorService {
-  constructor(private prismaService: PrismaService) { }
+  constructor(private prismaService: PrismaService) {}
 
   async create(createAssignorDto: CreateAssignorDto) {
     const assignor = new Assignor(createAssignorDto);
@@ -48,7 +48,13 @@ export class AssignorService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} assignor`;
+  async remove(id: string) {
+    const assignorData = await this.findOne(id);
+    if (!assignorData) return;
+    return this.prismaService.assignor.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

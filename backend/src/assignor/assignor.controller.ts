@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   NotFoundException,
   Param,
   Patch,
@@ -14,7 +16,7 @@ import { UpdateAssignorDto } from './dto/update-assignor.dto';
 
 @Controller('assignor')
 export class AssignorController {
-  constructor(private readonly assignorService: AssignorService) { }
+  constructor(private readonly assignorService: AssignorService) {}
 
   @Post()
   create(@Body() createAssignorDto: CreateAssignorDto) {
@@ -44,7 +46,10 @@ export class AssignorController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.assignorService.remove(+id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id') id: string) {
+    const result = await this.assignorService.remove(id);
+    if (!result) throw new NotFoundException();
+    return;
   }
 }
