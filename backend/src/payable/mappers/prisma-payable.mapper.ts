@@ -5,17 +5,12 @@ import { UUID } from 'crypto';
 
 export class PrismaPayableMapper extends IPayableMapper<Payable> {
   toDomainEntity(data: Payable): PayableEntity {
-    const year = data.emissionDate.getFullYear();
-    const month = data.emissionDate.getMonth() + 1;
-    const day = data.emissionDate.getDate();
-    const emissionDate = new Date(year, month - 1, day);
-
-    return {
-      id: data.id as UUID,
-      value: data.value,
-      assignorId: data.assignorId as UUID,
-      emissionDate: emissionDate,
-    };
+    return new PayableEntity(
+      data.id as UUID,
+      data.value,
+      data.emissionDate,
+      data.assignorId as UUID,
+    );
   }
 
   toPersistenceModel(data: PayableEntity): Payable {

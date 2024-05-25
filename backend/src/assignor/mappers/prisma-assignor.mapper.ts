@@ -5,13 +5,13 @@ import { AssignorEntity } from '../entities/assignor.entity';
 
 export class PrismaAssignorMapper extends IAssignorMapper<Assignor> {
   toDomainEntity(data: Assignor): AssignorEntity {
-    return {
-      id: data.id as UUID,
-      document: data.document,
-      email: data.email,
-      phone: data.phone,
-      name: data.name,
-    };
+    return new AssignorEntity(
+      data.id as UUID,
+      data.document,
+      data.email,
+      data.phone,
+      data.name,
+    );
   }
 
   toPersistenceModel(data: AssignorEntity): Assignor {
