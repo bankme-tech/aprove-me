@@ -81,7 +81,10 @@
       </div>
     </div>
   </div>
-  <button class="button" type="submit" [disabled]="assignorForm.invalid">
-    Submit
-  </button>
+  <div class="button-wrapper">
+    <button class="button" type="button" (click)="onCancel()">Cancel</button>
+    <button class="button" type="submit" [disabled]="assignorForm.invalid">
+      Submit
+    </button>
+  </div>
 </form>
