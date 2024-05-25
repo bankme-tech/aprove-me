@@ -1,0 +1,35 @@
+### Get all Payables
+GET http://localhost:3000/integrations/payable
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+### Get Payable by ID
+GET http://localhost:3000/integrations/payable/36911613-6d2a-4a10-b23e-fdaa6df6c95d
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+### Create Payable
+POST http://localhost:3000/integrations/payable
+Content-Type: application/json
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+{
+  "value": 500,
+  "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8"
+}
+
+### Update Payable
+PATCH  http://localhost:3000/integrations/payable/36911613-6d2a-4a10-b23e-fdaa6df6c95d
+Content-Type: application/json
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+{
+  "value": 1000
+}
+
+### Delete Payable
+DELETE http://localhost:3000/integrations/payable/36911613-6d2a-4a10-b23e-fdaa6df6c95d
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ

@@ -1,0 +1,23 @@
+### Create User
+POST http://localhost:3000/integrations/users
+Content-Type: application/json
+
+{
+  "login": "teste",
+  "password": "123456"
+}
+
+### Update User
+PATCH  http://localhost:3000/integrations/users/5be6894d-d3f2-4462-a894-c3cf0eaf4cf2
+Content-Type: application/json
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+{
+  "password": "1234567"
+}
+
+### Delete User
+DELETE http://localhost:3000/integrations/users/c54f5b6d-ce5a-4993-8141-6d2a77a5b4b0
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
