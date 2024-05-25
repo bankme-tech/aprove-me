@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MicroservicesModule } from './microservices/microservices.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { MicroservicesModule } from './microservices/microservices.module';
       },
     ]),
     MicroservicesModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

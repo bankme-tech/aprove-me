@@ -40,9 +40,13 @@ export class AssignorService {
   }
 
   async findOne(id: string) {
-    return await this.prisma.assignor.findUniqueOrThrow({
+    const assignor = await this.prisma.assignor.findUnique({
       where: { id },
     });
+    if (!assignor) {
+      throw new BadRequestException('Assignor not found');
+    }
+    return assignor;
   }
 
   async update(id: string, updateAssignorDto: UpdateAssignorDto) {

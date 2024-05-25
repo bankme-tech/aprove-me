@@ -4,6 +4,8 @@ import { ConsumerService } from './consumer.service';
 import { PayableService } from '../payable/payable.service';
 import { MicroServicesController } from './microservices.controller';
 import { DeadProducerService } from './dead.producer.service';
+import { EmailService } from '../email/email.service';
+import { AssignorService } from 'src/assignor/assignor.service';
 
 @Global()
 @Module({
@@ -13,6 +15,8 @@ import { DeadProducerService } from './dead.producer.service';
     ConsumerService,
     PayableService,
     DeadProducerService,
+    EmailService,
+    AssignorService,
   ],
   exports: [ProducerService],
 })
