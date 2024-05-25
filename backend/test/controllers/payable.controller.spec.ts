@@ -20,9 +20,12 @@ import { IRemovePayableUseCase } from 'src/payable/usecases/remove-payable.useca
 import { makePayableEntity } from 'test/mocks/entities/payable.entity.mock';
 import { RemovePayableInputDTO } from 'src/payable/dto/remove-payable.input.dto';
 import { AuthModule } from 'src/auth/auth.module';
+import { PrismaModule } from 'src/persistence/prisma.module';
+import { PrismaClient } from '@prisma/client';
 
 describe('PayableController', () => {
   let sut: PayableController;
+  const prismaClient = new PrismaClient();
 
   let createPayableUseCaseStub: CreatePayableUseCaseStub;
   let findAllPayablesUseCaseStub: FindAllPayablesUseCaseStub;
@@ -40,7 +43,7 @@ describe('PayableController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PayableController],
-      imports: [AuthModule],
+      imports: [AuthModule, PrismaModule.forTest(prismaClient)],
       providers: [
         {
           provide: ICreatePayableUseCase,

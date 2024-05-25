@@ -25,5 +25,6 @@ import { PrismaUserMapper } from './mappers/prisma-user.mapper';
       useClass: PrismaUserRepository,
     },
   ],
+  exports: [UserService, IUserRepository, IUserEncrypter],
 })
 export class UserModule {}

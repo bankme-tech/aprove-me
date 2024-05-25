@@ -27,6 +27,7 @@ import { CustomLogger } from './helpers/custom-logger.e2e';
 import { AuthModule } from 'src/auth/auth.module';
 import { makeAuthHeader } from './helpers/auth.e2e';
 import { AuthService } from 'src/auth/auth.service';
+import { IUserEncrypter } from 'src/user/encrypters/user.encrypter.interface';
 
 describe('PayableController (e2e)', () => {
   let app: INestApplication;
@@ -64,7 +65,15 @@ describe('PayableController (e2e)', () => {
     app.useGlobalFilters(new PrismaExceptionFilter());
     await app.init();
 
-    authToken = await makeAuthHeader(app.get(AuthService));
+    const authService = app.get(AuthService);
+    const encrypter = app.get(IUserEncrypter);
+    const prismaDatabaseHelper = new PrismaDatabaseHelper(prismaClient);
+
+    authToken = await makeAuthHeader(
+      prismaDatabaseHelper,
+      encrypter,
+      authService,
+    );
 
     const { id, value, emissionDate, assignorId } = makePayableEntity();
     createPayableDTO = {

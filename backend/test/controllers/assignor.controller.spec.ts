@@ -20,9 +20,12 @@ import { IRemoveAssignorUseCase } from 'src/assignor/usecases/remove-assignor.us
 import { RemoveAssignorUseCaseStub } from 'test/mocks/usecases/assignor/remove-assignor.usecase.mock';
 import { RemoveAssignorInputDTO } from 'src/assignor/dto/remove-assignor.input.dto';
 import { AuthModule } from 'src/auth/auth.module';
+import { PrismaClient } from '@prisma/client';
+import { PrismaModule } from 'src/persistence/prisma.module';
 
 describe('AssignorController', () => {
   let sut: AssignorController;
+  const prismaClient = new PrismaClient();
 
   let createAssignorUseCaseStub: CreateAssignorUseCaseStub;
   let findAllAssignorsUseCaseStub: FindAllAssignorsUseCaseStub;
@@ -40,7 +43,7 @@ describe('AssignorController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssignorController],
-      imports: [AuthModule],
+      imports: [AuthModule, PrismaModule.forTest(prismaClient)],
       providers: [
         {
           provide: ICreateAssignorUseCase,
