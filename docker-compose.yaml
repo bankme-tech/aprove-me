@@ -47,7 +47,7 @@ services:
     container_name: 'app-front'
     restart: on-failure
     ports:
-      - "4200:4200"
+      - "4200:80"
     networks:
       - rabbitmq-network
 
