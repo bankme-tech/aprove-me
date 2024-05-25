@@ -13,6 +13,7 @@ Antes de prosseguir com a execução do projeto, verifique se o seu sistema aten
 ## Estrutura do Projeto
 
 O projeto é composto por múltiplos serviços que são gerenciados por meio de Docker Compose. A estrutura do projeto é organizada da seguinte forma:
+
 ```
 project/
 │
@@ -22,7 +23,7 @@ project/
 │   ├── ...
 ├── frontend/
 │   ├── Dockerfile
-│   ├── ...  
+│   ├── ...
 └── ...
 ```
 
@@ -30,19 +31,31 @@ project/
 
 A seguir, estão as instruções para a execução do projeto em cada ambiente:
 
-1. Navegue até o diretório `dev` do projeto:
+1. Navegue até o diretório:
 
    ```bash
-   cd /caminho/para/o/projeto/dev
+   cd /caminho/para/o/projeto
    ```
 
-2. Execute o comando abaixo para iniciar os serviços do ambiente de produção:
+2. crie um arquivo .env na pasta backend, .env.example é um exemplo de como deve ser feito, com as seguintes variaveis de ambiente
+
+   ```bash
+   DATABASE_URL=nome do caminho que salvara o banco de dados, exemplo file:./dev.db
+
+   SMTP_HOST= host do servidor de email
+   SMTP_PORT= porta do servidor de email
+   SMTP_USER= usuario do servidor de email
+   SMTP_PASSWORD= senha do servidor de email
+   SMTP_FROM= email de origem
+   ```
+
+3. Execute o comando abaixo na pasta root, para iniciar os serviços do ambiente de produção:
 
    ```bash
       docker-compose -f compose.prod.yml up
    ```
 
-3. Aguarde até que todos os contêineres sejam iniciados e estejam em execução.
+4. Aguarde até que todos os contêineres sejam iniciados e estejam em execução.
 
 ## Acesso ao Projeto
 
