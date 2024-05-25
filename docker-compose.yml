@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    build: ./backend
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=file:/app/backend/prisma/dev.db
+    command: npm run start:dev

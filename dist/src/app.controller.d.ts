@@ -1,0 +1,33 @@
+import { PayableDto } from './DTOs/payable';
+import { AssignorDto } from './DTOs/assignor';
+import { PayableRepo } from './repositories/payable-repo';
+import { AssignorRepo } from './repositories/assignor-repo';
+import { UserDto } from './DTOs/user';
+import { UserRepo } from './repositories/user-repo';
+import { AuthService } from './auth/auth-service';
+export declare class AppController {
+    private payable;
+    private assignor;
+    private user;
+    private authService;
+    constructor(payable: PayableRepo, assignor: AssignorRepo, user: UserRepo, authService: AuthService);
+    auth(body: UserDto): Promise<{
+        token: string;
+    }>;
+    createUser(body: UserDto): Promise<UserDto>;
+    getUserById(id: number): Promise<UserDto>;
+    getUserByLogin(login: string): Promise<UserDto>;
+    getUserAll(): Promise<UserDto[]>;
+    updateUser(id: number, body: UserDto): Promise<UserDto>;
+    deleteUser(id: number): Promise<void>;
+    createPayable(body: PayableDto): Promise<PayableDto>;
+    getPayableById(id: string): Promise<PayableDto>;
+    getPayableAll(): Promise<PayableDto[]>;
+    updatePayable(id: string, body: PayableDto): Promise<PayableDto>;
+    deletePayable(id: string): Promise<any>;
+    createAssignor(body: AssignorDto): Promise<AssignorDto>;
+    getAssignorById(id: string): Promise<AssignorDto>;
+    getAssignorsAll(): Promise<AssignorDto[]>;
+    updateAssignor(id: string, body: AssignorDto): Promise<AssignorDto>;
+    deleteAssignor(id: string): Promise<any>;
+}
