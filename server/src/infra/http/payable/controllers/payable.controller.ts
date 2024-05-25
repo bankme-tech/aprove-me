@@ -19,10 +19,11 @@ import { ReadAllPayableService } from '@modules/payable/services/read-all-payabl
 import { Payable } from '@modules/payable/entities/payable.entity';
 import { CreatePayableBatchDto } from '@infra/http/rabbitmq/dtos/create-payable-batch';
 import { CreatePayableBatchService } from '@modules/payable/services/create-payable-batch.service';
+import { JwtAuthGuard } from '@infra/authentication/guards/jwt-auth.guard';
 
 @Controller('integrations/payable')
 @ApiTags('Payable')
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 export class PayableController {
   constructor(
     private readonly createPayableService: CreatePayableService,
