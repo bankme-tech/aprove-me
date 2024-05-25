@@ -3,6 +3,7 @@ import { AssignorController } from './assignor.controller';
 import { AssignorService } from './assignor.service';
 import { Assignor } from './entities/assignor.entity';
 import { BadRequestException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 const assignorEntityList = [
   new Assignor(
@@ -30,6 +31,7 @@ describe('AssignorController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AssignorController],
       providers: [
+        JwtService,
         {
           provide: AssignorService,
           useValue: {

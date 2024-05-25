@@ -4,6 +4,7 @@ import { PayableService } from './payable.service';
 import { Payable } from './entities/payable.entity';
 import { BadRequestException } from '@nestjs/common';
 import { CreatePayableDto } from './dto/create-payable.dto';
+import { JwtService } from '@nestjs/jwt';
 
 const payableEntityList = [
   new Payable({
@@ -40,6 +41,7 @@ describe('PayableController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PayableController],
       providers: [
+        JwtService,
         {
           provide: PayableService,
           useValue: {
