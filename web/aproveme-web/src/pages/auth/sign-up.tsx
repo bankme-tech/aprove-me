@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { createAccount } from '@/api/create-account'
@@ -17,6 +18,8 @@ const signUpForm = z.object({
 type SignUpForm = z.infer<typeof signUpForm>
 
 export const SignUp = () => {
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -31,14 +34,19 @@ export const SignUp = () => {
     const { login, password, confirmPassword } = data
 
     if (password !== confirmPassword) {
-      // toast
+      toast.error('As senhas não coincidem.')
     } else {
       try {
         await signUpAccount({ login, password })
 
-        // toast
+        toast.success('Conta criada com sucesso!', {
+          action: {
+            label: 'Login',
+            onClick: () => navigate(`/sign-in?login=${login}`),
+          },
+        })
       } catch {
-        // toast
+        toast.error('Erro ao criar conta. Tente novamente.')
       }
     }
   }
