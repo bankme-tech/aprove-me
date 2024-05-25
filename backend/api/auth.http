@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:8080
+
+### Auth
+POST {{baseUrl}}/integrations/auth
+Content-Type: application/json
+
+{
+    "login": "aprovame",
+    "password": "aprovame"
+}
