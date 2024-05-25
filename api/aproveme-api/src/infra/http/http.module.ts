@@ -23,18 +23,24 @@ import { RegisterAssignorController } from "./controllers/regiter-assignor.contr
 import { CreateAccountController } from "./controllers/create-account.controller";
 import { FetchAssignorsNamesController } from "./controllers/fetch-assignors-names.controller";
 import { FetchAssignorsNamesService } from "@/domain/receivables/application/services/fetch-assignors-names";
+import { FetchPaginatedPayablesService } from "@/domain/receivables/application/services/fetch-paginated-payables";
+import { FetchPayablesController } from "./controllers/fetch-payables.controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
+    //Account Controllers
     CreateAccountController,
     AuthenticateController,
 
+    //Assignor Controllers
     ReceivePayableController,
+    FetchPayablesController,
     GetPayableByIdController,
     EditPayableController,
     DeletePayableByIdController,
 
+    //Payable Controllers
     RegisterAssignorController,
     FetchAssignorsNamesController,
     GetAssignorByIdController,
@@ -55,6 +61,7 @@ import { FetchAssignorsNamesService } from "@/domain/receivables/application/ser
 
     //Payable Services
     CreatePayableService,
+    FetchPaginatedPayablesService,
     EditPayableService,
     FindPayableByIdService,
     RemovePayableService,
