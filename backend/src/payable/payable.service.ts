@@ -1,15 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { randomUUID } from 'node:crypto';
+import { PrismaService } from 'src/infra/database/prisma.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 
 @Injectable()
 export class PayableService {
-  create(createPayableDto: CreatePayableDto) {
-    return {
-      id: randomUUID(),
-      ...createPayableDto,
-    };
+  constructor(private prismaService: PrismaService) {}
+
+  async create(createPayableDto: CreatePayableDto) {
+    const assignor = await this.checkIfAssignorExists(
+      createPayableDto.assignor,
+    );
+    if (!assignor) return;
+    const payableData = await this.prismaService.payable.create({
+      data: {
+        value: createPayableDto.value,
+        emissionDate: new Date(createPayableDto.emissionDate),
+        assignor: {
+          connect: {
+            id: createPayableDto.assignor,
+          },
+        },
+      },
+    });
+    return payableData;
   }
 
   findAll() {
@@ -26,5 +40,13 @@ export class PayableService {
 
   remove(id: number) {
     return `This action removes a #${id} payable`;
+  }
+
+  private async checkIfAssignorExists(assignorId: string) {
+    return this.prismaService.assignor.findUnique({
+      where: {
+        id: assignorId,
+      },
+    });
   }
 }

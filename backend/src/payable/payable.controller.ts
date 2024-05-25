@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
@@ -16,8 +17,13 @@ export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
   @Post()
-  create(@Body() createPayableDto: CreatePayableDto) {
-    return this.payableService.create(createPayableDto);
+  async create(@Body() createPayableDto: CreatePayableDto) {
+    const result = await this.payableService.create(createPayableDto);
+    if (!result)
+      throw new UnprocessableEntityException(
+        `The provided assignor ${createPayableDto.assignor} doesn't exists`,
+      );
+    return result;
   }
 
   @Get()

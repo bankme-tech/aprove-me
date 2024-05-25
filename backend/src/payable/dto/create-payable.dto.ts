@@ -1,13 +1,8 @@
-import {
-  IsDateString,
-  IsNotEmpty,
-  IsNumberString,
-  IsUUID,
-} from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 
 export class CreatePayableDto {
   @IsNotEmpty()
-  @IsNumberString()
+  @IsNumber()
   value: number;
 
   @IsNotEmpty()
