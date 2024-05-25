@@ -37,14 +37,14 @@ function CreatePayable() {
     e.preventDefault();
     const { id } = assignors.find(({ name }) => name === formData.assignor) as Assignor;
 
-    const payload = { assignor: id, value: formData.value };
+    const payload = { assignor: id, value: +formData.value };
 
     try {
-      const { data } = await axios.post('/payable', payload, config);
-      console.log(data);
+      await axios.post('/payable', payload, config);
+      alert('Novo recebível cadastrado com sucesso.')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      console.log(err.response.data.message);
+      alert(err.response.data.message);
     }
   }
 
