@@ -19,22 +19,27 @@ import { DeleteAssignorByIdController } from "./controllers/delete-assignor-by-i
 import { DeletePayableByIdController } from "./controllers/delete-payable-by-id.controller";
 import { EditAssignorController } from "./controllers/edit-assignor.controller";
 import { EditPayableController } from "./controllers/edit-payable.controller";
-import { RegisterAssignorUserController } from "./controllers/regiter-assignor.controller";
+import { RegisterAssignorController } from "./controllers/regiter-assignor.controller";
 import { CreateAccountController } from "./controllers/create-account.controller";
+import { FetchAssignorsNamesController } from "./controllers/fetch-assignors-names.controller";
+import { FetchAssignorsNamesService } from "@/domain/receivables/application/services/fetch-assignors-names";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
     CreateAccountController,
-    ReceivePayableController,
     AuthenticateController,
+
+    ReceivePayableController,
     GetPayableByIdController,
-    GetAssignorByIdController,
-    DeleteAssignorByIdController,
-    DeletePayableByIdController,
-    EditAssignorController,
     EditPayableController,
-    RegisterAssignorUserController,
+    DeletePayableByIdController,
+
+    RegisterAssignorController,
+    FetchAssignorsNamesController,
+    GetAssignorByIdController,
+    EditAssignorController,
+    DeleteAssignorByIdController,
   ],
   providers: [
     //Account Services
@@ -43,6 +48,7 @@ import { CreateAccountController } from "./controllers/create-account.controller
 
     //Assignor Services
     CreateAssignorService,
+    FetchAssignorsNamesService,
     EditAssignorService,
     FindAssignorByIdService,
     RemoveAssignorService,
