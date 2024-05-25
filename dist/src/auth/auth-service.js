@@ -44,6 +44,6 @@ exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [user_repo_1.UserRepo,
-        toke_1.TokenValidator])
+        toke_1.CreateToken])
 ], AuthService);
 //# sourceMappingURL=auth-service.js.map

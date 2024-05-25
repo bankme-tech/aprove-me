@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { UserDto } from '../../DTOs/user';
 import { PrismaService } from '../../database/prisma.service';
-import { UserRepo } from '../user-repo';
 import * as bcrypt from 'bcrypt';
+import { UserRepo } from './user.repo';
 
 @Injectable()
-export class prismaUserRepo implements UserRepo {
+export class UserService implements UserRepo {
   constructor(private prisma: PrismaService) {}
 
   async createUser(body: UserDto) {
@@ -34,8 +34,8 @@ export class prismaUserRepo implements UserRepo {
     return getUserById;
   }
 
-  async getUserByLogin(login: string): Promise<UserDto> {
-    const getUserByLogin = this.prisma.user.findFirst({
+  async getUserByLogin(login: any): Promise<UserDto> {
+    const getUserByLogin = this.prisma.user.findUnique({
       where: { login },
     });
     return getUserByLogin;
@@ -47,9 +47,12 @@ export class prismaUserRepo implements UserRepo {
   }
 
   async updateUser(id: number, body: UserDto): Promise<UserDto> {
+    const salt = parseInt(process.env.SALT_ROUND, 10);
+    const hashingPassword = await bcrypt.hash(body.password, salt);
+    const newBody = { ...body, password: hashingPassword };
     const updateUser = await this.prisma.user.update({
       where: { id },
-      data: body,
+      data: newBody,
     });
     return updateUser;
   }

@@ -1,10 +1,10 @@
-import { PrismaService } from '../../database/prisma.service';
-import { PayableRepo } from '../payable-repo';
-import { PayableDto } from '../../DTOs/payable';
 import { Injectable } from '@nestjs/common';
+import { PayableDto } from '../../DTOs/payable';
+import { PrismaService } from '../../database/prisma.service';
+import { PayableRepo } from './payable.repo';
 
 @Injectable()
-export class prismaPayableRepo implements PayableRepo {
+export class PayableService implements PayableRepo {
   constructor(private prisma: PrismaService) {}
 
   async createPayable(body: PayableDto): Promise<PayableDto> {

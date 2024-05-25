@@ -1,10 +1,10 @@
+import { AssignorRepo } from './assignor.repo';
 import { PrismaService } from '../../database/prisma.service';
-import { AssignorRepo } from '../assignor-repo';
 import { AssignorDto } from '../../DTOs/assignor';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class prismaAssignorRepo implements AssignorRepo {
+export class AssignorServices implements AssignorRepo {
   constructor(private prisma: PrismaService) {}
 
   async createAssignor(body: AssignorDto): Promise<AssignorDto> {

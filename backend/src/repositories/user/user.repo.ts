@@ -1,4 +1,4 @@
-import { UserDto } from '../DTOs/user';
+import { UserDto } from '../../DTOs/user';
 
 export abstract class UserRepo {
   abstract createUser(body: UserDto): Promise<UserDto>;

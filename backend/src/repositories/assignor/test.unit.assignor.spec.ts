@@ -1,23 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PayableRepo } from '../repositories/payable-repo';
-import { prismaPayableRepo } from '../repositories/prisma/prisma-payable-repo';
-import { prismaAssignorRepo } from '../repositories/prisma/prisma-assignor-repo';
-import { AssignorRepo } from '../repositories/assignor-repo';
-import { prismaUserRepo } from '../repositories/prisma/prisma-user-repo';
+import { PayableRepo } from '../repositories/payable.repo';
+import { prismaPayableRepo } from '../repositories/entitys/prisma-payable-repo';
+import { prismaAssignorRepo } from '../repositories/entitys/prisma-assignor-repo';
+import { AssignorRepo } from '../repositories/assignor.repo';
+import { prismaUserRepo } from '../repositories/entitys/prisma-user-repo';
 import { PrismaService } from '../database/prisma.service';
 import { AppController } from '../app.controller';
 import {
   MOCK_NOVO_CEDENTE,
   MOCK_UPDATE_CEDENTE,
 } from '../../test/mocks/mock-assignor';
-import { UserRepo } from '../repositories/user-repo';
+import { UserRepo } from '../repositories/user.repo';
 import {
   BadRequestException,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthService } from '../auth/auth-service';
+import { AuthService } from '../auth/auth.service';
 
 describe('Cedente', () => {
   let controller: AppController;

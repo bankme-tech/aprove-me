@@ -1,4 +1,4 @@
-import { AssignorDto } from '../DTOs/assignor';
+import { AssignorDto } from '../../DTOs/assignor';
 
 export abstract class AssignorRepo {
   abstract createAssignor(body: AssignorDto): Promise<AssignorDto>;

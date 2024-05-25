@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserRepo } from '../repositories/user-repo';
-import { PayableRepo } from '../repositories/payable-repo';
-import { prismaPayableRepo } from '../repositories/prisma/prisma-payable-repo';
-import { prismaAssignorRepo } from '../repositories/prisma/prisma-assignor-repo';
-import { AssignorRepo } from '../repositories/assignor-repo';
-import { prismaUserRepo } from '../repositories/prisma/prisma-user-repo';
+import { UserRepo } from '../repositories/user.repo';
+import { PayableRepo } from '../repositories/payable.repo';
+import { prismaPayableRepo } from '../repositories/entitys/prisma-payable-repo';
+import { prismaAssignorRepo } from '../repositories/entitys/prisma-assignor-repo';
+import { AssignorRepo } from '../repositories/assignor.repo';
+import { prismaUserRepo } from '../repositories/entitys/prisma-user-repo';
 import { PrismaService } from '../database/prisma.service';
 import {
   MOCK_NOVO_USUARIO,
@@ -18,7 +18,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { AuthService } from '../auth/auth-service';
+import { AuthService } from '../auth/auth.service';
 import { JwtModule } from '@nestjs/jwt';
 
 describe('Usuário', () => {

@@ -16,7 +16,19 @@ async function bootstrap() {
     .addTag('Assignors', 'Endpoints relacionados aos cedentes')
     .addTag('Payables', 'Endpoints relacionados a recebíveis')
     .addTag('Auth', 'Endpoints relacionados a autenticação')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        in: 'header',
+        name: 'Authorization',
+        description: 'Enter your Bearer token',
+      },
+      'bearer',
+    )
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

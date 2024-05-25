@@ -1,5 +1,4 @@
 import { UserDto } from '../DTOs/user';
-import { UserRepo } from '../repositories/user-repo';
 import * as bcrypt from 'bcrypt';
 import {
   BadRequestException,
@@ -8,11 +7,12 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { CreateToken } from './toke';
+import { UserService } from '../repositories/user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private user: UserRepo,
+    private user: UserService,
     private jwt: CreateToken,
   ) {}
 
@@ -22,7 +22,6 @@ export class AuthService {
       const user = await this.user.getUserByLogin(login);
       if (user) {
         const unHashedPassword = await bcrypt.compare(password, user.password);
-
         if (unHashedPassword) {
           const token = await this.jwt.generate(user.login, user.id);
           return { token };
@@ -35,5 +34,15 @@ export class AuthService {
       }
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  async validateUser(login: string): Promise<{ login: string; id: number }> {
+    const user = await this.user.getUserByLogin(login);
+    if (user && user.login === login) {
+      const { password, login, id } = user;
+
+      return { login, id };
+    }
+    return null;
   }
 }

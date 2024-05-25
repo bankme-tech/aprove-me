@@ -1,4 +1,4 @@
-import { PayableDto } from '../DTOs/payable';
+import { PayableDto } from '../../DTOs/payable';
 
 export abstract class PayableRepo {
   abstract createPayable(body: PayableDto): Promise<PayableDto>;

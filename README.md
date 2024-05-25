@@ -79,7 +79,7 @@ A API utiliza tokens JWT para autenticação, que devem ser incluídos no cabeç
 
 ## Testes
 
-Os testes estão localizados no diretório `/src/DTOs`, acompanhando seus respectivos alvos de testes.
+Os testes estão localizados no diretório `/src/repositories`, acompanhando seus respectivos alvos de testes.
 
 #### Como testar?
 
