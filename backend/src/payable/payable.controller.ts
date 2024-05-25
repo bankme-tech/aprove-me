@@ -3,7 +3,7 @@ import { PayableService } from './payable.service';
 import { Payable, Prisma } from '@prisma/client';
 import { CreatePayableAssignorDto } from './payable.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { RabbitMqService } from 'src/rabbit-mq/rabbit-mq.service';
+import { RabbitMqService } from '../rabbit-mq/rabbit-mq.service';
 
 @Controller('integrations/payable')
 export class PayableController {
@@ -30,7 +30,7 @@ export class PayableController {
     }
   }
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.payableService.findAll();

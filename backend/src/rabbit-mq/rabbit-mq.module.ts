@@ -2,8 +2,8 @@ import { Module, forwardRef } from "@nestjs/common";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import { RabbitMqService } from "./rabbit-mq.service";
 import { PayableProcessor } from "./consumer.service";
-import { PayableModule } from "src/payable/payable.module";
-import { MailerConfigModule } from "src/mailer/mailer.module";
+import { PayableModule } from "../payable/payable.module";
+import { MailerConfigModule } from "../mailer/mailer.module";
 
 @Module({
   imports: [
