@@ -1,10 +1,49 @@
+import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
+import { registerAssignor } from '@/api/register-assignor'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+const registerAssignorForm = z.object({
+  name: z.string(),
+  email: z.string(),
+  phone: z.string(),
+  document: z.string(),
+})
+type RegisterAssignorForm = z.infer<typeof registerAssignorForm>
+
 export const RegisterAssignor = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<RegisterAssignorForm>()
+
+  const { mutateAsync: registerAssignorFn } = useMutation({
+    mutationFn: registerAssignor,
+  })
+
+  const handleRegisterAssignor = async (data: RegisterAssignorForm) => {
+    const { document, email, name, phone } = data
+
+    if (!document || !email || !name || !phone) {
+      toast.error('Todos os campos devem ser preenchidos!')
+    } else {
+      try {
+        await registerAssignorFn({ document, email, name, phone })
+
+        toast.success('Cedente registrado com sucesso!')
+      } catch {
+        toast.error('Erro ao registrar cedente.')
+      }
+    }
+  }
+
   return (
     <>
       <Helmet />
@@ -12,21 +51,24 @@ export const RegisterAssignor = () => {
 
       <main className=" w-[500px] self-center">
         <section className="flex flex-col justify-center gap-6">
-          <form className="space-y-7    ">
+          <form
+            onSubmit={handleSubmit(handleRegisterAssignor)}
+            className="space-y-7    "
+          >
             <div className="space-y-2">
               <Label htmlFor="name">Nome</Label>
-              <Input id="name" type="text" />
+              <Input id="name" type="text" {...register('name')} />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" />
+              <Input id="email" type="email" {...register('email')} />
             </div>
 
             <div className="flex gap-6">
               <div className="w-full space-y-2">
                 <Label htmlFor="phone">Telefone</Label>
-                <Input id="phone" type="tel" />
+                <Input id="phone" type="tel" {...register('phone')} />
               </div>
 
               <div className="w-full space-y-2">
@@ -34,11 +76,11 @@ export const RegisterAssignor = () => {
                 <span className="text-xs text-muted-foreground">
                   &nbsp; (CPF | CNPJ)
                 </span>
-                <Input id="document" type="text" />
+                <Input id="document" type="text" {...register('document')} />
               </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={false}>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               Finalizar cadastro
             </Button>
           </form>
