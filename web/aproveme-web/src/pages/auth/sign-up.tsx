@@ -1,11 +1,48 @@
+import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { z } from 'zod'
 
+import { createAccount } from '@/api/create-account'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+const signUpForm = z.object({
+  login: z.string(),
+  password: z.string(),
+  confirmPassword: z.string(),
+})
+type SignUpForm = z.infer<typeof signUpForm>
+
 export const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SignUpForm>()
+
+  const { mutateAsync: signUpAccount } = useMutation({
+    mutationFn: createAccount,
+  })
+
+  const handleSignUp = async (data: SignUpForm) => {
+    const { login, password, confirmPassword } = data
+
+    if (password !== confirmPassword) {
+      // toast
+    } else {
+      try {
+        await signUpAccount({ login, password })
+
+        // toast
+      } catch {
+        // toast
+      }
+    }
+  }
+
   return (
     <>
       <Helmet title="Cadastro" />
@@ -24,52 +61,34 @@ export const SignUp = () => {
             </p>
           </div>
 
-          <form className="space-y-3">
+          <form onSubmit={handleSubmit(handleSignUp)} className="space-y-3">
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="login">Seu login</Label>
-                <Input id="login" type="text" />
+                <Input id="login" type="text" {...register('login')} />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="password">Sua senha</Label>
-                <Input id="password" type="password" />
+                <Input
+                  id="password"
+                  type="password"
+                  {...register('password')}
+                />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword">Confirmar senha</Label>
-                <Input id="confirmPassword" type="password" />
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  {...register('confirmPassword')}
+                />
               </div>
             </div>
-            <div className="flex w-full justify-center gap-6">
-              {/* <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Seu nome</Label>
-                  <Input id="name" type="text" />
-                </div>
+            <div className="flex w-full justify-center gap-6"></div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email"> Seu e-mail</Label>
-                  <Input id="email" type="email" />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone"> Seu telefone</Label>
-                  <Input id="phone" type="tel" />
-                </div>
-              </div> */}
-            </div>
-
-            {/* <div className="space-y-2">
-              <Label htmlFor="document">Seu documento</Label>
-              <span className="text-xs text-muted-foreground">
-                {' '}
-                (CPF | CNPJ)
-              </span>
-              <Input id="document" type="text" />
-            </div> */}
-
-            <Button type="submit" className="w-full" disabled={false}>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               Finalizar cadastro
             </Button>
 

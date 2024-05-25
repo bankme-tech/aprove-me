@@ -7,12 +7,16 @@ export const api = axios.create({
   withCredentials: true,
 })
 
+const publicRoutes = ['/integrations/sessions', '/integrations/auth']
+
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('access_token')
-    if (token) {
+    const token = localStorage.getItem('@aproveme/access_token')
+
+    if (token && !publicRoutes.includes(config.url || '')) {
       config.headers.Authorization = `Bearer ${token}`
     }
+
     return config
   },
   (error) => {
