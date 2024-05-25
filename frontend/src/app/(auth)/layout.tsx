@@ -2,27 +2,15 @@
 
 import { Sidebar } from "@/components/organisms/Sidebar";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const DashboardLayout = ({
   children, // will be a page or nested layout
 }: any) => {
   const router = useRouter();
-  const [token, setToken] = useState<null | string>(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  if (!localStorage.getItem("token")) {
+    router.push("/");
 
-    if (!token) {
-      router.push("/");
-
-      return;
-    }
-
-    setToken(token);
-  }, [router]);
-
-  if (!token) {
     return null;
   }
 

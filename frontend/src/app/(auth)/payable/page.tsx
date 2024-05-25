@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { usePayable } from "./hooks/usePayable";
 
 export const Payable = () => {
-  const { payable } = usePayable();
+  const { deferredPayable } = usePayable();
 
   const router = useRouter();
 
@@ -27,7 +27,7 @@ export const Payable = () => {
       </div>
       <Table
         headerContent={header}
-        bodyContent={payable}
+        bodyContent={deferredPayable}
         linkToEdit="/payable/edit"
       ></Table>
     </>

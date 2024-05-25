@@ -1,8 +1,9 @@
 import { findManyPayable } from "@/services";
-import { useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 
 export const usePayable = () => {
-  const [payable, setPayable] = useState();
+  const [payable, setPayable] = useState([]);
+  const deferredPayable = useDeferredValue(payable);
 
   useEffect(() => {
     const fetch = async () => {
@@ -14,5 +15,5 @@ export const usePayable = () => {
     fetch();
   }, []);
 
-  return { payable };
+  return { deferredPayable };
 };
