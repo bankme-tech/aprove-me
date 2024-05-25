@@ -1,9 +1,16 @@
 import { Landmark } from 'lucide-react'
-import { Outlet } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 export const AuthLayout = () => {
-  const test = 1
-  console.log(test)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const token = localStorage.getItem('@aproveme/access_token')
+    if (token) {
+      navigate('/payable')
+    }
+  }, [navigate])
   return (
     <div className="grid min-h-screen grid-cols-2 antialiased">
       <aside className="flex h-full flex-col justify-between border-r border-foreground/5 bg-muted p-10 text-muted-foreground">
