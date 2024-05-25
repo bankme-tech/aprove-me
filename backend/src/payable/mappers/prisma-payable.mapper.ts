@@ -1,9 +1,9 @@
 import { Payable } from '@prisma/client';
-import { PayableMapper } from './payable.mapper.interface';
+import { IPayableMapper } from './payable.mapper.interface';
 import { PayableEntity } from '../entities/payable.entity';
 import { UUID } from 'crypto';
 
-export class PrismaPayableMapper extends PayableMapper<Payable> {
+export class PrismaPayableMapper extends IPayableMapper<Payable> {
   toDomainEntity(data: Payable): PayableEntity {
     const year = data.emissionDate.getFullYear();
     const month = data.emissionDate.getMonth() + 1;

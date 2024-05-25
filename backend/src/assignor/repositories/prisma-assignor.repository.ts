@@ -3,7 +3,7 @@ import { CreateAssignorInputDTO } from '../dto/create-assignor.input.dto';
 import { AssignorEntity } from '../entities/assignor.entity';
 import { IAssignorRepository } from './assignor.repository.interface';
 import { Injectable } from '@nestjs/common';
-import { AssignorMapper } from '../mappers/assignor.mapper.interface';
+import { IAssignorMapper } from '../mappers/assignor.mapper.interface';
 import { Assignor } from '@prisma/client';
 import { UpdateAssignorInputDTO } from '../dto/update-assignor.input.dto';
 import { PrismaErrorCodes } from 'src/exception-filters/prisma-exception.filter';
@@ -13,7 +13,7 @@ import { ReferencedRecordError } from 'src/persistence/errors/referenced-record.
 export class PrismaAssignorRepository implements IAssignorRepository {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly mapper: AssignorMapper<Assignor>,
+    private readonly mapper: IAssignorMapper<Assignor>,
   ) {}
 
   async save(

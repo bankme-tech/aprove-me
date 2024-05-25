@@ -3,7 +3,7 @@ import { CreatePayableInputDTO } from '../dto/create-payable.input.dto';
 import { PayableEntity } from '../entities/payable.entity';
 import { IPayableRepository } from './payable.repository.interface';
 import { Injectable } from '@nestjs/common';
-import { PayableMapper } from '../mappers/payable.mapper.interface';
+import { IPayableMapper } from '../mappers/payable.mapper.interface';
 import { Payable } from '@prisma/client';
 import { FindPayableInputDTO } from '../dto/find-payable.input.dto';
 import { UpdatePayableInputDTO } from '../dto/update-payable.input.dto';
@@ -13,7 +13,7 @@ import { RemovePayableInputDTO } from '../dto/remove-payable.input.dto';
 export class PrismaPayableRepository implements IPayableRepository {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly mapper: PayableMapper<Payable>,
+    private readonly mapper: IPayableMapper<Payable>,
   ) {}
 
   async save(createPayableDTO: CreatePayableInputDTO): Promise<PayableEntity> {
