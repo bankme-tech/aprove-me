@@ -9,7 +9,7 @@ const useGetPayable = () => {
   const query = useQuery({
     queryFn: getPayable,
     queryKey: ['payables-data'],
-    retry: false
+    retry: false,
   })
 
   return {...query, data: query.data?.data}

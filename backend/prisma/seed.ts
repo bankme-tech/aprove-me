@@ -16,9 +16,9 @@ async function main() {
       {
         id: '7ea87666-459c-4200-b38f-c0097b39b38a',
         document: '000.000.000.25',
-        email: 'alice@prisma.io',
-        name: 'Alice',
-        password: bcrypt.hashSync('senhapoderosa'),
+        email: 'aprovame@aprovame.com',
+        name: 'Dan Miranda',
+        password: bcrypt.hashSync('aprovame'),
         phone: '(75) 9 9910-1314',
       },
     ],

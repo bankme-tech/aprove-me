@@ -1,6 +1,5 @@
 "use client";
 
-import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Combobox } from "@/components/ui/combobox";
 import { DatePicker } from "@/components/ui/date-picker";
@@ -14,11 +13,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import logo from "../../../public/logo-bankme.png";
 import useCheckToken from "../hooks/useCheckToken";
 import useCreatePayable from "../hooks/useCreatePayable";
 import useGetAssignors from "../hooks/useGetAssignors";
@@ -50,11 +47,6 @@ export default function RegisterPayable() {
     disabled: isLoading,
   });
 
-  const getIsTokenExpired = (expDate: number) => {
-    const MILLISECONDS_PER_SECOND = 1000;
-      return new Date() > new Date(expDate * MILLISECONDS_PER_SECOND);
-  }
-
   useCheckToken();
 
 
@@ -64,9 +56,7 @@ export default function RegisterPayable() {
   };
 
   return (
-    <main className={`flex flex-col items-center justify-center p-10 gap-10`}>
-      <ModeToggle />
-      <Image src={logo} alt="" className={style.logo} />
+    <section className={`flex flex-col items-center w-full justify-center w-100 p-10 gap-12`}>
       <h1 className="text-4xl font-bold">Create a new payable</h1>
       <div>
         <Form {...form}>
@@ -132,6 +122,6 @@ export default function RegisterPayable() {
           </form>
         </Form>
       </div>
-    </main>
+    </section>
   );
 }

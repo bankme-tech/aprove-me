@@ -1,5 +1,5 @@
 import { JwtPayload, jwtDecode } from "jwt-decode";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const getIsTokenExpired = (expDate: number) => {
@@ -9,6 +9,7 @@ const getIsTokenExpired = (expDate: number) => {
 
 function useCheckToken() {
   const { push } = useRouter();
+  const pathname = usePathname()
   useEffect(() => {
     const token = localStorage.getItem("BANKME_TOKEN");
     if (token) {
@@ -17,7 +18,9 @@ function useCheckToken() {
       if (isTokenExpired) {
         localStorage.removeItem("BANKME_TOKEN");
         push("/");
-      } 
+      } else if (!isTokenExpired && pathname === '/') {
+        push("register-payable")
+      }
     } else {
       push("/");
     }

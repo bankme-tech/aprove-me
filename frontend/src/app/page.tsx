@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import logo from "../../public/logo-bankme.png";
 import useCheckToken from "./hooks/useCheckToken";
 import useLogin from "./hooks/useLogin";
 import style from "./login.module.css";
@@ -57,7 +56,7 @@ export default function Login() {
 
   return (
     <div className={style.container}>
-      <Image src={logo} alt="" className={style.logo} />
+      <Image src={"/logo-bankme.png"} width={80} height={80} alt="" className={style.logo} />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleLogin)}
@@ -87,7 +86,7 @@ export default function Login() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="password" {...field} />
+                  <Input placeholder="password" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -1,5 +1,6 @@
 .container {
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   justify-content: center;
   align-items: center;
 }
@@ -18,8 +19,7 @@
   justify-content: center;
   border-radius: 20px;
   margin: 20px;
-  width: 300px;
-  height: 300px;
+  width: 22rem;
   background-color: blueviolet;
   color: white;
   transition: 0.5s all ease;

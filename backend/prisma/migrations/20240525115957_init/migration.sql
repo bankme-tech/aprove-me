@@ -14,7 +14,7 @@ CREATE TABLE "payables" (
     "value" REAL NOT NULL,
     "emissionDate" DATETIME NOT NULL,
     "assignorId" TEXT NOT NULL,
-    CONSTRAINT "payables_assignorId_fkey" FOREIGN KEY ("assignorId") REFERENCES "assignors" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "payables_assignorId_fkey" FOREIGN KEY ("assignorId") REFERENCES "assignors" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateIndex

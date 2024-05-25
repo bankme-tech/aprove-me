@@ -16,7 +16,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import logo from "../../../public/logo-bankme.png";
 import useCheckToken from "../hooks/useCheckToken";
 import useCreateAssignor from "../hooks/useCreateAssignor";
 import useGetPayable from "../hooks/useGetPayable";
@@ -81,7 +80,7 @@ export default function RegisterAssignor() {
       <div>
         <ModeToggle />
       </div>
-      <Image src={logo} alt="bank-me logo" className={style.logo} />
+      <Image src={"/logo-bankme.png"} alt="bank-me logo" className={style.logo} />
       <h1 className="text-4xl font-bold">Create your account</h1>
       <div>
         <Form {...form}>
