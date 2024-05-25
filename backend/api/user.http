@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:8080
+
+### Create a new user
+POST {{baseUrl}}/integrations/user
+Content-Type: application/json
+
+{
+    "login": "aprovame",
+    "password": "aprovame"
+}
