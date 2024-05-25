@@ -17,17 +17,22 @@ services:
       test: ["CMD", "lsof", "-t", "-i:3000"]
       timeout: 10s
       retries: 5
+    depends_on:
+      - rabbitmq
+    
   rabbitmq:
     container_name: 'bankme_rabbitmq'
     image: rabbitmq:management
     ports:
-      - "5672:5672" 
+      - "5672:5672"
       - "15672:15672" 
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq 
     environment:
-      RABBITMQ_DEFAULT_USER: bankme  
-      RABBITMQ_DEFAULT_PASS: aprove-me123  
+      RABBITMQ_DEFAULT_USER: rabbitmq  
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+    networks:
+      - bankme-network
 
 volumes:
   rabbitmq_data:

@@ -21,7 +21,7 @@ import { MicroservicesModule } from './microservices/microservices.module';
         name: 'RABBITMQ_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://rabbitmq:rabbitmq@localhost:5672'],
+          urls: ['amqp://rabbitmq:rabbitmq@rabbitmq:5672'],
           queue: 'payable_queue',
           queueOptions: {
             durable: true,

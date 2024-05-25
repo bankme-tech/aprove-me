@@ -8,8 +8,8 @@ export class MicroservicesService {
   private channel: ChannelWrapper;
   constructor(private readonly payableService: PayableService) {}
 
-  async onModuleInit() {
-    const connection = amq.connect(['amqp://rabbitmq:rabbitmq@localhost:5672']);
+  private async onModuleInit() {
+    const connection = amq.connect('amqp://rabbitmq:rabbitmq@rabbitmq:5672');
     this.channel = connection.createChannel({
       json: true,
       setup: (channel: Channel) => {
@@ -50,7 +50,7 @@ export class MicroservicesService {
       data: payablesToResolve,
     });
     try {
-      this.channel.sendToQueue('payable_queue', Buffer.from(message));
+      await this.channel.sendToQueue('payable_queue', Buffer.from(message));
     } catch (error) {
       Logger.error('Error sending message to queue', error);
       throw new HttpException(
@@ -58,9 +58,20 @@ export class MicroservicesService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+
+    const result = await this.channel.addSetup((channel: Channel) => {
+      return channel.consume('payable_queue', async (message) => {
+        const payablesToCreate: CreatePayableDto[] = JSON.parse(
+          message.content.toString(),
+        );
+        await this.handlePayableQueue(payablesToCreate);
+        channel.ack(message);
+      });
+    });
+    console.log('Result:', result);
   }
 
-  async addPayableToDeadQueue(payable: CreatePayableDto) {
+  private async addPayableToDeadQueue(payable: CreatePayableDto) {
     const message = JSON.stringify({
       pattern: 'dead_queue',
       data: payable,

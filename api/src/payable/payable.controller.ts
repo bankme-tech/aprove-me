@@ -14,11 +14,15 @@ import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { MicroservicesService } from 'src/microservices/microservices.service';
 
 @UseGuards(AuthGuard)
 @Controller('integrations/payable')
 export class PayableController {
-  constructor(private readonly payableService: PayableService) {}
+  constructor(
+    private readonly payableService: PayableService,
+    private readonly microservicesService: MicroservicesService,
+  ) {}
 
   @Post()
   async create(@Body() createPayableDto: CreatePayableDto) {
@@ -49,8 +53,10 @@ export class PayableController {
     return await this.payableService.remove(id);
   }
 
-  // @Post('batch')
-  // async batchCreate(@Body() payables: CreatePayableDto[]) {
-  //   return await this.payableService.batchCreate(payables);
-  // }
+  @Post('batch')
+  async batchCreate(@Body() payables: CreatePayableDto[]) {
+    await this.microservicesService.resolvePayableQueue(payables);
+
+    return { message: 'Batch created' };
+  }
 }

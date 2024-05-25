@@ -33,3 +33,33 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZ
 DELETE http://localhost:3000/integrations/payable/36911613-6d2a-4a10-b23e-fdaa6df6c95d
 # Replace your token in Authorization header
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+
+
+### Post Payables in batch
+POST http://localhost:3000/integrations/payable/batch
+Content-Type: application/json
+# Replace your token in Authorization header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjIzNjU0LCJleHAiOjE3MTY2MjU0NTR9.jpy5Bi6GKLSKYbJstVnMGFWx2uVXn30iH8xbGSZkDMo
+
+[
+  { "value": 1, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 2, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 3, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 4, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 5, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 6, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 7, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 8, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 9, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 10, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 11, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 12, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 13, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 14, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 15, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 16, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 17, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 18, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 19, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
+  { "value": 20, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" }
+]
