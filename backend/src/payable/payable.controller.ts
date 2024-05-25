@@ -1,16 +1,17 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
+import { PayableService } from './payable.service';
 
 @Controller('payable')
 export class PayableController {
@@ -33,7 +34,9 @@ export class PayableController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.payableService.findOne(+id);
+    const result = this.payableService.findOne(id);
+    if (!result) throw new NotFoundException();
+    return result;
   }
 
   @Patch(':id')

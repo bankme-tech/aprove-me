@@ -30,8 +30,12 @@ export class PayableService {
     return this.prismaService.payable.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} payable`;
+  async findOne(id: string) {
+    return this.prismaService.payable.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
   update(id: number, updatePayableDto: UpdatePayableDto) {
