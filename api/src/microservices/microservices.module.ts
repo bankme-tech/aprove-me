@@ -1,12 +1,13 @@
 import { Global, Module } from '@nestjs/common';
-import { MicroservicesService } from './microservices.service';
-import { MicroservicesController } from './microservices.controller';
+import { ProducerService } from './producer.service';
+import { ConsumerService } from './consumer.service';
 import { PayableService } from '../payable/payable.service';
+import { MicroServicesController } from './microservices.controller';
 
 @Global()
 @Module({
-  controllers: [MicroservicesController],
-  providers: [MicroservicesService, PayableService],
-  exports: [MicroservicesService],
+  controllers: [MicroServicesController],
+  providers: [ProducerService, ConsumerService, PayableService],
+  exports: [ProducerService],
 })
 export class MicroservicesModule {}

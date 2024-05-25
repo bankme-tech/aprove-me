@@ -29,6 +29,7 @@
     "@nestjs/microservices": "^10.3.8",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.14.0",
+    "@types/amqplib": "^0.10.5",
     "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.4",
     "bcrypt": "^5.1.1",

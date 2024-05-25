@@ -1,18 +1,20 @@
 ### Get all Payables
 GET http://localhost:3000/integrations/payable
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjY3NDYwLCJleHAiOjE3MTcyNzIyNjB9.H_O9_BZi-gym5Kgi_JRybZmYxGfUWOuAnLtIj4ADzNk
+
 
 ### Get Payable by ID
 GET http://localhost:3000/integrations/payable/36911613-6d2a-4a10-b23e-fdaa6df6c95d
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjY3NDYwLCJleHAiOjE3MTcyNzIyNjB9.H_O9_BZi-gym5Kgi_JRybZmYxGfUWOuAnLtIj4ADzNk
+
 
 ### Create Payable
 POST http://localhost:3000/integrations/payable
 Content-Type: application/json
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjY3NDYwLCJleHAiOjE3MTcyNzIyNjB9.H_O9_BZi-gym5Kgi_JRybZmYxGfUWOuAnLtIj4ADzNk
 
 {
   "value": 500,
@@ -23,7 +25,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZ
 PATCH  http://localhost:3000/integrations/payable/36911613-6d2a-4a10-b23e-fdaa6df6c95d
 Content-Type: application/json
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjY3NDYwLCJleHAiOjE3MTcyNzIyNjB9.H_O9_BZi-gym5Kgi_JRybZmYxGfUWOuAnLtIj4ADzNk
+
 
 {
   "value": 1000
@@ -32,14 +35,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZ
 ### Delete Payable
 DELETE http://localhost:3000/integrations/payable/36911613-6d2a-4a10-b23e-fdaa6df6c95d
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjY3NDYwLCJleHAiOjE3MTcyNzIyNjB9.H_O9_BZi-gym5Kgi_JRybZmYxGfUWOuAnLtIj4ADzNk
+
 
 
 ### Post Payables in batch
 POST http://localhost:3000/integrations/payable/batch
 Content-Type: application/json
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjIzNjU0LCJleHAiOjE3MTY2MjU0NTR9.jpy5Bi6GKLSKYbJstVnMGFWx2uVXn30iH8xbGSZkDMo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjY3NDYwLCJleHAiOjE3MTcyNzIyNjB9.H_O9_BZi-gym5Kgi_JRybZmYxGfUWOuAnLtIj4ADzNk
 
 [
   { "value": 1, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
@@ -63,3 +67,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZ
   { "value": 19, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" },
   { "value": 20, "assignorId": "d9ebb252-f177-4751-8385-a611bf8758b8" }
 ]
+
+

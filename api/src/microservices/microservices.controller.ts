@@ -1,21 +1,19 @@
 import { Controller } from '@nestjs/common';
-import { MicroservicesService } from './microservices.service';
 import { Ctx, MessagePattern, RmqContext } from '@nestjs/microservices';
+import { ConsumerService } from './consumer.service';
 
 @Controller()
-export class MicroservicesController {
-  constructor(private readonly microservicesService: MicroservicesService) {}
+export class MicroServicesController {
+  constructor(private readonly consumerService: ConsumerService) {}
 
-  @MessagePattern('payable_queue')
-  async getPayableNotifications(@Ctx() data: RmqContext) {
-    const channel = data.getChannelRef();
-    const message = data.getMessage();
-    const payablesToCreate = JSON.parse(message.content.toString());
+  @MessagePattern('payable-queue')
+  async getNotifications(@Ctx() context: RmqContext) {
+    const message = context.getMessage();
+    const content = JSON.parse(message.content);
 
-    await this.microservicesService.handlePayableQueue(payablesToCreate);
+    const { payables } = content;
+    await this.consumerService.consumePayableQueue(payables);
 
-    channel.ack(message);
-
-    return 'Payables created';
+    return { success: true };
   }
 }
