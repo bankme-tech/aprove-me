@@ -28,6 +28,8 @@ export class ReceivePayableController {
   ) {
     const { assignorId, emissionDate, value } = body;
 
+    console.log(body)
+
     const createPayableResult = await this.createPayable.execute({
       payable: {
         id: randomUUID(),

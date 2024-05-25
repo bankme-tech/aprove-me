@@ -10,7 +10,7 @@ import { RemoveAssignorService } from "@/domain/receivables/application/services
 import { RemovePayableService } from "@/domain/receivables/application/services/remove-payable-service";
 import { RegisterUserService } from "@/domain/account/application/services/register-user";
 import { AuthenticateUserService } from "@/domain/account/application/services/authenticate-user";
-import { ReceivePayableController } from "./controllers/receive-payable-and-assignor.controller";
+import { ReceivePayableController } from "./controllers/receive-payable.controller";
 import { AuthenticateController } from "./controllers/authenticate.controller";
 import { GetPayableByIdController } from "./controllers/get-payable-by-id.controller";
 import { GetAssignorByIdController } from "./controllers/get-assignor-by-id.controller";
