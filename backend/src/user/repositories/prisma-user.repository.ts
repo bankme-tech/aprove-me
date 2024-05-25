@@ -23,4 +23,18 @@ export class PrismaUserRepository implements IUserRepository {
 
     return this.mapper.toDomainEntity(user);
   }
+
+  async findByLogin(login: string): Promise<UserEntity> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        login,
+      },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return this.mapper.toDomainEntity(user);
+  }
 }

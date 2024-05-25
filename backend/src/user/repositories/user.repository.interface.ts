@@ -1,6 +1,7 @@
 import { CreateUserInputDTO } from '../dto/create-user.input.dto';
-import { CreateUserOuputDTO } from '../dto/create-user.output.dto';
+import { UserEntity } from '../entities/user.entity';
 
 export abstract class IUserRepository {
-  abstract save(createUserDTO: CreateUserInputDTO): Promise<CreateUserOuputDTO>;
+  abstract save(createUserDTO: CreateUserInputDTO): Promise<UserEntity>;
+  abstract findByLogin(login: string): Promise<UserEntity>;
 }
