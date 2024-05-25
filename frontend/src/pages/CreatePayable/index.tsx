@@ -29,12 +29,6 @@ const CreatePayable = () => {
       <Form
         name="basic"
         onFinish={onFinish}
-        initialValues={{
-          id: "6755767e-c5ef-4cd7-8e5b-67ce7b230131",
-          value: 0,
-          emissionDate: dayjs("01/01/2001 01:11", "DD/MM/YYYY HH:mm"),
-          assignor: "6755767e-c5ef-4cd7-8e5b-67ce7b230131",
-        }}
         autoComplete="off"
         layout="vertical"
         className="flex flex-col w-full max-w-sm gap-4"
