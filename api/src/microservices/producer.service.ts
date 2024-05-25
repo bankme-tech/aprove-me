@@ -30,8 +30,6 @@ export class ProducerService {
       );
       Logger.log('Sent To Queue');
     } catch (error) {
-      console.log('Error sending payable to queue', error);
-
       throw new HttpException(
         'Error sending payable to queue',
         HttpStatus.INTERNAL_SERVER_ERROR,
