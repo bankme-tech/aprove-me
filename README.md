@@ -79,6 +79,8 @@ Foram criados testes unitários e testes de integração.
 2. Instalar as dependências
 
     ```bash
+    pnpm install
+    # ou
     npm install
     ```
 
@@ -87,17 +89,23 @@ Foram criados testes unitários e testes de integração.
     > Necessário para os testes de integração
 
     ```bash
+    pnpm migrate:dev
+    # ou
     npm run migrate:dev
     ```
 
 4. Para executar os testes, utilize o comando:
 
     ```bash
+    pnpm test
+    # ou
     npm run test
     ```
   
 - Para verificar a cobertura de testes, utilize o comando:
 
     ```bash
+    pnpm test:cov
+    # ou
     npm run test:cov
     ```
