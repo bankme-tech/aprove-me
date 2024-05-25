@@ -1,19 +1,12 @@
 import { useEffect, useState } from "react";
 import { axiosInstance as axios} from "../api";
-
-type Assignor = {
-  id: string,
-  name: string,
-}
-
-const initialState = {
-  assignor: '',
-  value: 0,
-}
+import { useNavigate } from "react-router-dom";
+import { Assignor } from "../types";
 
 function CreatePayable() {
   const [assignors, setAssignors] = useState<Assignor[]>([]);
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState({ assignor: '', value: 0 });
+  const navigate = useNavigate();  
 
   const token = localStorage.getItem('token');
   const config = { headers: { 'Authorization': token } };
@@ -25,7 +18,6 @@ function CreatePayable() {
         setAssignors(data);
       } catch (err) {
         alert('Você não está logado.')
-        console.log(err);
       }
     }
     
@@ -35,13 +27,18 @@ function CreatePayable() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { id } = assignors.find(({ name }) => name === formData.assignor) as Assignor;
-
-    const payload = { assignor: id, value: +formData.value };
+    
+    const assignor = assignors.find(({ name }) => name === formData.assignor);
+    const payload = {
+      assignor: assignor?.id,
+      value: formData.value !== 0 ? formData.value : undefined,
+    };
 
     try {
-      await axios.post('/payable', payload, config);
-      alert('Novo recebível cadastrado com sucesso.')
+      const { data: { id } } = await axios.post('/payable', payload, config);
+      alert('Novo recebível cadastrado com sucesso.');
+      navigate(`/payable/${id}`);
+      
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       alert(err.response.data.message);
@@ -49,7 +46,7 @@ function CreatePayable() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target;    
     setFormData({...formData, [name]: value})
   }
 
@@ -57,7 +54,7 @@ function CreatePayable() {
     <main>
       <h1>Cadastro de Recebíveis</h1>
       <form action="submit" onSubmit={ handleSubmit }>
-        <label htmlFor="assignor">
+        <label htmlFor="assignor-select">
           Cedente:
           <select
             name="assignor"
@@ -65,7 +62,8 @@ function CreatePayable() {
             value={ formData.assignor }
             onChange={ handleChange }
           >
-            {assignors.map(({name}, index) => {
+            <option value="" disabled selected>Selecione o cedente</option>
+            {assignors.map(({ name }, index) => {
               return (
                 <option
                   key={ index } value={ name }>{ name }</option>
@@ -73,14 +71,17 @@ function CreatePayable() {
             })}
           </select>
         </label>
-        <input
-          type="number"
-          placeholder="Valor a receber"
-          name="value"
-          id="payable-value-input"
-          value={ formData.value }
-          onChange={ handleChange }
-        />
+        <label htmlFor="payable-value-input">
+            Valor:
+          <input
+            type="number"
+            placeholder="Valor a receber"
+            name="value"
+            id="payable-value-input"
+            value={ formData.value }
+            onChange={ handleChange }
+          />
+        </label>
         <button>Cadastrar</button>
       </form>
     </main>
