@@ -17,12 +17,12 @@ function CreatePayable() {
         const { data } = await axios.get('/assignor', config);
         setAssignors(data);
       } catch (err) {
-        alert('Você não está logado.')
+        alert('Você não está logado.');
       }
-    }
+    };
     
-    getAssignors()
-  }, [config])
+    getAssignors();
+  }, [config]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ function CreatePayable() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;    
-    setFormData({...formData, [name]: value})
+    setFormData({...formData, [name]: value});
   }
 
   return (
