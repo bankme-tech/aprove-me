@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
 
-import { PrismaProvider } from "../../providers/prisma.provider";
+import { PrismaProvider } from "../providers/prisma.provider";
 
 @Injectable()
 export class FindPayableByIdPipe implements PipeTransform<string> {

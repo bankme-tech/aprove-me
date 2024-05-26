@@ -2,7 +2,7 @@ import { Controller, Delete, Param, ParseUUIDPipe } from "@nestjs/common";
 import type { Payable } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
-import { FindPayableByIdPipe } from "../find-by-id/find-payable-by-id.pipe";
+import { FindPayableByIdPipe } from "../find-payable-by-id.pipe";
 import { PayableDTO } from "../payable.dto";
 
 @Controller()
