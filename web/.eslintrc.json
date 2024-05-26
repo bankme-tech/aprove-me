@@ -29,6 +29,7 @@
         "json": "always"
       }
     ],
-    "import/no-anonymous-default-export": "off"
+    "import/no-anonymous-default-export": "off",
+    "class-methods-use-this": "off"
   }
 }

@@ -20,9 +20,8 @@ import type { Nullable, Replace } from '@/utils/types';
 
 interface Props {
   mode?: 'EDIT' | 'CREATE';
-  defaultValues: Replace<
-    Nullable<CreatePayableSchema>,
-    { emissionDate: string }
+  defaultValues: Nullable<
+    Replace<CreatePayableSchema, { emissionDate: string }>
   >;
   id?: string;
 }
@@ -118,13 +117,16 @@ export const Form: React.FC<Props> = ({
           <input
             {...register('value')}
             type="text"
-            placeholder="Type here"
+            placeholder="Type here value"
             className="input input-sm input-bordered w-full"
           />
 
           {errors.value && (
             <div className="label">
-              <span className="label-text-alt text-error">
+              <span
+                className="label-text-alt text-error"
+                data-testid="value-error-message"
+              >
                 {errors.value.message}
               </span>
             </div>
@@ -137,13 +139,16 @@ export const Form: React.FC<Props> = ({
           </div>
           <input
             type="date"
-            placeholder="Type here"
+            placeholder="Type here date"
             className="input input-sm input-bordered w-full"
             {...register('emissionDate')}
           />
           {errors.emissionDate && (
             <div className="label">
-              <span className="label-text-alt text-error">
+              <span
+                className="label-text-alt text-error"
+                data-testid="emissionDate-error-message"
+              >
                 {errors.emissionDate.message}
               </span>
             </div>
@@ -155,10 +160,13 @@ export const Form: React.FC<Props> = ({
           name="assignor"
           render={({ field: { onChange } }) => (
             <>
-              <SelectAssignor defaultValue={df.assignor} onChange={onChange} />
+              <SelectAssignor selected={df.assignor} onChange={onChange} />
               {errors.assignor && (
                 <div className="label">
-                  <span className="label-text-alt text-error">
+                  <span
+                    className="label-text-alt text-error"
+                    data-testid="assignor-error-message"
+                  >
                     {errors.assignor.message}
                   </span>
                 </div>

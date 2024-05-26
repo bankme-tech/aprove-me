@@ -3,3 +3,9 @@ export type Nullable<T> = {
 };
 
 export type Replace<T, R> = Omit<T, keyof R> & R;
+
+export type ApiError = {
+  message: string;
+  error: string;
+  statusCode: number;
+};

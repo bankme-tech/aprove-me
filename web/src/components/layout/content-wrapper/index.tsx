@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { useAppContext } from '@/hooks/useAppContext';
-import { cn } from '@/utils/funcitons';
+import { cn } from '@/utils/functions';
 
 interface Props {
   children?: React.ReactNode;

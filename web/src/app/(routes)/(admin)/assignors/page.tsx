@@ -2,31 +2,28 @@
 
 'use client';
 
-import dayjs from 'dayjs';
 import { Pen, Trash } from 'lucide-react';
-import type { NextPage } from 'next';
 import Link from 'next/link';
 import React from 'react';
 import { toast } from 'sonner';
 
 import { AppRoutes } from '@/constants/app-routes';
 import { useAPI } from '@/hooks/useAPI';
-import type { PayableModel } from '@/services/models/payable-model';
+import type { AssignorModel } from '@/services/models/assignor-model';
 
-export const PayablesListPage: NextPage = () => {
+export const AssignorsPage: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [payables, setPayables] = React.useState<PayableModel[]>([]);
+  const [assignors, setAssignors] = React.useState<AssignorModel[]>([]);
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false);
-
   const { api } = useAPI();
 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const data = await api.payables.findAll();
-      setPayables(data.payables);
+      const data = await api.assignors.findAll();
+      setAssignors(data.assignors);
     } catch (error) {
-      toast.error('An error occured while trying to fetch payables');
+      toast.error('An error occured while trying to fetch assignors');
     } finally {
       setIsLoading(false);
     }
@@ -45,7 +42,7 @@ export const PayablesListPage: NextPage = () => {
   }) => {
     try {
       setIsDeleteLoading(true);
-      await api.payables.delete(id);
+      await api.assignors.delete(id);
       toast.success('Payable successfully deleted');
       if (onSuccess) {
         onSuccess();
@@ -68,37 +65,39 @@ export const PayablesListPage: NextPage = () => {
   return (
     <main className="flex min-h-content flex-col items-center px-4 pt-20">
       <div className="w-full max-w-7xl overflow-x-auto">
-        <h1 className="text-2xl">Payables</h1>
+        <h1 className="text-2xl">Assignors</h1>
         <table className="table w-full">
           <thead>
             <tr>
               <th></th>
-              <th>Value</th>
-              <th>Emission date</th>
-              <th>Assignor</th>
+              <th>Document</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Phone</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {payables.map((p, idx) => (
+            {assignors.map((p, idx) => (
               <tr key={p.id}>
                 <th>{idx + 1}</th>
-                <td>{p.value}</td>
-                <td>{dayjs(p.emissionDate).format('DD/MM/YYYY')}</td>
-                <td>{p.assignor}</td>
+                <td>{p.document}</td>
+                <td>{p.email}</td>
+                <td>{p.name}</td>
+                <td>{p.phone}</td>
                 <td>
                   <div className="flex gap-2">
                     <Link
-                      href={AppRoutes.payables.edit.replace(':id', p.id)}
+                      href={AppRoutes.assignors.edit.replace(':id', p.id)}
                       className="btn btn-primary btn-sm"
                     >
                       <Pen size={18} />
                     </Link>
 
                     <a
-                      data-testid={`modal-trigger-${p.id}`}
                       href="#my_modal_8"
                       className="btn btn-outline btn-error btn-sm"
+                      data-testid={`modal-trigger-${p.id}`}
                     >
                       <Trash size={18} />
                     </a>
@@ -144,4 +143,4 @@ export const PayablesListPage: NextPage = () => {
   );
 };
 
-export default PayablesListPage;
+export default AssignorsPage;

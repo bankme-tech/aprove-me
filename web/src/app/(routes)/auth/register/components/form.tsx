@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import Cookies from 'js-cookie';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -35,6 +34,7 @@ export const Form: React.FC = () => {
 
   const onSubmit = async (data: LoginSchema) => {
     try {
+      await api.users.create(data);
       const res = await api.auth.login(data);
       Cookies.set('accessToken', res.accessToken);
       setUser(res.user);
@@ -71,7 +71,7 @@ export const Form: React.FC = () => {
           <div className="label">
             <span
               className="label-text-alt text-error"
-              data-testid="login-error-message"
+              data-testid="register-error-message"
             >
               {errors.login.message}
             </span>
@@ -84,7 +84,7 @@ export const Form: React.FC = () => {
           <span className="label-text">Password</span>
         </div>
         <input
-          type="password"
+          type="text"
           placeholder="Type here password"
           className="input input-sm input-bordered w-full"
           {...register('password')}
@@ -102,15 +102,8 @@ export const Form: React.FC = () => {
         )}
       </label>
 
-      <span className="mt-4 text-sm">
-        Dont have an account?{' '}
-        <Link href={AppRoutes.auth.register} className="underline">
-          Register now
-        </Link>
-      </span>
-
       <button type="submit" className="btn btn-primary btn-sm btn-block mt-4">
-        Login
+        Register
       </button>
     </form>
   );

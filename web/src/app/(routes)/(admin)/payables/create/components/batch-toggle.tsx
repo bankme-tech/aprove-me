@@ -11,7 +11,7 @@ export const BatchToggle: React.FC = () => {
   const batch = searchParams.get('batch') === 'true';
 
   return (
-    <div className="form-control">
+    <div className="form-control" data-testid="batch-button">
       <label className="label cursor-pointer gap-4">
         <span className="label-text">Batch</span>
         <input

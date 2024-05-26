@@ -1,8 +1,10 @@
 import type { LoginSchema } from '@/schemas/auth/login-schema';
-import { Client } from '@/services';
 import type { UserModel } from '@/services/models/user-model';
 
-export class AuthClient extends Client {
+import type { AuthClient } from '../../clients/auth-client';
+import { AxiosClient } from './axios-client';
+
+export class AxiosAuthClient extends AxiosClient implements AuthClient {
   constructor() {
     super('integrations/auth');
   }

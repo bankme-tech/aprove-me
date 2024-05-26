@@ -1,12 +1,12 @@
 'use client';
 
-import { HandCoins, Home } from 'lucide-react';
+import { HandCoins, Home, User } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
 import { AppRoutes } from '@/constants/app-routes';
 import { useAppContext } from '@/hooks/useAppContext';
-import { cn } from '@/utils/funcitons';
+import { cn } from '@/utils/functions';
 
 export const LeftBar: React.FC = () => {
   const { isLeftBarOpen } = useAppContext();
@@ -36,6 +36,21 @@ export const LeftBar: React.FC = () => {
               </li>
               <li>
                 <Link href={AppRoutes.payables.index}>List</Link>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details open>
+            <summary>
+              <User size={18} /> Assignors
+            </summary>
+            <ul>
+              <li>
+                <Link href={AppRoutes.assignors.create}>Create</Link>
+              </li>
+              <li>
+                <Link href={AppRoutes.assignors.index}>List</Link>
               </li>
             </ul>
           </details>
