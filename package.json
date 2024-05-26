@@ -21,11 +21,15 @@
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^10.0.0",
+    "@nestjs/jwt": "^10.2.0",
+    "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.14.0",
     "@supabase/supabase-js": "^2.43.4",
     "axios": "^1.7.2",
+    "jsonwebtoken": "^9.0.2",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   },
