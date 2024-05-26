@@ -23,7 +23,10 @@ import { PrismaPayableMapper } from 'src/payable/mappers/prisma-payable.mapper';
           queue: process.env.RABBITMQ_QUEUE,
           queueOptions: {
             durable: true,
+            deadLetterExchange: process.env.RABBITMQ_DEAD_LETTER_EXCHANGE,
+            deadLetterRoutingKey: process.env.RABBITMQ_DEAD_LETTER_ROUTING_KEY,
           },
+          noAck: true,
         },
       },
     ]),

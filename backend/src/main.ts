@@ -5,6 +5,7 @@ import { PrismaExceptionFilter } from './exception-filters/prisma-exception.filt
 import { PersistenceExceptionFilter } from './exception-filters/persistence-exception.filter';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import * as amqp from 'amqplib';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -28,11 +29,29 @@ async function bootstrap(): Promise<void> {
         queue: process.env.RABBITMQ_QUEUE,
         queueOptions: {
           durable: true,
+          deadLetterExchange: process.env.RABBITMQ_DEAD_LETTER_EXCHANGE,
+          deadLetterRoutingKey: process.env.RABBITMQ_DEAD_LETTER_ROUTING_KEY,
         },
         noAck: false,
       },
     },
     { inheritAppConfig: true },
+  );
+
+  const connection = await amqp.connect(process.env.RABBITMQ_URL);
+  const channel = await connection.createChannel();
+  await channel.assertExchange(
+    process.env.RABBITMQ_DEAD_LETTER_EXCHANGE,
+    'direct',
+    { durable: true },
+  );
+  await channel.assertQueue(process.env.RABBITMQ_DEAD_LETTER_QUEUE, {
+    durable: true,
+  });
+  await channel.bindQueue(
+    process.env.RABBITMQ_DEAD_LETTER_QUEUE,
+    process.env.RABBITMQ_DEAD_LETTER_EXCHANGE,
+    process.env.RABBITMQ_DEAD_LETTER_ROUTING_KEY,
   );
 
   await app.startAllMicroservices();
