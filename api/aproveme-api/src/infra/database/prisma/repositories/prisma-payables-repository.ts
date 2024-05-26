@@ -3,7 +3,7 @@ import { PrismaService } from "../prisma.service";
 
 import { Payable } from "@/domain/receivables/enterprise/entities/payable";
 import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/payable-with-assignor";
-import { PayablesRepository } from "@/domain/receivables/application/repositories/payables-repository";
+import { PaginatedPayables, PayablesRepository } from "@/domain/receivables/application/repositories/payables-repository";
 import { PrismaPayableMapper } from "../mappers/prisma-payable-mapper";
 import { PrismaPayableWithAssignorMapper } from "../mappers/prisma-payable-with-assignor-mapper";
 import { PaginationParams } from "@/core/repositories/pagination-params";
@@ -71,12 +71,20 @@ export class PrismaPayablesRepository implements PayablesRepository {
     return payableWithAssignor;
   }
 
-  async findManyPaginated({ page }: PaginationParams): Promise<Payable[]> {
+  async findManyPaginated({ page }: PaginationParams): Promise<PaginatedPayables> {
     const payables = await this.prisma.payable.findMany({
+      orderBy: {
+        emissionDate: 'desc'
+      },
       take: 5,
-      skip: (page - 1) * 20,
+      skip: (page - 1) * 5,
     });
 
-    return payables.map(PrismaPayableMapper.toDomain);
+    const totalCount = await this.prisma.payable.findMany({})
+
+    return {
+      payables: payables.map(PrismaPayableMapper.toDomain), 
+      totalCount: totalCount.length
+    }
   }
 }

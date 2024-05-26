@@ -8,14 +8,14 @@ import {
 import { Button } from './ui/button'
 
 export interface PaginationProps {
-  pageIndex: number
+  page: number
   totalCount: number
   perPage: number
-  onPageChange: (pageIndex: number) => Promise<void> | void
+  onPageChange: (page: number) => Promise<void> | void
 }
 
 export const Pagination = ({
-  pageIndex,
+  page,
   perPage,
   totalCount,
   onPageChange,
@@ -30,45 +30,45 @@ export const Pagination = ({
 
       <div className="flex items-center gap-6 lg:gap-8">
         <div className="text-sm font-medium ">
-          Página {pageIndex + 1} de {pages}
+          Página {page} de {pages}
         </div>
 
         <div className="flex items-center gap-2">
           <Button
-            onClick={() => onPageChange(0)}
+            onClick={() => onPageChange(1)}
             variant="outline"
             className="h-8 w-8 p-0"
-            disabled={pageIndex === 0}
+            disabled={page === 1}
           >
             <ChevronsLeft className="h-4 w-4" />
             <span className="sr-only">primeira pagina</span>
           </Button>
 
           <Button
-            onClick={() => onPageChange(pageIndex - 1)}
+            onClick={() => onPageChange(page - 1)}
             variant="outline"
             className="h-8 w-8 p-0"
-            disabled={pageIndex === 0}
+            disabled={page === 1}
           >
             <ChevronLeft className="h-4 w-4" />
             <span className="sr-only">pagina anterior</span>
           </Button>
 
           <Button
-            onClick={() => onPageChange(pageIndex + 1)}
+            onClick={() => onPageChange(page + 1)}
             variant="outline"
             className="h-8 w-8 p-0"
-            disabled={pages <= pageIndex + 1}
+            disabled={pages <= page}
           >
             <ChevronRight className="h-4 w-4" />
             <span className="sr-only">proxima pagina</span>
           </Button>
 
           <Button
-            onClick={() => onPageChange(pages - 1)}
+            onClick={() => onPageChange(pages)}
             variant="outline"
             className="h-8 w-8 p-0"
-            disabled={pages <= pageIndex + 1}
+            disabled={pages <= page}
           >
             <ChevronsRight className="h-4 w-4" />
             <span className="sr-only">ultima pagina</span>

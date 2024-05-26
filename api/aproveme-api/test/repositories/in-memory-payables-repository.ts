@@ -1,4 +1,4 @@
-import { PayablesRepository } from "@/domain/receivables/application/repositories/payables-repository";
+import { PaginatedPayables, PayablesRepository } from "@/domain/receivables/application/repositories/payables-repository";
 import { Payable } from "@/domain/receivables/enterprise/entities/payable";
 import { PayableWithAssignor } from "@/domain/receivables/enterprise/entities/value-object/payable-with-assignor";
 import { InMemoryAssignorsRepository } from "./in-memory-assignors-repository";
@@ -66,7 +66,7 @@ export class InMemoryPayablesRepository implements PayablesRepository {
     });
   }
 
-  async findManyPaginated({ page }: PaginationParams): Promise<Payable[]> {
+  async findManyPaginated({ page }: PaginationParams): Promise<PaginatedPayables> {
     const MAX_ITEMS_PER_PAGE = 5;
 
     const payables = this.items.slice(
@@ -74,6 +74,9 @@ export class InMemoryPayablesRepository implements PayablesRepository {
       page * MAX_ITEMS_PER_PAGE
     );
 
-    return payables;
+    return {
+      payables,
+      totalCount: this.items.length
+    };
   }
 }

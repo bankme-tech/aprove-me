@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Search } from 'lucide-react'
 
@@ -12,7 +12,7 @@ export interface PayableTableRowProps {
   payable: {
     id: string
     value: number
-    emissionDate: string
+    emissionDate: Date
     assignorId: string
   }
 }
@@ -33,18 +33,19 @@ export const PayableTableRow = ({ payable }: PayableTableRowProps) => {
         </Dialog>
       </TableCell>
 
-      <TableCell className="text-center font-mono text-xs font-medium">
+      <TableCell className="font-mono text-xs font-medium">
         {payable.id}
       </TableCell>
 
-      <TableCell className="text-center text-muted-foreground">
-        {formatDistanceToNow(payable.emissionDate, {
-          locale: ptBR,
-          addSuffix: true,
-        })}
+      <TableCell className="flex flex-col text-center">
+        {format(new Date(payable.emissionDate), 'dd/MM/yyyy', { locale: ptBR })}
+        <span className="text-xs text-muted-foreground">
+          {formatDistanceToNow(payable.emissionDate, {
+            locale: ptBR,
+            addSuffix: true,
+          })}
+        </span>
       </TableCell>
-
-      <TableCell className="font-medium">{payable.assignorId}</TableCell>
 
       <TableCell className="text-right font-medium">
         {payable.value.toLocaleString('pt-BR', {

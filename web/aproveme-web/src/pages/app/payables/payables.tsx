@@ -1,5 +1,9 @@
+import { useQuery } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
+import { useSearchParams } from 'react-router-dom'
+import { z } from 'zod'
 
+import { fetchPayables } from '@/api/fetch-payables'
 import { Pagination } from '@/components/pagination'
 import {
   Table,
@@ -12,71 +16,59 @@ import {
 import { PayableTableRow } from './components/payable-table-row'
 
 export const Payables = () => {
-  const payables = [
-    {
-      id: '1',
-      value: 333.33,
-      emissionDate: '2024-05-22T12:47:20.560Z',
-      assignorId: '1',
-    },
-    {
-      id: '2',
-      value: 333.33,
-      emissionDate: '2024-05-22T12:47:20.560Z',
-      assignorId: '1',
-    },
-    {
-      id: '3',
-      value: 333.33,
-      emissionDate: '2024-05-22T12:47:20.560Z',
-      assignorId: '1',
-    },
-    {
-      id: '4',
-      value: 333.33,
-      emissionDate: '2024-05-22T12:47:20.560Z',
-      assignorId: '1',
-    },
-    {
-      id: '5',
-      value: 333.33,
-      emissionDate: '2024-05-22T12:47:20.560Z',
-      assignorId: '1',
-    },
-  ]
+  const [searchParams, setSeatchParams] = useSearchParams()
+
+  const page = z.coerce.number().parse(searchParams.get('page') ?? '1')
+
+  const { data: result } = useQuery({
+    queryKey: ['payables', page],
+    queryFn: () => fetchPayables({ page }),
+  })
+
+  const handlePaginate = (page: number) => {
+    setSeatchParams((prevState) => {
+      prevState.set('page', String(page))
+
+      return prevState
+    })
+  }
+
   return (
     <>
       <Helmet title="Recebíveis" />
       <h1 className="text-3xl font-bold tracking-tight">Recebíveis</h1>
-      <main className="w-[900px] self-center">
+      <main className="-mt-3 w-8/12 self-center">
         <section className="space-y-2.5">
           <Table>
             {/* <TableCaption>Uma lista de recebíveis</TableCaption> */}
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[64px]"></TableHead>
-                <TableHead className="w-[100px]">Identificador</TableHead>
+                <TableHead className="w-[270px] text-center">
+                  Identificador
+                </TableHead>
                 <TableHead className="w-[200px] text-center">
                   Data de emissão
                 </TableHead>
-                <TableHead>Cedente</TableHead>
-                <TableHead className="text-right">Valor</TableHead>
+                <TableHead className="pr-8 text-right">Valor</TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
-              {payables.map((payable) => (
-                <PayableTableRow key={payable.id} payable={payable} />
-              ))}
+              {result?.payables.map((payable) => {
+                return <PayableTableRow key={payable.id} payable={payable} />
+              })}
             </TableBody>
           </Table>
 
-          <Pagination
-            onPageChange={() => {}}
-            pageIndex={0}
-            perPage={10}
-            totalCount={50}
-          />
+          {result && (
+            <Pagination
+              onPageChange={handlePaginate}
+              page={page}
+              perPage={5}
+              totalCount={result.totalCount}
+            />
+          )}
         </section>
       </main>
     </>

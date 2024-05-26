@@ -27,6 +27,7 @@ export class FetchPayablesController {
 
     return {
       payables: result.value.payables.map(PayablePresenter.toHTTP),
+      totalCount: result.value.totalCount
     };
   }
 }

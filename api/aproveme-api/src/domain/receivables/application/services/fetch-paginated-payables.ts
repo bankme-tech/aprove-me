@@ -11,6 +11,7 @@ type FetchPaginatedPayablesServiceResponse = Either<
   null,
   {
     payables: Payable[];
+    totalCount: number;
   }
 >;
 
@@ -21,10 +22,11 @@ export class FetchPaginatedPayablesService {
   async execute({
     page,
   }: FetchPaginatedPayablesServiceRequest): Promise<FetchPaginatedPayablesServiceResponse> {
-    const payables = await this.payablesRepo.findManyPaginated({ page });
+    const result = await this.payablesRepo.findManyPaginated({ page });
 
     return right({
-      payables,
+      payables: result.payables,
+      totalCount: result.totalCount
     });
   }
 }
