@@ -4,7 +4,7 @@ import useAuthentication from "@/hooks/useAuthentication";
 import Loading from "./components/Loading";
 import FormPayable from "./components/FormPayable";
 import FormAssignor from "./components/FormAssignor";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [formPayable, setFormPayable] = useState<boolean>(true);
@@ -18,13 +18,12 @@ export default function Home() {
       <Styled.Main>
         <Styled.Container>
           {formPayable ? <FormPayable /> : <FormAssignor />}
-          <Styled.SubmitButton
+          <Styled.CreateButton
             type="button"
             onClick={() => setFormPayable((prev) => !prev)}
-            style={{ width: "50%", backgroundColor: "#019901" }}
           >
             {formPayable ? "Create Assignor" : "Create Payable"}
-          </Styled.SubmitButton>
+          </Styled.CreateButton>
         </Styled.Container>
       </Styled.Main>
   );

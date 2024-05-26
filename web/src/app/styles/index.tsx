@@ -31,8 +31,11 @@ export const Form = styled.form`
   border: 1px solid #0000001f;
   box-shadow: 0 5px 10px #0000001f;
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: #1f1f1f;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -150,4 +153,17 @@ export const Links = styled.div`
   align-items: center;
   justify-content: space-around;
   gap: 1rem;
+`;
+
+export const CreateButton = styled.button`
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #65bd13;
+  color: #ffffff;
+  cursor: pointer;
+  &:hover {
+    background-color: #65bd13da;
+  }
 `;
