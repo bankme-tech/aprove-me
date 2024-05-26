@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import * as Styled from "./styles";
 import useAuthentication from "@/hooks/useAuthentication";
 import Loading from "./components/Loading";
@@ -11,23 +11,21 @@ export default function Home() {
   const { loading } = useAuthentication();
 
   if (loading) {
-    return (
-        <Loading />
-    );
+    return <Loading />;
   }
 
   return (
-    <Styled.Main>
-      <Styled.Container>
-        {formPayable ? (<FormPayable />) : (<FormAssignor />)}
-      <Styled.SubmitButton 
-      type="button"
-      onClick={() => setFormPayable((prev) => !prev)}
-        style={{ width: "70%", backgroundColor: "#019901" }}
-      >
-        {formPayable ? "Create Assignor" : "Create Payable"}
-      </Styled.SubmitButton>
-      </Styled.Container>
-    </ Styled.Main>
+      <Styled.Main>
+        <Styled.Container>
+          {formPayable ? <FormPayable /> : <FormAssignor />}
+          <Styled.SubmitButton
+            type="button"
+            onClick={() => setFormPayable((prev) => !prev)}
+            style={{ width: "70%", backgroundColor: "#019901" }}
+          >
+            {formPayable ? "Create Assignor" : "Create Payable"}
+          </Styled.SubmitButton>
+        </Styled.Container>
+      </Styled.Main>
   );
 }
