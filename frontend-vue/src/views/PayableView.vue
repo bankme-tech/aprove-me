@@ -10,12 +10,12 @@ interface Assignor {
 const router = useRouter();
 
 const assignorName = ref('');
-const payableDescription = ref('');
+const emissionDate = ref(new Date().toISOString().substring(0, 10))
 const payableAmount = ref('');
 const assignors = ref<Assignor[]>([]);
 
 const assignorNameError = ref(false);
-const payableDescriptionError = ref(false);
+const emissionDateError = ref(false);
 const payableAmountError = ref(false);
 
 const validateField = (fieldValue: string) => {
@@ -24,7 +24,10 @@ const validateField = (fieldValue: string) => {
 
 const fetchAssignors = async () => {
     try {
-        const response = await fetch('http://localhost:3000/integrations/assignor/');
+        const response = await fetch('http://localhost:3000/integrations/assignor/', {
+            method: "GET",
+            headers: { 'Authorization': `Bearer ${localStorage.getItem("session-token")}` }
+        });
         const data: Assignor[] = await response.json();
         assignors.value = data;
     } catch (error) {
@@ -34,26 +37,30 @@ const fetchAssignors = async () => {
 
 onMounted(fetchAssignors);
 
-
 const insertPayable = async (e: Event) => {
     e.preventDefault();
     
     assignorNameError.value = validateField(assignorName.value);
-    payableDescriptionError.value = validateField(payableDescription.value);
+    emissionDateError.value = validateField(emissionDate.value);
     payableAmountError.value = validateField(payableAmount.value);
 
-    if (!assignorNameError.value && !payableDescriptionError.value && !payableAmountError.value) {
-        const payload = {
-            assignor: assignors.value.find(a => a.name === assignorName.value)?.id || '',
-            payables: [{
-                description: payableDescription.value,
-                amount: payableAmount.value
-            }]
-        };
+    if (!assignorNameError.value && !emissionDateError.value && !payableAmountError.value) {
+        const formattedEmissionDate = new Date(emissionDate.value).toISOString();
+        const assignorId = assignors.value.find(a => a.name === assignorName.value)?.id;
 
-        const result = await fetch('http://localhost:3000/integrations/payable/', {
+        if (!assignorId) {
+            console.error('Assignor ID not found');
+            return;
+        }
+
+        const payload = [{
+            amount: parseFloat(payableAmount.value),
+            emissionDate: formattedEmissionDate
+        }];
+
+        const result = await fetch(`http://localhost:3000/integrations/payable/${assignorId}`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("session-token")}` },
             body: JSON.stringify(payload)
         });
 
@@ -64,7 +71,6 @@ const insertPayable = async (e: Event) => {
         }
     }
 };
-
 </script>
 
 <template>
@@ -84,14 +90,14 @@ const insertPayable = async (e: Event) => {
             <p v-if="assignorNameError" class="text-red-500 text-xs italic">Please select an assignor.</p>
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="payableDescription">
-                Payable description
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="emissionDate">
+                Emission Date
             </label>
-            <input v-model="payableDescription"
-                :class="{'border-red-500': payableDescriptionError}"
+            <input v-model="emissionDate"
+                :class="{'border-red-500': emissionDateError}"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="payableDescription" type="text" placeholder="">
-            <p v-if="payableDescriptionError" class="text-red-500 text-xs italic">Please fill out this field.</p>
+                id="emissionDate" type="date" placeholder="">
+            <p v-if="emissionDateError" class="text-red-500 text-xs italic">Please fill out this field.</p>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="payableAmount">
