@@ -77,7 +77,7 @@ export default function LoginForm({
           </button>
         </form>
 
-        <span className="text-xs font-light sm:text-sm">
+        <span className="text-xs font-light sm:text-sm ">
           {isSignup ? 'Already have an account? ' : 'No account? '}
           <Link
             href={isSignup ? '/signIn' : '/signUp'}

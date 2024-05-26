@@ -52,9 +52,9 @@ export default function AssignorDetails({
   };
 
   return (
-    <section className="w-full flex items-center justify-center">
+    <section className="w-full flex flex-col justify-center bg-neutral-50 max-w-[600px] gap-2 sm:gap-4 p-4 sm:p-6 rounded-lg relative">
       {!loading && (
-        <div className="bg-neutral-50 w-[90%] max-w-[600px] flex flex-col gap-2 sm:gap-4 p-4 sm:p-6 rounded-lg relative">
+        <>
           <h1 className="font-bold text-lg text-center sm:text-2xl md:text-3xl">
             Payable
           </h1>
@@ -66,7 +66,7 @@ export default function AssignorDetails({
           <CardInfo label="Email" value={assignor?.email} />
           <CardInfo label="Name" value={assignor?.name} />
           <CardInfo label="Phone" value={formatPhone(assignor?.phone)} />
-        </div>
+        </>
       )}
     </section>
   );

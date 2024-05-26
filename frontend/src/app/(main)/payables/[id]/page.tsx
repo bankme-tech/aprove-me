@@ -32,7 +32,7 @@ export default function PayableId({ params }: { params: { id: string } }) {
   }, [params, router]);
 
   return (
-    <section className=" w-full flex justify-center items-center ">
+    <section className=" w-full h-full flex justify-center items-center ">
       {!loading && (
         <PayableCard initialPayable={payable as Payable} isDetails />
       )}

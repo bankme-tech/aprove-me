@@ -20,6 +20,7 @@ export default function SignUp() {
 
     try {
       await api.post('/users', userData);
+      toast.success('User created successfully');
       router.push('/signIn');
     } catch (error: unknown) {
       toast.error(

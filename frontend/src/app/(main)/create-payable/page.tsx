@@ -49,15 +49,11 @@ export default function Home() {
   };
 
   return (
-    <main className="w-full flex flex-col items-center justify-center gap-4 px-4 sm:px-8 md:px-12 lg:px-18">
-      <div
-        className={`bg-neutral-50 w-[95%] max-w-[600px] flex flex-col gap-2 sm:gap-4 p-4 sm:p-6 rounded-lg relative `}
-      >
-        <PayableForm
-          payable={initialPayable}
-          handleForm={handleCreatePayable}
-        />
-      </div>
-    </main>
+    <section className="w-full flex flex-col items-center justify-center gap-2 sm:gap-4 p-4 sm:p-6 rounded-xl relative bg-neutral-50 max-w-[600px]">
+      <PayableForm
+        payable={initialPayable}
+        handleForm={handleCreatePayable}
+      />
+    </section>
   );
 }

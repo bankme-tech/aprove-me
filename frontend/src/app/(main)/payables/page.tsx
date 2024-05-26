@@ -28,13 +28,13 @@ export default function Payables() {
   }, [router]);
 
   return (
-    <>
+    <section className='flex flex-col justify-center items-center gap-4'>
       <h1 className="text-white font-bold text-3xl mt-4">Payables</h1>
       <div className="flex flex-wrap justify-center gap-2 sm:gap-4 bg-4">
         {payables?.map((payable) => (
           <PayableCard key={payable.id} setPayables={setPayables} initialPayable={payable} />
         ))}
       </div>
-    </>
+    </section>
   );
 }

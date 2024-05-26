@@ -35,7 +35,10 @@ export default function AssignorForm() {
       });
       router.push(`/assignor/${data.id}`);
     } catch (error) {
-      toast.error('Error creating payable');
+      toast.error('Error creating assignor');
+      if (((error as AxiosError)?.response?.status) === 409) {
+        toast.error('Assignor already exists')
+      }
       if (((error as AxiosError)?.response?.status) === 401) {
         toast.error('Session expired')
         router.push('/signIn')
@@ -76,63 +79,61 @@ export default function AssignorForm() {
   };
 
   return (
-    <main className=" w-full text-white flex justify-center items-center ">
-      <div className="bg-neutral-50 w-4/5 max-w-[500px] p-4 rounded-lg flex items-center justify-center">
-        <form
-          className="flex flex-col gap-4 text-black items-center justify-center w-full"
-          onSubmit={handleCreatePayable}
+    <section className="w-full flex flex-col items-center justify-center gap-2 sm:gap-4 p-4 sm:p-6 rounded-xl relative bg-neutral-50 max-w-[600px]">
+      <form
+        className="flex flex-col gap-4 text-black items-center justify-center w-full"
+        onSubmit={handleCreatePayable}
+      >
+        <Input
+          name="name"
+          type="text"
+          onChange={handleFormChange}
+          value={assignorInfo.name}
+          verifyValue={verifyName}
+          placeholder="John Doe"
         >
-          <Input
-            name="name"
-            type="text"
-            onChange={handleFormChange}
-            value={assignorInfo.name}
-            verifyValue={verifyName}
-            placeholder="John Doe"
-          >
-            Name
-          </Input>
+          Name
+        </Input>
 
-          <Input
-            name="document"
-            type="text"
-            onChange={handleFormChange}
-            value={assignorInfo.document}
-            verifyValue={isCPFOrCNPJValid}
-            placeholder="CPF or CNPJ"
-          >
-            Document
-          </Input>
-          <Input
-            name="email"
-            type="email"
-            onChange={handleFormChange}
-            value={assignorInfo.email}
-            verifyValue={verifyEmail}
-            placeholder="email@example.com"
-          >
-            Email
-          </Input>
+        <Input
+          name="document"
+          type="text"
+          onChange={handleFormChange}
+          value={assignorInfo.document}
+          verifyValue={isCPFOrCNPJValid}
+          placeholder="CPF or CNPJ"
+        >
+          Document
+        </Input>
+        <Input
+          name="email"
+          type="email"
+          onChange={handleFormChange}
+          value={assignorInfo.email}
+          verifyValue={verifyEmail}
+          placeholder="email@example.com"
+        >
+          Email
+        </Input>
 
-          <Input
-            name="phone"
-            type="tel"
-            onChange={handleFormChange}
-            value={assignorInfo.phone}
-            verifyValue={isPhoneNumberValid}
-            placeholder="00 91234-5678"
-          >
-            Phone
-          </Input>
+        <Input
+          name="phone"
+          type="tel"
+          onChange={handleFormChange}
+          value={assignorInfo.phone}
+          verifyValue={isPhoneNumberValid}
+          placeholder="00 91234-5678"
+        >
+          Phone
+        </Input>
 
-          <button
-            disabled={!isInputsValid()}
-            className="p-2 bg-zinc-900 text-white hover:bg-zinc-900/90 transition mb-4 rounded-lg md:text-lg w-full disabled:cursor-not-allowed"
-          >
-            Create
-          </button>
-        </form>
-      </div>
-    </main>
+        <button
+          disabled={!isInputsValid()}
+          className="p-2 bg-zinc-900 text-white hover:bg-zinc-900/90 transition mb-4 rounded-lg md:text-lg w-full disabled:cursor-not-allowed"
+        >
+          Create
+        </button>
+      </form>
+    </section>
   );
 }
