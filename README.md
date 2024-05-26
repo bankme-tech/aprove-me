@@ -8,6 +8,8 @@
 ## Sumário
 
 - [Sobre](#sobre)
+- [Observações](#observações)
+  - [Envio de Email](#envio-de-email)
 - [Pré-requisitos](#pré-requisitos)
 - [Executando o projeto](#executando-o-projeto)
 - [Testes](#testes)
@@ -19,6 +21,16 @@
 ## Sobre
 
 Este projeto foi desenvolvido para o [desafio técnico da Bankme](docs/description.md) e consiste em desenvolver uma aplicação para gerenciar recebíveis e cedentes
+
+## Observações
+
+### Envio de Email
+
+Foi utilizado o [Ethereal Email](https://ethereal.email). Para visualizar os emails enviados, acesse o [link](https://ethereal.email) e faça o login com as credenciais presentes no arquivo `.env` do backend.
+
+> É possível que o serviço de email expire, caso isso ocorra, basta criar uma nova conta no [Ethereal Email](https://ethereal.email) e alterar as variáveis de ambiente no arquivo `.env` do backend.
+
+Caso deseje utilizar um serviço de email real, basta alterar as variáveis de ambiente no arquivo `.env` do backend.
 
 ## Pré-requisitos
 
