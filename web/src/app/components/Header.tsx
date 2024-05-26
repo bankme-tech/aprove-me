@@ -1,11 +1,12 @@
 import Link from "next/link";
 import * as Styled from "../styles";
 import { useRouter } from "next/navigation";
+import { removeToken } from "@/utils/tokenUtils";
 
 export default function Header() {
   const router = useRouter();
   const handleLoggout = () => {
-    localStorage.removeItem('token');
+    removeToken()
     router.push('/login');
   }
 

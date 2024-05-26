@@ -9,6 +9,7 @@ export const Main = styled.main`
   min-height: 100vh;
   background-color: #f0f0f0;
   font-family: "Poppins", sans-serif;
+  padding-top: 100px;
 `;
 
 export const Container = styled.div`
@@ -17,6 +18,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  /* margin-top: 90px; */
 `;
 
 export const Form = styled.form`
@@ -89,6 +91,7 @@ export const Select = styled.select`
 
 export const SubmitButton = styled.button`
   padding: 0.5rem 1rem;
+  margin-top: 1rem;
   width: 100%;
   border: none;
   border-radius: 5px;
