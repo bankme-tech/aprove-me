@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useAuth } from "@/hooks/UseAuth";
 import { redirect, usePathname } from "next/navigation";
 
@@ -29,9 +29,11 @@ export default function RootLayout({
             <Link href="/payables">Payables</Link>
             <button onClick={logout}>Logout</button>
           </header>
-          <main className="w-full flex flex-col items-center justify-center gap-4 px-4 sm:px-8 md:px-12 lg:px-18 h-full">
-            {children}
-          </main>
+          <Suspense fallback={<div>Loading...</div>}>
+            <main className="w-full flex flex-col items-center justify-center gap-4 px-4 sm:px-8 md:px-12 lg:px-18 h-full">
+              {children}
+            </main>
+          </Suspense>
         </div>
 
       )}
