@@ -135,7 +135,7 @@ export default function PayableCard({
             Payable
           </h1>
           <CardInfo label="Id" value={payable?.id} />
-          <CardInfo label="Value" value={payable?.value.toFixed(2)} />
+          <CardInfo label="Value" value={payable?.value.toFixed(2).replace('.', ',')} />
           <CardInfo
             label="Emission Date"
             value={payable?.emissionDate ? formatDate() : ''}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './input.css';
 
-interface Props extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'name'> {
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   verifyValue: (value: string) => boolean;
   children: React.ReactNode;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
