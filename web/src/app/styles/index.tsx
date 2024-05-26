@@ -15,6 +15,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 15px;
   padding: 5rem;
   gap: 1rem;
   background-color: #ffffff9e;
@@ -48,6 +49,26 @@ export const Input = styled.input`
     border-color: #0000003f;
   } &:active {
     border-color: #0000003f;
+  }
+`;
+
+export const Select = styled.select`
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border: 1px solid #0000001f;
+  border-radius: 5px;
+  font-size: 1rem;
+  &:focus {
+    outline: none;
+    border-color: #0000003f;
+  } &:hover {
+    border-color: #0000003f;
+  } &:active {
+    border-color: #0000003f;
+  }
+  option {
+    color: #313131;
+    font-size: 0.9rem;
   }
 `;
 
