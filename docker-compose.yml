@@ -40,6 +40,24 @@ services:
       timeout: 10s
       retries: 5
 
+  web:
+    container_name: 'bankme_web'
+    build: ./web
+    env_file:
+      - ./web/.env
+    ports:
+      - 3001:3001
+    volumes:
+      - ./web/src:/app/src
+    networks:
+      - bankme-network
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001"]
+      timeout: 10s
+      retries: 5
+
 volumes:
   rabbitmq_data:
 
