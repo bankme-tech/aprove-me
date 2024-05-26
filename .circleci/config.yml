@@ -49,15 +49,9 @@ jobs:
           name: Install Heroku CLI
           command: curl https://cli-assets.heroku.com/install.sh | sh
       - run:
-          name: Authenticate with Heroku
-          command: |
-            echo $HEROKU_API_KEY | heroku auth:token
-            heroku auth:whoami
-      - run:
           name: Deploy to Heroku
           command: |
-            heroku git:remote -a $HEROKU_APP_NAME
-            git push heroku HEAD:main
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
       - run:
           name: Scale Dynos
           command: heroku ps:scale web=1 --app $HEROKU_APP_NAME
