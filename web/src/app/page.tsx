@@ -15,14 +15,15 @@ export default function Home() {
     const formData = new FormData(e.currentTarget);
     const valueString = formData.get("value");
     const assignorId = formData.get("assignorId");
-    
+    setSuccess(null);
     if (!valueString || !assignorId) {
       setError("Please fill all the fields");
       return;
     }
     const value = +valueString;
-    if (value <= 0) {
-      setError("Insert a value correct");
+    
+    if (isNaN(value) || value <= 0) {
+      setError("Insert a 'value' correct");
       return;
     }
     try {
@@ -35,7 +36,7 @@ export default function Home() {
         setSuccess('Payable created successfully');
       }, 1500);
     } catch (error: any) {
-      console.error(error);
+      setError(error.response.data.message);
     }
   }
 
@@ -51,8 +52,8 @@ export default function Home() {
         <h1>Create a new Payable</h1>
         <Styled.Input type="text" placeholder="Value" name="value" />
         <Styled.Input type="text" placeholder="Assignor" name="assignorId" />
-        {error && <Styled.Error>{error}</Styled.Error>}
-        {success && <Styled.Success>{success}</Styled.Success>}
+        {error && <Styled.Error>{error} ❌</Styled.Error>}
+        {success && <Styled.Success>{success} ✔️</Styled.Success>}
         <Styled.SubmitButton type="submit">Create</Styled.SubmitButton>
       </Styled.Form>
     </Styled.Main>

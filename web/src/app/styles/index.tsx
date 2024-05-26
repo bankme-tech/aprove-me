@@ -32,7 +32,7 @@ export const Error = styled.p`
 `;
 
 export const Success = styled.p`
-  color: #00ff00;
+  color: #019901;
 `;
 
 export const Input = styled.input`
