@@ -20,7 +20,7 @@ export class PatchAssignorUseCase implements IUseCase {
 
     const assignor = new Assignor({
       id: patch.id,
-      document: patch.patchAssignorDto.email,
+      document: patch.patchAssignorDto.document,
       email: patch.patchAssignorDto.email,
       phone: patch.patchAssignorDto.phone,
       name: patch.patchAssignorDto.name,

@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { Entity } from '../entity';
+import { cleanObject } from '@/utils/functions';
 
 export abstract class InMemoryRepository<T extends Entity<any>> {
-  public readonly entities: T[] = [];
+  public entities: T[] = [];
 
   async create(entity: T): Promise<T> {
     this.entities.push(entity);
@@ -28,8 +30,11 @@ export abstract class InMemoryRepository<T extends Entity<any>> {
   }
 
   async findById(id: string): Promise<T | null> {
-    const entity = this.entities.find((item) => item.id === id) || null;
-
+    console.log('ENTITIES AQUI:', this.entities);
+    console.log('ID PASSADO: ', id);
+    /* @ts-ignore */
+    const entity = this.entities.find((item) => item.props.id === id) || null;
+    /* @ts-ignore */
     return entity;
   }
 
@@ -47,7 +52,13 @@ export abstract class InMemoryRepository<T extends Entity<any>> {
     const index = this.entities.findIndex((item) => item.id === entity.id);
 
     if (index >= 0) {
-      this.entities[index] = entity;
+      // @ts-ignore
+      this.entities[index].props = {
+        // @ts-ignore
+        ...this.entities[index].props,
+        // @ts-ignore
+        ...cleanObject(entity.props),
+      } as unknown as T;
     }
 
     return entity;
@@ -57,7 +68,7 @@ export abstract class InMemoryRepository<T extends Entity<any>> {
     const index = this.entities.findIndex((item) => item.id === id);
 
     if (index !== -1) {
-      this.entities.splice(index, 1);
+      this.entities = this.entities.filter((e) => e.id !== id);
     }
   }
 }

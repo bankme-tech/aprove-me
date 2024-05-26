@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { envConfig } from './config/env.config';
 import { JwtModule } from '@nestjs/jwt';
 import { BullModule } from '@nestjs/bull';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Global()
 @Module({
@@ -26,6 +27,16 @@ import { BullModule } from '@nestjs/bull';
       redis: {
         host: 'localhost',
         port: 6379,
+      },
+    }),
+    MailerModule.forRoot({
+      transport: {
+        host: envConfig().mailHost,
+        port: envConfig().mailPort,
+        auth: {
+          user: envConfig().mailUser,
+          pass: envConfig().mailPassword,
+        },
       },
     }),
   ],
