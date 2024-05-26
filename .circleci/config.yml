@@ -1,59 +1,72 @@
-# Couldn't automatically generate a config from your source code.
-# This is a generic template to serve as a base for your custom config
-
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:16
+
 jobs:
-  test:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/executor-intro/ & https://circleci.com/docs/configuration-reference/#executor-job
-    docker:
-      # Specify the version you desire here
-      # See: https://circleci.com/developer/images/image/cimg/base
-      - image: cimg/base:current
-
-    # Add steps to the job
-    # See: https://circleci.com/docs/jobs-steps/#steps-overview & https://circleci.com/docs/configuration-reference/#steps
-    steps:
-      # Checkout the code as the first step.
-      - checkout
-      # Replace this with a real test runner invocation
-      - run:
-          name: Run tests
-          command: echo 'replace me with real tests!' && false
-  build:
-    docker:
-      - image: cimg/base:current
+  install_dependencies:
+    executor: node-executor
     steps:
       - checkout
-      # Replace this with steps to build a package, or executable
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run:
-          name: Build an artifact
-          command: touch example.txt
-      - store_artifacts:
-          path: example.txt
-  deploy:
-    docker:
-      - image: cimg/base:current
-    steps:
-      # Replace this with steps to deploy to users
-      - run:
-          name: deploy
-          command: "#e.g. ./deploy.sh"
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
+  run_tests:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Run Tests
+          command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
+
+
+  build_and_deploy:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Build Application
+          command: npm run build
+      - run:
+          name: Install Heroku CLI
+          command: curl https://cli-assets.heroku.com/install.sh | sh
+      - run:
+          name: Deploy to Heroku
+          command: |
+            echo $HEROKU_API_KEY | heroku auth:token
+            git remote add heroku https://git.heroku.com/$HEROKU_APP_NAME.git
+            git push heroku main
+      - run:
+          name: Scale Dynos
+          command: heroku ps:scale web=1 --app $HEROKU_APP_NAME
+
 workflows:
-  example:
+  version: 2
+  test_build_deploy:
     jobs:
-      - test
-      - build:
+      - install_dependencies
+      - run_tests:
           requires:
-            - test
-      - deploy:
+            - install_dependencies
+      - build_and_deploy:
           requires:
-            - test
+            - run_tests
