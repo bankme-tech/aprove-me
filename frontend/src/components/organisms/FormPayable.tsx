@@ -1,5 +1,6 @@
-import { createPayable, findManyAssignor } from "@/services";
-import { useEffect, useState } from "react";
+import { onSubmitPayable } from "@/actions/onSubmitPayable";
+import { findManyAssignor } from "@/services";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { DialogFooter } from "../molecules/DialogFooter";
 import {
@@ -15,20 +16,13 @@ type Inputs = {
 };
 
 export const FormPayable = () => {
+  const [isPending, startTransition] = useTransition();
   const [options, setOptions] = useState([]);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-
-  const onSubmit = async (data: Inputs) => {
-    await createPayable({
-      ...data,
-      value: parseFloat(data.value),
-      emissionDate: new Date(data.emissionDate),
-    });
-  };
 
   useEffect(() => {
     const fetch = async () => {
@@ -40,8 +34,14 @@ export const FormPayable = () => {
     fetch();
   }, []);
 
+  const onSubmit = handleSubmit((data) => {
+    startTransition(() => {
+      onSubmitPayable(data);
+    });
+  });
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <div className="p-4 w-full">
         <FormFieldSelect
           title="Cedente"
@@ -57,7 +57,7 @@ export const FormPayable = () => {
         <FormField title="Valor" form={{ name: "value", register }} />
         <FormFieldDate title="Data" form={{ name: "emissionDate", register }} />
       </div>
-      <DialogFooter type="submit" />
+      <DialogFooter type="submit" disabled={isPending} />
     </form>
   );
 };
