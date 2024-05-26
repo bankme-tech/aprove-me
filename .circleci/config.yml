@@ -46,10 +46,9 @@ jobs:
           name: Build Application
           command: npm run build
       - run:
-          name: Deploy to Dokku
+          name: Deploy Rook to Render
           command: |
-            git remote add dokku dokku@dokku.me:bankme-api
-            git push dokku main
+            curl https://api.render.com/deploy/srv-cp9se97109ks73ae3dbg?key=d7xfaa7NzNs
 
 workflows:
   version: 2
