@@ -9,6 +9,12 @@ import { CryptoService } from './crypto.service';
 import { TokenService } from './token.service';
 import { ICredentials, IUnsafeUser, IUser } from './interfaces/user.interface';
 import { UserRepository } from './user.repository';
+import { User } from '@prisma/client';
+
+export interface AuthRegistered {
+  id: string;
+  login: string;
+}
 
 @Injectable()
 export class AuthService {
@@ -16,9 +22,9 @@ export class AuthService {
     private readonly cryptoService: CryptoService,
     private readonly userRepository: UserRepository,
     private readonly tokenService: TokenService,
-  ) {}
+  ) { }
 
-  public async registerUser(credential: ICredentials): Promise<IUser> {
+  public async registerUser(credential: ICredentials): Promise<AuthRegistered> {
     const loginExists = await this.userRepository.exists({
       login: credential.login,
     });
@@ -99,9 +105,9 @@ export class AuthService {
     delete mutUser.salt;
   }
 
-  private cleanUserSensitiveData(user: Partial<IUnsafeUser>): IUser {
+  private cleanUserSensitiveData(user: Partial<User>): Exclude<User, 'password' | 'salt'> {
     const safeUser = { ...user };
     this.deleteUserSensitiveData(safeUser);
-    return safeUser as IUser;
+    return safeUser as Exclude<User, 'password' | 'salt'>;
   }
 }

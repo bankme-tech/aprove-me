@@ -13,9 +13,7 @@ export class AuthGuard implements CanActivate {
   constructor(private tokenService: TokenService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    console.log("| ----- | ----- | 129873981 29382193 | ----- | ----- | ");
     const req = context.switchToHttp().getRequest();
-    console.log(`[Log:req]:`, req);
     const token = this.extractTokenFromHeader(req);
     if (!token) {
       throw new UnauthorizedException();

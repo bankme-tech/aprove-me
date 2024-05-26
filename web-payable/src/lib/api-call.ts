@@ -1,5 +1,7 @@
 'use client';
 
+export const AUTH_TOKEN = 'AUTH_TOKEN';
+
 interface CallData {
   endpoint: string;
   method: 'POST' | 'PATCH' | 'PUT' | 'GET' | 'DELETE';
@@ -12,7 +14,7 @@ function addMissingSlash(endpoint: string) {
 }
 
 export async function apiCall<T = any>(data: CallData) {
-  const token = 'TODO: get localstorage token';
+  const token = localStorage.getItem(AUTH_TOKEN) || 'unauthorized';
   const { endpoint, method, body } = data;
 
   const path = `${process.env.NEXT_PUBLIC_API_HOST}${addMissingSlash(endpoint)}`;
@@ -21,15 +23,15 @@ export async function apiCall<T = any>(data: CallData) {
     body: JSON.stringify(body),
     headers: {
       ['Content-Type']: 'application/json',
-      Authorization: token ? `Bearer ${token}` : 'undefined',
+      Authorization: `Bearer ${token}`,
     }
   });
+  const statusCode = response.status;
 
-  const AUTH_TOKEN = 'payable_auth_token';
   const UNAUTHORIZED = 401;
-  if (response.status === UNAUTHORIZED && localStorage.getItem(AUTH_TOKEN)) {
+  if (response.status === UNAUTHORIZED && token) {
     // localStorage.removeItem(AUTH_TOKEN);
-    return { redirect: '/login' }
+    return { redirect: '/login', statusCode };
   }
 
   if (!response.ok || response.status > 400) {
@@ -38,5 +40,5 @@ export async function apiCall<T = any>(data: CallData) {
   }
 
   const result = await response.json() as T;
-  return { result };
+  return { result, statusCode };
 }

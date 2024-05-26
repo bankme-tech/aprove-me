@@ -28,9 +28,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useState } from "react";
+import { AUTH_TOKEN, apiCall } from "@/lib/api-call";
+import { AuthLoginResponse, AuthRegistered } from "@/interfaces/auth.interface";
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
-  username: z.string().min(1, { message: "Username precisa ter no mínimo 1 carater" }),
+  login: z.string().min(1, { message: "Username precisa ter no mínimo 1 carater" }),
   password: z.string().min(1, { message: "Senha precisa ter no mínimo 1 carater" }),
 });
 
@@ -38,10 +41,30 @@ export default function Page() {
   const [formType, setFormType] = useState<"login" | "register">('login');
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { username: "", password: "" },
+    defaultValues: { login: "", password: "" },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(formType, ": ", values);
+  const router = useRouter();
+
+  async function onSubmit(credential: z.infer<typeof formSchema>) {
+    console.log(formType, ": ", credential);
+    if (formType === 'register') {
+      await apiCall<AuthRegistered>({
+        endpoint: "/integrations/auth",
+        method: "POST",
+        body: credential,
+      });
+      // TODO: show toaster message.
+    }
+
+    const res = await apiCall<AuthLoginResponse>({
+      endpoint: "/integrations/auth/login",
+      method: "POST",
+      body: credential,
+    });
+    if (res.result?.token) {
+      localStorage.setItem(AUTH_TOKEN, res.result.token);
+      router.push("/pagaveis");
+    }
   }
 
   const credentialContent =
@@ -49,12 +72,12 @@ export default function Page() {
       <div className="space-y-1">
         <FormField
           control={form.control}
-          name="username"
+          name="login"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="username">Username</FormLabel>
+              <FormLabel htmlFor="login">Username</FormLabel>
               <FormControl>
-                <Input id="username" autoFocus {...field} />
+                <Input id="login" autoFocus {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -96,7 +119,7 @@ export default function Page() {
                 <CardHeader>
                   <CardTitle className="text-center">Entrar</CardTitle>
                   <CardDescription>
-                    Digite o username e senha para acessar o nosso sistema
+                    Digite o login e senha para acessar o nosso sistema
                     ou clique em cadastrar para criar uma nova conta.
                   </CardDescription>
                 </CardHeader>
@@ -104,7 +127,7 @@ export default function Page() {
                 {credentialContent}
 
                 <CardFooter>
-                  <Button type="submit">Save changes</Button>
+                  <Button type="submit">Entrar</Button>
                 </CardFooter>
               </Card>
             </TabsContent>

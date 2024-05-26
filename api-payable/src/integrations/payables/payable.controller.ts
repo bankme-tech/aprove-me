@@ -49,7 +49,7 @@ export class PayableController {
 
   @Get()
   async getPage(@Query() queryDto: PayablePaginationDto) {
-    const { page, limit, cursorId, includeAssignor, selectKeys} = queryDto;
+    const { page, limit, cursorId, includeAssignor, selectKeys } = queryDto;
     console.log(`[Log:queryDto]:`, queryDto);
     const pagination = await this.payableService.getPage({
       page,
@@ -82,8 +82,9 @@ export class PayableController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<Payable> {
-    return this.payableService.deletePayable(id);
+  async delete(@Param('id') id: string) {
+    const payable = await this.payableService.deletePayable(id);
+    return { deleted: payable };
   }
 
   /** Consume values emitted by {@link PayableQueueProvider['sendBatch']}. */
