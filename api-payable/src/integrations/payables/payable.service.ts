@@ -31,16 +31,25 @@ export class PayableService {
   }
 
   async getPage(params: PaginationDto & { includeAssignor: boolean }) {
-    const { limit, cursorId, page, includeAssignor } = params;
+    const { limit, cursorId, page, includeAssignor, selectKeys } = params;
     const offset = (page - 1) * limit;
     type FindManyParam = Parameters<PrismaService['payable']['findMany']>[0];
     const findManyParam: FindManyParam = {
       skip: offset,
       take: limit,
-      include: { assignor: !!includeAssignor },
     }
     if (cursorId) findManyParam.cursor = { id: cursorId };
+    if (selectKeys) {
+      findManyParam.select = {};
+      for (const key of selectKeys) {
+        console.log(`[Log:key]:`, key);
+        findManyParam.select[key] = true;
+      }
+    }
+    if (includeAssignor) findManyParam.include = { assignor: includeAssignor };
 
+
+    console.log(`[Log:findManyParam]:`, findManyParam);
     const [total, items] = await Promise.all([
       this.prisma.payable.count(),
       this.prisma.payable.findMany(findManyParam),

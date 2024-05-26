@@ -47,14 +47,16 @@ export class PayableController {
     return this.payableService.updatePayable(id, dto);
   }
 
-  @Get('page')
+  @Get()
   async getPage(@Query() queryDto: PayablePaginationDto) {
-    const { page, limit, cursorId, includeAssignor } = queryDto;
+    const { page, limit, cursorId, includeAssignor, selectKeys} = queryDto;
+    console.log(`[Log:queryDto]:`, queryDto);
     const pagination = await this.payableService.getPage({
       page,
       limit,
       cursorId,
       includeAssignor,
+      selectKeys,
     });
     return pagination;
   }

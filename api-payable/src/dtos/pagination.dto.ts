@@ -1,5 +1,6 @@
 import { Type } from "class-transformer";
-import { IsInt, IsOptional, IsString } from "class-validator";
+import { IsArray, IsInt, IsOptional, IsString } from "class-validator";
+import { Transform } from "class-transformer";
 
 export class PaginationDto {
   @Type(() => Number)
@@ -15,4 +16,10 @@ export class PaginationDto {
   @IsOptional()
   @IsString()
   cursorId?: string;
+
+  @Transform((o) => o.value ? o.value.split(',') : undefined)
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  selectKeys?: string[];
 }

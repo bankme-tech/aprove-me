@@ -1,7 +1,6 @@
 "use client";
 
 import { Pencil1Icon, TrashIcon, PlusIcon } from "@radix-ui/react-icons"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -15,14 +14,15 @@ import { numberToCurrency } from "@/lib/format-currency"
 import React from "react";
 import { apiCall } from "@/lib/api-call";
 import { Pagination } from "@/interfaces/pagination.interface";
-import { PayableDto, PayableEntity } from "@/interfaces/payable.interface";
+import { PayableEntity } from "@/interfaces/payable.interface";
+import { PaginationContainer } from "@/components/pagination";
 
 interface PayableListItem {
   payableId: string;
-  assignorId: string;
-  assignorName: string;
   value: number;
   emissionDate: string;
+  // assignorId: string;
+  // assignorName: string;
 }
 
 type CardProps = React.ComponentProps<typeof Card>;
@@ -34,20 +34,24 @@ type CardProps = React.ComponentProps<typeof Card>;
  */
 export default function PayableList({ className, ...props }: CardProps) {
   const [payableItems, setPayableItems] = React.useState<PayableListItem[]>();
+  const selectKeys: (keyof PayableEntity)[] = ['id', 'value', 'emissionDate'];
 
   React.useEffect(() => {
     apiCall<Pagination<Required<PayableEntity>>>({
-      endpoint: "/integrations/payable/page?includeAssignor=true",
+      endpoint: `/integrations/payable?selectKeys=${selectKeys.join(',')}`,
       method: "GET",
     }).then((res) => {
-      console.log(JSON.stringify(res.result, null, 2));
       if (res.result?.items) {
         const payableListItems: PayableListItem[] = res.result.items.map((payable) => ({
-          value: payable.value,
           payableId: payable.id,
-          emissionDate: payable.emissionDate,
-          assignorId: payable.assignorId,
-          assignorName: payable.assignor.name,
+          value: payable.value,
+          emissionDate: new Intl.DateTimeFormat("pt-BR", {
+            timeStyle: "medium",
+            dateStyle: "short",
+            hourCycle: "h24",
+          }).format(new Date(payable.emissionDate)),
+          // assignorId: payable.assignorId,
+          // assignorName: payable.assignor.name,
         }));
         setPayableItems(payableListItems);
       }
@@ -77,13 +81,10 @@ export default function PayableList({ className, ...props }: CardProps) {
           >
             <div className="space-y-1">
               <p className="text-sm font-medium leading-none">
-                {payable.assignorName}
+                Data de emissão: {payable.emissionDate}
               </p>
               <p className="text-sm text-muted-foreground">
                 Valor: {numberToCurrency(payable.value)}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Data: {payable.emissionDate}
               </p>
             </div>
 
@@ -102,6 +103,7 @@ export default function PayableList({ className, ...props }: CardProps) {
           </div>
         ))}
       </CardContent>
+      <PaginationContainer />
     </Card>
   );
 }
