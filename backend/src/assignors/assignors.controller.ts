@@ -30,6 +30,11 @@ export class AssignorsController {
     return this.assignorsService.getAssignorById(id);
   }
 
+  @Get()
+  async getAssignors() {
+    return this.assignorsService.getAssignors();
+  }
+
   @Put('/:id')
   @UsePipes(new ValidationPipe({ transform: true }))
   async updateAssignor(

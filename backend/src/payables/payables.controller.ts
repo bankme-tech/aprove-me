@@ -21,6 +21,11 @@ import { AuthGuard } from '../auth/auth.guard';
 export class PayablesController {
   constructor(private readonly payablesService: PayablesService) {}
 
+  @Get('')
+  async getPayables() {
+    return this.payablesService.getPayables();
+  }
+
   @Post('')
   async createPayable(@Body() payableDto: CreatePayableDto) {
     return this.payablesService.createPayable(payableDto);

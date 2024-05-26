@@ -142,4 +142,34 @@ describe('AssignorsController', () => {
       ).rejects.toThrow(NotFoundException);
     });
   });
+  describe('getAssignors', () => {
+    it('should return a list of assignors', async () => {
+      const assignors = [
+        {
+          id: randomUUID(),
+          document: '12345678901',
+          email: 'email@email.com',
+          phone: '1234567890',
+          name: 'Assignor Name',
+          userId: randomUUID(),
+        },
+        {
+          id: randomUUID(),
+          document: '12345678902',
+          email: 'email2@email.com',
+          phone: '1234567890',
+          name: 'Assignor Name 2',
+          userId: randomUUID(),
+        },
+      ] as Assignor[];
+      service.getAssignors.mockResolvedValue(assignors);
+
+      expect(await controller.getAssignors()).toBe(assignors);
+
+      expect(service.getAssignors).toHaveBeenCalled();
+      expect(service.getAssignors).toHaveBeenCalledTimes(1);
+      expect(service.getAssignors).toHaveBeenCalledWith();
+      expect(service.getAssignors).toHaveReturned();
+    });
+  });
 });
