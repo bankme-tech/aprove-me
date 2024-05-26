@@ -20,7 +20,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
-    "db:up": "docker compose up -d"
+    "db:up": "docker compose up -d",
+    "docker:build": "docker build -t bankme-api-app .",
+    "docker:run": "docker run -p 8080:8080 -d bankme-api-app"
   },
   "dependencies": {
     "@fastify/helmet": "^11.1.1",

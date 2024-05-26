@@ -27,11 +27,16 @@ import { AuthController } from './infra/http/controllers/auth.controller';
 import { FindAllAssignorsUseCase } from './use-cases/find-all-assignors.use-case';
 import { FindAllPayablesUseCase } from './use-cases/find-all-payables.use-case';
 import { UsersController } from './infra/http/controllers/users.controller';
+import { DeadQueueConsumerJob } from './infra/jobs/dead-queue-consumer.job';
+import { DeadQueueProducerJob } from './infra/jobs/dead-queue-producer.job';
 
 @Module({
   imports: [
     BullModule.registerQueue({
       name: 'create-payable-queue',
+    }),
+    BullModule.registerQueue({
+      name: 'dead-queue',
     }),
   ],
   controllers: [
@@ -70,6 +75,8 @@ import { UsersController } from './infra/http/controllers/users.controller';
     CreatePayableConsumerJob,
     FindAllAssignorsUseCase,
     FindAllPayablesUseCase,
+    DeadQueueConsumerJob,
+    DeadQueueProducerJob,
   ],
 })
 export class IntegrationsModule {}
