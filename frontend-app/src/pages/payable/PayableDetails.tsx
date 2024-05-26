@@ -37,12 +37,17 @@ function PayableDetails() {
     }
   }, [id, payable]);
 
+  const handleEdit = () => {};
+  const handleDelete = () => {};
+
   return (
     <main>
       <h1>Detalhes do Recebível</h1>
       <p>{`Valor: R$ ${ payable?.value }`}</p>
       <p>{`Data de emissão: ${ date }`}</p>
       <p>{`Cedente: ${assignor?.name}`}</p>
+      <button onClick={ handleEdit }>Editar</button>
+      <button onClick={ handleDelete }>Excluir</button>
     </main>
   )
 }

@@ -36,7 +36,7 @@ function CreatePayable() {
     try {
       const { data: { id } } = await axios.post('/payable', payload, config);
       alert('Novo recebível cadastrado com sucesso.');
-      navigate(`/payable/${id}`);
+      navigate(`/integrations/payable/${id}`);
       
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
