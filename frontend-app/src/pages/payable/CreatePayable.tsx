@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { axiosInstance as axios} from "../api";
+import { axiosInstance as axios} from "../../api";
 import { useNavigate } from "react-router-dom";
-import { Assignor } from "../types";
-import { getTokenAndSetHeaders } from "../helpers";
+import { Assignor } from "../../types";
+import { getTokenAndSetHeaders } from "../../helpers";
 
 function CreatePayable() {
   const [assignors, setAssignors] = useState<Assignor[]>([]);

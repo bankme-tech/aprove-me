@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { axiosInstance as axios } from "../api";
+import { axiosInstance as axios } from "../../api";
 
 const initialState = {
   login: '',
