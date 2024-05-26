@@ -11,6 +11,7 @@ import { PrismaPayableRepository } from 'src/payable/repositories/prisma-payable
 import { AssignorModule } from 'src/assignor/assignor.module';
 import { IPayableMapper } from 'src/payable/mappers/payable.mapper.interface';
 import { PrismaPayableMapper } from 'src/payable/mappers/prisma-payable.mapper';
+import { IProducer } from './interfaces/producer.interface';
 
 @Module({
   imports: [
@@ -47,6 +48,10 @@ import { PrismaPayableMapper } from 'src/payable/mappers/prisma-payable.mapper';
     {
       provide: IPayableMapper,
       useClass: PrismaPayableMapper,
+    },
+    {
+      provide: IProducer,
+      useClass: RabbitMQProducer,
     },
   ],
   controllers: [RabbitMQConsumer],

@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RmqRecordBuilder } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-import { IProducer } from './interfaces/producer.interface';
+import { IProducer, Options } from './interfaces/producer.interface';
 
 @Injectable()
 export class RabbitMQProducer<T> implements IProducer<T> {
@@ -12,9 +12,20 @@ export class RabbitMQProducer<T> implements IProducer<T> {
     @Inject('RABBITMQ_SERVICE') private readonly client: ClientProxy,
   ) {}
 
-  async publishMessage(message: T): Promise<void> {
+  async publishMessage(
+    message: T,
+    options: Options = { retries: 0 },
+  ): Promise<void> {
     try {
-      lastValueFrom(this.client.emit(this.queue, message));
+      const record = new RmqRecordBuilder<T>(message)
+        .setOptions({
+          headers: {
+            'x-retries': options.retries.toString(),
+          },
+        })
+        .build();
+
+      lastValueFrom(this.client.emit(this.queue, record));
       this.logger.log(`Message published to queue '${this.queue}'`);
     } catch (error) {
       this.logger.error(
