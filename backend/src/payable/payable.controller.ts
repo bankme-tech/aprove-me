@@ -6,6 +6,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { RabbitMqService } from '../rabbit-mq/rabbit-mq.service';
 import { AssignorService } from 'src/assignor/assignor.service';
 
+
+
+
 @UseGuards(AuthGuard)
 @Controller('integrations/payable')
 export class PayableController {
@@ -13,7 +16,7 @@ export class PayableController {
     private readonly payableService: PayableService,
     // private readonly assignorService: AssignorService,
     private readonly rabbitMqService: RabbitMqService
-  ) {}
+  ) { }
 
   // @UseGuards(AuthGuard)
   @Post()
@@ -23,7 +26,7 @@ export class PayableController {
 
   @Post(':assignorId')
   async createAssignor(@Body() createPayableDto: CreatePayableDto[], @Param('assignorId') assignorId) {
-    return this.payableService.create({assignor: assignorId, payables: createPayableDto});
+    return this.payableService.create({ assignor: assignorId, payables: createPayableDto });
   }
 
   // @UseGuards(AuthGuard)

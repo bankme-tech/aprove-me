@@ -10,7 +10,16 @@ interface Assignor {
 const router = useRouter();
 
 const assignorName = ref('');
-const emissionDate = ref(new Date().toISOString().substring(0, 10))
+const emissionDate = ref(new Date().toISOString().substring(0, 10))/**
+ * Computes the total amount payable for the given items.
+ *
+ * @param {Object[]} items - An array of items, where each item is an object with `price` and `quantity` properties.
+ * @returns {number} The total amount payable for the given items.
+ */
+function computeTotalPayable(items) {
+    return items.reduce((total, item) => total + item.price * item.quantity, 0);
+}
+
 const payableAmount = ref('');
 const assignors = ref<Assignor[]>([]);
 
@@ -22,6 +31,10 @@ const validateField = (fieldValue: string) => {
     return fieldValue.trim().length === 0;
 };
 
+/**
+ * Fetches a list of assignors from the server.
+ * @returns {Promise<Assignor[]>} A promise that resolves to an array of assignor objects.
+ */
 const fetchAssignors = async () => {
     try {
         const response = await fetch('http://localhost:3000/integrations/assignor/', {
@@ -37,9 +50,19 @@ const fetchAssignors = async () => {
 
 onMounted(fetchAssignors);
 
+/**
+ * Asynchronously inserts a new payable record.
+ *
+ * This function is responsible for validating the input fields, formatting the emission date,
+ * finding the assignor ID, and sending the payable data to the server. If the request is successful,
+ * the user is redirected to the payable list page.
+ *
+ * @param {Event} e - The event object passed to the function.
+ * @returns {Promise<void>} - A Promise that resolves when the payable is successfully inserted.
+ */
 const insertPayable = async (e: Event) => {
     e.preventDefault();
-    
+
     assignorNameError.value = validateField(assignorName.value);
     emissionDateError.value = validateField(emissionDate.value);
     payableAmountError.value = validateField(payableAmount.value);

@@ -14,13 +14,13 @@ const payables = ref<Payable[]>([]);
 const editablePayable = ref<Payable | null>(null);
 
 const fetchAssignor = async (assignorId: string) => {
-    const response = await fetch(`http://localhost:3000/integrations/assignor/${assignorId}`);
+    const response = await fetch(`http://localhost:3000/integrations/assignor/${assignorId}`, { method: 'GET', headers: { Authorization: `Bearer ${localStorage.getItem("session-token")}`} });
     return response.json();
 };
 
 const fetchPayables = async () => {
     try {
-        const response = await fetch('http://localhost:3000/integrations/payable/', { method: 'GET' });
+    const response = await fetch('http://localhost:3000/integrations/payable/', { method: 'GET', headers: { Authorization: `Bearer ${localStorage.getItem("session-token")}`} });
         const data: Payable[] = await response.json();
         for (let el of data) {
             const assignor = await fetchAssignor(el.assignorId);
@@ -48,7 +48,7 @@ const submitEdit = async () => {
 
         const response = await fetch(`http://localhost:3000/integrations/payable/${editablePayable.value.id}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem("session-token")}` },
             body: JSON.stringify(updatePayload)
         });
 
@@ -66,7 +66,7 @@ const deletePayable = async (payableId: string) => {
     try {
         const response = await fetch(`http://localhost:3000/integrations/payable/${payableId}`, { method: 'DELETE' });
         if (response.ok) {
-            await fetchPayables(); // Refresh the list after deletion
+            await fetchPayables(); 
         }
     } catch (error) {
         console.error('Failed to delete payable:', error);
@@ -80,19 +80,24 @@ onMounted(fetchPayables);
     <table class="table-auto w-full">
         <thead>
             <tr>
-                <th>Description</th>
+                <th>Payable ID</th>
                 <th>Amount</th>
-                <th>Due Date</th>
-                <th>Assignor</th>
-                <th>Actions</th>
+                <th>EmissionDate</th>
+                <th>Assignor ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
             </tr>
         </thead>
         <tbody>
             <tr class="pl-3 pr-3" v-for="item in payables" :key="item.id">
-                <td class="border border-slate-300 ...">{{ item.description }}</td>
+                <td class="border border-slate-300 ...">{{ item.id }}</td>
                 <td class="border border-slate-300 ...">{{ item.amount }}</td>
-                <td class="border border-slate-300 ...">{{ item.dueDate }}</td>
-                <td class="border border-slate-300 ...">{{ item.assignor?.name }}</td>
+                <td class="border border-slate-300 ...">{{ item.emissionDate }}</td>
+                <td class="border border-slate-300 ...">{{ item.assignor.id }}</td>
+                <td class="border border-slate-300 ...">{{ item.assignor.name }}</td>
+                <td class="border border-slate-300 ...">{{ item.assignor.phone }}</td>
+                <td class="border border-slate-300 ...">{{ item.assignor.email }}</td>
                 <td class="border border-slate-300 ...">
                     <button  class="bg-blue-500 text-white py-2 px-2 rounded ml-2 mr-2 mu-5 md-2 m-2" @click="showEditForm(item)">Edit</button>
                     <button  class="bg-blue-500 text-white py-2 px-2 rounded ml-2 mr-2 mu-5 md-2 m-2" @click="deletePayable(item.id)">Delete</button>
