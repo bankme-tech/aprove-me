@@ -10,7 +10,6 @@ import type { Payable } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { FindPayableByIdPipe } from "../find-payable-by-id.pipe";
-import { PayableDTO } from "../payable.dto";
 import { UpdatePayableByIdInputDTO } from "./update-payable-by-id-input.dto";
 import { UpdatePayableByIdInputPipe } from "./update-payable-by-id-input.pipe";
 
@@ -24,8 +23,8 @@ export class UpdatePayableByIdController {
     @Body(UpdatePayableByIdInputPipe) input: UpdatePayableByIdInputDTO,
   ) {
     if (input.assignorId !== payable.assignorId) {
-      const assignor = await this.prisma.payable.findUnique({
-        where: { id: payable.assignorId },
+      const assignor = await this.prisma.assignor.findUnique({
+        where: { id: input.assignorId },
       });
 
       if (assignor === null) {
@@ -33,7 +32,7 @@ export class UpdatePayableByIdController {
       }
     }
 
-    await this.prisma.payable.update({
+    return await this.prisma.payable.update({
       data: {
         value: input.value,
         emissionDate: input.emissionDate,
@@ -42,13 +41,6 @@ export class UpdatePayableByIdController {
       where: {
         id: payable.id,
       },
-    });
-
-    return new PayableDTO({
-      id: payable.id,
-      value: input.value,
-      emissionDate: input.emissionDate,
-      assignorId: input.assignorId,
     });
   }
 }

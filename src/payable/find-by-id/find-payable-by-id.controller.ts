@@ -1,7 +1,6 @@
 import { Controller, Get, Param, ParseUUIDPipe } from "@nestjs/common";
 import type { Payable } from "@prisma/client";
 
-import { PayableDTO } from "../payable.dto";
 import { FindPayableByIdPipe } from "../find-payable-by-id.pipe";
 
 @Controller()
@@ -10,6 +9,6 @@ export class FindPayableByIdController {
   async handle(
     @Param("id", ParseUUIDPipe, FindPayableByIdPipe) payable: Payable,
   ) {
-    return new PayableDTO(payable);
+    return payable;
   }
 }
