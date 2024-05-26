@@ -30,8 +30,6 @@ export abstract class InMemoryRepository<T extends Entity<any>> {
   }
 
   async findById(id: string): Promise<T | null> {
-    console.log('ENTITIES AQUI:', this.entities);
-    console.log('ID PASSADO: ', id);
     /* @ts-ignore */
     const entity = this.entities.find((item) => item.props.id === id) || null;
     /* @ts-ignore */

@@ -34,8 +34,6 @@ describe('Delete assignor use case', () => {
 
     expect(repository.entities).toHaveLength(2);
 
-    await findAllAssignorsUseCase.execute();
-
     const assignors = await findAllAssignorsUseCase.execute();
 
     expect(assignors).toHaveLength(2);
