@@ -47,10 +47,8 @@ export const Payables = () => {
                 <TableHead className="w-[270px] text-center">
                   Identificador
                 </TableHead>
-                <TableHead className="w-[200px] text-center">
-                  Data de emissão
-                </TableHead>
-                <TableHead className="pr-8 text-right">Valor</TableHead>
+                <TableHead className=" text-center">Data de emissão</TableHead>
+                <TableHead className="pr-9 text-right">Valor</TableHead>
               </TableRow>
             </TableHeader>
 

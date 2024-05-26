@@ -1,4 +1,5 @@
-import { FilePlus, Landmark, ScrollText, UserRoundPlus } from 'lucide-react'
+import { FilePlus, ScrollText, UserRoundPlus } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import { AccountMenu } from './account-menu'
 import { NavLink } from './nav-link'
@@ -9,7 +10,13 @@ export const Header = () => {
   return (
     <div className="border-b">
       <div className="flex h-16 items-center gap-6 px-6">
-        <Landmark className="h-6 w-6" />
+        <Link to={'/payable'}>
+          <img
+            src="logo-bankme.png"
+            alt="Logo BankMe"
+            className="h-6 w-6"
+          ></img>
+        </Link>
 
         <Separator orientation="vertical" className="h-6" />
 

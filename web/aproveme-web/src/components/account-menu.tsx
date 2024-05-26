@@ -42,7 +42,7 @@ export const AccountMenu = () => {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          className="text-emerald-500 dark:text-emerald-400"
+          className="text-blue-600 dark:text-blue-500"
           asChild
           disabled={false}
         >

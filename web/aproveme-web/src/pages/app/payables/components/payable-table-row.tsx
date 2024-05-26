@@ -1,6 +1,6 @@
 import { format, formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { Search } from 'lucide-react'
+import { Info } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
@@ -23,8 +23,13 @@ export const PayableTableRow = ({ payable }: PayableTableRowProps) => {
       <TableCell>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline" size="xs">
-              <Search className="h-3 w-3" />
+            <Button
+              variant="link"
+              // variant="ghost"
+              // variant="outline"
+              size="xs"
+            >
+              <Info className="h-5 w-5" />
               <span className="sr-only">detalhes do cedente</span>
             </Button>
           </DialogTrigger>
