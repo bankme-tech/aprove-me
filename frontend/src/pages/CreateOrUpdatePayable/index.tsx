@@ -1,24 +1,29 @@
 import type { FormProps } from "antd";
 import { Button, DatePicker, Form, Input, InputNumber, Select } from "antd";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import payableService from "../../services/payableService";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { Assignor } from "../../model/assignor";
 import assignorService from "../../services/assignorService";
 import { isAxiosError } from "axios";
+import { Payable } from "../../model/payable";
 
-type FieldType = {
-  id: string;
+interface FieldType {
+  emissionDate: dayjs.ConfigType;
   value: number;
-  emissionDate: string;
+  id: string;
   assignor: string;
-};
+}
 
-const CreatePayable = () => {
+const CreateOrUpdatePayable = () => {
   const navigate = useNavigate();
+  const [form] = Form.useForm<FieldType>();
   const [assignors, setAssignors] = useState<Assignor[]>([]);
+  const params = useParams();
+
+  const isEditing = !!params.id;
 
   useEffect(() => {
     const fetchAssignors = async () => {
@@ -26,27 +31,77 @@ const CreatePayable = () => {
       setAssignors(response.data);
     };
 
+    const fetchPayable = async () => {
+      try {
+        const response = await payableService.findById(params.id!);
+        const payable = response.data;
+        form.setFieldsValue({
+          ...payable,
+          emissionDate: dayjs(payable.emissionDate),
+        });
+      } catch (error) {
+        toast.error("Erro ao buscar pagável");
+      }
+    };
+
+    if (isEditing) {
+      try {
+        fetchPayable();
+      } catch (error) {
+        if (isAxiosError(error)) {
+          if (error.response?.status === 404) {
+            toast.error("Pagável não encontrado");
+            navigate("/");
+            return;
+          }
+        }
+
+        toast.error("Erro ao buscar pagável");
+      }
+    }
+
     try {
       fetchAssignors();
     } catch (error) {
       toast.error("Erro ao buscar cedentes");
     }
-  }, []);
+  }, [isEditing]);
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    if (isEditing) {
+      try {
+        await payableService.update(params.id!, {
+          emissionDate: dayjs(values.emissionDate).toISOString(),
+          assignor: values.assignor,
+          value: values.value,
+        });
+        navigate(`/payable/${params.id}`);
+
+        toast.success("Pagável atualizado com sucesso");
+      } catch (error) {
+        if (isAxiosError(error)) {
+          if (error.response?.status === 409) {
+            toast.error("Pagável com o id informado já existe");
+            return;
+          }
+
+          if (error.response?.status === 400) {
+            toast.error("Dados inválidos");
+            return;
+          }
+        }
+
+        toast.error("Erro ao atualizar pagável");
+      }
+      return;
+    }
+
     try {
       await payableService.createPayable({
         ...values,
         emissionDate: dayjs(values.emissionDate).toISOString(),
       });
-      navigate("/payable", {
-        state: {
-          payable: {
-            ...values,
-            emissionDate: dayjs(values.emissionDate).toISOString(),
-          },
-        },
-      });
+      navigate(`/payable/${values.id}`);
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.response?.status === 409) {
@@ -68,6 +123,7 @@ const CreatePayable = () => {
     <div className="flex flex-col max-w-sm mx-auto py-8 gap-4 w-full">
       <h1 className="text-2xl">Cadastro de pagavel</h1>
       <Form
+        form={form}
         name="basic"
         onFinish={onFinish}
         onFinishFailed={() =>
@@ -143,4 +199,4 @@ const CreatePayable = () => {
   );
 };
 
-export default CreatePayable;
+export default CreateOrUpdatePayable;

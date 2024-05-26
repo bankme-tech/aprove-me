@@ -10,6 +10,9 @@ const assignorService = {
   async create(assignor: Assignor) {
     return api.post<Assignor>(ASSIGNOR_ENDPOINT, assignor);
   },
+  async findById(id: string) {
+    return api.get<Assignor>(`${ASSIGNOR_ENDPOINT}/${id}`);
+  },
 };
 
 export default assignorService;

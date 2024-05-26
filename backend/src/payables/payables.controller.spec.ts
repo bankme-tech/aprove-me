@@ -129,4 +129,26 @@ describe('PayablesController', () => {
       );
     });
   });
+
+  describe('getPayables', () => {
+    it('should return all payables', async () => {
+      const payables = [
+        {
+          id: randomUUID(),
+          value: 100,
+          emissionDate: new Date(),
+          assignor: randomUUID(),
+        },
+        {
+          id: randomUUID(),
+          value: 200,
+          emissionDate: new Date(),
+          assignor: randomUUID(),
+        },
+      ];
+      service.getPayables.mockResolvedValue(payables);
+
+      expect(await controller.getPayables()).toBe(payables);
+    });
+  });
 });

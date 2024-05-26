@@ -22,6 +22,10 @@ export class PayablesService {
     private emailService: EmailService,
   ) {}
 
+  async getPayables() {
+    return this.prisma.payable.findMany();
+  }
+
   getPayableById(id: string) {
     return this.prisma.payable.findUnique({
       where: { id },
