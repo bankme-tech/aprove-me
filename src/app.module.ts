@@ -1,6 +1,8 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 
 import { AssignorModule } from "./assignor/assignor.module";
+import { AuthModule } from "./auth/auth.module";
 import { PayableModule } from "./payable/payable.module";
 import { PrismaProvider } from "./providers/prisma.provider";
 
@@ -12,8 +14,10 @@ import { PrismaProvider } from "./providers/prisma.provider";
       exports: [PrismaProvider],
       global: true,
     },
+    ConfigModule.forRoot({ isGlobal: true }),
     PayableModule,
     AssignorModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
