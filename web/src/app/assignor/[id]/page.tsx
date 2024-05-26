@@ -10,13 +10,13 @@ import { getToken, removeToken } from "@/utils/tokenUtils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type AssygnorDetailsProps = {
+type AssignorDetailsProps = {
   params: {
     id: string;
   };
 };
 
-export default function AssignorDetails({ params }: AssygnorDetailsProps) {
+export default function AssignorDetails({ params }: AssignorDetailsProps) {
   const [data, setData] = useState<Assignor | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
