@@ -1,18 +1,18 @@
 ### Get all Assignors
 GET http://localhost:3000/integrations/assignor
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNmQ2NjhjMy1lYWQzLTRjNGMtYWNkMS1lODM2YTg0YmZkM2UiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjgzNTc2LCJleHAiOjE3MTcyODgzNzZ9.S_XvTFqRWgloINgVdG6FhJC5p-CC-n7MkILlpLF20KU
 
 ### Get Assignor by ID
-GET http://localhost:3000/integrations/assignor/d9ebb252-f177-4751-8385-a611bf8758b8
+GET http://localhost:3000/integrations/assignor/228f7f74-90de-4e8a-94a0-d320795a20dc
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNmQ2NjhjMy1lYWQzLTRjNGMtYWNkMS1lODM2YTg0YmZkM2UiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjgzNTc2LCJleHAiOjE3MTcyODgzNzZ9.S_XvTFqRWgloINgVdG6FhJC5p-CC-n7MkILlpLF20KU
 
 ### Create Assignor
 POST http://localhost:3000/integrations/assignor
 Content-Type: application/json
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNmQ2NjhjMy1lYWQzLTRjNGMtYWNkMS1lODM2YTg0YmZkM2UiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjgzNTc2LCJleHAiOjE3MTcyODgzNzZ9.S_XvTFqRWgloINgVdG6FhJC5p-CC-n7MkILlpLF20KU
 
 {
   "document": "12345678901",
@@ -22,10 +22,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZ
 }
 
 ### Update Assignor
-PATCH  http://localhost:3000/integrations/assignor/d9ebb252-f177-4751-8385-a611bf8758b8
+PATCH  http://localhost:3000/integrations/assignor/228f7f74-90de-4e8a-94a0-d320795a20dc
 Content-Type: application/json
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNmQ2NjhjMy1lYWQzLTRjNGMtYWNkMS1lODM2YTg0YmZkM2UiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjgzNTc2LCJleHAiOjE3MTcyODgzNzZ9.S_XvTFqRWgloINgVdG6FhJC5p-CC-n7MkILlpLF20KU
 
 {
   "document": "12345678951",
@@ -33,6 +33,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZ
 }
 
 ### Delete Assignor
-DELETE http://localhost:3000/integrations/assignor/d9ebb252-f177-4751-8385-a611bf8758b8
+DELETE http://localhost:3000/integrations/assignor/228f7f74-90de-4e8a-94a0-d320795a20dc
 # Replace your token in Authorization header
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NDIxNDFmZC1iMjNlLTQyNTEtYjE3ZS1hNzNhZWZiNDY0YTEiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjA3NDM0LCJleHAiOjE3MTY2MDkyMzR9.pMDuePnoaR6oGrJaFadayyaqtwqnKc4AXkSPCtSmTvQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNmQ2NjhjMy1lYWQzLTRjNGMtYWNkMS1lODM2YTg0YmZkM2UiLCJsb2dpbiI6Im5lYXRoIiwiaWF0IjoxNzE2NjgzNTc2LCJleHAiOjE3MTcyODgzNzZ9.S_XvTFqRWgloINgVdG6FhJC5p-CC-n7MkILlpLF20KU
