@@ -14,12 +14,22 @@ Sumário
 1. Como rodar a aplicação
 2. Explicação da arquitetura
 
-## Como rodar a aplicação
+## Como rodar a aplicação (localmente)
 
 ```bash
-$ pnpm 
+$ pnpm install // instalar as dependencias
+$ pnpm db:up // subir o container do Redis utilizado pelas filas da aplicação
+$ pnpm db:migrate // rodas as migrações do prisma
+$ pnpm db:studio // (opcional) caso queira visualizar o banco de dados
+$ pnpm start:dev // inicializar a aplicação
 ```
 
+## Como rodar a aplicação (com container Docker)
+```bash
+$ pnpm start:dev
+$ pnpm docker:build
+$ pnpm docker:run
+```
 ## Explicação da arquitetura
 
 ### Schema Validation
