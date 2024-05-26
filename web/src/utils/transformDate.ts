@@ -1,4 +1,7 @@
-export default function transformDate(date: string) {
+export default function transformDate(date: string | undefined) {
+  if (!date) {
+    return '';
+  }
   const dateHour = new Date(date);
 
   const day = dateHour.getDate().toString().padStart(2, '0');
