@@ -32,8 +32,7 @@ jobs:
             - v1-dependencies-
       - run:
           name: Run Tests
-          command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
-
+          command: npm test
 
   build_and_deploy:
     executor: node-executor
@@ -51,9 +50,12 @@ jobs:
           command: curl https://cli-assets.heroku.com/install.sh | sh
       - run:
           name: Deploy to Heroku
+          environment:
+            HEROKU_API_KEY: $HEROKU_API_KEY
+            HEROKU_APP_NAME: $HEROKU_APP_NAME
           command: |
             echo $HEROKU_API_KEY | heroku auth:token
-            git remote add heroku https://git.heroku.com/$HEROKU_APP_NAME.git
+            heroku git:remote -a $HEROKU_APP_NAME
             git push heroku main
       - run:
           name: Scale Dynos
