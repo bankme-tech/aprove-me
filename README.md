@@ -1,4 +1,4 @@
-# My API
+# Bankme Api
 
 ## Preparando o Ambiente
 

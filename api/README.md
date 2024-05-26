@@ -1,73 +1,76 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Bankme Api
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Preparando o Ambiente
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+1. **Instalar o Docker**: Certifique-se de que você tem o Docker e o Docker Compose instalados na sua máquina. [Instruções de instalação do Docker](https://docs.docker.com/get-docker/)
 
-## Description
+2. **Clonar o Repositório**: Clone o repositório do projeto para a sua máquina local.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+    ```bash
+    git clone git@github.com:feroddev/aprove-me.git
+    cd aprove-me/api
+    git checkout felipe-rodrigues-aprove-me
+    ```
 
-## Installation
+## Instalando as Dependências
 
-```bash
-$ npm install
-```
+As dependências do projeto serão instaladas automaticamente dentro do contêiner Docker, conforme definido no `Dockerfile`.
 
-## Running the app
+## Rodando o Projeto
 
-```bash
-# development
-$ npm run start
 
-# watch mode
-$ npm run start:dev
+1. **Iniciar o Contêiner**: Inicie o contêiner com o comando:
 
-# production mode
-$ npm run start:prod
-```
+    ```bash
+    docker-compose up -d --build
+    ```
 
-## Test
+    Isso vai iniciar a aplicação e mapear a porta 3000 do contêiner para a porta 3000 do host. A aplicação estará acessível em `http://localhost:3000`.
 
-```bash
-# unit tests
-$ npm run test
+2. **Acessar o Contêiner**: Se você precisar acessar o shell do contêiner para depuração, use o comando:
 
-# e2e tests
-$ npm run test:e2e
+    ```bash
+    docker exec -it bankme_api sh
+    ```
 
-# test coverage
-$ npm run test:cov
-```
+## Estrutura do Projeto
 
-## Support
+- `Dockerfile`: Define a imagem Docker para o ambiente de desenvolvimento da API.
+- `docker-compose.yml`: Define os serviços, volumes e variáveis de ambiente para a aplicação.
+- `src/`: Diretório que contém o código-fonte da aplicação.
+- `package.json` e `package-lock.json`: Arquivos que definem as dependências do projeto.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## Desenvolvimento
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Durante o desenvolvimento, as mudanças feitas nos arquivos do projeto serão refletidas imediatamente no contêiner, graças ao volume montado (`volumes` no `docker-compose.yml`).
 
-## License
+## Utilização
 
-Nest is [MIT licensed](LICENSE).
+Para utilizar as rotas da API, você pode seguir as solicitações HTTP definidas no arquivo `api/src/http/start-here.http` localizado na raiz do projeto. Este arquivo contém exemplos de solicitações para cada rota da API, incluindo detalhes sobre os dados necessários e as respostas esperadas.
+
+### Passos:
+
+1. Certifique-se de ter o [VS Code](https://code.visualstudio.com/) instalado na sua máquina e também a extensão do [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) instalada no seu VSCode, pois o arquivo `api.http` é um arquivo de solicitações HTTP compatível com o VS Code.
+
+2. Abra o arquivo `api.http` no VS Code.
+
+3. Navegue pelas solicitações HTTP definidas no arquivo para encontrar a rota que deseja testar.
+
+4. Clique no botão `Send Request` ao lado de cada solicitação para enviar a solicitação HTTP para o servidor.
+
+5. Observe as respostas retornadas pelo servidor para verificar se a solicitação foi processada com sucesso.
+
+Ao seguir esses passos, você poderá testar todas as funcionalidades da API e entender como interagir com ela usando solicitações HTTP.
+
+
+## Notas
+
+- Certifique-se de que a porta 3000 não esteja sendo usada por outra aplicação no seu host.
+- Para parar a aplicação, use `Ctrl+C` no terminal onde o Docker Compose está rodando, ou execute `docker-compose down` para parar e remover os contêineres.
+
+## Me Conheça mais
+[Linkedin](https://www.linkedin.com/in/feroddev/)
+
+[Portfólio](portfolio-feroddev.vercel.app)
+
