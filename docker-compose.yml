@@ -24,7 +24,15 @@ services:
       interval: 5s
       timeout: 5s
       retries: 3
-
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - app
+    restart: on-failure
 networks:
   rabbitmq_go_net:
     driver: bridge

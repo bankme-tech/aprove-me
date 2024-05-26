@@ -63,6 +63,8 @@ Depois que os serviços forem iniciados com sucesso, você poderá acessar o pro
 
 o acesso principal api é na url http://localhost:3000
 
+para acessar o frontend acesse http://localhost:8080
+
 ## Encerrando os Serviços
 
 Para encerrar os serviços e liberar os recursos do sistema, você pode usar o comando `docker-compose down`.

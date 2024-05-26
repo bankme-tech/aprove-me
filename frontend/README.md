@@ -1,30 +1,53 @@
-# React + TypeScript + Vite
+# Documentação de Execução do Projeto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta documentação destina-se a fornecer instruções detalhadas para a execução do projeto.
 
-Currently, two official plugins are available:
+## Requisitos do Sistema
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Antes de prosseguir com a execução do projeto, verifique se o seu sistema atende aos seguintes requisitos:
 
-## Expanding the ESLint configuration
+- Node versão 18 ou superior instalado e configurado corretamente
+- Conexão com a Internet para baixar as dependencias necessárias
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Execução do Projeto
 
-- Configure the top-level `parserOptions` property like this:
+A seguir, estão as instruções para a execução do projeto.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+Navegue até o diretório do projeto:
+
+```bash
+cd /caminho/para/o/projeto
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+## Instação
+
+Execute o comando abaixo para instalar as depencencias:
+
+```bash
+npm install
+ou
+yarn
+```
+
+### Executar a aplicação
+
+```bash
+# modo desenvolvimento
+$ yarn dev
+
+# modo preview
+$ yarn preview
+```
+
+## Acesso ao Projeto
+
+Depois que os serviços forem iniciados com sucesso, você poderá acessar o projeto por meio do navegador da Web ou de outros clientes, conforme apropriado. As informações específicas de acesso (URLs, portas, etc.) dependerão da configuração do projeto.
+
+o acesso principal é na url no modo DEV http://localhost:5173 para PREVIEW é http://localhost:4173/
+
+## Considerações Finais
+
+Este documento fornece as instruções básicas para a execução do projeto. Certifique-se de ajustar as configurações de acordo com os requisitos específicos do seu projeto.
+
+Se encontrar problemas durante a execução do projeto ou precisar de assistência adicional, consulte a documentação do projeto ou entre em contato com a equipe de desenvolvimento para obter suporte.

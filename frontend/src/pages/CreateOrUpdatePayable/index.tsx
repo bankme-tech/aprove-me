@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { Assignor } from "../../model/assignor";
 import assignorService from "../../services/assignorService";
 import { isAxiosError } from "axios";
-import { Payable } from "../../model/payable";
 
 interface FieldType {
   emissionDate: dayjs.ConfigType;
@@ -121,14 +120,18 @@ const CreateOrUpdatePayable = () => {
 
   return (
     <div className="flex flex-col max-w-sm mx-auto py-8 gap-4 w-full">
-      <h1 className="text-2xl">Cadastro de pagavel</h1>
+      <h1 className="text-2xl">
+        {isEditing ? "Edição" : "Cadastro"} de pagável
+      </h1>
       <Form
         form={form}
         name="basic"
         onFinish={onFinish}
         onFinishFailed={() =>
           toast.error(
-            "Erro ao cadastrar cedente, verifique os campos e tente novamente!"
+            `Erro ao ${
+              isEditing ? "editar" : "cadastrar"
+            } cedente, verifique os campos e tente novamente!`
           )
         }
         autoComplete="off"
@@ -191,7 +194,7 @@ const CreateOrUpdatePayable = () => {
 
         <Form.Item className="flex justify-end">
           <Button type="primary" htmlType="submit">
-            Cadastrar
+            {isEditing ? "Atualizar" : "Cadastrar"}
           </Button>
         </Form.Item>
       </Form>
