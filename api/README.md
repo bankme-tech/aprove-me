@@ -1,73 +1,55 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <img src="./docs/api-arch.png" width="1000" alt="Nest Logo" />
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descrição
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+API criada com o intuito de realizar o teste para desenvolvedor fullstack na Bankme.
 
-## Description
+O Backend feito em Node.JS utilizar o framework Nest.JS, um arquétipo opinado que conta com inúmeras facilidades para desenvolvedores que desejam criar apis.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+No texto a seguir serão explicados o pontos mais importantes e o conceitos utilizados nessa API.
 
-## Installation
+Sumário
+1. Como rodar a aplicação
+2. Explicação da arquitetura
+
+## Como rodar a aplicação
 
 ```bash
-$ pnpm install
+$ pnpm 
 ```
 
-## Running the app
+## Explicação da arquitetura
 
-```bash
-# development
-$ pnpm run start
+### Schema Validation
+Para ter dados consistentes e que estão de acordo com a lógica de negócios da aplicação, foi utilizaro o [Zod](https://zod.dev/), um biblioteca de validação de dados e tipagem estática extremamente flexível e cabível para situação onde precisamos que os dados vindo do cliente da API sejam extremamente consistentes. A imeplemtação foi feita através da Pipe ZodValidationPipe que é utilizada nos parametros de body, params, entre outros.
+### Validation Pipe
+<img src="./docs/zod-pipe.png" width="400" />
 
-# watch mode
-$ pnpm run start:dev
+### Utilização
+<img src="./docs/zod-pipe-apply.png" width="400" />
 
-# production mode
-$ pnpm run start:prod
-```
+### Autenticação
+A autenticação no sistema foi feita utilizando tokens JWT com expiração definivida por uma variavel de ambiente JWT_EXPIRES_IN, além de um secret (JWT_SECRET). A cada request que é feito para a API antes de passar pelo fluxo de obtenção dos dados, uma checagem é feita pelo AuthGuard para garantir que o consumidor está passando um token valido e não expirado.
 
-## Test
+### Auth Guard
+<img src="./docs/auth-guard-apply.png" width="400" />
 
-```bash
-# unit tests
-$ pnpm run test
+### Utilização
+<img src="./docs/auth-guard.png" width="400" />
 
-# e2e tests
-$ pnpm run test:e2e
+### Criptografia da senha
+Para a senha foi feito uma criptografia baseada em rounds a partir da biblioteca bcrypt
 
-# test coverage
-$ pnpm run test:cov
-```
+### Criptografando a senha para persistir
+<img src="./docs/crypt-password.png" width="400" />
 
-## Support
+### Descriptografando na tentativa do login
+<img src="./docs/decrypt-password.png" width="400" />
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Filas
+As filas no projeto foram implementadas a partir da biblioteca [Bull](https://github.com/OptimalBits/bull). Com essa lib conseguimos criar uma classe produtora e outra consumidora, e ela trata de lidar com as ações encadeadas. Foi implementado tanto a fila de criação em lote dos payables quanto a fila morta. O email que seria do time de operações pode ser visualizado aqui https://ethereal.email/messages, ele será abastecido sempre que um Payable indevido não conseguir ser cadastrado
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+### Testes
+No que se refere aos testes, fora implementados testes para os principais UseCases da aplicação
