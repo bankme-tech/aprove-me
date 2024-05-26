@@ -32,7 +32,7 @@ describe("Find Payable By Id With Assignor Data", () => {
 
     expect(result.isRight()).toBeTruthy();
 
-    expect(result.value.payable.id).toEqual(fakePayable.id);
-    expect(result.value.payable.assignorId).toEqual(fakeAssignor.id);
+    expect(result.value.payableWithAssignor.payableId).toEqual(fakePayable.id);
+    expect(result.value.payableWithAssignor.assignor.id).toEqual(fakeAssignor.id);
   });
 });

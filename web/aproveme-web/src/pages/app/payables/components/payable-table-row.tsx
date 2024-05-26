@@ -1,6 +1,7 @@
 import { format, formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Info } from 'lucide-react'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
@@ -18,23 +19,24 @@ export interface PayableTableRowProps {
 }
 
 export const PayableTableRow = ({ payable }: PayableTableRowProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open)
+  }
+
   return (
     <TableRow>
       <TableCell>
-        <Dialog>
+        <Dialog onOpenChange={handleOpenChange}>
           <DialogTrigger asChild>
-            <Button
-              variant="link"
-              // variant="ghost"
-              // variant="outline"
-              size="xs"
-            >
+            <Button variant="link" size="xs">
               <Info className="h-5 w-5" />
               <span className="sr-only">detalhes do cedente</span>
             </Button>
           </DialogTrigger>
 
-          <PayableDetails />
+          {isOpen && <PayableDetails payableId={payable.id} />}
         </Dialog>
       </TableCell>
 

@@ -38,7 +38,7 @@ export const Payables = () => {
       <Helmet title="Recebíveis" />
       <h1 className="text-3xl font-bold tracking-tight">Recebíveis</h1>
       <main className="-mt-3 w-8/12 self-center">
-        <section className="space-y-2.5">
+        <section className="flex min-h-[435px] flex-col justify-between space-y-2.5">
           <Table>
             {/* <TableCaption>Uma lista de recebíveis</TableCaption> */}
             <TableHeader>
@@ -53,9 +53,9 @@ export const Payables = () => {
             </TableHeader>
 
             <TableBody>
-              {result?.payables.map((payable) => {
-                return <PayableTableRow key={payable.id} payable={payable} />
-              })}
+              {result?.payables.map((payable) => (
+                <PayableTableRow key={payable.id} payable={payable} />
+              ))}
             </TableBody>
           </Table>
 

@@ -54,10 +54,17 @@ describe("Get Payable By Id (E2E)", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({
-      payable: expect.objectContaining({
+      payableWithAssignor: expect.objectContaining({
+        payableId: payable.id.toString(),
         value: payable.value,
         emissionDate: payable.emissionDate.toISOString(),
-        assignorId: payable.assignorId.toString(),
+        assignor: expect.objectContaining({
+          id: assignor.id.toString(),
+          document: assignor.document,
+          email: assignor.email,
+          phone: assignor.phone,
+          name: assignor.name,
+        }),
       }),
     });
   });

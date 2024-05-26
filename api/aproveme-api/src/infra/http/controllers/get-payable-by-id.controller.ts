@@ -5,8 +5,8 @@ import {
   HttpCode,
   Param,
 } from "@nestjs/common";
-import { PayablePresenter } from "../presenters/payable-presenter";
 import { FindPayableByIdService } from "@/domain/receivables/application/services/find-payable-by-id";
+import { PayableWithAssignorPresenter } from "../presenters/payable-with-assignor-presenter";
 
 @Controller("/integrations/payable/:id")
 export class GetPayableByIdController {
@@ -24,7 +24,7 @@ export class GetPayableByIdController {
     }
 
     return {
-      payable: PayablePresenter.toHTTP(result.value.payable),
+      payableWithAssignor: PayableWithAssignorPresenter.toHTTP(result.value.payableWithAssignor),
     };
   }
 }
