@@ -13,14 +13,14 @@ import { BullModule } from '@nestjs/bull';
       load: [envConfig],
     }),
     JwtModule.registerAsync({
-      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('jwtSecret'),
+        secret: configService.get('jwtSecret'),
         signOptions: {
-          expiresIn: configService.get<string | number>('jwtExpiresIn'),
+          expiresIn: configService.get('jwtExpiresIn'),
         },
       }),
+      global: true,
     }),
     BullModule.forRoot({
       redis: {

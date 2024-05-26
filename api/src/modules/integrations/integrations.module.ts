@@ -26,6 +26,7 @@ import { PayablesController } from './infra/http/controllers/payables.controller
 import { AuthController } from './infra/http/controllers/auth.controller';
 import { FindAllAssignorsUseCase } from './use-cases/find-all-assignors.use-case';
 import { FindAllPayablesUseCase } from './use-cases/find-all-payables.use-case';
+import { UsersController } from './infra/http/controllers/users.controller';
 
 @Module({
   imports: [
@@ -33,7 +34,12 @@ import { FindAllPayablesUseCase } from './use-cases/find-all-payables.use-case';
       name: 'create-payable-queue',
     }),
   ],
-  controllers: [AssignorsController, PayablesController, AuthController],
+  controllers: [
+    AssignorsController,
+    PayablesController,
+    AuthController,
+    UsersController,
+  ],
   providers: [
     {
       provide: PayablesRepository,
