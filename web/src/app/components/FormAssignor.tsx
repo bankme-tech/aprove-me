@@ -6,7 +6,7 @@ import { connection } from "@/connection";
 import { useState } from "react";
 import { validateAssignor } from "@/utils/validateFields";
 
-type NumberValues = {
+export type NumberValues = {
   phone: string;
   document: string;
 };

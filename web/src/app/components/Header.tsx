@@ -21,7 +21,7 @@ export default function Header() {
   return (
     <Styled.Header>
       <Styled.Nav>
-        <Styled.LogoType>Bankme</Styled.LogoType>
+        <Styled.LogoType onClick={() => router.push('/')} >Bankme</Styled.LogoType>
         <Styled.Links>
           <Link href="/payable">Payables</Link>
           <Link href="/assignor">Assignors</Link>

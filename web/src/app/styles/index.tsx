@@ -177,4 +177,5 @@ export const LogoType = styled.h1`
   color: #0b36c0;
   font-weight: 800;
   text-transform: uppercase;
+  cursor: pointer;
 `;
