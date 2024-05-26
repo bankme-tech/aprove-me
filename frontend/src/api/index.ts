@@ -1,14 +1,14 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
+export const BASE_URL = "http://localhost:3000";
+
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: BASE_URL,
 });
 
 api.interceptors.request.use((config) => {
-  const token =
-    localStorage.getItem("token") ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFwcm92YW1lIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzE2NzMxNDU5LCJleHAiOjE3MTY4MTc4NTl9.E5c9ob5iWR8bij5cimESeVqyfu_T4NdCBJ0K3a3MA7w";
+  const token = localStorage.getItem("token");
   if (token) {
     config.headers["Authorization"] = `Bearer ${token}`;
   }
@@ -21,7 +21,7 @@ api.interceptors.response.use(
     if (error.response.status === 401) {
       toast.error("Sessão expirada, faça login novamente");
       localStorage.removeItem("token");
-      //   window.location.href = "/login";
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }
