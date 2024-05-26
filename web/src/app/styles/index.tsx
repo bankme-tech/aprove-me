@@ -18,7 +18,6 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  /* margin-top: 90px; */
 `;
 
 export const Form = styled.form`
@@ -96,7 +95,7 @@ export const SubmitButton = styled.button`
   border: none;
   border-radius: 5px;
   font-size: 1rem;
-  background-color: #131fbd;
+  background-color: #0b36c0;
   color: #ffffff;
   cursor: pointer;
   &:hover {
@@ -144,7 +143,7 @@ export const Loggout = styled.button`
   border: none;
   border-radius: 20px;
   font-size: 1rem;
-  background-color: #131fbd;
+  background-color: #0b36c0;
   color: #ffffff;
   cursor: pointer;
   &:hover {
@@ -171,4 +170,11 @@ export const CreateButton = styled.button`
   &:hover {
     background-color: #65bd13da;
   }
+`;
+
+export const LogoType = styled.h1`
+  font-size: 1.5rem;
+  color: #0b36c0;
+  font-weight: 800;
+  text-transform: uppercase;
 `;

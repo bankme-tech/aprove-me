@@ -2,7 +2,7 @@ import Assignor from "@/interfaces/Assignor";
 import Payable from "@/interfaces/Payable";
 import transformDate from "@/utils/transformDate";
 import React from "react";
-import * as Styled from "../styles/Payable";
+import * as Styled from "../styles/Details";
 
 type TablePayableProps = {
   payable: Payable;

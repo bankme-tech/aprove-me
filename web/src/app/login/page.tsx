@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { validateLogin } from "@/utils/validateFields";
 import { connection } from '@/connection'
 import { useRouter } from "next/navigation";
-import { Main } from "../styles";
+import { LogoType, Main } from "../styles";
 
 export default function Login(): React.ReactElement {
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +35,7 @@ export default function Login(): React.ReactElement {
       localStorage.setItem("token", token);
       router.push("/");
     } catch (error: any) {
-      if (error.response?.status === 401) {
+      if (error.response?.status === 401 || error.response?.status === 404) {
         setError("Invalid login or password");
       } else {
         setError("An error occurred, please try again");
@@ -48,7 +48,7 @@ export default function Login(): React.ReactElement {
       <Styled.Container>
         <Styled.SubContainer>
           <Styled.Image src="/logo-bankme.png" alt="Logo" />
-          <Styled.Logo>bankme</Styled.Logo>
+          <LogoType>Bankme</LogoType>
         </Styled.SubContainer>
         <Styled.Divider />
         <Styled.Form onSubmit={handleSubmit}>

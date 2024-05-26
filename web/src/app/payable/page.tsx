@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import * as Styled from "../styles";
-import * as PayableStyle from '../styles/Payable';
+import * as PayableStyle from '../styles/Details';
 import Assignor from "@/interfaces/Assignor";
 import Payable from "@/interfaces/Payable";
 import { connection } from "@/connection";

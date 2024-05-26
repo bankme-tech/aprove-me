@@ -2,7 +2,19 @@ import styled from "styled-components";
 
 export const Title = styled.h1`
   font-size: 2rem;
+  text-transform: uppercase;
   color: #333;
+`;
+
+export const Card = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+  padding: 3rem;
+  border: 1px solid #333;
+  border-radius: 5px;
+  margin-top: 1rem;
+  gap: 1rem;
 `;
 
 export const Table = styled.table`
@@ -30,6 +42,12 @@ export const Table = styled.table`
   }
 `;
 
+export const Divider = styled.div`
+  height: 1px;
+  background-color: #333;
+  width: 200px;
+  `;
+
 export const Button = styled.button`
   padding: 0.5rem 1rem;
   border: none;
@@ -41,5 +59,13 @@ export const Button = styled.button`
 
   &:hover {
     background-color: #555;
+  }
+`;
+
+export const Paragraph = styled.p`
+  font-size: 1rem;
+  color: #333;
+  span {
+    font-weight: bold;
   }
 `;

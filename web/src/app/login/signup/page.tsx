@@ -47,7 +47,7 @@ export default function SignIn() {
       <Login.Container>
         <Login.SubContainer>
           <Login.Image src="/logo-bankme.png" alt="Logo" />
-          <Login.Logo>bankme</Login.Logo>
+          <Styled.LogoType>Bankme</Styled.LogoType>
         </Login.SubContainer>
         <Login.Divider />
         <Login.Form onSubmit={handleSubmit}>
