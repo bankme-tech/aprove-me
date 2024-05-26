@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import styled from "styled-components";
 
@@ -9,6 +9,14 @@ export const Main = styled.main`
   min-height: 100vh;
   background-color: #f0f0f0;
   font-family: "Poppins", sans-serif;
+`;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
 `;
 
 export const Form = styled.form`
@@ -45,9 +53,11 @@ export const Input = styled.input`
   &:focus {
     outline: none;
     border-color: #0000003f;
-  } &:hover {
+  }
+  &:hover {
     border-color: #0000003f;
-  } &:active {
+  }
+  &:active {
     border-color: #0000003f;
   }
 `;
@@ -61,14 +71,16 @@ export const Select = styled.select`
   &:focus {
     outline: none;
     border-color: #0000003f;
-  } &:hover {
+  }
+  &:hover {
     border-color: #0000003f;
-  } &:active {
+  }
+  &:active {
     border-color: #0000003f;
   }
   option {
     color: #313131;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 `;
 
@@ -78,10 +90,64 @@ export const SubmitButton = styled.button`
   border: none;
   border-radius: 5px;
   font-size: 1rem;
-  background-color: #000000;
+  background-color: #131fbd;
   color: #ffffff;
   cursor: pointer;
   &:hover {
-    background-color: #0000009e;
+    background-color: #131ebdc7;
   }
+`;
+
+export const Header = styled.header`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+  position: fixed;
+`;
+
+export const Logo = styled.img`
+  width: 25px;
+  margin-right: 1rem;
+`;
+
+export const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1024px;
+  gap: 1rem;
+  a {
+    color: #000000;
+    font-size: 1rem;
+    margin-left: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+      color: #0000009e;
+    }
+  }
+`;
+
+export const Loggout = styled.button`
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  background-color: #131fbd;
+  color: #ffffff;
+  cursor: pointer;
+  &:hover {
+    background-color: #131ebdc7;
+  }
+`;	
+
+export const Links = styled.div`
+  display: flex;
+  width: 70%;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1rem;
 `;
