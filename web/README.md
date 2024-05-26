@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Descrição
 
-First, run the development server:
+Frontend criadao com o intuito de realizar o teste para desenvolvedor fullstack na Bankme.
+
+O Frontend feito em React utilizar o framework Next.JS, um arquétipo opinado que conta com inúmeras facilidades para desenvolvedores que desejam criar interface.
+
+Foi utilizado um utilitário de classes CSS chamado Tailwindcss e Daisyui, a escolha o Daisyui em relação a outra bibliotecas de componente foi devido à performance que ela trás à aplicação devido utilizar apenas coisa primitivas da web que é o CSS e o HTML, sem nenhum javascript.
+
+No texto a seguir serão explicados o pontos mais importantes e o conceitos utilizados nesse Frontend.
+
+## Como rodar a aplicação (localmente)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+$ pnpm install // instalar as dependencias
+$ pnpm dev // inicializa a aplicação
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Explicação da arquitetura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Injeção da API
+Nesse frontend, utilizei uma espécie de injeção de dependência que eu mesmo criei para suprir a necessidade dos testes. Como o ideal é que os testes unitários não façam requisições para a API, encontrei uma boa maneira de mockar esses dados.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Para isso, utilizo uma única instância do BankmeClient que é injetada pelo ApiContextProvider
 
-## Learn More
+![image](https://github.com/felipe1496/aprove-me/assets/75271280/a1f4ce29-ba6f-418b-9b64-5d2fdac6cff1)
 
-To learn more about Next.js, take a look at the following resources:
+### intância sendo utilizada no código
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![image](https://github.com/felipe1496/aprove-me/assets/75271280/2f8843e4-8de9-468b-a6a6-0368c7dda48f)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Dessa forma é possível injetar um outro BankmeClient que implementa os métodos de forma mockada, para realizar os testes
 
-## Deploy on Vercel
+### Injetando BankmeClient mockado durante testes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![image](https://github.com/felipe1496/aprove-me/assets/75271280/e400f730-5279-4cbc-94a7-b4eb8070457e)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Autenticação
+
+Para realizar a autenticação, coloquei o accessToken dentro dos cookies, e sempre que request é utilizado, ele injeta através de um interceptor, o accessToken do usuário.
+
+Caso o accessToken esteja inválido, um interceptor das responses vai redirecionar o usuário para a página de login
+
+
+
