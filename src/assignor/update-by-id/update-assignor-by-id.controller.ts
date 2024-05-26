@@ -9,11 +9,7 @@ import { UpsertAssignorInputSchema } from "../upsert-assignor-input.schema";
 
 @Controller()
 export class UpdateAssignorByIdController {
-  private readonly prisma: PrismaProvider;
-
-  constructor(prisma: PrismaProvider) {
-    this.prisma = prisma;
-  }
+  constructor(private readonly prisma: PrismaProvider) {}
 
   @Put("integrations/assignor/:id")
   async handle(
