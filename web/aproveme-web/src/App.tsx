@@ -15,7 +15,7 @@ export const App = () => {
       <ThemeProvider storageKey="aproveme-theme">
         <Helmet titleTemplate="%s | aprove.me" />
 
-        <Toaster richColors />
+        <Toaster richColors position="bottom-center" />
 
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
