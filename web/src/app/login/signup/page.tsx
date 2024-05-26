@@ -50,7 +50,7 @@ export default function SignIn() {
           <Login.Logo>bankme</Login.Logo>
         </Login.SubContainer>
         <Login.Divider />
-        <Styled.Form onSubmit={handleSubmit}>
+        <Login.Form onSubmit={handleSubmit}>
           <Login.Title>Sign in</Login.Title>
           <Styled.Input type="text" placeholder="Username" name="login" />
           <Styled.Input
@@ -62,7 +62,7 @@ export default function SignIn() {
           <Styled.SubmitButton type="submit">Sign In</Styled.SubmitButton>
           {success && <Styled.Success>{success}</Styled.Success>}
           <Link href="/login">Sing up</Link>
-        </Styled.Form>
+        </Login.Form>
       </Login.Container>
     </Styled.Main>
   );

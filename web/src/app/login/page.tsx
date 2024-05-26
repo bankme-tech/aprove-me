@@ -23,6 +23,8 @@ export default function Login(): React.ReactElement {
       setError(message);
       return;
     }
+
+
     setError(null);
     try {
         const result = await connection.post('/auth', {

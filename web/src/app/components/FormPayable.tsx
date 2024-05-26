@@ -44,8 +44,9 @@ export default function FormPayable() {
         assignorId,
       });
       setError(null);
+      setSuccess('Payable created successfully');
       setTimeout(() => {
-        setSuccess('Payable created successfully');
+        setSuccess(null);
       }, 1500);
     } catch (error: any) {
       setError(error.response.data.message);
@@ -53,7 +54,7 @@ export default function FormPayable() {
   }
 
   return (
-    <Styled.Main>
+    <>
       <Styled.Form onSubmit={handleCreatePayable}>
         <h1>Create a new Payable</h1>
         <Styled.Input type="text" placeholder="Value" name="value" />
@@ -67,6 +68,6 @@ export default function FormPayable() {
         {success && <Styled.Success>{success} ✔️</Styled.Success>}
         <Styled.SubmitButton type="submit">Create</Styled.SubmitButton>
       </Styled.Form>
-    </Styled.Main>
+    </>
   );
 }
