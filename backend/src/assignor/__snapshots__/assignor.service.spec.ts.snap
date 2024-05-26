@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic CRUD operation (assignor) should delete a payable 1`] = `
+{
+  "id": "f880ae47-39fe-4ea7-8d3d-210bbd179b63",
+  "name": "Assignor Name",
+}
+`;
+
+exports[`basic CRUD operation (assignor) should return all assignor 1`] = `
+[
+  {
+    "name": "Henrique",
+  },
+  {
+    "name": "Mauler",
+  },
+]
+`;
+
+exports[`basic CRUD operation (assignor) should return an assignor by id 1`] = `
+{
+  "id": "1",
+  "name": "Frederico",
+}
+`;
+
+exports[`basic CRUD operation (assignor) should update an payable by id 1`] = `
+{
+  "amount": 1000,
+  "assignId": "1",
+  "description": "An updated description",
+  "id": "1",
+}
+`;
