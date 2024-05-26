@@ -104,9 +104,11 @@ export const SubmitButton = styled.button`
 export const Header = styled.header`
   display: flex;
   justify-content: center;
+  padding: 1.5rem 0;
   width: 100%;
-  padding: 1rem;
   position: fixed;
+  background-color: #ffffff;
+  box-shadow: 0 5px 10px #0000001f;
 `;
 
 export const Logo = styled.img`
