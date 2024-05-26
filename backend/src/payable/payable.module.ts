@@ -18,6 +18,8 @@ import { RemovePayableUseCase } from './usecases/remove-payable-usecase';
 import { RabbitMQModule } from 'src/rabbitmq/rabbitmq.module';
 import { RabbitMQProducer } from 'src/rabbitmq/rabbitmq.producer';
 import { IProducer } from 'src/rabbitmq/interfaces/producer.interface';
+import { EmailModule } from 'src/email/email.module';
+import { PayableService } from './payable.service';
 
 @Module({
   controllers: [PayableController],
@@ -54,7 +56,9 @@ import { IProducer } from 'src/rabbitmq/interfaces/producer.interface';
       provide: IProducer,
       useClass: RabbitMQProducer,
     },
+    PayableService,
   ],
-  imports: [AssignorModule, RabbitMQModule],
+  imports: [AssignorModule, RabbitMQModule, EmailModule],
+  exports: [PayableService],
 })
 export class PayableModule {}
