@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: nestjs_api
+    ports:
+      - '3000:3000'
+    environment:
+      - DATABASE_URL=postgres://postgres.aiqryhyuwulbhrdmrhra:Idealist9-Dropkick-Reliant-Even@aws-0-us-east-1.pooler.supabase.com:5432/postgres
+    env_file:
+      - .env
