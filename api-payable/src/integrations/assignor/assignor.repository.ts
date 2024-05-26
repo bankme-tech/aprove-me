@@ -14,6 +14,10 @@ export class AssignorRepository {
     return this.prisma.assignor.findUnique({ where: { id } });
   }
 
+  async getByEmail(email: string): Promise<Assignor | null> {
+    return this.prisma.assignor.findUnique({ where: { email } });
+  }
+
   async update(
     id: string,
     data: Prisma.AssignorUpdateInput,

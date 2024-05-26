@@ -27,7 +27,7 @@ import { Combobox, ComboboxProps } from "@/components/combobox";
 import { useRouter } from "next/navigation";
 import { Slot } from "@radix-ui/react-slot";
 import { apiCall } from "@/lib/api-call";
-import { AssignorEntity, type AssignorDto } from "@/interfaces/assignor.interface";
+import { AssignorEntity } from "@/interfaces/assignor.interface";
 import { type PayableDto } from "@/interfaces/payable.interface";
 
 const formSchema = z.object({
@@ -41,10 +41,10 @@ export default function Page() {
   const router = useRouter();
   const [assignors, setAssignors] = React.useState<AssignorEntity[]>([]);
   React.useEffect(() => {
-    apiCall({ endpoint: `/integrations/assignors`, method: "GET" })
-      .then((res) => {
-        setAssignors(res.result.assignors)
-      });
+    apiCall({
+      endpoint: `/integrations/assignors`,
+      method: "GET",
+    }).then((res) => setAssignors(res.result.assignors));
   }, [])
 
   const form = useForm<PayableSchema>({
@@ -90,11 +90,8 @@ export default function Page() {
   }
 
   function buildComboboxValue(assignor: AssignorEntity): ComboboxProps['items'][number] {
-    const label = `${assignor.name} ${assignor.email}`;
-    return {
-      key: label.toLowerCase(),
-      label,
-    }
+    const label = `${assignor.name} - Email: ${assignor.email}`;
+    return { key: label.toLowerCase(), label };
   }
   function onComboboxSelect(key: string) {
     const assignorFound = assignors.find((a) => key === buildComboboxValue(a).key);

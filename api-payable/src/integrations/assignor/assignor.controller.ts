@@ -8,6 +8,7 @@ import {
   Delete,
   NotFoundException,
   Query,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { AssignorRepository } from './assignor.repository';
 import { Assignor } from '@prisma/client';
@@ -20,6 +21,10 @@ export class AssignorController {
 
   @Post()
   async create(@Body() dto: AssignorDto): Promise<Assignor> {
+    const emailExists = await this.assignorService.getByEmail(dto.email);
+    if (emailExists) {
+      throw new UnprocessableEntityException("Email already exists");
+    }
     return this.assignorService.create(dto);
   }
 

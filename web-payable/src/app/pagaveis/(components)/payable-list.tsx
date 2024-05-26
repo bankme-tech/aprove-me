@@ -15,11 +15,11 @@ import React from "react";
 import { apiCall } from "@/lib/api-call";
 import { Pagination } from "@/interfaces/pagination.interface";
 import { PayableEntity } from "@/interfaces/payable.interface";
-import { PaginationContainer } from "@/components/pagination";
+import { AlertModalButton } from "@/components/alert-modal";
 
 interface PayableListItem {
-  payableId: string;
-  value: number;
+  id: string;
+  value: string;
   emissionDate: string;
   // assignorId: string;
   // assignorName: string;
@@ -29,7 +29,6 @@ type CardProps = React.ComponentProps<typeof Card>;
 
 /**
  * @todo pagination.
- * @todo delete item.
  * @todo edit item.
  */
 export default function PayableList({ className, ...props }: CardProps) {
@@ -43,8 +42,8 @@ export default function PayableList({ className, ...props }: CardProps) {
     }).then((res) => {
       if (res.result?.items) {
         const payableListItems: PayableListItem[] = res.result.items.map((payable) => ({
-          payableId: payable.id,
-          value: payable.value,
+          id: payable.id,
+          value: numberToCurrency(payable.value),
           emissionDate: new Intl.DateTimeFormat("pt-BR", {
             timeStyle: "medium",
             dateStyle: "short",
@@ -58,15 +57,26 @@ export default function PayableList({ className, ...props }: CardProps) {
     });
   }, []);
 
+  function onDeleteConfirmation(id: string) {
+    apiCall<{ deleted: PayableEntity }>({
+      endpoint: `/integrations/payable/${id}`,
+      method: "DELETE",
+    }).then((res) => {
+      if (res.result?.deleted && payableItems) {
+        setPayableItems(payableItems.filter(obj => obj.id !== id));
+      }
+    });
+  }
+
   return (
     <Card className={className} {...props}>
       <CardHeader>
         <CardTitle>Lista de pagáveis</CardTitle>
         <CardDescription>
           Procure a lista de pagáveis. Caso queira cria um pagável novo aperte "Criar pagável".
-          <Button className="w-full mt-3">
-            <PlusIcon className="mr-2 h-4 w-4" />
+          <Button className="w-full mt-3" asChild>
             <Link href="/pagaveis/criar">
+              <PlusIcon className="mr-2 h-4 w-4" />
               Criar pagável.
             </Link>
           </Button>
@@ -84,26 +94,31 @@ export default function PayableList({ className, ...props }: CardProps) {
                 Data de emissão: {payable.emissionDate}
               </p>
               <p className="text-sm text-muted-foreground">
-                Valor: {numberToCurrency(payable.value)}
+                Valor: {payable.value}
               </p>
             </div>
 
             <div className="flex bg-c">
-              <Button className="bg-blue-600">
-                <Link href="#">
+              <Button className="bg-blue-600 text-white shadow-sm hover:bg-blue-500" asChild>
+                <Link href={`/pagaveis/${payable.id}`}>
                   <Pencil1Icon />
                 </Link>
               </Button>
-              <Button className="bg-red-700">
-                <Link href="#">
-                  <TrashIcon />
-                </Link>
-              </Button>
+
+              <AlertModalButton
+                label={<TrashIcon />}
+                title="Por favor confirme antes de apagar."
+                message={`Esta operação é permanente. 
+                  Deseja apagar pagável com valor de ${payable.value}?`}
+                confirmMessage="Remover permanentemente"
+                id={payable.id}
+                onConfirm={onDeleteConfirmation}
+                buttonsClassName="bg-destructive text-destructive-foreground shadow-sm hover:bg-red-700"
+              />
             </div>
           </div>
         ))}
       </CardContent>
-      <PaginationContainer />
     </Card>
   );
 }
