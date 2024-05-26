@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { Payable, Prisma } from '@prisma/client';
-import { CreatePayableAssignorDto } from './payable.dto';
+import { CreatePayableAssignorDto, CreatePayableDto } from './payable.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { RabbitMqService } from '../rabbit-mq/rabbit-mq.service';
 import { AssignorService } from 'src/assignor/assignor.service';
@@ -19,6 +19,11 @@ export class PayableController {
   @Post()
   async create(@Body() createPayableDto: CreatePayableAssignorDto) {
     return this.payableService.create(createPayableDto);
+  }
+
+  @Post(':assignorId')
+  async createAssignor(@Body() createPayableDto: CreatePayableDto[], @Param('assignorId') assignorId) {
+    return this.payableService.create({assignor: assignorId, payables: createPayableDto});
   }
 
   // @UseGuards(AuthGuard)
