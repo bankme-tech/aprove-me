@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { axiosInstance as axios} from "../api";
 import { useNavigate } from "react-router-dom";
 import { Assignor } from "../types";
+import { getTokenAndSetHeaders } from "../helpers";
 
 function CreatePayable() {
   const [assignors, setAssignors] = useState<Assignor[]>([]);
   const [formData, setFormData] = useState({ assignor: '', value: 0 });
   const navigate = useNavigate();  
 
-  const token = localStorage.getItem('token');
-  const config = { headers: { 'Authorization': token } };
-
+  const config = getTokenAndSetHeaders();
+  
   useEffect(() => {
     const getAssignors = async () => {
       try {
@@ -22,8 +22,7 @@ function CreatePayable() {
     }
     
     getAssignors()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setAssignors])
+  }, [config])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
