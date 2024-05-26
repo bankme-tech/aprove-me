@@ -5,6 +5,8 @@ import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class PayableService {
+  private readonly logger = new Logger(PayableService.name);
+
   constructor(
     private readonly createPayableUseCase: ICreatePayableUseCase,
     private readonly emailService: EmailService,
@@ -12,10 +14,7 @@ export class PayableService {
 
   async processBatch(payables: CreatePayableInputDTO[]): Promise<void> {
     const batchSize = payables.length;
-    Logger.log(
-      `Processing batch with ${batchSize} payables`,
-      PayableService.name,
-    );
+    this.logger.debug(`Processing batch with ${batchSize} payables`);
     let processed = 0;
     let failed = 0;
     try {
@@ -25,26 +24,34 @@ export class PayableService {
             await this.createPayableUseCase.execute(payable);
             processed++;
           } catch (error) {
-            Logger.error(
-              `Error processing payable from batch. Error: ${error.message}`,
-              PayableService.name,
+            this.logger.debug(
+              `Error processing payable. Error: ${error.message}`,
             );
             failed++;
           }
         }),
       );
 
-      const result = `Batch of ${batchSize} payables processed with ${processed} successful payables and ${failed} failed payables`;
-
-      await this.emailService.sendEmail({
-        to: process.env.EMAIL_TO,
-        subject: 'Payables batch successfully processed',
-        content: result,
-      });
-      Logger.log('Batch successfully processed', PayableService);
+      await this.sendEmailNotification(batchSize, processed, failed);
+      this.logger.debug('Batch successfully processed');
     } catch (error) {
-      Logger.error('Error processing batch', PayableService.name);
+      this.logger.error('Error processing batch', error.stack);
       throw error;
     }
+  }
+
+  private async sendEmailNotification(
+    batchSize: number,
+    processed: number,
+    failed: number,
+  ): Promise<void> {
+    const result = `Batch of ${batchSize} payables processed with ${processed} successful payables and ${failed} failed payables`;
+
+    await this.emailService.sendEmail({
+      to: process.env.EMAIL_TO,
+      subject: 'Payables batch successfully processed',
+      content: result,
+    });
+    this.logger.debug('Email notification sent with batch result');
   }
 }
