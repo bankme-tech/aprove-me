@@ -43,4 +43,8 @@ export class AssignorsService {
       where: { id },
     });
   }
+
+  async getAssignors() {
+    return this.prisma.assignor.findMany();
+  }
 }

@@ -11,7 +11,7 @@
     "deploy": "npx prisma migrate deploy",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "npm run generate && nest start --watch",
+    "start:dev": "npx prisma migrate dev && npm run generate && nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "npm run deploy && npm run generate && node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
