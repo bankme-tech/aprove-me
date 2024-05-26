@@ -1,8 +1,22 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { format, formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
+import { deletePayable } from '@/api/delete-payable'
 import { getPayable, GetPayableBody } from '@/api/get-payable'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
   DialogContent,
@@ -26,6 +40,8 @@ interface PayableDetailsProps {
 }
 
 export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
+  const navigate = useNavigate()
+
   const { data: payableDetail, isLoading: isPayableLoading } =
     useQuery<GetPayableBody>({
       queryKey: ['payable-detail', payableId],
@@ -33,6 +49,19 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
       staleTime: Infinity, // Em quanto tempo essa informação se torna obsoleta,
       enabled: !!payableId, // Habilita a query apenas se payableId estiver disponível
     })
+
+  const { mutateAsync: deletePayableFn } = useMutation({
+    mutationFn: deletePayable,
+  })
+
+  const handleDelete = async () => {
+    try {
+      await deletePayableFn(payableId)
+      navigate(0)
+    } catch {
+      toast.error('Erro ao deletar o recebível.')
+    }
+  }
 
   // Desestruturação dos dados
   const {
@@ -59,6 +88,7 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
             </DialogHeader>
 
             <section className="space-y-6">
+              {/* {Dados do Recebível} */}
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -103,8 +133,9 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
                 </TableFooter>
               </Table>
 
+              {/* {Dados do Cedente} */}
               <h3 className="font-bold">Cedente:</h3>
-              <Table className="-mt-5">
+              <Table className="-mt-1">
                 <TableBody>
                   <TableRow>
                     <TableCell className="text-muted-foreground">
@@ -161,6 +192,7 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
               </Table>
             </section>
 
+            {/* {Seção de botões} */}
             <section className="flex flex-col gap-1">
               <Button
                 className="bg-amber-500 font-bold text-black  hover:bg-blue-600 hover:text-white dark:bg-amber-400 dark:hover:bg-blue-600"
@@ -169,13 +201,35 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
                 Editar
               </Button>
 
-              <Button
-                className="hover:bg-blue-600"
-                variant={'destructive'}
-                size={'lg'}
-              >
-                Deletar Recebível
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    className="bg-red-600 text-destructive-foreground hover:bg-destructive/90"
+                    size={'lg'}
+                  >
+                    Deletar Recebível
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Tem mesmo certeza?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Esta ação não pode ser desfeita. Isso vai deletar
+                      permanentemente o recebível e remover os dados do
+                      servidor.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-red-600"
+                      onClick={handleDelete}
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </section>
           </>
         )}
