@@ -53,3 +53,37 @@ As filas no projeto foram implementadas a partir da biblioteca [Bull](https://gi
 
 ### Testes
 No que se refere aos testes, fora implementados testes para os principais UseCases da aplicação
+
+### Fluxo completo da API
+POST
+1. Os dados entram na API caso estejam válidos, a partir do controller;
+2. O controller encaminha esse DTO para o Use Case
+3. O use case, onde está localizado toda a lógica de negócios da aplicação, tem a responsabilidade de criar as entidades e fazer os devidos tratamentos para que o repository tenha a capacidade de criar a entidade
+4. O repository através de um ObjectMapper para persistencia, tenta introduzir aquele dado em uma base de dados
+5. Em caso de sucesso o repository retorna para a API um objeto de domínio, ou seja uma nova entidade, a a partir de outro ObjectMapper, só que dessa vez para o domínio
+6. o use case faz os devidos tratamentos no retorno e encaminha para o controller novamente
+7. o controller a partir de um ObjectViewModel retorna o objeto para o usuário
+
+GET
+1. Uma query é feita e o controller deve ser responsavel por encaminhar esses dados para o use case
+2. O use case trata esse dados brutos, lançando erros quando necessário
+3. Caso esteja tudo OK, ele encaminha esse query para o repository, que busca os dados devidamente
+4. Através de um ObjectMapper, o repository retorna esses dados para o use case depois de passar pelo Object Mapper para persistencia
+5. O use case retorna para o controller
+6. O controller retorna para o usuário passando por um ViewModel
+
+PATCH
+1. Os dados entram na API caso estejam válidos, a partir do controller;
+2. O controller encaminha esse DTO para o Use Case
+3. O use case, onde está localizado toda a lógica de negócios da aplicação, tem a responsabilidade de criar as entidades e fazer os devidos tratamentos para que o repository tenha a capacidade de atualizar a entidade
+4. O repository através de um ObjectMapper para persistencia, tenta introduzir aquele dado em uma base de dados
+5. Em caso de sucesso o repository retorna para a API um objeto de domínio, ou seja uma nova entidade, a a partir de outro ObjectMapper, só que dessa vez para o domínio
+6. o use case faz os devidos tratamentos no retorno e encaminha para o controller novamente
+7. o controller a partir de um ObjectViewModel retorna o objeto para o usuário
+
+DELETE
+1. O controller recebe os parametros da deleção
+2. O use case trata esses pametros para encaminhar para a camada de repository
+3. O repository não lança nenhum erro caso tenha ocorrido sucesso
+4. Nada é retornado para o use case
+5. Nada é retornado para o controller
