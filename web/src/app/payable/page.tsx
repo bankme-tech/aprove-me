@@ -11,12 +11,14 @@ import Loading from "../components/Loading";
 import { getToken } from "@/utils/tokenUtils";
 import transformDate from "@/utils/transformDate";
 import TablePayable from "../components/TablePayable";
+import { useRouter } from "next/navigation";
 
 export default function PayablePage() {
   const [assignors, setAssignors] = useState<Assignor[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [payable, setPayable] = useState<Payable[]>([]);
   useAuthentication();
+  const router = useRouter();
   
   useEffect(() => {
     async function data() {
@@ -63,6 +65,11 @@ export default function PayablePage() {
             })}
           </tbody>
         </PayableStyle.Table>
+        <PayableStyle.Button onClick={() => router.push('/')}
+          style={{backgroundColor: "#0b36c0"}}
+        >
+            Home
+          </PayableStyle.Button>
       </Styled.Container>
     </Styled.Main>
   );
