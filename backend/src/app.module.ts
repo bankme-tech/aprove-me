@@ -7,6 +7,7 @@ import { AssignorModule } from './assignor/assignor.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
     AuthModule,
     UserModule,
     RabbitMQModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [],
