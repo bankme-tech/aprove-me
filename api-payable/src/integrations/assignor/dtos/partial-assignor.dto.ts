@@ -1,4 +1,4 @@
-import { IsString, MaxLength, IsOptional } from 'class-validator';
+import { IsString, MaxLength, IsOptional, IsEmail } from 'class-validator';
 
 export class PartialAssignorDto {
   /** É o documento CPF ou CNPJ do cedente */
@@ -8,7 +8,7 @@ export class PartialAssignorDto {
   document?: string;
 
   /** É o email do cedente */
-  @IsString()
+  @IsEmail()
   @MaxLength(140)
   @IsOptional()
   email?: string;

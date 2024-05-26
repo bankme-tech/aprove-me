@@ -3,6 +3,7 @@ import { Payable } from '@prisma/client';
 import { PrismaService } from '../../infrastructure/prisma.service';
 import { PayableDto } from './dtos/payables.dto';
 import { PartialPayableDto } from './dtos/partial-payable.dto';
+import { PaginationDto } from 'src/dtos/pagination.dto';
 
 @Injectable()
 export class PayableService {
@@ -29,12 +30,7 @@ export class PayableService {
     });
   }
 
-  async getPage(params: {
-    limit: number,
-    page: number,
-    cursorId: string,
-    includeAssignor: boolean,
-  }) {
+  async getPage(params: PaginationDto & { includeAssignor: boolean }) {
     const { limit, cursorId, page, includeAssignor } = params;
     const offset = (page - 1) * limit;
     type FindManyParam = Parameters<PrismaService['payable']['findMany']>[0];

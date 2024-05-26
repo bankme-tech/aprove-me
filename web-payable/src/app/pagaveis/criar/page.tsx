@@ -27,29 +27,27 @@ import { Combobox, ComboboxProps } from "@/components/combobox";
 import { useRouter } from "next/navigation";
 import { Slot } from "@radix-ui/react-slot";
 import { apiCall } from "@/lib/api-call";
+import { AssignorEntity, type AssignorDto } from "@/interfaces/assignor.interface";
+import { type PayableDto } from "@/interfaces/payable.interface";
 
 const formSchema = z.object({
   value: z.string({ message: "Por favor digite um valor positivo" }),
   emissionDate: z.string(),
   assignor: z.string().uuid(),
 });
+type PayableSchema = z.infer<typeof formSchema>;
 
-interface Assignor {
-  id: string
-  name: string;
-  email: string;
-}
-
-type Payable = z.infer<typeof formSchema>;
 export default function Page() {
   const router = useRouter();
-  const [assignors, setAssignors] = React.useState<Assignor[]>([]);
+  const [assignors, setAssignors] = React.useState<AssignorEntity[]>([]);
   React.useEffect(() => {
     apiCall({ endpoint: `/integrations/assignors`, method: "GET" })
-      .then((res) => setAssignors(res.result.assignors));
+      .then((res) => {
+        setAssignors(res.result.assignors)
+      });
   }, [])
 
-  const form = useForm<Payable>({
+  const form = useForm<PayableSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       value: "R$ 0",
@@ -65,11 +63,11 @@ export default function Page() {
   }
 
   async function onSubmit(
-    payable: Payable,
+    payable: PayableSchema,
     e?: React.BaseSyntheticEvent<object, any, any>,
   ) {
     e?.preventDefault();
-    const dto: Payable | { value: number } = {
+    const dto: Omit<PayableDto, 'id'> = {
       ...payable,
       value: currencyToNumber(payable.value),
       emissionDate: new Date(payable.emissionDate).toISOString(),
@@ -91,7 +89,7 @@ export default function Page() {
     }
   }
 
-  function buildComboboxValue(assignor: Assignor): ComboboxProps['items'][number] {
+  function buildComboboxValue(assignor: AssignorEntity): ComboboxProps['items'][number] {
     const label = `${assignor.name} ${assignor.email}`;
     return {
       key: label.toLowerCase(),

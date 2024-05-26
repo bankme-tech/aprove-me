@@ -24,8 +24,9 @@ import { BatchPayableDto } from './dtos/batch-payable.dto';
 import { PaginationDto } from 'src/dtos/pagination.dto';
 import { ROUTE_PAYABLE_BATCH_DEAD_LETTER } from 'src/microservices/rmq/payable-dead-letter-queue.service';
 import { EmailService } from 'src/services/email/email.service';
+import { PayablePaginationDto } from './dtos/payable-pagination.dto';
 
-@Controller('/integrations/payable')
+@Controller("/integrations/payable")
 export class PayableController {
   constructor(
     private readonly emailService: EmailService,
@@ -46,30 +47,16 @@ export class PayableController {
     return this.payableService.updatePayable(id, dto);
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Payable | null> {
-    const payable = await this.payableService.getPayableById(id);
-    if (!payable) {
-      throw new NotFoundException(`Payable not found. Id: ${id}`);
-    }
-    return payable;
-  }
-
-  @Get()
-  async getPage(@Query() queryDto: PaginationDto) {
-    const { page, limit, cursorId } = queryDto;
+  @Get('page')
+  async getPage(@Query() queryDto: PayablePaginationDto) {
+    const { page, limit, cursorId, includeAssignor } = queryDto;
     const pagination = await this.payableService.getPage({
       page,
       limit,
       cursorId,
-      includeAssignor: false,
+      includeAssignor,
     });
     return pagination;
-  }
-
-  @Delete(':id')
-  async delete(@Param('id') id: string): Promise<Payable> {
-    return this.payableService.deletePayable(id);
   }
 
   @Post('batch')
@@ -81,6 +68,20 @@ export class PayableController {
     });
 
     return { sent: true, queueName: PAYABLE_BATCH_QUEUE };
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Payable | null> {
+    const payable = await this.payableService.getPayableById(id);
+    if (!payable) {
+      throw new NotFoundException(`Payable not found. Id: ${id}`);
+    }
+    return payable;
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<Payable> {
+    return this.payableService.deletePayable(id);
   }
 
   /** Consume values emitted by {@link PayableQueueProvider['sendBatch']}. */

@@ -1,10 +1,13 @@
-export function numberToCurrency(numericString: string): string {
+export function numberToCurrency(numericString: string | number): string {
   if (!numericString) return "R$ 0";
 
-  const num = parseFloat(numericString) / 100;
-  if (Number.isNaN(num)) return "Invalid number";
+  const num = typeof numericString === 'string'
+    ? parseFloat(numericString)
+    : numericString;
+  const currencyFloat = num / 100;
+  if (Number.isNaN(currencyFloat)) return "Invalid number";
 
-  return  num.toLocaleString("pt-BR", {
+  return currencyFloat.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
     maximumFractionDigits: 2,

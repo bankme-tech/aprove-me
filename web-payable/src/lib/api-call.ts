@@ -11,7 +11,7 @@ function addMissingSlash(endpoint: string) {
   return `/${endpoint}`;
 }
 
-export async function apiCall(data: CallData) {
+export async function apiCall<T = any>(data: CallData) {
   const token = 'TODO: get localstorage token';
   const { endpoint, method, body } = data;
 
@@ -37,6 +37,6 @@ export async function apiCall(data: CallData) {
     throw new Error(err.message);
   }
 
-  const result = await response.json()
+  const result = await response.json() as T;
   return { result };
 }

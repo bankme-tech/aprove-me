@@ -30,6 +30,9 @@ CREATE TABLE "User" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Assignor_email_key" ON "Assignor"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_login_key" ON "User"("login");
 
 -- AddForeignKey

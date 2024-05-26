@@ -17,14 +17,14 @@ model Payable {
   id           String   @id @default(uuid())
   value        Float
   emissionDate DateTime @default(now())
-  assignor     Assignor @relation(fields: [assignorId], references: [id], onDelete: Cascade)
+  assignor     Assignor @relation(fields: [assignorId], references: [id])
   assignorId   String   @db.VarChar(36)
 }
 
 model Assignor {
   id       String    @id @default(uuid())
   document String    @db.VarChar(30)
-  email    String    @db.VarChar(140)
+  email    String    @db.VarChar(140) @unique
   phone    String    @db.VarChar(20)
   name     String    @db.VarChar(140)
   payables Payable[]
