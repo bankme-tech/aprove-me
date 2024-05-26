@@ -21,7 +21,7 @@ export default function Home() {
           <Styled.SubmitButton
             type="button"
             onClick={() => setFormPayable((prev) => !prev)}
-            style={{ width: "70%", backgroundColor: "#019901" }}
+            style={{ width: "50%", backgroundColor: "#019901" }}
           >
             {formPayable ? "Create Assignor" : "Create Payable"}
           </Styled.SubmitButton>
