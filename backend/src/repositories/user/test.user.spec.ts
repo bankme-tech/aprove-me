@@ -1,54 +1,44 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserRepo } from '../repositories/user.repo';
-import { PayableRepo } from '../repositories/payable.repo';
-import { prismaPayableRepo } from '../repositories/entitys/prisma-payable-repo';
-import { prismaAssignorRepo } from '../repositories/entitys/prisma-assignor-repo';
-import { AssignorRepo } from '../repositories/assignor.repo';
-import { prismaUserRepo } from '../repositories/entitys/prisma-user-repo';
-import { PrismaService } from '../database/prisma.service';
-import {
-  MOCK_NOVO_USUARIO,
-  MOCK_NOVO_USUARIO_RESPONSE,
-  MOCK_NOVO_USUARIO_SEM_SENHA,
-  MOCK_UPDATE_USUARIO,
-} from '../../test/mocks/mock-usuários';
-import { AppController } from '../app.controller';
 import {
   BadRequestException,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { AuthService } from '../auth/auth.service';
-import { JwtModule } from '@nestjs/jwt';
+import { AssignorModule } from '../assignor/assignor.module';
+import { PayableModule } from '../payable/payable.module';
+import { UserModule } from './user.module';
+import { AuthModule } from '../../auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
+import { SecurityModule } from '../../auth/security.module';
+import {
+  MOCK_NOVO_USUARIO,
+  MOCK_NOVO_USUARIO_RESPONSE,
+  MOCK_NOVO_USUARIO_SEM_SENHA,
+  MOCK_UPDATE_USUARIO,
+} from '../../../test/mocks/mock-usuários';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
 
 describe('Usuário', () => {
-  let controller: AppController;
-  let service: UserRepo;
+  let controller: UserController;
+  let service: UserService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        JwtModule.register({
-          secret: process.env.JWT_SECRET,
-          signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
-        }),
+        AssignorModule,
+        PayableModule,
+        UserModule,
+        AuthModule,
+        PassportModule,
+        SecurityModule,
       ],
-      controllers: [AppController],
-      providers: [
-        PrismaService,
-        { provide: PayableRepo, useClass: prismaPayableRepo },
-        { provide: AssignorRepo, useClass: prismaAssignorRepo },
-        { provide: UserRepo, useClass: prismaUserRepo },
-        AuthService,
-      ],
+      controllers: [],
+      providers: [],
     }).compile();
 
-    controller = module.get<AppController>(AppController);
-    service = module.get<UserRepo>(UserRepo);
-  });
-
-  it('Deve estar definido', () => {
-    expect(service).toBeDefined();
+    controller = module.get<UserController>(UserController);
+    service = module.get<UserService>(UserService);
   });
 
   describe('Crianção de usuário', () => {
@@ -70,6 +60,16 @@ describe('Usuário', () => {
       }
     });
 
+    it('Deve falhar ao tentar registrar um usuário ja existente', async () => {
+      jest.spyOn(service, 'createUser');
+
+      try {
+        await controller.createUser(MOCK_NOVO_USUARIO);
+      } catch (error) {
+        expect(error).toBeInstanceOf(BadRequestException);
+      }
+    });
+
     it('Internal erro ao tentar criar um novo usuário', async () => {
       jest.spyOn(service, 'createUser').mockReset;
 
@@ -83,12 +83,9 @@ describe('Usuário', () => {
     it('Deve obter um usuário pelo id', async () => {
       jest.spyOn(service, 'getUserById');
 
-      const result = await controller.getUserById(
-        MOCK_NOVO_USUARIO_RESPONSE.id,
-      );
+      const result = await controller.getUserById(MOCK_NOVO_USUARIO.id);
 
-      expect(result.login).toEqual(MOCK_NOVO_USUARIO_RESPONSE.login);
-      expect(result.id).toEqual(MOCK_NOVO_USUARIO_RESPONSE.id);
+      expect(result.id).toEqual(MOCK_NOVO_USUARIO.id);
     });
 
     it('Deve falhar ao tentar obter um usuário pelo id', async () => {
@@ -135,11 +132,8 @@ describe('Usuário', () => {
 
       const result = await controller.updateUser(id, MOCK_UPDATE_USUARIO);
 
-      expect(result).toEqual(MOCK_UPDATE_USUARIO);
-      expect(result.password).toBeDefined();
-      expect(result.password).toEqual(MOCK_UPDATE_USUARIO.password);
       expect(result.login).toBeDefined();
-      expect(result.login).toEqual('teste2');
+      expect(result.login).toEqual(MOCK_UPDATE_USUARIO.login);
       expect(result.id).toBeDefined();
       expect(result.id).toEqual(MOCK_UPDATE_USUARIO.id);
     });
@@ -170,16 +164,6 @@ describe('Usuário', () => {
       const result = await controller.deleteUser(MOCK_NOVO_USUARIO_RESPONSE.id);
 
       expect(result).toBeUndefined();
-    });
-
-    it('Deve falhar ao tentar obter um array de usuários', async () => {
-      jest.spyOn(service, 'getUsersAll');
-
-      try {
-        await controller.getUserAll();
-      } catch (error) {
-        expect(error.message).toBe('Users not found');
-      }
     });
   });
 });

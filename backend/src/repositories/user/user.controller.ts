@@ -52,16 +52,8 @@ export class UserController {
   async getUserAll() {
     try {
       const users = await this.user.getUsersAll();
-
-      if (!users) {
-        throw new NotFoundException('Users not found');
-      }
-
       return users;
     } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

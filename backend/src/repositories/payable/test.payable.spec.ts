@@ -1,48 +1,42 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PayableRepo } from '../repositories/payable.repo';
-import { prismaPayableRepo } from '../repositories/entitys/prisma-payable-repo';
-import { prismaAssignorRepo } from '../repositories/entitys/prisma-assignor-repo';
-import { AssignorRepo } from '../repositories/assignor.repo';
-import { prismaUserRepo } from '../repositories/entitys/prisma-user-repo';
-import { PrismaService } from '../database/prisma.service';
-import { AppController } from '../app.controller';
 import {
   MOCK_NOVO_RECEBIVEIS,
   MOCK_UPDATE_RECEBIVEIS,
-} from '../../test/mocks/mock-payable';
-import { UserRepo } from '../repositories/user.repo';
+} from '../../../test/mocks/mock-payable';
 import {
   BadRequestException,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { AuthService } from '../auth/auth.service';
+import { PayableController } from './payable.controller';
+import { PayableService } from './payable.service';
+import { AssignorModule } from '../assignor/assignor.module';
+import { PayableModule } from './payable.module';
+import { UserModule } from '../user/user.module';
+import { AuthModule } from '../../auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
+import { SecurityModule } from '../../auth/security.module';
 
 describe('recebiveis', () => {
-  let controller: AppController;
-  let service: PayableRepo;
+  let controller: PayableController;
+  let service: PayableService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        JwtModule.register({
-          secret: process.env.JWT_SECRET,
-          signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
-        }),
+        AssignorModule,
+        PayableModule,
+        UserModule,
+        AuthModule,
+        PassportModule,
+        SecurityModule,
       ],
-      controllers: [AppController],
-      providers: [
-        PrismaService,
-        { provide: PayableRepo, useClass: prismaPayableRepo },
-        { provide: AssignorRepo, useClass: prismaAssignorRepo },
-        { provide: UserRepo, useClass: prismaUserRepo },
-        AuthService,
-      ],
+      controllers: [],
+      providers: [],
     }).compile();
 
-    controller = module.get<AppController>(AppController);
-    service = module.get<PayableRepo>(PayableRepo);
+    controller = module.get<PayableController>(PayableController);
+    service = module.get<PayableService>(PayableService);
   });
 
   it('Deve estar definido', () => {

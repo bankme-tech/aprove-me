@@ -1,0 +1,2 @@
+export const MOCK_ADM_TOKEN =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6IkFkbWluIiwiaWQiOjMsImlhdCI6MTcxNjY3Nzg4MywiZXhwIjoxNzE2Njc3OTQzfQ.mf1RCvTiSskH7i6rcpZKospatill1Iq2t3bzNorcBV';
