@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
 } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
+import { Response } from 'express';
 
 // CRUD gerado com o comando "nest g resource payable".
 /**Camada de controle da rota 'integrations/payable'. Inclui CRUD completo. */
@@ -31,8 +33,9 @@ export class PayableController {
 
   /**Busca um recebível pelo id e retorna seus dados. */
   @Get('payable/:id')
-  findOne(@Param('id') id: string) {
-    return this.payableService.findOne(id);
+  async findOne(@Param('id') id: string, @Res() response: Response) {
+    const { status, body } = await this.payableService.findOne(id);
+    return response.status(status).json(body);
   }
 
   /**Altera os dados de um recebível no banco de dados pelo id. */

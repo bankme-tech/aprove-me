@@ -31,7 +31,11 @@ export class PayableService {
     const response = await this.prisma.payable.findUnique({
       where: { id },
     });
-    return response;
+
+    if (!response) {
+      return { status: 400, body: { message: 'Recebível não encontrado.' } };
+    }
+    return { status: 200, body: response };
   }
 
   /**Altera os dados de um recebível no banco de dados pelo id. */
