@@ -6,6 +6,7 @@ import useGetPayable from "../hooks/useGetPayable";
 import { Payable } from "../hooks/useGetPayableById";
 import Loading from "./loading";
 import style from "./payables.module.css";
+import ModalPayable from "@/components/modal-payable";
 
 export default function Payables() {
   useCheckToken();

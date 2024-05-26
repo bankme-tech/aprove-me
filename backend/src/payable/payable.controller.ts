@@ -40,7 +40,7 @@ export class PayableController {
   }
 
   @Get()
-  @HttpCode(201)
+  @HttpCode(200)
   async getAllPayables() {
     return this.payableService.findAll();
   }

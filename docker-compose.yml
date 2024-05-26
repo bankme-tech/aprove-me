@@ -1,19 +1,19 @@
 services:
-  frontend:
-    container_name: app_frontend
-    build: ./frontend
-    ports:
-      - 3001:3001
-    working_dir: /app-frontend
-    volumes: 
-      - ./frontend/src:/app-frontend/src
-    command: dev
-    healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3001"] 
-      timeout: 10s
-      retries: 5
-    depends_on:
-      - backend
+# frontend:
+#     container_name: app_frontend
+#     build: ./frontend
+#     ports:
+#       - 3001:3001
+#     working_dir: /app-frontend
+#     volumes: 
+#       - ./frontend/src:/app-frontend/src
+#     command: dev
+#     healthcheck:
+#       test: ["CMD", "lsof", "-t", "-i:3001"] 
+#       timeout: 10s
+#       retries: 5
+#     depends_on:
+#       - backend
   backend:
     container_name: app_backend
     build: ./backend

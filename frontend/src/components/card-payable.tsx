@@ -16,7 +16,7 @@ export default function CardPayable({ payable }: CardPayableProps) {
     <div className={style.cardContainer}>
       { payable &&
           <Card className={`py-4 ${style.link}`} key={payable.id}>
-            <EditErase />
+            <EditErase payable={payable} />
             <Link href={`/payables/${payable.id}`} key={payable.id}>
               <CardHeader className="pt-2 px-4 flex-col gap-12 items-start">
                 <p className="text-tiny uppercase font-bold">

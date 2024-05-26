@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { api } from "../../api";
 
-type Assignors = {
+export type Assignors = {
     id: string;
     document: string;
     email: string;
