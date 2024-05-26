@@ -7,7 +7,9 @@ import { CreatePayableDto } from 'src/payable/dto/create-payable.dto';
 export class ProducerService {
   private channelWrapper: ChannelWrapper;
   constructor() {
-    const connection = amqp.connect(['amqp://localhost:5672']);
+    const connection = amqp.connect([
+      process.env.RABBITMQ_URL || 'amqp://localhost:5672',
+    ]);
     this.channelWrapper = connection.createChannel({
       setup: (channel: Channel) => {
         return channel.assertQueue('payable_queue', { durable: true });
@@ -27,7 +29,6 @@ export class ProducerService {
         } as any,
       );
     } catch (error) {
-      console.log('aaa');
       Logger.error(`Error sending message: ${error}`);
       throw new HttpException(
         'Internal server error',

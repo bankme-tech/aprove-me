@@ -34,7 +34,7 @@ export default function AssignorDetails({
     }
 
     getAssignor();
-  }, [params.id]);
+  }, [params.id, router]);
 
   const formatPhone = (phone: string) => {
     if (!phone) return '';

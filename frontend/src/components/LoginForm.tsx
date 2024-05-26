@@ -37,7 +37,7 @@ export default function LoginForm({
     !verifyPassword(userData.password);
 
   return (
-    <main className=" w-full text-black flex justify-center items-center">
+    <section className=" w-full text-black flex justify-center items-center h-full">
       <div className="p-8 w-4/5 max-w-[400px] bg-neutral-50 rounded-xl flex flex-col items-center">
         <h1 className="text-xl font-semibold md:text-2xl lg:text-3xl">
           {isSignup ? 'Sign up' : 'Sign in'}
@@ -87,6 +87,6 @@ export default function LoginForm({
           </Link>
         </span>
       </div>
-    </main>
+    </section>
   );
 }

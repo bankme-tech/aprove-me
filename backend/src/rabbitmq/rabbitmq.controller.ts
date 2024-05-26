@@ -1,11 +1,6 @@
 import { Controller } from '@nestjs/common';
 
-import {
-  Ctx,
-  EventPattern,
-  MessagePattern,
-  RmqContext,
-} from '@nestjs/microservices';
+import { Ctx, MessagePattern, RmqContext } from '@nestjs/microservices';
 import { CreatePayableDto } from 'src/payable/dto/create-payable.dto';
 import { ConsumerService } from './consumer';
 import { EmailService } from './email.service';

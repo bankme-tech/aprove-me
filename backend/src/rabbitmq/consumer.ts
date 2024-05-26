@@ -30,7 +30,7 @@ export class ConsumerService {
 
       if (!success) {
         await this.deadProducerService.sendToDeadQueue(payable);
-        this.emailService.deniedPayableEmail(payable);
+        // this.emailService.deniedPayableEmail(payable);
         continue;
       }
 

@@ -11,6 +11,7 @@ import { handleChange } from '@/utils/utils';
 import { Payable } from '@/types/PayableType';
 import { Assignor } from '@/types/AssignorType';
 import { useRouter } from 'next/navigation';
+import { AxiosError } from 'axios';
 
 type PayableFormProps = {
   payable: Payable;
@@ -46,11 +47,11 @@ export default function PayableForm({
         await api.get(`integrations/payable/${payable.id}`);
       } catch (error) {
         toast.error('Error fetching assignors');
-        if (error?.response?.status === 401) router.push('/signIn');
+        if ((error as AxiosError)?.response?.status === 401) router.push('/signIn');
       }
     };
     getAssignors();
-  }, [payable.id]);
+  }, [payable.id, router]);
 
   const handleFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -65,6 +66,7 @@ export default function PayableForm({
   const verifyNumber = (value: string) =>
     !(isNaN(Number(value)) || +value <= 0);
 
+
   return (
     <form
       className="flex flex-col gap-2 mt-2 text-black items-center justify-center w-full"
@@ -73,8 +75,9 @@ export default function PayableForm({
       <Input
         name="value"
         type="number"
+        step="0.01"
         onChange={handleFormChange}
-        value={payableInfo.value}
+        value={Number(payableInfo.value).toFixed(2)}
         verifyValue={verifyNumber}
       >
         Value

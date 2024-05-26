@@ -25,4 +25,13 @@ export class AuthService {
       token: await this.jwtService.signAsync(payload),
     };
   }
+
+  async validateToken(token: string) {
+    try {
+      this.jwtService.verify(token);
+      return { valid: true };
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token');
+    }
+  }
 }

@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     api.defaults.headers['authorization'] = '';
     setIsAuthenticated(false);
     router.push('/signIn');
-  }, [])
+  }, [router])
 
   return (
     <AuthContext.Provider value={{ isLoading, isAuthenticated, login: Login, logout: Logout }}>

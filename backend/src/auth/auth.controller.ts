@@ -12,4 +12,10 @@ export class AuthController {
   async signIn(@Body() loginDto: LoginDTO) {
     return this.authService.signIn(loginDto);
   }
+
+  @Public()
+  @Post('validate-token')
+  async validateToken(@Body() validateTokenDTO: { token: string }) {
+    return this.authService.validateToken(validateTokenDTO.token);
+  }
 }

@@ -3,21 +3,46 @@ version: '3'
 services:
 
   rabbitmq:
-   image: rabbitmq:3-management
-   container_name: rabbitmq-my
-   ports:
-     - "5672:5672"
-     - "15672:15672"
-   volumes:
-     - rabbitmq_data:/var/lib/rabbitmq
+    image: rabbitmq:3-management
+    container_name: rabbitmq-my
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - bankme_api
 
-  #api:
-  #  build: ./backend/
-  #  container_name: bankme_api
-  #  ports:
-  #    - 8080:8080
-  #  restart: always
-  #  volumes:
-  #   - ./backend/src:/app/backend/src
+  # api:
+  #   build: ./backend/
+  #   container_name: bankme_api
+  #   ports:
+  #     - "8080:8080"
+  #   restart: always
+  #   volumes:
+  #     - ./backend/src:/app/backend/src
+  #   depends_on:
+  #     - rabbitmq
+  #   networks:
+  #     - bankme_api
+
+
+  # frontend:
+  #   build: ./frontend/
+  #   container_name: frontendxx
+  #   ports:
+  #     - "3000:3000"
+  #   restart: always
+  #   volumes:
+  #     - ./frontend/src:/app/frontend/src
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - bankme_api
+
 volumes:
   rabbitmq_data:
+
+networks:
+  bankme_api:
+    driver: bridge

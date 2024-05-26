@@ -10,11 +10,12 @@ interface Props {
   value: string | number;
   verifyValue: (value: string) => boolean;
   placeholder?: string;
+  step?: string;
 }
 
 type ErrorType = { email: string, password: string, value: string, name: string, document: string, phone: string }
 
-export default function Input({ children, type, onChange, name, value, verifyValue, placeholder }: Props) {
+export default function Input({ children, type, onChange, name, value, verifyValue, placeholder, step }: Props) {
 
 
   const errors: ErrorType = {
@@ -45,6 +46,7 @@ export default function Input({ children, type, onChange, name, value, verifyVal
           name={name}
           type={type}
           value={value}
+          step={step}
           required
           placeholder={placeholder}
           onChange={(e) => {
