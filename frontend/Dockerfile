@@ -9,9 +9,11 @@ RUN npm install
 
 COPY . .
 
-RUN npx prisma generate
+RUN apk add --no-cache xdg-utils
 
-EXPOSE 3000
+EXPOSE 3001
 
-CMD ["npm", "run", "start:dev"]
+ENTRYPOINT ["npm"]
+
+CMD ["run", "dev"]
  
