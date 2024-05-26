@@ -10,8 +10,10 @@ export class RabbitMQProducer<T> implements IProducer<T> {
   ) {}
 
   async publishMessage(message: T): Promise<void> {
-    lastValueFrom(this.client.emit('message', message)).then(() => {
-      Logger.log('Message published', 'RabbitMQProducer');
-    });
+    lastValueFrom(this.client.emit(process.env.RABBITMQ_QUEUE, message)).then(
+      () => {
+        Logger.log('Message published', RabbitMQProducer.name);
+      },
+    );
   }
 }
