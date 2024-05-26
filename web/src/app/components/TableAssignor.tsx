@@ -1,8 +1,6 @@
 'use client'
 
 import Assignor from "@/interfaces/Assignor";
-import Payable from "@/interfaces/Payable";
-import transformDate from "@/utils/transformDate";
 import React from "react";
 import * as Styled from "../styles/Details";
 import { useRouter } from "next/navigation";
@@ -18,7 +16,7 @@ export default function TableAssignor({ assignor }: TableAssignorProps): React.R
   }
 
   return (
-    <tr>
+    <tr onClick={handleClick}>
     <td>{assignor.name}</td>
     <td>
       <Styled.Button 
