@@ -24,17 +24,18 @@ export class UserController {
   constructor(private user: UserService) {}
 
   @ApiTags('User')
-  @Post('user')
+  @Post('users')
   async createUser(@Body() body: UserDto) {
     try {
       const { login } = body;
-      const userExist = await this.user.getUserByLogin(login);
+      const lowerCaseLogin = login.toLowerCase();
+      const userExist = await this.user.getUserByLogin(lowerCaseLogin);
 
       if (userExist) {
         throw new BadRequestException('User already exists');
       }
-
-      const createUser = await this.user.createUser(body);
+      const user = { ...body, login: lowerCaseLogin };
+      const createUser = await this.user.createUser(user);
 
       return createUser;
     } catch (error) {
@@ -47,7 +48,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiTags('User')
-  @Get('user')
+  @Get('users')
   @HttpCode(HttpStatus.OK)
   async getUserAll() {
     try {
@@ -60,7 +61,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiTags('User')
-  @Get('user/:id')
+  @Get('users/:id')
   @ApiBearerAuth('bearer')
   @HttpCode(HttpStatus.OK)
   async getUserById(@Param('id') id: number) {
@@ -82,7 +83,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiTags('User')
-  @Get('user/login/search')
+  @Get('users/login/search')
   @HttpCode(HttpStatus.OK)
   async getUserByLogin(@Query('login') login: string) {
     try {
@@ -103,7 +104,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiTags('User')
-  @Put('user/:id')
+  @Put('users/:id')
   @HttpCode(HttpStatus.OK)
   async updateUser(@Param('id') id: number, @Body() body: UserDto) {
     try {
@@ -126,7 +127,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiTags('User')
-  @Delete('user/:id')
+  @Delete('users/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUser(@Param('id') id: number) {
     try {

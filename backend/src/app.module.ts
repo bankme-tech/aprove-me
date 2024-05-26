@@ -2,7 +2,7 @@ import { AuthModule } from './auth/auth.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { PassportModule } from '@nestjs/passport';
-import { UserModule } from './repositories/user/user.module';
+import { UserModule } from './repositories/users/user.module';
 import { PayableModule } from './repositories/payable/payable.module';
 import { AssignorModule } from './repositories/assignor/assignor.module';
 import { SecurityModule } from './auth/security.module';

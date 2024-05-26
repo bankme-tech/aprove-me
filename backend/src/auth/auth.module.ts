@@ -5,7 +5,7 @@ import { CreateToken } from './toke';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaService } from '../database/prisma.service';
 import { JwtStrategy } from './jwt.strategy';
-import { UserService } from '../repositories/user/user.service';
+import { UserService } from '../repositories/users/user.service';
 import { AuthController } from './auth.controller';
 @Module({
   imports: [

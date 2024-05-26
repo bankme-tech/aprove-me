@@ -3,6 +3,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as dotenv from 'dotenv';
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -33,6 +34,14 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
+
+  const corsOptions: CorsOptions = {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept',
+  };
+  app.enableCors(corsOptions);
 
   await app.listen(3000);
 }

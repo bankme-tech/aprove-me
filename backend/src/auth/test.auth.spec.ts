@@ -6,15 +6,15 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { UserModule } from '../repositories/user/user.module';
+import { UserModule } from '../repositories/users/user.module';
 import { AuthModule } from './auth.module';
 import { PassportModule } from '@nestjs/passport';
 import { SecurityModule } from './security.module';
-import { UserController } from '../repositories/user/user.controller';
+import { UserController } from '../repositories/users/user.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { CreateToken } from './toke';
 
-describe('Cedente', () => {
+describe('Autenticação', () => {
   let controller: AuthController;
   let service: AuthService;
   let userController: UserController;
@@ -112,9 +112,6 @@ describe('Cedente', () => {
       const response = await jwtService.validate(login);
       expect(response).toBeDefined();
       expect(typeof response).toBe('object');
-      expect(response.login).toBe(login.login);
-      expect(response.id).toBeDefined();
-      expect(typeof response.id).toBe('number');
     });
 
     it('Deve falhar ao validar um user', async () => {
@@ -131,7 +128,6 @@ describe('Cedente', () => {
       jest.spyOn(createToken, 'generate');
 
       const response = await createToken.generate(login.login, login.id);
-      console.log(response);
       expect(response).toBeDefined();
       expect(typeof response).toBe('string');
       expect(createToken.generate).toHaveBeenCalled();

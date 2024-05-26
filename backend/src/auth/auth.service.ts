@@ -7,7 +7,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { CreateToken } from './toke';
-import { UserService } from '../repositories/user/user.service';
+import { UserService } from '../repositories/users/user.service';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +19,9 @@ export class AuthService {
   async authenticate(body: UserDto): Promise<{ token: string }> {
     try {
       const { login, password } = body;
-      const user = await this.user.getUserByLogin(login);
+      const toLowerCaseLogin = login.toLowerCase();
+      const user = await this.user.getUserByLogin(toLowerCaseLogin);
+
       if (user) {
         const unHashedPassword = await bcrypt.compare(password, user.password);
         if (unHashedPassword) {
@@ -39,7 +41,7 @@ export class AuthService {
   async validateUser(login: string): Promise<{ login: string; id: number }> {
     const user = await this.user.getUserByLogin(login);
     if (user && user.login === login) {
-      const { password, login, id } = user;
+      const { login, id } = user;
 
       return { login, id };
     }

@@ -70,6 +70,7 @@ export class PayableController {
   async getPayableAll() {
     try {
       const payables = await this.payable.getAllPayables();
+      console.log(payables);
 
       if (!payables) {
         throw new NotFoundException('Payables not found');

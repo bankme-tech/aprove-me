@@ -35,10 +35,14 @@ export class UserService implements UserRepo {
   }
 
   async getUserByLogin(login: any): Promise<UserDto> {
-    const getUserByLogin = this.prisma.user.findUnique({
-      where: { login },
-    });
-    return getUserByLogin;
+    try {
+      const getUserByLogin = await this.prisma.user.findUnique({
+        where: { login },
+      });
+      return getUserByLogin;
+    } catch (e) {
+      return e;
+    }
   }
 
   async getUsersAll(): Promise<UserDto[]> {
@@ -48,8 +52,11 @@ export class UserService implements UserRepo {
 
   async updateUser(id: number, body: UserDto): Promise<UserDto> {
     const salt = parseInt(process.env.SALT_ROUND, 10);
+
     const hashingPassword = await bcrypt.hash(body.password, salt);
-    const newBody = { ...body, password: hashingPassword };
+    const toLowerCaseLogin = body.login.toLocaleLowerCase();
+
+    const newBody = { id, login: toLowerCaseLogin, password: hashingPassword };
     const updateUser = await this.prisma.user.update({
       where: { id },
       data: newBody,

@@ -12,7 +12,7 @@ import { AssignorController } from './assignor.controller';
 import { AssignorServices } from './assignor.service';
 import { AssignorModule } from './assignor.module';
 import { PayableModule } from '../payable/payable.module';
-import { UserModule } from '../user/user.module';
+import { UserModule } from '../users/user.module';
 import { AuthModule } from '../../auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
 import { SecurityModule } from '../../auth/security.module';
