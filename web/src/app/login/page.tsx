@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import * as Styled from "../styles";
+import * as Styled from "../styles/Login";
 import React, { useState } from "react";
 import { validateLogin } from "@/utils/validateFields";
 import { connection } from '@/connection'
 import { useRouter } from "next/navigation";
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+import { Main } from "../styles";
 
 export default function Login(): React.ReactElement {
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +25,7 @@ export default function Login(): React.ReactElement {
     }
     setError(null);
     try {
-        const result = await connection.post(`${BASE_URL}/auth`, {
+        const result = await connection.post('/auth', {
         login,
         password,
       });
@@ -43,7 +42,7 @@ export default function Login(): React.ReactElement {
   };
 
   return (
-    <Styled.Main>
+    <Main>
       <Styled.Container>
         <Styled.SubContainer>
           <Styled.Image src="/logo-bankme.png" alt="Logo" />
@@ -60,9 +59,9 @@ export default function Login(): React.ReactElement {
           />
           {error && <Styled.Error>{error}</Styled.Error>}
           <Styled.SubmitButton type="submit">Login</Styled.SubmitButton>
-          <Link href="/signup">Create a new User</Link>
+          <Link href="/login/signup">Create a new User</Link>
         </Styled.Form>
       </Styled.Container>
-    </Styled.Main>
+    </Main>
   );
 }

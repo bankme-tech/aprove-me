@@ -1,39 +1,69 @@
-'use client'
-import Link from 'next/link';
-import * as Styled from '../../styles';
+"use client";
+import Link from "next/link";
+import * as Styled from "../../styles/";
+import * as Login from "../../styles/Login";
+import { connection } from "@/connection";
+import { validateLogin } from "@/utils/validateFields";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SignIn() {
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const login = formData.get('login');
-    const password = formData.get('password');
-
-    const data = {
-      login,
-      password
+    const login = formData.get("login");
+    const password = formData.get("password");
+    const { message } = validateLogin(login as string, password as string);
+    if (message) {
+      setError(message);
+      return;
     }
-    console.log(data);
+    setError(null);
+    try {
+      await connection.post("/users", {
+        login,
+        password,
+      });
+
+      setSuccess("User created successfully");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        setError("Invalid login or password");
+      } else {
+        setError("An error occurred, please try again");
+      }
+    }
   }
 
   return (
     <Styled.Main>
-
-      <Styled.Container>
-      <Styled.SubContainer>
-        <Styled.Image src="/logo-bankme.png" alt="Logo" />
-        <Styled.Logo>bankme</Styled.Logo>
-      </Styled.SubContainer>
-        <Styled.Divider />
-      <Styled.Form onSubmit={handleSubmit}>
-        <Styled.Title>Sign in</Styled.Title>
-        <Styled.Input type="text" placeholder="Username" name='login'/>
-        <Styled.Input type="password" placeholder="Password" name='password'/>
-        <Styled.SubmitButton type="submit">Sign In</Styled.SubmitButton>
-        <Link href="/login">Sing up</Link>
-      </Styled.Form>
-      </Styled.Container>
+      <Login.Container>
+        <Login.SubContainer>
+          <Login.Image src="/logo-bankme.png" alt="Logo" />
+          <Login.Logo>bankme</Login.Logo>
+        </Login.SubContainer>
+        <Login.Divider />
+        <Styled.Form onSubmit={handleSubmit}>
+          <Login.Title>Sign in</Login.Title>
+          <Styled.Input type="text" placeholder="Username" name="login" />
+          <Styled.Input
+            type="password"
+            placeholder="Password"
+            name="password"
+          />
+          {error && <Styled.Error>{error}</Styled.Error>}
+          <Styled.SubmitButton type="submit">Sign In</Styled.SubmitButton>
+          {success && <Styled.Success>{success}</Styled.Success>}
+          <Link href="/login">Sing up</Link>
+        </Styled.Form>
+      </Login.Container>
     </Styled.Main>
   );
 }
