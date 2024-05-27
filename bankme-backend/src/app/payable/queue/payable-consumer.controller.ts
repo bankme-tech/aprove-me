@@ -1,9 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
 import { CreatePayableDto } from '../dto/payable.dto';
 import { DbService } from 'src/db/db.service';
 
-@Injectable()
+@Controller()
 export class PayableConsumerController {
   private readonly logger = new Logger(PayableConsumerController.name);
 
