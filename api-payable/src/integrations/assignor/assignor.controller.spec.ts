@@ -26,10 +26,10 @@ describe(AssignorController.name, () => {
     phone: '+55 (21) 9 1111 4444',
   };
   let id: string;
-  describe('POST /integrations/assignors', () => {
+  describe('POST /integrations/assignor', () => {
     it('should create a new assignor', async () => {
       const response = await supertest(app.getHttpServer())
-        .post('/integrations/assignors')
+        .post('/integrations/assignor')
         .send(dto);
       type Body = Awaited<ReturnType<AssignorController['create']>>;
       const body = response?.body as Body;
@@ -38,11 +38,11 @@ describe(AssignorController.name, () => {
     });
   });
 
-  describe('GET /integrations/assignors/:id', () => {
+  describe('GET /integrations/assignor/:id', () => {
     it('should return expected dto', async () => {
       expect(id).toBeDefined();
       const response = await supertest(app.getHttpServer()).get(
-        `/integrations/assignors/${id}`,
+        `/integrations/assignor/${id}`,
       );
       type Body = Awaited<ReturnType<AssignorController['create']>>;
       const body = response.body as Body;
@@ -54,14 +54,14 @@ describe(AssignorController.name, () => {
     });
   });
 
-  describe('PATCH /integrations/assignors/:id', () => {
+  describe('PATCH /integrations/assignor/:id', () => {
     it('should update assignor', async () => {
       const newDto: PartialAssignorDto = {
         name: `New Name ${rng()}`,
         email: `new.devtest.${rng()}@email.com`,
       };
       const response = await supertest(app.getHttpServer())
-        .patch(`/integrations/assignors/${id}`)
+        .patch(`/integrations/assignor/${id}`)
         .send(newDto);
       type Body = Awaited<ReturnType<AssignorController['update']>>;
       const body = response.body as Body;
@@ -75,10 +75,10 @@ describe(AssignorController.name, () => {
     });
   });
 
-  describe('DELETE /integrations/assignors/:id', () => {
+  describe('DELETE /integration/assignor/:id', () => {
     it('should delete assignor', async () => {
       const response = await supertest(app.getHttpServer()).delete(
-        `/integrations/assignors/${id}`,
+        `/integrations/assignor/${id}`,
       );
       expect(response.statusCode).toBe(HttpStatus.OK);
     });
@@ -86,7 +86,7 @@ describe(AssignorController.name, () => {
     describe('subsequente GET request', () => {
       it('should throw 404 not found', async () => {
         const response = await supertest(app.getHttpServer()).get(
-          `/integrations/assignors/${id}`,
+          `/integrations/assignor/${id}`,
         );
         expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
       });

@@ -42,7 +42,7 @@ export default function Page() {
   const [assignors, setAssignors] = React.useState<AssignorEntity[]>([]);
   useEffect(() => {
     apiCall({
-      endpoint: `/integrations/assignors`,
+      endpoint: '/integrations/assignor',
       method: "GET",
     }).then((res) => setAssignors(res.result.assignors));
   }, [])

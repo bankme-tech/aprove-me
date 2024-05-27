@@ -11,7 +11,7 @@ export default function Page() {
   const [assignor, setAssignor] = useState<Required<AssignorEntity>>();
   useEffect(() => {
     apiCall<Required<AssignorEntity>>({
-      endpoint: `/integrations/assignors/${param.id}?includeAssignor=true`,
+      endpoint: `/integrations/assignor/${param.id}?includeAssignor=true`,
       method: 'GET',
     }).then((res) => {
       setAssignor(res.result);

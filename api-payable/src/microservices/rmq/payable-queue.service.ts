@@ -6,7 +6,7 @@ import {
   Transport,
 } from '@nestjs/microservices';
 import { RabbitmqConnection } from './connect-queues';
-import { PayableDto } from 'src/integrations/payables/dtos/payables.dto';
+import { PayableDto } from 'src/integrations/payable/dtos/payables.dto';
 import {
   ROUTE_PAYABLE_BATCH_DEAD_LETTER,
   PAYABLE_DEAD_LETTER_INJECT_TOKEN,
@@ -29,7 +29,7 @@ export class PayableQueueProvider {
     @Inject(PAYABLE_BATCH_INJECT_TOKEN) private readonly client: ClientProxy,
     @Inject(PAYABLE_DEAD_LETTER_INJECT_TOKEN)
     private readonly deadLetterClient: ClientProxy,
-  ) {}
+  ) { }
 
   private readonly TRY_LIMIT = 4;
 

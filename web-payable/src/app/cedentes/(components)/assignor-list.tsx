@@ -22,7 +22,7 @@ export default function AssignorList({ className, ...props }: CardProps) {
 
   useEffect(() => {
     apiCall<{ assignors: AssignorEntity[] }>({
-      endpoint: "/integrations/assignors",
+      endpoint: "/integrations/assignor",
       method: "GET"
     }).then((res) => {
       setAssignors(res.result.assignors);
@@ -31,7 +31,7 @@ export default function AssignorList({ className, ...props }: CardProps) {
 
   function onDeleteConfirmation(id: string) {
     apiCall<{ deleted: AssignorEntity }>({
-      endpoint: `/integrations/assignors/${id}`,
+      endpoint: `/integrations/assignor/${id}`,
       method: "DELETE",
     }).then((res) => {
       if (res.result?.deleted && assignors) {

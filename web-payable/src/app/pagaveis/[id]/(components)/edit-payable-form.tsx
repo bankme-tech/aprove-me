@@ -49,8 +49,8 @@ export default function EditPayableForm(p: Props) {
 
   function loadAssignors() {
     apiCall({
-      endpoint: `/integrations/assignors`,
-      method: "GET",
+      endpoint: '/integrations/assignor',
+      method: 'GET',
     }).then((res) => {
       setAssignors(res.result.assignors);
     });
@@ -67,9 +67,7 @@ export default function EditPayableForm(p: Props) {
     if (p.payable?.assignorId) {
       form.setValue('assignor', p.payable.assignorId);
     }
-  }, [
-    p.id,
-  ]);
+  }, [p.id]);
 
   useEffect(() => {
     loadAssignors();

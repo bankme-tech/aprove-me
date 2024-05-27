@@ -62,7 +62,7 @@ export default function EditAssignorForm(p: Props) {
 
   useEffect(() => {
     apiCall({
-      endpoint: `/integrations/assignors/${p.id}`,
+      endpoint: `/integrations/assignor/${p.id}`,
       method: 'GET',
     }).then((res) => {
       // setAssignor(res.result);
@@ -89,7 +89,7 @@ export default function EditAssignorForm(p: Props) {
     e?.preventDefault();
     try {
       await apiCall({
-        endpoint: `/integrations/assignors/${p.id}`,
+        endpoint: `/integrations/assignor/${p.id}`,
         method: 'PATCH',
         body: assignor,
       });

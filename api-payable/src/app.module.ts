@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { PayableModule } from './integrations/payables/payable.module';
+import { PayableModule } from './integrations/payable/payable.module';
 import { AssignorModule } from './integrations/assignor/assignor.module';
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
 import { AuthModule } from './integrations/auth/auth.module';
@@ -18,4 +18,4 @@ import { EmailModule } from './services/email/email.module';
     EmailModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

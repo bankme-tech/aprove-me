@@ -14,9 +14,9 @@ import { Assignor } from '@prisma/client';
 import { AssignorDto } from './dtos/assignor.dto';
 import { PartialAssignorDto } from './dtos/partial-assignor.dto';
 
-@Controller('/integrations/assignors')
+@Controller('/integrations/assignor')
 export class AssignorController {
-  constructor(private readonly assignorService: AssignorRepository) {}
+  constructor(private readonly assignorService: AssignorRepository) { }
 
   @Post()
   async create(@Body() dto: AssignorDto): Promise<Assignor> {

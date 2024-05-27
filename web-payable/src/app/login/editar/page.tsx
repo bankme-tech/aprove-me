@@ -4,5 +4,5 @@ export default function Page() {
       <h1>Editar perfil de usuário</h1>
       <p>Funcionalidade ainda em construção 🚧</p>
     </div>
-  )
+  );
 }

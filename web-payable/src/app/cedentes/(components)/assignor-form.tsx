@@ -59,7 +59,7 @@ export default function AssignorForm() {
     e?.preventDefault();
     try {
       const res = await apiCall({
-        endpoint: '/integrations/assignors',
+        endpoint: '/integrations/assignor',
         method: 'POST',
         body: assignor,
       });

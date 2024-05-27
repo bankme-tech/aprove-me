@@ -32,7 +32,7 @@ describe(PayableController.name, () => {
       phone: '+55 (21) 9 1111 4444',
     };
     const response = await supertest(app.getHttpServer())
-      .post('/integrations/assignors')
+      .post('/integrations/assignor')
       .send(dto);
     type Body = Awaited<ReturnType<AssignorController['create']>>;
     const body = response?.body as Body;
