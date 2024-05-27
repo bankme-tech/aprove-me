@@ -39,7 +39,7 @@ const formSchema = z.object({
 });
 
 export default function AuthForm() {
-  const [formType, setFormType] = useState<"login" | "register">('login');
+  const [formType, setFormType] = useState<"login" | "register">('register');
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { login: "", password: "" },
@@ -65,7 +65,7 @@ export default function AuthForm() {
 
     if (res.result?.token) {
       localStorage.setItem(AUTH_TOKEN, res.result.token);
-      router.push("/pagaveis");
+      router.push("/cedentes");
     }
   }
 
@@ -106,15 +106,37 @@ export default function AuthForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <Tabs defaultValue="login" className="w-[400px]">
+        <Tabs defaultValue="register" className="w-[400px]">
           <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="register" onClick={() => setFormType('register')}>
+              Cadastrar
+            </TabsTrigger>
             <TabsTrigger value="login" onClick={() => setFormType('login')}>
               Entrar
             </TabsTrigger>
-            <TabsTrigger value="password" onClick={() => setFormType('register')}>
-              Cadastrar
-            </TabsTrigger>
           </TabsList>
+
+
+          <TabsContent value="register">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-center">Cadastrar</CardTitle>
+                <CardDescription>
+                  Cadastre sua conta aqui aperte em &quot;cadastrar e entrar&quot; para acessar a plataforma
+                  ou clique entrar se já possuir cadastro.
+                </CardDescription>
+              </CardHeader>
+
+              {credentialContent}
+
+              <CardFooter>
+                <Button type="submit"
+                  onClick={() => { toast({ title: "Cadastro concluido" }) }}
+                >Cadastrar</Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="login">
             <Card>
               <CardHeader>
@@ -129,27 +151,6 @@ export default function AuthForm() {
 
               <CardFooter>
                 <Button type="submit">Entrar</Button>
-              </CardFooter>
-            </Card>
-          </TabsContent>
-          <TabsContent value="password">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-center">Cadastrar</CardTitle>
-                <CardDescription>
-                  Cadastre sua conta aqui aperte em &quot;cadastrar e entrar&quot; para acessar a plataforma
-                  ou clique entrar se já possuir cadastro.
-                </CardDescription>
-              </CardHeader>
-
-              {credentialContent}
-
-              <CardFooter>
-                <Button type="submit"
-                  onClick={
-                    () => { toast({ title: "Cadastro concluido" }) }
-                  }
-                >Cadastrar</Button>
               </CardFooter>
             </Card>
           </TabsContent>

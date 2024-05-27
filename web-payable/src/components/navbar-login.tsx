@@ -6,7 +6,7 @@ import { apiCall } from "@/lib/api-call";
 import { usePathname } from "next/navigation";
 
 export default function NavbarLogin() {
-  const [greeting, setGreeting] = useState<string>("");
+  const [greeting, setGreeting] = useState<string>("Entrar");
   const [link, setLink] = useState<string>("/login");
   /** Using pathname update to rerun token check. */
   const pathname = usePathname();
