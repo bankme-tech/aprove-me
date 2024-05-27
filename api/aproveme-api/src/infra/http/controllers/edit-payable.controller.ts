@@ -11,7 +11,7 @@ import { z } from "zod";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
 
 const editPayableBodySchema = z.object({
-  value: z.number().nullable(),
+  value: z.number(),
 });
 type EditPayableBodySchema = z.infer<typeof editPayableBodySchema>;
 

@@ -43,13 +43,13 @@ const editPayableForm = z.object({
 type EditPayableForm = z.infer<typeof editPayableForm>
 
 export const PayableData = ({ payableId }: PayableDataProps) => {
-  const { deletePayableFn } = useAppContext()
+  const { deletePayableFn, editPayableFn } = useAppContext()
   const navigate = useNavigate()
   const [isPayableEditable, setIsPayableEditable] = useState(false)
 
   const { data: payableDetail, isLoading: isPayableLoading } =
     useQuery<GetPayableBody>({
-      queryKey: ['payable-detail', payableId],
+      queryKey: ['payable-detail'],
       queryFn: () => getPayable(payableId),
       staleTime: Infinity, // Em quanto tempo essa informação se torna obsoleta,
       enabled: !!payableId, // Habilita a query apenas se payableId estiver disponível
@@ -60,7 +60,7 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
 
   const {
     register: payableRegister,
-    // handleSubmit: handlePayableSubmit,
+    handleSubmit,
     // formState: { isSubmitting: isPayableSubmitting },
   } = useForm<EditPayableForm>({
     defaultValues: {
@@ -79,6 +79,17 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
 
   const handlePayableEdit = () => {
     setIsPayableEditable(!isPayableEditable)
+  }
+
+  const handleEditSubmition = async ({ value }: EditPayableForm) => {
+    try {
+      await editPayableFn({ id: payableId, value: Number(value) })
+
+      handlePayableEdit()
+    } catch (error) {
+      console.error(error)
+      toast.error('Erro ao editar o recebível.')
+    }
   }
 
   return (
@@ -120,8 +131,14 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
             {isPayableLoading ? (
               <Skeleton className="h-4 w-full" />
             ) : isPayableEditable ? (
-              <Input className="h-6 w-24" {...payableRegister('value')} />
+              // <form onSubmit={handleSubmit(handleEditSubmition)}>
+              <Input
+                className="h-6 w-24"
+                {...payableRegister('value')}
+                type="number"
+              />
             ) : (
+              // </form>
               value?.toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
@@ -130,7 +147,15 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
           </TableCell>
 
           <TableCell className="w-10">
-            <Button variant={'outline'} size={'sm'} onClick={handlePayableEdit}>
+            <Button
+              variant={'outline'}
+              size={'sm'}
+              onClick={
+                isPayableEditable
+                  ? handleSubmit(handleEditSubmition)
+                  : handlePayableEdit
+              }
+            >
               {isPayableEditable ? (
                 <Check className="h-4 w-4"></Check>
               ) : (

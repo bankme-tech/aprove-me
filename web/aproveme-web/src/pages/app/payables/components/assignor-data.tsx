@@ -37,7 +37,7 @@ export const AssignorData = ({ payableId }: AssignorDataProps) => {
 
   const { data: payableDetail, isLoading: isPayableLoading } =
     useQuery<GetPayableBody>({
-      queryKey: ['payable-detail', payableId],
+      queryKey: ['payable-detail'],
       queryFn: () => getPayable(payableId),
       staleTime: Infinity, // Em quanto tempo essa informação se torna obsoleta,
       enabled: !!payableId, // Habilita a query apenas se payableId estiver disponível
