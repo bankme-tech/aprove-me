@@ -2,9 +2,9 @@ import { IUseCase } from '@/core/use-cases/interfaces';
 import { AuthDto } from '../infra/http/dtos/auth.dto';
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { EmailOrPasswordIncorrectError } from './errors/email-or-password-incorrect.error';
 import { JwtService } from '@nestjs/jwt';
 import { UsersRepository } from '../domain/repositories/users.repository';
+import { LoginOrPasswordIncorrectError } from './errors/login-or-password-incorrect.error';
 
 @Injectable()
 export class AuthUserUseCase implements IUseCase {
@@ -17,13 +17,13 @@ export class AuthUserUseCase implements IUseCase {
     const user = await this.usersRepository.findByLogin(authDto.login);
 
     if (!user) {
-      throw new EmailOrPasswordIncorrectError();
+      throw new LoginOrPasswordIncorrectError();
     }
 
     const isMatch = await bcrypt.compare(authDto.password, user.password);
 
     if (!isMatch) {
-      throw new EmailOrPasswordIncorrectError();
+      throw new LoginOrPasswordIncorrectError();
     }
 
     const payload = { sub: user.id };

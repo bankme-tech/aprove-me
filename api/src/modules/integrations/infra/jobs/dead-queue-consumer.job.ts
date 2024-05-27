@@ -16,9 +16,8 @@ export class DeadQueueConsumerJob implements IUseCase {
         subject: `Payable creation failed, job: ${job.data}`,
         text: 'It was not possible to create payable, job',
       });
-      console.log('enviei o emial');
     } catch (error) {
-      console.log('deu foi errooo');
+      console.error(error);
     }
   }
 }
