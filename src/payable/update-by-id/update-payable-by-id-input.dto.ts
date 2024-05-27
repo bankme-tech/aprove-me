@@ -1,11 +1,7 @@
-export class UpdatePayableByIdInputDTO {
-  readonly value: number;
-  readonly emissionDate: Date;
-  readonly assignorId: string;
+import { z } from "zod";
 
-  constructor(value: number, emissionDate: Date, assignorId: string) {
-    this.value = value;
-    this.emissionDate = emissionDate;
-    this.assignorId = assignorId;
-  }
-}
+import { UpdatePayableByIdInputSchema } from "./update-payable-by-id-input.schema";
+
+export type UpdatePayableByIdInputDTO = z.infer<
+  typeof UpdatePayableByIdInputSchema
+>;
