@@ -38,22 +38,27 @@ export default function PayablesTable() {
     const cellValue = payable[columnKey as keyof Payable];
 
     switch (columnKey) {
+      case "value":
+        return new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(cellValue as number);
       case "emissionDate":
         return moment(cellValue).format("DD/MM/YYYY");
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <Tooltip content="Details">
+            <Tooltip content="Detalhes">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <Eye />
               </span>
             </Tooltip>
-            <Tooltip content="Edit user">
+            <Tooltip content="Editar">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <PencilSimple />
               </span>
             </Tooltip>
-            <Tooltip color="danger" content="Delete user">
+            <Tooltip color="danger" content="Deletar">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <Trash />
               </span>
@@ -61,7 +66,7 @@ export default function PayablesTable() {
           </div>
         );
       default:
-        return renderCell(payable, columnKey as keyof Payable)
+        return cellValue as string;
     }
   }, []);
 
