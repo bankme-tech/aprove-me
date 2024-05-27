@@ -1,16 +1,14 @@
 import { api } from '@/lib/axios'
 
 export interface FetchAssignorsNamesResponse {
-  assignorsNames: {
-    id: string
-    name: string
-  }[]
+  id: string
+  name: string
 }
 
 export const fetchAssignorsNames = async () => {
-  const response = await api.get<FetchAssignorsNamesResponse>(
+  const response = await api.get<FetchAssignorsNamesResponse[]>(
     '/integrations/assignor',
   )
 
-  return response.data.assignorsNames
+  return response.data
 }

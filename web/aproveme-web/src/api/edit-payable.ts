@@ -6,6 +6,5 @@ export interface EditPayableBody {
 }
 
 export const editPayable = async ({ id, value }: EditPayableBody) => {
-  console.log({ id, value })
   await api.put(`/integrations/payable/${id}`, { value })
 }

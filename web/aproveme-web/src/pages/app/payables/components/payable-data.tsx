@@ -63,7 +63,7 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
     handleSubmit,
     // formState: { isSubmitting: isPayableSubmitting },
   } = useForm<EditPayableForm>({
-    defaultValues: {
+    values: {
       value,
     },
   })

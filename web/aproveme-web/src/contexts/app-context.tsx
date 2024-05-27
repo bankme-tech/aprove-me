@@ -3,51 +3,35 @@ import { ReactNode, useCallback, useMemo, useState } from 'react'
 import { createContext } from 'use-context-selector'
 
 import { deletePayable } from '@/api/delete-payable'
-import { editPayable } from '@/api/edit-payable'
-import { fetchAssignorsNames } from '@/api/fetch-assignors-names'
-import { registerAssignor } from '@/api/register-assignor'
-import { registerPayable } from '@/api/register-payable'
+import { editAssignor, EditAssignorBody } from '@/api/edit-assignor'
+import { editPayable, EditPayableBody } from '@/api/edit-payable'
+import {
+  fetchAssignorsNames,
+  FetchAssignorsNamesResponse,
+} from '@/api/fetch-assignors-names'
+import { registerAssignor, RegisterAssignorBody } from '@/api/register-assignor'
+import { registerPayable, RegisterPayableBody } from '@/api/register-payable'
 
 interface AppProviderProps {
   children: ReactNode
 }
 
-interface Assignor {
-  id: string
-  name: string
-}
-
-interface RegisterPayable {
-  value: number
-  assignorId: string
-  emissionDate: Date
-}
-
-interface RegisterAssignor {
-  document: string
-  email: string
-  phone: string
-  name: string
-}
-
-interface EditPayable {
-  id: string
-  value: number
-}
-
 interface AppContextType {
-  assignorsNames: Assignor[]
-  registerPayableFn: (data: RegisterPayable) => Promise<void>
+  assignorsNames: FetchAssignorsNamesResponse[]
+  registerPayableFn: (data: RegisterPayableBody) => Promise<void>
   refreshAssignorsNames: () => void
-  registerAssignorFn: (data: RegisterAssignor) => Promise<void>
+  registerAssignorFn: (data: RegisterAssignorBody) => Promise<void>
   deletePayableFn: (payableId: string) => Promise<void>
-  editPayableFn: (data: EditPayable) => Promise<void>
+  editPayableFn: (data: EditPayableBody) => Promise<void>
+  editAssignorFn: (data: EditAssignorBody) => Promise<void>
 }
 
 export const AppContext = createContext({} as AppContextType)
 
 export const AppProvider = ({ children }: AppProviderProps) => {
-  const [assignorsNames, setAssignorsNames] = useState<Assignor[]>([])
+  const [assignorsNames, setAssignorsNames] = useState<
+    FetchAssignorsNamesResponse[]
+  >([])
 
   // Mutations
   const { mutateAsync: fetchAssignorsNamesFn } = useMutation({
@@ -65,6 +49,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const { mutateAsync: editPayableFn } = useMutation({
     mutationFn: editPayable,
   })
+  const { mutateAsync: editAssignorFn } = useMutation({
+    mutationFn: editAssignor,
+  })
 
   // Callbacks
   const refreshAssignorsNames = useCallback(async () => {
@@ -80,6 +67,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       registerAssignorFn,
       deletePayableFn,
       editPayableFn,
+      editAssignorFn,
     }),
     [
       assignorsNames,
@@ -88,6 +76,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       registerAssignorFn,
       deletePayableFn,
       editPayableFn,
+      editAssignorFn,
     ],
   )
 

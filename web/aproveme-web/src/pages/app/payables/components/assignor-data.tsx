@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { getPayable, GetPayableBody } from '@/api/get-payable'
@@ -19,6 +20,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
+import { useAppContext } from '@/hooks/use-app-context'
 
 interface AssignorDataProps {
   payableId: string
@@ -33,6 +35,8 @@ const editAssignorForm = z.object({
 type EditAssignorForm = z.infer<typeof editAssignorForm>
 
 export const AssignorData = ({ payableId }: AssignorDataProps) => {
+  const { editAssignorFn } = useAppContext()
+
   const [isAssignorEditable, setIsAssignorEditable] = useState(false)
 
   const { data: payableDetail, isLoading: isPayableLoading } =
@@ -45,13 +49,19 @@ export const AssignorData = ({ payableId }: AssignorDataProps) => {
 
   const {
     payableWithAssignor: {
-      assignor: { name = '', phone = '', email = '', document = '' } = {},
+      assignor: {
+        id = '',
+        name = '',
+        phone = '',
+        email = '',
+        document = '',
+      } = {},
     } = {},
   } = payableDetail || {}
 
   const {
     register: assignorRegister,
-    // handleSubmit: handleAssignorSubmit,
+    handleSubmit,
     // formState: { isSubmitting: isAssignorSubmitting },
   } = useForm<EditAssignorForm>({
     values: {
@@ -64,6 +74,22 @@ export const AssignorData = ({ payableId }: AssignorDataProps) => {
 
   const handleAssignorEdit = () => {
     setIsAssignorEditable(!isAssignorEditable)
+  }
+
+  const handleEditSubmition = async ({
+    document,
+    email,
+    name,
+    phone,
+  }: EditAssignorForm) => {
+    try {
+      await editAssignorFn({ id, document, email, name, phone })
+
+      handleAssignorEdit()
+    } catch (error) {
+      console.error(error)
+      toast.error('Erro ao editar o recebível.')
+    }
   }
 
   return (
@@ -165,7 +191,11 @@ export const AssignorData = ({ payableId }: AssignorDataProps) => {
                 <AlertDialogAction asChild>
                   <Button
                     className="bg-red-600  text-white"
-                    onClick={handleAssignorEdit}
+                    onClick={
+                      isAssignorEditable
+                        ? handleSubmit(handleEditSubmition)
+                        : handleAssignorEdit
+                    }
                   >
                     Continuar
                   </Button>
