@@ -9,14 +9,14 @@ export class PayableProducerController {
 
   @Post('payable/batch')
   async batch(@Body() dto: PayableBatchDto) {
-    const { payables } = dto;
+    const { payables, emailTo } = dto;
 
     if (payables.length > 10000) {
       return 'Batch size exceeds the limit of 10,000 payables';
     }
 
-    await firstValueFrom(this.client.emit('payable_queue', payables));
+    await firstValueFrom(this.client.emit('payable_queue', { payables, emailTo }));
 
-    return 'Batch processing initiated';
+    return { message: 'Batch processing initiated' };
   }
 }

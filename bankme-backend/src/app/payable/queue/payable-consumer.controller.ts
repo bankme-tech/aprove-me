@@ -1,8 +1,8 @@
 import { Controller, Logger } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
-import { CreatePayableDto } from '../dto/payable.dto';
 import { DbService } from 'src/db/db.service';
 import { EmailService } from 'src/app/mail/mail.service';
+import { PayableBatchDto } from '../dto/payable-batch.dto';
 
 @Controller()
 export class PayableConsumerController {
@@ -14,7 +14,7 @@ export class PayableConsumerController {
   ) {}
 
   @EventPattern('payable_queue')
-  async handlePayableBatch(payables: CreatePayableDto[]) {
+  async handlePayableBatch({ payables, emailTo }: PayableBatchDto) {
     let total = payables.length;
     let successCount = 0;
     let failureCount = 0;
@@ -30,11 +30,16 @@ export class PayableConsumerController {
       }
     }
 
-    return this.notify(successCount, failureCount, total);
+    this.notify(successCount, failureCount, total, emailTo);
   }
 
-  notify(successCount: number, failureCount: number, total: number) {
-    const to = 'example@mail.com';
+  notify(
+    successCount: number,
+    failureCount: number,
+    total: number,
+    email: string,
+  ) {
+    const to = email;
     const subject = 'payable batch';
     const text = `
     Batch processing complete
