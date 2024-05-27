@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     if (token.length === 0) return false;
 
     try {
-      await jwtVerify(authorization, this.secret);
+      await jwtVerify(token, this.secret);
       return true;
     } catch (error) {
       return false;
