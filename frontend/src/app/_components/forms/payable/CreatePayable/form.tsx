@@ -88,6 +88,7 @@ export default function CreatePayable({
                                         value={value ? parseDate(value.toISOString()) : null}
                                         onChange={onChange}
                                         showMonthAndYearPickers
+                                        isRequired
                                     />
                                 )}
                             />
@@ -104,6 +105,7 @@ export default function CreatePayable({
                                         onSelectionChange={onChange}
                                         isInvalid={Boolean(errors.assignor)}
                                         errorMessage={errors.assignor?.message}
+                                        isRequired
                                     >
                                         {(item) => (
                                             <AutocompleteItem key={item.id}>
