@@ -31,6 +31,7 @@ services:
       - 5672:5672
       - 15672:15672
 
+  # When changing this name remember to also change `LOCALSTACK_HOSTNAME` env vars.
   aws-local-dev-service:
     # Healthcheck `http://localhost:4566/_localstack/health`
     container_name: aws-local-dev-container
@@ -42,7 +43,6 @@ services:
       - 4510-4559:4510-4559  # External services port range
     env_file:
       - ./.aws-local.env
-
     environment:
       - AWS_ACCESS_KEY_ID=aws_payable_key_id
       - AWS_SECRET_ACCESS_KEY=aws_payable_secret_key
@@ -51,6 +51,18 @@ services:
       - ./container-data/localstack:/var/lib/localstack
       # - ${TEMPDIR:-/tmp/localstack}:/tmp/localstack
       - /var/run/docker.sock:/var/run/docker.sock
+
+  terraform-local-dev-service:
+    container_name: terraform-local-dev-container
+    build:
+      context: .
+      dockerfile: terraform.dockerfile
+    environment:
+      - LOCALSTACK_HOSTNAME=aws-local-dev-service
+    volumes:
+      - "../terraform/:/code/terraform/"
+    working_dir: /code/terraform
+    command: sleep infinity
 
 networks:
   backend:
