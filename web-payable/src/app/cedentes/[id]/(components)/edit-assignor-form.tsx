@@ -57,7 +57,6 @@ export default function EditAssignorForm(p: Props) {
   const form = useForm<AssignorSchema>({
     resolver: zodResolver(formSchema),
   });
-  // const [assignor, setAssignor] = useState(null);
 
   useEffect(() => {
     apiCall({
@@ -88,7 +87,7 @@ export default function EditAssignorForm(p: Props) {
     e?.preventDefault();
     try {
       await apiCall({
-        endpoint: '/integrations/assignors',
+        endpoint: `/integrations/assignors/${p.id}`,
         method: 'PATCH',
         body: assignor,
       });
@@ -117,12 +116,12 @@ export default function EditAssignorForm(p: Props) {
               {countDefined(p.assignor) > 1 ?
                 <div>
                   <br /><strong>Valores atuais:</strong>
-              <ul>
-                {p.assignor?.document ? <li>Documento: {p.assignor.document}</li> : null}
-                {p.assignor?.email ? <li>Email: {p.assignor.email}</li> : null}
-                {p.assignor?.name ? <li>Nome: {p.assignor.name}</li> : null}
-                {p.assignor?.phone ? <li>Telefone: {p.assignor.phone}</li> : null}
-              </ul>
+                  <ul>
+                    {p.assignor?.document ? <li>Documento: {p.assignor.document}</li> : null}
+                    {p.assignor?.email ? <li>Email: {p.assignor.email}</li> : null}
+                    {p.assignor?.name ? <li>Nome: {p.assignor.name}</li> : null}
+                    {p.assignor?.phone ? <li>Telefone: {p.assignor.phone}</li> : null}
+                  </ul>
                 </div>
                 : null
               }
