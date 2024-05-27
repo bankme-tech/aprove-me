@@ -61,7 +61,7 @@ export default function Login(): React.ReactElement {
           />
           {error && <Styled.Error>{error}</Styled.Error>}
           <Styled.SubmitButton type="submit">Login</Styled.SubmitButton>
-          <Link href="/login/signup">Create a new User</Link>
+          <Link href="/signup">Create a new User</Link>
         </Styled.Form>
       </Styled.Container>
     </Main>
