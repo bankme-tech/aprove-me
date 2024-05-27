@@ -61,6 +61,7 @@ export default function Page() {
       method: "POST",
       body: credential,
     });
+
     if (res.result?.token) {
       localStorage.setItem(AUTH_TOKEN, res.result.token);
       router.push("/pagaveis");

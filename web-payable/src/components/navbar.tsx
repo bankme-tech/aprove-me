@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ThemeToggle } from "./theme-toggle";
+import NavbarLogin from "./navbar-login";
 
 interface NavItem {
   path: string;
@@ -21,6 +22,10 @@ export default function Navbar() {
               className="block mt-4 sm:inline-block sm:mt-0 sm:mx-5 text-secondary hover:font-semibold mr-4">
               {l.label}
             </Link >)}
+        </div>
+
+        <div className="my-auto">
+          <NavbarLogin />
         </div>
         <div className="my-auto">
           <ThemeToggle />
