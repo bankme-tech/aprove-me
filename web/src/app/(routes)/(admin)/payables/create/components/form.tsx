@@ -47,10 +47,16 @@ export const Form: React.FC<Props> = ({
     formState: { errors },
     control,
     reset,
+    watch,
   } = useForm<CreatePayableSchema>({
-    defaultValues: df as any,
+    defaultValues: {
+      ...df,
+      value: df.value ? df.value.toString() : df.value,
+    } as any,
     resolver: zodResolver(createPayableSchema),
   });
+
+  const assignorId = watch('assignor');
 
   const onSubmit = async (data: CreatePayableSchema) => {
     switch (mode) {
@@ -160,7 +166,7 @@ export const Form: React.FC<Props> = ({
           name="assignor"
           render={({ field: { onChange } }) => (
             <>
-              <SelectAssignor selected={df.assignor} onChange={onChange} />
+              <SelectAssignor selected={assignorId} onChange={onChange} />
               {errors.assignor && (
                 <div className="label">
                   <span
