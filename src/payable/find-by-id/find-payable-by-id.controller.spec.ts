@@ -1,3 +1,4 @@
+import { ConfigModule } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
 import { Payable } from "@prisma/client";
 
@@ -9,6 +10,12 @@ describe("FindPayableByIdController", () => {
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
+      imports: [
+        ConfigModule.forRoot({
+          ignoreEnvFile: true,
+          load: [() => ({ SECRET: "secret" })],
+        }),
+      ],
       controllers: [FindPayableByIdController],
       providers: [
         {

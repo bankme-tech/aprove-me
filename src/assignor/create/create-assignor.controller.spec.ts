@@ -1,3 +1,4 @@
+import { ConfigModule } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
@@ -28,6 +29,12 @@ describe("CreateAssignorController", () => {
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
+      imports: [
+        ConfigModule.forRoot({
+          ignoreEnvFile: true,
+          load: [() => ({ SECRET: "secret" })],
+        }),
+      ],
       controllers: [CreateAssignorController],
       providers: [{ provide: PrismaProvider, useValue: makePrismaProvider() }],
     }).compile();

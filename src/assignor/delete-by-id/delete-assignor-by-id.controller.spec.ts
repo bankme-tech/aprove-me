@@ -1,4 +1,5 @@
 import { BadRequestException } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
 import { Assignor } from "@prisma/client";
 
@@ -11,6 +12,12 @@ describe("DeleteAssignorByIdController", () => {
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
+      imports: [
+        ConfigModule.forRoot({
+          ignoreEnvFile: true,
+          load: [() => ({ SECRET: "secret" })],
+        }),
+      ],
       controllers: [DeleteAssignorByIdController],
       providers: [
         {
