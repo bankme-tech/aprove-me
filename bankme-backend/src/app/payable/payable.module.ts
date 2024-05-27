@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { DbModule } from 'src/db/db.module';
 import { AssignorModule } from 'src/app/assignor/assignor.module';
+import { MailModule } from '../mail/mail.module';
 import { PayableController } from './payable.controller';
 import { PayableService } from './payable.service';
 import { PayableRepository } from './payable.repository';
@@ -23,6 +24,7 @@ import { PayableConsumerController } from './queue/payable-consumer.controller';
         },
       },
     ]),
+    MailModule,
   ],
   controllers: [PayableController, PayableProducerController, PayableConsumerController],
   providers: [PayableService, PayableRepository],

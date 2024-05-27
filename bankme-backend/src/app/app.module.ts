@@ -6,6 +6,7 @@ import { AssignorModule } from './assignor/assignor.module';
 import { UserModule } from './user/user.module';
 import { CryptoModule } from './crypto/crypto.module';
 import { AuthModule } from './auth/auth.module';
+import { MailModule } from 'src/app/mail/mail.module';
 import { validate } from '../config/env.validation';
 
 @Module({
@@ -20,6 +21,7 @@ import { validate } from '../config/env.validation';
     UserModule,
     CryptoModule,
     AuthModule,
+    MailModule
   ],
 })
 export class AppModule {}
