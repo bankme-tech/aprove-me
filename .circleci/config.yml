@@ -1,0 +1,63 @@
+version: 2.1
+
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:16
+
+jobs:
+  install_dependencies:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  run_tests:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Run Tests
+          command: npm test
+
+  build_and_deploy:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Build Application
+          command: npm run build
+      - run:
+          name: Deploy Rook to Render
+          command: |
+            curl https://api.render.com/deploy/srv-cp9se97109ks73ae3dbg?key=d7xfaa7NzNs
+
+workflows:
+  version: 2
+  test_build_deploy:
+    jobs:
+      - install_dependencies
+      - run_tests:
+          requires:
+            - install_dependencies
+      - build_and_deploy:
+          requires:
+            - run_tests

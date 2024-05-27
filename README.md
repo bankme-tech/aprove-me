@@ -1,73 +1,260 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/YPZgRfNrTESCRbaE1hRY6Q/S4nZ66nwubjtx3SVXTfT65/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/YPZgRfNrTESCRbaE1hRY6Q/S4nZ66nwubjtx3SVXTfT65/tree/main)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[![CircleCI](https://dl.circleci.com/insights-snapshot/circleci/YPZgRfNrTESCRbaE1hRY6Q/S4nZ66nwubjtx3SVXTfT65/main/generate-config/badge.svg?window=30d)](https://app.circleci.com/insights/circleci/YPZgRfNrTESCRbaE1hRY6Q/S4nZ66nwubjtx3SVXTfT65/workflows/generate-config/overview?branch=main&reporting-window=last-30-days&insights-snapshot=true)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<div id="top"></div>
 
-## Description
+<br />
+<div align="center">
+  <h1 align="center">bankme-api</h1>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+  <h3 align="center">
+    API Repository Github
+    <br />
+  </h3>
 
-## Installation
+[![NodeJS][NodeJS]][NodeJS]
+[![NestJS][NestJS]][NestJS]
+[![Postgres][Postgres]][Postgres]
+[![Prisma][Prisma]][Prisma]
+</div>
 
-```bash
-$ npm install
+## Sumário
+
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Ambiente de produção](#ambiente-de-produção)
+- [Ambiente de desenvolvimento](#ambiente-de-desenvolvimento)
+  - [Configuração](#configuração)
+  - [Docker](#docker)
+- [Testando API](#testando-a-api)
+
+
+
+<!-- ABOUT -->
+## Sobre o Projeto
+
+É uma API construída com o framework NestJS.
+
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Ambiente de produção
+
+Endereço do ambiente de produção da API: [API-bankme](https://bankme-api.onrender.com).
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+## Ambiente de desenvolvimento
+
+### Plugins e dependências
+
+- [Node](https://nodejs.org/)
+- [NestJs](https://nestjs.com/)
+- [Postgres](https://www.postgresql.org/)
+- [Prisma](https://www.prisma.io/)
+
+Para facilitar a instalacao de dependencias recomendo fortemente a ferramenta: [ASDF](https://asdf-vm.com).
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+### Configuração
+
+1.  Se você  está usando uma os Debian/Ubuntu based básica talvez precise instalar a biblioteca `base-devel` para instalar as dependências básicas para instalar o ruby e `libpq` e\ou `libpq-dev` que a gem [pg](https://github.com/ged/ruby-pg/) precisa como pré-requisito. Para Debian ou Ubuntu:
+```sh
+asdf plugin-add nodejs
 ```
 
-## Running the app
+```sh
+asdf install nodejs latest
+asdf global nodejs
+```
+3. Uma vez instalada as dependencias, voce pode executar o servidor.
 
-```bash
-# development
-$ npm run start
+4. Rode o comando `npm run start:dev` para iniciar o serviço
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Docker
+
+1.  Use os comendos para subir o server local com docker:
+```sh
+docker-compose up -d 
 ```
 
-## Test
+```sh
+docker-compose down -v
+```
+2. Para facilitar o desenvolvimento, é recomendável usar o vscode com a extensão do docker.
 
-```bash
-# unit tests
-$ npm run test
+3. Assim que levantar os serviços com docker-compose, irá parecer a lista dos containers no vscode.
 
-# e2e tests
-$ npm run test:e2e
+![](https://github.com/laisevn/cybermen-api/blob/main/Captura%20de%20tela%20de%202021-08-02%2016-29-47.png)
 
-# test coverage
-$ npm run test:cov
+4. Clique com o botão direito em 'Atach bash'
+5. Pronto!
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Testando a API
+
+### POST: /integrations/auth
+
+#### Autenticando
+
+##### Parametros
+
+
+> | name   |  type      | data type      | 
+> |--------|------------|----------------|
+> | `name` |  required  | string         | 
+> | `password` |  required  | string     |
+
+
+### POST: /integrations/assignor
+
+#### Criando Assignor
+
+
+##### Header
+Use o token gerado no retorno da rota de autenticação:
+```sh
+ Authorization: Bearer <token-aqui>
 ```
 
-## Support
+##### Parametros
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+> | name   |  type      | data type      | 
+> |--------|------------|----------------|
+> | `document` |  required  | string        | 
+> | `email` |  required  | string     | 
+> | `phone` |  required  | string     | 
+> | `name` |  required  | string     | 
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+### GET: /integrations/assignor/:id
 
-Nest is [MIT licensed](LICENSE).
+#### Visualizar Assignor
+
+
+##### Header
+Use o token gerado no retorno da rota de autenticação:
+```sh
+ Authorization: Bearer <token-aqui>
+```
+
+### DELETE: /integrations/assignor/:id
+
+#### Deletar Assignor
+
+
+##### Header
+Use o token gerado no retorno da rota de autenticação:
+```sh
+ Authorization: Bearer <token-aqui>
+```
+
+### PUT: /integrations/assignor/:id
+
+#### Atualizar Assignor
+
+
+##### Header
+Use o token gerado no retorno da rota de autenticação:
+```sh
+ Authorization: Bearer <token-aqui>
+```
+
+##### Parametros
+
+
+> | name   |  type      | data type      | 
+> |--------|------------|----------------|
+> | `document` |  optional  | string        | 
+> | `email` |  optional  | string     | 
+> | `phone` |  optional  | string     | 
+> | `name` |  optional  | string     | 
+
+
+### POST: /integrations/payable
+
+#### Criar Payable
+
+##### Header
+Use o token gerado no retorno da rota de autenticação:
+```sh
+ Authorization: Bearer <token-aqui>
+```
+
+##### Parametros
+
+
+> | name   |  type      | data type      | 
+> |--------|------------|----------------|
+> | `value` |  required  | float  |
+> | `emissionDate` |  required  | string  |
+> | `assignor` |  required  | string  |
+
+
+
+### PUT: /integrations/payable/:id
+
+#### Atualizar Payable
+
+
+##### Header
+Use o token gerado no retorno da rota de autenticação:
+```sh
+ Authorization: Bearer <token-aqui>
+```
+
+##### Parametros
+
+
+> | name   |  type      | data type      | 
+> |--------|------------|----------------|
+> | `value` |  optional  | float  |
+> | `emissionDate` |  optional  | string  |
+> | `assignor` |  optional  | string  |
+
+
+### DELETE: /integrations/payable/:id
+
+#### Deletar Payable
+
+
+##### Header
+Use o token gerado no retorno da rota de autenticação:
+```sh
+ Authorization: Bearer <token-aqui>
+```
+
+### GET: /integrations/payable/:id
+
+#### Viazualizar Payable
+
+
+##### Header
+Use o token gerado no retorno da rota de autenticação:
+```sh
+ Authorization: Bearer <token-aqui>
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- How to make badge shields https://shields.io/ -->
+[NodeJS]:https://img.shields.io/badge/nodejs-6DA55F?style=for-the-badge&logo=node.js&logoColor=white
+[NestJS]:https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white
+[Postgres]:https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white
+[Prisma]:https://img.shields.io/badge/Prisma-black?style=for-the-badge&logo=Prisma&logoColor=white
