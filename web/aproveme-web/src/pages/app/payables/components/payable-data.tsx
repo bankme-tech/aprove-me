@@ -85,39 +85,40 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="flex items-center">
-            Emitido{' '}
-            {isPayableLoading ? (
-              <Skeleton className="h-4 w-12" />
-            ) : (
-              formatDistanceToNow(emissionDate, {
-                locale: ptBR,
-                addSuffix: true,
-              })
-            )}
-          </TableHead>
-          <TableHead className="pr-10 text-center">Valor</TableHead>
-          <TableHead className="text-right"></TableHead>
-          <TableHead className="text-right"></TableHead>
+          <TableHead>Data de Emissão</TableHead>
+          <TableHead>Valor</TableHead>
+          <TableHead>Editar</TableHead>
+          <TableHead>Deletar</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableFooter className="">
         <TableRow>
-          <TableCell className="mt-1.5 flex gap-5">
-            <p>Data:</p>
+          <TableCell className="mt-4 flex flex-col pt-0">
             {isPayableLoading ? (
               <Skeleton className="h-4 w-12" />
             ) : (
-              format(new Date(emissionDate), 'dd/MM/yyyy', {
-                locale: ptBR,
-              })
+              <p>
+                {format(new Date(emissionDate), 'dd/MM/yyyy', {
+                  locale: ptBR,
+                })}
+              </p>
+            )}
+            {isPayableLoading ? (
+              <Skeleton className="h-4 w-12" />
+            ) : (
+              <span className="text-xs">
+                {formatDistanceToNow(emissionDate, {
+                  locale: ptBR,
+                  addSuffix: true,
+                })}
+              </span>
             )}
           </TableCell>
 
           <TableCell className="w-30">
             {isPayableLoading ? (
-              <Skeleton className="h-4 w-12" />
+              <Skeleton className="h-4 w-full" />
             ) : isPayableEditable ? (
               <Input className="h-6 w-24" {...payableRegister('value')} />
             ) : (
