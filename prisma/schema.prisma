@@ -23,3 +23,9 @@ model Assignor {
   name String
   payables Payable[]
 }
+
+model Permission {
+  id String @id @default(uuid())
+  login String
+  password String
+}
