@@ -1,7 +1,6 @@
 "use client";
 "use components";
 
-import Loading from "@/app/components/Loading";
 import * as Styled from "@/app/styles";
 import * as AssignorStyle from "@/app/styles/Details";
 import { connection } from "@/connection";
@@ -11,13 +10,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type AssygnorDetailsProps = {
+type AssignorDetailsProps = {
   params: {
     id: string;
   };
 };
 
-export default function AssignorEdit({ params }: AssygnorDetailsProps) {
+export default function AssignorEdit({ params }: AssignorDetailsProps) {
   const [updatedData, setUpdatedData] = useState<Partial<Assignor>>({});
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
