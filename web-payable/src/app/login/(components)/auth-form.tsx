@@ -31,6 +31,7 @@ import { useState } from "react";
 import { AUTH_TOKEN, apiCall } from "@/lib/api-call";
 import { AuthLoginResponse, AuthRegistered } from "@/interfaces/auth.interface";
 import { useRouter } from 'next/navigation'
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   login: z.string().min(1, { message: "Username precisa ter no mínimo 1 caractere" }),
@@ -44,9 +45,9 @@ export default function AuthForm() {
     defaultValues: { login: "", password: "" },
   });
   const router = useRouter();
+  const { toast } = useToast();
 
   async function onSubmit(credential: z.infer<typeof formSchema>) {
-    console.log(formType, ": ", credential);
     if (formType === 'register') {
       await apiCall<AuthRegistered>({
         endpoint: "/integrations/auth",
@@ -144,7 +145,11 @@ export default function AuthForm() {
               {credentialContent}
 
               <CardFooter>
-                <Button type="submit">Cadastrar</Button>
+                <Button type="submit"
+                  onClick={
+                    () => { toast({ title: "Cadastro concluido" }) }
+                  }
+                >Cadastrar</Button>
               </CardFooter>
             </Card>
           </TabsContent>
