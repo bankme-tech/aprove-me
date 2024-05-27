@@ -15,6 +15,7 @@
     "@tanstack/react-query": "^5.37.1",
     "@tanstack/react-query-devtools": "^5.37.1",
     "axios": "^1.7.2",
+    "cookies-next": "^4.2.1",
     "framer-motion": "^11.2.6",
     "moment": "^2.30.1",
     "next": "14.2.3",
