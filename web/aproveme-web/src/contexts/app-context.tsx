@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
 import { createContext } from 'use-context-selector'
 
+import { deletePayable } from '@/api/delete-payable'
 import { fetchAssignorsNames } from '@/api/fetch-assignors-names'
 import { registerAssignor } from '@/api/register-assignor'
 import { registerPayable } from '@/api/register-payable'
@@ -33,6 +34,7 @@ interface AppContextType {
   registerPayableFn: (data: RegisterPayable) => Promise<void>
   refreshAssignorsNames: () => void
   registerAssignorFn: (data: RegisterAssignor) => Promise<void>
+  deletePayableFn: (payableId: string) => Promise<void>
 }
 
 export const AppContext = createContext({} as AppContextType)
@@ -50,9 +52,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const { mutateAsync: registerAssignorFn } = useMutation({
     mutationFn: registerAssignor,
   })
+  const { mutateAsync: deletePayableFn } = useMutation({
+    mutationFn: deletePayable,
+  })
 
   // Callbacks
-
   const refreshAssignorsNames = useCallback(async () => {
     const data = await fetchAssignorsNamesFn()
     setAssignorsNames(data)
@@ -64,12 +68,14 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       refreshAssignorsNames,
       registerPayableFn,
       registerAssignorFn,
+      deletePayableFn,
     }),
     [
       assignorsNames,
       registerPayableFn,
       refreshAssignorsNames,
       registerAssignorFn,
+      deletePayableFn,
     ],
   )
 

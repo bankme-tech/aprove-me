@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { format, formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Check, Pencil, Trash2, X } from 'lucide-react'
@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { deletePayable } from '@/api/delete-payable'
 import { getPayable, GetPayableBody } from '@/api/get-payable'
 import {
   AlertDialog,
@@ -32,6 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useAppContext } from '@/hooks/use-app-context'
 
 interface PayableDataProps {
   payableId: string
@@ -43,7 +43,9 @@ const editPayableForm = z.object({
 type EditPayableForm = z.infer<typeof editPayableForm>
 
 export const PayableData = ({ payableId }: PayableDataProps) => {
+  const { deletePayableFn } = useAppContext()
   const navigate = useNavigate()
+  const [isPayableEditable, setIsPayableEditable] = useState(false)
 
   const { data: payableDetail, isLoading: isPayableLoading } =
     useQuery<GetPayableBody>({
@@ -56,8 +58,6 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
   const { payableWithAssignor: { value = 0, emissionDate = new Date() } = {} } =
     payableDetail || {}
 
-  const [isPayableEditable, setIsPayableEditable] = useState(false)
-
   const {
     register: payableRegister,
     // handleSubmit: handlePayableSubmit,
@@ -66,10 +66,6 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
     defaultValues: {
       value,
     },
-  })
-
-  const { mutateAsync: deletePayableFn } = useMutation({
-    mutationFn: deletePayable,
   })
 
   const handleDelete = async () => {
