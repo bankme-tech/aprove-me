@@ -45,7 +45,7 @@ export default function NavbarLogin() {
         setGreeting("Entrar");
       }
     }).catch(ignoreExpiredError);
-  }, [pathname, greeting]);
+  }, [pathname]);
 
   return (
     <div>

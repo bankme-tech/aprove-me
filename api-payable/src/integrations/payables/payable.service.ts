@@ -42,14 +42,11 @@ export class PayableService {
     if (selectKeys) {
       findManyParam.select = {};
       for (const key of selectKeys) {
-        console.log(`[Log:key]:`, key);
         findManyParam.select[key] = true;
       }
     }
     if (includeAssignor) findManyParam.include = { assignor: includeAssignor };
 
-
-    console.log(`[Log:findManyParam]:`, findManyParam);
     const [total, items] = await Promise.all([
       this.prisma.payable.count(),
       this.prisma.payable.findMany(findManyParam),

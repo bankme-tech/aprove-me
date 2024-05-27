@@ -18,7 +18,7 @@ export async function apiCall<T = any>(data: CallData) {
   const { endpoint, method, body } = data;
 
   const path = `${process.env.NEXT_PUBLIC_API_HOST}${addMissingSlash(endpoint)}`;
-  const response = await fetch(new URL(path), {
+  const res = await fetch(new URL(path), {
     method,
     body: JSON.stringify(body),
     headers: {
@@ -26,19 +26,8 @@ export async function apiCall<T = any>(data: CallData) {
       Authorization: `Bearer ${token}`,
     }
   });
-  const statusCode = response.status;
+  const statusCode = res.status;
+  const result = await res.json() as T;
 
-  const UNAUTHORIZED = 401;
-  if (response.status === UNAUTHORIZED && token) {
-    // localStorage.removeItem(AUTH_TOKEN);
-    return { redirect: '/login', statusCode };
-  }
-
-  if (!response.ok || response.status > 400) {
-    const err = await response.json();
-    throw new Error(err.message);
-  }
-
-  const result = await response.json() as T;
   return { result, statusCode };
 }

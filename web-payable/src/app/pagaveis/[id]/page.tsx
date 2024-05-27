@@ -9,8 +9,10 @@ export default function Page() {
   const [payable, setPayable] = useState('');
 
   useEffect(() => {
-    apiCall({ endpoint: `/integrations/payable/${param.id}`, method: 'GET' })
-      .then((res) => setPayable(res.result));
+    apiCall({
+      endpoint: `/integrations/payable/${param.id}`,
+      method: 'GET',
+    }).then((res) => setPayable(res.result));
     // TODO: catch((err) => toaster)
   }, [param.id]);
 

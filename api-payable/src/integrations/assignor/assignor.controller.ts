@@ -37,9 +37,7 @@ export class AssignorController {
   }
 
   @Get()
-  async findMany(@Query() queryDto?: PartialAssignorDto) {
-    console.log(`[Log:queryDto]:`, queryDto);
-    // TODO: add select
+  async findMany() {
     const assignors = await this.assignorService.findMany();
     return { assignors };
   }
@@ -50,8 +48,6 @@ export class AssignorController {
     if (!assignor) throw new NotFoundException(`Assignor not found. Id: ${id}`);
     return assignor;
   }
-
-
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<Assignor> {

@@ -21,7 +21,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import React from "react";
+import React, { useEffect } from "react";
 import { currencyToNumber, numberToCurrency } from "@/lib/format-currency";
 import { Combobox, ComboboxProps } from "@/components/combobox";
 import { useRouter } from "next/navigation";
@@ -32,7 +32,7 @@ import { type PayableDto } from "@/interfaces/payable.interface";
 
 const formSchema = z.object({
   value: z.string({ message: "Por favor digite um valor positivo" }),
-  emissionDate: z.string(),
+  emissionDate: z.string().default(new Date().toISOString()),
   assignor: z.string().uuid(),
 });
 type PayableSchema = z.infer<typeof formSchema>;
@@ -40,7 +40,7 @@ type PayableSchema = z.infer<typeof formSchema>;
 export default function Page() {
   const router = useRouter();
   const [assignors, setAssignors] = React.useState<AssignorEntity[]>([]);
-  React.useEffect(() => {
+  useEffect(() => {
     apiCall({
       endpoint: `/integrations/assignors`,
       method: "GET",
@@ -79,9 +79,7 @@ export default function Page() {
         method: 'POST',
         body: dto,
       });
-      if (res.redirect) {
-        router.push(res.redirect);
-      } else if (res.result) {
+      if (res.result) {
         router.push(`/pagaveis/${res.result.id}`);
       }
     } catch (err: any) {
