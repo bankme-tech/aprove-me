@@ -94,9 +94,6 @@ docker-compose down -v
 2. Para facilitar o desenvolvimento, é recomendável usar o vscode com a extensão do docker.
 
 3. Assim que levantar os serviços com docker-compose, irá parecer a lista dos containers no vscode.
-
-![](https://github.com/laisevn/cybermen-api/blob/main/Captura%20de%20tela%20de%202021-08-02%2016-29-47.png)
-
 4. Clique com o botão direito em 'Atach bash'
 5. Pronto!
 
