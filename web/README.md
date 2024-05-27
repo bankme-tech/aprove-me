@@ -9,6 +9,11 @@ Foi utilizado um utilitário de classes CSS chamado Tailwindcss e Daisyui, a esc
 
 No texto a seguir serão explicados o pontos mais importantes e o conceitos utilizados nesse Frontend.
 
+## Variáveis de ambiente
+```bash
+NEXT_PUBLIC_API_BASE_URL="http://localhost:8080/api"
+```
+
 ## Como rodar a aplicação (localmente)
 
 ```bash
