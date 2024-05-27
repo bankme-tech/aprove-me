@@ -87,7 +87,7 @@ Opitei por usar o Swagger, pois é a melhor escolha no que disrespeito a documen
 
 - `GET /integrations/user`: Retorna todos os usuários.
 - `GET /integrations/user/:id`: Retorna um usuário específico pelo ID.
-- `GET /integrations/user/login/search`: Retorna um usuário específico pelo login, passando o email como string via `@Query`. Ex: `/integrations/user/login/search?login=test@test.com`
+- `GET /integrations/user/search/login`: Retorna um usuário específico pelo login, passando o email como string via `@Query`. Ex: `/integrations/user/search/login?login=test`
 - `POST /integrations/user`: Cria um novo usuário.
 - `PUT /integrations/user/:id`: Atualiza um usuário existente pelo ID.
 - `DELETE /integrations/user/:id`: Exclui um usuário pelo ID.

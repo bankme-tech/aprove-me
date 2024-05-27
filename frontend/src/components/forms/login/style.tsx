@@ -10,7 +10,7 @@ export const FormLoginStyle = styled.form`
   gap: 1rem;
 
   p {
-    color: var(--p-color);
+    color: var(--p-color-login);
     text-align: center;
   }
 `;
@@ -41,18 +41,16 @@ export const FormContent = styled.div`
 export const MsgContainer = styled.div`
   position: absolute;
   width: 100%;
-  top: 76vh;
-  left: 0;
-`;
-
-export const MsgErrorContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  top: 76vh;
+  top: 73vh;
   left: 0;
 
   p {
-    color: var(--error-color);
+    &.error {
+      color: var(--error-color);
+    }
+    &.success {
+      color: var(--success-color);
+    }
   }
 `;
 

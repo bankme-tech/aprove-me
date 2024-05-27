@@ -83,7 +83,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiTags('User')
-  @Get('users/login/search')
+  @Get('users/search/login')
   @HttpCode(HttpStatus.OK)
   async getUserByLogin(@Query('login') login: string) {
     try {

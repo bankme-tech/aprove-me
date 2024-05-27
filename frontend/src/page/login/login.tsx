@@ -1,5 +1,6 @@
 import { Container, Content, FooterLogin, FormContainer, Title } from './style'
-import { FormLogin } from '../../components/forms/formLogin';
+import { FormLogin } from '../../components/forms/login/login';
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
   return (
@@ -14,7 +15,8 @@ export const Login = () => {
         </FormContainer>
       </Content>
       <FooterLogin>
-        <p>Para acessar o conteúdo, faça login ou cadastre-se.</p>
+        <p>Para acessar o conteúdo, faça login ou 
+          <Link to="/register"> Cadastre-se</Link>.</p>
       </FooterLogin>
     </Container>
   )

@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { Home } from './page/home/home'
 import { Login } from './page/login/login'
-import { UserRegister } from './page/register/userRegister'
+import { UserRegister } from './page/register/user/user'
 
 function App() {
 

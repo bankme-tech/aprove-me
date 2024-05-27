@@ -1,14 +1,11 @@
 import { useState } from 'react'
-import FormButtons from '../buttons/formButtons'
+import FormButtons from '../../buttons/formButtons'
 import {
   FormContent,
   FormLoginStyle,
   MsgContainer,
-  RegisterContainer,
-  MsgErrorContainer,
 } from './style'
-import { LoginApi } from '../../service/UserApi'
-import { Link } from 'react-router-dom'
+import { LoginApi } from '../../../service/UserApi'
 
 export const FormLogin = () => {
   const [login, setLogin] = useState('');
@@ -76,18 +73,15 @@ export const FormLogin = () => {
       { 
         loading && 
         <MsgContainer>
-          <p>Carregando...</p> 
+          <p className='success'>Logado. Redirecionando...</p> 
         </MsgContainer>
       }
       { 
         error && 
-        <MsgErrorContainer>
-          <p>{ errorMsg }</p> 
-        </MsgErrorContainer>
+        <MsgContainer>
+          <p className='error'>{ errorMsg }</p> 
+        </MsgContainer>
       }
-      <RegisterContainer>
-        <Link to="/register">Cadastrar</Link>
-      </RegisterContainer>
     </FormLoginStyle>
     )
 }

@@ -1,19 +1,43 @@
 :root {
-   /* *** Variaveis para login *** */
 
-  --bg-body-color: #222;
-  --bg-form-color: #dadada;
+  /* *** Globais *** */
+
+  --error-color: #ff4c4c;
+  --success-color: #28A745;
   --font-color: #ccc;
   --link-color: #646cff;
   --link-hover-color: #535bf2;
-  --text-form-color: #444;
-  --p-color: #676767;
-  --h1-color: #aaa;
   --input-outline-color: #646cff;
-  --error-color: #ff0000;
+  --p-color: #656565;
+  
+  /* ****************************** */
+  
+  
+  /* *** Variaveis CSS para login *** */
+  
+  --bg-body-color: #222;
+  --bg-form-color: #dadada;
+  --text-form-color: #444;
+  --h1-color: #aaa;
+  --p-color-login: #656565;
 
-  /* *** Variaveis para footer *** */
+  
+  /* ****************************** */
+
+  
+  /* *** Variaveis CSS para footer da pagina de login *** */
+  
   --bg-footer-color: #c0c0c0;
+
+
+
+  /* ****************************** */
+
+
+  /* *** Variaveis CSS para página de registro *** */
+
+  --bg-main-register-color: #292929;
+  --bg-button-register-color: #646cff;
   
 }
 
@@ -42,4 +66,8 @@ body {
 h1 {
   font-size: 3em;
   line-height: 1.1;
+}
+
+p {
+  color: var(--p-color);
 }
