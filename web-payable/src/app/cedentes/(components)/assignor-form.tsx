@@ -64,7 +64,8 @@ export default function AssignorForm() {
         body: assignor,
       });
       if (res.result) {
-        router.push(`/cedentes/${res.result.id}`);
+        // router.push(`/cedentes/${res.result.id}`);
+        router.back();
       }
     } catch (err: any) {
       console.error(err); // TODO: add toaster or other message;

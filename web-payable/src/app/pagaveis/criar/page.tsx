@@ -80,7 +80,8 @@ export default function Page() {
         body: dto,
       });
       if (res.result) {
-        router.push(`/pagaveis/${res.result.id}`);
+        // router.push(`/pagaveis/${res.result.id}`);
+        router.back();
       }
     } catch (err: any) {
       console.log(err); // TODO: add toaster or other message;
