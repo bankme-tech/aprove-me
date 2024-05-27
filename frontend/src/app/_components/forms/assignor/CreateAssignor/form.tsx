@@ -6,6 +6,7 @@ import { PatternFormat } from "react-number-format";
 import { useMutation } from "@tanstack/react-query";
 import { assignorService } from "@/services/api/assignors";
 import { toast } from "react-toastify";
+import { queryClient } from "@/app/provider";
 
 interface CreateAssignorProps {
     isOpen: boolean;
@@ -40,6 +41,9 @@ export default function CreateAssignor({
                 reset()
                 onOpenChange(false)
                 toast.success("Recebível adicionado com sucesso!")
+                queryClient.invalidateQueries({
+                    queryKey: ["assignors"],
+                })
             },
             onError: () => toast.error("Erro ao adicionar recebível"),
         });
@@ -53,7 +57,7 @@ export default function CreateAssignor({
             <ModalContent>
                 {(onClose) => (
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <ModalHeader className="flex flex-col gap-1">Adicionar recebível</ModalHeader>
+                        <ModalHeader className="flex flex-col gap-1">Adicionar cedente</ModalHeader>
                         <ModalBody>
                             <Controller
                                 name="document"

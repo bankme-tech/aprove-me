@@ -38,7 +38,7 @@ export default function CreatePayable({
     const {
         handleSubmit,
         control,
-        watch,
+        reset,
         formState: { errors },
     } = useForm<CreatePayableType>({
         resolver: zodResolver(CreatePayableSchema),
@@ -52,6 +52,7 @@ export default function CreatePayable({
     const onSubmit = async (data: CreatePayableType) => {
         mutateAsync(data, {
             onSuccess: () => {
+                reset()
                 onOpenChange(false);
                 toast.success("Recebível criado com sucesso")
                 queryClient.invalidateQueries({
