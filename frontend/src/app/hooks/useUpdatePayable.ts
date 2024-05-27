@@ -4,7 +4,7 @@ import { api } from "../../api";
 
 export type CreatePayable = {
   value: string;
-  emissionDate: string;
+  emissionDate: Date;
   assignorId: string;
 };
 

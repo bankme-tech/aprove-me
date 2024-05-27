@@ -1,16 +1,11 @@
+'use client'
+
 import useUpdatePayable from "@/app/hooks/useUpdatePayable";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  useDisclosure,
-} from "@nextui-org/react";
-import { Pencil1Icon } from "@radix-ui/react-icons";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Button } from "./ui/button";
 import { Combobox } from "./ui/combobox";
 import { DatePicker } from "./ui/date-picker";
 import {
@@ -25,155 +20,126 @@ import { Input } from "./ui/input";
 
 const formSchema = z.object({
   value: z.string({ required_error: "value is required" }).min(2),
-  emissionDate: z.string({ required_error: "emissionDate is required" }),
+  emissionDate: z.date({ required_error: "emissionDate is required" }),
   assignorId: z.string({ required_error: "assignor is required" }).min(2),
 });
 
 type ModalPayableProps = {
-  payable: {
-    id: string;
-    value: string;
-    emissionDate: string;
-    assignorId: string;
+  props: {
+    payable: {
+      id: string;
+      value: string;
+      emissionDate: string;
+      assignorId: string;
+    };
+    assignors: {
+      id: string;
+      name: string;
+    }[];
+    isOpen: boolean;
+    setIsOpen: (value: boolean) => void;
   };
-  assignors: {
-    id: string;
-    name: string;
-  }[];
 };
 
-export default function ModalPayable({
-  payable,
-  assignors,
-}: ModalPayableProps) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+export default function ModalPayable({ props }: ModalPayableProps) {
   const { mutate: mutateUpdateValues } = useUpdatePayable();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      value: payable.value,
-      emissionDate: payable.emissionDate,
-      assignorId: payable.assignorId,
+      value: props.payable.value,
+      emissionDate: new Date(props.payable.emissionDate),
+      assignorId: props.payable.assignorId,
     },
   });
 
-  const handlePayableUpdate = (values: z.infer<typeof formSchema>) =>
-    mutateUpdateValues({ id: payable.id, payable: values });
+  const handlePayableUpdate = (values: z.infer<typeof formSchema>) => {
+    mutateUpdateValues({ id: props.payable.id, payable: values });
+    props.setIsOpen(false);
+  };
 
   return (
-    <div className="flex justify-center">
-      <Button color="default" onPress={onOpen}>
-        <Pencil1Icon />
-      </Button>
-      <Modal
-        backdrop="blur"
-        className="w-1/3 h-4/3 self-center p-10 rounded-2xl"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        radius="lg"
-        classNames={{
-          body: "py-6",
-          backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-          base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
-          header: "border-b-[1px] border-[#292f46]",
-          footer: "border-t-[1px] border-[#292f46]",
-          closeButton: "hover:bg-white/5 active:bg-white/10",
-        }}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex">Modal Title</ModalHeader>
-              <ModalBody>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(handlePayableUpdate)}
-                    className="space-y-8"
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <FormField
-                      control={form.control}
-                      name="value"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>value</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="value"
-                              className="dark:bg-black transition colors"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="emissionDate"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <DatePicker
-                              date={
-                                field.value ? new Date(field.value) : undefined
-                              }
-                              setDate={field.onChange}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+    <div className="flex justify-center transition-all">
+      {props.isOpen && (
+        <div className="fixed dark:bg-[#1E293B] bg-black top-20 w-1/3 h-2/3 rounded-3xl transition-all flex justify-center flex-col gap-5 bg-[#1E293B]">
+          <h1 className="text-3xl font-bold self-center dark:text-white text-white ">Update your payable</h1>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handlePayableUpdate)}
+              className="space-y-8 flex justify-center items-center flex-col gap-3"
+             
+            >
+              <FormField
+                control={form.control}
+                name="value"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">value</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="value"
+                        className="dark:bg-[#020817] dark:hover:bg-[#1E293B] bg-white transition"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="emissionDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <DatePicker
+                        date={field.value ? new Date(field.value) : undefined}
+                        setDate={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                    <FormField
-                      control={form.control}
-                      name="assignorId"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Combobox
-                              value={field.value}
-                              setValue={field.onChange}
-                              assignors={assignors ? assignors : []}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+              <FormField
+                control={form.control}
+                name="assignorId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Combobox
+                        value={field.value}
+                        setValue={field.onChange}
+                        assignors={props.assignors ? props.assignors : []}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                    <div>
-                      <Button
-                        color="success"
-                        variant="light"
-                        className="bg-black rounded-lg"
-                        onPress={onClose}
-                      >
-                        Close
-                      </Button>
+              <div>
+                <Button
+                  color="failure"
+                  type="button"
+                  onClick={() => props.setIsOpen(false)}
+                >
+                  Close
+                </Button>
 
-                      <Button
-                        className="bg-[#6f4ef2] shadow-lg shadow-indigo-500/20 rounded-lg ml-2"
-                        disabled={!form.formState.isValid}
-                        type="submit"
-                      >
-                        Update
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              </ModalBody>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+                <Button
+                  className="bg-[#6f4ef2] shadow-lg shadow-indigo-500/20 rounded-lg ml-2"
+                  disabled={!form.formState.isValid}
+                  type="submit"
+                >
+                  Update
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
+      )}
     </div>
   );
 }

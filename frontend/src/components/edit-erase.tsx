@@ -1,31 +1,35 @@
 'use client'
 
-import Loading from "@/app/assignor/loading";
 import useDeletePayable from "@/app/hooks/useDeletePayable";
-import useGetAssignors from "@/app/hooks/useGetAssignors";
 import { Button } from "@nextui-org/react";
-import { TrashIcon } from "@radix-ui/react-icons";
-import ModalPayable from "./modal-payable";
+import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 type EditEraseProps = {
-  payable: {
-    id: string;
-    value: string;
-    emissionDate: string;
-    assignorId: string;
-  };
+ props: {
+   payable: {
+     id: string;
+     value: string;
+     emissionDate: string;
+     assignorId: string;
+   };
+   isOpen: boolean;
+   setIsOpen: (value: boolean) => void;
+ }
 }
 
 
-export default function EditErase({ payable }: EditEraseProps) {
-
-  const {data: assignors, isLoading } = useGetAssignors();
+export default function EditErase({ props }: EditEraseProps) {
+  
   const {mutate: deleteMutate} = useDeletePayable();
 
-  if (isLoading) return <Loading />;
   return (
     <div style={{display: 'flex', width: '100%', justifyContent: 'space-between',alignItems: 'center', marginBottom: '5px', padding: '5px'} }>
-      <ModalPayable payable={payable} assignors={assignors} />
-      <Button onClick={() => deleteMutate(payable.id)}><TrashIcon /></Button>
+     
+     <Button color="default" onClick={() => props.setIsOpen(!props.isOpen)}>
+        <Pencil1Icon />
+      </Button>
+     
+   
+      <Button onClick={() => deleteMutate(props.payable.id)}><TrashIcon /></Button>
     </div>
   );
 }
