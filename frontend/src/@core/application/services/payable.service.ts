@@ -3,10 +3,10 @@ import {
   CreatePayableInputDTO,
   CreatePayableOutputDTO,
 } from "../../domain/dtos/payable.dto";
-import type { IPayableGateway } from "../../domain/gateways/payable.gateway";
 import { TYPES } from "../../infra/dependecy-injection/types";
 import { IPayableService } from "../../domain/services/payable.service.interface";
 import { Payable } from "../../domain/entities/payable.entity";
+import type { IPayableGateway } from "@/@core/domain/gateways/payable.gateway";
 
 @injectable()
 export class PayableService implements IPayableService {
@@ -19,8 +19,8 @@ export class PayableService implements IPayableService {
     return this.payableGateway.create(data);
   }
 
-  findById(id: string): Promise<Payable> | null {
-    const result = this.payableGateway.findById(id);
+  async findById(id: string): Promise<Payable | null> {
+    const result = await this.payableGateway.findById(id);
     if (!result) {
       return null;
     }
