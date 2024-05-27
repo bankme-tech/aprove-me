@@ -8,6 +8,6 @@ yarn prisma migrate dev  # generate sqlite database.
 ```
 Run tests:
 ```sh
-yarn test            # run api automated tests.
-yarn start:dev       # start dev api.
+yarn test      # run api automated tests.
+yarn dev       # start dev api.
 ```
