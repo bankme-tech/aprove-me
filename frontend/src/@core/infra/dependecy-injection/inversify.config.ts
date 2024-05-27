@@ -4,6 +4,7 @@ import { TYPES } from "./types";
 import { IPayableService } from "@/@core/domain/services/payable.service.interface";
 import { PayableService } from "@/@core/application/services/payable.service";
 import { AxiosHttpClient } from "../http/axios.http.client";
+import { HttpPayableGateway } from "../gateways/http-payable.gateway";
 import { IPayableGateway } from "@/@core/domain/gateways/payable.gateway";
 import { IAssignorService } from "@/@core/domain/services/assignor.service.interface";
 import { AssignorService } from "@/@core/application/services/assignor.service";
@@ -13,6 +14,7 @@ import { HttpAssignorGateway } from "../gateways/http-assignor.gateway";
 export const myContainer = new Container();
 
 myContainer.bind(TYPES.IHttpClient).to(AxiosHttpClient);
+myContainer.bind<IPayableGateway>(TYPES.IPayableGateway).to(HttpPayableGateway);
 myContainer
   .bind<IAssignorGateway>(TYPES.IAssignorGateway)
   .to(HttpAssignorGateway);
