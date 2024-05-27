@@ -53,6 +53,23 @@ export default function PayableDetails({ params }: PàyableDetailsProps) {
     fetchData();
   }, [params.id, router]);
 
+  const confirmDelete = async () => {
+    if (confirm("Are you sure you want to delete this payable?")) {
+      try {
+        await connection.delete(`/payable/${params.id}`);
+        alert("Payable deleted successfully");
+        router.push("/payable");
+      } catch (error: any) {
+        console.log(error.response.data.message);
+        
+        alert(error.response.data.message);
+      }
+    } else {
+      alert("Payable not deleted");
+    }
+  }
+
+
   if (error) {
     return (
       <Styled.Main>
@@ -84,6 +101,9 @@ export default function PayableDetails({ params }: PàyableDetailsProps) {
           <PayableStyle.Button onClick={() => router.back()}>
             Back
           </PayableStyle.Button>
+          <PayableStyle.ButtonDelete onClick={confirmDelete}>
+            Delete Payable
+          </PayableStyle.ButtonDelete>
           </div>
           </PayableStyle.Card>
         )}

@@ -22,6 +22,22 @@ export default function AssignorDetails({ params }: AssignorDetailsProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
+  const confirmDelete = async () => {
+    if (confirm("Are you sure you want to delete this assignor?")) {
+      try {
+        await connection.delete(`/assignor/${params.id}`);
+        alert("Assignor deleted successfully");
+        router.push("/assignor");
+      } catch (error: any) {
+        console.log(error.response.data.message);
+        
+        alert(error.response.data.message);
+      }
+    } else {
+      alert("Assignor not deleted");
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
       const token = getToken();
@@ -82,6 +98,9 @@ export default function AssignorDetails({ params }: AssignorDetailsProps) {
           <AssignorStyle.Button onClick={() => router.back()}>
             Back
           </AssignorStyle.Button>
+          <AssignorStyle.ButtonDelete onClick={confirmDelete}>
+            Delete Assignor
+          </AssignorStyle.ButtonDelete>
           </div>
           </AssignorStyle.Card>
         )}
