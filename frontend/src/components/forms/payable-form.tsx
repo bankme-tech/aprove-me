@@ -1,19 +1,19 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { DatePicker } from "../ui/date-picker";
 import CurrencyInput from "../ui/currency-input";
-import { Input } from "../ui/input";
+import { DatePicker } from "../ui/date-picker";
+import { Assignor } from "@/@core/domain/entities/assignor.entity";
+import { Combobox } from "../ui/combobox";
 
 export const payableSchema = z.object({
   value: z.coerce
@@ -29,9 +29,10 @@ export const payableSchema = z.object({
 
 export interface PayableFormProps {
   onSubmit: (values: z.infer<typeof payableSchema>) => void;
+  assignors: Assignor[];
 }
 
-export function PayableForm({ onSubmit }: PayableFormProps) {
+export function PayableForm({ onSubmit, assignors }: PayableFormProps) {
   const form = useForm<z.infer<typeof payableSchema>>({
     resolver: zodResolver(payableSchema),
     defaultValues: {
@@ -47,22 +48,14 @@ export function PayableForm({ onSubmit }: PayableFormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col content-between space-y-8"
       >
-        <FormField
-          control={form.control}
+        <Combobox
+          form={form}
           name="assignorId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>ID do cedente</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="123e4567-e89b-12d3-a456-426655440000"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>Identificador único do cedente</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Cedente"
+          items={assignors}
+          itemToLabel={(assignor) => assignor.name}
+          itemToValue={(assignor) => assignor.id}
+          description="Cedente do recebível."
         />
         <CurrencyInput
           form={form}
