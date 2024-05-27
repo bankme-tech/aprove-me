@@ -10,6 +10,7 @@ import * as amqp from 'amqplib';
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useBodyParser('json', { limit: '50mb' });
+  app.enableCors();
   app.setGlobalPrefix('integrations');
   app.useGlobalPipes(
     new ValidationPipe({
