@@ -1,5 +1,5 @@
 import { Test } from "@nestjs/testing";
-import type { Assignor } from "@prisma/client";
+import { Assignor } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { FindAssignorByIdController } from "./find-assignor-by-id.controller";

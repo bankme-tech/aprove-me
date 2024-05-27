@@ -1,5 +1,5 @@
 import { Test } from "@nestjs/testing";
-import type { Payable } from "@prisma/client";
+import { Payable } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { DeletePayableByIdController } from "./delete-payable-by-id.controller";

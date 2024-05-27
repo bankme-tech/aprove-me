@@ -1,6 +1,6 @@
 import { BadRequestException } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
-import type { Assignor } from "@prisma/client";
+import { Assignor } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { DeleteAssignorByIdController } from "./delete-assignor-by-id.controller";

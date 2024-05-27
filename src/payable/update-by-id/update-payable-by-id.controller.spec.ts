@@ -1,6 +1,6 @@
 import { BadRequestException } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
-import type { Assignor, Payable } from "@prisma/client";
+import { Assignor, Payable } from "@prisma/client";
 
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { UpdatePayableByIdController } from "./update-payable-by-id.controller";

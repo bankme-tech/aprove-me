@@ -1,5 +1,5 @@
 import { Body, Controller, Param, ParseUUIDPipe, Put } from "@nestjs/common";
-import type { Assignor } from "@prisma/client";
+import { Assignor } from "@prisma/client";
 
 import { Auth } from "../../auth/auth.decorator";
 import { ZodPipe } from "../../pipes/zod.pipe";

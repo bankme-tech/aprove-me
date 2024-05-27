@@ -1,6 +1,6 @@
 import { BadRequestException } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
-import type { Payable } from "@prisma/client";
+import { Payable } from "@prisma/client";
 
 import { PrismaProvider } from "../providers/prisma.provider";
 import { FindPayableByIdPipe } from "./find-payable-by-id.pipe";

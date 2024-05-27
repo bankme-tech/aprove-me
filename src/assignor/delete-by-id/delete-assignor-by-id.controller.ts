@@ -5,7 +5,7 @@ import {
   Param,
   ParseUUIDPipe,
 } from "@nestjs/common";
-import type { Assignor } from "@prisma/client";
+import { Assignor } from "@prisma/client";
 
 import { Auth } from "../../auth/auth.decorator";
 import { PrismaProvider } from "../../providers/prisma.provider";

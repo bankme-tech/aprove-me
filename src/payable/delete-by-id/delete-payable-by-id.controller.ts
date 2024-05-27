@@ -1,5 +1,5 @@
 import { Controller, Delete, Param, ParseUUIDPipe } from "@nestjs/common";
-import type { Payable } from "@prisma/client";
+import { Payable } from "@prisma/client";
 
 import { Auth } from "../../auth/auth.decorator";
 import { PrismaProvider } from "../../providers/prisma.provider";
