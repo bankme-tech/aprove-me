@@ -28,14 +28,14 @@ type AssignorType = {
 type ComboboxProps = {
   value: string
   setValue: (value: string) => void
-  assignors: AssignorType[];
+  assignors: AssignorType[] | undefined;
 }
  
 export function Combobox({value, setValue, assignors}: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
 
-  const formattedAssignors = assignors
-  .map(assignor => ({value: assignor.id, label: assignor.name}))
+  const formattedAssignors = assignors ? assignors
+  .map(assignor => ({value: assignor.id, label: assignor.name})) : []
  
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -59,7 +59,7 @@ export function Combobox({value, setValue, assignors}: ComboboxProps) {
           <CommandGroup>
             <CommandList>
 
-            {formattedAssignors.map((assignor) => (
+            {formattedAssignors && formattedAssignors.map((assignor) => (
               <CommandItem
               key={assignor.value}
               value={assignor.value}
