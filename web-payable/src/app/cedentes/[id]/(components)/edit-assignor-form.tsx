@@ -24,6 +24,7 @@ import { apiCall } from "@/lib/api-call";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { AssignorEntity } from "@/interfaces/assignor.interface";
+import { useRouter } from "next/navigation";
 
 function limitMessage(key: string, limit: number) {
   return `${key} com caracteres acima do limite ${limit} caracteres`;
@@ -57,6 +58,7 @@ export default function EditAssignorForm(p: Props) {
   const form = useForm<AssignorSchema>({
     resolver: zodResolver(formSchema),
   });
+  const router = useRouter();
 
   useEffect(() => {
     apiCall({
@@ -91,6 +93,7 @@ export default function EditAssignorForm(p: Props) {
         method: 'PATCH',
         body: assignor,
       });
+      router.back();
     } catch (err: any) {
       console.error(err); // TODO: add toaster or other message;
     }
