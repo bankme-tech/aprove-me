@@ -10,7 +10,7 @@ export class PayablesService {
   constructor(
     private prisma: PrismaService,
     @InjectQueue('payablesBatch') private readonly payablesBatch: Queue,
-  ) { }
+  ) {}
 
   async create(createPayableDto: CreatePayableDto) {
     return this.prisma.payable.create({
@@ -25,6 +25,9 @@ export class PayablesService {
   async findOne(id: string) {
     return this.prisma.payable.findUnique({
       where: { id },
+      include: {
+        assignorReference: true,
+      },
     });
   }
 
