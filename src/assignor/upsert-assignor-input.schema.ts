@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 import { isBrazilianPhoneNumber } from "../validators/isBrazilianPhoneNumber";
 import { isCNPJ } from "../validators/isCNPJ";

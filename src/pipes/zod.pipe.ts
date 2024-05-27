@@ -1,5 +1,5 @@
 import { BadRequestException, PipeTransform } from "@nestjs/common";
-import z from "zod";
+import { z } from "zod";
 
 export class ZodPipe<T extends z.ZodType>
   implements PipeTransform<unknown, z.infer<T>>
