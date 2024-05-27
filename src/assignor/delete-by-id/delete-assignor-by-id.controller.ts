@@ -7,6 +7,7 @@ import {
 } from "@nestjs/common";
 import type { Assignor } from "@prisma/client";
 
+import { Auth } from "../../auth/auth.decorator";
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { FindAssignorByIdPipe } from "../find-assignor-by-id.pipe";
 
@@ -14,6 +15,7 @@ import { FindAssignorByIdPipe } from "../find-assignor-by-id.pipe";
 export class DeleteAssignorByIdController {
   constructor(private readonly prisma: PrismaProvider) {}
 
+  @Auth()
   @Delete("/integrations/assignor/:id")
   async handle(
     @Param("id", ParseUUIDPipe, FindAssignorByIdPipe) assignor: Assignor,

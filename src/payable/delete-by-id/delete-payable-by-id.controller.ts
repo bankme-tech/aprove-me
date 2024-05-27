@@ -1,6 +1,7 @@
 import { Controller, Delete, Param, ParseUUIDPipe } from "@nestjs/common";
 import type { Payable } from "@prisma/client";
 
+import { Auth } from "../../auth/auth.decorator";
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { FindPayableByIdPipe } from "../find-payable-by-id.pipe";
 
@@ -8,6 +9,7 @@ import { FindPayableByIdPipe } from "../find-payable-by-id.pipe";
 export class DeletePayableByIdController {
   constructor(private readonly prisma: PrismaProvider) {}
 
+  @Auth()
   @Delete("/integrations/payable/:id")
   async handle(
     @Param("id", ParseUUIDPipe, FindPayableByIdPipe) payable: Payable,

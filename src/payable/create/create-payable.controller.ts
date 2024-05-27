@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
+import { Auth } from "../../auth/auth.decorator";
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { CreatePayableInputDTO } from "./create-payable-input.dto";
 import { CreatePayableInputPipe } from "./create-payable-input.pipe";
@@ -9,6 +10,7 @@ import { CreatePayableOutputDTO } from "./create-payable-output.dto";
 export class CreatePayableController {
   constructor(private readonly prisma: PrismaProvider) {}
 
+  @Auth()
   @Post("/integrations/payable")
   async handle(
     @Body(CreatePayableInputPipe) input: CreatePayableInputDTO,

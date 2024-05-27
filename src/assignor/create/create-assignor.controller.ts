@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
+import { Auth } from "../../auth/auth.decorator";
 import { ZodPipe } from "../../pipes/zod.pipe";
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { UpsertAssignorInputDTO } from "../upsert-assignor-input.dto";
@@ -9,6 +10,7 @@ import { UpsertAssignorInputSchema } from "../upsert-assignor-input.schema";
 export class CreateAssignorController {
   constructor(private readonly prisma: PrismaProvider) {}
 
+  @Auth()
   @Post("/integrations/assignor")
   async handle(
     @Body(new ZodPipe(UpsertAssignorInputSchema)) input: UpsertAssignorInputDTO,

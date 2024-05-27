@@ -8,6 +8,7 @@ import {
 } from "@nestjs/common";
 import type { Payable } from "@prisma/client";
 
+import { Auth } from "../../auth/auth.decorator";
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { FindPayableByIdPipe } from "../find-payable-by-id.pipe";
 import { UpdatePayableByIdInputDTO } from "./update-payable-by-id-input.dto";
@@ -17,6 +18,7 @@ import { UpdatePayableByIdInputPipe } from "./update-payable-by-id-input.pipe";
 export class UpdatePayableByIdController {
   constructor(private readonly prisma: PrismaProvider) {}
 
+  @Auth()
   @Put("/integrations/payable/:id")
   async handle(
     @Param("id", ParseUUIDPipe, FindPayableByIdPipe) payable: Payable,
