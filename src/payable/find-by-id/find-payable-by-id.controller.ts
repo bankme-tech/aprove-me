@@ -7,7 +7,7 @@ import { FindPayableByIdPipe } from "../find-payable-by-id.pipe";
 @Controller()
 export class FindPayableByIdController {
   @Auth()
-  @Get("/integrations/payable/:id")
+  @Get("integrations/payable/:id")
   async handle(
     @Param("id", ParseUUIDPipe, FindPayableByIdPipe) payable: Payable,
   ) {

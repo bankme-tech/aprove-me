@@ -12,7 +12,7 @@ export class CreatePayableController {
   constructor(private readonly prisma: PrismaProvider) {}
 
   @Auth()
-  @Post("/integrations/payable")
+  @Post("integrations/payable")
   async handle(
     @Body(new ZodPipe(CreatePayableInputSchema)) input: CreatePayableInputDTO,
   ) {

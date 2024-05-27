@@ -16,7 +16,7 @@ export class DeleteAssignorByIdController {
   constructor(private readonly prisma: PrismaProvider) {}
 
   @Auth()
-  @Delete("/integrations/assignor/:id")
+  @Delete("integrations/assignor/:id")
   async handle(
     @Param("id", ParseUUIDPipe, FindAssignorByIdPipe) assignor: Assignor,
   ) {

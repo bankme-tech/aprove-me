@@ -20,7 +20,7 @@ export class UpdatePayableByIdController {
   constructor(private readonly prisma: PrismaProvider) {}
 
   @Auth()
-  @Put("/integrations/payable/:id")
+  @Put("integrations/payable/:id")
   async handle(
     @Param("id", ParseUUIDPipe, FindPayableByIdPipe) payable: Payable,
     @Body(new ZodPipe(UpdatePayableByIdInputSchema))

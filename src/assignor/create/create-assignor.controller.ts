@@ -11,7 +11,7 @@ export class CreateAssignorController {
   constructor(private readonly prisma: PrismaProvider) {}
 
   @Auth()
-  @Post("/integrations/assignor")
+  @Post("integrations/assignor")
   async handle(
     @Body(new ZodPipe(UpsertAssignorInputSchema)) input: UpsertAssignorInputDTO,
   ) {

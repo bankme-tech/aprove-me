@@ -10,7 +10,7 @@ export class DeletePayableByIdController {
   constructor(private readonly prisma: PrismaProvider) {}
 
   @Auth()
-  @Delete("/integrations/payable/:id")
+  @Delete("integrations/payable/:id")
   async handle(
     @Param("id", ParseUUIDPipe, FindPayableByIdPipe) payable: Payable,
   ) {

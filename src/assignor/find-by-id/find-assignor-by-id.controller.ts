@@ -7,7 +7,7 @@ import { FindAssignorByIdPipe } from "../find-assignor-by-id.pipe";
 @Controller()
 export class FindAssignorByIdController {
   @Auth()
-  @Get("/integrations/assignor/:id")
+  @Get("integrations/assignor/:id")
   async handle(
     @Param("id", ParseUUIDPipe, FindAssignorByIdPipe) assignor: Assignor,
   ) {
