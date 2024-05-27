@@ -5,9 +5,12 @@ import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow
 import { useQuery } from "@tanstack/react-query";
 import moment from "@/utils/moment";
 import { Eye, PencilSimple, Plus, Trash } from "phosphor-react";
-import { Key, useCallback } from "react";
+import { Key, useCallback, useState } from "react";
 import CreatePayable from "./forms/payable/CreatePayable/form";
 import CreateAssignor from "./forms/assignor/CreateAssignor/form";
+import UpdatePayable from "./forms/payable/UpdatePayable/form";
+import PayableDetails from "./PayableDetails";
+import DeletePayable from "./forms/payable/DeletePayable/form";
 
 const columns = [
   { name: "ID", uid: "id" },
@@ -17,10 +20,12 @@ const columns = [
 ];
 
 export default function PayablesTable() {
+  const [payable, setPayable] = useState<Payable | null>(null)
+  const [payableId, setPayableId] = useState<string | null>(null)
+
   const {
     data: payables = [],
     isLoading,
-    isError,
   } = useQuery({
     queryKey: ["payables"],
     queryFn: () => payableService.getAllPayables(),
@@ -32,6 +37,18 @@ export default function PayablesTable() {
 
   const { isOpen: isOpenCreateAssignor, onOpen: onOpenCreateAssignor, onOpenChange: onOpenChangeCreateAssignor } = useDisclosure({
     id: "create-assignor",
+  });
+
+  const { isOpen: isOpenUpdatePayable, onOpen: onOpenUpdatePayable, onOpenChange: onOpenChangeUpdatePayable } = useDisclosure({
+    id: "update-payable",
+  });
+
+  const { isOpen: isOpenPayableDetails, onOpen: onOpenPayableDetails, onOpenChange: onOpenChangePayableDetails } = useDisclosure({
+    id: "details-payable",
+  });
+
+  const { isOpen: isOpenDeletePayable, onOpen: onOpenDeletePayable, onOpenChange: onOpenChangeDeletePayable } = useDisclosure({
+    id: "delete-payable",
   });
 
   const renderCell = useCallback((payable: Payable, columnKey: Key) => {
@@ -47,28 +64,37 @@ export default function PayablesTable() {
         return moment(cellValue).format("DD/MM/YYYY");
       case "actions":
         return (
-          <div className="relative flex items-center gap-2">
+          <div className="relative flex items-center">
             <Tooltip content="Detalhes">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <Button type="button" isIconOnly variant="light" onPress={() => {
+                setPayableId(payable.id)
+                onOpenChangePayableDetails()
+              }}>
                 <Eye />
-              </span>
+              </Button>
             </Tooltip>
             <Tooltip content="Editar">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <Button type="button" isIconOnly variant="light" onPress={() => {
+                setPayable(payable)
+                onOpenUpdatePayable()
+              }}>
                 <PencilSimple />
-              </span>
+              </Button>
             </Tooltip>
             <Tooltip color="danger" content="Deletar">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+              <Button type="button" isIconOnly variant="light" color="danger" onPress={() => {
+                setPayableId(payable.id)
+                onOpenChangeDeletePayable()
+              }}>
                 <Trash />
-              </span>
+              </Button>
             </Tooltip>
           </div>
         );
       default:
         return cellValue as string;
     }
-  }, []);
+  }, [onOpenChangeDeletePayable, onOpenChangePayableDetails, onOpenUpdatePayable]);
 
   return (
     <>
@@ -109,6 +135,12 @@ export default function PayablesTable() {
       {isOpenCreatePayable && <CreatePayable isOpen={isOpenCreatePayable} onOpenChange={onOpenChangeCreatePayable} />}
 
       {isOpenCreateAssignor && <CreateAssignor isOpen={isOpenCreateAssignor} onOpenChange={onOpenChangeCreateAssignor} />}
+
+      {(isOpenUpdatePayable && payable) && <UpdatePayable isOpen={isOpenUpdatePayable} onOpenChange={onOpenChangeUpdatePayable} payable={payable} />}
+
+      {(isOpenPayableDetails && payableId) && <PayableDetails isOpen={isOpenPayableDetails} onOpenChange={onOpenChangePayableDetails} payableId={payableId} />}
+
+      {(isOpenDeletePayable && payableId) && <DeletePayable isOpen={isOpenDeletePayable} onOpenChange={onOpenChangeDeletePayable} payableId={payableId} />}
     </>
   )
 }
