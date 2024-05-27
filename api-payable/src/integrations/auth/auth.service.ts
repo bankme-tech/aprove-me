@@ -22,7 +22,7 @@ export class AuthService {
     private readonly cryptoService: CryptoService,
     private readonly userRepository: UserRepository,
     private readonly tokenService: TokenService,
-  ) { }
+  ) {}
 
   public async registerUser(credential: ICredentials): Promise<AuthRegistered> {
     const loginExists = await this.userRepository.exists({
@@ -105,7 +105,9 @@ export class AuthService {
     delete mutUser.salt;
   }
 
-  private cleanUserSensitiveData(user: Partial<User>): Exclude<User, 'password' | 'salt'> {
+  private cleanUserSensitiveData(
+    user: Partial<User>,
+  ): Exclude<User, 'password' | 'salt'> {
     const safeUser = { ...user };
     this.deleteUserSensitiveData(safeUser);
     return safeUser as Exclude<User, 'password' | 'salt'>;

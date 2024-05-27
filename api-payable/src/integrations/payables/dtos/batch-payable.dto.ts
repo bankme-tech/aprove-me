@@ -1,6 +1,6 @@
-import { IsArray, ValidateNested } from "class-validator";
-import { PayableDto } from "./payables.dto";
-import { Type } from "class-transformer";
+import { IsArray, ValidateNested } from 'class-validator';
+import { PayableDto } from './payables.dto';
+import { Type } from 'class-transformer';
 
 export class BatchPayableDto {
   @IsArray()

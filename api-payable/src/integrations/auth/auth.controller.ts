@@ -12,7 +12,7 @@ import { AuthGuard, ReqAuthorized } from './auth.guard';
 
 @Controller('/integrations/auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post()
   async create(@Body() dto: CredentialsDto) {

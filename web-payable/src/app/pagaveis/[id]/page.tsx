@@ -17,7 +17,7 @@ export default function Page() {
     }).then((res) => {
       setPayable(res.result);
     });
-  }, []);
+  }, [param.id]);
 
   return (
     <div className="flex min-h-screen flex-col justify-between p-12">

@@ -16,13 +16,13 @@ import { PartialAssignorDto } from './dtos/partial-assignor.dto';
 
 @Controller('/integrations/assignors')
 export class AssignorController {
-  constructor(private readonly assignorService: AssignorRepository) { }
+  constructor(private readonly assignorService: AssignorRepository) {}
 
   @Post()
   async create(@Body() dto: AssignorDto): Promise<Assignor> {
     const emailExists = await this.assignorService.getByEmail(dto.email);
     if (emailExists) {
-      throw new UnprocessableEntityException("Email already exists");
+      throw new UnprocessableEntityException('Email already exists');
     }
     return this.assignorService.create(dto);
   }

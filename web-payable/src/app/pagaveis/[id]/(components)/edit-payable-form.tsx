@@ -67,7 +67,9 @@ export default function EditPayableForm(p: Props) {
     if (p.payable?.assignorId) {
       form.setValue('assignor', p.payable.assignorId);
     }
-  }, [p.id]);
+  }, [
+    p.id,
+  ]);
 
   useEffect(() => {
     loadAssignors();

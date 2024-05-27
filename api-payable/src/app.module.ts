@@ -18,4 +18,4 @@ import { EmailModule } from './services/email/email.module';
     EmailModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

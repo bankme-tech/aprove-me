@@ -16,7 +16,7 @@ export default function Page() {
     }).then((res) => {
       setAssignor(res.result);
     });
-  }, []);
+  }, [param.id]);
 
   return (
     <div>

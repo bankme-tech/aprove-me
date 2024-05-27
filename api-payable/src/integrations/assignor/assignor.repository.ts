@@ -4,7 +4,7 @@ import { PrismaService } from 'src/infrastructure/prisma.service';
 
 @Injectable()
 export class AssignorRepository {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(data: Prisma.AssignorCreateInput): Promise<Assignor> {
     return this.prisma.assignor.create({ data });

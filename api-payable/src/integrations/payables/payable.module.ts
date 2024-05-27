@@ -6,12 +6,8 @@ import { RabbitMQModule } from 'src/microservices/rmq/rabbitmq.module';
 import { EmailModule } from 'src/services/email/email.module';
 
 @Module({
-  imports: [
-    RabbitMQModule,
-    InfrastructureModule,
-    EmailModule,
-  ],
+  imports: [RabbitMQModule, InfrastructureModule, EmailModule],
   controllers: [PayableController],
   providers: [PayableService],
 })
-export class PayableModule { }
+export class PayableModule {}

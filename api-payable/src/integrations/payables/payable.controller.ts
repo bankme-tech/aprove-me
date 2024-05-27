@@ -23,15 +23,18 @@ import {
 import { BatchPayableDto } from './dtos/batch-payable.dto';
 import { ROUTE_PAYABLE_BATCH_DEAD_LETTER } from 'src/microservices/rmq/payable-dead-letter-queue.service';
 import { EmailService } from 'src/services/email/email.service';
-import { PayableByIdDto, PayablePaginationDto } from './dtos/payable-pagination.dto';
+import {
+  PayableByIdDto,
+  PayablePaginationDto,
+} from './dtos/payable-pagination.dto';
 
-@Controller("/integrations/payable")
+@Controller('/integrations/payable')
 export class PayableController {
   constructor(
     private readonly emailService: EmailService,
     private readonly payableService: PayableService,
     private readonly payableQueueProvider: PayableQueueProvider,
-  ) { }
+  ) {}
 
   @Post()
   async create(@Body() dto: PayableDto): Promise<Payable> {
@@ -43,7 +46,6 @@ export class PayableController {
     @Param('id') id: string,
     @Body() dto: PartialPayableDto,
   ): Promise<Payable> {
-    console.log(`[Log:dto]:`, dto);
     return this.payableService.updatePayable(id, dto);
   }
 
@@ -64,7 +66,10 @@ export class PayableController {
   async emitPayableBatch(@Body() dto: BatchPayableDto) {
     const FIRST_TRY = 0;
     dto.payables.forEach(async (p) => {
-      void this.payableQueueProvider.sendBatch({ data: p, tryCount: FIRST_TRY });
+      void this.payableQueueProvider.sendBatch({
+        data: p,
+        tryCount: FIRST_TRY,
+      });
     });
 
     return { sent: true, queueName: PAYABLE_BATCH_QUEUE };
@@ -73,7 +78,7 @@ export class PayableController {
   @Get(':id')
   async findOne(
     @Param('id') id: string,
-    @Query() queryDto: PayableByIdDto
+    @Query() queryDto: PayableByIdDto,
   ): Promise<Payable | null> {
     const payable = await this.payableService.getPayableById(id, queryDto);
     if (!payable) {

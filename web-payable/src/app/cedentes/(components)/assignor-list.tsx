@@ -27,7 +27,7 @@ export default function AssignorList({ className, ...props }: CardProps) {
     }).then((res) => {
       setAssignors(res.result.assignors);
     });
-  }, [assignors]);
+  }, []);
 
   function onDeleteConfirmation(id: string) {
     apiCall<{ deleted: AssignorEntity }>({
@@ -45,7 +45,7 @@ export default function AssignorList({ className, ...props }: CardProps) {
       <CardHeader>
         <CardTitle>Lista de cedentes</CardTitle>
         <CardDescription>
-          Procure a lista de cedentes. Caso queira criar um cedente novo aperte "Criar cedente".
+          Procure a lista de cedentes. Caso queira criar um cedente novo aperte &quot;Criar cedente&quot;.
           <Button className="w-full mt-3" asChild>
             <Link href="/cedentes/criar">
               <PlusIcon className="mr-2 h-4 w-4" />

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import Link from "next/link"
 import { floatToCurrency } from "@/lib/format-currency"
-import React from "react";
+import { useEffect, useState } from "react";
 import { apiCall } from "@/lib/api-call";
 import { Pagination } from "@/interfaces/pagination.interface";
 import { PayableEntity } from "@/interfaces/payable.interface";
@@ -32,10 +32,10 @@ type CardProps = React.ComponentProps<typeof Card>;
  * @todo edit item.
  */
 export default function PayableList({ className, ...props }: CardProps) {
-  const [payableItems, setPayableItems] = React.useState<PayableListItem[]>();
-  const selectKeys: (keyof PayableEntity)[] = ['id', 'value', 'emissionDate'];
+  const [payableItems, setPayableItems] = useState<PayableListItem[]>();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const selectKeys: (keyof PayableEntity)[] = ['id', 'value', 'emissionDate'];
     apiCall<Pagination<Required<PayableEntity>>>({
       endpoint: `/integrations/payable?selectKeys=${selectKeys.join(',')}`,
       method: "GET",
@@ -55,7 +55,7 @@ export default function PayableList({ className, ...props }: CardProps) {
         setPayableItems(payableListItems);
       }
     });
-  }, [payableItems]);
+  }, []);
 
   function onDeleteConfirmation(id: string) {
     apiCall<{ deleted: PayableEntity }>({
@@ -73,7 +73,7 @@ export default function PayableList({ className, ...props }: CardProps) {
       <CardHeader>
         <CardTitle>Lista de pagáveis</CardTitle>
         <CardDescription>
-          Procure a lista de pagáveis. Caso queira criar um pagável novo aperte "Criar pagável".
+          Procure a lista de pagáveis. Caso queira criar um pagável novo aperte &quot;Criar pagável&quot;.
           <Button className="w-full mt-3" asChild>
             <Link href="/pagaveis/criar">
               <PlusIcon className="mr-2 h-4 w-4" />
@@ -87,6 +87,7 @@ export default function PayableList({ className, ...props }: CardProps) {
         {payableItems?.map((payable, index) => (
           <PayableCardItem
             index={index}
+            key={index}
             payable={payable}
             onDeleteConfirmation={onDeleteConfirmation}
           />

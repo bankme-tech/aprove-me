@@ -1,19 +1,21 @@
-import { Module } from "@nestjs/common";
-import { ClientsModule } from "@nestjs/microservices";
+import { Module } from '@nestjs/common';
+import { ClientsModule } from '@nestjs/microservices';
 import {
   PAYABLE_BATCH_INJECT_TOKEN,
   PayableQueueProvider,
   getPayableBatchProducer,
-} from "./payable-queue.service";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { RabbitmqConnection } from "./connect-queues";
+} from './payable-queue.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { RabbitmqConnection } from './connect-queues';
 import {
   PAYABLE_DEAD_LETTER_INJECT_TOKEN,
   PayableDeadLetterQueueProvider,
   getPayableBatchDLQProducer,
-} from "./payable-dead-letter-queue.service";
+} from './payable-dead-letter-queue.service';
 
-export function getRabbitMQConn(configService: ConfigService): RabbitmqConnection {
+export function getRabbitMQConn(
+  configService: ConfigService,
+): RabbitmqConnection {
   return {
     host: configService.getOrThrow('RABBITMQ_HOST'),
     password: configService.getOrThrow('RABBITMQ_PASSWORD'),
@@ -51,4 +53,4 @@ export function getRabbitMQConn(configService: ConfigService): RabbitmqConnectio
   providers: [PayableQueueProvider, PayableDeadLetterQueueProvider],
   exports: [PayableQueueProvider, PayableDeadLetterQueueProvider],
 })
-export class RabbitMQModule { }
+export class RabbitMQModule {}

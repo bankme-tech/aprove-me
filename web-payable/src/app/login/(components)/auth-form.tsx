@@ -136,7 +136,7 @@ export default function AuthForm() {
               <CardHeader>
                 <CardTitle className="text-center">Cadastrar</CardTitle>
                 <CardDescription>
-                  Cadastre sua conta aqui aperte em "cadastrar e entrar" para acessar a plataforma
+                  Cadastre sua conta aqui aperte em &quot;cadastrar e entrar&quot; para acessar a plataforma
                   ou clique entrar se já possuir cadastro.
                 </CardDescription>
               </CardHeader>

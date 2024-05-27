@@ -7,7 +7,7 @@ import { PaginationDto } from 'src/dtos/pagination.dto';
 
 @Injectable()
 export class PayableService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async createPayable(dto: PayableDto): Promise<Payable> {
     return this.prisma.payable.create({
@@ -37,7 +37,7 @@ export class PayableService {
     const findManyParam: FindManyParam = {
       skip: offset,
       take: limit,
-    }
+    };
     if (cursorId) findManyParam.cursor = { id: cursorId };
     if (selectKeys) {
       findManyParam.select = {};
@@ -59,7 +59,10 @@ export class PayableService {
     };
   }
 
-  async getPayableById(id: string, options?: { includeAssignor: boolean }): Promise<Payable | null> {
+  async getPayableById(
+    id: string,
+    options?: { includeAssignor: boolean },
+  ): Promise<Payable | null> {
     type FindParam = Parameters<PrismaService['payable']['findUnique']>[0];
     const findParam: FindParam = { where: { id } };
     if (options.includeAssignor) {
