@@ -10,9 +10,18 @@ O Backend feito em Node.JS utilizar o framework Nest.JS, um arquétipo opinado q
 
 No texto a seguir serão explicados o pontos mais importantes e o conceitos utilizados nessa API.
 
-Sumário
-1. Como rodar a aplicação
-2. Explicação da arquitetura
+## Variáveis de ambiente
+```bash
+PORT="8080" // porta em que a aplicação vai rodar
+FRONTEND_URL="http://localhost:3000" // URL do frontend para o cors
+CRYPT_ROUNDS="10" // rounds de criptografia
+JWT_SECRET="c7bb8033-71c8-4780-95e4-f19fd437a6a3" // segredo para geração de JWT
+JWT_EXPIRES_IN="1d" // expiração do JWT
+MAIL_HOST="smtp.ethereal.email" // host do email, caso você queira ver o envio de email funcionando recomendo o uso da seguinte plataforma, ela fornecesse todas essas informações de host, port, user e password sem precisar criar conta. Além de fornecer a visualização da caixa de email https://ethereal.email/ basta clicar em Create Ethereal Account para ter as informações deste ENV
+MAIL_PORT="587"
+MAIL_USER="chance.johnston91@ethereal.email"
+MAIL_PASSWORD="7zBm9S2VpmSKRScag8"
+```
 
 ## Como rodar a aplicação (localmente)
 
