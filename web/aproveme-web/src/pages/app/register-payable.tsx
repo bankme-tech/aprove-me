@@ -1,12 +1,9 @@
-import { useMutation } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { fetchAssignorsNames } from '@/api/fetch-assignors-names'
-import { registerPayable } from '@/api/register-payable'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -17,11 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-
-interface Assignor {
-  id: string
-  name: string
-}
+import { useAppContext } from '@/contexts/app-context'
 
 const registerPayableForm = z.object({
   value: z.string(),
@@ -30,18 +23,12 @@ const registerPayableForm = z.object({
 type RegisterPayableForm = z.infer<typeof registerPayableForm>
 
 export const RegisterPayable = () => {
-  const [assignorsNames, setAssignorsNames] = useState<Assignor[]>([])
+  const { assignorsNames, registerPayableFn, refreshAssignorsNames } =
+    useAppContext()
+
   const [selectedAssignorId, setSelectedAssignorId] = useState<
     string | undefined
   >(undefined)
-
-  const { mutateAsync: fetchAssignorsNamesFn } = useMutation({
-    mutationFn: fetchAssignorsNames,
-  })
-
-  const { mutateAsync: registerPayableFn } = useMutation({
-    mutationFn: registerPayable,
-  })
 
   const {
     register,
@@ -71,14 +58,8 @@ export const RegisterPayable = () => {
   }
 
   useEffect(() => {
-    const handleFetchAssignorsNames = async () => {
-      const data = await fetchAssignorsNamesFn()
-
-      setAssignorsNames(data)
-    }
-
-    handleFetchAssignorsNames()
-  }, [fetchAssignorsNamesFn])
+    refreshAssignorsNames()
+  }, [refreshAssignorsNames])
 
   useEffect(() => {
     if (selectedAssignorId) {

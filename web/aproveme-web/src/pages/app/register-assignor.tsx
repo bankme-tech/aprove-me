@@ -1,13 +1,12 @@
-import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { registerAssignor } from '@/api/register-assignor'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useAppContext } from '@/contexts/app-context'
 
 const registerAssignorForm = z.object({
   name: z.string(),
@@ -18,15 +17,13 @@ const registerAssignorForm = z.object({
 type RegisterAssignorForm = z.infer<typeof registerAssignorForm>
 
 export const RegisterAssignor = () => {
+  const { registerAssignorFn } = useAppContext()
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<RegisterAssignorForm>()
-
-  const { mutateAsync: registerAssignorFn } = useMutation({
-    mutationFn: registerAssignor,
-  })
 
   const handleRegisterAssignor = async (data: RegisterAssignorForm) => {
     const { document, email, name, phone } = data
