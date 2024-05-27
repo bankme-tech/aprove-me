@@ -46,5 +46,8 @@ Para realizar a autenticação, coloquei o accessToken dentro dos cookies, e sem
 
 Caso o accessToken esteja inválido, um interceptor das responses vai redirecionar o usuário para a página de login
 
+## Testes
+Os testes foram realizados para todas as páginas da aplicação.
+
 
 
