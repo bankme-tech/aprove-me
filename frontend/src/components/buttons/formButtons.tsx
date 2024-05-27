@@ -17,7 +17,7 @@ export default function FormButtons() {
       </Button>
       <Button
         type='reset'
-        variant="outlined"
+        variant="contained"
         color='error'
       >
         Limpar

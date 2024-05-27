@@ -9,7 +9,7 @@ background-color: var(--bg-main-register-color);
   border-radius: 5px;
   padding: 2rem;
   width: 20vw;
-  height: 50vh;
+  height: 50vh;  
 `; 
 
 export const FormUserRegister = styled.form`
@@ -19,6 +19,17 @@ export const FormUserRegister = styled.form`
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+
+  input {
+    padding: 0.3rem;
+    border-radius: 5px;
+    border: 1px solid var(--input-outline-color);
+    color: var(--input-color);
+
+    &:focus {
+      outline: 1px solid var(--input-outline-color);
+    }
+  }
 `;
 
 export const MsgContainer = styled.div`

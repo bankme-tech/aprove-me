@@ -5,31 +5,54 @@ import {
   FormLoginStyle,
   MsgContainer,
 } from './style'
-import { LoginApi } from '../../../service/UserApi'
+import { GetProfileApi, LoginApi } from '../../../service/UserApi'
 
 export const FormLogin = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState('');
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  const fetchUserData = async (token: string) => {
+    try {
+      const response = await GetProfileApi(token)
+   
+      if (response.id && response.login) {
+        const date = new Date()
+        const userData = {
+          id: response.id,
+          login: response.login,
+          date,
+        }
+        localStorage.setItem('token', token)
+        localStorage.setItem('user', JSON.stringify(userData))
+        setLoading('Logado com sucesso! Redirecionando...')
+        setTimeout(() => {
+          setLoading('')
+          window.location.href = '/home'
+        }, 2000)
+        return;
+      } 
+      setLoading('Erro ao logar!')
+      setError(true)
+      setErrorMsg('Usuário ou senha inválidos!')
+      return;
+    } catch (error) {
+      setError(true)
+      setErrorMsg('Erro ao logar!')
+      console.log(error)
+    } 
+  }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       const response = await LoginApi({ login, password })
       if (response.token) {
-        localStorage.setItem('token', response.token)
-        setLoading(true)
-        setTimeout(() => {
-          setLoading(false)
-          window.location.href = '/home'
-        }, 2000)
-        return;
-      }      
-      setLoading(false)
-      setError(true)
-      setErrorMsg('Usuário ou senha inválidos!')
+        setLoading('Logando...')
+        await fetchUserData(response.token)
+      } 
     } catch (error) {
       console.log(error)
     }
@@ -73,7 +96,7 @@ export const FormLogin = () => {
       { 
         loading && 
         <MsgContainer>
-          <p className='success'>Logado. Redirecionando...</p> 
+          <p className='success'>{ loading }</p> 
         </MsgContainer>
       }
       { 

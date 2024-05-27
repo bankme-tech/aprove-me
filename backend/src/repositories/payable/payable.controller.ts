@@ -43,6 +43,7 @@ export class PayableController {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
   @UseGuards(JwtAuthGuard)
   @ApiTags('Payables')
   @Get('payable/:id')

@@ -2,20 +2,26 @@ import {
   Controller,
   Body,
   Post,
+  Get,
   HttpStatus,
   NotFoundException,
   HttpException,
   BadRequestException,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserDto } from '../DTOs/user';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from '../auth/auth.service';
-import { LocalAuthGuard } from '../auth/AuthGuard';
+import { JwtAuthGuard, LocalAuthGuard } from '../auth/AuthGuard';
+import { JwtStrategy } from './jwt.strategy';
 
 @Controller('integrations')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private jwtStrategy: JwtStrategy,
+  ) {}
 
   @UseGuards(LocalAuthGuard)
   @ApiTags('Auth')
@@ -42,6 +48,22 @@ export class AuthController {
       ) {
         throw error;
       }
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @ApiTags('Auth')
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  async perfil(@Req() req: any) {
+    try {
+      const token = req.token;
+      const decoded = this.jwtStrategy.decodeToken(token);
+      if (decoded) {
+        return decoded;
+      }
+      return null;
+    } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

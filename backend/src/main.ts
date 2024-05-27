@@ -9,6 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   dotenv.config();
+
   const config = new DocumentBuilder()
     .setTitle('Aprove-me API')
     .setDescription('Uma API para aprovação no processo seletivo.')

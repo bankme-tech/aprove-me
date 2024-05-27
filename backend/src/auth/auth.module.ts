@@ -7,11 +7,14 @@ import { PrismaService } from '../database/prisma.service';
 import { JwtStrategy } from './jwt.strategy';
 import { UserService } from '../repositories/users/user.service';
 import { AuthController } from './auth.controller';
+import { TokenInterceptor } from './tokenInterceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+
 @Module({
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
+      signOptions: { expiresIn: process.env.JWT_EXPIRATION },
     }),
   ],
   controllers: [AuthController],
@@ -22,6 +25,10 @@ import { AuthController } from './auth.controller';
     CreateToken,
     PrismaService,
     JwtStrategy,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TokenInterceptor,
+    },
   ],
   exports: [
     AuthService,
