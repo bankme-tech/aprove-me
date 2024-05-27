@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormMessage,
@@ -17,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import useCheckToken from "./hooks/useCheckToken";
 import useLogin from "./hooks/useLogin";
+import Loading from "./loading";
 import style from "./login.module.css";
 
 const formSchema = z.object({
@@ -31,6 +33,9 @@ export default function Login() {
   const {
     mutate: mutateLogin,
     isSuccess: isLoginSuccess,
+    isError: isLoginError,
+    error,
+    isPending,
     data: loginData,
   } = useLogin();
 
@@ -42,6 +47,7 @@ export default function Login() {
     },
   });
 
+
   useCheckToken();
 
   useEffect(() => {
@@ -51,8 +57,16 @@ export default function Login() {
     }
   }, [loginData?.data.token, isLoginSuccess]);
 
+
+
   const handleLogin = (values: z.infer<typeof formSchema>) =>
     mutateLogin(values);
+
+
+  if(isPending) {
+    return <Loading />;
+  }
+
 
   return (
     <div className={style.container}>
@@ -68,6 +82,7 @@ export default function Login() {
             flexDirection: "column",
           }}
         >
+
           <FormField
             control={form.control}
             name="login"
@@ -77,6 +92,7 @@ export default function Login() {
                   <Input placeholder="email" {...field} />
                 </FormControl>
                 <FormMessage />
+                {isLoginError && <FormDescription>Login or password incorrect</FormDescription>}
               </FormItem>
             )}
           />

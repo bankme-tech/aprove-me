@@ -36,10 +36,3 @@ model Payable {
   @@map("payables")
 }
 
-// model Users {
-//   id       String @id @default(uuid())
-//   login    String @unique
-//   password String
-
-//   @@map("users")
-// }

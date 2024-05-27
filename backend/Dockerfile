@@ -7,12 +7,8 @@ RUN npm ci
 
 COPY . .
 
-COPY ./prisma ./prisma
 
-RUN npx prisma generate --schema=./prisma/schema.prisma
-RUN npx prisma migrate dev --name init --schema=./prisma/schema.prisma
-
-RUN npm run seed
+RUN npx prisma generate
 
 
 EXPOSE 3000
