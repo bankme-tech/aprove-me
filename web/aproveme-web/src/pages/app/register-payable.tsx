@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useAppContext } from '@/contexts/app-context'
+import { useAppContext } from '@/hooks/use-app-context'
 
 const registerPayableForm = z.object({
   value: z.string(),
