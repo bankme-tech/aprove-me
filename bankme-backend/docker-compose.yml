@@ -1,15 +1,24 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        DATABASE_URL: ${DATABASE_URL}
     ports:
       - "3001:3001"
       - "5555:5555"
     depends_on:
       - rabbitmq
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
 
   rabbitmq:
     image: rabbitmq:management-alpine
     hostname: rabbitmq
     ports:
-      - '5672:5672'
-      - '15672:15672'
+      - "5672:5672"
+      - "15672:15672"

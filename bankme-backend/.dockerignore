@@ -6,3 +6,4 @@ Dockerfile
 .gitignore
 .eslintrc.js
 README.md
+.env
