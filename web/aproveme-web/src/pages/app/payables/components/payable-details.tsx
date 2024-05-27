@@ -1,8 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { format, formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { Check, Pencil, Trash2, X } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { z } from 'zod'
 
 import { deletePayable } from '@/api/delete-payable'
 import { getPayable, GetPayableBody } from '@/api/get-payable'
@@ -24,6 +28,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
@@ -39,8 +44,24 @@ interface PayableDetailsProps {
   payableId: string
 }
 
+const editPayableForm = z.object({
+  value: z.number(),
+})
+type EditPayableForm = z.infer<typeof editPayableForm>
+
+const editAssignorForm = z.object({
+  document: z.string(),
+  email: z.string(),
+  phone: z.string(),
+  name: z.string(),
+})
+type EditAssignorForm = z.infer<typeof editAssignorForm>
+
 export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
   const navigate = useNavigate()
+
+  const [isAssignorEditable, setIsAssignorEditable] = useState(false)
+  const [isPayableEditable, setIsPayableEditable] = useState(false)
 
   const { data: payableDetail, isLoading: isPayableLoading } =
     useQuery<GetPayableBody>({
@@ -50,8 +71,40 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
       enabled: !!payableId, // Habilita a query apenas se payableId estiver disponível
     })
 
+  // Desestruturação dos dados
+  const {
+    payableWithAssignor: {
+      payableId: id = '',
+      value = 0,
+      emissionDate = new Date(),
+      assignor: { name = '', phone = '', email = '', document = '' } = {},
+    } = {},
+  } = payableDetail || {}
+
   const { mutateAsync: deletePayableFn } = useMutation({
     mutationFn: deletePayable,
+  })
+
+  const {
+    register: payableRegister,
+    handleSubmit: handlePayableSubmit,
+    formState: { isSubmitting: isPayableSubmitting },
+  } = useForm<EditPayableForm>({
+    defaultValues: {
+      value,
+    },
+  })
+  const {
+    register: assignorRegister,
+    handleSubmit: handleAssignorSubmit,
+    formState: { isSubmitting: isAssignorSubmitting },
+  } = useForm<EditAssignorForm>({
+    values: {
+      document,
+      email,
+      name,
+      phone,
+    },
   })
 
   const handleDelete = async () => {
@@ -63,15 +116,12 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
     }
   }
 
-  // Desestruturação dos dados
-  const {
-    payableWithAssignor: {
-      payableId: id = '',
-      value = 0,
-      emissionDate = new Date(),
-      assignor: { name = '', phone = '', email = '', document = '' } = {},
-    } = {},
-  } = payableDetail || {}
+  const handleAssignorEdit = () => {
+    setIsAssignorEditable(!isAssignorEditable)
+  }
+  const handlePayableEdit = () => {
+    setIsPayableEditable(!isPayableEditable)
+  }
 
   return (
     <>
@@ -103,13 +153,15 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
                         })
                       )}
                     </TableHead>
-                    <TableHead className="text-right">Valor</TableHead>
+                    <TableHead className="pr-10 text-center">Valor</TableHead>
+                    <TableHead className="text-right"></TableHead>
+                    <TableHead className="text-right"></TableHead>
                   </TableRow>
                 </TableHeader>
 
-                <TableFooter>
+                <TableFooter className="">
                   <TableRow>
-                    <TableCell className="flex gap-5">
+                    <TableCell className="mt-1.5 flex gap-5">
                       <p>Data:</p>
                       {isPayableLoading ? (
                         <Skeleton className="h-4 w-12" />
@@ -119,14 +171,75 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
                         })
                       )}
                     </TableCell>
-                    <TableCell className="text-right">
+
+                    <TableCell className="w-30">
                       {isPayableLoading ? (
                         <Skeleton className="h-4 w-12" />
+                      ) : isPayableEditable ? (
+                        <Input
+                          className="h-6 w-24"
+                          {...payableRegister('value')}
+                        />
                       ) : (
                         value?.toLocaleString('pt-BR', {
                           style: 'currency',
                           currency: 'BRL',
                         })
+                      )}
+                    </TableCell>
+
+                    <TableCell className="w-10">
+                      <Button
+                        variant={'outline'}
+                        size={'sm'}
+                        onClick={handlePayableEdit}
+                      >
+                        {isPayableEditable ? (
+                          <Check className="h-4 w-4"></Check>
+                        ) : (
+                          <Pencil className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </TableCell>
+
+                    <TableCell className="w-10">
+                      {isPayableEditable ? (
+                        <Button
+                          variant={'outline'}
+                          size={'sm'}
+                          onClick={handlePayableEdit}
+                        >
+                          <X className="h-4 w-4"></X>
+                        </Button>
+                      ) : (
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant={'outline'} size={'sm'}>
+                              <Trash2 className="h-4 w-4 " />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Tem mesmo certeza?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Esta ação não pode ser desfeita. Isso vai
+                                deletar permanentemente o recebível e remover os
+                                dados do servidor.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                className="bg-red-600"
+                                onClick={handleDelete}
+                              >
+                                Continue
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       )}
                     </TableCell>
                   </TableRow>
@@ -144,6 +257,11 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
                     <TableCell className="flex justify-end">
                       {isPayableLoading ? (
                         <Skeleton className="h-4 w-32" />
+                      ) : isAssignorEditable ? (
+                        <Input
+                          className="h-6 w-36"
+                          {...assignorRegister('name')}
+                        />
                       ) : (
                         name
                       )}
@@ -157,6 +275,11 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
                     <TableCell className="flex justify-end">
                       {isPayableLoading ? (
                         <Skeleton className="h-4 w-32" />
+                      ) : isAssignorEditable ? (
+                        <Input
+                          className="h-6 w-36"
+                          {...assignorRegister('phone')}
+                        />
                       ) : (
                         phone
                       )}
@@ -170,6 +293,11 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
                     <TableCell className="flex justify-end">
                       {isPayableLoading ? (
                         <Skeleton className="h-4 w-32" />
+                      ) : isAssignorEditable ? (
+                        <Input
+                          className="h-6 w-36"
+                          {...assignorRegister('email')}
+                        />
                       ) : (
                         email
                       )}
@@ -183,6 +311,11 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
                     <TableCell className="flex justify-end">
                       {isPayableLoading ? (
                         <Skeleton className="h-4 w-32" />
+                      ) : isAssignorEditable ? (
+                        <Input
+                          className="h-6 w-36"
+                          {...assignorRegister('document')}
+                        />
                       ) : (
                         document
                       )}
@@ -193,43 +326,56 @@ export const PayableDetails = ({ payableId }: PayableDetailsProps) => {
             </section>
 
             {/* {Seção de botões} */}
-            <section className="flex flex-col gap-1">
-              <Button
-                className="bg-amber-500 font-bold text-black  hover:bg-blue-600 hover:text-white dark:bg-amber-400 dark:hover:bg-blue-600"
-                size={'xs'}
-              >
-                Editar
-              </Button>
+            <section className="flex justify-evenly gap-1">
+              {isAssignorEditable ? (
+                <Button
+                  className="w-full bg-red-600 font-bold text-white hover:bg-destructive/90"
+                  size={'xs'}
+                  onClick={handleAssignorEdit}
+                >
+                  Cancelar
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleAssignorEdit}
+                  className="w-full bg-amber-500 font-bold text-black  hover:bg-blue-600 hover:text-white dark:bg-amber-400 dark:hover:bg-blue-600"
+                  size={'xs'}
+                >
+                  Editar
+                </Button>
+              )}
 
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button
-                    className="bg-red-600 text-destructive-foreground hover:bg-destructive/90"
-                    size={'lg'}
-                  >
-                    Deletar Recebível
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Tem mesmo certeza?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Esta ação não pode ser desfeita. Isso vai deletar
-                      permanentemente o recebível e remover os dados do
-                      servidor.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      className="bg-red-600"
-                      onClick={handleDelete}
-                    >
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              {isAssignorEditable ? (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className="w-full" variant={'success'} size={'xs'}>
+                      Salvar
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Tem mesmo certeza?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Esta ação não pode ser desfeita. Isso vai alterar
+                        permanentemente os dados no servidor.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction asChild>
+                        <Button
+                          className="bg-red-600  text-white"
+                          onClick={handleAssignorEdit}
+                        >
+                          Continuar
+                        </Button>
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              ) : (
+                <></>
+              )}
             </section>
           </>
         )}
