@@ -1,4 +1,4 @@
-# Bankme Api
+# Bankme Fullstack
 
 ## Preparando o Ambiente
 
@@ -16,8 +16,11 @@
 
 As dependências do projeto serão instaladas automaticamente dentro do contêiner Docker, conforme definido no `Dockerfile`.
 
-## Rodando o Projeto
+## Antes de tudo
+Altere os arquivos `env.example` para `.env` dentro das pastas `api` e `web`. 
 
+
+## Rodando o Projeto
 
 1. **Iniciar o Contêiner**: Inicie o contêiner com o comando:
 
@@ -39,13 +42,18 @@ As dependências do projeto serão instaladas automaticamente dentro do contêin
 - `docker-compose.yml`: Define os serviços, volumes e variáveis de ambiente para a aplicação.
 - `src/`: Diretório que contém o código-fonte da aplicação.
 - `package.json` e `package-lock.json`: Arquivos que definem as dependências do projeto.
+- `api` e `web`: Pastas mães para guardar o projeto.
 
 
 ## Desenvolvimento
-
 Durante o desenvolvimento, as mudanças feitas nos arquivos do projeto serão refletidas imediatamente no contêiner, graças ao volume montado (`volumes` no `docker-compose.yml`).
 
-## Utilização
+
+## Utilização Web
+Com o projeto rodando, acesse `http://localhost:3001` para acessar a aplicação web.
+
+
+## Utilização API
 
 Para utilizar as rotas da API, você pode seguir as solicitações HTTP definidas no arquivo `api/src/http/start-here.http` localizado na raiz do projeto. Este arquivo contém exemplos de solicitações para cada rota da API, incluindo detalhes sobre os dados necessários e as respostas esperadas.
 
@@ -66,11 +74,10 @@ Ao seguir esses passos, você poderá testar todas as funcionalidades da API e e
 
 ## Notas
 
-- Certifique-se de que a porta 3000 não esteja sendo usada por outra aplicação no seu host.
+- Certifique-se de que a porta `3000` e `3001` não esteja sendo usada por outra aplicação no seu host.
 - Para parar a aplicação, use `Ctrl+C` no terminal onde o Docker Compose está rodando, ou execute `docker-compose down` para parar e remover os contêineres.
 
 ## Me Conheça mais
 [Linkedin](https://www.linkedin.com/in/feroddev/)
-
 [Portfólio](portfolio-feroddev.vercel.app)
 
