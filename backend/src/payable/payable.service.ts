@@ -27,7 +27,6 @@ export class PayableService {
     return this.payableRepository.findAll();
   }
 
-  //verificar essa parte se vai ficar assim
 
   async findOne(id: string): Promise<Payable> {
     try {
