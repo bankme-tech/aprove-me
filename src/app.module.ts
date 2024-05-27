@@ -4,6 +4,7 @@ import { ConfigModule } from "@nestjs/config";
 import { AssignorModule } from "./assignor/assignor.module";
 import { AuthModule } from "./auth/auth.module";
 import { PayableModule } from "./payable/payable.module";
+import { PermissionModule } from "./permission/permission.module";
 import { PrismaProvider } from "./providers/prisma.provider";
 
 @Module({
@@ -18,6 +19,7 @@ import { PrismaProvider } from "./providers/prisma.provider";
     PayableModule,
     AssignorModule,
     AuthModule,
+    PermissionModule,
   ],
 })
 export class AppModule {}
