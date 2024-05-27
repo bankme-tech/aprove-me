@@ -106,7 +106,9 @@ export const SubmitButton = styled.button`
 export const Header = styled.header`
   display: flex;
   justify-content: center;
-  padding: 1.5rem 0;
+  align-items: center;
+  /* padding: 1.5rem 0; */
+  height: 80px;
   width: 100%;
   position: fixed;
   background-color: #ffffff;
@@ -141,10 +143,11 @@ export const Nav = styled.nav`
 export const Loggout = styled.button`
   padding: 0.5rem 1.5rem;
   border: none;
-  border-radius: 20px;
+  /* border-radius: 5px; */
   font-size: 1rem;
   background-color: #0b36c0;
   color: #ffffff;
+  height: 80px;
   cursor: pointer;
   &:hover {
     background-color: #131ebdc7;

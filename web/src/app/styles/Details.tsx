@@ -63,6 +63,21 @@ export const Button = styled.button`
   }
 `;
 
+export const ButtonDelete = styled.button`
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #af1717;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 0 0.5rem;
+
+  &:hover {
+    background-color: #af1717;
+  }
+`;
+
 export const Paragraph = styled.p`
   font-size: 1rem;
   color: #333;

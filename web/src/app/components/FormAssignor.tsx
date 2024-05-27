@@ -27,6 +27,11 @@ export default function FormAssignor() {
     }
   };
 
+  const resetValues = (event: HTMLFormElement) => {
+    event.reset()
+    setNumberValues({ phone: "", document: "" });
+  }
+
   const handleCreatePayable = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -54,6 +59,7 @@ export default function FormAssignor() {
       await connection.post("/assignor", data);
       setErrors([]);
       setSuccess("Assignor created successfully");
+      resetValues(e.target as HTMLFormElement);
       setTimeout(() => {
         setSuccess(null);
       }, 2500);

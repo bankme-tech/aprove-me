@@ -45,6 +45,7 @@ export default function FormPayable() {
       });
       setError(null);
       setSuccess('Payable created successfully');
+      (e.target as HTMLFormElement).reset();
       setTimeout(() => {
         setSuccess(null);
       }, 1500);
