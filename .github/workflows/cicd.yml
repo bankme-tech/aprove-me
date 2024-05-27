@@ -1,0 +1,43 @@
+name: CICD
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment - "stg/prod"'
+        required: true
+        type: choice
+        options:
+        - stg
+        - prod
+    tf-apply:
+      description: 'TF apply - "yes/no"'
+      required: true
+      default: 'no'
+      type: choice
+      options:
+      - 'no'
+      - 'yes'
+
+permissions:
+    id-token: write
+    contents: write
+
+jobs:
+  dev-cicd:
+    name: DEV
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    uses: ./.github/workflows/pipeline.yml
+    with:
+      bucket_name: "payable"
+      environment: "dev"
+      deploy: true
+    secrets:
+      tf_var_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID_DEV }}
+      service_role_arn: ${{ secrets.IAM_TF_SERVICE_DEV }}

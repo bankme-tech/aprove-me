@@ -1,0 +1,102 @@
+name: Terraform Pipeline
+
+on:
+  workflow_call:
+    inputs:
+      bucket_name:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+      deploy:
+        required: true
+        type: string
+    secrets:
+      tf_var_aws_account_id:
+        required: true
+      service_role_arn:
+        required: true
+
+jobs:
+  tf-validate:
+    name: TF
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./infrastructure/terraform
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.service_role_arn }}
+          role-duration-seconds: 900
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.8.2"
+
+      - name: Terraform Format - ${{ inputs.environment }} Environment
+        id: fmt
+        run: terraform fmt -recursive -check -diff
+
+      - name: Terraform Init - ${{ inputs.environment }} Environment
+        id: init
+        run: |
+          terraform init -input=false \
+          -backend-config="bucket=${{ inputs.bucket_name }}"
+
+      - name: Terraform Select Workspace - ${{ inputs.environment }} Environment
+        id: select
+        run: terraform select -or-create ${{ inputs.environment }}
+
+      - name: Terraform Validate - ${{ inputs.environment }} Environment
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan - ${{ inputs.environment }} Environment
+        id: plan
+        run: terraform plan -input=false -var-file=${{ inputs.env_file }} -out=tfplan
+        env:
+          TF_VAR_aws_account_id: ${{ secrets.tf_var_aws_account_id }}
+
+      - name: Terraform Apply - ${{ inputs.environment }} Environment
+        if:
+          (github.ref == 'refs/heads/main' && github.event_name == 'push') ||
+          (github.event_name == 'workflow_dispatch' && inputs.deploy == 'yes')
+        run: |
+          echo Run TF Apply
+          terraform apply -input=false -auto-approve tfplan
+        env:
+          TF_VAR_aws_account_id: ${{ secrets.tf_var_aws_account_id }}
+
+      - name: Upload TF State - if pipeline failed
+        uses: actions/upload-artifact@v4
+        if: 
+          failure() &&
+          ((github.ref == 'refs/heads/main' && github.event_name == 'push') ||
+          (github.event_name == 'workflow_dispatch' && inputs.deploy == 'yes'))
+        with:
+          name: tf-state
+          path: |
+            .terraform/*.tfstate
+            ./*.tfstate
+            /home/runner/work/infrastructure/**/*.tfstate
+          retention-days: 7
+
+#      - name: RUN DOCKER COMPOSE
+#        steps:
+#        - LOGIN into AWS EC2 instance
+#        - SSH into AWS EC2 instance
+#        - RUN docker-compose up -d
