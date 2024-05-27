@@ -1,6 +1,6 @@
 import { api } from "../apiService";
-import { PayableData, PayableGateway } from "./interfaces/PayableGateway";
-import { Payable, PayableWithAssignor } from "./types/Payable";
+import { PayableGateway } from "./interfaces/PayableGateway";
+import { Payable, PayableData, PayableWithAssignor } from "./types/Payable";
 
 export class APIPayableService implements PayableGateway {
     async getAllPayables(): Promise<Payable[]> {
