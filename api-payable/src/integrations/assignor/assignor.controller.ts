@@ -7,7 +7,6 @@ import {
   Patch,
   Delete,
   NotFoundException,
-  Query,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { AssignorRepository } from './assignor.repository';

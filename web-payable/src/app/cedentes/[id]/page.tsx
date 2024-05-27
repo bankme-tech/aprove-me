@@ -18,8 +18,6 @@ export default function Page() {
     });
   }, []);
 
-
-
   return (
     <div>
       <EditAssignorForm id={param.id} assignor={assignor} />

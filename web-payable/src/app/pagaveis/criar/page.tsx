@@ -80,7 +80,6 @@ export default function Page() {
         body: dto,
       });
       if (res.result) {
-        // router.push(`/pagaveis/${res.result.id}`);
         router.back();
       }
     } catch (err: any) {

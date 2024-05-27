@@ -55,7 +55,7 @@ export default function PayableList({ className, ...props }: CardProps) {
         setPayableItems(payableListItems);
       }
     });
-  }, []);
+  }, [payableItems]);
 
   function onDeleteConfirmation(id: string) {
     apiCall<{ deleted: PayableEntity }>({

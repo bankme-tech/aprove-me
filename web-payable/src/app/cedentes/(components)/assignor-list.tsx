@@ -25,10 +25,9 @@ export default function AssignorList({ className, ...props }: CardProps) {
       endpoint: "/integrations/assignors",
       method: "GET"
     }).then((res) => {
-      console.log(`[Log:res.result]:`, res.result);
       setAssignors(res.result.assignors);
     });
-  }, []);
+  }, [assignors]);
 
   function onDeleteConfirmation(id: string) {
     apiCall<{ deleted: AssignorEntity }>({
