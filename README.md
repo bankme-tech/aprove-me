@@ -1,4 +1,15 @@
-# Bankme Fullstack
+<p align="center">
+  <img src="./web/public//logo-bankme.png" alt="Logo Bankme" width="100">
+</p>
+<h1 align="center">
+  Bankme Fullstack
+</h1>
+
+## Tecnologias Utilizadas
+
+- **Backend**: NestJS, TypeScript, Prisma, SQLite, Jest, Autocannon.
+- **Frontend**: NextJS, TypeScript, Styled Components, Axios.
+
 
 ## Preparando o Ambiente
 
@@ -52,7 +63,6 @@ Durante o desenvolvimento, as mudanças feitas nos arquivos do projeto serão re
 ## Utilização Web
 Com o projeto rodando, acesse `http://localhost:3001` para acessar a aplicação web.
 
-
 ## Utilização API
 
 Para utilizar as rotas da API, você pode seguir as solicitações HTTP definidas no arquivo `api/src/http/start-here.http` localizado na raiz do projeto. Este arquivo contém exemplos de solicitações para cada rota da API, incluindo detalhes sobre os dados necessários e as respostas esperadas.
@@ -71,6 +81,11 @@ Para utilizar as rotas da API, você pode seguir as solicitações HTTP definida
 
 Ao seguir esses passos, você poderá testar todas as funcionalidades da API e entender como interagir com ela usando solicitações HTTP.
 
+## Teste de carga com Autocannon
+
+```bash
+docker exec -it bankme_api npm run test:load
+```
 
 ## Notas
 
@@ -79,5 +94,8 @@ Ao seguir esses passos, você poderá testar todas as funcionalidades da API e e
 
 ## Me Conheça mais
 [Linkedin](https://www.linkedin.com/in/feroddev/)
+
 [Portfólio](portfolio-feroddev.vercel.app)
+
+Email: [neath.felipe@gmail.com](mailto:neath.felipe@gmail.com)
 

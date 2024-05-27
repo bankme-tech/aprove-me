@@ -3,9 +3,9 @@ const autocannon = require('autocannon');
 
 // Dados da requisição
 const requestData = [
-  { value: 123.45, assignorId: '0eea6843-fbbc-476b-a72b-6360a69f8286' },
-  { value: 234.56, assignorId: '0eea6843-fbbc-476b-a72b-6360a69f8286' },
-  { value: 234.56, assignorId: '0eea6843-fbbc-476b-a72b-6360a69f8286' },
+  { value: 123.45, assignorId: '047f2ffc-cd8b-42fe-9d08-0738bf7719df' },
+  { value: 234.56, assignorId: '047f2ffc-cd8b-42fe-9d08-0738bf7719df' },
+  { value: 234.56, assignorId: '047f2ffc-cd8b-42fe-9d08-0738bf7719df' },
 ];
 const validToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMDUzNjI4Mi1iYTIwLTQxMjYtODljNC1iODcxMmViODU0YmYiLCJsb2dpbiI6ImZlcm9kZGV2IiwiaWF0IjoxNzE2Nzc0MDQ3LCJleHAiOjE3MTczNzg4NDd9.0YKcfVccCvwW5w7DUas_shfd5473Brk5yKshnmXMgqU';
