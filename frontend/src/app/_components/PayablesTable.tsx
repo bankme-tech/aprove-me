@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import moment from "@/utils/moment";
 import { Eye, PencilSimple, Plus, Trash } from "phosphor-react";
 import { Key, useCallback } from "react";
-import CreatePayable from "./forms/CreatePayable/form";
+import CreatePayable from "./forms/payable/CreatePayable/form";
 
 const columns = [
     {name: "ID", uid: "id"},
