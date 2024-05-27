@@ -1,9 +1,4 @@
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
-import { authService } from "./services/api/auth";
-
-const secretKey = "secret";
-const key = new TextEncoder().encode(secretKey);
 
 export async function login(formData: FormData) {
     const login = formData.get("login") as string;
