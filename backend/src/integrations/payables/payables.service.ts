@@ -10,7 +10,7 @@ export class PayablesService {
   constructor(
     private prisma: PrismaService,
     @InjectQueue('payablesBatch') private readonly payablesBatch: Queue,
-  ) {}
+  ) { }
 
   async create(createPayableDto: CreatePayableDto) {
     return this.prisma.payable.create({
@@ -28,20 +28,20 @@ export class PayablesService {
     });
   }
 
-  update(id: string, updatePayableDto: UpdatePayableDto) {
+  async update(id: string, updatePayableDto: UpdatePayableDto) {
     return this.prisma.payable.update({
       where: { id },
       data: updatePayableDto,
     });
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     return this.prisma.payable.delete({
       where: { id },
     });
   }
 
-  batchCreate(createPayableDtos: CreatePayableDto[]) {
+  async batchCreate(createPayableDtos: CreatePayableDto[]) {
     return this.payablesBatch.add('process-payables', createPayableDtos, {
       attempts: 4,
       lifo: true,
