@@ -83,7 +83,7 @@ export default function CreatePayable({
                                 render={({ field: { value, onChange } }) => (
                                     <DatePicker
                                         label="Data de emissão"
-                                        isInvalid={!!errors.emissionDate}
+                                        isInvalid={Boolean(errors.emissionDate)}
                                         errorMessage={errors.emissionDate?.message}
                                         value={value ? parseDate(value.toISOString()) : null}
                                         onChange={onChange}
@@ -102,6 +102,8 @@ export default function CreatePayable({
                                         placeholder="Selecione um cedente"
                                         selectedKey={value}
                                         onSelectionChange={onChange}
+                                        isInvalid={Boolean(errors.assignor)}
+                                        errorMessage={errors.assignor?.message}
                                     >
                                         {(item) => (
                                             <AutocompleteItem key={item.id}>
