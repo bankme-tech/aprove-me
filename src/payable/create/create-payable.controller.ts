@@ -1,10 +1,11 @@
 import { Body, Controller, Post } from "@nestjs/common";
+import { Assignor, Payable } from "@prisma/client";
 
 import { Auth } from "../../auth/auth.decorator";
+import { ZodPipe } from "../../pipes/zod.pipe";
 import { PrismaProvider } from "../../providers/prisma.provider";
 import { CreatePayableInputDTO } from "./create-payable-input.dto";
-import { CreatePayableInputPipe } from "./create-payable-input.pipe";
-import { CreatePayableOutputDTO } from "./create-payable-output.dto";
+import { CreatePayableInputSchema } from "./create-payable-input.schema";
 
 @Controller()
 export class CreatePayableController {
@@ -13,8 +14,8 @@ export class CreatePayableController {
   @Auth()
   @Post("/integrations/payable")
   async handle(
-    @Body(CreatePayableInputPipe) input: CreatePayableInputDTO,
-  ): Promise<CreatePayableOutputDTO> {
+    @Body(new ZodPipe(CreatePayableInputSchema)) input: CreatePayableInputDTO,
+  ) {
     const upsertAssignorPromise = this.prisma.assignor.upsert({
       where: {
         id: input.assignor.id,
@@ -51,20 +52,25 @@ export class CreatePayableController {
       },
     });
 
-    await this.prisma.$transaction([
+    const [assignor, payable] = await this.prisma.$transaction([
       upsertAssignorPromise,
       upsertPayablePromise,
     ]);
 
-    return new CreatePayableOutputDTO(
-      input.id,
-      input.value,
-      input.emissionDate,
-      input.assignor.id,
-      input.assignor.document,
-      input.assignor.email,
-      input.assignor.phone,
-      input.assignor.name,
-    );
+    const output: Payable & { assignor: Assignor } = {
+      id: payable.id,
+      value: payable.value,
+      emissionDate: payable.emissionDate,
+      assignorId: payable.assignorId,
+      assignor: {
+        id: assignor.id,
+        document: assignor.document,
+        email: assignor.email,
+        phone: assignor.phone,
+        name: assignor.name,
+      },
+    };
+
+    return output;
   }
 }
