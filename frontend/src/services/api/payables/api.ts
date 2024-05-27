@@ -1,6 +1,6 @@
 import { api } from "../apiService";
 import { PayableData, PayableGateway } from "./interfaces/PayableGateway";
-import { Payable } from "./types/Payable";
+import { Payable, PayableWithAssignor } from "./types/Payable";
 
 export class APIPayableService implements PayableGateway {
     async getAllPayables(): Promise<Payable[]> {
@@ -8,7 +8,7 @@ export class APIPayableService implements PayableGateway {
         return response.data;
     }
 
-    async getPayable(id: string): Promise<Payable> {
+    async getPayable(id: string): Promise<PayableWithAssignor> {
         const response = await api.get(`/payables/${id}`);
         return response.data;
     }
@@ -18,9 +18,9 @@ export class APIPayableService implements PayableGateway {
     }
 
     async updatePayable(id: string, payable: PayableData): Promise<void> {
-        return await api.put(`/payables/${id}`, payable);
+        return await api.patch(`/payables/${id}`, payable);
     }
-    
+
     async deletePayable(id: string): Promise<void> {
         return await api.delete(`/payables/${id}`);
     }
