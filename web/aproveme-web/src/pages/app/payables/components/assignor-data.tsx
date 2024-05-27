@@ -41,7 +41,7 @@ export const AssignorData = ({ payableId }: AssignorDataProps) => {
 
   const { data: payableDetail, isLoading: isPayableLoading } =
     useQuery<GetPayableBody>({
-      queryKey: ['payable-detail'],
+      queryKey: ['payable-detail', payableId],
       queryFn: () => getPayable(payableId),
       staleTime: Infinity, // Em quanto tempo essa informação se torna obsoleta,
       enabled: !!payableId, // Habilita a query apenas se payableId estiver disponível
@@ -183,7 +183,7 @@ export const AssignorData = ({ payableId }: AssignorDataProps) => {
                 <AlertDialogTitle>Tem mesmo certeza?</AlertDialogTitle>
                 <AlertDialogDescription>
                   Esta ação não pode ser desfeita. Isso vai alterar
-                  permanentemente os dados no servidor.
+                  permanentemente os dados do cedente no servidor.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>

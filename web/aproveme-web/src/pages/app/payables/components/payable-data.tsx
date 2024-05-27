@@ -49,7 +49,7 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
 
   const { data: payableDetail, isLoading: isPayableLoading } =
     useQuery<GetPayableBody>({
-      queryKey: ['payable-detail'],
+      queryKey: ['payable-detail', payableId],
       queryFn: () => getPayable(payableId),
       staleTime: Infinity, // Em quanto tempo essa informação se torna obsoleta,
       enabled: !!payableId, // Habilita a query apenas se payableId estiver disponível
@@ -127,18 +127,16 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
             )}
           </TableCell>
 
-          <TableCell className="w-30">
+          <TableCell className="w-32">
             {isPayableLoading ? (
               <Skeleton className="h-4 w-full" />
             ) : isPayableEditable ? (
-              // <form onSubmit={handleSubmit(handleEditSubmition)}>
               <Input
                 className="h-6 w-24"
                 {...payableRegister('value')}
                 type="number"
               />
             ) : (
-              // </form>
               value?.toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
@@ -147,21 +145,47 @@ export const PayableData = ({ payableId }: PayableDataProps) => {
           </TableCell>
 
           <TableCell className="w-10">
-            <Button
-              variant={'outline'}
-              size={'sm'}
-              onClick={
-                isPayableEditable
-                  ? handleSubmit(handleEditSubmition)
-                  : handlePayableEdit
-              }
-            >
-              {isPayableEditable ? (
-                <Check className="h-4 w-4"></Check>
-              ) : (
+            {isPayableEditable ? (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant={'outline'} size={'sm'}>
+                    <Check className="h-4 w-4"></Check>
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Tem mesmo certeza?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Esta ação não pode ser desfeita. Isso vai alterar
+                      permanentemente os dados do recebível no servidor.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction asChild>
+                      <Button
+                        className="bg-red-600  text-white"
+                        onClick={
+                          isPayableEditable
+                            ? handleSubmit(handleEditSubmition)
+                            : handlePayableEdit
+                        }
+                      >
+                        Continuar
+                      </Button>
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <Button
+                variant={'outline'}
+                size={'sm'}
+                onClick={handlePayableEdit}
+              >
                 <Pencil className="h-4 w-4" />
-              )}
-            </Button>
+              </Button>
+            )}
           </TableCell>
 
           <TableCell className="w-10">
