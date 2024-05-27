@@ -5,8 +5,10 @@ import { Autocomplete, AutocompleteItem, Button, DatePicker, Input, Modal, Modal
 import { NumericFormat } from "react-number-format";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { assignorService } from "@/services/api/assignors";
-import { parseDate } from "@internationalized/date";
 import { payableService } from "@/services/api/payables";
+import { getLocalTimeZone, parseAbsolute } from "@internationalized/date";
+import { toast } from "react-toastify";
+import { queryClient } from "@/app/provider";
 
 interface CreatePayableProps {
     isOpen: boolean;
@@ -19,13 +21,14 @@ export default function CreatePayable({
 }: CreatePayableProps) {
     const {
         data: assignors = [],
+        isLoading: isLoadingAssignors,
     } = useQuery({
         queryKey: ["assignors"],
         queryFn: () => assignorService.getAllAssignors(),
     });
 
     const {
-        mutate,
+        mutateAsync,
         isPending
     } = useMutation({
         mutationKey: ["payables"],
@@ -35,13 +38,28 @@ export default function CreatePayable({
     const {
         handleSubmit,
         control,
+        watch,
         formState: { errors },
     } = useForm<CreatePayableType>({
         resolver: zodResolver(CreatePayableSchema),
+        defaultValues: {
+            value: 0,
+            emissionDate: new Date(),
+            assignor: "",
+        },
     });
 
     const onSubmit = async (data: CreatePayableType) => {
-        mutate(data);
+        mutateAsync(data, {
+            onSuccess: () => {
+                onOpenChange(false);
+                toast.success("Recebível criado com sucesso")
+                queryClient.invalidateQueries({
+                    queryKey: ["payables"],
+                })
+            },
+            onError: () => toast.error("Erro ao criar recebível")
+        });
     }
 
     return (
@@ -57,7 +75,6 @@ export default function CreatePayable({
                             <Controller
                                 name="value"
                                 control={control}
-                                defaultValue={0}
                                 render={({ field: { value, onChange } }) => (
                                     <NumericFormat
                                         prefix="R$ "
@@ -83,10 +100,16 @@ export default function CreatePayable({
                                 render={({ field: { value, onChange } }) => (
                                     <DatePicker
                                         label="Data de emissão"
+                                        variant="bordered"
                                         isInvalid={Boolean(errors.emissionDate)}
                                         errorMessage={errors.emissionDate?.message}
-                                        value={value ? parseDate(value.toISOString()) : null}
-                                        onChange={onChange}
+                                        granularity="day"
+                                        value={
+                                            value
+                                                ? parseAbsolute(value.toISOString(), getLocalTimeZone())
+                                                : undefined
+                                        }
+                                        onChange={(value) => onChange(value.toDate())}
                                         showMonthAndYearPickers
                                         isRequired
                                     />
@@ -105,10 +128,11 @@ export default function CreatePayable({
                                         onSelectionChange={onChange}
                                         isInvalid={Boolean(errors.assignor)}
                                         errorMessage={errors.assignor?.message}
+                                        isLoading={isLoadingAssignors}
                                         isRequired
                                     >
                                         {(item) => (
-                                            <AutocompleteItem key={item.id}>
+                                            <AutocompleteItem key={item.id} value={item.id}>
                                                 {item.name}
                                             </AutocompleteItem>
                                         )}
@@ -120,7 +144,7 @@ export default function CreatePayable({
                             <Button type="button" color="danger" variant="light" onPress={onClose}>
                                 Fechar
                             </Button>
-                            <Button type="submit" color="primary" onPress={onClose} isLoading={isPending}>
+                            <Button type="submit" color="primary" isLoading={isPending}>
                                 Salvar
                             </Button>
                         </ModalFooter>
