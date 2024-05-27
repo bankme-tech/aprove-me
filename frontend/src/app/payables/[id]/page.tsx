@@ -2,30 +2,46 @@
 
 import { Payable } from "@/@core/domain/entities/payable.entity";
 import { PayableCard } from "@/components/cards/payable-card";
-import { usePayable } from "@/context/use-payable";
-import { useEffect, useState } from "react";
+import { usePayable } from "@/context/payable/use-payable";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function CreatedPayable({ params }: { params: { id: string } }) {
   const { getPayable } = usePayable();
   const [payable, setPayable] = useState<Payable | null>(null);
 
-  useEffect(() => {
-    const fetchPayable = async () => {
-      const payable = await getPayable(params.id);
-      setPayable(payable);
-    };
-    fetchPayable();
-  }, [params.id, getPayable]);
+  const { isLoading } = useQuery({
+    queryKey: ["payable", params.id],
+    queryFn: async () => {
+      const response = await getPayable(params.id);
+      setPayable(response);
+      return response;
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen ">
+        <p>Carregando...</p>
+      </main>
+    );
+  }
+
+  if (!payable) {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen ">
+        <p>Erro ao carregar dados do pagamento.</p>
+      </main>
+    );
+  }
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen ">
       <PayableCard
-        id={payable ? payable.id : Math.random().toString(36).substring(7)}
-        value={payable ? payable.value : Math.random() * 1000}
-        emissionDate={payable ? payable.emissionDate : new Date()}
-        assignorId={
-          payable ? payable.assignorId : Math.random().toString(36).substring(7)
-        }
+        id={payable.id}
+        value={payable.value}
+        emissionDate={new Date(payable.emissionDate)}
+        assignorId={payable.assignorId}
       />
     </main>
   );
