@@ -1,23 +1,28 @@
 "use client";
 
-import { apiCall } from "@/lib/api-call";
 import { useParams } from "next/navigation";
+import EditAssignorForm from "./(components)/edit-assignor-form";
 import { useEffect, useState } from "react";
+import { apiCall } from "@/lib/api-call";
+import { AssignorEntity } from "@/interfaces/assignor.interface";
 
 export default function Page() {
   const param = useParams<{ id: string }>();
-  const [assignor, setAssignor] = useState(null);
-
+  const [assignor, setAssignor] = useState<Required<AssignorEntity>>();
   useEffect(() => {
-    apiCall({ endpoint: `/integrations/assignors/${param.id}`, method: 'GET' })
-      .then((res) => setAssignor(res.result));
-    // TODO: catch((err) => toaster)
-  }, [param.id]);
+    apiCall<Required<AssignorEntity>>({
+      endpoint: `/integrations/assignors/${param.id}?includeAssignor=true`,
+      method: 'GET',
+    }).then((res) => {
+      setAssignor(res.result);
+    });
+  }, []);
+
+
 
   return (
     <div>
-      <h1>Cedentes by id</h1>
-      <p>{JSON.stringify(assignor)}</p>
+      <EditAssignorForm id={param.id} assignor={assignor} />
     </div>
   );
 }

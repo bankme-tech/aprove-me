@@ -121,6 +121,12 @@ export default function EditPayableForm(p: Props) {
     if (assignorFound) form.setValue('assignor', assignorFound.id);
   }
 
+  function countDefined(payable?: PayableEntity) {
+    return Number(!!payable?.value) +
+      Number(!!payable?.emissionDate) +
+      Number(!!payable?.assignor?.name);
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -129,6 +135,17 @@ export default function EditPayableForm(p: Props) {
             <CardTitle className="text-center">Atualizar Pagável</CardTitle>
             <CardDescription>
               Adicione os valores que devem ser atualizados.
+              {countDefined(p?.payable) > 1 ?
+                <div>
+                  <br /><strong>Valores atuais:</strong>
+                  <ul>
+                    {p.payable?.value ? <li>- Valor {p.payable.value}</li> : null}
+                    {p.payable?.emissionDate ? <li>- Data: de emissão {p.payable.emissionDate}</li> : null}
+                    {p.payable?.assignor.name ? <li>- Cedentes: {p.payable.assignor.name}</li> : null}
+                  </ul>
+                </div>
+                : null
+              }
             </CardDescription>
           </CardHeader>
 
