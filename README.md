@@ -72,15 +72,21 @@ The project has been structured into two main parts: the backend and the fronten
 2. **Navigate to the project directory:**
 
     ```bash
-    cd bankme-samueldeotti
+    cd aprove-me
     ```
+4. **Switch the branch**
+
+   ```bash
+    git checkout samuel-deotti-aprove-me
+    ```
+
 3. **Modify the environment variables**
     The project requires environment variables to be set, you you need to modify the .env.example file. Duplicate this file and rename it to .env. Then, update the values of the variables according to your environment.
 
 3. **Start the Docker containers:**
 
     ```bash
-      docker-compose up --build
+      docker compose up --build
       ``` 
     This command will build and start the necessary Docker containers for the project. It may take a few minutes on the first run as it depends on your internet connection speed to download the required Docker images.
 
