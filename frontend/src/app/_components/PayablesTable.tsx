@@ -25,8 +25,12 @@ export default function PayablesTable() {
       queryFn: () => payableService.getAllPayables(),
     })
 
-    const { isOpen, onOpen, onOpenChange } = useDisclosure({
+    const { isOpen: isOpenCreatePayable, onOpen: onOpenCreatePayable, onOpenChange: onOpenChangeCreatePayable } = useDisclosure({
       id: "create-payable",
+    });
+
+    const { isOpen: isOpenCreateAssignor, onOpen: onOpenCreateAssignor, onOpenChange: onOpenChangeCreateAssignor } = useDisclosure({
+      id: "create-assignor",
     });
 
     const renderCell = useCallback((payable: Payable, columnKey: Key) => {
@@ -65,8 +69,11 @@ export default function PayablesTable() {
         <Table
           aria-label="Payables table list"
           topContent={
-            <div className="flex items-center justify-end">
-              <Button type="button" color="primary" endContent={<Plus />} onClick={onOpen}>
+            <div className="flex items-center justify-end gap-2">
+              <Button type="button" color="primary" endContent={<Plus />} onClick={onOpenCreateAssignor}>
+                Adicionar cedente
+              </Button>
+              <Button type="button" color="primary" endContent={<Plus />} onClick={onOpenCreatePayable}>
                 Adicionar recebível
               </Button>
             </div>
@@ -93,7 +100,7 @@ export default function PayablesTable() {
             </TableBody>
         </Table>
 
-        <CreatePayable isOpen={isOpen} onOpenChange={onOpenChange} />
+        <CreatePayable isOpen={isOpenCreatePayable} onOpenChange={onOpenChangeCreatePayable} />
       </>
     )
 }
