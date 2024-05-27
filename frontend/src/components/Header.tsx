@@ -22,7 +22,7 @@ export default async function Header() {
                     redirect("/");
                   }}
                 >
-                  <Button type="submit" color="primary" variant="flat">
+                  <Button type="submit" color="danger" variant="flat">
                     Sair
                   </Button>
                 </form>
