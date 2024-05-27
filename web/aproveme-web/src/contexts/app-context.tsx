@@ -1,9 +1,8 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
-import { createContext, useContextSelector } from 'use-context-selector'
+import { createContext } from 'use-context-selector'
 
 import { fetchAssignorsNames } from '@/api/fetch-assignors-names'
-import { fetchPayables, FetchPayablesResponse } from '@/api/fetch-payables'
 import { registerAssignor } from '@/api/register-assignor'
 import { registerPayable } from '@/api/register-payable'
 
@@ -77,12 +76,4 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <AppContext.Provider value={contextValues}>{children}</AppContext.Provider>
   )
-}
-
-export const useAppContext = () => {
-  const context = useContextSelector(AppContext, (context) => context)
-  if (context === undefined) {
-    throw new Error('useAppContext must be used within an AppProvider')
-  }
-  return context
 }
