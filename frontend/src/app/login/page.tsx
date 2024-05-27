@@ -39,7 +39,7 @@ export default async function Login() {
                 <div className="flex flex-col">
                 <div className="flex items-center justify-between">
                     <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                        Password
+                        Senha
                     </label>
                 </div>
                 <div className="mt-2">
