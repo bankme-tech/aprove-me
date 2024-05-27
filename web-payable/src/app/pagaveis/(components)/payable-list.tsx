@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Link from "next/link"
-import { numberToCurrency } from "@/lib/format-currency"
+import { floatToCurrency, numberToCurrency } from "@/lib/format-currency"
 import React from "react";
 import { apiCall } from "@/lib/api-call";
 import { Pagination } from "@/interfaces/pagination.interface";
@@ -43,7 +43,7 @@ export default function PayableList({ className, ...props }: CardProps) {
       if (res.result?.items) {
         const payableListItems: PayableListItem[] = res.result.items.map((payable) => ({
           id: payable.id,
-          value: numberToCurrency(payable.value),
+          value: floatToCurrency(payable.value),
           emissionDate: new Intl.DateTimeFormat("pt-BR", {
             timeStyle: "medium",
             dateStyle: "short",

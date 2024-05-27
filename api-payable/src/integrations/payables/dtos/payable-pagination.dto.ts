@@ -8,3 +8,10 @@ export class PayablePaginationDto extends PaginationDto {
   @IsBoolean()
   includeAssignor: boolean;
 }
+
+export class PayableByIdDto {
+  @Type(() => Boolean)
+  @IsOptional()
+  @IsBoolean()
+  includeAssignor: boolean;
+}

@@ -24,11 +24,12 @@ export interface ComboboxProps {
   notFoundLabel: string;
   items: { key: string; label: string; }[];
   onSelect?: (key: string) => void;
+  initialKey?: string;
 }
 
 export function Combobox(p: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
-  const [key, setKey] = React.useState("");
+  const [key, setKey] = React.useState(p.initialKey ?? "");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

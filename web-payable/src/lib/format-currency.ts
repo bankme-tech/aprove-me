@@ -14,6 +14,14 @@ export function numberToCurrency(numericString: string | number): string {
   });
 }
 
+export function floatToCurrency(currencyFloat: number) {
+  return currencyFloat.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: 2,
+  });
+}
+
 export function currencyToNumber(currency: string) {
   const EVERYTHING_EXCEPT_DIGIT_AND_COMMA = /[^\d,]/g;
   const cleanString = currency

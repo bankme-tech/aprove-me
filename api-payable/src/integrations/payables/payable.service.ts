@@ -59,8 +59,13 @@ export class PayableService {
     };
   }
 
-  async getPayableById(id: string): Promise<Payable | null> {
-    return this.prisma.payable.findUnique({ where: { id } });
+  async getPayableById(id: string, options?: { includeAssignor: boolean }): Promise<Payable | null> {
+    type FindParam = Parameters<PrismaService['payable']['findUnique']>[0];
+    const findParam: FindParam = { where: { id } };
+    if (options.includeAssignor) {
+      findParam.include = { assignor: options.includeAssignor };
+    }
+    return this.prisma.payable.findUnique(findParam);
   }
 
   async deletePayable(id: string): Promise<Payable> {
