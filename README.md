@@ -25,7 +25,7 @@ Aprove-me é uma aplicação full-stack que utiliza ferramentas como NestJS, Nex
 
 ## Visão Geral
 
-Essa é uma aplicação moderna desenvolvida utilizando várias tecnologias de ponta para oferecer uma solução robusta e escalável. Ele é composto por um backend desenvolvido em NestJS e Prisma, um frontend em NextJS, BullMQ para gerenciamento de filas, Redis para armazenamento em memória e Docker Compose para orquestração de contêineres e foi feito como um desafio técnico para a empresa aprove-me.
+Essa é uma aplicação moderna desenvolvida utilizando várias tecnologias de ponta para oferecer uma solução robusta e escalável. Ele é composto por um backend desenvolvido em NestJS e Prisma, um frontend em NextJS, BullMQ para gerenciamento de filas, Redis para armazenamento em memória e Docker Compose para orquestração de contêineres, algumas bibliotecas interessantes foram usadas no frontend, sendo elas a useHookForm, tansteck query, shadcn e tailwind como as mais importantes e foi feito como um desafio técnico para a empresa aprove-me.
 
 ## Requisitos
 
