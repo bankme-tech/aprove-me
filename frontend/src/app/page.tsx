@@ -1,33 +1,23 @@
 "use client";
 
-import { PayableForm, payableSchema } from "@/components/forms/payable-form";
-import { useRouter } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { CreatePayableInputDTO } from "@/@core/domain/dtos/payable.dto";
+import { useQuery } from "@tanstack/react-query";
 import { usePayable } from "@/context/payable/use-payable";
-import { useAssignor } from "@/context/assignor/use-assignor";
+import {
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  Table,
+} from "@/components/ui/table";
+import Link from "next/link";
 
 export default function Home() {
-  const router = useRouter();
-  const { createPayable } = usePayable();
-  const { getAllAssignors } = useAssignor();
+  const { getAllPayables } = usePayable();
   const { status, data } = useQuery({
-    queryKey: ["assignors"],
-    queryFn: getAllAssignors,
+    queryKey: ["payables"],
+    queryFn: getAllPayables,
   });
-  const { mutate } = useMutation({
-    mutationFn: createPayable,
-    onSuccess: (response) => {
-      router.push(`/payables/${response.id}`);
-    },
-  });
-
-  const handleSubmit = async (data: CreatePayableInputDTO) => {
-    const formData = payableSchema.safeParse(data);
-    if (formData.success) {
-      mutate(formData.data);
-    }
-  };
 
   if (status === "pending") {
     return (
@@ -40,18 +30,51 @@ export default function Home() {
   if (status === "error") {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen ">
-        <p>Erro ao carregar dados do pagamento.</p>
+        <p>Erro</p>
       </main>
     );
   }
 
   return (
     <main className="flex items-center justify-center min-h-screen ">
-      <div className="w-full max-w-md p-6 bg-white rounded shadow-md ">
-        <h1 className="mb-4 text-2xl font-bold text-center">
-          Cadastrar recebível
+      <div className="w-full max-w-md m-3 bg-white rounded shadow-md ">
+        <h1 className="mb-4 text-xl font-bold text-center sm:text-2xl">
+          Listagem de recebíveis
         </h1>
-        <PayableForm onSubmit={handleSubmit} assignors={data} />
+        <div className="overflow-x-auto">
+          <Table className="w-auto min-w-auto">
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-auto sm:w-auto">ID</TableHead>
+                <TableHead>Data de emissão</TableHead>
+                <TableHead className="text-right">Valor</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.map((payable) => (
+                <TableRow key={payable.id}>
+                  <TableCell className="font-medium">
+                    <Link
+                      className="text-bankmeBlue font-extrabold hover:underline"
+                      href={`/payables/${payable.id}`}
+                    >
+                      {payable.id}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    {new Date(payable.emissionDate).toLocaleDateString("pt-BR")}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {payable.value.toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </main>
   );
