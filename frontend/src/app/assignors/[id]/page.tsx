@@ -6,7 +6,7 @@ import { useAssignor } from "@/context/assignor/use-assignor";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-export default function CreatedAssignor({
+export default function AssignorDetails({
   params,
 }: {
   params: { id: string };

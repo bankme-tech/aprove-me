@@ -7,7 +7,7 @@ import { CreatePayableInputDTO } from "@/@core/domain/dtos/payable.dto";
 import { usePayable } from "@/context/payable/use-payable";
 import { useAssignor } from "@/context/assignor/use-assignor";
 
-export default function Home() {
+export default function CreatePayable() {
   const router = useRouter();
   const { createPayable } = usePayable();
   const { getAllAssignors } = useAssignor();

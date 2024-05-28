@@ -6,7 +6,7 @@ import { AssignorForm, assignorSchema } from "@/components/forms/assignor-form";
 import { CreateAssignorInputDTO } from "@/@core/domain/dtos/assignor.dto";
 import { useAssignor } from "@/context/assignor/use-assignor";
 
-export default function Home() {
+export default function CreateAssignor() {
   const router = useRouter();
   const { createAssignor } = useAssignor();
   const { mutate } = useMutation({

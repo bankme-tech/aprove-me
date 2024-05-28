@@ -6,7 +6,7 @@ import { usePayable } from "@/context/payable/use-payable";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-export default function CreatedPayable({ params }: { params: { id: string } }) {
+export default function PayableDetails({ params }: { params: { id: string } }) {
   const { getPayable } = usePayable();
   const [payable, setPayable] = useState<Payable | null>(null);
 
