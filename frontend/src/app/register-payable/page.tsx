@@ -19,7 +19,6 @@ import { z } from "zod";
 import useCheckToken from "../hooks/useCheckToken";
 import useCreatePayable from "../hooks/useCreatePayable";
 import useGetAssignors from "../hooks/useGetAssignors";
-import useGetPayable from "../hooks/useGetPayable";
 import style from "./page.module.css";
 
 const formSchema = z.object({
@@ -30,7 +29,6 @@ const formSchema = z.object({
 
 export default function RegisterPayable() {
   const { push } = useRouter();
-  const { data: payables, isLoading } = useGetPayable();
   const {
     mutate: mutateCreatePayable,
   } = useCreatePayable();
@@ -44,7 +42,6 @@ export default function RegisterPayable() {
       emissionDate: new Date(),
       assignorId: "",
     },
-    disabled: isLoading,
   });
 
   useCheckToken();

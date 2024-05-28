@@ -2,11 +2,9 @@
 
 import useCheckToken from "@/app/hooks/useCheckToken";
 import useGetAssignorsByid from "@/app/hooks/useGetAssignorById";
-import EditErase from "@/components/edit-erase";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
-import Link from "next/link";
-import Loading from "../loading";
 import style from "../../payables/payables.module.css";
+import Loading from "../loading";
 
 
 export default function AssignorDetails({params}: {params: {id: string}}) {

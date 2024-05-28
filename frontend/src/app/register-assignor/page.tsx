@@ -1,6 +1,5 @@
 "use client";
 
-import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,14 +10,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import useCheckToken from "../hooks/useCheckToken";
 import useCreateAssignor from "../hooks/useCreateAssignor";
-import useGetPayable from "../hooks/useGetPayable";
 import style from "./page.module.css";
 
 const formSchema = z
@@ -36,8 +32,8 @@ const formSchema = z
   });
 
 export default function RegisterAssignor() {
-  const { data: payables, isLoading } = useGetPayable();
-  const [token, setToken] = useState<string>();
+
+
   const { push } = useRouter();
 
   const {
@@ -47,12 +43,15 @@ export default function RegisterAssignor() {
     data: assignorData,
   } = useCreateAssignor();
 
- useCheckToken();
+
 
 
   useEffect(() => {
     if (isCreatedSuccess) {
+      alert("Assignor created successfully");
       push("/");
+    } else {
+      alert("Assignor not created")
     }
   }, [isCreatedSuccess]);
 
@@ -77,10 +76,7 @@ export default function RegisterAssignor() {
     <main
       className={`flex flex-col items-center justify-center gap-12 p-24 ${style.container}`}
     >
-      <div>
-        <ModeToggle />
-      </div>
-      <Image src={"/logo-bankme.png"} alt="bank-me logo" className={style.logo} />
+  
       <h1 className="text-4xl font-bold">Create your account</h1>
       <div>
         <Form {...form}>
@@ -148,7 +144,7 @@ export default function RegisterAssignor() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="password" {...field} />
+                    <Input placeholder="password" type="password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -160,7 +156,7 @@ export default function RegisterAssignor() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="confirm_password" {...field} />
+                    <Input placeholder="confirm_password" type="password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -29,12 +30,13 @@ const formSchema = z.object({
 });
 
 export default function Login() {
+  useCheckToken();
+
   const router = useRouter();
   const {
     mutate: mutateLogin,
     isSuccess: isLoginSuccess,
     isError: isLoginError,
-    error,
     isPending,
     data: loginData,
   } = useLogin();
@@ -47,7 +49,6 @@ export default function Login() {
     },
   });
 
-
   useCheckToken();
 
   useEffect(() => {
@@ -57,20 +58,22 @@ export default function Login() {
     }
   }, [loginData?.data.token, isLoginSuccess]);
 
-
-
   const handleLogin = (values: z.infer<typeof formSchema>) =>
     mutateLogin(values);
 
-
-  if(isPending) {
+  if (isPending) {
     return <Loading />;
   }
 
-
   return (
     <div className={style.container}>
-      <Image src={"/logo-bankme.png"} width={80} height={80} alt="" className={style.logo} />
+      <Image
+        src={"/logo-bankme.png"}
+        width={80}
+        height={80}
+        alt=""
+        className={style.logo}
+      />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleLogin)}
@@ -82,7 +85,6 @@ export default function Login() {
             flexDirection: "column",
           }}
         >
-
           <FormField
             control={form.control}
             name="login"
@@ -92,7 +94,9 @@ export default function Login() {
                   <Input placeholder="email" {...field} />
                 </FormControl>
                 <FormMessage />
-                {isLoginError && <FormDescription>Login or password incorrect</FormDescription>}
+                {isLoginError && (
+                  <FormDescription>Login or password incorrect</FormDescription>
+                )}
               </FormItem>
             )}
           />
@@ -105,6 +109,11 @@ export default function Login() {
                   <Input placeholder="password" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
+                <FormDescription>
+                  <Link href={"/register-assignor"} className="underline">
+                    Create your account
+                  </Link>
+                </FormDescription>
               </FormItem>
             )}
           />
