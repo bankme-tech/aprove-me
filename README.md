@@ -18,7 +18,8 @@ Aprove-me é uma aplicação full-stack que utiliza ferramentas como NestJS, Nex
     - [Iniciando o projeto](#iniciando-o-projeto)
 4. [Estrutura do Projeto](#estrutura-do-projeto)
 5. [Contribuição](#contribuição)
-6. [Scripts](#scripts)
+6. [Rotas da API](#rotas-da-api)
+7. [Scripts](#scripts)
     - [Backend](#backend-scripts)
     - [Frontend](#frontend-scripts)
 
@@ -109,7 +110,223 @@ Envie para o repositório remoto (git push origin feature/nova-feature).
 Abra um Pull Request.
 ```
 
-## Rotas
+## Rotas da API
+#### Payable
+```GET /integrations/payable```
+##### Retorna todos os payables.
+
+Exemplo de Resposta:
+
+```
+[
+  {
+    "id": 1,
+    "amount": 100.00,
+    "status": "paid",
+    "created_at": "2023-05-27T12:34:56.789Z"
+  },
+  ...
+]
+```
+
+```GET /integrations/payable/:id```
+ ##### Retorna um payable específico.
+
+Parâmetros:
+
+id (string): ID do payable
+Exemplo de Resposta:
+
+```
+{
+  "id": UUID,
+  "value": 0,
+  "emissionDate": "2024-05-28T16:31:07.768Z",
+  "assignorId": "string"
+}
+```
+
+```POST /integrations/payable```
+##### Cria um novo payable.
+
+Corpo da Requisição:
+
+```
+{
+  "value": 0,
+  "emissionDate": "2024-05-28T16:31:07.768Z",
+  "assignorId": "string"
+}
+```
+Exemplo de Resposta:
+
+```
+{
+  "id": UUID,
+  "value": 0,
+  "emissionDate": "2024-05-28T16:31:07.768Z",
+  "assignorId": "string"
+}
+
+```
+```
+PUT /integrations/payable/:id
+```
+##### Atualiza um payable existente.
+
+Parâmetros:
+
+id (string): ID do payable
+Corpo da Requisição:
+
+```
+{
+    "emissionDate": "2024-05-28T16:31:07.768Z",
+}
+```
+Exemplo de Resposta:
+
+```
+{
+  "id": 1,
+  "value": 0,
+  "emissionDate": "2024-05-28T16:31:07.768Z",
+}
+```
+
+```
+DELETE /integrations/payable/
+```
+##### Deleta um payable.
+
+Exemplo de resposta:
+
+Apenas status 204
+
+Parâmetros:
+
+id (string): ID do pagamento
+
+
+#### Assignor
+```GET /integrations/assignor```
+##### Retorna todos os assignors.
+
+Exemplo de Resposta:
+
+```
+[
+  {
+    "id": 1,
+    "document": "string",
+    "email": "string",
+    "password": "string",
+    "phone": "string",
+    "name": "string"
+  },
+  ...
+]
+```
+```GET /integrations/assignor/```
+#### Retorna um assignor específico.
+
+Parâmetros:
+
+id (string): ID do assignor
+Exemplo de Resposta:
+
+```
+{
+  "id": 1,
+  "document": "string",
+  "email": "string",
+  "password": "string",
+  "phone": "string",
+  "name": "string"
+}
+```
+POST /integrations/assignor
+Cria um novo assignor e funciona como o registro de um novo usuário.
+
+Corpo da Requisição:
+
+```
+{
+  "document": "string",
+  "email": "string",
+  "password": "string",
+  "phone": "string",
+  "name": "string"
+}
+```
+Exemplo de Resposta:
+
+```
+{
+  "id": 2,
+  "document": "string",
+  "email": "string",
+  "password": "string",
+  "phone": "string",
+  "name": "string"
+}
+```
+```PUT /integrations/assignor/```
+#### Atualiza um assignor existente.
+
+Parâmetros:
+
+id (string): ID do cedente
+Corpo da Requisição:
+
+```
+{
+  "name": "Company A Updated"
+}
+```
+Exemplo de Resposta:
+
+```
+{
+  "id": 1,
+  "document": "string",
+  "email": "string",
+  "password": "string",
+  "phone": "string",
+  "name": "Company A Updated"
+}
+```
+
+```DELETE /integrations/assignor/```
+#### Deleta um assignor.
+
+Parâmetros:
+
+id (string): ID do cedente
+
+Exemplo de Resposta:
+
+Apenas status 204
+#### Auth
+
+```POST /integrations/auth/```
+#### Autentica um usuário e retorna um token JWT.
+
+Corpo da Requisição:
+
+```
+{
+  "login": "user@email.com",
+  "password": "password"
+}
+```
+Exemplo de Resposta:
+
+```
+{
+  "token": "jwt-token"
+}
+```
 
 É possível ver as rotas através do http://localhost:3000/api#/.
 
