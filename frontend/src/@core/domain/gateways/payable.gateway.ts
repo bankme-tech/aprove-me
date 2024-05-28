@@ -5,4 +5,6 @@ export interface IPayableGateway {
   create(params: CreatePayableInputDTO): Promise<Payable>;
   findById(id: string): Promise<Payable | null>;
   findAll(): Promise<Payable[]>;
+  update(id: string, params: CreatePayableInputDTO): Promise<void>;
+  delete(id: string): Promise<void>;
 }

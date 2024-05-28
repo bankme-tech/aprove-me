@@ -8,3 +8,9 @@ export type CreatePayableInputDTO = Pick<
 export type CreatePayableOutputDTO = Payable;
 
 export type FindPayableOutputDTO = Payable;
+
+export type UpdatePayableInputDTO = CreatePayableInputDTO;
+
+export type UpdatePayableOutputDTO = Payable;
+
+export type DeletePayableInputDTO = Pick<Payable, "id">;
