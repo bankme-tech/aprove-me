@@ -24,6 +24,16 @@ export const assignorServiceFindById = {
   phone: '(75) 9 9921-4100',
   name: 'Teste dos Santos',
   password: 'hashedPassword',
+  payables: [],
+};
+
+export const assignorServiceFindedById = {
+  id: '2',
+  document: '000.000.000.18',
+  email: 'email@email.com',
+  phone: '(75) 9 9921-4100',
+  name: 'Teste dos Santos',
+  payables: [],
 };
 
 export const assignorServiceCreated = {

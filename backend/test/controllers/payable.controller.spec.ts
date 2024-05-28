@@ -1,10 +1,10 @@
 import { BullModule } from '@nestjs/bull';
 import { Test } from '@nestjs/testing';
-import { AuthController } from 'src/auth/auth.controller';
-import { AuthModule } from 'src/auth/auth.module';
 import { PrismaModule } from '../../prisma/prisma.module';
 import { AssignorController } from '../../src/assignor/assignor.controller';
 import { AssignorService } from '../../src/assignor/assignor.service';
+import { AuthController } from '../../src/auth/auth.controller';
+import { AuthModule } from '../../src/auth/auth.module';
 import { PayableController } from '../../src/payable/payable.controller';
 import { PayableService } from '../../src/payable/payable.service';
 import {
@@ -30,7 +30,18 @@ describe('PayableController', () => {
         }),
       ],
       controllers: [AuthController, PayableController, AssignorController],
-      providers: [AssignorService, PayableService],
+      providers: [
+        {
+          provide: PayableService,
+          useValue: {
+            findAll: jest.fn(),
+            findOne: jest.fn(),
+            create: jest.fn(),
+            update: jest.fn(),
+          },
+        },
+        AssignorService,
+      ],
     }).compile();
 
     payableService = moduleRef.get<PayableService>(PayableService);

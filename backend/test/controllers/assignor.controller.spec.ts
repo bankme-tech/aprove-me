@@ -1,12 +1,9 @@
-import { BullModule } from '@nestjs/bull';
+import { forwardRef } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { AuthController } from 'src/auth/auth.controller';
-import { AuthModule } from 'src/auth/auth.module';
-import { PrismaModule } from '../../prisma/prisma.module';
 import { AssignorController } from '../../src/assignor/assignor.controller';
+import { AssignorModule } from '../../src/assignor/assignor.module';
 import { AssignorService } from '../../src/assignor/assignor.service';
-import { PayableController } from '../../src/payable/payable.controller';
-import { PayableService } from '../../src/payable/payable.service';
+import { AuthModule } from '../../src/auth/auth.module';
 import {
   assignorServiceCreated,
   assignorServiceFindAll,
@@ -19,29 +16,34 @@ import {
 describe('AssignorService', () => {
   let assignorController: AssignorController;
   let assignorService: AssignorService;
-
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [
-        PrismaModule,
-        AuthModule,
-        BullModule.registerQueue({
-          name: 'payable',
-        }),
+      imports: [forwardRef(() => AuthModule), forwardRef(() => AssignorModule)],
+      controllers: [AssignorController],
+      providers: [
+        {
+          provide: AssignorService,
+          useValue: {
+            findAll: jest.fn(),
+            findOne: jest.fn(),
+            create: jest.fn(),
+            update: jest.fn(),
+          },
+        },
       ],
-      controllers: [AuthController, AssignorController, PayableController],
-      providers: [AssignorService, PayableService],
     }).compile();
-
     assignorService = moduleRef.get<AssignorService>(AssignorService);
     assignorController = moduleRef.get<AssignorController>(AssignorController);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   describe('Verifica se o controller está funcionando corretamente.', () => {
     it('Deve retornar um array de Assignors', async () => {
       jest
         .spyOn(assignorService, 'findAll')
-        .mockResolvedValue(assignorServiceFindAll);
+        .mockImplementation(async () => assignorServiceFindAll);
 
       expect(await assignorController.getAllAssignors()).toBe(
         assignorServiceFindAll,

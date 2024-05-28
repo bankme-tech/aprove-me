@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { AssignorService } from 'src/assignor/assignor.service';
+import { AssignorService } from '../assignor/assignor.service';
 import { SignInDto } from './dto/signIn.dto';
 
 @Controller('integrations/auth')

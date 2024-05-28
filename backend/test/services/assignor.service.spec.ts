@@ -1,11 +1,11 @@
 import { BullModule } from '@nestjs/bull';
 import { Test } from '@nestjs/testing';
-import { AuthController } from 'src/auth/auth.controller';
-import { AuthModule } from 'src/auth/auth.module';
 import { PrismaModule } from '../../prisma/prisma.module';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AssignorController } from '../../src/assignor/assignor.controller';
 import { AssignorService } from '../../src/assignor/assignor.service';
+import { AuthController } from '../../src/auth/auth.controller';
+import { AuthModule } from '../../src/auth/auth.module';
 import { PayableController } from '../../src/payable/payable.controller';
 import { PayableService } from '../../src/payable/payable.service';
 import {
