@@ -12,5 +12,3 @@ export type FindPayableOutputDTO = Payable;
 export type UpdatePayableInputDTO = CreatePayableInputDTO;
 
 export type UpdatePayableOutputDTO = Payable;
-
-export type DeletePayableInputDTO = Pick<Payable, "id">;
