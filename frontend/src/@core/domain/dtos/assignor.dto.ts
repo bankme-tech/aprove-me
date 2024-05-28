@@ -8,3 +8,5 @@ export type CreateAssignorInputDTO = Pick<
 export type CreateAssignorOutputDTO = Assignor;
 
 export type FindAssignorInputDTO = Assignor;
+
+export type UpdateAssignorInputDTO = CreateAssignorInputDTO;

@@ -27,7 +27,15 @@ export class AssignorService implements IAssignorService {
     return result;
   }
 
-  findAll(): Promise<Assignor[]> {
-    return this.assignorGateway.findAll();
+  async findAll(): Promise<Assignor[]> {
+    return await this.assignorGateway.findAll();
+  }
+
+  async update(id: string, data: CreateAssignorInputDTO): Promise<Assignor> {
+    return await this.assignorGateway.update(id, data);
+  }
+
+  async delete(id: string): Promise<void> {
+    return await this.assignorGateway.delete(id);
   }
 }
