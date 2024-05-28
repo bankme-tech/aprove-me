@@ -12,8 +12,8 @@ type EditEraseProps = {
       emissionDate: string;
       assignorId: string;
     };
-    isOpen: boolean;
-    setIsOpen: (value: boolean) => void;
+    isOpen: {id: string, isOpen: boolean};
+    setIsOpen: (value: {id: string, isOpen: boolean}) => void;
   };
 };
 
@@ -33,7 +33,7 @@ export default function EditErase({ props }: EditEraseProps) {
         padding: "5px",
       }}
     >
-      <Button color="default" onClick={() => props.setIsOpen(!props.isOpen)}>
+      <Button color="default" onClick={() => props.setIsOpen({id:props.payable.id, isOpen: !props.isOpen.isOpen})}>
         <Pencil1Icon />
       </Button>
 

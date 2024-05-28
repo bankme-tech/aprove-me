@@ -11,8 +11,8 @@ type CardPayableProps = {
       emissionDate: string;
       assignorId: string;
     };
-    isOpen: boolean;
-    setIsOpen: (value: boolean) => void;
+    isOpen: {id: string, isOpen: boolean};
+    setIsOpen: (value: {id: string, isOpen: boolean}) => void;
   }
 };
 export default function CardPayable({ props }: CardPayableProps) {

@@ -15,6 +15,7 @@ const useGetPayableById = (id: string) => {
   const query = useQuery({
     queryFn: () => getPayable(id),
     queryKey: ["payable-data"],
+    enabled: !!id
   });
 
   return { ...query, data: query.data?.data };

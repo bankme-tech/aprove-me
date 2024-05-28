@@ -14,7 +14,7 @@ export default function Payables() {
   useCheckToken();
   const { data: payables, isLoading } = useGetPayable();
   const { data: assignors } = useGetAssignors();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState({id: '', isOpen: true});
 
   if (isLoading) {
     return <Loading />;
@@ -25,15 +25,17 @@ export default function Payables() {
       {payables &&
         payables.map((payable: Payable) => (
           <div key={payable.id}>
-            <CardPayable props={{payable, setIsOpen, isOpen}} />
-            <ModalPayable
-              props={{
-                payable,
-                assignors: assignors || [],
-                isOpen,
-                setIsOpen,
-              }}
-            />
+            <CardPayable props={{ payable, setIsOpen, isOpen }} />
+            {(isOpen.isOpen && payable.id === isOpen.id) && (
+              <ModalPayable
+                props={{
+                  payable,
+                  assignors: assignors || [],
+                  isOpen,
+                  setIsOpen,
+                }}
+              />
+            )}
           </div>
         ))}
     </div>
