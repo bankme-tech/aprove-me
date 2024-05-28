@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../ui/input";
+import Link from "next/link";
 
 export const assignorSchema = z.object({
   document: z
@@ -36,9 +37,15 @@ export const assignorSchema = z.object({
 
 export interface AssignorFormProps {
   onSubmit: (values: z.infer<typeof assignorSchema>) => void;
+  defaultValues?: Partial<z.infer<typeof assignorSchema>>;
+  isEditing?: boolean;
 }
 
-export function AssignorForm({ onSubmit }: AssignorFormProps) {
+export function AssignorForm({
+  onSubmit,
+  defaultValues,
+  isEditing = false,
+}: AssignorFormProps) {
   const form = useForm<z.infer<typeof assignorSchema>>({
     resolver: zodResolver(assignorSchema),
     defaultValues: {
@@ -46,6 +53,7 @@ export function AssignorForm({ onSubmit }: AssignorFormProps) {
       email: "",
       phone: "",
       name: "",
+      ...defaultValues,
     },
   });
 
@@ -111,10 +119,21 @@ export function AssignorForm({ onSubmit }: AssignorFormProps) {
             </FormItem>
           )}
         />
-
-        <Button className="bg-bankmeBlue" type="submit">
-          Cadastrar
+        <Button className="self-center w-32 bg-bankmeBlue" type="submit">
+          {isEditing ? "Salvar" : "Cadastrar"}
         </Button>
+        {!isEditing && (
+          <Link
+            href={"/"}
+            className={buttonVariants({
+              variant: "outline",
+              className:
+                "w-fit opacity-75 hover:bg-blue-600 self-center hover:text-white",
+            })}
+          >
+            Voltar
+          </Link>
+        )}
       </form>
     </Form>
   );
