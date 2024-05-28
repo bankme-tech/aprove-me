@@ -37,4 +37,18 @@ export class HttpPayableGateway implements IPayableGateway {
 
     return response.body as unknown as Payable[];
   }
+
+  async update(id: string, params: CreatePayableInputDTO): Promise<void> {
+    await this.httpClient.patch({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/payable/${id}`,
+      body: params,
+    });
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.httpClient.delete({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/payable/${id}`,
+      body: undefined,
+    });
+  }
 }
