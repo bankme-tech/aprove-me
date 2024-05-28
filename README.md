@@ -112,7 +112,7 @@ Abra um Pull Request.
 
 ## Rotas da API
 #### Payable
-```GET /integrations/payable```
+`GET /integrations/payable`
 ##### Retorna todos os payables.
 
 Exemplo de Resposta:
@@ -129,7 +129,7 @@ Exemplo de Resposta:
 ]
 ```
 
-```GET /integrations/payable/:id```
+`GET /integrations/payable/:id`
  ##### Retorna um payable específico.
 
 Parâmetros:
@@ -146,7 +146,7 @@ Exemplo de Resposta:
 }
 ```
 
-```POST /integrations/payable```
+`POST /integrations/payable`
 ##### Cria um novo payable.
 
 Corpo da Requisição:
@@ -169,9 +169,9 @@ Exemplo de Resposta:
 }
 
 ```
-```
+`
 PUT /integrations/payable/:id
-```
+`
 ##### Atualiza um payable existente.
 
 Parâmetros:
@@ -194,9 +194,9 @@ Exemplo de Resposta:
 }
 ```
 
-```
+`
 DELETE /integrations/payable/
-```
+`
 ##### Deleta um payable.
 
 Exemplo de resposta:
@@ -209,7 +209,7 @@ id (string): ID do pagamento
 
 
 #### Assignor
-```GET /integrations/assignor```
+`GET /integrations/assignor`
 ##### Retorna todos os assignors.
 
 Exemplo de Resposta:
@@ -227,7 +227,7 @@ Exemplo de Resposta:
   ...
 ]
 ```
-```GET /integrations/assignor/```
+`GET /integrations/assignor/`
 #### Retorna um assignor específico.
 
 Parâmetros:
@@ -245,7 +245,7 @@ Exemplo de Resposta:
   "name": "string"
 }
 ```
-POST /integrations/assignor
+`POST /integrations/assignor`
 Cria um novo assignor e funciona como o registro de um novo usuário.
 
 Corpo da Requisição:
@@ -271,7 +271,7 @@ Exemplo de Resposta:
   "name": "string"
 }
 ```
-```PUT /integrations/assignor/```
+`PUT /integrations/assignor/`
 #### Atualiza um assignor existente.
 
 Parâmetros:
@@ -297,7 +297,7 @@ Exemplo de Resposta:
 }
 ```
 
-```DELETE /integrations/assignor/```
+`DELETE /integrations/assignor/`
 #### Deleta um assignor.
 
 Parâmetros:
@@ -309,7 +309,7 @@ Exemplo de Resposta:
 Apenas status 204
 #### Auth
 
-```POST /integrations/auth/```
+`POST /integrations/auth/`
 #### Autentica um usuário e retorna um token JWT.
 
 Corpo da Requisição:
