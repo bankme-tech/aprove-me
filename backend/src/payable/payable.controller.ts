@@ -33,6 +33,7 @@ export class PayableController {
     const jobs = payableBatch.map((payable) => ({
       name: 'create',
       data: payable,
+      attempt: 4,
     }));
     await this.batchQueue.addBulk(jobs);
 

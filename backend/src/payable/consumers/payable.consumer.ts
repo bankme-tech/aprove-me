@@ -1,4 +1,10 @@
-import { InjectQueue, OnQueueDrained, Process, Processor } from '@nestjs/bull';
+import {
+  InjectQueue,
+  OnQueueDrained,
+  OnQueueFailed,
+  Process,
+  Processor,
+} from '@nestjs/bull';
 import { Inject, Logger } from '@nestjs/common';
 import { Job } from 'bull';
 import { Queue } from 'bullmq';
@@ -46,10 +52,21 @@ export class PayableConsumer {
       name: this.assignorInfo.name,
       email: this.assignorInfo.email,
       subject: 'Job Count',
-      text: `falhas: ${this.failedCount}
-            sucessos: ${this.successCount}`,
+      text: `fails: ${this.failedCount}
+            success: ${this.successCount}`,
     });
     this.failedCount = 0;
     this.successCount = 0;
+  }
+
+  @OnQueueFailed()
+  async handlerFails() {
+    await this.sendEmail.handler({
+      name: 'operations team',
+      email: 'opertations@operate.com',
+      subject: 'Job Count',
+      text: `fails: ${this.failedCount}
+      `,
+    });
   }
 }
