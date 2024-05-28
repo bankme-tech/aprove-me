@@ -30,4 +30,12 @@ export class PayableService implements IPayableService {
   findAll(): Promise<Payable[]> {
     return this.payableGateway.findAll();
   }
+
+  update(id: string, data: CreatePayableInputDTO): Promise<void> {
+    return this.payableGateway.update(id, data);
+  }
+
+  delete(id: string): Promise<void> {
+    return this.payableGateway.delete(id);
+  }
 }
