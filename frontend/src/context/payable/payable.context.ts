@@ -9,6 +9,8 @@ export type PayableContextType = {
   createPayable: (data: CreatePayableInputDTO) => Promise<Payable>;
   getPayable: (id: string) => Promise<Payable | null>;
   getAllPayables: () => Promise<Payable[]>;
+  updatePayable: (id: string, data: CreatePayableInputDTO) => Promise<void>;
+  deletePayable: (id: string) => Promise<void>;
 };
 
 const defaultPayable: Payable = {
@@ -23,4 +25,6 @@ export const PayableContext = createContext<PayableContextType>({
   createPayable: async () => defaultPayable,
   getPayable: async () => null,
   getAllPayables: async () => [],
+  updatePayable: async () => {},
+  deletePayable: async () => {},
 });
