@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Danrllei Miranda",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -39,6 +39,7 @@
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "sqlite3": "^5.1.7",
+    "superagent": "^9.0.2",
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {

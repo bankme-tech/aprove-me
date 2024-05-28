@@ -14,6 +14,7 @@ import style from "../payables.module.css";
 export default function PayableDetails({ params }: { params: { id: string } }) {
   useCheckToken();
   const { data: payable, isLoading } = useGetPayableById(params.id);
+  
   const [isOpen, setIsOpen] = useState(false);
   const { data: assignors } = useGetAssignors();
   if (isLoading) {

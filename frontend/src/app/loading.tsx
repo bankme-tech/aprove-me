@@ -2,7 +2,7 @@ import { MoonLoader } from 'react-spinners'
 
 export default function Loading() {
   return (
-    <div style={{width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div className='w-full flex justify-center items-center'>
     <MoonLoader color="#0935C1" />
     </div>
   )
