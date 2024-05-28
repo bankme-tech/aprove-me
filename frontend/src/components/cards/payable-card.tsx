@@ -114,12 +114,17 @@ export function PayableCard({ className, ...props }: PayableCardProps) {
               ID do cedente
             </p>
             <p className="text-base font-semibold text-primary">
-              {cardAssignorId}
+              <Link
+                className="font-extrabold text-bankmeBlue hover:underline"
+                href={`/assignors/${cardAssignorId}`}
+              >
+                {cardAssignorId}
+              </Link>
             </p>
           </div>
         </div>
       </CardContent>
-      <CardFooter className=" flex justify-evenly gap-5">
+      <CardFooter className="flex gap-5 justify-evenly">
         <Link
           href={"/"}
           className={buttonVariants({
