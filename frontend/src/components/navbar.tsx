@@ -2,11 +2,18 @@
 
 import { Link, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ModeToggle } from "./mode-toggle";
+import { Button } from "./ui/button";
 
 export default function NavigationBar() {
   const pathname = usePathname();
+  const { push } = useRouter();
+
+  const logout = () => {
+    localStorage.removeItem("BANKME_TOKEN");
+    push("/");
+  }
 
   return (
     <Navbar shouldHideOnScroll className="p-4 mb-32">
@@ -29,7 +36,10 @@ export default function NavigationBar() {
           </Link>
         </NavbarItem>
       </NavbarContent>
+      <div className="flex justify-between w-36 p-2">
+      <Button color="error" onClick={logout}>Logout</Button>
       <ModeToggle />
+      </div>
     </Navbar>
   );
 }

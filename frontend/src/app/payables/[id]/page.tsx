@@ -14,8 +14,8 @@ import style from "../payables.module.css";
 export default function PayableDetails({ params }: { params: { id: string } }) {
   useCheckToken();
   const { data: payable, isLoading } = useGetPayableById(params.id);
-  
-  const [isOpen, setIsOpen] = useState(false);
+
+  const [isOpen, setIsOpen] = useState({ id: params.id, isOpen: false });
   const { data: assignors } = useGetAssignors();
   if (isLoading) {
     return <Loading />;
@@ -25,9 +25,8 @@ export default function PayableDetails({ params }: { params: { id: string } }) {
     <div className={`${style.cardContainer}`}>
       {payable && (
         <div>
-
           <Card className={`py-4 ${style.link}`} key={payable?.id}>
-            <EditErase props={{payable, setIsOpen, isOpen}} />
+            <EditErase props={{ payable, setIsOpen, isOpen }} />
             <CardHeader className="pt-2 px-4 flex-col gap-12 items-start">
               <p className="text-tiny uppercase font-bold">id: {payable.id}</p>
               <div>
@@ -48,16 +47,18 @@ export default function PayableDetails({ params }: { params: { id: string } }) {
             </CardHeader>
             <CardBody className="overflow-visible py-2"></CardBody>
           </Card>
+          {isOpen.isOpen && (
             <ModalPayable
-            props={{
-              payable: payable,
-              assignors: assignors || [],
-              isOpen,
-              setIsOpen,
-            }}/>
+              props={{
+                payable: payable,
+                assignors: assignors || [],
+                isOpen,
+                setIsOpen,
+              }}
+            />
+          )}
         </div>
       )}
-    
     </div>
   );
 }

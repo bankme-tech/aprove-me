@@ -1,4 +1,3 @@
-import NavigationBar from "@/components/navbar"
 
 export default function RegisterAssignorLayout({
     children, 
@@ -7,7 +6,7 @@ export default function RegisterAssignorLayout({
   }) {
     return (
       <main className="w-full">
-       <NavigationBar />
+       {/* <NavigationBar /> */}
         {children}
       </main>
     )

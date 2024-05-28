@@ -38,9 +38,8 @@ export default function RegisterAssignor() {
 
   const {
     mutate: mutateCreateAssignor,
-    error: assignorError,
+    isError,
     isSuccess: isCreatedSuccess,
-    data: assignorData,
   } = useCreateAssignor();
 
 
@@ -50,8 +49,10 @@ export default function RegisterAssignor() {
     if (isCreatedSuccess) {
       alert("Assignor created successfully");
       push("/");
-    } else {
-      alert("Assignor not created")
+    }
+
+    if(isError) {
+      alert("Assignor not created, try again.");
     }
   }, [isCreatedSuccess]);
 

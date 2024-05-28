@@ -5,7 +5,7 @@
   Aprove-me
 </h1>
 
-
+<video src="./assets/demo-aproveme-app.webm"></video>
 
 Aprove-me é uma aplicação full-stack que utiliza ferramentas como NestJS, NextJS, BullMQ, Redis e Docker Compose. Este documento fornece uma visão geral do projeto, bem como instruções detalhadas sobre como configurá-lo, executá-lo e contribuir para ele.
 
