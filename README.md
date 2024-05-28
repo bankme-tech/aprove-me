@@ -109,6 +109,10 @@ Envie para o repositório remoto (git push origin feature/nova-feature).
 Abra um Pull Request.
 ```
 
+## Rotas
+
+É possível ver as rotas através do http://localhost:3000/api#/.
+
 ## Scripts
 ### Backend Scripts
 
@@ -129,9 +133,7 @@ Os principais scripts disponíveis no backend são:
  test:e2e: Executa os testes end-to-end.
  seed: Executa o script de seed para popular o banco de dados.
 ```
-## Rotas
 
-É possível ver as rotas através do http://localhost:3000/api#/.
 
 ### Frontend Scripts
 Os principais scripts disponíveis no frontend são:
