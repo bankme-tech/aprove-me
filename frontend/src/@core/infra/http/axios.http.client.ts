@@ -33,4 +33,29 @@ export class AxiosHttpClient<T, R> implements IHttpClient<T, R> {
       body: response.data,
     };
   }
+
+  async patch(params: HttpRequestDTO<T>): Promise<HttpResponseDTO<R>> {
+    const response = await axios.request({
+      url: params.url,
+      method: HttpMethod.PATCH,
+      data: params.body,
+    });
+
+    return {
+      statusCode: response.status,
+      body: response.data,
+    };
+  }
+
+  async delete(params: HttpRequestDTO<undefined>): Promise<HttpResponseDTO<R>> {
+    const response = await axios.request({
+      url: params.url,
+      method: HttpMethod.DELETE,
+    });
+
+    return {
+      statusCode: response.status,
+      body: response.data,
+    };
+  }
 }
