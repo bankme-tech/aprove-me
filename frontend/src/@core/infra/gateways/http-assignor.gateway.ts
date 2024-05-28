@@ -37,4 +37,20 @@ export class HttpAssignorGateway implements IAssignorGateway {
 
     return response.body as unknown as Assignor[];
   }
+
+  async update(id: string, params: CreateAssignorInputDTO): Promise<Assignor> {
+    const result = await this.httpClient.patch({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/assignor/${id}`,
+      body: params,
+    });
+
+    return result.body;
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.httpClient.delete({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/assignor/${id}`,
+      body: undefined,
+    });
+  }
 }
