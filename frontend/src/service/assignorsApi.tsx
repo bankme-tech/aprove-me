@@ -1,9 +1,9 @@
-import { TPayable } from '../types/PayableType'
+import { TAssignors } from '../types/AssignorsType'
 
-const URL = 'http://localhost:3000/integrations/payable'
+const URL = 'http://localhost:3000/integrations/assignor'
 const TOKEN_STORAGED = localStorage.getItem('token')
 
-export const CreatePayableApi = async (data: TPayable) => {
+export const CreateAssignorApi = async (data: TAssignors) => {
   const response = await fetch(URL,
     {
       method: 'POST',
@@ -17,7 +17,7 @@ export const CreatePayableApi = async (data: TPayable) => {
   return response.json()
 }
 
-export const GetAllPayablesApi = async () => {
+export const GetAllAssignorsApi = async () => {
   const response = await fetch(URL,
     {
       headers: {
@@ -28,19 +28,18 @@ export const GetAllPayablesApi = async () => {
   return response.json()
 }
 
-export const GetPayableByIdApi = async (id: string) => {
+export const GetAssignorByIdApi = async (id: string) => {
   const response = await fetch(`${URL}/${id}`,
-  {
-    headers: {
-      'Authorization': `Bearer ${TOKEN_STORAGED}`
+    {
+      headers: {
+        'Authorization': `Bearer ${TOKEN_STORAGED}`
+      }
     }
-  }
-)
-const as = await response.json()
-return as
+  )
+  return response.json()
 }
 
-export const UpdatePayableApi = async (id: string, data: TPayable) => {
+export const UpdateAssignorApi = async (id: number, data: TAssignors) => {
   const response = await fetch(`${URL}/${id}`,
     {
       method: 'PUT',
@@ -54,17 +53,14 @@ export const UpdatePayableApi = async (id: string, data: TPayable) => {
   return response.json()
 }
 
-export const DeletePayableApi = async (id: string) => {
-  try {
-    await fetch(`${URL}/${id}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${TOKEN_STORAGED}`
-        }
+export const DeleteAssignorApi = async (id: number) => {
+  const response = await fetch(`${URL}/${id}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${TOKEN_STORAGED}`
       }
-    )
-  } catch (error) {
-    console.log(error)
-  } 
+    }
+  )
+  return response.json()
 }

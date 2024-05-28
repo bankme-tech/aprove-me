@@ -4,8 +4,13 @@ export const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
+
+  img {
+    margin: auto;
+    width: 20%;
+  }
 `;
 
 export const Content = styled.div`
@@ -13,34 +18,11 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
-  border-top: 1px solid var(--border-color);
-  height: 100%;
   width: 100%;
-`;
+  gap: 2rem;
 
-export const HeaderHome = styled.header`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  margin-top: 2rem;
-  width: 100vw;
-`;
-
-export const LogoutButton = styled.button`
-  background-color: var(--logout-color);
-  position: absolute;
-  border: none;
-  border-radius: 0.5rem;
-  color: var(--font-color);
-  padding: 0.5rem;
-  right: 1rem;
-  top: 1rem;
-
-    &:hover {
-      background-color: var(--hover-logout-color);
-      cursor: pointer;
-    }
+  h1 {
+    font-size: 3rem;
+    margin: 2rem;
+  }
 `;

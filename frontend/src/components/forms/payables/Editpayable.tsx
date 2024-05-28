@@ -5,7 +5,7 @@ import { Container, FormRegisterPayable } from './styled'
 import { GetAllAssignorsApi } from '../../../service/assignorsApi'
 import { TAssignors } from '../../../types/AssignorsType'
 
-export const RegisterPayableForm = ({ id, setId, value, setValue, assignor, setAssignor, emissionDate, setEmissionDate, handleSubmit, setError }: TPayableProps) => {
+export const EditPayableForm = ({ id, setId, value, setValue, assignor, setAssignor, emissionDate, setEmissionDate, handleSubmit, setError }: TPayableProps) => {
   const [fetchAssignor, setFetchAssignor] = useState([])
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const RegisterPayableForm = ({ id, setId, value, setValue, assignor, setA
   }
 
   return (
-    <Container>      
+    <Container>    
       <div>
         <h1>Cadastro de pagáveis</h1>
         <FormRegisterPayable

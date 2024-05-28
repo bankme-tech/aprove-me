@@ -4,38 +4,42 @@
 
   --error-color: #ff4c4c;
   --success-color: #28A745;
+  --loading-color: #0044ff;
   --logout-color: #fa2c2c;
   --hover-logout-color: #f00;
   --font-color: #ccc;
+  --font-hover-color: #fff;
+  --font-color-2: #444;
   --link-color: #646cff;
   --link-hover-color: #535bf2;
   --input-color: #444;
   --input-outline-color: #646cff;
   --p-color: #656565;
   --border-color: #b3b6f3;
+  --text-button-color: #fff;
+  --modal-bg-color: #292929d3;
   
   
-  
-  /* *** Variaveis CSS para login *** */
+  /* *** Login *** */
   
   --bg-body-color: #222;
   --bg-form-color: #dadada;
   --text-form-color: #444;
   --h1-color: #aaa;
   --p-color-login: #656565;
-
-  
-
-  
-  /* *** Variaveis CSS para footer da pagina de login *** */
-  
   --bg-footer-color: #c0c0c0;
 
+  /* *** Header *** */
 
+  --bg-header-color: #292929;
+  --bg-time-color: #383838;
+  
+  /* *** Home *** */
 
+  --bg-button-color: #646cff;
+  --bg-button-hover-color: #4049f1;
 
-
-  /* *** Variaveis CSS para página de registro *** */
+  /* *** Registro de usuário *** */
 
   --bg-main-register-color: #292929;
   --bg-button-register-color: #646cff;
@@ -44,6 +48,13 @@
   /* *** Variaveis CSS para registro de recebiveis *** */
 
   --bg-form-receivables-color: #595959;
+  --modal-h2-color: #555;
+  --modal-p-color: #656565;
+  --modal-submit-button-color: #646cff;
+  --modal-submit-button-hover-color: #535bf2;
+  --modal-cancel-button-color: #ff4c4c;
+  --modal-cancel-button-hover-color: #f00;
+  --modal-button-color: #fff;
 }
 
 * {
@@ -75,4 +86,43 @@ h1 {
 
 p {
   color: var(--p-color);
+}
+p.error {
+  color: var(--error-color) !important;
+}
+
+p.success {
+  color: var(--success-color) !important;
+}
+
+p.loadin {
+  color: var(--loading-color) !important;
+}
+
+.config {
+  color:var(--text-button-color);
+  margin: 0 5px;
+  cursor: pointer;
+  border: none;
+  padding: 0.3rem 0.2rem;
+  border-radius: 0.2rem;
+}
+
+.delete {
+  background-color: var(--logout-color);
+  &:hover {
+    background-color: var(--hover-logout-color);
+  }
+}
+
+.edit {
+  background-color: var(--link-color);
+
+  &:hover {
+    background-color: var(--link-hover-color);
+  }
+}
+
+select option{
+  color: var(--font-color-2);
 }

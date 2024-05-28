@@ -1,7 +1,13 @@
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-export default function FormButtons() {
+type FormButtonsProps = {
+  setId: (string: string) => void
+  setValue: (string: number) => void
+  setAssignor: (string: string) => void
+  setEmissionDate: (string: string) => void
+};
+export default function FormButtons({ setId, setValue, setAssignor, setEmissionDate }: FormButtonsProps) {
   return (
     <Stack 
       spacing={1}
@@ -19,6 +25,7 @@ export default function FormButtons() {
         type='reset'
         variant="contained"
         color='error'
+        onClick={ () => { setId(''); setValue(0); setAssignor(''); setEmissionDate(''); } }
       >
         Limpar
       </Button>
