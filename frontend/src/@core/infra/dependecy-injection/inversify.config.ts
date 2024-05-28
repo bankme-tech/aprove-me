@@ -10,6 +10,10 @@ import { IAssignorService } from "@/@core/domain/services/assignor.service.inter
 import { AssignorService } from "@/@core/application/services/assignor.service";
 import { IAssignorGateway } from "@/@core/domain/gateways/assignor.gateway";
 import { HttpAssignorGateway } from "../gateways/http-assignor.gateway";
+import { UserService } from "@/@core/application/services/user.service";
+import { IUserService } from "@/@core/domain/services/user.service.interface";
+import { IUserGateway } from "@/@core/domain/gateways/user.gateway";
+import { HttpUserGateway } from "../gateways/http-user.gateway";
 
 export const myContainer = new Container();
 
@@ -20,3 +24,5 @@ myContainer
   .to(HttpAssignorGateway);
 myContainer.bind<IPayableService>(TYPES.IPayableService).to(PayableService);
 myContainer.bind<IAssignorService>(TYPES.IAssignorService).to(AssignorService);
+myContainer.bind<IUserService>(TYPES.IUserService).to(UserService);
+myContainer.bind<IUserGateway>(TYPES.IUserGateway).to(HttpUserGateway);
