@@ -17,7 +17,7 @@ export const FormLogin = () => {
   const fetchUserData = async (token: string) => {
     try {
       const response = await GetProfileApi(token)
-   
+      
       if (response.id && response.login) {
         const date = new Date()
         const userData = {
@@ -25,6 +25,7 @@ export const FormLogin = () => {
           login: response.login,
           date,
         }
+
         localStorage.setItem('token', token)
         localStorage.setItem('user', JSON.stringify(userData))
         setLoading('Logado com sucesso! Redirecionando...')
@@ -34,10 +35,11 @@ export const FormLogin = () => {
         }, 2000)
         return;
       } 
-      setLoading('Erro ao logar!')
+      
       setError(true)
+      setLoading('Erro ao logar!')
       setErrorMsg('Usuário ou senha inválidos!')
-      return;
+
     } catch (error) {
       setError(true)
       setErrorMsg('Erro ao logar!')
@@ -52,7 +54,10 @@ export const FormLogin = () => {
       if (response.token) {
         setLoading('Logando...')
         await fetchUserData(response.token)
+        return;
       } 
+      setError(true)
+      setErrorMsg('Usuário ou senha inválidos!')
     } catch (error) {
       console.log(error)
     }
@@ -67,6 +72,7 @@ export const FormLogin = () => {
         <input
           type="login"
           id="login"
+          data-testId="login"
           name="login"
           value={login}
           onChange={(e) => {
@@ -81,6 +87,7 @@ export const FormLogin = () => {
         <input
           type="password"
           id="password"
+          data-testId="password"
           name="password"
           value={password}
           onChange={(e) => {
@@ -91,7 +98,12 @@ export const FormLogin = () => {
         />
       </FormContent>
       <div>
-        <FormButtons />
+        <FormButtons
+          setId={ setLogin}
+          setValue={( ) => {}}
+          setAssignor={ setPassword }
+          setEmissionDate={( ) => {}}
+        />
       </div>
       { 
         loading && 

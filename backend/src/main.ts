@@ -43,6 +43,7 @@ async function bootstrap() {
     allowedHeaders:
       'Origin, X-Requested-With, Content-Type, Accept, Authorization',
   };
+
   app.enableCors(corsOptions);
 
   await app.listen(3000);

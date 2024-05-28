@@ -149,7 +149,12 @@ export const UserFormRegister = () => {
 					onChange={ (e) => setConfirmPassword(e.target.value) }
 					disabled={ isSubmitting || isCheckingUser }
 				/>
-				<FormButtons />
+				<FormButtons					
+          setId={( ) => {}}
+          setValue={( ) => {}}
+          setAssignor={( ) => {}}
+          setEmissionDate={( ) => {}}
+				/>
 				<MsgContainer>
 					{ error && <p className='error'>{ errorMessage }</p> }
 					{ success && <p className='success'>Registrado com sucesso!</p> }

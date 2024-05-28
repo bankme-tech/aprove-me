@@ -61,7 +61,7 @@ export const HeaderComponent = () => {
       
       setTimeout(() => {
         window.location.href = '/';
-      }, 2000);
+      }, 1000);
 
     } catch (error) {
       localStorage.removeItem('token');
@@ -71,13 +71,13 @@ export const HeaderComponent = () => {
   }
 
   return (
-    <HeaderContainer>
+    <HeaderContainer data-testId='header'>
       <LogoutButton
         onClick={handleLogoutButton}
       >
         { logOut ? 'Deslogando' : 'Deslogar' }
       </LogoutButton>
-      <div>
+      <div data-testId='log-time'>
         <h2>Você está logado há:</h2>
         <h2>{ timeLogged }</h2>
         <h2>ID: {parse.id}</h2>
