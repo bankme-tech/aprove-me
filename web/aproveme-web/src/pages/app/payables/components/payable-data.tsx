@@ -43,8 +43,9 @@ const editPayableForm = z.object({
 type EditPayableForm = z.infer<typeof editPayableForm>
 
 export const PayableData = ({ payableId }: PayableDataProps) => {
-  const { deletePayableFn, editPayableFn } = useAppContext()
   const navigate = useNavigate()
+
+  const { deletePayableFn, editPayableFn } = useAppContext()
   const [isPayableEditable, setIsPayableEditable] = useState(false)
 
   const { data: payableDetail, isLoading: isPayableLoading } =

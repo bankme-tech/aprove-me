@@ -2,10 +2,11 @@ import { api } from '@/lib/axios'
 
 export interface EditAssignorBody {
   id: string
-  document: string | null
-  email: string | null
-  phone: string | null
-  name: string | null
+  document: string
+  email: string
+  phone: string
+  name: string
+  payableId: string
 }
 
 export const editAssignor = async ({
