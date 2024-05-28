@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,6 +14,7 @@ import CurrencyInput from "../ui/currency-input";
 import { DatePicker } from "../ui/date-picker";
 import { Assignor } from "@/@core/domain/entities/assignor.entity";
 import { Combobox } from "../ui/combobox";
+import Link from "next/link";
 
 export const payableSchema = z.object({
   value: z.coerce
@@ -30,15 +31,23 @@ export const payableSchema = z.object({
 export interface PayableFormProps {
   onSubmit: (values: z.infer<typeof payableSchema>) => void;
   assignors: Assignor[];
+  defaultValues?: Partial<z.infer<typeof payableSchema>>;
+  isEditing?: boolean;
 }
 
-export function PayableForm({ onSubmit, assignors }: PayableFormProps) {
+export function PayableForm({
+  onSubmit,
+  assignors,
+  defaultValues,
+  isEditing = false,
+}: PayableFormProps) {
   const form = useForm<z.infer<typeof payableSchema>>({
     resolver: zodResolver(payableSchema),
     defaultValues: {
       value: 0,
       emissionDate: undefined,
       assignorId: "",
+      ...defaultValues,
     },
   });
 
@@ -63,23 +72,36 @@ export function PayableForm({ onSubmit, assignors }: PayableFormProps) {
           name="value"
           placeholder="R$ 0,00"
         />
-        <FormField
-          control={form.control}
-          name="emissionDate"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Data de emissão</FormLabel>
-              <FormControl>
-                <DatePicker {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button className="bg-bankmeBlue" type="submit">
-          Cadastrar
+        {!isEditing && (
+          <FormField
+            control={form.control}
+            name="emissionDate"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Data de emissão</FormLabel>
+                <FormControl>
+                  <DatePicker {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        <Button className="bg-bankmeBlue w-32 self-center" type="submit">
+          {isEditing ? "Salvar" : "Cadastrar"}
         </Button>
+        {!isEditing && (
+          <Link
+            href={"/"}
+            className={buttonVariants({
+              variant: "outline",
+              className:
+                "w-fit opacity-75 hover:bg-blue-600 self-center hover:text-white",
+            })}
+          >
+            Voltar
+          </Link>
+        )}
       </form>
     </Form>
   );

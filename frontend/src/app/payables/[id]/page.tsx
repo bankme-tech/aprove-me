@@ -30,7 +30,7 @@ export default function CreatedPayable({ params }: { params: { id: string } }) {
   if (!payable) {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen ">
-        <p>Erro ao carregar dados do pagamento.</p>
+        <p>Erro</p>
       </main>
     );
   }
