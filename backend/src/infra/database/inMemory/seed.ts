@@ -54,3 +54,16 @@ export function getPayableSeed({ date }: { date: Date }) {
     },
   ];
 }
+
+export function getUsersSeed({ date }: { date: Date }) {
+  return [
+    {
+      id: '1',
+      login: 'aprovame',
+      password: 'aprovame',
+      createdAt: date,
+      updatedAt: date,
+      deletedAt: null,
+    },
+  ];
+}

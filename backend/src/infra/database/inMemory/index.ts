@@ -1,4 +1,4 @@
-type Filter = { where: { id: string } };
+type Filter = { where: { [key: string]: string } };
 
 export class InMemoryDatabase {
   private readonly db = new Map<string, any>();
@@ -27,7 +27,14 @@ export class InMemoryDatabase {
   }
 
   public findUnique({ where }: Filter) {
-    return this.db.get(where.id);
+    const [[key, search]] = Object.entries(where);
+    if (key === 'id') {
+      return this.db.get(where.id);
+    }
+    const [item] = Array.from(this.db.values()).filter(
+      (item) => item[key] === search,
+    );
+    return item;
   }
 
   public update({ where, data }: Filter & { data: any }) {
