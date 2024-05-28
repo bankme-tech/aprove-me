@@ -11,6 +11,7 @@ import {
   Table,
 } from "@/components/ui/table";
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function Home() {
   const { getAllPayables } = usePayable();
@@ -38,6 +39,26 @@ export default function Home() {
   return (
     <main className="flex items-center justify-center min-h-screen ">
       <div className="w-full max-w-md m-3 bg-white rounded shadow-md ">
+        <div className="flex gap-3 m-5 justify-center">
+          <Link
+            href={"/payables"}
+            className={buttonVariants({
+              variant: "outline",
+              className: "w-fit opacity-75 hover:bg-blue-600 hover:text-white",
+            })}
+          >
+            Criar recebível
+          </Link>
+          <Link
+            href={"/assignors"}
+            className={buttonVariants({
+              variant: "outline",
+              className: "w-fit opacity-75 hover:bg-blue-600 hover:text-white",
+            })}
+          >
+            Criar cedente
+          </Link>
+        </div>
         <h1 className="mb-4 text-xl font-bold text-center sm:text-2xl">
           Listagem de recebíveis
         </h1>
