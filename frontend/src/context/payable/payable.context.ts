@@ -8,6 +8,7 @@ export type PayableContextType = {
   payables: Payable[];
   createPayable: (data: CreatePayableInputDTO) => Promise<Payable>;
   getPayable: (id: string) => Promise<Payable | null>;
+  getAllPayables: () => Promise<Payable[]>;
 };
 
 const defaultPayable: Payable = {
@@ -21,4 +22,5 @@ export const PayableContext = createContext<PayableContextType>({
   payables: [],
   createPayable: async () => defaultPayable,
   getPayable: async () => null,
+  getAllPayables: async () => [],
 });

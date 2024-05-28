@@ -28,8 +28,16 @@ export const PayableProvider = ({
     return result;
   };
 
+  const getAllPayables = async (): Promise<Payable[]> => {
+    const result = await service.findAll();
+    setPayables(result);
+    return result;
+  };
+
   return (
-    <PayableContext.Provider value={{ payables, createPayable, getPayable }}>
+    <PayableContext.Provider
+      value={{ payables, createPayable, getPayable, getAllPayables }}
+    >
       {children}
     </PayableContext.Provider>
   );

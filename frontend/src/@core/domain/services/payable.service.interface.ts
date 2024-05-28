@@ -6,4 +6,5 @@ import {
 export interface IPayableService {
   create(data: CreatePayableInputDTO): Promise<CreatePayableOutputDTO>;
   findById(id: string): Promise<CreatePayableOutputDTO | null>;
+  findAll(): Promise<CreatePayableOutputDTO[]>;
 }

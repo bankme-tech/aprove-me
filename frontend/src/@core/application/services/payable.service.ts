@@ -26,4 +26,8 @@ export class PayableService implements IPayableService {
     }
     return result;
   }
+
+  findAll(): Promise<Payable[]> {
+    return this.payableGateway.findAll();
+  }
 }

@@ -29,7 +29,12 @@ export class HttpPayableGateway implements IPayableGateway {
 
     return response.body;
   }
-  findAll(): Promise<Payable[]> {
-    throw new Error("Method not implemented.");
+  async findAll(): Promise<Payable[]> {
+    const response = await this.httpClient.get({
+      url: `${process.env.NEXT_PUBLIC_API_URL}/payable`,
+      body: undefined,
+    });
+
+    return response.body as unknown as Payable[];
   }
 }
