@@ -18,11 +18,11 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { PayableForm } from "../forms/payable-form";
-import { useAssignor } from "@/context/assignor/use-assignor";
 import { useQuery } from "@tanstack/react-query";
 import { usePayable } from "@/context/payable/use-payable";
 import { UpdatePayableInputDTO } from "@/@core/domain/dtos/payable.dto";
 import { useState } from "react";
+import { useAuth } from "@/context/auth/use-auth";
 
 interface PayableCardProps extends React.ComponentProps<typeof Card> {
   className?: string;
@@ -33,13 +33,15 @@ interface PayableCardProps extends React.ComponentProps<typeof Card> {
 }
 
 export function PayableCard({ className, ...props }: PayableCardProps) {
-  const { getAllAssignors } = useAssignor();
+  const { isAuth } = useAuth();
+
   const { status, data } = useQuery({
-    queryKey: ["assignors"],
-    queryFn: getAllAssignors,
+    queryKey: ["payable"],
+    queryFn: () => getPayable(props.id),
+    enabled: isAuth,
   });
 
-  const { updatePayable, deletePayable } = usePayable();
+  const { getPayable, updatePayable, deletePayable } = usePayable();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [cardValue, setCardValue] = useState(props.value);
@@ -66,7 +68,7 @@ export function PayableCard({ className, ...props }: PayableCardProps) {
     );
   }
 
-  if (status === "error") {
+  if (status === "error" || !data) {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen ">
         <p>Erro</p>
@@ -152,7 +154,6 @@ export function PayableCard({ className, ...props }: PayableCardProps) {
             </DialogHeader>
             <PayableForm
               onSubmit={handleEditSubmit}
-              assignors={data}
               defaultValues={{
                 value: value,
                 emissionDate: emissionDate,

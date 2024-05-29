@@ -5,8 +5,9 @@ import { useMutation } from "@tanstack/react-query";
 import { AssignorForm, assignorSchema } from "@/components/forms/assignor-form";
 import { CreateAssignorInputDTO } from "@/@core/domain/dtos/assignor.dto";
 import { useAssignor } from "@/context/assignor/use-assignor";
+import withAuth from "@/components/with-auth";
 
-export default function CreateAssignor() {
+const CreateAssignor = () => {
   const router = useRouter();
   const { createAssignor } = useAssignor();
   const { mutate } = useMutation({
@@ -33,4 +34,6 @@ export default function CreateAssignor() {
       </div>
     </main>
   );
-}
+};
+
+export default withAuth(CreateAssignor);

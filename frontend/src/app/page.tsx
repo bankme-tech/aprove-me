@@ -12,12 +12,16 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { useAuth } from "@/context/auth/use-auth";
+import withAuth from "@/components/with-auth";
 
-export default function Home() {
+const Home = () => {
+  const { isAuth } = useAuth();
   const { getAllPayables } = usePayable();
   const { status, data } = useQuery({
     queryKey: ["payables"],
     queryFn: getAllPayables,
+    enabled: isAuth,
   });
 
   if (status === "pending") {
@@ -39,7 +43,7 @@ export default function Home() {
   return (
     <main className="flex items-center justify-center min-h-screen ">
       <div className="w-full max-w-md m-3 bg-white rounded shadow-md ">
-        <div className="flex gap-3 m-5 justify-center">
+        <div className="flex justify-center gap-3 m-5">
           <Link
             href={"/payables"}
             className={buttonVariants({
@@ -72,31 +76,36 @@ export default function Home() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((payable) => (
-                <TableRow key={payable.id}>
-                  <TableCell className="font-medium">
-                    <Link
-                      className="text-bankmeBlue font-extrabold hover:underline"
-                      href={`/payables/${payable.id}`}
-                    >
-                      {payable.id}
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    {new Date(payable.emissionDate).toLocaleDateString("pt-BR")}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {payable.value.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {data.length &&
+                data.map((payable) => (
+                  <TableRow key={payable.id}>
+                    <TableCell className="font-medium">
+                      <Link
+                        className="font-extrabold text-bankmeBlue hover:underline"
+                        href={`/payables/${payable.id}`}
+                      >
+                        {payable.id}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      {new Date(payable.emissionDate).toLocaleDateString(
+                        "pt-BR"
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {payable.value.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })}
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </div>
       </div>
     </main>
   );
-}
+};
+
+export default withAuth(Home);

@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { IUserService } from "@/@core/domain/services/user.service.interface";
 import { myContainer } from "@/@core/infra/dependecy-injection/inversify.config";
 import { TYPES } from "@/@core/infra/dependecy-injection/types";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AuthContext } from "./auth.context";
 import { AuthInputDTO, RegisterInputDTO } from "@/@core/domain/dtos/user.dto";
 import { UnauthorizedError } from "@/@core/domain/errors/unauthorized-error";
@@ -13,22 +14,29 @@ import { UserAlreadyExistsError } from "@/@core/domain/errors/user-already-exist
 const service = myContainer.get<IUserService>(TYPES.IUserService);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [token, setToken] = useState<string | null>(null);
   const [isAuth, setIsAuth] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isAuth) {
-      console.log("isAuth", isAuth);
-      router.push("/login");
+  const auth = () => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      const { exp } = service.decodeToken(token);
+      const now = Date.now() / 1000;
+      if (now < exp) {
+        setIsAuth(true);
+        return;
+      }
     }
-  }, [isAuth, router]);
+    setIsAuth(false);
+    localStorage.removeItem("accessToken");
+    router.push("/login");
+  };
 
   const login = async (data: AuthInputDTO) => {
     try {
-      const result = await service.login(data);
-      setToken(result.token);
+      const { token } = await service.login(data);
+      localStorage.setItem("accessToken", token);
       setIsAuth(true);
       router.push("/");
     } catch (error) {
@@ -55,7 +63,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, login, register, isAuth, error }}>
+    <AuthContext.Provider value={{ login, register, isAuth, error, auth }}>
       {children}
     </AuthContext.Provider>
   );

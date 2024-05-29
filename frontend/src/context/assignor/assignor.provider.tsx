@@ -8,8 +8,9 @@ import { Assignor } from "@/@core/domain/entities/assignor.entity";
 import { IAssignorService } from "@/@core/domain/services/assignor.service.interface";
 import { myContainer } from "@/@core/infra/dependecy-injection/inversify.config";
 import { TYPES } from "@/@core/infra/dependecy-injection/types";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { AssignorContext } from "./assignor.context";
+import { useAuth } from "../auth/use-auth";
 
 const service = myContainer.get<IAssignorService>(TYPES.IAssignorService);
 
@@ -19,15 +20,13 @@ export const AssignorProvider = ({
   children: React.ReactNode;
 }) => {
   const [assignors, setAssignors] = useState<Assignor[]>([]);
+  const { isAuth } = useAuth();
 
-  const refreshAssignors = async () => {
+  const refreshAssignors = useCallback(async () => {
+    if (!isAuth) return;
     const result = await service.findAll();
     setAssignors(result);
-  };
-
-  useEffect(() => {
-    refreshAssignors();
-  }, []);
+  }, [isAuth]);
 
   const createAssignor = async (data: CreateAssignorInputDTO) => {
     const result = await service.create(data);

@@ -9,10 +9,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import withAuth from "@/components/with-auth";
 import { useAuth } from "@/context/auth/use-auth";
 import { z } from "zod";
 
-export default function Auth() {
+const Auth = () => {
   const { login, register, error } = useAuth();
 
   const handleLoginSubmit = async (data: z.infer<typeof authSchema>) => {
@@ -77,4 +78,6 @@ export default function Auth() {
       </div>
     </main>
   );
-}
+};
+
+export default withAuth(Auth);

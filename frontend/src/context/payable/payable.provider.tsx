@@ -4,9 +4,10 @@ import { Payable } from "@/@core/domain/entities/payable.entity";
 import { IPayableService } from "@/@core/domain/services/payable.service.interface";
 import { myContainer } from "@/@core/infra/dependecy-injection/inversify.config";
 import { TYPES } from "@/@core/infra/dependecy-injection/types";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { PayableContext } from "./payable.context";
 import { CreatePayableInputDTO } from "@/@core/domain/dtos/payable.dto";
+import { useAuth } from "../auth/use-auth";
 
 const service = myContainer.get<IPayableService>(TYPES.IPayableService);
 
@@ -16,15 +17,13 @@ export const PayableProvider = ({
   children: React.ReactNode;
 }) => {
   const [payables, setPayables] = useState<Payable[]>([]);
+  const { isAuth } = useAuth();
 
-  const refreshPayables = async () => {
+  const refreshPayables = useCallback(async () => {
+    if (!isAuth) return;
     const result = await service.findAll();
     setPayables(result);
-  };
-
-  useEffect(() => {
-    refreshPayables();
-  }, []);
+  }, [isAuth]);
 
   const createPayable = async (data: CreatePayableInputDTO) => {
     const result = await service.create(data);

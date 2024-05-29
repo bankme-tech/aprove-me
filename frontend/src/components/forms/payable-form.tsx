@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/form";
 import CurrencyInput from "../ui/currency-input";
 import { DatePicker } from "../ui/date-picker";
-import { Assignor } from "@/@core/domain/entities/assignor.entity";
 import { Combobox } from "../ui/combobox";
 import Link from "next/link";
+import { useAssignor } from "@/context/assignor/use-assignor";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/context/auth/use-auth";
 
 export const payableSchema = z.object({
   value: z.coerce
@@ -30,17 +32,24 @@ export const payableSchema = z.object({
 
 export interface PayableFormProps {
   onSubmit: (values: z.infer<typeof payableSchema>) => void;
-  assignors: Assignor[];
   defaultValues?: Partial<z.infer<typeof payableSchema>>;
   isEditing?: boolean;
 }
 
 export function PayableForm({
   onSubmit,
-  assignors,
   defaultValues,
   isEditing = false,
 }: PayableFormProps) {
+  const { getAllAssignors } = useAssignor();
+
+  const { isAuth } = useAuth();
+  const { status, data: assignors } = useQuery({
+    queryKey: ["assignors"],
+    queryFn: getAllAssignors,
+    enabled: isAuth,
+  });
+
   const form = useForm<z.infer<typeof payableSchema>>({
     resolver: zodResolver(payableSchema),
     defaultValues: {
@@ -50,6 +59,24 @@ export function PayableForm({
       ...defaultValues,
     },
   });
+
+  if (status === "pending") {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen ">
+        <p>Carregando...</p>
+      </main>
+    );
+  }
+
+  if (status === "error" || assignors === undefined) {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen ">
+        <p>Erro</p>
+      </main>
+    );
+  }
+
+  console.log(assignors);
 
   return (
     <Form {...form}>

@@ -2,15 +2,12 @@
 
 import { Assignor } from "@/@core/domain/entities/assignor.entity";
 import { AssignorCard } from "@/components/cards/assignor-card";
+import withAuth from "@/components/with-auth";
 import { useAssignor } from "@/context/assignor/use-assignor";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-export default function AssignorDetails({
-  params,
-}: {
-  params: { id: string };
-}) {
+const AssignorDetails = ({ params }: { params: { id: string } }) => {
   const { getAssignor } = useAssignor();
   const [assignor, setAssignor] = useState<Assignor | null>(null);
 
@@ -50,4 +47,6 @@ export default function AssignorDetails({
       />
     </main>
   );
-}
+};
+
+export default withAuth(AssignorDetails);
