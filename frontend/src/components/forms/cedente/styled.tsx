@@ -8,7 +8,7 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-export const FormRegisterPayable = styled.form`
+export const FormRegisterAssignor = styled.form`
   background-color: var(--bg-form-receivables-color);
   padding: 20px;
   display: flex;
@@ -32,5 +32,13 @@ export const FormRegisterPayable = styled.form`
     &:focus {
       outline: 1px solid var(--input-outline-color);
     }
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin: 0 10%;
   }
 `;

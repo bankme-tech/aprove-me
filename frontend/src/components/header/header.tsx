@@ -71,13 +71,13 @@ export const HeaderComponent = () => {
   }
 
   return (
-    <HeaderContainer data-testId='header'>
+    <HeaderContainer data-testid='header'>
       <LogoutButton
         onClick={handleLogoutButton}
       >
         { logOut ? 'Deslogando' : 'Deslogar' }
       </LogoutButton>
-      <div data-testId='log-time'>
+      <div data-testid='log-time'>
         <h2>Você está logado há:</h2>
         <h2>{ timeLogged }</h2>
         <h2>ID: {parse.id}</h2>

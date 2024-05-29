@@ -18,9 +18,9 @@ export const DisplayPayables = () => {
 	const [editAssignor, setEditAssignor] = useState('' as string);
 
 	const getPayables = async () => {
-		const response = await GetAllPayablesApi();
+		const response = await GetAllPayablesApi() as TPayable[];
 	
-		if (response) {
+		if (Array.isArray(response) && response) {
 			const payable = response.map((p: TPayable) => {
 				return {
 					id: p.id,
@@ -98,6 +98,7 @@ export const DisplayPayables = () => {
 									<button
 										className='details'
 										onClick={ () => navigate(`/payable/${p.id}`) }
+										data-testid='details'
 									>
 										🔍
 									</button>
@@ -109,12 +110,14 @@ export const DisplayPayables = () => {
 									<button
 										onClick={ () => handleDelete(p.id) }
 										className='config delete'
+										data-testid='delete'
 									>
 										Excluir
 									</button>
 									<button
 										onClick={ () => handleEdit(p.id) }
 										className='config edit'
+										data-testid='edit'
 									>
 										Editar
 									</button>
@@ -130,6 +133,7 @@ export const DisplayPayables = () => {
 							<button
 								onClick={ () => setEdit(!edit) }
 								className='close'
+								data-testid='close-modal'
 							>
 								❌
 							</button>

@@ -5,7 +5,7 @@ export class AuthDto {
   @ApiProperty({
     example: 1,
     description:
-      'ID do usuário. Required apenas para atualização de usuário e geração do token.',
+      'ID do usuário. Requerido apenas para atualização de usuário e geração do token.',
     required: false,
     type: Number,
   })

@@ -10,7 +10,7 @@ type ModalCreateAssignorProps = {
   confirm: boolean
   setConfirm: (e: boolean) => void
 }
-export const ModalCreateAssignor = ({ setConfirm, setSuccess, success, confirm  }: ModalCreateAssignorProps) => {
+export const PageCreateAssignor = ({ setConfirm, setSuccess, success, confirm  }: ModalCreateAssignorProps) => {
 
   const reduxCreateAssignorConfirm = useSelector((state: TAssignorsRedux) => state.assignorReduce)
   console.log(reduxCreateAssignorConfirm)

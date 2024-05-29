@@ -123,6 +123,32 @@ p.loadin {
   }
 }
 
+.submit {
+  background-color: var(--bg-button-color);
+  color: var(--text-button-color);
+  border: none;
+  padding: 0.3rem 0.2rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--bg-button-hover-color);
+  }
+}
+
+.cancel {
+  background-color: var(--logout-color);
+  color: var(--text-button-color);
+  border: none;
+  padding: 0.3rem 0.2rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover-logout-color);
+  }
+}
+
 select option{
   color: var(--font-color-2);
 }

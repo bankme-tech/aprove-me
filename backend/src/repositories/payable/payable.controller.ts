@@ -64,6 +64,7 @@ export class PayableController {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
   @UseGuards(JwtAuthGuard)
   @ApiTags('Payables')
   @Get('payable')
@@ -71,7 +72,6 @@ export class PayableController {
   async getPayableAll() {
     try {
       const payables = await this.payable.getAllPayables();
-      console.log(payables);
 
       if (!payables) {
         throw new NotFoundException('Payables not found');
@@ -85,6 +85,7 @@ export class PayableController {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
   @UseGuards(JwtAuthGuard)
   @ApiTags('Payables')
   @Put('payable/:id')
@@ -107,6 +108,7 @@ export class PayableController {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
   @UseGuards(JwtAuthGuard)
   @ApiTags('Payables')
   @Delete('payable/:id')

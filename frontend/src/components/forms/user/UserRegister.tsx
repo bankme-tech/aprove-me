@@ -114,6 +114,7 @@ export const UserFormRegister = () => {
 				<input
 					type="text"
 					id="login"
+					data-testid="login-register-user"
 					name="login"
 					onChange={ (e) => {
 						setLogin(e.target.value);
@@ -130,13 +131,18 @@ export const UserFormRegister = () => {
 					>
 						{ isCheckingUser ? '...' : 'Verificar' }
 					</CheckButton>
-					{ hasUser === 'yes' ? '✅' : hasUser === 'no' ? '❌' : '' }
+					<span 
+						data-testid='checkuser-span'
+					>
+						{ hasUser === 'yes' ? '✅' : hasUser === 'no' ? '❌' : '' }
+					</span>
 				</label>
 
 				<label htmlFor="password">Password:</label>
 				<input
 					type="password"
 					id="password"
+					data-testid="password-register-user"
 					name="password"
 					onChange={ (e) => setPassword(e.target.value) }
 					disabled={ isSubmitting || isCheckingUser }
@@ -145,6 +151,7 @@ export const UserFormRegister = () => {
 				<input
 					type="password"
 					id="confirmPassword"
+					data-testid="confirmPassword-register-user"
 					name="confirmPassword"
 					onChange={ (e) => setConfirmPassword(e.target.value) }
 					disabled={ isSubmitting || isCheckingUser }

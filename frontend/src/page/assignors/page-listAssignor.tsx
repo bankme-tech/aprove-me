@@ -11,7 +11,7 @@ export const DisplayAssignors = () => {
 	const getAssignors = async () => {
 		const response = await GetAllAssignorsApi();
 	
-		if (response) {
+		if (Array.isArray(response) && response) {
 			const assignor = response.map((p: TAssignors) => {
 				return {
 					id: p.id,

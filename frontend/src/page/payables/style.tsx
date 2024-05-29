@@ -170,7 +170,7 @@ export const EditContainer = styled.div`
     background-color: transparent;
     position: absolute;
     top: 30vh;
-    right: 88vh;
+    right: 36vw;
     border: 1px solid #888;
     cursor: pointer;
   }

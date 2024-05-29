@@ -31,6 +31,7 @@ export const RegisterPayableForm = ({ id, setId, value, setValue, assignor, setA
           <input
             type="text"
             id='id'
+            data-testid='id-payable'
             value={id}
             onChange={ (e) => {
               setId(e.target.value);
@@ -42,6 +43,7 @@ export const RegisterPayableForm = ({ id, setId, value, setValue, assignor, setA
           <input
             type="number"
             id='value'
+            data-testid='value-payable'
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
             required
@@ -65,7 +67,9 @@ export const RegisterPayableForm = ({ id, setId, value, setValue, assignor, setA
                 })
               }
           </select>
-          <label htmlFor="data">Data: de emissão</label>
+          <label htmlFor="data">
+            Data de emissão:
+          </label>
           <input
             type="date"
             id='data'

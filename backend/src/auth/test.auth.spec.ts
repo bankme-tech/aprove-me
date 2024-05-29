@@ -132,5 +132,17 @@ describe('Autenticação', () => {
       expect(typeof response).toBe('string');
       expect(createToken.generate).toHaveBeenCalled();
     });
+
+    it('Deve falhar ao criar um token', async () => {
+      jest.spyOn(controller, 'perfil');
+
+      const response = await controller.perfil(
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluIiwiaWQiOjEsImlhdCI6MTcxNjkyNjUxNiwiZXhwIjoxNzE2OTMwMTE2fQ.U_I5wA0kMApyapen4pYINgdIXRDdppgXnGK0g0aTSvM',
+      );
+
+      expect(response).toBeDefined();
+      expect(typeof response).toBe('object');
+      expect(controller.perfil).toHaveBeenCalled();
+    });
   });
 });

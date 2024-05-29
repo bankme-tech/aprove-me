@@ -23,9 +23,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return user;
   }
 
-  async decodeToken(token: string) {
-    const decoded = await this.jwtService.decode(token);
-    const { login, id } = decoded;
-    return { login, id };
+  async decodeToken(token: string): Promise<{ login: string; id: number }> {
+    const decoded = (await this.jwtService.decode(token)) || {
+      login: null,
+      id: null,
+    };
+
+    if (decoded.login && decoded.id) {
+      const { login, id } = decoded;
+      return { login, id };
+    }
+
+    return null;
   }
 }

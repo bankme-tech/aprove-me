@@ -20,7 +20,7 @@ export const EditPayableForm = ({ id, setId, value, setValue, assignor, setAssig
   return (
     <Container>    
       <div>
-        <h1>Cadastro de pagáveis</h1>
+        <h1>Cadastro de edição de pagáveis</h1>
         <FormRegisterPayable
           onSubmit={(e) => {
             e.preventDefault()
@@ -31,6 +31,7 @@ export const EditPayableForm = ({ id, setId, value, setValue, assignor, setAssig
           <input
             type="text"
             id='id'
+            data-testid='id-edit-payable'
             value={id}
             onChange={ (e) => {
               setId(e.target.value);
@@ -42,6 +43,7 @@ export const EditPayableForm = ({ id, setId, value, setValue, assignor, setAssig
           <input
             type="number"
             id='value'
+            data-testid='value-edit-payable'
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
             required
@@ -49,6 +51,7 @@ export const EditPayableForm = ({ id, setId, value, setValue, assignor, setAssig
           <label htmlFor="cedente">Cedente:</label>
           <select
             id="cedente"
+            data-testid='assignor-edit-payable'
             value={assignor}
             onChange={(e) => {
               setAssignor(e.target.value);
@@ -65,7 +68,7 @@ export const EditPayableForm = ({ id, setId, value, setValue, assignor, setAssig
                 })
               }
           </select>
-          <label htmlFor="data">Data: de emissão</label>
+          <label htmlFor="data">Data de emissão:</label>
           <input
             type="date"
             id='data'
