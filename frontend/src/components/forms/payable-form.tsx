@@ -76,8 +76,6 @@ export function PayableForm({
     );
   }
 
-  console.log(assignors);
-
   return (
     <Form {...form}>
       <form
@@ -114,7 +112,7 @@ export function PayableForm({
             )}
           />
         )}
-        <Button className="bg-bankmeBlue w-32 self-center" type="submit">
+        <Button className="self-center w-32 bg-bankmeBlue" type="submit">
           {isEditing ? "Salvar" : "Cadastrar"}
         </Button>
         {!isEditing && (
