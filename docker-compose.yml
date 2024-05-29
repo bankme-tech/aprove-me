@@ -1,0 +1,8 @@
+services:
+  web:
+    build: .
+    environment:
+      - SECRET=0268b63e-0d98-492d-a219-903bc55fdddd
+      - API_KEY=38fcacdb-3a8b-4f1b-9033-e3c8fe9ede66
+    ports:
+      - 3000:3000
