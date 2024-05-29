@@ -15,6 +15,17 @@ services:
     command: >
       sh -c "npx prisma migrate deploy && npm run start:prod"
 
+  frontend:
+    container_name: aproveme-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8080/integrations
+    restart: always
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
