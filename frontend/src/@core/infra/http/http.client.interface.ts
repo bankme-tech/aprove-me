@@ -8,6 +8,7 @@ export enum HttpMethod {
 export type HttpRequestDTO<T = undefined> = {
   url: string;
   body: T;
+  headers?: Record<string, string>;
 };
 
 export type HttpResponseDTO<T = undefined> = {

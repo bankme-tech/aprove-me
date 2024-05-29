@@ -15,6 +15,7 @@ export class AxiosHttpClient<T, R> implements IHttpClient<T, R> {
       response = await axios.request({
         url: params.url,
         method: HttpMethod.GET,
+        headers: params.headers,
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -36,6 +37,7 @@ export class AxiosHttpClient<T, R> implements IHttpClient<T, R> {
         url: params.url,
         method: HttpMethod.POST,
         data: params.body,
+        headers: params.headers,
       });
 
       return {
@@ -62,6 +64,7 @@ export class AxiosHttpClient<T, R> implements IHttpClient<T, R> {
         url: params.url,
         method: HttpMethod.PATCH,
         data: params.body,
+        headers: params.headers,
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -82,6 +85,7 @@ export class AxiosHttpClient<T, R> implements IHttpClient<T, R> {
       response = await axios.request({
         url: params.url,
         method: HttpMethod.DELETE,
+        headers: params.headers,
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
