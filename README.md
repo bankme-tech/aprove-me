@@ -47,7 +47,13 @@ Certifique-se de ter os seguintes itens instalados na sua máquina:
     cd aprove-me
     ```
 
-2. Configurar variáveis de ambiente
+2. Acesse a branch `desafio-gabrielrnascimento`
+
+    ```bash
+    git checkout desafio-gabrielrnascimento
+    ```
+
+3. Configurar variáveis de ambiente
     - Crie um arquivo `.env` (para o backend) e `.env.local` (para o frontend) e preencha as variáveis de acordo com o arquivo `.env.example`
     - Para utilizar os valores *default*, presentes no `.env.example`, execute o comando abaixo:
 
@@ -55,13 +61,13 @@ Certifique-se de ter os seguintes itens instalados na sua máquina:
     cp ./backend/.env.example ./backend/.env && cp ./frontend/.env.example ./frontend/.env.local
     ```
 
-3. Executar o comando para subir os containers
+4. Executar o comando para subir os containers
 
     ```bash
     docker-compose up --build
     ```
 
-4. Acessar a aplicação utilizando
+5. Acessar a aplicação utilizando
 
     > Para o **backend**, acesse [`http://localhost:8080`](http://localhost:8080) <br>
     > Para o **backend**, acesse [`http://localhost:3000`](http://localhost:3000) <br>
