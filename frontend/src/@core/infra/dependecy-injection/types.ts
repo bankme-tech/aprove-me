@@ -6,6 +6,7 @@ const TYPES = {
   IUserGateway: Symbol.for("IUserGateway"),
   IUserService: Symbol.for("IUserService"),
   IHttpClient: Symbol.for("IHttpClient"),
+  JwtDecoder: Symbol.for("IJwtDecoder"),
 };
 
 export { TYPES };

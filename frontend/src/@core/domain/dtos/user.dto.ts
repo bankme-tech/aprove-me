@@ -9,3 +9,10 @@ export type AuthOutputDTO = {
 export type RegisterInputDTO = AuthInputDTO;
 
 export type RegisterOutputDTO = Pick<User, "id" | "login">;
+
+export type DecodedToken = {
+  login: string;
+  password: string;
+  iat: number;
+  exp: number;
+};

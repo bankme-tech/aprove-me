@@ -14,6 +14,9 @@ import { UserService } from "@/@core/application/services/user.service";
 import { IUserService } from "@/@core/domain/services/user.service.interface";
 import { IUserGateway } from "@/@core/domain/gateways/user.gateway";
 import { HttpUserGateway } from "../gateways/http-user.gateway";
+import { JwtDecoder } from "../jwt-decoder";
+import { IJwtDecoder } from "@/@core/application/interfaces/decoder.interface";
+import { DecodedToken } from "@/@core/domain/dtos/user.dto";
 
 export const myContainer = new Container();
 
@@ -26,3 +29,4 @@ myContainer.bind<IPayableService>(TYPES.IPayableService).to(PayableService);
 myContainer.bind<IAssignorService>(TYPES.IAssignorService).to(AssignorService);
 myContainer.bind<IUserService>(TYPES.IUserService).to(UserService);
 myContainer.bind<IUserGateway>(TYPES.IUserGateway).to(HttpUserGateway);
+myContainer.bind<IJwtDecoder<DecodedToken>>(TYPES.JwtDecoder).to(JwtDecoder);
