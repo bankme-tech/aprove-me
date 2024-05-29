@@ -17,4 +17,4 @@ services:
 
 networks:
     default_services_network:
-        name: rbr-services
+        name: bankme-services
