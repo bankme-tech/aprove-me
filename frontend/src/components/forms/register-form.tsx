@@ -58,7 +58,7 @@ export function AuthForm({ onSubmit, version }: AuthFormProps) {
             <FormItem>
               <FormLabel>Senha</FormLabel>
               <FormControl>
-                <Input placeholder="aproveme" {...field} />
+                <Input placeholder="aproveme" type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
