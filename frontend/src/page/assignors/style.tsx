@@ -57,3 +57,12 @@ export const RegisterAssignorContainer = styled.div`
     }
   }
 `;
+
+export const AssingorDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5vh;
+  width: 100%;
+`;

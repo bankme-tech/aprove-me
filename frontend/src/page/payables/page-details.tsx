@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TPayable } from '../../types/PayableType';
 import { GetPayableByIdApi } from '../../service/PayableApi';
-import { PayablesDetailsContainer } from './style';
+import { PayablesDetailsContainer, TablePayables } from './style';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const DetailsPayables = () => {
@@ -32,14 +32,24 @@ export const DetailsPayables = () => {
   return (
     <PayablesDetailsContainer>
       <h1>Detalhes do pagável</h1>
-      <h2>ID:</h2>
-      <p>{payables.id}</p>
-      <h2>Valor</h2>
-      <p>{payables.value}</p>
-      <h2>Data de emissão</h2>
-      <p>{payables.emissionDate}</p>
-      <h2>Cedente</h2>
-      <p>{payables.assignor}</p>
+      <TablePayables>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Valor</th>
+          <th>Data de emissão</th>
+          <th>Cedente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{payables.id}</td>
+          <td>{payables.value}</td>
+          <td>{payables.emissionDate}</td>
+          <td>{payables.assignor}</td>
+        </tr>
+      </tbody>
+     </TablePayables>
 
       <button
         onClick={ () => {
@@ -47,7 +57,7 @@ export const DetailsPayables = () => {
           navigate(`/assignors/${payables.assignor}`);
         }}
       >
-        Ver cedente
+        Detalhes do cedente
       </button>
     </PayablesDetailsContainer>
   )

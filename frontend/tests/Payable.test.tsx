@@ -4,6 +4,7 @@ import { renderWithRouter } from './helpers/renderWithRouter';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { DisplayCreatePayable } from '../src/page/payables/page-registerPayable';
+import { DetailsPayables } from '../src/page/payables/page-details';
 
 const mockPayables = [
   {
@@ -168,13 +169,32 @@ describe('Payable', () => {
       expect(buttonSubmit).toBeInTheDocument();
       expect(buttonCancel).toBeInTheDocument();
 
-      const entraceId = await userEvent.type(screen.getByTestId('id-payable'), '74b862fd-b309-48fb-9062-b6e17ee4e2d2');
+      const entraceId = await userEvent.type(screen.getByTestId('id-payable'), '74b862fd-b309-48fb--b6e17ee4e2d2');
       const entraceValue = await userEvent.type(screen.getByTestId('value-payable'), '1000000000');
 
-      await userEvent.click(buttonCancel);
-      expect(entraceId).toBe(undefined);
-      expect(entraceValue).toBe(undefined);
+      await userEvent.click(buttonSubmit);
+      
+      const getWarning = await screen.findByText('ID inválido! Insira um ID válido no formato UUID');
 
+    });
+  });
+  describe('Registrar Pagável', () => {
+    test('Deve ter os campos corretos', async () => {
+      renderWithRouter(<DetailsPayables />);
+      const getText = screen.getByText('Detalhes do pagável');
+      const labelId = screen.getByText('ID');
+      const labelValue = screen.getByText('Valor');
+      const labelDate = screen.getByText('Data de emissão');
+      const labelAssignor = screen.getByText('Cedente');
+      const buttonSubmit = screen.getByText('Detalhes do cedente');
+
+      await userEvent.click(buttonSubmit);
+      expect(getText).toBeInTheDocument();
+      expect(labelId).toBeInTheDocument();
+      expect(labelValue).toBeInTheDocument();
+      expect(labelDate).toBeInTheDocument();
+      expect(labelAssignor).toBeInTheDocument();
+      expect(buttonSubmit).toBeInTheDocument();
     });
   });
 });

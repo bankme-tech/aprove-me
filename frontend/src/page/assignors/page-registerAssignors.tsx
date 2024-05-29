@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { RegisterAssignorForm } from '../../components/forms/cedente/RegisterAssignor';
 import { GetAssignorByIdApi } from '../../service/assignorsApi';
 import { TAssignors } from '../../types/AssignorsType';
-import { PageCreateAssignor } from './modal';
+import { PageCreateAssignorModal } from './modal';
 import { useDispatch } from 'react-redux';
 import { createAssignorsAction } from '../../redux/actions/createAssignorAction';
 
@@ -71,7 +71,7 @@ export const DisplayCreateAssignors = () => {
 
       {
       confirm &&
-        <PageCreateAssignor
+        <PageCreateAssignorModal
           setSuccess={setSuccess}
           success={success}
           confirm={confirm}

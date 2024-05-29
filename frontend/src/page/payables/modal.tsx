@@ -51,7 +51,7 @@ export const ModalCreatePayable = ({ setConfirm, setSuccess, success, confirm  }
   }
 
   return (
-    <ModalContainer data-testid='payable-modal'>
+    <ModalContainer data-testid='register-payable-modal'>
       <h2>Confirmar criação do recebível?</h2>
       <div>
         <p>ID: { id }</p>

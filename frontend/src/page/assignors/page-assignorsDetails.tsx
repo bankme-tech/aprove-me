@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { GetAssignorByIdApi } from '../../service/assignorsApi';
 import { TAssignors } from '../../types/AssignorsType';
 import { TablePayables } from '../payables/style';
+import { AssingorDetailsContainer } from './style';
 
 export const AssignorsDetails = () => {
   const getParams = useParams() as { id: string };
@@ -23,25 +24,28 @@ export const AssignorsDetails = () => {
     setAssignorsDetails(response);
   }
   return (
-    <TablePayables>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Documento</th>
-          <th>Email</th>
-          <th>Telefone</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{assignorsDetails.id}</td>
-          <td>{assignorsDetails.name}</td>
-          <td>{assignorsDetails.document}</td>
-          <td>{assignorsDetails.email}</td>
-          <td>{assignorsDetails.phone}</td>
-        </tr>
-      </tbody>
-    </TablePayables>
+    <AssingorDetailsContainer>
+      <h1>Detalhes do Cedente</h1>
+        <TablePayables>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Documento</th>
+              <th>Email</th>
+              <th>Telefone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{assignorsDetails.id}</td>
+              <td>{assignorsDetails.name}</td>
+              <td>{assignorsDetails.document}</td>
+              <td>{assignorsDetails.email}</td>
+              <td>{assignorsDetails.phone}</td>
+            </tr>
+          </tbody>
+        </TablePayables>
+    </AssingorDetailsContainer>
   );
 }

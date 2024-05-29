@@ -3,7 +3,7 @@ import { HeaderComponent } from '../header/header';
 
 export const Layout = () => {
   return (
-    <div>
+    <div data-testid='outlet'>
       <HeaderComponent />
       <Outlet />
     </div>

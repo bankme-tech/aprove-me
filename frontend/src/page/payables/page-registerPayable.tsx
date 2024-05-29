@@ -51,7 +51,7 @@ export const DisplayCreatePayable = () => {
   return (
     <ContainerRegister>
       <div>
-        <RegisterPayableForm
+        <RegisterPayableForm 
           id={ id }
           setId={ setId }
           value={ value }
