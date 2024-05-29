@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bankme-api-deployment
+  namespace: bankme
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bankme-api
+  template:
+    metadata:
+      labels:
+        app: bankme-api
+    spec:
+      containers:
+      - name: api
+        image: matheusjustino/bankme:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        env:
+          - name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: DATABASE_URL
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: PORT
+          - name: SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: SECRET
+          - name: RABBITMQ_DEFAULT_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: RABBITMQ_DEFAULT_HOST
+          - name: RABBITMQ_DEFAULT_USER
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: RABBITMQ_DEFAULT_USER
+          - name: RABBITMQ_DEFAULT_PASS
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: RABBITMQ_DEFAULT_PASS
+          - name: SMTP_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: SMTP_HOST
+          - name: SMTP_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: SMTP_PORT
+          - name: SMTP_USER
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: SMTP_USER
+          - name: SMTP_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: SMTP_PASSWORD
+          - name: OPERATION_TEAM_EMAIL
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-api-envs
+                key: OPERATION_TEAM_EMAIL

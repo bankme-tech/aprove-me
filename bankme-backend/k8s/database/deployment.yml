@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bankme-database-deployment
+  namespace: bankme
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bankme-database
+  template:
+    metadata:
+      labels:
+        app: bankme-database
+    spec:
+      containers:
+      - name: database
+        image: postgres:14.4-alpine
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 5432
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-database-envs
+                key: POSTGRES_DB
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-database-envs
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-database-envs
+                key: POSTGRES_PASSWORD

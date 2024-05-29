@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bankme-rabbitmq-deployment
+  namespace: bankme
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bankme-rabbitmq
+  template:
+    metadata:
+      labels:
+        app: bankme-rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3.11-management
+        imagePullPolicy: Always
+        ports:
+          - name: http
+            protocol: TCP
+            containerPort: 15672
+          - name: amqp
+            protocol: TCP
+            containerPort: 5672
+        env:
+          - name: RABBITMQ_DEFAULT_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-rabbitmq-envs
+                key: RABBITMQ_DEFAULT_HOST
+          - name: RABBITMQ_DEFAULT_USER
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-rabbitmq-envs
+                key: RABBITMQ_DEFAULT_USER
+          - name: RABBITMQ_DEFAULT_PASS
+            valueFrom:
+              configMapKeyRef:
+                name: bankme-rabbitmq-envs
+                key: RABBITMQ_DEFAULT_PASS

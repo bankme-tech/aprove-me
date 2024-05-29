@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: database-svc
+  namespace: bankme
+spec:
+  type: NodePort
+  selector:
+    app: bankme-database
+  ports:
+    - port: 5432

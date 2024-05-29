@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bankme-database-envs
+  namespace: bankme
+data:
+  POSTGRES_DB: bankme-db
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: docker

@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-svc
+  namespace: bankme
+spec:
+  type: LoadBalancer
+  selector:
+    app: bankme-api
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
