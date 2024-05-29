@@ -122,3 +122,41 @@ curl --location 'http://localhost:3001/integrations/payable' \
 }
 ```
 </details>
+
+--------------------------------------------------------------------------------
+
+<details>
+  <summary> 
+    <code>POST</code> <code>/integrations/payable/batch</code> <code><b>Create batch of payables</b></code> 
+  </summary>
+
+Send batch of payables to RabbitMQ queue. The queue consumer will process and save them in the database.
+##### Body schema
+> | Name                    | Type              | Nullable | Description             |
+> |-------------------------|-------------------|----------|-------------------------|
+> | payables                | Array<PayableDto> | required | Payable array.          |
+> | payables[].assignorId   | UUID              | required | Payable assignorId.     |
+> | payables[].value        | float             | required | Payable value in float. |
+> | payables[].emissionDate | ISOString         | required | Payable emissionDate.   |
+
+###### Example cURL
+```sh
+curl --location 'http://localhost:3001/integrations/payable' \
+--header 'Content-Type: application/json' \
+--data '{
+    "payables": [
+        "value":1.23,
+        "emissionDate":"2024-05-27T20:57:00.000Z",
+        "assignor":"d8f6d710-72da-4d4f-be1a-7485efde3b9e"
+    ]
+}'
+```
+
+###### Response
+```json
+{
+    "sent": true,
+    "queueName": "q_payable_batch"
+}
+```
+</details>

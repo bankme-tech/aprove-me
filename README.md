@@ -16,14 +16,17 @@ Iniciar aplicação local.
 yarn dev 
 ```
 ### Terminal 3: Front-end
-Iniciar aplicação
+Iniciar aplicação.
 ```sh
 yarn dev 
 ```
 
 ## API
-### 
-Documentação de endpoint da API:
+### Documentação de endpoint da API:
 - `/integrations/auth`([ver](./api-payable/src/integrations/auth/API.md))
 - `/integrations/assignor`([ver](./api-payable/src/integrations/assignor/API.md))
 - `/integrations/payable`([ver](./api-payable/src/integrations/payable/API.md))
+
+## AMQP
+### Documentação da filas
+- Lista de filas: ([ver](./api-payable/src/microservices/rmq/README.md))
