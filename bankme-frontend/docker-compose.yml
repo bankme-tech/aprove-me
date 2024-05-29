@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+    web:
+        container_name: frontend
+        build:
+            dockerfile: Dockerfile
+            context: .
+        env_file: .env.docker
+        ports:
+            - 3000:3000
+        volumes:
+            - .:/home/app:cached
+            - ./package.json:/home/app/package.json:cached
+        networks:
+            - default_services_network
+
+networks:
+    default_services_network:
+        name: rbr-services

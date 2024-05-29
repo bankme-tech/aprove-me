@@ -55,9 +55,9 @@ export class AssignorController {
 		);
 	}
 
-	@HttpCode(HttpStatus.NO_CONTENT)
+	@HttpCode(HttpStatus.OK)
 	@Delete(`:id`)
-	public async deleteAssignor(@Param(`id`) assigorId: string) {
-		return this.assignorService.deleteAssignor(assigorId);
+	public async deleteAssignor(@Param(`id`) assignorId: string) {
+		return this.assignorService.deleteAssignor(assignorId);
 	}
 }

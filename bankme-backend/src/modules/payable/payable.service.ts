@@ -50,7 +50,11 @@ export class PayableService implements IPayableService {
 
 	public async findAllPayable(): Promise<Payable[]> {
 		this.logger.log(`FindAllPayable`);
-		return this.prismaService.payable.findMany();
+		return this.prismaService.payable.findMany({
+			orderBy: {
+				createdAt: `desc`,
+			},
+		});
 	}
 
 	public async findOnePayable(payableId: string): Promise<Payable> {

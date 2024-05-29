@@ -58,7 +58,7 @@ export class PayableController {
 		return this.payableService.updatePayable(id, updatePayableDto);
 	}
 
-	@HttpCode(HttpStatus.NO_CONTENT)
+	@HttpCode(HttpStatus.OK)
 	@Delete(':id')
 	async remove(@Param('id') id: string) {
 		return await this.payableService.removePayable(id);
