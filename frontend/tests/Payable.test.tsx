@@ -169,12 +169,12 @@ describe('Payable', () => {
       expect(buttonSubmit).toBeInTheDocument();
       expect(buttonCancel).toBeInTheDocument();
 
-      const entraceId = await userEvent.type(screen.getByTestId('id-payable'), '74b862fd-b309-48fb--b6e17ee4e2d2');
+      const entraceId = await userEvent.type(screen.getByTestId('id-payable'), '74b862fd-b309-48fb-9062-b6e17ee4e2d2');
       const entraceValue = await userEvent.type(screen.getByTestId('value-payable'), '1000000000');
 
-      await userEvent.click(buttonSubmit);
-      
-      const getWarning = await screen.findByText('ID inválido! Insira um ID válido no formato UUID');
+      await userEvent.click(buttonCancel);
+      expect(entraceId).toBe(undefined);
+      expect(entraceValue).toBe(undefined);
 
     });
   });

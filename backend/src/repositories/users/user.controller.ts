@@ -81,7 +81,6 @@ export class UserController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiTags('User')
   @Get('users/search/login')
   @HttpCode(HttpStatus.OK)
