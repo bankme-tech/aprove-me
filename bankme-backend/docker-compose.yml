@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  backend:
+    container_name: "api"
+    build:
+      dockerfile: Dockerfile
+      context: .
+    env_file: .env.docker
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./users-api:/home/app:cached
+      - ./users-api/package.json:/home/app/package.json:cached
+    depends_on:
+      database:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - bankme-services
+
+  database:
+    image: postgres:14.4-alpine
+    container_name: bankme-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: bankme-db
+    ports:
+      - 5432:5432
+    networks:
+      - bankme-services
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: bankme-rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    env_file:
+      - .env.docker
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bankme-services
+
+networks:
+  bankme-services:
+    name: default_services_network

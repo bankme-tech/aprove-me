@@ -1,0 +1,9 @@
+Dockerfile
+.dockerignore
+node_modules
+.git
+k8s
+scripts
+README.md
+
+*terraform*
