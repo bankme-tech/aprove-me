@@ -76,7 +76,7 @@ const Home = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.length &&
+              {data.length > 0 ? (
                 data.map((payable) => (
                   <TableRow key={payable.id}>
                     <TableCell className="font-medium">
@@ -99,7 +99,14 @@ const Home = () => {
                       })}
                     </TableCell>
                   </TableRow>
-                ))}
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center">
+                    Nenhum recebível encontrado
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>
