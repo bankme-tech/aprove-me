@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateAssignorDto } from './dto/create-assignor.dto';
 import { UpdateAssignorDto } from './dto/update-assignor.dto';
 import { PrismaService } from 'src/database/prisma.service';
-
 @Injectable()
 export class AssignorService {
+  private readonly logger = new Logger(AssignorService.name);
+
   constructor(private prisma: PrismaService) { }
 
   create(createAssignorDto: CreateAssignorDto) {

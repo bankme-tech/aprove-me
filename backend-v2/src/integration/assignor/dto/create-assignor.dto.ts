@@ -6,3 +6,4 @@ export class CreateAssignorDto implements Prisma.AssignorCreateInput {
   email: string;
   phone: string;
 }
+
