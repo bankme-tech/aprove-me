@@ -5,7 +5,7 @@ export class FakeEncrypterAdapter implements Encrypter {
     return 'encrypted_password';
   }
 
-  async compare(_value: string, _hash: string) {
-    return true;
+  async compare(value: string, hash: string) {
+    return value === hash;
   }
 }
