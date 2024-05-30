@@ -3,6 +3,7 @@ import { AssignorController } from './assignor.controller';
 import { AssignorService } from './assignor.service';
 import AssignorDto from '../dto/AssignorDto';
 import { assignorToCreationMock, assignorCreatedMock } from './mocks/mock';
+import { JwtService } from '@nestjs/jwt';
 
 describe('AssignorController', () => {
   let assignorController: AssignorController;
@@ -21,6 +22,13 @@ describe('AssignorController', () => {
             findAssignorById: jest.fn().mockResolvedValue(assignorCreatedMock),
             updateAssignorById: jest.fn(),
             deleteAssignorById: jest.fn(),
+          },
+        },
+        {
+          provide: JwtService,
+          useValue: {
+            signAsync: jest.fn(),
+            verifyAsync: jest.fn(),
           },
         },
       ],
