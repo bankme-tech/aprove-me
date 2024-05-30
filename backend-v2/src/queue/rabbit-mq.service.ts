@@ -1,9 +1,9 @@
-import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import amqp, { AmqpConnectionManager, ChannelWrapper } from 'amqp-connection-manager';
 import { CreatePayableDto } from 'src/integration/payable/dto/create-payable.dto';
 import { Payable } from '@prisma/client';
 
-type ConsumerOptions = {
+type ConsumerOptions<T> = {
     retries: number;
     interval: number;
     queueName: string;
@@ -13,42 +13,42 @@ type ConsumerOptions = {
     noLocal: boolean;
     exclusive: boolean;
     args: any;
-    onMessage?: (msg: any) => void;
-    onConsumeError?: (msg: any) => void;
-    onConsumeOk?: (msg: any) => void;
-    onCancel?: (msg: any) => void;
-    onCancelOk?: (msg: any) => void;
-    onShutdown?: (msg: any) => void;
-    onReturn?: (msg: any) => void;
-    onConfirm?: (msg: any) => void;
-    onBlocked?: (msg: any) => void;
-    onUnblocked?: (msg: any) => void;
-    onFailure?: (msg: any) => void;
+    onMessage?: (msg: T) => void;
+    onConsumeError?: (msg: T) => void;
+    onConsumeOk?: (msg: T) => void;
+    onCancel?: (msg: T) => void;
+    onCancelOk?: (msg: T) => void;
+    onShutdown?: (msg: T) => void;
+    onReturn?: (msg: T) => void;
+    onConfirm?: (msg: T) => void;
+    onBlocked?: (msg: T) => void;
+    onUnblocked?: (msg: T) => void;
+    onFailure?: (msg: T) => void;
 }
 
 @Injectable()
-export class RabbitMqFactoryService implements OnModuleDestroy {
+export class RabbitMqFactoryService implements OnModuleDestroy, OnModuleInit {
     private readonly logger = new Logger(RabbitMqFactoryService.name);
-    private readonly connection: AmqpConnectionManager;
+    private connection: AmqpConnectionManager;
 
-    constructor() {
-        this.connection = amqp.connect([process.env.RABBITMQ_URI || 'amqp://localhost:5672']);
+    async onModuleInit() {
+        this.connection = await amqp.connect([process.env.RABBITMQ_URI || 'amqp://localhost:5672']);
     }
 
-    createProducer(queueName: string): RabbitMqProducer {
+    createProducer<T>(queueName: string): RabbitMqProducer<T> {
         const channel = this.connection.createChannel({
             json: true,
             setup: (channel) => channel.assertQueue(queueName, { durable: true }),
         });
-        return new RabbitMqProducer(channel, this.logger, queueName);
+        return new RabbitMqProducer<T>(channel, this.logger, queueName);
     }
 
-    createConsumer(consumerOptions: ConsumerOptions): RabbitMqConsumer {
+    createConsumer<T>(consumerOptions: ConsumerOptions<T>): RabbitMqConsumer<T> {
         const channel = this.connection.createChannel({
             json: true,
             setup: (channel) => channel.assertQueue(consumerOptions.queueName, { durable: true }),
         });
-        return new RabbitMqConsumer(channel, this.logger, consumerOptions);
+        return new RabbitMqConsumer<T>(channel, this.logger, consumerOptions);
     }
 
     async onModuleDestroy() {
@@ -56,43 +56,52 @@ export class RabbitMqFactoryService implements OnModuleDestroy {
     }
 }
 
-class RabbitMqProducer {
+export class RabbitMqProducer<T> {
     constructor(
         private channel: ChannelWrapper,
         private logger: Logger,
         private queueName: string
     ) {}
 
-    async addPayables(payables: CreatePayableDto[]) {
-        this.logger.log(`Adding payables to queue ${this.queueName}`);
-        for (const payable of payables) {
-            this.logger.log('Adding payable to queue');
-            await this.channel.sendToQueue(this.queueName, payable);
+    async addToQueue(data: T[]) {
+        this.logger.log(`Adding items to queue ${this.queueName}`);
+        for (const item of data) {
+            this.logger.log('Adding item to queue');
+            await this.channel.sendToQueue(this.queueName, item);
         }
     }
 }
 
-class RabbitMqConsumer {
+export class RabbitMqConsumer<T> {
+    private listeners: Array<(msg: T) => void> = [];
+
     constructor(
         private channel: ChannelWrapper,
         private logger: Logger,
-        private options: ConsumerOptions
-    ) {}
+        private options: ConsumerOptions<T>
+    ) {
+        this.initializeConsumer();
+    }
 
-    async addPayableListener() {
+    private initializeConsumer() {
         try {
             this.channel.consume(
                 this.options.queueName,
                 async (message) => {
                     this.logger.log('Receiving message from RabbitMQ');
-                    const msg = JSON.parse(message.content.toString());
+                    const msg: T = JSON.parse(message.content.toString());
 
                     let retries = 0;
                     const processMessage = async () => {
                         try {
+                            for (const listener of this.listeners) {
+                                await listener(msg);
+                            }
+
                             if (this.options.onMessage) {
                                 await this.options.onMessage(msg);
                             }
+
                             this.channel.ack(message);
                             if (this.options.onConsumeOk) {
                                 this.options.onConsumeOk(msg);
@@ -122,5 +131,9 @@ class RabbitMqConsumer {
         } catch (error) {
             this.logger.error(`Error adding listener to queue ${this.options.queueName}:`, error);
         }
+    }
+
+    async addPayableListener(callback: (payable: T) => void) {
+        this.listeners.push(callback);
     }
 }

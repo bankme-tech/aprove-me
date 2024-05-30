@@ -1,15 +1,32 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, OnModuleInit } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
+import { RabbitMqFactoryService, RabbitMqProducer } from 'src/queue/rabbit-mq.service';
 
-@Controller()
-export class PayableController {
-  constructor(private readonly payableService: PayableService) {}
+
+@Controller('payables')
+export class PayableController implements OnModuleInit {
+  producer: RabbitMqProducer<CreatePayableDto>;
+  constructor(
+    private readonly payableService: PayableService,
+    private readonly rabbitMqFactoryService: RabbitMqFactoryService
+  ) {}
+  
+
+  onModuleInit() {
+    this.producer = this.rabbitMqFactoryService.createProducer<CreatePayableDto>('payables');
+  }
 
   @Post()
   create(@Body() createPayableDto: CreatePayableDto) {
     return this.payableService.create(createPayableDto);
+  }
+
+  @Post('bulk')
+  async createMany(@Body() createPayableDtos: CreatePayableDto[]) {
+    await this.producer.addToQueue(createPayableDtos);
+    return { message: 'Payables are being processed' };
   }
 
   @Get()
