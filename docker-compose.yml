@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.8.16-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 8080:15672
+
+    environment:
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "admin"
+
+  bankme-consumer:
+    build: ./consumer
+    container_name: bankme-consumer
+    tty: true
+    stdin_open: true
+    command: run start:dev
+
+    working_dir: /app
+    volumes:
+      - ./consumer/src:/app/src
+      - ./consumer/test:/app/test
+      - ./consumer/prisma:/app/prisma
+
+    env_file:
+      - ./consumer/.env
+
+    depends_on:
+      database:
+        condition: service_healthy
+
+  bankme-api:
+    build: ./bankme
+    container_name: bankme-api
+    tty: true
+    stdin_open: true
+    command: run start:dev
+
+    working_dir: /app
+    volumes:
+      - ./bankme/src:/app/src
+      - ./bankme/test:/app/test
+      - ./bankme/prisma:/app/prisma
+    depends_on:
+      database:
+        condition: service_healthy
+
+    ports:
+      - 3000:3000
+
+    env_file:
+      - ./bankme/.env
+      
+  database:
+    image: mysql:8.0.29
+    container_name: receitas_db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DB_NAME: ${DB_NAME}
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
