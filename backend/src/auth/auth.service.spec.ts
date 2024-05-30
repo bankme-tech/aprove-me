@@ -4,6 +4,7 @@ import { FakeEncrypterAdapter } from 'src/shared/adapters';
 import { UserModule } from 'src/user/user.module';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
+import { JwtService } from '@nestjs/jwt';
 
 const now = new Date();
 
@@ -20,12 +21,16 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         {
-          provide: UserService,
-          useValue: FakeUserService,
-        },
-        {
           provide: 'Encrypter',
           useClass: FakeEncrypterAdapter,
+        },
+        {
+          provide: JwtService,
+          useValue: jest.fn(),
+        },
+        {
+          provide: UserService,
+          useValue: FakeUserService,
         },
       ],
     }).compile();
