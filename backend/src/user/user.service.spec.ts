@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { InMemoryDatabase } from 'src/infra/database/inMemory';
 import { getUsersSeed } from 'src/infra/database/inMemory/seed';
 import { PrismaService } from 'src/infra/database/prisma.service';
+import { FakeEncrypterAdapter } from 'src/shared/adapters';
 import { UserService } from './user.service';
 
 const now = new Date();
@@ -14,6 +15,10 @@ describe('UserService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
+        {
+          provide: 'Encrypter',
+          useClass: FakeEncrypterAdapter,
+        },
         {
           provide: PrismaService,
           useValue: {
@@ -29,6 +34,24 @@ describe('UserService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('create', () => {
+    it('should create an user with encrypted password', async () => {
+      const login = 'aprovame';
+      const password = 'aprovame';
+
+      const result = await service.create({ login, password });
+
+      expect(result).toEqual({
+        id: '1',
+        login: 'aprovame',
+        password: 'encrypted_password',
+        createdAt: now,
+        updatedAt: now,
+        deletedAt: null,
+      });
+    });
   });
 
   describe('findOne', () => {
