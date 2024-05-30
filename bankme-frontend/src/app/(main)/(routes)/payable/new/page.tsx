@@ -31,10 +31,7 @@ const formSchema = z.object({
     value: z
         .string()
         .min(1)
-        .regex(
-            /^[0-9]+$/,
-            'O valor deve conter apenas caracteres numéricos de 0 a 9',
-        ),
+        .regex(/^[0-9]+$/),
     assignorId: z.string().min(1),
 });
 
