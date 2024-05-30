@@ -60,7 +60,7 @@ export class PayableService implements IPayableService {
 	public async findOnePayable(payableId: string): Promise<Payable> {
 		this.logger.log(`FindOnePayable - payableId: ${payableId}`);
 
-		const payable = await this.prismaService.payable.findUnique({
+		const payable = await this.prismaService.payable.findFirst({
 			where: { id: payableId },
 		});
 		if (!payable) throw new BadRequestException('Payable not found');
@@ -75,6 +75,14 @@ export class PayableService implements IPayableService {
 		this.logger.log(
 			`UpdatePayable - payableId: ${payableId} - data: ${JSON.stringify(data)}`,
 		);
+
+		const assignor = await this.prismaService.assignor.findFirst({
+			where: {
+				id: data.assignorId,
+			},
+		});
+		if (!assignor) throw new BadRequestException(`Assignor not found`);
+
 		return this.prismaService.payable.update({
 			where: { id: payableId },
 			data,
