@@ -8,7 +8,7 @@ import { UserModule } from 'src/user/user.module';
 import { UserService } from 'src/user/user.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { LocalStrategy } from './strategies';
+import { JwtStrategy, LocalStrategy } from './strategies';
 
 @Module({
   controllers: [AuthController],
@@ -27,6 +27,7 @@ import { LocalStrategy } from './strategies';
     AuthService,
     { provide: 'Encrypter', useClass: BcryptAdapter },
     ConfigService,
+    JwtStrategy,
     LocalStrategy,
     PrismaService,
     UserService,

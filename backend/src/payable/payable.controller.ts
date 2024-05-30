@@ -10,13 +10,16 @@ import {
   Patch,
   Post,
   UnprocessableEntityException,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards';
 import { NotFound, UnprocessableEntity } from 'src/shared/domain/errors';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
 import { PayableService } from './payable.service';
 
 @Controller('payable')
+@UseGuards(JwtAuthGuard)
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
