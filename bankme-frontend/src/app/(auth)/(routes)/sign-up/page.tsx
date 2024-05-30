@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 const SignUpPage: NextPage = () => {
-    const { register, handleLogin, handleSubmit, errors, isLoading } =
+    const { register, handleSignUp, handleSubmit, errors, isLoading } =
         useSignIn();
 
     return (
@@ -22,7 +22,7 @@ const SignUpPage: NextPage = () => {
             </div>
 
             <form
-                onSubmit={handleSubmit(handleLogin)}
+                onSubmit={handleSubmit(handleSignUp)}
                 className="flex flex-col pt-6 gap-3"
             >
                 <Input

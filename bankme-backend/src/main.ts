@@ -18,7 +18,9 @@ async function bootstrap() {
 		new ExpressAdapter(),
 	);
 
-	app.enableCors();
+	app.enableCors({
+		origin: '*',
+	});
 	app.use(helmet());
 	app.use(compression());
 	app.use(json({ limit: '30mb' }));

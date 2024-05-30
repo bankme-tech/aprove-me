@@ -12,3 +12,9 @@ export const createAssignor = async (data: ICreateAssignor) => {
 export const listAssignors = async () => {
     return api.get<IAssignor[]>(`/assignor`).then((res) => res.data);
 };
+
+export const getAssignor = async (assignorId: string) => {
+    return api
+        .get<IAssignor>(`/assignor/${assignorId}`)
+        .then((res) => res.data);
+};

@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { jwtDecode } from 'jwt-decode';
 
 // LIBS
-import { api } from './axios';
+import { serverSideApi } from './axios';
 
 // INTERFACES
 import { IUser } from '@/interfaces/user.interface';
@@ -33,8 +33,8 @@ export const authOptions: NextAuthOptions = {
                     throw new Error('Invalid data');
                 }
                 try {
-                    const { token } = await api
-                        .post<{ token: string }>(`auth/login`, credentials)
+                    const { token } = await serverSideApi
+                        .post<{ token: string }>(`/auth/login`, credentials)
                         .then((res) => res.data);
 
                     if (!token) {

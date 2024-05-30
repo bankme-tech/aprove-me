@@ -24,7 +24,7 @@ const useSignIn = () => {
     } = useForm<FormType>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            login: 'login',
+            login: 'bankme',
             password: '123',
         },
     });

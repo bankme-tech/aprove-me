@@ -4,9 +4,10 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { useMutation } from '@tanstack/react-query';
 
-// LIBS
-import { api } from '@/lib/axios';
+// SERVICES
+import { registerUser } from '@/services/auth.service';
 
 const formSchema = z.object({
     login: z.string().min(1),
@@ -18,9 +19,7 @@ const formSchema = z.object({
 type FormType = z.infer<typeof formSchema & FieldValues>;
 
 const useSignIn = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const { push } = useRouter();
-
     const {
         handleSubmit,
         register,
@@ -33,40 +32,35 @@ const useSignIn = () => {
         },
     });
 
-    const handleLogin: SubmitHandler<FormType> = useCallback(
+    const registerMutation = useMutation({
+        mutationKey: [`register`],
+        mutationFn: registerUser,
+    });
+
+    const handleSignUp: SubmitHandler<FormType> = useCallback(
         async (data, event) => {
             event?.preventDefault();
 
-            try {
-                setIsLoading(true);
-
-                await api.post(`/users/register`, data);
-
-                toast.success('Registered successfully');
-
-                setTimeout(() => push('/sign-in'), 500);
-            } catch (error: any) {
-                console.error({ error });
-                const errorMsg =
-                    error.response?.data ||
-                    error.message ||
-                    'Something went wrong';
-
-                return toast.error(errorMsg, {
-                    description: 'Please try again',
-                });
-            } finally {
-                setIsLoading(false);
-            }
+            toast.promise(registerMutation.mutateAsync(data), {
+                loading: `Submitting...`,
+                error: (error: any) => {
+                    return (
+                        error.response?.data ||
+                        error.message ||
+                        'Something went wrong'
+                    );
+                },
+                success: `Registered successfully`,
+            });
         },
-        [],
+        [registerMutation],
     );
 
     return {
         handleSubmit,
-        handleLogin,
+        handleSignUp,
         register,
-        isLoading,
+        isLoading: registerMutation.isPending,
         errors,
     };
 };

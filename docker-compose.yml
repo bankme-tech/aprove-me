@@ -6,7 +6,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./bankme-backend
-    env_file: .env.docker
+    env_file: ./bankme-backend/.env.docker
     ports:
       - "8080:8080"
     volumes:
@@ -25,14 +25,20 @@ services:
     build:
         dockerfile: Dockerfile
         context: ./bankme-frontend
-    env_file: .env.docker
+    # env_file: ./bankme-frontend/.env.docker
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:8080/api/integrations"
+      NEXT_PUBLIC_API_URL_SERVER_SIDE: "http://backend:8080/api/integrations"
+      NEXTAUTH_SECRET: "logindobatman"
     ports:
         - 3000:3000
     volumes:
         - .:/home/app:cached
         - ./package.json:/home/app/package.json:cached
+    depends_on:
+      - backend
     networks:
-        - default_services_network
+        - bankme-services
 
   database:
     image: postgres:14.4-alpine
@@ -58,7 +64,7 @@ services:
       - 5672:5672
       - 15672:15672
     env_file:
-      - .env.docker
+      - ./bankme-backend/.env.docker
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:15672"]
       interval: 5s
