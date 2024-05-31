@@ -41,11 +41,17 @@ export const FormPayable = () => {
   const goBack = () => router.back();
 
   const onSubmit = async (data: any) => {
-    await createPayable({
+    const res = await createPayable({
       ...data,
       value: parseFloat(data.value),
       emissionDate: new Date(data.emissionDate),
     });
+
+    if (res instanceof Error) {
+      // TODO: show error message
+
+      return;
+    }
 
     goBack();
   };
