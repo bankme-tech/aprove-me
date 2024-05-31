@@ -1,7 +1,6 @@
 "use client";
 
 import { authenticate } from "@/services";
-import { isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Button } from "../atoms/Button";
@@ -18,7 +17,7 @@ export const FormLogin = () => {
 
   const onSubmit = async (data: any) => {
     const authenticated = await authenticate(data);
-    if (isAxiosError(authenticated)) {
+    if (authenticated instanceof Error) {
       return;
     }
 
@@ -41,12 +40,14 @@ export const FormLogin = () => {
         title="Login"
         placeholder="Digite seu login..."
         form={{ name: "login", register }}
+        error={errors}
       />
       <FormField
         title="Senha"
         type="password"
         placeholder="Digite sua senha..."
         form={{ name: "password", register }}
+        error={errors}
       />
 
       <div className="flex items-center justify-between">
