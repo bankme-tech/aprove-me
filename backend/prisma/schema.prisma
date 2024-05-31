@@ -28,7 +28,7 @@ model Payable {
   value        Float
   emissionDate DateTime 
   assignorId   String
-  assignor     Assignor @relation(fields: [assignorId], references: [id])
+  assignor     Assignor @relation(fields: [assignorId], references: [id], onDelete: Cascade)
   userPayables UserPayable[]
 }
 
@@ -43,8 +43,8 @@ model UserPayable {
   id         String  @id @default(uuid())
   userId     String
   payableId  String
-  user       User    @relation(fields: [userId], references: [id])
-  payable    Payable @relation(fields: [payableId], references: [id])
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payable    Payable @relation(fields: [payableId], references: [id], onDelete: Cascade)
 
   @@unique([userId, payableId])
 }

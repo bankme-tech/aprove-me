@@ -24,7 +24,6 @@ export class CrudStrategyService<T, C, U> {
   async findOne(query: PrismaQuery | string): Promise<T> {
     // TODO: Should extensible for new queries and closed to changes
     const findById = typeof query === 'string';
-    console.log('🚀 ~ CrudStrategyService<T, ~ findOne ~ findById:', findById);
     const data = await this.prisma[this.model].findUnique(
       findById
         ? {
