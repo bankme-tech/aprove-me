@@ -1,4 +1,4 @@
-import axios from "axios";
+import { authenticatedFetch } from "./authenticatedFetch";
 
 type Auth = {
   login: string;
@@ -7,17 +7,20 @@ type Auth = {
 
 export const authenticate = async (auth: Auth) => {
   try {
-    const { data } = await axios.post(
-      "http://localhost:4000/v1/integrations/auth",
-      auth,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "*/*",
-        },
-      }
-    );
+    const response = await fetch("http://localhost:4000/v1/integrations/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+      },
+      body: JSON.stringify(auth),
+    });
 
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
     return data.data;
   } catch (error) {
     console.error("Erro na solicitação:", error);
@@ -33,17 +36,18 @@ export const findManyPayable = async ({
   page: number;
 }) => {
   try {
-    const { data } = await axios.get(
+    const response = await authenticatedFetch(
       `http://localhost:4000/v1/integrations/payable?limit=${limit}&page=${page}`,
-
       {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+        method: "GET",
       }
     );
 
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
     return data.data;
   } catch (error) {
     console.error("Erro na solicitação:", error);
@@ -59,17 +63,18 @@ export const findManyAssignor = async ({
   page: number;
 }) => {
   try {
-    const { data } = await axios.get(
+    const response = await authenticatedFetch(
       `http://localhost:4000/v1/integrations/assignor?limit=${limit}&page=${page}`,
-
       {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+        method: "GET",
       }
     );
 
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
     return data.data;
   } catch (error) {
     console.error("Erro na solicitação:", error);
@@ -79,17 +84,18 @@ export const findManyAssignor = async ({
 
 export const findOnePayable = async (id: string) => {
   try {
-    const { data } = await axios.get(
+    const response = await authenticatedFetch(
       `http://localhost:4000/v1/integrations/payable/${id}`,
-
       {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+        method: "GET",
       }
     );
 
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
     return data.data;
   } catch (error) {
     console.error("Erro na solicitação:", error);
@@ -98,19 +104,19 @@ export const findOnePayable = async (id: string) => {
 };
 
 export const findOneAssignor = async (assignorId: string) => {
-  console.log("🚀 ~ findOneAssignor ~ assignorId:", assignorId);
   try {
-    const { data } = await axios.get(
+    const response = await authenticatedFetch(
       `http://localhost:4000/v1/integrations/assignor/${assignorId}`,
-
       {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+        method: "GET",
       }
     );
 
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
     return data.data;
   } catch (error) {
     console.error("Erro na solicitação:", error);
@@ -120,17 +126,19 @@ export const findOneAssignor = async (assignorId: string) => {
 
 export const createPayable = async (body: any) => {
   try {
-    const { data } = await axios.post(
+    const response = await authenticatedFetch(
       `http://localhost:4000/v1/integrations/payable/`,
-      body,
       {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+        method: "POST",
+        body: JSON.stringify(body),
       }
     );
 
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
     return data.data;
   } catch (error) {
     console.error("Erro na solicitação:", error);
