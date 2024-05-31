@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, OnModuleInit } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, OnModuleInit, Query } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { CreatePayableDto } from './dto/create-payable.dto';
 import { UpdatePayableDto } from './dto/update-payable.dto';
@@ -28,11 +28,14 @@ export class PayableController implements OnModuleInit {
     await this.producer.addToQueue(createPayableDtos);
     return { message: 'Payables are being processed' };
   }
-
   @Get()
-  findAll() {
-    return this.payableService.findAll();
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.payableService.findAll({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {

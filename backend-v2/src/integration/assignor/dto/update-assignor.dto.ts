@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export class UpdateAssignorDto implements Prisma.AssignorUpdateInput {
     id?: string;

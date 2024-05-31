@@ -21,7 +21,6 @@ export class PayableConsumerService implements OnModuleInit {
             noLocal: false,
             exclusive: false,
             args: {},
-            // onMessage: this.onMessageReceived.bind(this),
             onConsumeError: (error) => this.logger.error('Consume Error:', error),
             onFailure: (error) => this.logger.error('Processing Failed:', error),
         });

@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export class UpdatePayableDto implements Prisma.PayableUpdateInput {
   id?: string;

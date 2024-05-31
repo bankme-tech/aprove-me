@@ -12,7 +12,7 @@ type ConsumerOptions<T> = {
     prefetchCount: number;
     noLocal: boolean;
     exclusive: boolean;
-    args: any;
+    args?: Record<string, unknown>
     onMessage?: (msg: T) => void;
     onConsumeError?: (msg: T) => void;
     onConsumeOk?: (msg: T) => void;
