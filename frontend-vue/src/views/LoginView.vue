@@ -1,65 +1,58 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
-  import { useRouter, useRoute } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
-  const router = useRouter()
-  const route = useRoute()
-  const email = ref('')
-  const password = ref('')
-  const errorMessage = ref('')
+const router = useRouter();
+const route = useRoute();
+const email = ref('');
+const password = ref('');
+const errorMessage = ref('');
 
-  const signIn = async (e: Event) => {
-    e.preventDefault()
-    const next_router = route.query.next as string 
-    
-    if(!next_router) {
-      errorMessage.value = ""
-    }
+const signIn = async (e: Event) => {
+  e.preventDefault();
+  const nextRouter = route.query.next || '/'; 
 
-    const result = await fetch("http://localhost:3000/integrations/auth", {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ email: email.value, password: password.value })
-    })
-    const data = await result.json()
-    if (result.ok) {
-      localStorage.setItem("session-token", data.token)
-      router.push('/payableform')
-      return
-    } else {
-      errorMessage.value = data.message || "Erro desconhecido durante o login."
-    }
+  const result = await fetch("http://localhost:3000/integrations/auth", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email.value, password: password.value })
+  });
+  const data = await result.json();
+
+  if (result.ok) {
+    localStorage.setItem("session-token", data.token);
+    router.push(nextRouter);
+  } else {
+    errorMessage.value = data.message || "Erro desconhecido durante o login.";
   }
+};
 
-  const signUp = async (e: Event) => {
-    e.preventDefault()
-    const next_router = route.query.next as string
-    
-    if(!next_router) {
-      errorMessage.value = ""
-    }
+const signUp = async (e: Event) => {
+  e.preventDefault();
+  const nextRouter = route.query.next || '/'; 
 
-    const result = await fetch("http://localhost:3000/integrations/register", {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ email: email.value, password: password.value })
-    })
-    const data = await result.json()
+  const result = await fetch("http://localhost:3000/integrations/register", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email.value, password: password.value })
+  });
+  const data = await result.json();
 
-    if (result.ok) {
-      localStorage.setItem("session-token", data.token)
-      router.push(next_router)
-    } else {
-      errorMessage.value = data.message || "Erro desconhecido durante o registro."
-    }
+  if (result.ok) {
+    localStorage.setItem("session-token", data.token);
+    router.push(nextRouter);
+  } else {
+    errorMessage.value = data.message || "Erro desconhecido durante o registro.";
   }
+};
 
-  onMounted(() => {
-    if(route.query.next) {
-      errorMessage.value = "Ops! Parece que o seu token expirou. Por favor, faça o login novamente"
-    }
-  })
+onMounted(() => {
+  if (route.query.next) {
+    errorMessage.value = route.query.message
+  }
+});
 </script>
+
 
 
 <template>

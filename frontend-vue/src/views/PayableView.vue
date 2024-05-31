@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 interface Assignor {
     id: string;
@@ -8,18 +8,10 @@ interface Assignor {
 }
 
 const router = useRouter();
+const route = useRoute();
 
 const assignorName = ref('');
-const emissionDate = ref(new Date().toISOString().substring(0, 10))/**
- * Computes the total amount payable for the given items.
- *
- * @param {Object[]} items - An array of items, where each item is an object with `price` and `quantity` properties.
- * @returns {number} The total amount payable for the given items.
- */
-function computeTotalPayable(items) {
-    return items.reduce((total, item) => total + item.price * item.quantity, 0);
-}
-
+const emissionDate = ref(new Date().toISOString().substring(0, 10));
 const payableAmount = ref('');
 const assignors = ref<Assignor[]>([]);
 
@@ -31,18 +23,29 @@ const validateField = (fieldValue: string) => {
     return fieldValue.trim().length === 0;
 };
 
-/**
- * Fetches a list of assignors from the server.
- * @returns {Promise<Assignor[]>} A promise that resolves to an array of assignor objects.
- */
+const handleUnauthorized = () => {
+    const currentPath = router.currentRoute.value.fullPath;
+    router.push({
+        path: '/login',
+        query: {
+            next: currentPath,
+            message: "Ops, parece que a autenticação expirou"
+        }
+    });
+};
+
 const fetchAssignors = async () => {
     try {
         const response = await fetch('http://localhost:3000/integrations/assignor/', {
             method: "GET",
             headers: { 'Authorization': `Bearer ${localStorage.getItem("session-token")}` }
         });
-        const data: Assignor[] = await response.json();
-        assignors.value = data;
+        if (response.status === 401) {
+            handleUnauthorized();
+        } else {
+            const data: Assignor[] = await response.json();
+            assignors.value = data;
+        }
     } catch (error) {
         console.error('Failed to fetch assignors:', error);
     }
@@ -51,14 +54,10 @@ const fetchAssignors = async () => {
 onMounted(fetchAssignors);
 
 /**
- * Asynchronously inserts a new payable record.
- *
- * This function is responsible for validating the input fields, formatting the emission date,
- * finding the assignor ID, and sending the payable data to the server. If the request is successful,
- * the user is redirected to the payable list page.
+ * Asynchronously inserts a new payable record with the provided assignor, emission date, and amount.
  *
  * @param {Event} e - The event object passed to the function.
- * @returns {Promise<void>} - A Promise that resolves when the payable is successfully inserted.
+ * @returns {Promise<void>} - A Promise that resolves when the payable record has been inserted or an error has occurred.
  */
 const insertPayable = async (e: Event) => {
     e.preventDefault();
@@ -88,13 +87,19 @@ const insertPayable = async (e: Event) => {
         });
 
         if (result.ok) {
-            router.push('/payableList');
+            router.push('/listpayable');
         } else {
-            console.error('Failed to post payables:', await result.text());
+            if (result.status === 401) {
+                handleUnauthorized();
+            } else {
+                console.error('Failed to post payables:', await result.text());
+            }
         }
     }
 };
 </script>
+
+
 
 <template>
     <form @submit.prevent="insertPayable" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

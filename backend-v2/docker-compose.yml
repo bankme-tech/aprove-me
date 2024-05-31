@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      NODE_ENV: "development"
+      RABBITMQ_URI: "amqp://rabbitmq"
+      EMAIL_HOST: "mailhog"
+      EMAIL_PORT: 1025
+      EMAIL_USER: "anyuser"
+      EMAIL_PASS: "anypass"
+      SESSION_EXPIRY_MINUTES: "1"
+    depends_on:
+      - rabbitmq
+      - mailhog
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    restart: always
