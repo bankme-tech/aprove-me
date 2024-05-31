@@ -20,7 +20,7 @@ export class PayableDto extends BaseModel {
   @ApiProperty()
   assignorId: string;
 
-  @ApiProperty()
   @IsDateString()
+  @ApiProperty()
   emissionDate: Date;
 }
