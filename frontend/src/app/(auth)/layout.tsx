@@ -1,11 +1,10 @@
 "use client";
 
 import { Sidebar } from "@/components/organisms/Sidebar";
+import { Children } from "@/types/children";
 import { useRouter } from "next/navigation";
 
-const DashboardLayout = ({
-  children, // will be a page or nested layout
-}: any) => {
+const DashboardLayout = ({ children }: Children) => {
   const router = useRouter();
 
   if (!localStorage.getItem("token")) {
