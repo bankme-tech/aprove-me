@@ -28,7 +28,7 @@ export const Payable = () => {
       <Table
         headerContent={header}
         bodyContent={deferredPayable}
-        linkToEdit="/payable/edit"
+        linkToEdit="/payable"
       ></Table>
     </>
   );

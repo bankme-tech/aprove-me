@@ -5,9 +5,16 @@ type TableLine = {
   content: any; // TODO: to fix
   keys?: string[];
   link?: string; // TODO: add type conditional
+  exclude?: boolean;
 };
 
-export const TableLine = ({ edit, content, keys, link }: TableLine) => {
+export const TableLine = ({
+  edit,
+  content,
+  keys,
+  link,
+  exclude,
+}: TableLine) => {
   return (
     <tr {...(edit && { className: "hover:bg-success" })}>
       {keys
@@ -27,10 +34,19 @@ export const TableLine = ({ edit, content, keys, link }: TableLine) => {
               {value}
             </td>
           ))}
-      <td className="py-4 px-6 text-sm font-medium text-right whitespace-nowrap ">
+      <td className="py-4 px-6 text-sm font-medium text-right whitespace-nowrap space-x-4 ">
         {edit && (
-          <Link href={link + "?id=" + content.id}>
-            <span className="text-primary-dark hover:underline">Edit</span>
+          <Link href={link + "/edit?id=" + content.id}>
+            <span className="text-primary-dark hover:underline hover:text-primary hover:font-bold">
+              Editar
+            </span>
+          </Link>
+        )}
+        {exclude && (
+          <Link href={link + "/delete?id=" + content.id}>
+            <span className="text-primary-dark hover:underline hover:text-red-500 hover:font-bold">
+              Excluir
+            </span>
           </Link>
         )}
       </td>

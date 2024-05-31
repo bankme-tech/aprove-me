@@ -5,10 +5,10 @@ import { DialogHeader } from "../molecules/DialogHeader";
 export const Dialog = ({
   title,
   confirm,
-  cancel,
   children,
   padding,
   dialogForm,
+  onConfirm,
 }: any) => {
   const router = useRouter();
   const goBack = () => router.back();
@@ -24,7 +24,13 @@ export const Dialog = ({
         <div className="relative bg-white rounded-lg shadow">
           <DialogHeader title={title} goBack={goBack} />
           <div className={padding ? "p-4 " : ""}>{children}</div>
-          {!dialogForm && <DialogFooter goBack={goBack} />}
+          {!dialogForm && (
+            <DialogFooter
+              goBack={goBack}
+              confirm={confirm}
+              onConfirm={onConfirm}
+            />
+          )}
         </div>
       </div>
     </div>
