@@ -9,7 +9,7 @@ type TableLine = {
 
 export const TableLine = ({ edit, content, keys, link }: TableLine) => {
   return (
-    <tr className={edit ? "hover:bg-success" : ""}>
+    <tr {...(edit && { className: "hover:bg-success" })}>
       {keys
         ? keys.map((key: any) => (
             <td

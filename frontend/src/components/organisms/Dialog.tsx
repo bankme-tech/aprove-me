@@ -24,7 +24,7 @@ export const Dialog = ({
         <div className="relative bg-white rounded-lg shadow">
           <DialogHeader title={title} goBack={goBack} />
           <div className={padding ? "p-4 " : ""}>{children}</div>
-          {!dialogForm && <DialogFooter onClose={goBack} />}
+          {!dialogForm && <DialogFooter goBack={goBack} />}
         </div>
       </div>
     </div>
