@@ -10,17 +10,18 @@ import { BaseModel } from 'src/models/baseModel.dto';
 
 export class PayableDto extends BaseModel {
   @IsNumber()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'value must not be empty' })
   @IsPositive()
   @ApiProperty()
   value: number;
 
   @IsUUID()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'assignorId must not be empty' })
   @ApiProperty()
   assignorId: string;
 
   @IsDateString()
+  @IsNotEmpty({ message: 'emissionDate must not be empty' })
   @ApiProperty()
   emissionDate: Date;
 }

@@ -4,12 +4,12 @@ import { BaseModel } from 'src/models/baseModel.dto';
 
 export class UserDto extends BaseModel {
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'login must not be empty' })
   @ApiProperty()
   login: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'password must not be empty' })
   @ApiProperty()
   password: string;
 }

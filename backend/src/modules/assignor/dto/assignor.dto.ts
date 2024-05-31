@@ -4,12 +4,12 @@ import { BaseModel } from 'src/models/baseModel.dto';
 
 export class AssignorDto extends BaseModel {
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'document must not be empty' })
   @ApiProperty()
   document: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'email must not be empty' })
   @ApiProperty()
   email: string;
 
@@ -19,7 +19,7 @@ export class AssignorDto extends BaseModel {
   phone: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'name must not be empty' })
   @ApiProperty()
   name: string;
 }
