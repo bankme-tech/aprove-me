@@ -1,4 +1,3 @@
-"use server";
 import LogoStatic from "../../assets/logo-bankme.png";
 import { Image } from "../atoms/Image";
 

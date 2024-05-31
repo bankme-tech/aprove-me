@@ -53,7 +53,6 @@ export class PayableProcessor {
     data: Omit<PayableDto, 'id'>[];
     user: JwtPayload;
   }) {
-    console.log('🚀 ~ PayableProcessor ~ data:', data);
     // Fake service email
     // await this.mailerService.sendMail({
     //   to: 'operations@example.com',

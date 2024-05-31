@@ -9,7 +9,7 @@ export const TableBody = ({ content, keys, link }: any) => {
           ? content.map((row: any) => {
               return (
                 <TableLine
-                  key={row.key}
+                  key={row.id}
                   content={row}
                   keys={keys}
                   link={link}

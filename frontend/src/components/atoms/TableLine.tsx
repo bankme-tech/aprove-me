@@ -20,15 +20,15 @@ export const TableLine = ({
       {keys
         ? keys.map((key: any) => (
             <td
-              key={key}
+              key={`${key}-${content}`}
               className="py-4 px-6 text-sm font-medium text-primary-dark whitespace-nowrap"
             >
               {content[key]}
             </td>
           ))
-        : content.map(({ id, value }: any) => (
+        : content.map(({ key, value }: any) => (
             <td
-              key={id}
+              key={key}
               className="py-4 px-6 text-sm font-medium text-primary-dark whitespace-nowrap"
             >
               {value}

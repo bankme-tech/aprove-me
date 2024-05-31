@@ -1,12 +1,13 @@
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+import { Logo } from "../molecules/Logo";
 import { SidebarLine } from "../molecules/SidebarLine";
 
 const DynamicLogo = dynamic(
   () => import("../molecules/Logo").then(({ Logo }) => Logo),
   {
     loading: () => <p>Carregando...</p>,
-    ssr: true,
+    ssr: false,
   }
 );
 
@@ -81,7 +82,7 @@ export const Sidebar = () => {
   return (
     <div className="h-screen relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700  w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
-        <DynamicLogo />
+        <Logo />
       </div>
       <nav className="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
         {lines.map((line) => (
