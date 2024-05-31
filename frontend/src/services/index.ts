@@ -166,3 +166,25 @@ export const createPayable = async (body: any) => {
     return error;
   }
 };
+
+export const updatePayable = async (body: any, id: string) => {
+  try {
+    const response = await authenticatedFetch(
+      `http://localhost:4000/v1/integrations/payable/${id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(body),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Erro na solicitação:", error);
+    return error;
+  }
+};

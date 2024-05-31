@@ -1,6 +1,5 @@
 "use client";
 
-import { PayableProvider } from "@/context/payable.context";
 import { deleteOnePayable } from "@/services";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -24,7 +23,7 @@ const PayableLayout = ({ children }: any) => {
   }, [pathname]);
 
   return (
-    <PayableProvider>
+    <>
       {isModalOpen && (
         <Dialog
           {...(pathname !== "/payable/delete"
@@ -51,7 +50,7 @@ const PayableLayout = ({ children }: any) => {
         </Dialog>
       )}
       {payableComponent}
-    </PayableProvider>
+    </>
   );
 };
 

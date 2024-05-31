@@ -1,9 +1,9 @@
 "use client";
 
-import { FormPayable } from "@/components/organisms/FormPayable";
+import { FormPayableEdit } from "@/components/organisms/FormPayableEdit";
 
 const PayableEdit = () => {
-  return <FormPayable />;
+  return <FormPayableEdit />;
 };
 
 export default PayableEdit;
