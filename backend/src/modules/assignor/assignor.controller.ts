@@ -5,10 +5,12 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { Assignor } from '@prisma/client';
+import { JwtPayload } from 'src/types/jwt-payload.types';
 import { AuthGuard } from '../auth/auth.guard';
 import { CrudStrategyController } from '../crud-strategy/crud-strategy.controller';
 import { AssignorService } from './assignor.service';
@@ -33,8 +35,11 @@ export class AssignorController extends CrudStrategyController<
   @Post()
   @ApiBody({ type: AssignorNoBaseModelDto })
   @HttpCode(201)
-  async create(@Body() createDto: AssignorNoBaseModel): Promise<Assignor> {
-    return await this.assignorService.create(createDto);
+  async create(
+    @Body() createDto: AssignorNoBaseModel,
+    @Req() req,
+  ): Promise<Assignor> {
+    return await this.assignorService.create(createDto, req.user as JwtPayload);
   }
 
   @ApiBody({ type: AssignorNoBaseModelDto })

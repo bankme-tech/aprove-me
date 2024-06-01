@@ -3,9 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Payable } from '@prisma/client';
 import Bull, { Queue } from 'bull';
 import { PrismaService } from 'src/config/prisma.service';
-import { JwtPayload } from 'src/types/jwt-payload.types';
 import { CrudStrategyService } from '../crud-strategy/crud-strategy.service';
-import { UserPayableService } from '../user-payable/user-payable.service';
 import { AssignorService } from './../assignor/assignor.service';
 import { PayableDto } from './dto/payable.dto';
 @Injectable()
@@ -20,7 +18,7 @@ export class PayableService extends CrudStrategyService<
   constructor(
     @InjectQueue('payable') private queue: Queue,
     private readonly assignorService: AssignorService,
-    private readonly userPayableService: UserPayableService,
+
     prisma: PrismaService,
   ) {
     super(prisma, 'Payable');
@@ -35,19 +33,11 @@ export class PayableService extends CrudStrategyService<
     return this.result;
   }
 
-  async create(
-    data: Omit<PayableDto, 'id'>,
-    user: JwtPayload,
-  ): Promise<Payable> {
+  async create(data: Omit<PayableDto, 'id'>): Promise<Payable> {
     await this.assignorService.findOne(data.assignorId);
 
     const payable = await this.refPrisma.payable.create({
       data,
-    });
-
-    await this.userPayableService.create({
-      payableId: payable.id,
-      userId: user.id,
     });
 
     return payable;
@@ -55,11 +45,9 @@ export class PayableService extends CrudStrategyService<
 
   async createMany(
     data: Omit<PayableDto, 'id'>[],
-    user: JwtPayload,
   ): Promise<Bull.Job<string | null>> {
     return this.queue.add('createPayable', {
       data,
-      user,
     });
   }
 }

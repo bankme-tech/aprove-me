@@ -1,10 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,36 +8,36 @@ datasource db {
 }
 
 model Assignor {
-  id       String   @id @default(uuid())
-  document String   
-  email    String  
-  phone    String  
-  name     String   
-  payables Payable[]
+  id           String         @id @default(uuid())
+  document     String   
+  email        String  
+  phone        String  
+  name         String   
+  payables     Payable[]
+  userAssignors UserAssignor[]  
 }
 
 model Payable {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   value        Float
   emissionDate DateTime 
   assignorId   String
-  assignor     Assignor @relation(fields: [assignorId], references: [id], onDelete: Cascade)
-  userPayables UserPayable[]
+  assignor     Assignor  @relation(fields: [assignorId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id       String   @id @default(uuid())
-  login    String   @unique
-  password String
-  userPayables UserPayable[]
+  id           String         @id @default(uuid())
+  login        String         @unique
+  password     String
+  userAssignors UserAssignor[]  
 }
 
-model UserPayable { 
-  id         String  @id @default(uuid())
-  userId     String
-  payableId  String
-  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  payable    Payable @relation(fields: [payableId], references: [id], onDelete: Cascade)
+model UserAssignor { 
+  id         String     @id @default(uuid())
+  userId     String     
+  assignorId String     
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assignor   Assignor   @relation(fields: [assignorId], references: [id])
 
-  @@unique([userId, payableId])
+  @@unique([userId, assignorId])  // Garante que a combinação de userId e assignorId é única
 }

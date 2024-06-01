@@ -6,7 +6,6 @@ import {
 } from '@nestjs/bull';
 import { Payable } from '@prisma/client';
 import { Job } from 'bull';
-import { JwtPayload } from 'src/types/jwt-payload.types';
 import { PayableDto } from './dto/payable.dto';
 import { PayableService } from './payable.service';
 
@@ -15,18 +14,16 @@ export class PayableProcessor {
   constructor(private readonly payableService: PayableService) {}
 
   @Process('createPayable')
-  async handleCreatePayable(
-    job: Job<{ data: Omit<PayableDto, 'id'>[]; user: JwtPayload }>,
-  ) {
+  async handleCreatePayable(job: Job<{ data: Omit<PayableDto, 'id'>[] }>) {
     try {
-      const { data, user } = job.data;
+      const { data } = job.data;
 
       if (data.length > 10000) {
         throw new Error('Exceeded the maximum allowed');
       }
 
       for (const payable of data) {
-        await this.payableService.create(payable, user);
+        await this.payableService.create(payable);
       }
 
       if (data.length >= 10) {
@@ -49,10 +46,8 @@ export class PayableProcessor {
       await this.sendEmailToOperations(job.data);
     }
   }
-  async sendEmailToOperations(data: {
-    data: Omit<PayableDto, 'id'>[];
-    user: JwtPayload;
-  }) {
+  async sendEmailToOperations(data: { data: Omit<PayableDto, 'id'>[] }) {
+    console.log('🚀 ~ PayableProcessor ~ sendEmailToOperations ~ data:', data);
     // Fake service email
     // await this.mailerService.sendMail({
     //   to: 'operations@example.com',
