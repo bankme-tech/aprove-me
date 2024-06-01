@@ -64,7 +64,7 @@ export const Sidebar = () => {
             />
           </svg>
         ),
-        link: "#",
+        link: "/logout",
       },
     ],
     []

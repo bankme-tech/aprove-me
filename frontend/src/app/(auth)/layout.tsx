@@ -1,15 +1,25 @@
 "use client";
 
 import { Sidebar } from "@/components/organisms/Sidebar";
+import { authenticated } from "@/services";
 import { Children } from "@/types/children";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const DashboardLayout = ({ children }: Children) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<object | Error>();
   const router = useRouter();
 
-  if (!localStorage.getItem("token")) {
-    router.push("/");
+  useEffect(() => {
+    const fetch = async () => {
+      setIsAuthenticated(await authenticated());
+    };
 
+    fetch();
+  }, []);
+
+  if (isAuthenticated instanceof Error) {
+    router.push("/");
     return null;
   }
 

@@ -28,6 +28,27 @@ export const authenticate = async (auth: Auth) => {
   }
 };
 
+export const authenticated = async () => {
+  try {
+    const response = await authenticatedFetch(
+      "http://localhost:4000/v1/integrations/auth/user",
+      {
+        method: "GET",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Erro na solicitação:", error);
+    return error;
+  }
+};
+
 export const findManyPayable = async ({
   limit = 10,
   page = 1,
