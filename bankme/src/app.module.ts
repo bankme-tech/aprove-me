@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { PayableModule } from './integrations/payable/payable.module';
 import { AssignorModule } from './integrations/assignor/assignor.module';
 import { PrismaService } from './prisma/prisma.service';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './integrations/auth/auth.module';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { JwtModule } from '@nestjs/jwt';
