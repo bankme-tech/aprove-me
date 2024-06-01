@@ -58,24 +58,11 @@ export default class PayableRepository {
     );
   }
 
-  async deletePayableById(id: string): Promise<IPayable | null> {
-    const payable = await this.findPayableById(id);
-
-    if (!payable) {
-      return;
-    }
-
+  async deletePayableById(id: string): Promise<void> {
     await this.prismaService.payable.delete({
       where: {
         id,
       },
     });
-
-    return new Payable(
-      payable.id,
-      payable.value,
-      payable.emissionDate,
-      payable.assignorId,
-    );
   }
 }
