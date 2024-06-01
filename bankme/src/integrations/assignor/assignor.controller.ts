@@ -11,7 +11,7 @@ import {
 import { AssignorService } from './assignor.service';
 import Assignor from '../entity/Assignor';
 import AssignorCreationDto from '../dto/AssignorCreationDto';
-import { AuthGuard } from '../../auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('/integrations/assignor/')
 export class AssignorController {
