@@ -1,14 +1,18 @@
-import { Controller } from '@nestjs/common';
 import { PayableService } from './payable.service';
-import { EventPattern, Payload } from '@nestjs/microservices';
+import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
 import PayableCreationDto from '../dto/PayableCreationDto';
+import { Controller } from '@nestjs/common';
 
-@Controller('payable')
+@Controller()
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}
 
   @EventPattern('payable_batch')
-  processPayable(@Payload() payload: PayableCreationDto[]) {
-    return this.payableService.processPayable(payload);
+  async processPayable(
+    @Payload() payload: PayableCreationDto,
+    @Ctx() context: RmqContext,
+  ) {
+    await this.payableService.processPayable(payload, context);
+    return;
   }
 }
