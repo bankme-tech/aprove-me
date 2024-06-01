@@ -4,6 +4,7 @@ export default class Assignor implements IAssignor {
   private _id: string;
   private _document: string;
   private _email: string;
+  private _password: string;
   private _phone: string;
   private _name: string;
 
@@ -11,12 +12,14 @@ export default class Assignor implements IAssignor {
     id?: string,
     document?: string,
     email?: string,
+    password?: string,
     phone?: string,
     name?: string,
   ) {
     this.id = id;
     this.document = document;
     this.email = email;
+    this.password = password;
     this.phone = phone;
     this.name = name;
   }
@@ -45,6 +48,14 @@ export default class Assignor implements IAssignor {
     this._email = email;
   }
 
+  get password(): string {
+    return this._password;
+  }
+
+  set password(password: string) {
+    this._password = password;
+  }
+
   get phone(): string {
     return this._phone;
   }
@@ -65,6 +76,7 @@ export default class Assignor implements IAssignor {
     return {
       document: this.document,
       email: this.email,
+      password: this.password,
       phone: this.phone,
       name: this.name,
     };
