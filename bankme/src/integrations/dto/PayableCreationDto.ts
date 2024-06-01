@@ -1,6 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
 import Payable from '../entity/Payable';
-import { IPayable } from '../types/IPayables';
 
 export default class PayableCreationDto {
   @IsNotEmpty()
@@ -26,23 +25,5 @@ export default class PayableCreationDto {
     payable.assignorId = this.assignorId;
 
     return payable;
-  }
-
-  static fromEntity(payable: IPayable): PayableCreationDto {
-    const payableDto = new PayableCreationDto();
-
-    payableDto.value = payable.value;
-    payableDto.emissionDate = payable.emissionDate;
-    payableDto.assignorId = payable.assignorId;
-
-    return payableDto;
-  }
-
-  toJSON() {
-    return {
-      value: this.value,
-      emissionDate: this.emissionDate,
-      assignorId: this.assignorId,
-    };
   }
 }
