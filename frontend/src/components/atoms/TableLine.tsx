@@ -5,6 +5,7 @@ type TableLine = {
   content: any; // TODO: to fix
   keys?: string[];
   link?: string; // TODO: add type conditional
+  showMore?: boolean;
   exclude?: boolean;
 };
 
@@ -13,6 +14,7 @@ export const TableLine = ({
   content,
   keys,
   link,
+  showMore,
   exclude,
 }: TableLine) => {
   return (
@@ -39,6 +41,13 @@ export const TableLine = ({
           <Link href={link + "/edit?id=" + content.id}>
             <span className="text-primary-dark hover:underline hover:text-primary hover:font-bold">
               Editar
+            </span>
+          </Link>
+        )}
+        {showMore && (
+          <Link href={link + "/show-more?id=" + content.id}>
+            <span className="text-primary-dark hover:underline hover:text-primary hover:font-bold">
+              Ver Mais
             </span>
           </Link>
         )}

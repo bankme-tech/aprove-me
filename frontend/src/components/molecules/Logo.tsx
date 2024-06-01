@@ -8,8 +8,6 @@ export const Logo = () => {
       src={LogoStatic}
       alt="Logo da Bankme"
       layout="responsive"
-      width={500}
-      height={500}
     />
   );
 };

@@ -20,8 +20,7 @@ export const Payable = () => {
     <>
       <div className="flex w-1/3 justify-between gap-12 mb-8 ">
         <Button onClick={() => router.push("/payable/register")}>
-          {" "}
-          Pagavéis
+          Criar Pagavéis
         </Button>
         <Button> Importar pagavéis</Button>
       </div>
@@ -37,4 +36,5 @@ export const Payable = () => {
 const PayablePage = () => {
   return <></>;
 };
+
 export default PayablePage;

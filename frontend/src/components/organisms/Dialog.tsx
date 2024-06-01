@@ -1,5 +1,4 @@
 import { useRouter } from "next/navigation";
-import { DialogFooter } from "../molecules/DialogFooter";
 import { DialogHeader } from "../molecules/DialogHeader";
 
 export const Dialog = ({
@@ -24,13 +23,6 @@ export const Dialog = ({
         <div className="relative bg-white rounded-lg shadow">
           <DialogHeader title={title} goBack={goBack} />
           <div className={padding ? "p-4 " : ""}>{children}</div>
-          {!dialogForm && (
-            <DialogFooter
-              goBack={goBack}
-              confirm={confirm}
-              onConfirm={onConfirm}
-            />
-          )}
         </div>
       </div>
     </div>

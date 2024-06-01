@@ -14,6 +14,7 @@ export const TableBody = ({ content, keys, link }: any) => {
                   keys={keys}
                   link={link}
                   edit
+                  showMore
                   exclude
                 />
               );

@@ -1,15 +1,6 @@
-import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { Logo } from "../molecules/Logo";
 import { SidebarLine } from "../molecules/SidebarLine";
-
-const DynamicLogo = dynamic(
-  () => import("../molecules/Logo").then(({ Logo }) => Logo),
-  {
-    loading: () => <p>Carregando...</p>,
-    ssr: false,
-  }
-);
 
 // TODO: Create component Icons
 export const Sidebar = () => {
@@ -87,7 +78,6 @@ export const Sidebar = () => {
       <nav className="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
         {lines.map((line) => (
           <SidebarLine key={line.title} title={line.title} link={line.link}>
-            {" "}
             {line.icon}
           </SidebarLine>
         ))}
