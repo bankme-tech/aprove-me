@@ -3,6 +3,7 @@ import { PayableController } from './payable.controller';
 import { PayableService } from './payable.service';
 import { payableCreatedMock, payableToCreationMock } from './mocks/mocks';
 import PayableDto from '../dto/PayableDto';
+import { JwtService } from '@nestjs/jwt';
 
 describe('PayableController', () => {
   let payableController: PayableController;
@@ -21,6 +22,13 @@ describe('PayableController', () => {
             findPayableById: jest.fn().mockResolvedValue(payableCreatedMock),
             updatePayableById: jest.fn(),
             deletePayableById: jest.fn(),
+          },
+        },
+        {
+          provide: JwtService,
+          useValue: {
+            signAsync: jest.fn(),
+            verifyAsync: jest.fn(),
           },
         },
       ],
