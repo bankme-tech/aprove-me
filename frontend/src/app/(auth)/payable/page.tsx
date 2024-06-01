@@ -3,10 +3,10 @@
 import { Button } from "@/components/atoms/Button";
 import { Table } from "@/components/organisms/Table";
 import { useRouter } from "next/navigation";
-import { usePayable } from "./hooks/usePayable";
+import { usePayableMany } from "./hooks/usePayableMany";
 
 export const Payable = () => {
-  const { deferredPayable } = usePayable();
+  const { deferredPayable } = usePayableMany();
 
   const router = useRouter();
 

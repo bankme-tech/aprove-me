@@ -1,5 +1,6 @@
 "use client";
 
+import { PayableProvider } from "@/context/payable.context";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Dialog } from "../../../components/organisms/Dialog";
@@ -17,7 +18,7 @@ const PayableLayout = ({ children }: any) => {
   }, [pathname]);
 
   return (
-    <>
+    <PayableProvider>
       {isModalOpen && (
         <Dialog
           label="Criar pagavéis"
@@ -30,7 +31,7 @@ const PayableLayout = ({ children }: any) => {
         </Dialog>
       )}
       {payableComponent}
-    </>
+    </PayableProvider>
   );
 };
 

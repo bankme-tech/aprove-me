@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { usePayable } from "@/context/payable.context";
 import { useRouter, useSearchParams } from "next/navigation";
 import { DialogFooter } from "../molecules/DialogFooter";
 import {
@@ -28,7 +29,7 @@ const schema = z.object({
 export const FormPayableEdit = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const { setUpdate } = usePayable();
   const id = searchParams.get("id") as string;
   const [isPending, startTransition] = useTransition();
   const [options, setOptions] = useState([]);
@@ -59,6 +60,7 @@ export const FormPayableEdit = () => {
       return;
     }
 
+    setUpdate(true);
     goBack();
   };
 

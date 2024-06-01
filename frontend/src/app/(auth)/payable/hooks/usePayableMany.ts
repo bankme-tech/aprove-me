@@ -1,8 +1,10 @@
+import { usePayable } from "@/context/payable.context";
 import { findManyPayable } from "@/services";
 import { useDeferredValue, useEffect, useState } from "react";
 
-export const usePayable = () => {
+export const usePayableMany = () => {
   const [payable, setPayable] = useState([]);
+  const { update, setUpdate } = usePayable();
   const deferredPayable = useDeferredValue(payable);
 
   useEffect(() => {
@@ -13,7 +15,9 @@ export const usePayable = () => {
     };
 
     fetch();
-  }, []);
+
+    setUpdate(false);
+  }, [update, setUpdate]);
 
   return { deferredPayable };
 };

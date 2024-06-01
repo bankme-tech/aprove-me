@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { usePayable } from "@/context/payable.context";
 import { useRouter } from "next/navigation";
 import { DialogFooter } from "../molecules/DialogFooter";
 import {
@@ -27,6 +28,7 @@ const schema = z.object({
 
 export const FormPayable = () => {
   const router = useRouter();
+  const { setUpdate } = usePayable();
 
   const [isPending, startTransition] = useTransition();
   const [options, setOptions] = useState([]);
@@ -49,10 +51,10 @@ export const FormPayable = () => {
 
     if (res instanceof Error) {
       // TODO: show error message
-
       return;
     }
 
+    setUpdate(true);
     goBack();
   };
 
