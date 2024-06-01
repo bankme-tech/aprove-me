@@ -11,6 +11,7 @@ async function bootstrap() {
       options: {
         urls: ['amqp://admin:admin@rabbitmq:5672'],
         queue: 'payable_queue',
+        noAck: false,
         queueOptions: {
           durable: false,
         },
