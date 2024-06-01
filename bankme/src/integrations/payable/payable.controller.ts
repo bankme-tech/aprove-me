@@ -6,12 +6,14 @@ import {
   Param,
   Post,
   Put,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import Payable from '../entity/Payable';
 import PayableCreationDto from '../dto/PayableCreationDto';
-import { AuthGuard } from '../../auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
+import { RequestWithUser } from '../types';
 
 @Controller('integrations/payable')
 export class PayableController {
@@ -56,5 +58,17 @@ export class PayableController {
     await this.payableService.deletePayableById(id);
 
     return;
+  }
+
+  @Post('/batch')
+  @UseGuards(AuthGuard)
+  async processBatch(
+    @Request() req: RequestWithUser,
+    @Body() batchData: PayableCreationDto[],
+  ) {
+    const { user } = req;
+    await this.payableService.processBatch(batchData, user);
+
+    return 'Lote em processamento.';
   }
 }
