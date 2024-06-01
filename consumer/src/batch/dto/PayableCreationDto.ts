@@ -1,7 +1,16 @@
 import { IsNotEmpty } from 'class-validator';
 import Payable from '../entity/Payable';
 
-export default class PayableCreationDto {
+export default class PayableCreationQueueDto {
+  @IsNotEmpty()
+  batchId: string;
+
+  @IsNotEmpty()
+  total: number;
+
+  @IsNotEmpty()
+  email: string;
+
   @IsNotEmpty()
   value: number;
 
@@ -11,8 +20,14 @@ export default class PayableCreationDto {
   @IsNotEmpty()
   assignorId: string;
 
-  constructor(value?: number, emissionDate?: Date, assignorId?: string) {
+  constructor(
+    value?: number,
+    email?: string,
+    emissionDate?: Date,
+    assignorId?: string,
+  ) {
     this.value = value;
+    this.email = email;
     this.emissionDate = emissionDate;
     this.assignorId = assignorId;
   }
@@ -25,23 +40,5 @@ export default class PayableCreationDto {
     payable.assignorId = this.assignorId;
 
     return payable;
-  }
-
-  static fromEntity(payable: Payable): PayableCreationDto {
-    const payableDto = new PayableCreationDto();
-
-    payableDto.value = payable.value;
-    payableDto.emissionDate = payable.emissionDate;
-    payableDto.assignorId = payable.assignorId;
-
-    return payableDto;
-  }
-
-  toJSON() {
-    return {
-      value: this.value,
-      emissionDate: this.emissionDate,
-      assignorId: this.assignorId,
-    };
   }
 }
