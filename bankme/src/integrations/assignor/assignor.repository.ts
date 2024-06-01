@@ -22,6 +22,7 @@ export default class AssignorRepository {
       createdAssignor.document,
       createdAssignor.name,
       createdAssignor.email,
+      createdAssignor.password,
       createdAssignor.phone,
     );
   }
@@ -42,6 +43,7 @@ export default class AssignorRepository {
       assignor.document,
       assignor.name,
       assignor.email,
+      assignor.password,
       assignor.phone,
     );
   }
@@ -62,6 +64,7 @@ export default class AssignorRepository {
       assignor.document,
       assignor.name,
       assignor.email,
+      assignor.password,
       assignor.phone,
     );
   }
@@ -88,6 +91,7 @@ export default class AssignorRepository {
       updatedAssignor.document,
       updatedAssignor.name,
       updatedAssignor.email,
+      updatedAssignor.password,
       updatedAssignor.phone,
     );
   }
@@ -110,7 +114,50 @@ export default class AssignorRepository {
       deletedAssignor.document,
       deletedAssignor.name,
       deletedAssignor.email,
+      deletedAssignor.password,
       deletedAssignor.phone,
+    );
+  }
+
+  async findUserByEmail(email: string): Promise<Assignor | null> {
+    const user = await this.prismaService.assignor.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return new Assignor(
+      user.id,
+      user.document,
+      user.name,
+      user.email,
+      user.password,
+      user.phone,
+    );
+  }
+
+  async findAssignorByEmail(email: string): Promise<Assignor | null> {
+    const user = await this.prismaService.assignor.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return new Assignor(
+      user.id,
+      user.document,
+      user.name,
+      user.password,
+      user.email,
+      user.phone,
     );
   }
 }
