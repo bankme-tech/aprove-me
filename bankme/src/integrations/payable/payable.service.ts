@@ -34,26 +34,33 @@ export class PayableService {
     return PayableDto.fromEntity(payable);
   }
 
-  async updatePayableById(id: string, payable: Payable) {
+  async updatePayableById(id: string, payable: Payable, email: string) {
+    const payableFound = await this.payableRepository.findPayableById(id);
+
+    if (!payableFound) {
+      throw new HttpException('Payable not found.', HttpStatus.NOT_FOUND);
+    }
+
+    await this.verifyAuthority(email, payableFound.assignorId);
+
     const updatedPayable = await this.payableRepository.updatePayableById(
       id,
       payable,
     );
 
-    if (!updatedPayable) {
-      throw new HttpException('Payable not found.', HttpStatus.NOT_FOUND);
-    }
-
     return PayableDto.fromEntity(updatedPayable);
   }
 
-  async deletePayableById(id: string) {
-    const payable = await this.payableRepository.deletePayableById(id);
+  async deletePayableById(id: string, email: string) {
+    const payable = await this.payableRepository.findPayableById(id);
 
     if (!payable) {
       throw new HttpException('Payable not found.', HttpStatus.NOT_FOUND);
     }
 
+    await this.verifyAuthority(email, payable.assignorId);
+
+    await this.payableRepository.deletePayableById(id);
     return;
   }
 
@@ -71,11 +78,34 @@ export class PayableService {
     batchData.forEach((payableData: PayableCreationDto, _index, array) => {
       const message = {
         batchId,
-        email: user.sub,
+        email: assignor.email,
         total: array.length,
         ...payableData,
       };
+
+      if (assignor.id !== payableData.assignorId) {
+        throw new HttpException(
+          'Assignor not allowed to create payable for another assignor.',
+          HttpStatus.FORBIDDEN,
+        );
+      }
+
       this.client.emit('payable_batch', message);
     });
+  }
+
+  private async verifyAuthority(email: string, assignorId: string) {
+    const assignor = await this.assignorService.findAssignorByEmail(email);
+
+    if (!assignor) {
+      throw new HttpException('Assignor not found.', HttpStatus.NOT_FOUND);
+    }
+
+    if (assignor.id !== assignorId) {
+      throw new HttpException(
+        'Assignor not allowed to do this operation.',
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 }
