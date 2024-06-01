@@ -1,15 +1,9 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { PayableController } from './payable.controller';
 import { PayableService } from './payable.service';
 import { AssignorModule } from '../assignor/assignor.module';
 import { PrismaModule } from '../../prisma/prisma.module';
 import PayableRepository from './payable.repository';
-import ValidateBodyMiddleware from './middleware/validateBody.middleware';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
@@ -33,10 +27,4 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   controllers: [PayableController],
   providers: [PayableService, PayableRepository],
 })
-export class PayableModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(ValidateBodyMiddleware)
-      .forRoutes({ path: 'integrations/payable', method: RequestMethod.POST });
-  }
-}
+export class PayableModule {}
