@@ -40,13 +40,17 @@ export class PayableController {
   @Put('/:id')
   @UseGuards(AuthGuard)
   async updatePayableById(
+    @Request() req: RequestWithUser,
     @Param('id') id: string,
     @Body() payableBody: PayableCreationDto,
   ) {
+    const { user } = req;
     const payable: Payable = payableBody.toEntity();
+
     const responsePayable = await this.payableService.updatePayableById(
       id,
       payable,
+      user.sub,
     );
 
     return responsePayable;
@@ -54,8 +58,13 @@ export class PayableController {
 
   @Delete('/:id')
   @UseGuards(AuthGuard)
-  async deletePayableById(@Param('id') id: string) {
-    await this.payableService.deletePayableById(id);
+  async deletePayableById(
+    @Request() req: RequestWithUser,
+    @Param('id') id: string,
+  ) {
+    const { user } = req;
+
+    await this.payableService.deletePayableById(id, user.sub);
 
     return;
   }
