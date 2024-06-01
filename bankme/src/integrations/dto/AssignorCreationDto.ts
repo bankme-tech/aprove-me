@@ -1,6 +1,5 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import Assignor from '../entity/Assignor';
-import { IAssignor } from '../types/IAssignor';
 
 export default class AssignorCreationDto {
   @IsNotEmpty()
@@ -11,6 +10,9 @@ export default class AssignorCreationDto {
   email: string;
 
   @IsNotEmpty()
+  password: string;
+
+  @IsNotEmpty()
   phone: string;
 
   @IsNotEmpty()
@@ -19,11 +21,13 @@ export default class AssignorCreationDto {
   constructor(
     document?: string,
     email?: string,
+    password?: string,
     phone?: string,
     name?: string,
   ) {
     this.document = document;
     this.email = email;
+    this.password = password;
     this.phone = phone;
     this.name = name;
   }
@@ -33,29 +37,10 @@ export default class AssignorCreationDto {
 
     payableEntity.document = this.document;
     payableEntity.email = this.email;
+    payableEntity.password = this.password;
     payableEntity.name = this.name;
     payableEntity.phone = this.phone;
 
     return payableEntity;
-  }
-
-  static fromEntity(assignor: IAssignor): AssignorCreationDto {
-    const assignorDto = new AssignorCreationDto();
-
-    assignorDto.document = assignor.document;
-    assignorDto.email = assignor.email;
-    assignorDto.name = assignor.name;
-    assignorDto.phone = assignor.phone;
-
-    return assignorDto;
-  }
-
-  public toJSON() {
-    return {
-      document: this.document,
-      email: this.email,
-      phone: this.phone,
-      name: this.name,
-    };
   }
 }
