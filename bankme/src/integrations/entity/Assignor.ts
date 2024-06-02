@@ -1,12 +1,11 @@
-import { IAssignor } from '../types/IAssignor';
-
-export default class Assignor implements IAssignor {
+export default class Assignor {
   private _id: string;
   private _document: string;
   private _email: string;
   private _password: string;
   private _phone: string;
   private _name: string;
+  private _active: boolean;
 
   constructor(
     id?: string,
@@ -15,6 +14,7 @@ export default class Assignor implements IAssignor {
     password?: string,
     phone?: string,
     name?: string,
+    active?: boolean,
   ) {
     this.id = id;
     this.document = document;
@@ -22,6 +22,7 @@ export default class Assignor implements IAssignor {
     this.password = password;
     this.phone = phone;
     this.name = name;
+    this.active = active;
   }
 
   get id(): string {
@@ -70,6 +71,14 @@ export default class Assignor implements IAssignor {
 
   set name(name: string) {
     this._name = name;
+  }
+
+  get active(): boolean {
+    return this._active;
+  }
+
+  set active(active: boolean) {
+    this._active = active;
   }
 
   toCreate() {
