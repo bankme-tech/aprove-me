@@ -1,7 +1,7 @@
 "use client";
 
 import { authenticate } from "@/services";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Button } from "../atoms/Button";
 import { FormField } from "../molecules/FormField";
@@ -14,7 +14,6 @@ export const FormLogin = () => {
     formState: { errors },
   } = useForm();
   const router = useRouter();
-  const search = useSearchParams();
 
   const onSubmit = async (data: any) => {
     const authenticated = await authenticate(data);

@@ -4,7 +4,7 @@ import { PayableProvider } from "@/context/payable.context";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Dialog } from "../../../components/organisms/Dialog";
-import { Payable } from "./page";
+import { Payable } from "./payable";
 
 const pagesWithDialog = ["/register", "/edit", "/show-more", "/delete"];
 const PayableLayout = ({ children }: any) => {

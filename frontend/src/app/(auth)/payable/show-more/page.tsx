@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { usePayableOne } from "../hooks/usePayableOne";
 
-export const PayableShowMore = () => {
+const PayableShowMore = () => {
   const searchParams = useSearchParams();
 
   const { payable } = usePayableOne(searchParams.get("id") as string);

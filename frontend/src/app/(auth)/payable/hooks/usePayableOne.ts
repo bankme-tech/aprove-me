@@ -2,7 +2,7 @@ import { findOnePayable } from "@/services";
 import { useEffect, useState } from "react";
 
 export const usePayableOne = (id: string) => {
-  const [payable, setPayable] = useState([]);
+  const [payable, setPayable] = useState<any>();
 
   useEffect(() => {
     const fetch = async () => {

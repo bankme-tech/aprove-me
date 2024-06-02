@@ -5,9 +5,13 @@ import { useRouter } from "next/navigation";
 const LogOut = () => {
   const router = useRouter();
 
-  localStorage.setItem("token", "");
+  if (typeof window !== "undefined") {
+    localStorage.setItem("token", "");
+  }
 
   router.push("/");
+
+  return <></>;
 };
 
 export default LogOut;
