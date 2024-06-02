@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AssignorController } from './assignor.controller';
 import { AssignorService } from './assignor.service';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from '../../prisma/prisma.module';
 import AssignorRepository from './assignor.repository';
 
 @Module({
