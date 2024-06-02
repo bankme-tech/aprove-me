@@ -12,6 +12,7 @@ async function bootstrap() {
         urls: ['amqp://admin:admin@rabbitmq:5672'],
         queue: 'payable_queue',
         noAck: false,
+        prefetchCount: 10,
         queueOptions: {
           durable: false,
         },
