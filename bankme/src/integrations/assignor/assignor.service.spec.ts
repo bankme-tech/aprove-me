@@ -3,6 +3,7 @@ import { AssignorService } from './assignor.service';
 import AssignorRepository from './assignor.repository';
 import { assignorEntityMock, assignorToCreationMock } from './mocks/mock';
 import AssignorDto from '../dto/AssignorDto';
+import * as bcrypt from 'bcrypt';
 
 describe('AssignorService', () => {
   let assignorService: AssignorService;
@@ -15,12 +16,10 @@ describe('AssignorService', () => {
         {
           provide: AssignorRepository,
           useValue: {
-            createAssignorRegister: jest
-              .fn()
-              .mockResolvedValue(assignorEntityMock),
-            findAssignorById: jest.fn().mockResolvedValue(assignorEntityMock),
-            updateAssignorById: jest.fn().mockResolvedValue(assignorEntityMock),
-            deleteAssignorById: jest.fn().mockResolvedValue(assignorEntityMock),
+            createAssignorRegister: jest.fn(),
+            findAssignorById: jest.fn(),
+            updateAssignorById: jest.fn(),
+            deleteAssignorById: jest.fn(),
           },
         },
       ],
@@ -37,14 +36,28 @@ describe('AssignorService', () => {
 
   describe('createAssignorRegister', () => {
     it('should create a new assignor with success', async () => {
+      const assignorEntityFromRepository = assignorEntityMock;
+
+      assignorEntityFromRepository.password = await bcrypt.hash(
+        assignorEntityMock.password,
+        10,
+      );
+
+      assignorRepository.createAssignorRegister = jest
+        .fn()
+        .mockResolvedValue(assignorEntityFromRepository);
+
+      const assignorFromController = assignorToCreationMock.toEntity();
+
       const result = await assignorService.createAssignorRegister(
-        assignorToCreationMock.toEntity(),
+        assignorFromController,
       );
 
       expect(result).toBeInstanceOf(AssignorDto);
       expect(result).toStrictEqual(AssignorDto.fromEntity(assignorEntityMock));
+
       expect(assignorRepository.createAssignorRegister).toHaveBeenCalledWith(
-        assignorToCreationMock.toEntity(),
+        assignorFromController,
       );
       expect(assignorRepository.createAssignorRegister).toHaveBeenCalledTimes(
         1,
@@ -55,6 +68,17 @@ describe('AssignorService', () => {
 
   describe('findAssignorById', () => {
     it('should find a assignor by id with success', async () => {
+      const assignorEntityFromRepository = assignorEntityMock;
+
+      assignorEntityFromRepository.password = await bcrypt.hash(
+        assignorEntityMock.password,
+        10,
+      );
+
+      assignorRepository.findAssignorById = jest
+        .fn()
+        .mockResolvedValue(assignorEntityFromRepository);
+
       const result = await assignorService.findAssignorById('1');
 
       expect(result).toBeInstanceOf(AssignorDto);
@@ -78,6 +102,17 @@ describe('AssignorService', () => {
 
   describe('updateAssignorById', () => {
     it('should update a assignor by id with success', async () => {
+      const assignorEntityFromRepository = assignorEntityMock;
+
+      assignorEntityFromRepository.password = await bcrypt.hash(
+        assignorEntityMock.password,
+        10,
+      );
+
+      assignorRepository.updateAssignorById = jest
+        .fn()
+        .mockResolvedValue(assignorEntityFromRepository);
+
       const result = await assignorService.updateAssignorById(
         '1',
         assignorToCreationMock.toEntity(),
@@ -110,6 +145,17 @@ describe('AssignorService', () => {
 
   describe('deleteAssignorById', () => {
     it('should delete a assignor by id with success', async () => {
+      const assignorEntityFromRepository = assignorEntityMock;
+
+      assignorEntityFromRepository.password = await bcrypt.hash(
+        assignorEntityMock.password,
+        10,
+      );
+
+      assignorRepository.deleteAssignorById = jest
+        .fn()
+        .mockResolvedValue(assignorEntityFromRepository);
+
       await assignorService.deleteAssignorById('1');
 
       expect(assignorRepository.deleteAssignorById).toHaveBeenCalledWith('1');

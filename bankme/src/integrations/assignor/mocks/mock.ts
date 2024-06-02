@@ -1,26 +1,37 @@
 import Assignor from '../../entity/Assignor';
 import AssignorDto from '../../dto/AssignorDto';
 import AssignorCreationDto from '../../dto/AssignorCreationDto';
+import { fakerPT_BR } from '@faker-js/faker';
+
+const uuid = fakerPT_BR.string.uuid();
+const document = fakerPT_BR.string.numeric(11);
+const email = fakerPT_BR.internet.email();
+const password = fakerPT_BR.string.alphanumeric(10);
+const phone = fakerPT_BR.string.numeric(11);
+const name = fakerPT_BR.person.fullName();
 
 export const assignorToCreationMock = new AssignorCreationDto(
-  '99999999999',
-  'email@email.com',
-  '99999999999',
-  'John Doe',
+  document,
+  email,
+  password,
+  phone,
+  name,
 );
 
 export const assignorCreatedMock = new AssignorDto(
-  '123456789',
-  '99999999999',
-  'email@email.com',
-  '99999999999',
-  'John Doe',
+  uuid,
+  document,
+  email,
+  password,
+  phone,
+  name,
 );
 
 export const assignorEntityMock = new Assignor(
-  '123456789',
-  '99999999999',
-  'email@email.com',
-  '99999999999',
-  'John Doe',
+  uuid,
+  document,
+  email,
+  password,
+  phone,
+  name,
 );

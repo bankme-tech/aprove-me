@@ -5,6 +5,11 @@ import AssignorDto from '../dto/AssignorDto';
 import { assignorToCreationMock, assignorCreatedMock } from './mocks/mock';
 import { JwtService } from '@nestjs/jwt';
 
+import { fakerPT_BR } from '@faker-js/faker';
+import { HttpException, HttpStatus } from '@nestjs/common';
+
+fakerPT_BR.seed(123);
+
 describe('AssignorController', () => {
   let assignorController: AssignorController;
   let assignorService: AssignorService;
@@ -50,6 +55,7 @@ describe('AssignorController', () => {
       );
 
       expect(result).toBeInstanceOf(AssignorDto);
+      expect(result).toEqual(assignorCreatedMock);
       expect(assignorService.createAssignorRegister).toHaveBeenCalledWith(
         assignorToCreationMock.toEntity(),
       );
@@ -60,35 +66,38 @@ describe('AssignorController', () => {
 
   describe('findAssignorById', () => {
     it('should find an assignor by id with success', async () => {
-      const id = '123456789';
+      const id = fakerPT_BR.string.uuid();
 
       const result = await assignorController.findAssignorById(id);
 
       expect(result).toBeInstanceOf(AssignorDto);
+      expect(result).toEqual(assignorCreatedMock);
       expect(assignorService.findAssignorById).toHaveBeenCalledWith(id);
       expect(assignorService.findAssignorById).toHaveBeenCalledTimes(1);
       expect(assignorService.findAssignorById).toHaveReturned();
     });
 
     it('should throw an error when assignor is not found', async () => {
-      const id = '123456789';
+      const id = fakerPT_BR.string.uuid();
 
       jest
         .spyOn(assignorService, 'findAssignorById')
-        .mockResolvedValueOnce(null);
+        .mockRejectedValue(
+          new HttpException('Assignor not found.', HttpStatus.NOT_FOUND),
+        );
 
       try {
         await assignorController.findAssignorById(id);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe('Assignor not found');
+        expect(error.message).toBe('Assignor not found.');
       }
     });
   });
 
   describe('updateAssignorById', () => {
     it('should update an assignor by id with success', async () => {
-      const id = '123456789';
+      const id = fakerPT_BR.string.uuid();
 
       await assignorController.updateAssignorById(id, assignorToCreationMock);
 
@@ -101,24 +110,26 @@ describe('AssignorController', () => {
     });
 
     it('should throw an error when assignor is not found', async () => {
-      const id = '123456789';
+      const id = fakerPT_BR.string.uuid();
 
       jest
         .spyOn(assignorService, 'updateAssignorById')
-        .mockResolvedValueOnce(null);
+        .mockRejectedValue(
+          new HttpException('Assignor not found.', HttpStatus.NOT_FOUND),
+        );
 
       try {
         await assignorController.updateAssignorById(id, assignorToCreationMock);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe('Assignor not found');
+        expect(error.message).toBe('Assignor not found.');
       }
     });
   });
 
   describe('deleteAssignorById', () => {
     it('should delete an assignor by id with success', async () => {
-      const id = '123456789';
+      const id = fakerPT_BR.string.uuid();
 
       await assignorController.deleteAssignorById(id);
 
@@ -128,17 +139,19 @@ describe('AssignorController', () => {
     });
 
     it('should throw an error when assignor is not found', async () => {
-      const id = '123456789';
+      const id = fakerPT_BR.string.uuid();
 
       jest
         .spyOn(assignorService, 'deleteAssignorById')
-        .mockResolvedValueOnce(null);
+        .mockRejectedValue(
+          new HttpException('Assignor not found.', HttpStatus.NOT_FOUND),
+        );
 
       try {
         await assignorController.deleteAssignorById(id);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe('Assignor not found');
+        expect(error.message).toBe('Assignor not found.');
       }
     });
   });
