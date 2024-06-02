@@ -26,7 +26,7 @@ services:
       - ./consumer/prisma:/app/prisma
 
     env_file:
-      - ./consumer/.env
+      - ./.env
 
     depends_on:
       database:
@@ -52,7 +52,7 @@ services:
       - 3000:3000
 
     env_file:
-      - ./bankme/.env
+     - ./.env
       
   database:
     image: mysql:8.0.29
