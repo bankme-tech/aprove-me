@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import Assignor from '../entity/Assignor';
+import { IAssignorValues } from '../types/IAssignor';
 
 @Injectable()
 export default class AssignorRepository {
@@ -62,16 +63,16 @@ export default class AssignorRepository {
     return new Assignor(
       assignor.id,
       assignor.document,
-      assignor.name,
       assignor.email,
       assignor.password,
       assignor.phone,
+      assignor.name,
     );
   }
 
   async updateAssignorById(
     id: string,
-    assignor: Assignor,
+    assignor: Partial<IAssignorValues>,
   ): Promise<Assignor | null> {
     const assignorFromDB = await this.findAssignorById(id);
 
@@ -83,40 +84,48 @@ export default class AssignorRepository {
       where: {
         id,
       },
-      data: assignor.toCreate(),
+      data: assignor,
     });
 
-    return new Assignor(
-      updatedAssignor.id,
-      updatedAssignor.document,
-      updatedAssignor.name,
-      updatedAssignor.email,
-      updatedAssignor.password,
-      updatedAssignor.phone,
-    );
+    const assignorToReturn = new Assignor();
+
+    assignorToReturn.id = updatedAssignor.id;
+    assignorToReturn.document = updatedAssignor.document;
+    assignorToReturn.email = updatedAssignor.email;
+    assignorToReturn.password = updatedAssignor.password;
+    assignorToReturn.phone = updatedAssignor.phone;
+    assignorToReturn.name = updatedAssignor.name;
+
+    return assignorToReturn;
   }
 
-  async deleteAssignorById(id: string): Promise<Assignor | null> {
+  async deleteAssignorById(
+    id: string,
+    assignor: Partial<IAssignorValues>,
+  ): Promise<Assignor | null> {
     const assignorFromDB = await this.findAssignorById(id);
 
     if (!assignorFromDB) {
       return null;
     }
 
-    const deletedAssignor = await this.prismaService.assignor.delete({
+    const deletedAssignor = await this.prismaService.assignor.update({
       where: {
         id,
       },
+      data: assignor,
     });
 
-    return new Assignor(
-      deletedAssignor.id,
-      deletedAssignor.document,
-      deletedAssignor.name,
-      deletedAssignor.email,
-      deletedAssignor.password,
-      deletedAssignor.phone,
-    );
+    const assignorToReturn = new Assignor();
+
+    assignorToReturn.id = deletedAssignor.id;
+    assignorToReturn.document = deletedAssignor.document;
+    assignorToReturn.email = deletedAssignor.email;
+    assignorToReturn.password = deletedAssignor.password;
+    assignorToReturn.phone = deletedAssignor.phone;
+    assignorToReturn.name = deletedAssignor.name;
+
+    return assignorToReturn;
   }
 
   async findUserByEmail(email: string): Promise<Assignor | null> {
@@ -130,14 +139,16 @@ export default class AssignorRepository {
       return null;
     }
 
-    return new Assignor(
-      user.id,
-      user.document,
-      user.name,
-      user.email,
-      user.password,
-      user.phone,
-    );
+    const assignorToReturn = new Assignor();
+
+    assignorToReturn.id = user.id;
+    assignorToReturn.document = user.document;
+    assignorToReturn.email = user.email;
+    assignorToReturn.password = user.password;
+    assignorToReturn.phone = user.phone;
+    assignorToReturn.name = user.name;
+
+    return assignorToReturn;
   }
 
   async findAssignorByEmail(email: string): Promise<Assignor | null> {
@@ -151,13 +162,15 @@ export default class AssignorRepository {
       return null;
     }
 
-    return new Assignor(
-      user.id,
-      user.document,
-      user.name,
-      user.password,
-      user.email,
-      user.phone,
-    );
+    const assignorToReturn = new Assignor();
+
+    assignorToReturn.id = user.id;
+    assignorToReturn.document = user.document;
+    assignorToReturn.email = user.email;
+    assignorToReturn.password = user.password;
+    assignorToReturn.phone = user.phone;
+    assignorToReturn.name = user.name;
+
+    return assignorToReturn;
   }
 }
