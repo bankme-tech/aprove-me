@@ -33,7 +33,7 @@ export class AssignorService {
   ): Promise<AssignorDto> {
     const updatedAssignor = await this.assignorRepository.updateAssignorById(
       id,
-      assignor,
+      assignor.toCreate(),
     );
 
     if (!updatedAssignor) {
@@ -44,7 +44,9 @@ export class AssignorService {
   }
 
   async deleteAssignorById(id: string): Promise<void> {
-    const assignor = await this.assignorRepository.deleteAssignorById(id);
+    const assignor = await this.assignorRepository.updateAssignorById(id, {
+      active: false,
+    });
 
     if (!assignor) {
       throw new HttpException('Assignor not found.', HttpStatus.NOT_FOUND);
