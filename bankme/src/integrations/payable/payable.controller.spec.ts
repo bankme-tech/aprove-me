@@ -1,9 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PayableController } from './payable.controller';
 import { PayableService } from './payable.service';
-import { payableCreatedMock, payableToCreationMock } from './mocks/mocks';
+import { payableCreatedMock, payableToCreationMock, req } from './mocks/mocks';
 import PayableDto from '../dto/PayableDto';
 import { JwtService } from '@nestjs/jwt';
+import { HttpException, HttpStatus } from '@nestjs/common';
+import { fakerPT_BR } from '@faker-js/faker';
 
 describe('PayableController', () => {
   let payableController: PayableController;
@@ -64,15 +66,19 @@ describe('PayableController', () => {
     });
 
     it('should throw an error when payable is not found', async () => {
-      const id = '123456789';
+      const id = fakerPT_BR.string.uuid();
 
-      payableService.findPayableById = jest.fn().mockResolvedValueOnce(null);
+      jest
+        .spyOn(payableService, 'findPayableById')
+        .mockRejectedValue(
+          new HttpException('Payable not found.', HttpStatus.NOT_FOUND),
+        );
 
       try {
         await payableController.findPayableById(id);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe('Payable not found');
+        expect(error.message).toBe('Payable not found.');
       }
     });
   });
@@ -80,38 +86,66 @@ describe('PayableController', () => {
   describe('updatePayableById', () => {
     it('should update a payable by id with success', async () => {
       await payableController.updatePayableById(
-        '1234567890',
+        req,
+        payableCreatedMock.id,
         payableToCreationMock,
       );
 
       expect(payableService.updatePayableById).toHaveBeenCalledWith(
-        '1234567890',
+        payableCreatedMock.id,
         payableToCreationMock.toEntity(),
+        req.user.sub,
       );
       expect(payableService.updatePayableById).toHaveBeenCalledTimes(1);
+    });
+
+    it('should throw an error when payable is not found', async () => {
+      const id = fakerPT_BR.string.uuid();
+
+      jest
+        .spyOn(payableService, 'updatePayableById')
+        .mockRejectedValue(
+          new HttpException('Payable not found.', HttpStatus.NOT_FOUND),
+        );
+
+      try {
+        await payableController.updatePayableById(
+          req,
+          id,
+          payableToCreationMock,
+        );
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+        expect(error.message).toBe('Payable not found.');
+      }
     });
   });
 
   describe('deletePayableById', () => {
     it('should delete a payable by id with success', async () => {
-      await payableController.deletePayableById('1234567890');
+      await payableController.deletePayableById(req, payableCreatedMock.id);
 
       expect(payableService.deletePayableById).toHaveBeenCalledWith(
-        '1234567890',
+        payableCreatedMock.id,
+        req.user.sub,
       );
       expect(payableService.deletePayableById).toHaveBeenCalledTimes(1);
     });
 
     it('should throw an error when payable is not found', async () => {
-      const id = '123456789';
+      const id = fakerPT_BR.string.uuid();
 
-      payableService.deletePayableById = jest.fn().mockResolvedValueOnce(null);
+      jest
+        .spyOn(payableService, 'deletePayableById')
+        .mockRejectedValue(
+          new HttpException('Payable not found.', HttpStatus.NOT_FOUND),
+        );
 
       try {
-        await payableController.deletePayableById(id);
+        await payableController.deletePayableById(req, id);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe('Payable not found');
+        expect(error.message).toBe('Payable not found.');
       }
     });
   });
