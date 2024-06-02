@@ -3,7 +3,7 @@ import PayableCreationDto from '../dto/PayableCreationDto';
 import { RmqContext } from '@nestjs/microservices';
 import amqp, { Channel } from 'amqp-connection-manager';
 import PayableRepository from './payable.repository';
-import { EmailService } from 'src/email/email.service';
+import { EmailService } from '../../email/email.service';
 
 @Injectable()
 export class PayableService {
@@ -30,10 +30,6 @@ export class PayableService {
     const attempts = originalMsg.properties.headers['attempts'] || 0;
 
     try {
-      // if (payload.value > 1250) {
-      //   throw new Error('Erro no processamento de recebivel.');
-      // }
-
       await this.payableRepository.createPayableRegister(payload.toEntity());
       channel.ack(originalMsg);
       this.itemsReport[payload.batchId].successful++;
