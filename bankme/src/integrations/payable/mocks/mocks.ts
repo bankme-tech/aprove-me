@@ -1,23 +1,38 @@
+import { RequestWithUser } from 'src/integrations/types';
 import PayableCreationDto from '../../dto/PayableCreationDto';
 import PayableDto from '../../dto/PayableDto';
 import Payable from '../../entity/Payable';
+import { fakerPT_BR } from '@faker-js/faker';
+import { assignorEntityMock } from '../../assignor/mocks/mock';
+
+const payableUUID = fakerPT_BR.string.uuid();
+const value = fakerPT_BR.number.int(1000);
+const assignorUUID = assignorEntityMock.id;
+const emissionDate = fakerPT_BR.date.past();
 
 export const payableToCreationMock = new PayableCreationDto(
-  1000,
-  new Date('10-10-2021'),
-  '123456789',
+  value,
+  emissionDate,
+  assignorUUID,
 );
 
 export const payableCreatedMock = new PayableDto(
-  '0987654321',
-  1000,
-  new Date('10-10-2021'),
-  '123456789',
+  payableUUID,
+  value,
+  emissionDate,
+  assignorUUID,
 );
 
 export const payableEntityMock = new Payable(
-  '0987654321',
-  1000,
-  new Date('10-10-2021'),
-  '123456789',
+  payableUUID,
+  value,
+  emissionDate,
+  assignorUUID,
 );
+
+export const req = {
+  user: {
+    sub: fakerPT_BR.internet.email(),
+    username: fakerPT_BR.person.firstName(),
+  },
+} as RequestWithUser;
