@@ -1,0 +1,44 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend_aprovame
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+    environment:
+      - PORT=3001
+      - JWT_SECRET=keUs3iNd+VyvIKKzIzLZDf1Cog102Q05vSpEDcaTtWw=
+      - DATABASE_URL="file:./dev.sqlite"
+      - REDIS_PORT=6379
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+      - sqlite
+    command: bash -c "npm run prisma:migrate && npm start"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend_aprovame
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/usr/src/app
+    environment:
+      - VITE_API_URL=http://localhost:3001/integrations
+    command: bash -c "npm install && npm run dev"
+
+  redis:
+    image: redis:latest
+    container_name: redis_aprovame
+    ports:
+      - "6379:6379"
+
+  sqlite:
+    image: alpine
+    container_name: sqlite_db
+    volumes:
+      - ./backend/src/infra/database/prisma:/app/src/infra/database/prisma
+    command: tail -f /dev/null
