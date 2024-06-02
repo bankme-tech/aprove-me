@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 @Injectable()
 export class EmailService {
   sendEmail(email: string, subject: string, message: string) {
-    const resend = new Resend('re_XBnN1Kfz_2ucemvbqgMA8uDxghPq2wJQE');
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     resend.emails.send({
       from: 'onboarding@resend.dev',
