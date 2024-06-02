@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import Payable from '../entity/Payable';
-import { IPayable } from '../types/IPayables';
 
 @Injectable()
 export default class PayableRepository {
   constructor(private prismaService: PrismaService) {}
 
-  async createPayableRegister(payable: Payable): Promise<IPayable> {
+  async createPayableRegister(payable: Payable): Promise<Payable> {
     const payableRegister = await this.prismaService.payable.create({
       data: payable.toCreate(),
     });
@@ -20,7 +19,7 @@ export default class PayableRepository {
     );
   }
 
-  async findPayableById(id: string): Promise<IPayable | null> {
+  async findPayableById(id: string): Promise<Payable | null> {
     const payable = await this.prismaService.payable.findUnique({
       where: {
         id,
@@ -42,7 +41,7 @@ export default class PayableRepository {
   async updatePayableById(
     id: string,
     payable: Payable,
-  ): Promise<IPayable | null> {
+  ): Promise<Payable | null> {
     const updatedPayable = await this.prismaService.payable.update({
       where: {
         id,
