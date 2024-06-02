@@ -5,6 +5,7 @@ export interface IAssignorValues {
   email: string;
   phone: string;
   name: string;
+  active: boolean;
 }
 
 export interface IAssignor extends ID, IAssignorValues {}
