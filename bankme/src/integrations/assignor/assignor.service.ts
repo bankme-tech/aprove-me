@@ -31,6 +31,10 @@ export class AssignorService {
     id: string,
     assignor: Assignor,
   ): Promise<AssignorDto> {
+    if (assignor.password) {
+      assignor.password = await bcrypt.hash(assignor.password, 10);
+    }
+
     const updatedAssignor = await this.assignorRepository.updateAssignorById(
       id,
       assignor.toCreate(),
