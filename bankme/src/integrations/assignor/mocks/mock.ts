@@ -9,6 +9,7 @@ const email = fakerPT_BR.internet.email();
 const password = fakerPT_BR.string.alphanumeric(10);
 const phone = fakerPT_BR.string.numeric(11);
 const name = fakerPT_BR.person.fullName();
+const active = true;
 
 export const assignorToCreationMock = new AssignorCreationDto(
   document,
@@ -25,6 +26,7 @@ export const assignorCreatedMock = new AssignorDto(
   password,
   phone,
   name,
+  active,
 );
 
 export const assignorEntityMock = new Assignor(
@@ -34,4 +36,5 @@ export const assignorEntityMock = new Assignor(
   password,
   phone,
   name,
+  active,
 );
