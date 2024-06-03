@@ -1,19 +1,14 @@
-import React, { ReactNode, createContext, useContext, useState } from "react";
+import { Children } from "@/types/children";
+import React, { createContext, useContext, useState } from "react";
 
-interface PayableContextType {
+type PayableContextType = {
   update: boolean;
   setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
 const PayableContext = createContext<PayableContextType | undefined>(undefined);
 
-interface PayableProviderProps {
-  children: ReactNode;
-}
-
-export const PayableProvider: React.FC<PayableProviderProps> = ({
-  children,
-}) => {
+export const PayableProvider = ({ children }: Children) => {
   const [update, setUpdate] = useState<boolean>(false);
 
   return (

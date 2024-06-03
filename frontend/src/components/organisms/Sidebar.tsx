@@ -3,6 +3,7 @@ import { Logo } from "../molecules/Logo";
 import { SidebarLine } from "../molecules/SidebarLine";
 
 // TODO: Create component Icons
+// TODO: Add responsiveness
 export const Sidebar = () => {
   const lines = useMemo(
     () => [
