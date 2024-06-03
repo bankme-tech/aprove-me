@@ -1,31 +1,46 @@
 # BankMe
 
-TODO: Detalhar mais algumas sessões
+**Isso não é um monorepo!**, Para rodar as aplicações juntas, utilize o Docker Compose:
 
-**Isso não é um monorepo!**
+```bash
+docker-compose -f "docker-compose.yml" up -d --build
+```
 
-Para faciltar o acesso, as duas aplicações estão no mesmo repositório. Além disso, toda a documentação necessária para instalar e inicilizar o projeto estará disponível no README.md de cada projeto.
+Os dois projetos estão no mesmo repositório para facilitar o encontro deles. Além disso, toda a documentação necessária para instalar e inicilizar o projeto estará disponível no README.md de cada projeto.
 
-# Backend
+# Processo de desenvolvimento
+
+- Leitura dos requisitos
+- [Brainstorm da Solução](#Brainstorm-da-solução)
+- Organização das tarefas
+- [Decisão das tecnologias a serem utilizadas](#Tecnologias-utilizadas)
+
+# Tecnologias utilizadas
+
+### Backend
 
 Tecnologias utilizadas:
 
 - NestJs
-  - obrigatório;
+  - Obrigatório;
 - SQLite
-  - obrigatório;
+  - Obrigatório;
 - Prisma
-  - obrigatório;
+  - Obrigatório;
 - JWT
-  - obrigatório;
+  - Obrigatório;
 - Docker e Docker Compose
-  - obrigatório;
+  - Obrigatório;
+- Bull
+  - Decidir utilizar ela pois tenho mais familiridade e é recomendada pela documentação
+- Swagger
+  - Documenta a aplicação e ainda permite realizar testes no endpoint
 
 Decisões de arquitetura:
 
-- Clean architecture
+- Arquitetura em camadas
 
-# Frontend
+### Frontend
 
 Tecnologias utilizadas e suas motivações:
 
@@ -33,8 +48,8 @@ Tecnologias utilizadas e suas motivações:
   - Possuo mais familiridade com estes framework/biblioteca, por consequência meu desenvolvimento demora menos tempo(o que estou tendo pouco no momento);
 - React-hook-form
   - Esta biblioteca permite que eu construa componentes controlavéis com facilidade;
-- Yup
-  - Permite que eu desenvolva validações no meu formulário;
+- Zod
+  - Permite que eu desenvolva validações no meu formulário e é compatível com Typescript;
 - Tailwind
   - Decidir por não utilizar Design System, por exemplo o Material UI, por meu protótipo apresentar componentes simples;
 
@@ -44,10 +59,10 @@ Decisões de arquitetura:
   - SSR e Router
 - Atomic Design
 
-# Processo de desenvolvimento
+# Brainstorm da solução
 
-- Leitura dos requisitos
-- Desenho da solução
-- Organização das tarefas
+### Backend
 
-# Níveis por Pull Request
+TODO: Adicionar imagem
+
+### Frontend

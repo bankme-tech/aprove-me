@@ -58,6 +58,20 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Run Docker
+
+Build a image
+
+```bash
+  docker build -t api-bank-me:1.0 .
+```
+
+Run container
+
+```bash
+  docker run -d -p 4000:4000 api-bank-me:1.0
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
