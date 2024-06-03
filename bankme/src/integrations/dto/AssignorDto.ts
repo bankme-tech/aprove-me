@@ -7,6 +7,7 @@ export default class AssignorDto {
   password: string;
   phone: string;
   name: string;
+  active: boolean;
 
   constructor(
     id?: string,
@@ -15,6 +16,7 @@ export default class AssignorDto {
     password?: string,
     phone?: string,
     name?: string,
+    active?: boolean,
   ) {
     this.id = id;
     this.document = document;
@@ -22,6 +24,7 @@ export default class AssignorDto {
     this.password = password;
     this.phone = phone;
     this.name = name;
+    this.active = active;
   }
 
   static fromEntity(assignor: Assignor): AssignorDto {
