@@ -12,6 +12,11 @@ services:
       RABBITMQ_DEFAULT_USER: "admin"
       RABBITMQ_DEFAULT_PASS: "admin"
 
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      timeout: 10s
+      retries: 5
+
   bankme-consumer:
     build: ./consumer
     container_name: bankme-consumer
@@ -30,6 +35,9 @@ services:
 
     depends_on:
       database:
+        condition: service_healthy
+
+      rabbitmq:
         condition: service_healthy
 
   bankme-api:
