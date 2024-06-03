@@ -18,6 +18,7 @@ import {
 import { UserInterceptor } from './user.interceptors';
 import { UserService } from './user.service';
 
+// Essas rotas não estão autenticadas para ser possível testar a autenticação
 @ApiTags('User')
 @Controller({ path: 'user', version: '1' })
 @UseInterceptors(UserInterceptor)
