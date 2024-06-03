@@ -105,7 +105,7 @@ describe('AssignorService', () => {
       const assignorEntityFromRepository = assignorEntityMock;
 
       assignorEntityFromRepository.password = await bcrypt.hash(
-        assignorEntityMock.password,
+        assignorEntityFromRepository.password,
         10,
       );
 
@@ -114,15 +114,15 @@ describe('AssignorService', () => {
         .mockResolvedValue(assignorEntityFromRepository);
 
       const result = await assignorService.updateAssignorById(
-        '1',
-        assignorToCreationMock.toEntity(),
+        assignorEntityFromRepository.id,
+        assignorEntityFromRepository,
       );
 
       expect(result).toBeInstanceOf(AssignorDto);
       expect(result).toStrictEqual(AssignorDto.fromEntity(assignorEntityMock));
       expect(assignorRepository.updateAssignorById).toHaveBeenCalledWith(
-        '1',
-        assignorToCreationMock.toEntity(),
+        assignorEntityFromRepository.id,
+        assignorEntityFromRepository.toCreate(),
       );
       expect(assignorRepository.updateAssignorById).toHaveBeenCalledTimes(1);
       expect(assignorRepository.updateAssignorById).toHaveReturned();
@@ -152,15 +152,18 @@ describe('AssignorService', () => {
         10,
       );
 
-      assignorRepository.deleteAssignorById = jest
+      assignorRepository.updateAssignorById = jest
         .fn()
         .mockResolvedValue(assignorEntityFromRepository);
 
-      await assignorService.deleteAssignorById('1');
+      await assignorService.deleteAssignorById(assignorEntityFromRepository.id);
 
-      expect(assignorRepository.deleteAssignorById).toHaveBeenCalledWith('1');
-      expect(assignorRepository.deleteAssignorById).toHaveBeenCalledTimes(1);
-      expect(assignorRepository.deleteAssignorById).toHaveReturned();
+      expect(assignorRepository.updateAssignorById).toHaveBeenCalledWith(
+        assignorEntityFromRepository.id,
+        { active: false },
+      );
+      expect(assignorRepository.updateAssignorById).toHaveBeenCalledTimes(1);
+      expect(assignorRepository.updateAssignorById).toHaveReturned();
     });
 
     it('should throw an error when assignor not found', async () => {
