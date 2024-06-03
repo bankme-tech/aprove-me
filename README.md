@@ -55,6 +55,7 @@ Tecnologias utilizadas e suas motivações:
 
 Decisões de arquitetura:
 
+
 - NextJS
   - SSR e Router
 - Atomic Design
@@ -63,6 +64,15 @@ Decisões de arquitetura:
 
 ### Backend
 
-TODO: Adicionar imagem
+- Desenho do Database
+![Screenshot 2024-06-02 213350](https://github.com/rogigs/bank-me/assets/49894949/2be7ce4f-3997-4157-ac14-ec3571e3af5a)
+
 
 ### Frontend
+- Desenho da UI 
+- Entendimento do retorno da API
+- Definição das rotas
+- Design System -> as cores são baseadas no site da Bank Me
+![image](https://github.com/rogigs/bank-me/assets/49894949/e9ea691c-2b79-4402-916d-7bd28e038d1d)
+
+
