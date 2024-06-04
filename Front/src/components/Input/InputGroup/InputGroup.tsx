@@ -29,7 +29,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
       {inputColumn.map((input) => (
         <div key={`${input.label}${input.type}`}>
           {input.type === "title" && (
-            <h1 className="tag-h1 my-0 text-gray-1">
+            <h1 className="tag-h1 my-0 text-purple-0">
               {input.label === "" ? <br /> : input.label}
             </h1>
           )}

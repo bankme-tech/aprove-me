@@ -44,9 +44,9 @@ export const BaseModal: React.FC<IBaseModalProps> = ({
         onSubmit={submitAction}
         className="scrollbar-pattern h-full overflow-y-auto"
       >
-        <div className="relative min-h-[3.5rem] w-full rounded-2xl border-[1.5px] border-blue-0 bg-white">
+        <div className="relative min-h-[3.5rem] w-full rounded-2xl border-[1.5px] border-purple-0 bg-white">
           <Close
-            color="blue-0"
+            color="purple-0"
             className="absolute right-3 top-3"
             onChange={handleClose}
           />

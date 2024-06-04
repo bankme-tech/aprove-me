@@ -1,7 +1,7 @@
-import React from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { colors } from "global/Colors";
+import React from "react";
 
 interface IVisibleDescriptionButtonProps {
   onInvertVisibility: () => void;
@@ -17,9 +17,9 @@ export const VisibleDescriptionButton: React.FC<
         <VisibilityIcon
           onClick={onInvertVisibility}
           sx={{
-            color: colors["blue-0"],
+            color: colors["purple-0"],
             borderRadius: "100%",
-            ":hover": { backgroundColor: colors["blue-2"] }
+            ":hover": { backgroundColor: colors["purple-2"] }
           }}
           fontSize="small"
         />
@@ -27,9 +27,9 @@ export const VisibleDescriptionButton: React.FC<
         <VisibilityOffIcon
           onClick={onInvertVisibility}
           sx={{
-            color: colors["blue-0"],
+            color: colors["purple-0"],
             borderRadius: "100%",
-            ":hover": { backgroundColor: colors["blue-2"] }
+            ":hover": { backgroundColor: colors["purple-2"] }
           }}
           fontSize="small"
         />

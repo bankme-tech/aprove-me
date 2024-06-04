@@ -20,7 +20,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({ onClean, onSearch }) => {
   }, [searchValue]);
 
   return (
-    <div className="flex h-8 w-full flex-row items-center justify-between rounded-lg border border-blue-0 bg-white pr-4 shadow-sm shadow-blue-0/30">
+    <div className="flex h-8 w-full flex-row items-center justify-between rounded-lg border border-purple-0 bg-white pr-4 shadow-sm shadow-purple-0/30">
       <input
         type="text"
         onChange={(e) => setSearchValue(e?.target?.value)}
@@ -30,7 +30,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({ onClean, onSearch }) => {
           }
         }}
         value={searchValue}
-        className="tag-p w-full truncate border-0 bg-transparent px-6 py-3 pr-10 text-blue-0 outline-none focus:outline-none"
+        className="tag-p w-full truncate border-0 bg-transparent px-6 py-3 pr-10 text-purple-0 outline-none focus:outline-none"
         placeholder="Digite o que deseja encontrar"
       />
 
@@ -38,7 +38,7 @@ export const SearchBar: React.FC<ISearchBarProps> = ({ onClean, onSearch }) => {
         {searchValue && (
           <button
             onClick={onCleanSearch}
-            className="tag-h5 w-28 cursor-pointer self-end truncate text-red-0 transition-colors duration-300 hover:opacity-50"
+            className="tag-h5 w-28 cursor-pointer self-end truncate text-red-1 transition-colors duration-300 hover:opacity-50"
           >
             Limpar busca
           </button>

@@ -15,7 +15,7 @@ export const Close: React.FC<ICloseProps> = ({
   color
 }) => {
   const colorStyle = {
-    icon: color ? colors[color] : colors["blue-0"]
+    icon: color ? colors[color] : colors["purple-0"]
   };
 
   return (

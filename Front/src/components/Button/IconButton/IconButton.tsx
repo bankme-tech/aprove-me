@@ -15,7 +15,9 @@ export const IconButton: React.FC<IIconButtonProps> = ({
   lightHover,
   onClick
 }) => {
-  const lightHoverStyle = lightHover ? "hover:bg-white/30" : "hover:bg-blue-2";
+  const lightHoverStyle = lightHover
+    ? "hover:bg-white/30"
+    : "hover:bg-purple-2";
 
   return (
     <button

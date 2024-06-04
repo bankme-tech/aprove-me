@@ -94,7 +94,7 @@ export const MaskedInput: React.FC<IMaskedInputProps> = ({
               className={`relative mt-0 flex flex-row px-0 ${sizeStyle[size].inputGroup}`}
             >
               <input
-                className={`border-b-[1px] border-black bg-transparent pt-0.5 text-black shadow-sm hover:shadow-md focus:border-b-[1.5px] focus:border-blue-0 focus:shadow-md focus:outline-none disabled:cursor-not-allowed disabled:border-gray-2 disabled:text-gray-2 disabled:shadow-sm ${sizeStyle[size].input}`}
+                className={`border-b-[1px] border-black bg-transparent pt-0.5 text-black shadow-sm hover:shadow-md focus:border-b-[1.5px] focus:border-purple-0 focus:shadow-md focus:outline-none disabled:cursor-not-allowed disabled:border-gray-1 disabled:text-gray-1 disabled:shadow-sm ${sizeStyle[size].input}`}
                 disabled={disabled}
                 placeholder={placeholder}
                 {...field}

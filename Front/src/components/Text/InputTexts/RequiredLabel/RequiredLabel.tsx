@@ -26,7 +26,7 @@ export const RequiredLabel: React.FC<IRequiredLabelProps> = ({
     <div className={`inline ${disabledStyle}`}>
       <p className={`${sizeStyle[size]}`}>
         {label}
-        <span className={`ml-1 w-2 text-alert ${sizeStyle[size]}`}>
+        <span className={`ml-1 w-2 text-red-0 ${sizeStyle[size]}`}>
           {required && "*"}
         </span>
       </p>

@@ -24,15 +24,15 @@ export const ReproveButton: React.FC<IButtonProps> = ({
     : "border-0 hover:border";
   const outlinedStyle = {
     button: isOutlined
-      ? "disabled:border-gray-2 disabled:bg-transparent bg-transparent hover:bg-black/25 border-alert"
-      : "bg-alert hover:bg-red-1 border-transparent hover:border-alert",
+      ? "disabled:border-gray-1 disabled:bg-transparent bg-transparent hover:bg-black/25 border-red-0"
+      : "bg-red-0 hover:bg-red-2 border-transparent hover:border-red-0",
     text: isDisabled
       ? isOutlined
-        ? "[&>*]:text-gray-2 [&>*]:hover:text-gray-2"
-        : "[&>*]:text-gray-3 [&>*]:hover:text-gray-3"
+        ? "[&>*]:text-gray-1 [&>*]:hover:text-gray-1"
+        : "[&>*]:text-gray-2 [&>*]:hover:text-gray-2"
       : isOutlined
-      ? "[&>*]:text-alert [&>*]:hover:text-white"
-      : "[&>*]:text-white [&>*]:hover:text-alert"
+      ? "[&>*]:text-red-0 [&>*]:hover:text-white"
+      : "[&>*]:text-white [&>*]:hover:text-red-0"
   };
   const sizeStyle = {
     small: `h-7 rounded-md ${autoWidth ? "px-0.5" : "px-8 w-fit"}`,

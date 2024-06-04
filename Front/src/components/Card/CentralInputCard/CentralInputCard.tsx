@@ -32,18 +32,14 @@ export const CentralInputCard: React.FC<ICentralInputCardProps> = ({
   } = useForm();
 
   return (
-    <div className="flex w-fit flex-col items-center justify-center gap-6 rounded-2xl border border-blue-2 bg-gray-5 p-8 shadow-md shadow-white/20">
+    <div className="flex w-fit flex-col items-center justify-center gap-6 rounded-2xl border border-purple-2 bg-gray-3 p-8 shadow-md shadow-white/20">
       <CardHeader title={title} texts={texts} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center gap-6"
       >
         {inputs && (
-          <InputGroup
-            control={control}
-            errors={errors}
-            inputColumn={inputs}
-          />
+          <InputGroup control={control} errors={errors} inputColumn={inputs} />
         )}
 
         <ActionButtons

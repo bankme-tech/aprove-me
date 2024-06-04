@@ -18,7 +18,7 @@ export const LoadingAlert: React.FC<ILoadingAlertProps> = ({
   return (
     <div className="relative flex h-min w-full animate-bounce items-center justify-center ease-in">
       <div
-        className={`relative bottom-0 right-2 aspect-square animate-pulse-slow rounded-full bg-blue-0 ${sizeStle[size]}`}
+        className={`relative bottom-0 right-2 aspect-square animate-pulse-slow rounded-full bg-purple-0 ${sizeStle[size]}`}
       />
       {size === "small" && <p className="tag-h5">Carregando...</p>}
       {size === "default" && <h3 className="tag-h3">Carregando...</h3>}

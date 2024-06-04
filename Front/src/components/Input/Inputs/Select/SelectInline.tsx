@@ -59,8 +59,8 @@ export const SelectInline: React.FC<ISelectInlineProps> = ({
   };
 
   const disabledStyle = disabled
-    ? "bg-gray-2 cursor-not-allowed hover:bg-gray-2"
-    : "bg-blue-0 hover:bg-blue80 cursor-pointer";
+    ? "bg-gray-1 cursor-not-allowed hover:bg-gray-1"
+    : "bg-purple-0 hover:bg-blue80 cursor-pointer";
 
   const isOpenStyle = {
     expandIcon: isOpen ? "rotate-180" : "",
@@ -147,7 +147,7 @@ export const SelectInline: React.FC<ISelectInlineProps> = ({
                 >
                   <div
                     onClick={disabled ? undefined : toggleDropdown}
-                    className={`flex h-10 items-center justify-center truncate rounded-full border-0 px-4 text-white transition-all delay-100 duration-500 hover:bg-blue-1 ${sizeStyle[size].selectGroup} ${disabledStyle}`}
+                    className={`flex h-10 items-center justify-center truncate rounded-full border-0 px-4 text-white transition-all delay-100 duration-500 hover:bg-purple-1 ${sizeStyle[size].selectGroup} ${disabledStyle}`}
                   >
                     <p
                       className={`w-60 truncate text-white ${sizeStyle[size].dropDown}`}
@@ -173,13 +173,13 @@ export const SelectInline: React.FC<ISelectInlineProps> = ({
                   </div>
 
                   <div
-                    className={`absolute z-20 mt-2 max-h-60 w-full overflow-y-auto rounded-md border border-solid border-gray-3 bg-white p-2 shadow-md ${isOpenStyle.dropDown}`}
+                    className={`absolute z-20 mt-2 max-h-60 w-full overflow-y-auto rounded-md border border-solid border-gray-2 bg-white p-2 shadow-md ${isOpenStyle.dropDown}`}
                   >
                     <input
                       type="text"
                       placeholder="Pesquisar.."
                       id="myInput"
-                      className={`mb-2 w-full rounded border border-gray-3 p-2 ${sizeStyle[size].searchInput}`}
+                      className={`mb-2 w-full rounded border border-gray-2 p-2 ${sizeStyle[size].searchInput}`}
                       value={searchValue}
                       onChange={handleInputChange}
                       onKeyDown={() => setChargingList(true)}
@@ -190,13 +190,13 @@ export const SelectInline: React.FC<ISelectInlineProps> = ({
                     {(searchValue !== "" || searchValue !== undefined) &&
                     optionsSearch.length === 0 ? (
                       <p
-                        className={`block cursor-default border-b border-blue-0/10 px-4 py-2 ${sizeStyle[size].options}`}
+                        className={`block cursor-default border-b border-purple-0/10 px-4 py-2 ${sizeStyle[size].options}`}
                       >
                         Sem opções listadas
                       </p>
                     ) : optionsSearch.length > 1000 ? (
                       <p
-                        className={`block cursor-default border-b border-blue-0/10 px-4 py-2 ${sizeStyle[size].options} ${isChargingStyle}`}
+                        className={`block cursor-default border-b border-purple-0/10 px-4 py-2 ${sizeStyle[size].options} ${isChargingStyle}`}
                       >
                         Digite na busca para listar as opções...
                       </p>
@@ -208,7 +208,7 @@ export const SelectInline: React.FC<ISelectInlineProps> = ({
                             setIsOpen(!isOpen);
                           }}
                           key={index}
-                          className={`block cursor-pointer border-b border-blue-0/10 px-4 py-2 transition-colors duration-150 hover:bg-gray-3 ${sizeStyle[size].options}`}
+                          className={`block cursor-pointer border-b border-purple-0/10 px-4 py-2 transition-colors duration-150 hover:bg-gray-2 ${sizeStyle[size].options}`}
                         >
                           {option}
                         </p>

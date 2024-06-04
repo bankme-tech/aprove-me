@@ -10,10 +10,10 @@ export const ProgressSuccessBar: React.FC<IProgressSuccessBarProps> = ({
   const percentage = percentageDefault === 0 ? 1 : percentageDefault;
 
   return (
-    <div className="relative h-1 w-full bg-blue-2">
+    <div className="relative h-1 w-full bg-purple-2">
       <div
         style={{ width: `${percentage}%` }}
-        className="absolute left-0 h-1 bg-blue-0"
+        className="absolute left-0 h-1 bg-purple-0"
       />
     </div>
   );

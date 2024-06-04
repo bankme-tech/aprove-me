@@ -24,14 +24,14 @@ export const PrimaryButton: React.FC<IButtonProps> = ({
     : "border-0 hover:border";
   const outlinedStyle = {
     button: isOutlined
-      ? "disabled:border-gray-2 disabled:bg-transparent bg-transparent hover:bg-black/25 border-blue-0"
-      : "disabled:bg-blue-1 bg-blue-0 hover:bg-blue-0/80 border-transparent hover:border-blue-0",
+      ? "disabled:border-gray-1 disabled:bg-transparent bg-transparent hover:bg-black/25 border-purple-0"
+      : "disabled:bg-purple-1 bg-purple-0 hover:bg-purple-0/80 border-transparent hover:border-purple-0",
     text: isDisabled
       ? isOutlined
-        ? "[&>*]:text-gray-2 [&>*]:hover:text-gray-2"
-        : "[&>*]:text-gray-3 [&>*]:hover:text-gray-3"
+        ? "[&>*]:text-gray-1 [&>*]:hover:text-gray-1"
+        : "[&>*]:text-gray-2 [&>*]:hover:text-gray-2"
       : isOutlined
-      ? "[&>*]:text-blue-0 [&>*]:hover:text-white"
+      ? "[&>*]:text-purple-0 [&>*]:hover:text-white"
       : "[&>*]:text-white [&>*]:hover:text-white"
   };
   const sizeStyle = {

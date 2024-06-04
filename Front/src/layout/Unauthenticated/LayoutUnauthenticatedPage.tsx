@@ -15,7 +15,7 @@ export const LayoutUnauthenticatedPage: React.FC<
 
   return (
     <div
-      className={`flex h-screen w-screen items-center justify-center bg-gradient-to-br from-blue-0 via-blue-1 to-blue-0 p-5 transition-opacity duration-500 ease-in ${visibleStyle}`}
+      className={`flex h-screen w-screen items-center justify-center bg-gradient-to-br from-purple-0 via-purple-1 to-purple-0 p-5 transition-opacity duration-500 ease-in ${visibleStyle}`}
       ref={ref}
     >
       {children}

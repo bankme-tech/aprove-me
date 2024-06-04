@@ -8,9 +8,9 @@ export interface ITitleProps {
 export const Title: React.FC<ITitleProps> = ({ isSmall, title }) => (
   <div className="flex w-auto">
     {title && isSmall ? (
-      <h3 className={"tag-h3 my-0 text-gray-1"}>{title}</h3>
+      <h3 className={"tag-h3 my-0 text-purple-1"}>{title}</h3>
     ) : (
-      <h1 className={"tag-h1 my-0 text-gray-1"}>{title}</h1>
+      <h1 className={"tag-h1 my-0 text-purple-1"}>{title}</h1>
     )}
   </div>
 );

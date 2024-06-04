@@ -6,28 +6,18 @@ import { IconButton } from "../IconButton/IconButton";
 
 interface IReturnButtonProps {
   onClick?: () => void;
-  changeColorForSmallScreen?: boolean;
 }
 
-export const ReturnButton: React.FC<IReturnButtonProps> = ({
-  onClick,
-  changeColorForSmallScreen
-}) => {
+export const ReturnButton: React.FC<IReturnButtonProps> = ({ onClick }) => {
   const navigate = useNavigate();
-
-  const smallScreen = window.innerWidth < 1050;
 
   return (
     <div className="z-20">
       <IconButton onClick={onClick ?? (() => navigate(-1))}>
         <ArrowBackIcon
           sx={{
-            color: smallScreen
-              ? colors["blue-0"]
-              : changeColorForSmallScreen
-              ? colors.white
-              : colors["blue-0"],
-            ":hover": { color: colors["blue-1"] }
+            color: colors["purple-1"],
+            ":hover": { color: colors["purple-0"] }
           }}
         />
       </IconButton>

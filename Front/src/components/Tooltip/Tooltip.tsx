@@ -22,7 +22,7 @@ export const Tooltip: React.FC<ITooltipProps> = ({
       componentsProps={{
         tooltip: {
           sx: {
-            backgroundColor: colors["blue-0"],
+            backgroundColor: colors["purple-0"],
             paddingX: "1.5rem",
             boxShadow: "2px 2px 3px 2x rgba(0,0,0,0.25)"
           }

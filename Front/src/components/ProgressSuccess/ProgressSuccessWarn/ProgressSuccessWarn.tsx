@@ -21,12 +21,12 @@ export const ProgressSuccessWarn: React.FC<IProgressSuccessWarnProps> = ({
   return (
     <div className="flex w-full flex-col justify-start gap-1 bg-transparent">
       <ProgressSuccessBar percentage={totalSuccessWarnings} />
-      <ul className="tag-h6 ml-4 list-disc text-blue-0/25">
+      <ul className="tag-h6 ml-4 list-disc text-purple-0/25">
         {warns.map((warn) => (
           <div key={TextUtils.generateRandomKey()}>
             {!warn.expression.test(text) && (
               <li>
-                <p className="tag-h6 text-blue-0">{warn.description}</p>
+                <p className="tag-h6 text-purple-0">{warn.description}</p>
               </li>
             )}
           </div>

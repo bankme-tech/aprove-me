@@ -74,10 +74,13 @@ export const PasswordInputWithWarn: React.FC<IPasswordInputWithWarnProps> = ({
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? (
-            <VisibilityIcon sx={{ color: colors["blue-0"] }} fontSize="small" />
+            <VisibilityIcon
+              sx={{ color: colors["purple-0"] }}
+              fontSize="small"
+            />
           ) : (
             <VisibilityOffIcon
-              sx={{ color: disabled ? colors["gray-2"] : colors["blue-0"] }}
+              sx={{ color: disabled ? colors["gray-1"] : colors["purple-0"] }}
               fontSize="small"
             />
           )}

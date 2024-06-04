@@ -46,7 +46,7 @@ export const CurrencyInput: React.FC<ICurrencyInputProps> = ({
       children: "absolute left-1 bottom-[0.24rem]"
     }
   };
-  const currencyTextStyle = disabled ? "text-gray-2" : "";
+  const currencyTextStyle = disabled ? "text-gray-1" : "";
 
   const addDecimalIfNeeded = (value: string): string | undefined => {
     if (!value) return undefined;
@@ -73,7 +73,7 @@ export const CurrencyInput: React.FC<ICurrencyInputProps> = ({
             className={`relative mt-0 flex flex-row px-0 ${sizeStyle[size].inputGroup} min-w-fit`}
           >
             <input
-              className={`min-w-fit border-b-[1px] border-black bg-transparent pt-0.5 text-black shadow-sm hover:shadow-md focus:border-b-[1.5px] focus:border-blue-0 focus:shadow-md focus:outline-none disabled:cursor-not-allowed disabled:border-gray-2 disabled:text-gray-2 disabled:shadow-sm ${sizeStyle[size].input}`}
+              className={`min-w-fit border-b-[1px] border-black bg-transparent pt-0.5 text-black shadow-sm hover:shadow-md focus:border-b-[1.5px] focus:border-purple-0 focus:shadow-md focus:outline-none disabled:cursor-not-allowed disabled:border-gray-1 disabled:text-gray-1 disabled:shadow-sm ${sizeStyle[size].input}`}
               disabled={disabled}
               placeholder={placeholder}
               defaultValue="0.00"

@@ -15,7 +15,7 @@ export const StyledRow: React.FC<IStyledRowProps> = ({
     <tr
       // @ts-ignore
       // eslint-disable-next-line
-      class="cursor-pointer hover:cursor-pointer hover:bg-blue-2"
+      class="cursor-pointer hover:cursor-pointer hover:bg-purple-2"
       {...props}
     />
   </Tooltip>

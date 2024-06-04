@@ -31,14 +31,16 @@ export const ScreenAddornFixed: React.FC<IScreenAddornFixedProps> = ({
     <div ref={ref} className="z-10">
       <img
         className={`fixed top-0 z-0 w-full transition-opacity duration-300 ease-in sm:invisible ${visibleTopStyle} ${indexStyle}`}
+        alt="addornTop"
         src="/assets/AddornTop.svg"
       />
       <img
         className={`fixed bottom-0 w-fit transition-opacity duration-300 ease-in sm:invisible md:invisible ${visibleBottomStyle}`}
+        alt="addornBottom"
         src="/assets/AddornBottom.svg"
       />
-      <div className="fixed right-16 top-6 z-10">
-        {hasReturnButton && <ReturnButton changeColorForSmallScreen />}
+      <div className="fixed right-12 top-5 z-10">
+        {hasReturnButton && <ReturnButton />}
       </div>
     </div>
   );

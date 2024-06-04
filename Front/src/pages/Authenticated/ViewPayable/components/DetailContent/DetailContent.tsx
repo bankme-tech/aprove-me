@@ -52,7 +52,7 @@ export const DetailContent: React.FC<IDetailContentProps> = ({
       {loadingDetail ? (
         <LoadingAlert />
       ) : (
-        <div className="m-2 rounded-lg border border-blue-2 px-4 py-2 shadow-lg shadow-blue-2">
+        <div className="m-2 rounded-lg border border-purple-2 px-4 py-2 shadow-lg shadow-purple-2">
           <TextList
             title="Cedente"
             infos={[

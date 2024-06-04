@@ -24,15 +24,15 @@ export const ApproveButton: React.FC<IButtonProps> = ({
     : "border-0 hover:border";
   const outlinedStyle = {
     button: isOutlined
-      ? "disabled:border-gray-2 disabled:bg-transparent bg-transparent hover:bg-black/25 border-success"
-      : "bg-success hover:bg-green-1 border-transparent hover:border-success",
+      ? "disabled:border-gray-1 disabled:bg-transparent bg-transparent hover:bg-black/25 border-green-0"
+      : "bg-green-0 hover:bg-green-2 border-transparent hover:border-green-0",
     text: isDisabled
       ? isOutlined
-        ? "[&>*]:text-gray-2 [&>*]:hover:text-gray-2"
-        : "[&>*]:text-gray-3 [&>*]:hover:text-gray-3"
+        ? "[&>*]:text-gray-1 [&>*]:hover:text-gray-1"
+        : "[&>*]:text-gray-2 [&>*]:hover:text-gray-2"
       : isOutlined
-      ? "[&>*]:text-success [&>*]:hover:text-white"
-      : "[&>*]:text-white [&>*]:hover:text-success"
+      ? "[&>*]:text-green-0 [&>*]:hover:text-white"
+      : "[&>*]:text-white [&>*]:hover:text-green-0"
   };
   const sizeStyle = {
     small: `h-7 rounded-md ${autoWidth ? "px-0.5" : "px-8 w-fit"}`,

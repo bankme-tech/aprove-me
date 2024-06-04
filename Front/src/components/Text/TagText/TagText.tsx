@@ -7,9 +7,9 @@ export interface ITagTextProps {
 
 export const TagText: React.FC<ITagTextProps> = ({ children, level }) => {
   const levelStyle = {
-    neutral: "[&>*]:text-blue-1 border-blue-1 bg-blue-2",
-    high: "[&>*]:text-red-0 border-red-0 bg-red-1",
-    low: "[&>*]:text-success border-success bg-green-1",
+    neutral: "[&>*]:text-purple-1 border-purple-1 bg-purple-2",
+    high: "[&>*]:text-red-1 border-red-1 bg-red-2",
+    low: "[&>*]:text-green-0 border-green-0 bg-green-2",
     medium: "[&>*]:text-gold-0 border-gold-0 bg-gold-2"
   };
 
