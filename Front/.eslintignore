@@ -1,0 +1,8 @@
+dist
+.github
+.storybook
+public
+node_modules
+out
+.next
+*.stories.tsx
