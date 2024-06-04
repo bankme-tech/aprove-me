@@ -43,7 +43,6 @@ export const CentralInputCard: React.FC<ICentralInputCardProps> = ({
             control={control}
             errors={errors}
             inputColumn={inputs}
-            watch={watch}
           />
         )}
 
