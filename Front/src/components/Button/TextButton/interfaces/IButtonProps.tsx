@@ -1,7 +1,7 @@
-import { IActionType } from "interfaces/interfaces/Forms/IActionType";
+import { ActionType } from "interfaces/interfaces/Inputs/ActionType";
 
 export interface IButtonProps {
-  actionType?: IActionType;
+  actionType?: ActionType;
   autoWidth?: boolean;
   children: string;
   isDisabled?: boolean;

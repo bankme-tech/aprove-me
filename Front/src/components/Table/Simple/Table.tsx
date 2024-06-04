@@ -1,6 +1,7 @@
 import { RowProps, Table as TableAntd } from "antd";
 import { SearchBar } from "components/Table/components/SearchBar/SearchBar";
 import { TagText } from "components/Text/TagText/TagText";
+import { AllTypes } from "interfaces/interfaces/Global/AllTypes";
 import { IColumn } from "interfaces/interfaces/Table/IColumn";
 import React, { ReactNode, useEffect, useState } from "react";
 import { ArrayUtils } from "utils/arrayUtils";
@@ -61,7 +62,7 @@ export const Table: React.FC<ITableProps> = ({
   };
 
   const onFilter = (
-    value: string | number | boolean,
+    value: React.Key | AllTypes,
     record: any,
     dataIndex: string
   ) => record[dataIndex]?.toString() === value?.toString();
@@ -72,7 +73,7 @@ export const Table: React.FC<ITableProps> = ({
     const key = column.dataIndex;
 
     const notRepeatedList = ArrayUtils.removeDuplicatedValuesWithKey(data, key);
-    const orderedList = notRepeatedList.toSorted((a, b) =>
+    const orderedList = notRepeatedList.sort((a, b) =>
       orderAscendingGeneral(a, b, asDate, asNumber)
     );
     const formattedValues = formatValues(orderedList, asDate);
@@ -100,7 +101,7 @@ export const Table: React.FC<ITableProps> = ({
         column.hideFilter || column?.type === "boolean"
           ? undefined
           : showListOfFilters(column, searchedData),
-      onFilter: (value: string | number | boolean, record: any) =>
+      onFilter: (value: React.Key | AllTypes, record: any) =>
         onFilter(value, record, column.dataIndex),
       render: column.render
         ? (record: any) => column.render && column.render(record)
