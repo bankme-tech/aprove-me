@@ -1,11 +1,12 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, Length } from "class-validator";
 
 export class CredentialDto {
-    @IsString()
-    @IsNotEmpty()
+    @IsString({ message: "Senha tem tipo texto" })
+    @IsNotEmpty({ message: "Senha precisa ser preenchida" })
     password: string;
 
-    @IsString()
-    @IsNotEmpty()
+    @IsString({ message: "Login tem tipo texto" })
+    @Length(1, 140)
+    @IsNotEmpty({ message: "Login precisa ser preenchido" })
     login: string;
 }

@@ -1,6 +1,6 @@
-import { UserDto } from "./userDto";
+import { UserBasicDto } from "@/authentication/user/dto/userBasic.dto";
 
 export interface LoginResponseDto {
-    user: UserDto;
+    user: UserBasicDto;
     accessToken: string;
 }

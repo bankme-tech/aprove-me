@@ -1,4 +1,4 @@
-import { AssignorDto } from "src/app/assignor/dto/assignor.dto";
+import { AssignorDto } from "@/app/assignor/dto/assignor.dto";
 
 export interface ReceivableDto {
     id: string;
