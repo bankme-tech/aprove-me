@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { PrismaModule } from "src/shared/prisma/prisma.module";
+import { PrismaModule } from "@/shared/prisma/prisma.module";
 import { AssignorModule } from "../assignor/assignor.module";
 import { ReceivableRepository } from "./receivable.repository";
 import { ReceivableService } from "./receivable.service";
