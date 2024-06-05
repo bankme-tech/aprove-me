@@ -1,10 +1,10 @@
+import { HandleHttpError } from "@/shared/utils/handleError";
 import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
-import { HandleHttpError } from "src/shared/utils/handleError";
-import { AssignorService } from "../assignor/assignor.service";
 import { CreateReceivableDto } from "./dto/createReceivable.dto";
 import { ReceivableDto } from "./dto/receivable.dto";
 import { UpdateReceivableDto } from "./dto/updateReceivable.dto";
 import { ReceivableRepository } from "./receivable.repository";
+import { AssignorService } from "../assignor/assignor.service";
 
 @Injectable()
 export class ReceivableService {

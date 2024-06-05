@@ -1,5 +1,5 @@
+import { HandleHttpError } from "@/shared/utils/handleError";
 import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
-import { HandleHttpError } from "src/shared/utils/handleError";
 import { AssignorRepository } from "./assignor.repository";
 import { AssignorDto } from "./dto/assignor.dto";
 import { CreateAssignorDto } from "./dto/createAssignor.dto";
