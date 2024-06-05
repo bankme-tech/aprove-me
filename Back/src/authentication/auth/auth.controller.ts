@@ -12,14 +12,14 @@ export class AuthController {
     @Post("login")
     @PreAuthorized()
     @HttpCode(HttpStatus.OK)
-    public async login(@Body() loginDto: CredentialDto) {
+    async login(@Body() loginDto: CredentialDto) {
         this.logger.log("Start method login");
         return await this.service.login(loginDto);
     }
 
     @Get("verify-token")
     @HttpCode(HttpStatus.OK)
-    public async verifyToken(): Promise<boolean> {
+    async verifyToken(): Promise<boolean> {
         this.logger.log("Start method verifyToken");
         return true;
     }
