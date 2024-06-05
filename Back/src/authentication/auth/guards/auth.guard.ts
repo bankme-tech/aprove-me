@@ -4,6 +4,7 @@ import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, L
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { Secret, verify } from "jsonwebtoken";
+import { AuthException } from "../exception/authException.enum";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -20,12 +21,12 @@ export class AuthGuard implements CanActivate {
 
         const token = this.extractTokenFromHeaders(request);
 
-        if (!token) throw new HttpException("Token inválido", HttpStatus.UNAUTHORIZED);
+        if (!token) throw new HttpException(AuthException.INVALID_TOKEN, HttpStatus.UNAUTHORIZED);
 
         try {
             const decodedToken = verify(token, this.jwtSecret as Secret) as any;
             if (new Date(decodedToken.exp) < DateUtils.today())
-                throw new HttpException("Token expirado", HttpStatus.UNAUTHORIZED);
+                throw new HttpException(AuthException.EXPIRED_TOKEN, HttpStatus.UNAUTHORIZED);
 
             const user = JSON.parse(decodedToken.sub);
 
