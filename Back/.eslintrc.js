@@ -5,12 +5,20 @@ module.exports = {
       tsconfigRootDir: __dirname,
       sourceType: "module"
   },
-  plugins: ["@typescript-eslint/eslint-plugin"],
+  plugins: ["@typescript-eslint/eslint-plugin", "@typescript-eslint", "import"],
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
   root: true,
   env: {
       node: true,
       jest: true
+  },
+  settings: {
+      "import/resolver": {
+          typescript: {
+              alwaysTryTypes: true,
+              project: "./tsconfig.json"
+          }
+      }
   },
   ignorePatterns: [".eslintrc.js"],
   rules: {
@@ -31,14 +39,34 @@ module.exports = {
               printWidth: 120
           }
       ],
-      "quotes": ["error", "double"],
-      "semi": ["error", "always"],
+      quotes: ["error", "double"],
+      semi: ["error", "always"],
       "no-multiple-empty-lines": [
-          "error", 
-          { 
-            "max": 1, 
-            "maxEOF": 1 
+          "error",
+          {
+              max: 1,
+              maxEOF: 1
           }
-        ],
-  }
+      ],
+      "import/no-unresolved": [
+          "error",
+          {
+              ignore: ["^@/"]
+          }
+      ],
+      "no-restricted-imports": [
+          "warn",
+          {
+              patterns: ["src/*"]
+          }
+      ]
+  },
+  overrides: [
+      {
+          files: ["tests/**/*"],
+          env: {
+              jest: true
+          }
+      }
+  ]
 };
