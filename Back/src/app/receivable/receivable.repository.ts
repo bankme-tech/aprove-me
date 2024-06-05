@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/shared/prisma/prisma.service";
+import { PrismaService } from "@/shared/prisma/prisma.service";
 import { CreateReceivableDto } from "./dto/createReceivable.dto";
 import { ReceivableDto } from "./dto/receivable.dto";
 import { UpdateReceivableDto } from "./dto/updateReceivable.dto";

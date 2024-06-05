@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { AssignorDto } from "./dto/assignor.dto";
 import { CreateAssignorDto } from "./dto/createAssignor.dto";
 import { UpdateAssignorDto } from "./dto/updateAssignor.dto";
-import { PrismaService } from "src/shared/prisma/prisma.service";
+import { PrismaService } from "@/shared/prisma/prisma.service";
 
 @Injectable()
 export class AssignorRepository {
