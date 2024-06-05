@@ -1,8 +1,8 @@
+import { PrismaService } from "@/shared/prisma/prisma.service";
 import { Injectable } from "@nestjs/common";
 import { AssignorDto } from "./dto/assignor.dto";
 import { CreateAssignorDto } from "./dto/createAssignor.dto";
 import { UpdateAssignorDto } from "./dto/updateAssignor.dto";
-import { PrismaService } from "@/shared/prisma/prisma.service";
 
 @Injectable()
 export class AssignorRepository {
@@ -14,7 +14,7 @@ export class AssignorRepository {
         });
     }
     async findById(id: string): Promise<AssignorDto | null> {
-        return this.database.assignor.findUnique({
+        return await this.database.assignor.findUnique({
             where: { id }
         });
     }

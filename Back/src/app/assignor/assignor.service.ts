@@ -4,6 +4,7 @@ import { AssignorRepository } from "./assignor.repository";
 import { AssignorDto } from "./dto/assignor.dto";
 import { CreateAssignorDto } from "./dto/createAssignor.dto";
 import { UpdateAssignorDto } from "./dto/updateAssignor.dto";
+import { AssignorException } from "./exception/assignorException.enum";
 
 @Injectable()
 export class AssignorService {
@@ -19,9 +20,12 @@ export class AssignorService {
             const alreadyRegisterDocument = await this.repository.hasDocument(data.document);
             const alreadyRegisterPhone = await this.repository.hasPhone(data.phone);
 
-            if (alreadyRegisterEmail) throw new HttpException("Email already exists", HttpStatus.CONFLICT);
-            if (alreadyRegisterDocument) throw new HttpException("Document already exists", HttpStatus.CONFLICT);
-            if (alreadyRegisterPhone) throw new HttpException("Phone already exists", HttpStatus.CONFLICT);
+            if (alreadyRegisterEmail)
+                throw new HttpException(AssignorException.EMAIL_ALREADY_EXIST, HttpStatus.CONFLICT);
+            if (alreadyRegisterDocument)
+                throw new HttpException(AssignorException.DOCUMENT_ALREADY_EXIST, HttpStatus.CONFLICT);
+            if (alreadyRegisterPhone)
+                throw new HttpException(AssignorException.PHONE_ALREADY_EXIST, HttpStatus.CONFLICT);
 
             await this.repository.create(data);
 
@@ -36,7 +40,7 @@ export class AssignorService {
         try {
             this.logger.log(`Start service getById - Request - ${JSON.stringify(id)}`);
             const assignor = await this.repository.findById(id);
-            if (!assignor) throw new HttpException("Id not found", HttpStatus.NOT_FOUND);
+            if (!assignor) throw new HttpException(AssignorException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
             this.logger.log(`End service getById - Response - ${JSON.stringify(assignor)}`);
             return assignor;
         } catch (error) {
@@ -53,12 +57,15 @@ export class AssignorService {
             const alreadyRegisterDocument = data?.document ? await this.repository.hasDocument(data.document) : false;
             const alreadyRegisterPhone = data?.phone ? await this.repository.hasPhone(data.phone) : false;
 
-            if (alreadyRegisterEmail) throw new HttpException("Email already exists", HttpStatus.CONFLICT);
-            if (alreadyRegisterDocument) throw new HttpException("Document already exists", HttpStatus.CONFLICT);
-            if (alreadyRegisterPhone) throw new HttpException("Phone already exists", HttpStatus.CONFLICT);
+            if (alreadyRegisterEmail)
+                throw new HttpException(AssignorException.EMAIL_ALREADY_EXIST, HttpStatus.CONFLICT);
+            if (alreadyRegisterDocument)
+                throw new HttpException(AssignorException.DOCUMENT_ALREADY_EXIST, HttpStatus.CONFLICT);
+            if (alreadyRegisterPhone)
+                throw new HttpException(AssignorException.PHONE_ALREADY_EXIST, HttpStatus.CONFLICT);
 
             const assignor = await this.repository.findById(id);
-            if (!assignor) throw new HttpException("Id not found", HttpStatus.NOT_FOUND);
+            if (!assignor) throw new HttpException(AssignorException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
 
             await this.repository.update(id, data);
 
@@ -74,7 +81,7 @@ export class AssignorService {
             this.logger.log(`Start service delete - Request - ${JSON.stringify({ id })}`);
 
             const assignor = await this.repository.findById(id);
-            if (!assignor) throw new HttpException("Id not found", HttpStatus.NOT_FOUND);
+            if (!assignor) throw new HttpException(AssignorException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
 
             await this.repository.delete(id);
 
