@@ -10,8 +10,9 @@ import authConfig from "../config/auth.config";
 import { PrismaModule } from "../prisma/prisma.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { UserModule } from "@/authentication/user/user.module";
 
-const Modules = [AssignorModule, AuthModule, PrismaModule, ReceivableModule, TokenModule];
+const Modules = [AssignorModule, AuthModule, PrismaModule, ReceivableModule, TokenModule, UserModule];
 const Configs = [appConfig, authConfig];
 
 @Module({
