@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////////////
+///// Auto Commented Out by 🅿🆁🅸🆂🅼🅰-🅼🆄🅻🆃🅸🆂🅲🅷🅴🅼🅰                       ////////     
+///// Detected : Datasource and Generator Client                                 ////////
+///// You can change this files content is commented or Uncommented Stage.       ////////
+///// It will take effect after you run npx prisma-multischema                   ////////
+///// Feel free to change Datasource/ Database URL / Provider / Binary Targets   ////////
+///// DO NOT EDIT in this comment box                                            ////////                                    
+///// CHANGE ONLY BELOW THIS LINE.                                               ////////       
+/////////////////////////////////////////////////////////////////////////////////////////                                         
+
+//
+//generator client {
+//    provider        = "prisma-client-js"
+//    previewFeatures = ["multiSchema"]
+//}
+// datasource db {
+//    provider = "sqlite"
+//    url      = env("DATABASE_URL")
+//}
