@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# Database
+/prisma/data/*
+
 # Logs
 logs
 *.log
@@ -33,9 +36,7 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+
+# env files
 .env
 docker.env
-
-prisma/schema.prisma
-
-uploadedFiles
