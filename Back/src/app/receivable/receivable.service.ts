@@ -1,10 +1,11 @@
 import { HandleHttpError } from "@/shared/utils/handleError";
 import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
+import { AssignorService } from "../assignor/assignor.service";
 import { CreateReceivableDto } from "./dto/createReceivable.dto";
 import { ReceivableDto } from "./dto/receivable.dto";
 import { UpdateReceivableDto } from "./dto/updateReceivable.dto";
+import { ReceivableException } from "./exception/receivableException.enum";
 import { ReceivableRepository } from "./receivable.repository";
-import { AssignorService } from "../assignor/assignor.service";
 
 @Injectable()
 export class ReceivableService {
@@ -17,7 +18,8 @@ export class ReceivableService {
             this.logger.log(`Start service create - Request - ${JSON.stringify(data)}`);
 
             const assignorExists = await this.assignorService.getById(data.assignorId);
-            if (!assignorExists) throw new HttpException("Assignor id not found", HttpStatus.NOT_FOUND);
+            if (!assignorExists)
+                throw new HttpException(ReceivableException.ASSIGNOR_ID_NOT_FOUND, HttpStatus.NOT_FOUND);
 
             await this.repository.create(data);
 
@@ -32,7 +34,7 @@ export class ReceivableService {
         try {
             this.logger.log(`Start service getById - Request - ${JSON.stringify(id)}`);
             const receivable = await this.repository.findById(id);
-            if (!receivable) throw new HttpException("Id not found", HttpStatus.NOT_FOUND);
+            if (!receivable) throw new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
             this.logger.log(`End service getById - Response - ${JSON.stringify(receivable)}`);
             return receivable;
         } catch (error) {
@@ -45,7 +47,7 @@ export class ReceivableService {
         try {
             this.logger.log(`Start service update - Request - ${JSON.stringify({ ...data, id })}`);
             const receivable = await this.repository.findById(id);
-            if (!receivable) throw new HttpException("Id not found", HttpStatus.NOT_FOUND);
+            if (!receivable) throw new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
 
             await this.repository.update(id, data);
 
@@ -60,7 +62,7 @@ export class ReceivableService {
         try {
             this.logger.log(`Start service delete - Request - ${JSON.stringify({ id })}`);
             const receivable = await this.repository.findById(id);
-            if (!receivable) throw new HttpException("Id not found", HttpStatus.NOT_FOUND);
+            if (!receivable) throw new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
 
             await this.repository.delete(id);
 
