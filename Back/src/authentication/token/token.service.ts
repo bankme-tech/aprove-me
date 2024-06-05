@@ -3,7 +3,7 @@ import { HandleHttpError } from "@/shared/utils/handleError";
 import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { sign } from "jsonwebtoken";
-import { UserDto } from "../auth/dto/userDto";
+import { UserBasicDto } from "../user/dto/userBasic.dto";
 
 @Injectable()
 export class TokenService {
@@ -13,7 +13,7 @@ export class TokenService {
 
     constructor(private readonly configService: ConfigService) {}
 
-    public generateAccessToken(user: UserDto): string {
+    public generateAccessToken(user: UserBasicDto): string {
         try {
             this.logger.log(`Start service generateAccessToken - Request - ${JSON.stringify({ user })}`);
 
