@@ -14,10 +14,10 @@ export const Redirect: React.FC<IRedirectProps> = ({
 
   return (
     <button
-      className="hover:bg-gray-3 rounded border-0 bg-transparent px-2 py-0.5"
+      className="rounded border-0 bg-transparent px-2 py-0.5 hover:bg-gray-3"
       onClick={() => navigate(destination)}
     >
-      <span className="tag-h5 text-gold-0 underline hover:text-gold-1">
+      <span className="tag-h5 text-purple-0 underline hover:text-purple-1">
         {children}
       </span>
     </button>
