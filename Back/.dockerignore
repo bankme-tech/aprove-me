@@ -1,0 +1,44 @@
+# ignore .git and .cache folders
+
+.git
+.cache
+logs/
+\*.log
+package-lock.json \**/*logs
+
+## Directory-based project format
+
+.idea/
+.vscode/
+.DS_Store
+infrastructure/
+tests/
+.git\*
+*.md
+.github
+.test
+node*modules/
+
+## Specific for project
+
+.editorconfig
+.eslintignore
+.eslintrc\*
+.prettierrc
+
+# Test folders
+
+test/
+dist/
+docs/
+
+# Upload folders
+
+upload/
+
+# Dockerfiles and docker-composes
+
+Dockerfile.\*
+docker-compose*
+Dockerfile
+Dockerfile.*
