@@ -10,7 +10,7 @@ export const TagText: React.FC<ITagTextProps> = ({ children, level }) => {
     neutral: "[&>*]:text-purple-1 border-purple-1 bg-purple-2",
     high: "[&>*]:text-red-1 border-red-1 bg-red-2",
     low: "[&>*]:text-green-0 border-green-0 bg-green-2",
-    medium: "[&>*]:text-gold-0 border-gold-0 bg-gold-2"
+    medium: "[&>*]:text-yellow-0 border-yellow-0 bg-yellow-1"
   };
 
   return (

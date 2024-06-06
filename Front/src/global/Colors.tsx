@@ -1,7 +1,6 @@
 export type colorsType = {
-  "gold-0": string;
-  "gold-1": string;
-  "gold-2": string;
+  "yellow-0": string;
+  "yellow-1": string;
   black: string;
   white: string;
   "gray-0": string;
@@ -21,9 +20,8 @@ export type colorsType = {
 };
 
 export const colors = {
-  "gold-0": "#D3A93D",
-  "gold-1": "#E2BD7A",
-  "gold-2": "#FAF2E5",
+  "yellow-0": "#D3A93A",
+  "yellow-1": "#FAF2EA",
   black: "#151515",
   white: "#ffffff",
   "gray-0": "#555555",
