@@ -5,6 +5,6 @@ export const TestRoute: React.FC = () => {
   return window.location.hostname === "localhost" ? (
     <Outlet />
   ) : (
-    <Navigate to="/off" />
+    <Navigate to={RoutesEnum.BaseRoute.Login} />
   );
 };
