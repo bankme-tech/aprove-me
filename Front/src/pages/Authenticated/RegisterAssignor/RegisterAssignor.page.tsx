@@ -18,7 +18,8 @@ export const RegisterAssignorPage: React.FC = () => {
   const {
     control,
     formState: { errors, isSubmitting },
-    handleSubmit
+    handleSubmit,
+    watch
   } = useForm();
 
   const onSave = async (data: any) => {
@@ -31,7 +32,7 @@ export const RegisterAssignorPage: React.FC = () => {
       const customError = TextUtils.getCustomError(error);
 
       if (customError) {
-        notify(customError.message, customError.type);
+        customError.map(({ message, type }) => notify(message, type));
       } else {
         notify("Erro ao salvar cedente, contate o suporte!", "error");
       }
@@ -67,9 +68,13 @@ export const RegisterAssignorPage: React.FC = () => {
               type: "text"
             },
             {
+              extraProps: {
+                mask: {
+                  maskType: "cellphone"
+                }
+              },
               label: "Celular",
               name: "phone",
-              maskType: "cellphone",
               placeholder: "Digite o celular...",
               required: true,
               type: "mask"
@@ -82,6 +87,7 @@ export const RegisterAssignorPage: React.FC = () => {
               type: "email"
             }
           ]}
+          watch={watch}
         />
 
         <TextButton

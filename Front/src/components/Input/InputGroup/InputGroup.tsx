@@ -6,20 +6,27 @@ import { PasswordInput } from "components/Input/Inputs/Password/Simple/PasswordI
 import { SelectInline } from "components/Input/Inputs/Select/SelectInline";
 import { TextInput } from "components/Input/Inputs/Text/TextInput";
 import { IPageFormsInput } from "interfaces/interfaces/Inputs/IPageFormsInput";
-
 import React from "react";
-import { Control, FieldErrors, FieldValues } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  FieldValues,
+  UseFormWatch
+} from "react-hook-form";
+import { PasswordInputWithWarn } from "../Inputs/Password/WithWarn/PasswordInputWithWarn";
 
 interface IInputGroupProps {
   control: Control<any>;
   errors: FieldErrors<FieldValues>;
   inputColumn: IPageFormsInput[];
+  watch: UseFormWatch<FieldValues | any>;
 }
 
 export const InputGroup: React.FC<IInputGroupProps> = ({
   control,
   errors,
-  inputColumn
+  inputColumn,
+  watch
 }) => {
   const verifyDisabled = (label: string, disabled?: boolean | undefined) =>
     disabled && control._formValues[label] !== undefined;
@@ -48,6 +55,22 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               required={input?.required}
             />
           )}
+          {input.type === "password-with-warn" && (
+            <PasswordInputWithWarn
+              autoWidth
+              disabled={verifyDisabled(
+                input?.name ?? input.label,
+                input.disabled
+              )}
+              errors={errors}
+              label={input.label}
+              name={input?.name ?? input.label}
+              control={control}
+              required={input?.required}
+              value={watch(input?.name ?? input.label)}
+              warns={input?.extraProps?.password?.warns ?? []}
+            />
+          )}
           {input.type === "text" && (
             <TextInput
               autoWidth
@@ -73,7 +96,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               )}
               errors={errors}
               label={input.label}
-              maskType={input?.maskType}
+              maskType={input?.extraProps?.mask?.maskType}
               name={input?.name ?? input.label}
               placeholder={input.placeholder}
               required={input?.required}
@@ -134,7 +157,7 @@ export const InputGroup: React.FC<IInputGroupProps> = ({
               errors={errors}
               label={input.label}
               name={input?.name ?? input.label}
-              options={input?.options ?? []}
+              options={input?.extraProps?.select?.options ?? []}
               placeholder={input?.placeholder ?? ""}
               required={input?.required}
             />

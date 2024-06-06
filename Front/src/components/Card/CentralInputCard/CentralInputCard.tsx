@@ -39,7 +39,7 @@ export const CentralInputCard: React.FC<ICentralInputCardProps> = ({
         className="flex flex-col items-center gap-6"
       >
         {inputs && (
-          <InputGroup control={control} errors={errors} inputColumn={inputs} />
+          <InputGroup control={control} errors={errors} inputColumn={inputs} watch={watch} />
         )}
 
         <ActionButtons

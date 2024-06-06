@@ -18,7 +18,8 @@ export const RegisterReceivablePage: React.FC = () => {
   const {
     control,
     formState: { errors, isSubmitting },
-    handleSubmit
+    handleSubmit,
+    watch
   } = useForm();
 
   const [assignors, setAssignors] = useState<string[]>([]);
@@ -33,7 +34,7 @@ export const RegisterReceivablePage: React.FC = () => {
       const customError = TextUtils.getCustomError(error);
 
       if (customError) {
-        notify(customError.message, customError.type);
+        customError.map(({ message, type }) => notify(message, type));
       } else {
         notify("Erro ao salvar recebível, contate o suporte!", "error");
       }
@@ -49,7 +50,7 @@ export const RegisterReceivablePage: React.FC = () => {
       const customError = TextUtils.getCustomError(error);
 
       if (customError) {
-        notify(customError.message, customError.type);
+        customError.map(({ message, type }) => notify(message, type));
       } else {
         notify("Erro ao carregar dados, contate o suporte!", "error");
       }
@@ -99,12 +100,13 @@ export const RegisterReceivablePage: React.FC = () => {
               {
                 label: "Cedente",
                 name: "assignorEmail",
-                options: assignors,
+                extraProps: { select: { options: assignors } },
                 placeholder: "Selecione o cedente",
                 required: true,
                 type: "select"
               }
             ]}
+            watch={watch}
           />
 
           <TextButton
