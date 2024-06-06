@@ -36,9 +36,23 @@ export class AssignorService {
         }
     }
 
+    public async getAll(): Promise<AssignorDto[]> {
+        try {
+            this.logger.log("Start service getAll");
+            const response = await this.repository.findAll();
+            this.logger.log(`End service getAll - Response - ${JSON.stringify(response)}`);
+            return response;
+        } catch (error) {
+            this.logger.error(`Error service getAll - Error - ${JSON.stringify(error)}`);
+            throw HandleHttpError.next(error);
+        }
+    }
+
     public async getById(id: string): Promise<AssignorDto> {
         try {
             this.logger.log(`Start service getById - Request - ${JSON.stringify(id)}`);
+            if (!id) throw new HttpException(AssignorException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
+
             const assignor = await this.repository.findById(id);
             if (!assignor) throw new HttpException(AssignorException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
             this.logger.log(`End service getById - Response - ${JSON.stringify(assignor)}`);
@@ -49,9 +63,25 @@ export class AssignorService {
         }
     }
 
+    public async getByEmail(email: string): Promise<AssignorDto> {
+        try {
+            this.logger.log(`Start service getByEmail - Request - ${JSON.stringify(email)}`);
+            if (!email) throw new HttpException(AssignorException.EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND);
+
+            const assignor = await this.repository.findByEmail(email);
+            if (!assignor) throw new HttpException(AssignorException.EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND);
+            this.logger.log(`End service getByEmail - Response - ${JSON.stringify(assignor)}`);
+            return assignor;
+        } catch (error) {
+            this.logger.error(`Error service getByEmail - Error - ${JSON.stringify(error)}`);
+            throw HandleHttpError.next(error);
+        }
+    }
+
     public async update(data: UpdateAssignorDto, id: string): Promise<void> {
         try {
             this.logger.log(`Start service update - Request - ${JSON.stringify({ ...data, id })}`);
+            if (!id) throw new HttpException(AssignorException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
 
             const alreadyRegisterEmail = data?.email ? await this.repository.hasEmail(data.email) : false;
             const alreadyRegisterDocument = data?.document ? await this.repository.hasDocument(data.document) : false;
@@ -79,6 +109,7 @@ export class AssignorService {
     public async delete(id: string): Promise<void> {
         try {
             this.logger.log(`Start service delete - Request - ${JSON.stringify({ id })}`);
+            if (!id) throw new HttpException(AssignorException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
 
             const assignor = await this.repository.findById(id);
             if (!assignor) throw new HttpException(AssignorException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);

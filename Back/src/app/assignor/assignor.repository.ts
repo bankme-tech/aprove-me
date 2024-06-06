@@ -13,9 +13,19 @@ export class AssignorRepository {
             data
         });
     }
+    async findAll(): Promise<AssignorDto[]> {
+        return await this.database.assignor.findMany({
+            orderBy: { email: "asc" }
+        });
+    }
     async findById(id: string): Promise<AssignorDto | null> {
         return await this.database.assignor.findUnique({
             where: { id }
+        });
+    }
+    async findByEmail(email: string): Promise<AssignorDto | null> {
+        return await this.database.assignor.findUnique({
+            where: { email }
         });
     }
     async update(id: string, data: UpdateAssignorDto): Promise<void> {
