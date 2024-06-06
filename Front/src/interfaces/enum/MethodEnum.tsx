@@ -1,13 +1,4 @@
-export type MethodEnumType =
-  | "POST"
-  | "PUT"
-  | "GET"
-  | "DELETE"
-  | "CRON"
-  | "SUBSCRIBER"
-  | "INTERNAL"
-  | "PRODUCER"
-  | "CONSUMER";
+export type MethodEnumType = "POST" | "PUT" | "GET" | "DELETE";
 
 const MethodValues: {
   [T in MethodEnumType]: string;
@@ -15,12 +6,7 @@ const MethodValues: {
   POST: "POST",
   PUT: "PUT",
   GET: "GET",
-  DELETE: "DELETE",
-  CRON: "CRON",
-  SUBSCRIBER: "SUBSCRIBER",
-  INTERNAL: "INTERNAL",
-  PRODUCER: "PRODUCER",
-  CONSUMER: "CONSUMER"
+  DELETE: "DELETE"
 };
 
 export class MethodEnum {
