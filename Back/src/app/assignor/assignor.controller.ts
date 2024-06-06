@@ -18,6 +18,13 @@ export class AssignorController {
 
     @Get()
     @HttpCode(HttpStatus.OK)
+    async getAll() {
+        this.logger.log("Start method getAll");
+        return await this.service.getAll();
+    }
+
+    @Get("by-id")
+    @HttpCode(HttpStatus.OK)
     async getById(@Query("id") id: string) {
         this.logger.log("Start method getById");
         return await this.service.getById(id);
