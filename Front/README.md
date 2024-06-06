@@ -4,6 +4,13 @@
 
 Este projeto consiste em uma plataforma de gestão de recebíveis desenvolvida para facilitar o registro e a administração dos recebíveis diários de clientes da 'Willer Bank'. Inclui funcionalidades para cadastrar novos recebíveis, visualizar registros existentes, atualizar detalhes e remover entradas. O objetivo é oferecer uma interface intuitiva e eficiente para que a equipe de operações gerencie as informações de recebíveis de forma organizada.
 
+## Pré-requisitos
+
+Para rodar e dar build do projeto localmente você precisará de algumas ferramentas:
+
+- Instale [Node.js](https://nodejs.org/en/)
+- Instale [VS Code](https://code.visualstudio.com/)
+
 ## Primeiros passos
 
 Primeiro, para rodar em modo de desenvolvimento execute no terminal:
@@ -84,7 +91,7 @@ Abra [http://localhost:8080](http://localhost:8080) no seu navagador para visual
 
 Uma forma simples para fazer o deploy do projeto o qual utiliza React com Vite é pelo Amplify, segue [link](https://docs.amplify.aws/gen1/javascript/deploy-and-host/frameworks/deploy-vite-site/) de como fazer deploy do frontend utilizando AWS Amplify.
 
-## Author
+## Autor
 
 - Nome: Willer Santos
 - Local: São Paulo, SP
