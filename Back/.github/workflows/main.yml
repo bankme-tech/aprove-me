@@ -1,0 +1,114 @@
+name: Willer Bank | Backend | Main
+on:
+    push:
+        branches:
+            - main
+jobs:
+    build_and_deploy:
+        name: build_and_deploy
+        runs-on: ubuntu-latest
+        environment:
+            name: main
+        env:
+            AWS_REGION: ${{ secrets.AWS_REGION_PIPELINE }}
+            AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PIPELINE }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PIPELINE }}
+            AWS_LOG_GROUP: willer-bank-main
+            ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION_PIPELINE }}.amazonaws.com
+            ECR_REPOSITORY: ${{ secrets.AWS_ECR_NAME }}
+            INSTANCE_ID: ${{ secrets.INSTANCE_ID }}
+            IMAGE_TAG: main-${{ github.sha }}
+        strategy:
+            matrix:
+                node-version: [18.x]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Build and push Docker image to ECR
+              run: |
+                  # Authenticate with ECR
+                  aws ecr get-login-password --region ${{ secrets.AWS_REGION_PIPELINE }} | docker login --username AWS --password-stdin $ECR_REGISTRY
+                  # Build the Docker image
+                  docker build --no-cache -t willer-bank:$IMAGE_TAG -f Dockerfile .
+                  # Tag the Docker image with the ECR URI
+                  docker tag willer-bank:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+                  # Push the Docker image to ECR
+                  docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+            - name: Create .env
+              working-directory: ./
+              run: |
+                  echo "PORT=${{ secrets.PORT }}" >> .env
+                  echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env
+                  echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> .env
+                  echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+                  echo "ACCESS_TOKEN_EXPIRATION_MINUTES=${{ secrets.ACCESS_TOKEN_EXPIRATION_MINUTES }}" >> .env
+                  echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+                  echo "EXCHANGE_URL=${{ secrets.EXCHANGE_URL }}" >> .env
+                  echo "SES_SMTP_USERNAME=${{ secrets.SES_SMTP_USERNAME }}" >> .env
+                  echo "SES_SMTP_PASSWORD=${{ secrets.SES_SMTP_PASSWORD }}" >> .env
+                  echo "SES_FROM_MAIL=${{ secrets.SES_FROM_MAIL }}" >> .env
+                  echo "SES_HOST=${{ secrets.SES_HOST }}" >> .env
+                  echo "SES_PORT=${{ secrets.SES_PORT }}" >> .env
+
+            - name: Upload docker-compose file to S3
+              run: aws s3 cp docker-compose.yml s3://s3-pipeline/willer-bank/docker-compose.yml
+
+            - name: Upload .env file to S3
+              run: aws s3 cp .env s3://s3-pipeline/willer-bank/.env
+
+            - name: Update docker-compose and deploy
+              id: ssm_command
+              run: |
+                  output=$(aws ssm send-command \
+                    --instance-ids $INSTANCE_ID \
+                    --document-name "AWS-RunShellScript" \
+                    --parameters "{\"commands\":[
+                        \"aws s3 cp s3://s3-pipeline/willer-bank/docker-compose.yml /opt/willer-bank/compose/docker-compose.yml\",
+                        \"aws s3 cp s3://s3-pipeline/willer-bank/.env /opt/willer-bank/compose/.env\",
+                        \"export APP_IMG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG\",
+                        \"export AWS_LOG_GROUP=$AWS_LOG_GROUP\",
+                        \"aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY\",
+                        \"cd /opt/willer-bank/compose && docker-compose up -d\"]}")
+                  command_id=$(echo $output | jq -r '.Command.CommandId')
+                  echo "::set-output name=command_id::$command_id"
+
+            - name: Wait for command completion and get output
+              run: |
+                  command_id=${{ steps.ssm_command.outputs.command_id }}
+                  status=""
+                  while [ "$status" != "Success" ]; do
+                      output=$(aws ssm get-command-invocation \
+                      --command-id $command_id \
+                      --instance-id $INSTANCE_ID)
+                      status=$(echo $output | jq -r '.Status')
+                      if [ "$status" == "Failed" ]; then
+                      echo "Command failed to execute. Error output:"
+                      aws ssm get-command-invocation \
+                          --command-id $command_id \
+                          --instance-id $INSTANCE_ID \
+                          --output text \
+                          --query 'StandardErrorContent'
+                      exit 1
+                      fi
+                      echo "Waiting for command to complete..."
+                      sleep 10
+                  done
+                  echo "Command executed successfully. Output:"
+                  aws ssm get-command-invocation \
+                      --command-id $command_id \
+                      --instance-id $INSTANCE_ID \
+                      --output text \
+                      --query 'StandardOutputContent'
+
+            - name: Deleting old images
+              run: |
+                  aws ssm send-command \
+                      --instance-ids $INSTANCE_ID \
+                      --document-name "AWS-RunShellScript" \
+                      --parameters "{\"commands\":[
+                          \"docker system prune -af\"
+                          ]}"
