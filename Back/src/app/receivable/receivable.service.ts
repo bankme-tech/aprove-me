@@ -1,8 +1,11 @@
 import { HandleHttpError } from "@/shared/utils/handleError";
 import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
 import { AssignorService } from "../assignor/assignor.service";
+import { AssignorDto } from "../assignor/dto/assignor.dto";
 import { CreateReceivableDto } from "./dto/createReceivable.dto";
 import { ReceivableDto } from "./dto/receivable.dto";
+import { ReceivableListDto } from "./dto/receivableList.dto";
+import { SaveReceivableDto } from "./dto/saveReceivable.dto";
 import { UpdateReceivableDto } from "./dto/updateReceivable.dto";
 import { ReceivableException } from "./exception/receivableException.enum";
 import { ReceivableRepository } from "./receivable.repository";
@@ -13,19 +16,32 @@ export class ReceivableService {
 
     constructor(private readonly repository: ReceivableRepository, private readonly assignorService: AssignorService) {}
 
-    public async create(data: CreateReceivableDto): Promise<void> {
+    public async save(data: CreateReceivableDto): Promise<void> {
         try {
-            this.logger.log(`Start service create - Request - ${JSON.stringify(data)}`);
+            this.logger.log(`Start service save - Request - ${JSON.stringify(data)}`);
 
-            const assignorExists = await this.assignorService.getById(data.assignorId);
-            if (!assignorExists)
-                throw new HttpException(ReceivableException.ASSIGNOR_ID_NOT_FOUND, HttpStatus.NOT_FOUND);
+            const assignor = await this.assignorService.getByEmail(data.assignorEmail);
+            if (!assignor) throw new HttpException(ReceivableException.ASSIGNOR_EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND);
 
-            await this.repository.create(data);
+            const newReceivable = await this.create(data, assignor);
 
-            this.logger.log("End service create");
+            await this.repository.create(newReceivable);
+
+            this.logger.log("End service save");
         } catch (error) {
-            this.logger.error(`Error service create - Error - ${JSON.stringify(error)}`);
+            this.logger.error(`Error service save - Error - ${JSON.stringify(error)}`);
+            throw HandleHttpError.next(error);
+        }
+    }
+
+    public async getAll(): Promise<ReceivableListDto[]> {
+        try {
+            this.logger.log("Start service getAll");
+            const response = await this.repository.findAll();
+            this.logger.log(`End service getAll - Response - ${JSON.stringify(response)}`);
+            return response;
+        } catch (error) {
+            this.logger.error(`Error service getAll - Error - ${JSON.stringify(error)}`);
             throw HandleHttpError.next(error);
         }
     }
@@ -33,6 +49,8 @@ export class ReceivableService {
     public async getById(id: string): Promise<ReceivableDto> {
         try {
             this.logger.log(`Start service getById - Request - ${JSON.stringify(id)}`);
+            if (!id) throw new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
+
             const receivable = await this.repository.findById(id);
             if (!receivable) throw new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
             this.logger.log(`End service getById - Response - ${JSON.stringify(receivable)}`);
@@ -46,6 +64,8 @@ export class ReceivableService {
     public async update(data: UpdateReceivableDto, id: string): Promise<void> {
         try {
             this.logger.log(`Start service update - Request - ${JSON.stringify({ ...data, id })}`);
+            if (!id) throw new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
+
             const receivable = await this.repository.findById(id);
             if (!receivable) throw new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
 
@@ -61,6 +81,8 @@ export class ReceivableService {
     public async delete(id: string): Promise<void> {
         try {
             this.logger.log(`Start service delete - Request - ${JSON.stringify({ id })}`);
+            if (!id) throw new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
+
             const receivable = await this.repository.findById(id);
             if (!receivable) throw new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND);
 
@@ -69,6 +91,21 @@ export class ReceivableService {
             this.logger.log("End service delete");
         } catch (error) {
             this.logger.error(`Error service delete - Error - ${JSON.stringify(error)}`);
+            throw HandleHttpError.next(error);
+        }
+    }
+
+    private async create(receivable: CreateReceivableDto, assignor: AssignorDto): Promise<SaveReceivableDto> {
+        try {
+            this.logger.log(`Start service create - Request - ${JSON.stringify({ receivable, assignor })}`);
+            const newReceivable = new SaveReceivableDto();
+            newReceivable.assignorId = assignor.id;
+            newReceivable.emissionDate = new Date(receivable.emissionDate);
+            newReceivable.value = Number(receivable.value);
+            this.logger.log(`End service create - Response - ${JSON.stringify(newReceivable)}`);
+            return newReceivable;
+        } catch (error) {
+            this.logger.error(`Error service create - Error - ${JSON.stringify(error)}`);
             throw HandleHttpError.next(error);
         }
     }
