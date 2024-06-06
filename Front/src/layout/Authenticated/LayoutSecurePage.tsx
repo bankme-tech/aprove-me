@@ -25,7 +25,7 @@ export const LayoutSecurePage: React.FC<ILayoutSecurePageProps> = ({
 
   return (
     <div
-      className="relative z-0 flex h-screen w-screen overflow-x-hidden xl:overflow-y-hidden"
+      className="scrollbar-pattern relative z-0 flex h-screen w-screen overflow-x-hidden"
       onMouseMove={handleMouseMove}
     >
       <ScreenAddornFixed hasReturnButton={hasReturnButton} mouseY={mouseY} />

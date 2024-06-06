@@ -28,7 +28,7 @@ export const ViewReceivablePage: React.FC = () => {
       const customError = TextUtils.getCustomError(error);
 
       if (customError) {
-        notify(customError.message, customError.type);
+        customError.map(({ message, type }) => notify(message, type));
       } else {
         notify("Erro ao carregar dados, contate o suporte!", "error");
       }

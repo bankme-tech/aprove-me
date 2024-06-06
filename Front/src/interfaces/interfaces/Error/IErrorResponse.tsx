@@ -3,6 +3,6 @@ export interface IErrorResponse {
 }
 
 interface IData {
-  message: string;
+  message: string | string[];
   statusCode: number;
 }

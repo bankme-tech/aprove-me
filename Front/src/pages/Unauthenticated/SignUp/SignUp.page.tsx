@@ -23,7 +23,7 @@ export const SignUpPage: React.FC = () => {
       const customError = TextUtils.getCustomError(error);
 
       if (customError) {
-        notify(customError.message, customError.type);
+        customError.map(({ message, type }) => notify(message, type));
       } else {
         notify("Erro ao cadastrar, contate o suporte!", "error");
       }
@@ -45,9 +45,31 @@ export const SignUpPage: React.FC = () => {
             required: true
           },
           {
+            extraProps: {
+              password: {
+                warns: [
+                  {
+                    description: "Mínimo de 8 caracteres",
+                    expression: /^.{8,}$/
+                  },
+                  {
+                    description: "Pelo menos uma letra minúscula",
+                    expression: /[a-z]/
+                  },
+                  {
+                    description: "Pelo menos uma letra maiúscula",
+                    expression: /[A-Z]/
+                  },
+                  {
+                    description: "Pelo menos um número",
+                    expression: /\d/
+                  }
+                ]
+              }
+            },
             label: "Senha",
             name: "password",
-            type: "password",
+            type: "password-with-warn",
             required: true
           }
         ]}

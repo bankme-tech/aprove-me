@@ -42,8 +42,10 @@ export class TextUtils {
     Math.random().toString(36).substring(7);
 
   static mergeRegex = (...regexes: RegExp[]): RegExp => {
-    const mergedRegexSource = regexes.map((regex) => regex.source).join();
-    return new RegExp(mergedRegexSource);
+    const mergedRegexSource = regexes
+      .map((regex) => `(?:${regex.source})`)
+      .join("|");
+    return new RegExp(`^(?:${mergedRegexSource})`);
   };
 
   static transformEmptyStringInUndefined = (
@@ -59,16 +61,17 @@ export class TextUtils {
 
   static getCustomError = (
     error: IError
-  ): { message: string; type: NotificationType } | undefined => {
+  ): { message: string; type: NotificationType }[] | undefined => {
     const statusCode = error.response.data.statusCode;
     const message = error.response.data.message;
 
     const isCustomError = statusCode.toString().startsWith("4");
 
     if (isCustomError && statusCode === 412) {
-      return { message, type: "warn" };
+      const messages = message as string[];
+      return messages?.map((message) => ({ message, type: "warn" }));
     } else if (isCustomError) {
-      return { message, type: "error" };
+      return [{ message: message as string, type: "error" }];
     } else {
       return undefined;
     }

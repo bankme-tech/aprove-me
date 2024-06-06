@@ -4,6 +4,7 @@ export type PageFormsInputType =
   | "email"
   | "mask"
   | "password"
+  | "password-with-warn"
   | "select"
   | "text"
   | "title";
