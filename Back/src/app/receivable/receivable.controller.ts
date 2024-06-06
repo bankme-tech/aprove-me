@@ -2,7 +2,6 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Logger, Param, Pos
 import { CreateReceivableDto } from "./dto/createReceivable.dto";
 import { UpdateReceivableDto } from "./dto/updateReceivable.dto";
 import { ReceivableService } from "./receivable.service";
-
 @Controller("integrations/payable")
 export class ReceivableController {
     private readonly logger = new Logger(ReceivableController.name);
@@ -11,12 +10,19 @@ export class ReceivableController {
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async create(@Body() data: CreateReceivableDto) {
-        this.logger.log("Start method create");
-        return await this.service.create(data);
+    async save(@Body() data: CreateReceivableDto) {
+        this.logger.log("Start method save");
+        return await this.service.save(data);
     }
 
     @Get()
+    @HttpCode(HttpStatus.OK)
+    async getAll() {
+        this.logger.log("Start method getAll");
+        return await this.service.getAll();
+    }
+
+    @Get("by-id")
     @HttpCode(HttpStatus.OK)
     async getById(@Query("id") id: string) {
         this.logger.log("Start method getById");
