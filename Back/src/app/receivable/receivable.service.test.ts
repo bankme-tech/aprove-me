@@ -1,143 +1,180 @@
-// import { HttpException, HttpStatus } from "@nestjs/common";
-// import { Test, TestingModule } from "@nestjs/testing";
-// import { beforeEach, describe, it } from "node:test";
-// import { AssignorService } from "../assignor/assignor.service";
-// import { CreateReceivableDto } from "./dto/createReceivable.dto";
-// import { ReceivableDto } from "./dto/receivable.dto";
-// import { UpdateReceivableDto } from "./dto/updateReceivable.dto";
-// import { ReceivableException } from "./exception/receivableException.enum";
-// import { ReceivableRepository } from "./receivable.repository";
-// import { ReceivableService } from "./receivable.service";
+import { HttpException, HttpStatus } from "@nestjs/common";
+import { Test, TestingModule } from "@nestjs/testing";
+import { beforeEach, describe, it } from "node:test";
+import { AssignorService } from "../assignor/assignor.service";
+import { CreateReceivableDto } from "./dto/createReceivable.dto";
+import { ReceivableDto } from "./dto/receivable.dto";
+import { ReceivableListDto } from "./dto/receivableList.dto";
+import { UpdateReceivableDto } from "./dto/updateReceivable.dto";
+import { ReceivableException } from "./exception/receivableException.enum";
+import { ReceivableRepository } from "./receivable.repository";
+import { ReceivableService } from "./receivable.service";
 
-// describe("ReceivableService", () => {
-//     let service: ReceivableService;
-//     let repository: ReceivableRepository;
-//     let assignorService: AssignorService;
+describe("ReceivableService", () => {
+    let service: ReceivableService;
+    let repository: ReceivableRepository;
+    let assignorService: AssignorService;
 
-//     const mockRepository = {
-//         create: jest.fn(),
-//         findById: jest.fn(),
-//         update: jest.fn(),
-//         delete: jest.fn()
-//     };
+    const mockRepository = {
+        create: jest.fn(),
+        findAll: jest.fn(),
+        findById: jest.fn(),
+        update: jest.fn(),
+        delete: jest.fn()
+    };
 
-//     const mockAssignorService = {
-//         getById: jest.fn()
-//     };
+    const mockAssignorService = {
+        getByEmail: jest.fn()
+    };
 
-//     const newReceivable: CreateReceivableDto = {
-//         assignorId: "1",
-//         value: 1000,
-//         emissionDate: new Date().toISOString()
-//     };
-//     const viewReceivable: ReceivableDto = {
-//         id: "1",
-//         assignorId: "1",
-//         value: 1000,
-//         emissionDate: new Date(),
-//         assignor: {
-//             id: "1",
-//             email: "test@email.com",
-//             document: "111111111",
-//             name: "Test",
-//             phone: "3333666999"
-//         }
-//     };
-//     const updateReceivable: UpdateReceivableDto = {
-//         value: 1500,
-//         emissionDate: new Date().toISOString()
-//     };
-//     const searchedId = "1";
+    const newReceivable: CreateReceivableDto = {
+        assignorEmail: "email@exemplo.com",
+        value: 1000,
+        emissionDate: new Date().toISOString()
+    };
 
-//     beforeEach(async () => {
-//         const module: TestingModule = await Test.createTestingModule({
-//             providers: [
-//                 ReceivableService,
-//                 { provide: ReceivableRepository, useValue: mockRepository },
-//                 { provide: AssignorService, useValue: mockAssignorService }
-//             ]
-//         }).compile();
+    const listReceivable: ReceivableListDto[] = [
+        {
+            id: "1",
+            value: 1000,
+            emissionDate: new Date()
+        }
+    ];
+    const viewReceivable: ReceivableDto = {
+        id: "1",
+        assignorId: "1",
+        value: 1000,
+        emissionDate: new Date(),
+        assignor: {
+            id: "1",
+            email: "test@email.com",
+            document: "111111111",
+            name: "Test",
+            phone: "3333666999"
+        }
+    };
+    const updateReceivable: UpdateReceivableDto = {
+        value: 1500,
+        emissionDate: new Date().toISOString()
+    };
+    const searchedId = "1";
+    const undefinedId: string = undefined as any;
 
-//         service = module.get<ReceivableService>(ReceivableService);
-//         repository = module.get<ReceivableRepository>(ReceivableRepository);
-//         assignorService = module.get<AssignorService>(AssignorService);
-//     });
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            providers: [
+                ReceivableService,
+                { provide: ReceivableRepository, useValue: mockRepository },
+                { provide: AssignorService, useValue: mockAssignorService }
+            ]
+        }).compile();
 
-//     it("should be defined", () => {
-//         expect(service).toBeDefined();
-//     });
+        service = module.get<ReceivableService>(ReceivableService);
+        repository = module.get<ReceivableRepository>(ReceivableRepository);
+        assignorService = module.get<AssignorService>(AssignorService);
+    });
 
-//     describe("create", () => {
-//         it("should create a receivable successfully", async () => {
-//             mockAssignorService.getById.mockResolvedValue(true);
-//             mockRepository.create.mockResolvedValue(undefined);
+    it("should be defined", () => {
+        expect(service).toBeDefined();
+    });
 
-//             await expect(service.create(newReceivable)).resolves.not.toThrow();
-//             expect(mockAssignorService.getById).toHaveBeenCalledWith(newReceivable.assignorId);
-//             expect(mockRepository.create).toHaveBeenCalledWith(newReceivable);
-//         });
+    describe("save", () => {
+        it("should save a receivable successfully", async () => {
+            mockAssignorService.getByEmail.mockResolvedValue(true);
+            mockRepository.create.mockResolvedValue(undefined);
 
-//         it("should throw an exception if assignor id not found", async () => {
-//             mockAssignorService.getById.mockResolvedValue(null);
+            await expect(service.save(newReceivable)).resolves.not.toThrow();
+            expect(mockAssignorService.getByEmail).toHaveBeenCalledWith(newReceivable.assignorEmail);
+            expect(mockRepository.create).toHaveBeenCalledWith(newReceivable);
+        });
 
-//             await expect(service.create(newReceivable)).rejects.toThrow(
-//                 new HttpException(ReceivableException.ASSIGNOR_ID_NOT_FOUND, HttpStatus.NOT_FOUND)
-//             );
-//         });
-//     });
+        it("should throw an exception if assignor id not found", async () => {
+            mockAssignorService.getByEmail.mockResolvedValue(null);
 
-//     describe("getById", () => {
-//         it("should return a receivable successfully", async () => {
-//             mockRepository.findById.mockResolvedValue(viewReceivable);
+            await expect(service.save(newReceivable)).rejects.toThrow(
+                new HttpException(ReceivableException.ASSIGNOR_EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND)
+            );
+        });
+    });
 
-//             await expect(service.getById(searchedId)).resolves.toEqual(viewReceivable);
-//             expect(mockRepository.findById).toHaveBeenCalledWith(searchedId);
-//         });
+    describe("getAll", () => {
+        it("should return an assignor successfully", async () => {
+            mockRepository.findAll.mockResolvedValue(listReceivable);
 
-//         it("should throw an exception if id not found", async () => {
-//             mockRepository.findById.mockResolvedValue(null);
+            await expect(service.getAll()).resolves.toEqual(listReceivable);
+        });
+    });
 
-//             await expect(service.getById(searchedId)).rejects.toThrow(
-//                 new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND)
-//             );
-//         });
-//     });
+    describe("getById", () => {
+        it("should return a receivable successfully", async () => {
+            mockRepository.findById.mockResolvedValue(viewReceivable);
 
-//     describe("update", () => {
-//         it("should update a receivable successfully", async () => {
-//             mockRepository.findById.mockResolvedValue(viewReceivable);
-//             mockRepository.update.mockResolvedValue(undefined);
+            await expect(service.getById(searchedId)).resolves.toEqual(viewReceivable);
+            expect(mockRepository.findById).toHaveBeenCalledWith(searchedId);
+        });
 
-//             await expect(service.update(updateReceivable, searchedId)).resolves.not.toThrow();
-//             expect(mockRepository.findById).toHaveBeenCalledWith(searchedId);
-//             expect(mockRepository.update).toHaveBeenCalledWith(searchedId, updateReceivable);
-//         });
+        it("should throw an exception if id is undefined", async () => {
+            await expect(service.getById(undefinedId)).rejects.toThrow(
+                new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND)
+            );
+        });
 
-//         it("should throw an exception if id not found", async () => {
-//             mockRepository.findById.mockResolvedValue(null);
+        it("should throw an exception if id not found", async () => {
+            mockRepository.findById.mockResolvedValue(null);
 
-//             await expect(service.update(updateReceivable, searchedId)).rejects.toThrow(
-//                 new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND)
-//             );
-//         });
-//     });
+            await expect(service.getById(searchedId)).rejects.toThrow(
+                new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND)
+            );
+        });
+    });
 
-//     describe("delete", () => {
-//         it("should delete a receivable successfully", async () => {
-//             mockRepository.findById.mockResolvedValue(viewReceivable);
-//             mockRepository.delete.mockResolvedValue(undefined);
+    describe("update", () => {
+        it("should update a receivable successfully", async () => {
+            mockRepository.findById.mockResolvedValue(viewReceivable);
+            mockRepository.update.mockResolvedValue(undefined);
 
-//             await expect(service.delete(searchedId)).resolves.not.toThrow();
-//             expect(mockRepository.findById).toHaveBeenCalledWith(searchedId);
-//             expect(mockRepository.delete).toHaveBeenCalledWith(searchedId);
-//         });
+            await expect(service.update(updateReceivable, searchedId)).resolves.not.toThrow();
+            expect(mockRepository.findById).toHaveBeenCalledWith(searchedId);
+            expect(mockRepository.update).toHaveBeenCalledWith(searchedId, updateReceivable);
+        });
 
-//         it("should throw an exception if id not found", async () => {
-//             mockRepository.findById.mockResolvedValue(null);
+        it("should throw an exception if id is undefined", async () => {
+            await expect(service.update(updateReceivable, undefinedId)).rejects.toThrow(
+                new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND)
+            );
+        });
 
-//             await expect(service.delete(searchedId)).rejects.toThrow(
-//                 new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND)
-//             );
-//         });
-//     });
-// });
+        it("should throw an exception if id not found", async () => {
+            mockRepository.findById.mockResolvedValue(null);
+
+            await expect(service.update(updateReceivable, searchedId)).rejects.toThrow(
+                new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND)
+            );
+        });
+    });
+
+    describe("delete", () => {
+        it("should delete a receivable successfully", async () => {
+            mockRepository.findById.mockResolvedValue(viewReceivable);
+            mockRepository.delete.mockResolvedValue(undefined);
+
+            await expect(service.delete(searchedId)).resolves.not.toThrow();
+            expect(mockRepository.findById).toHaveBeenCalledWith(searchedId);
+            expect(mockRepository.delete).toHaveBeenCalledWith(searchedId);
+        });
+
+        it("should throw an exception if id is undefined", async () => {
+            await expect(service.delete(undefinedId)).rejects.toThrow(
+                new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND)
+            );
+        });
+
+        it("should throw an exception if id not found", async () => {
+            mockRepository.findById.mockResolvedValue(null);
+
+            await expect(service.delete(searchedId)).rejects.toThrow(
+                new HttpException(ReceivableException.ID_NOT_FOUND, HttpStatus.NOT_FOUND)
+            );
+        });
+    });
+});
