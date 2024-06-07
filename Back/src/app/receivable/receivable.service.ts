@@ -1,3 +1,4 @@
+import { ReceivableProducerService } from "@/producer/receivable/receivable.producer.service";
 import { HandleHttpError } from "@/shared/utils/handleError";
 import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
 import { AssignorService } from "../assignor/assignor.service";
@@ -13,13 +14,17 @@ import { ReceivableRepository } from "./receivable.repository";
 @Injectable()
 export class ReceivableService {
     private readonly logger = new Logger(ReceivableService.name);
+    private readonly quantityLimitInBatch: number = 10000;
 
-    constructor(private readonly repository: ReceivableRepository, private readonly assignorService: AssignorService) {}
+    constructor(
+        private readonly repository: ReceivableRepository,
+        private readonly assignorService: AssignorService,
+        private readonly receivableProducerService: ReceivableProducerService
+    ) {}
 
     public async save(data: CreateReceivableDto): Promise<void> {
         try {
             this.logger.log(`Start service save - Request - ${JSON.stringify(data)}`);
-
             const assignor = await this.assignorService.getByEmail(data.assignorEmail);
             if (!assignor) throw new HttpException(ReceivableException.ASSIGNOR_EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND);
 
@@ -30,6 +35,21 @@ export class ReceivableService {
             this.logger.log("End service save");
         } catch (error) {
             this.logger.error(`Error service save - Error - ${JSON.stringify(error)}`);
+            throw HandleHttpError.next(error);
+        }
+    }
+
+    public async saveBatch(data: CreateReceivableDto[], email: string): Promise<void> {
+        try {
+            this.logger.log(`Start service saveBatch - Request - ${JSON.stringify({ data, email })}`);
+            const quantity = data.length;
+            if (quantity > this.quantityLimitInBatch)
+                throw new HttpException(ReceivableException.EXCEED_BATCH_LIMIT, HttpStatus.PRECONDITION_REQUIRED);
+
+            await this.receivableProducerService.addToSaveReceivable(data, email);
+            this.logger.log("End service saveBatch");
+        } catch (error) {
+            this.logger.error(`Error service saveBatch - Error - ${JSON.stringify(error)}`);
             throw HandleHttpError.next(error);
         }
     }
