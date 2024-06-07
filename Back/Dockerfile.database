@@ -1,0 +1,6 @@
+FROM alpine:latest
+RUN apk --no-cache add sqlite
+WORKDIR /db
+COPY prisma/data/dev.db /db/
+CMD ["sh", "-c", "sqlite3 /db/dev.db && tail -f /dev/null"]
+EXPOSE 1433

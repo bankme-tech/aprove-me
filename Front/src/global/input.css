@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .tag-h6 {
+    font-family: "Poppins", sans-serif;
+    font-size: 0.6rem;
+    font-weight: 200;
+    --tw-text-opacity: 1;
+    color: rgb(21 21 21 / var(--tw-text-opacity));
+  }
+
+  .tag-p {
+    font-family: "Poppins", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    --tw-text-opacity: 1;
+    color: rgb(21 21 21 / var(--tw-text-opacity));
+  }
+
+  .tag-h5 {
+    font-family: "Poppins", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    --tw-text-opacity: 1;
+    color: rgb(21 21 21 / var(--tw-text-opacity));
+  }
+
+  .tag-h4 {
+    font-family: "Poppins", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    --tw-text-opacity: 1;
+    color: rgb(21 21 21 / var(--tw-text-opacity));
+  }
+
+  .tag-h3 {
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    --tw-text-opacity: 1;
+    color: rgb(21 21 21 / var(--tw-text-opacity));
+  }
+
+  .tag-h2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    --tw-text-opacity: 1;
+    color: rgb(21 21 21 / var(--tw-text-opacity));
+  }
+
+  .tag-h1 {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    --tw-text-opacity: 1;
+    color: rgb(21 21 21 / var(--tw-text-opacity));
+  }
+
+  .scrollbar-pattern {
+    ::-webkit-scrollbar-track {
+      background-color: #f2f2f2;
+      border-radius: 8px;
+      margin-top: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    ::-webkit-scrollbar {
+      width: 9px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #56219A;
+      border-radius: 8px;
+    }
+  }
+
+  .input-currency {
+
+    ::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+version: "3.2"
+
+services:
+    sqlite:
+        container_name: sqlite
+        build:
+            dockerfile: Dockerfile.database
+            context: .
+        volumes:
+            - ./database:/data
+        ports:
+            - 1433:1433
+        networks:
+            - server
+        restart: always
+    server:
+        container_name: server
+        build:
+            dockerfile: Dockerfile
+            context: .
+        volumes:
+            - sqlite_data:/data/db
+            - .:/usr/app
+        env_file:
+            - .env
+        ports:
+            - 8000:8000
+        networks:
+            - server
+        depends_on:
+            - sqlite
+        restart: unless-stopped
+
+networks:
+    server:
+        driver: bridge
+
+volumes:
+    server:
+        driver: local
+    sqlite:
+        driver: local
+    sqlite_data:

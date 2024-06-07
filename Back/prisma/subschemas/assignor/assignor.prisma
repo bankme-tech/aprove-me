@@ -1,0 +1,9 @@
+model Assignor {
+    id       String @id @default(uuid())
+    document String @unique
+    email    String @unique
+    phone    String @unique
+    name     String
+
+    receivables Receivable[]
+}

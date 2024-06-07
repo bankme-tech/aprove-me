@@ -1,0 +1,8 @@
+dist
+dist/
+bin
+public
+.github
+node_modules
+node_modules/
+out

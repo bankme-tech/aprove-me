@@ -1,0 +1,35 @@
+//🧩Don't Edit this file.✨Generated in Thu Jun 06 2024 23:31:26 GMT-0300 (Horário Padrão de Brasília)✨
+model Assignor {
+  id       String @id @default(uuid())
+  document String @unique
+  email    String @unique
+  phone    String @unique
+  name     String
+
+  receivables Receivable[]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Receivable {
+  id           String   @id @default(uuid())
+  value        Float
+  emissionDate DateTime
+
+  assignorId String
+  assignor   Assignor @relation(fields: [assignorId], references: [id])
+}
+
+model User {
+  id       String @id @default(uuid())
+  login    String @unique
+  password String
+}
