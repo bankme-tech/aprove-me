@@ -1,7 +1,7 @@
 FROM node:20-alpine
 WORKDIR /usr/src
 COPY package.json package*.json ./
-RUN npm install
+RUN npm install --force
 COPY . .
 RUN npm run prisma:generate
 RUN npm run prisma:migrate
