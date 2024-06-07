@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Tue May 28 2024 21:16:07 GMT-0300 (Horário Padrão de Brasília)✨
+//🧩Don't Edit this file.✨Generated in Thu Jun 06 2024 23:31:26 GMT-0300 (Horário Padrão de Brasília)✨
 model Assignor {
   id       String @id @default(uuid())
   document String @unique
@@ -26,4 +26,10 @@ model Receivable {
 
   assignorId String
   assignor   Assignor @relation(fields: [assignorId], references: [id])
+}
+
+model User {
+  id       String @id @default(uuid())
+  login    String @unique
+  password String
 }
