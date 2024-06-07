@@ -13,7 +13,24 @@ Para rodar e dar build do projeto localmente você precisará de algumas ferrame
 
 ## Primeiros passos
 
+### Variáveis de ambiente
+
+-   PORT = # porta que roda o servidor (8000)
+-   NODE_ENV = # identificação de ambiente (development)
+-   FRONTEND_URL = # caso seja aplicado o CORS em produção para segurança e limitação de consumidores é possível colocar a URL do frontend
+-   DATABASE_URL = # endereço do arquivo que representa o banco de dados (file:./data/dev.db)
+-   ACCESS_TOKEN_EXPIRATION_MINUTES = # tempo de expiração do token (1)
+-   JWT_SECRET = # secredo que hasheia o token (lylVsWQiBvxWaSAPQ0Fv24ow9YuR9arA0heDclO5u1XbAvSWbA6VeCHJGq4mcayY)
+-   EXCHANGE_URL = # url utilizada para a instância que roda o Rabbit (amqps://gedxicsq:GOlDkOTUm-7RBQqDXse-pjyBHyZzACol@jackal.rmq.cloudamqp.com/gedxicsq)
+-   SES_SMTP_USERNAME = # usuário do SMTP no AWS SES
+-   SES_SMTP_PASSWORD = # senha do SMTP no AWS SES
+-   SES_FROM_MAIL = # email de origem
+-   SES_HOST = # host da AWS para envio do email (email-smtp.us-east-1.amazonaws.com)
+-   SES_PORT = # porta para envio de email (465)
+
 ### Rodando em modo de desenvolvimento
+
+Antes de rodar o projeto, crie o `dev.db` na pasta `/prisma/data` e crie o .env na raiz do Back.
 
 Primeiro, para rodar em modo de desenvolvimento execute no terminal:
 
@@ -28,6 +45,8 @@ Abra [http://localhost:8000/](http://localhost:8000/) ou [http://localhost:8000/
 
 ### Build do projeto
 
+Antes de rodar o projeto, crie o `dev.db` na pasta `/prisma/data` e crie o .env na raiz do Back.
+
 Primeiro, para rodar em modo de desenvolvimento execute no terminal:
 
 ```bash
@@ -39,21 +58,6 @@ npm run start:prod
 ```
 
 Abra [http://localhost:8000/](http://localhost:8000/) ou [http://localhost:8000/healt-check](http://localhost:8000/healt-check) no seu navagador para verificar que a api está rodando.
-
-### Variáveis de ambiente
-
--   PORT = # porta que roda o servidor (8000)
--   NODE_ENV = # identificação de ambiente (development)
--   FRONTEND_URL = # caso seja aplicado o CORS em produção para segurança e limitação de consumidores é possível colocar a URL do frontend
--   DATABASE_URL = # endereço do arquivo que representa o banco de dados (file:./data/dev.db)
--   ACCESS_TOKEN_EXPIRATION_MINUTES = # tempo de expiração do token (1)
--   JWT_SECRET = # secredo que hasheia o token (lylVsWQiBvxWaSAPQ0Fv24ow9YuR9arA0heDclO5u1XbAvSWbA6VeCHJGq4mcayY)
--   EXCHANGE_URL = # url utilizada para a instância que roda o Rabbit (amqps://gedxicsq:GOlDkOTUm-7RBQqDXse-pjyBHyZzACol@jackal.rmq.cloudamqp.com/gedxicsq)
--   SES_SMTP_USERNAME = # usuário do SMTP no AWS SES (AKIAUKA64ZWWXHOAHHWL)
--   SES_SMTP_PASSWORD = # senha do SMTP no AWS SES (BJxxSnoWPbAkIbRY/22AqjKAIvLi4j6DpTz9tUuV8BYS)
--   SES_FROM_MAIL = # email de origem (willer.poveda.santos@usp.br)
--   SES_HOST = # host da AWS para envio do email (email-smtp.us-east-1.amazonaws.com)
--   SES_PORT = # porta para envio de email (465)
 
 ## Estrutura
 
@@ -76,6 +80,7 @@ Abra [http://localhost:8000/](http://localhost:8000/) ou [http://localhost:8000/
         -   **exception**: Conjunto de mensagens de error personalizado que devem ser retornados.
     -   **producer**: Producer da aplicação, relacionado a estrutura de filas;
     -   **consumer**: Consumer da aplicação, relacionado a estrutura de filas;
+    -   **provider**: Provedores globais do sistema, logo, funcionalidades gerais do sistema, por exemplo envio de email, registro de logs de tabela, uso de api externa que é compartilhada por diversos módulos;
     -   **authentication**: Módulos relacionados a parte de autenticação:
         -   **auth**: Módulo para autenticação
         -   **token**: Módulo para gerenciamento de token
@@ -90,7 +95,13 @@ Abra [http://localhost:8000/](http://localhost:8000/) ou [http://localhost:8000/
 
 -   **.eslintignore; .eslintrc.js**: Linter (regras de padronização de arquivos);
 -   **.prettierrc**: Padronização de arquivos;
--   **.prettierrc**: Padronização de arquivos;
+-   **.gitignore**: Ignorar arquivos que não subiram no repositório do github;
+-   **.dockerignore**: Ignorar arquivos que não subiram no container docker;
+-   **docker-compose.yml**: Compose para deploy do projeto;
+-   **Dockerfile**: Imagem Docker do projeto;
+-   **Dockerfile.database**: Imagem Docker do banco de dados;
+-   **tsconfig.json**: Considerações para como será aplicado o typescript no projeto;
+-   **tsconfig.json**: Considerações para como será aplicado o typescript no projeto;
 
 ### Principais scripts
 
@@ -173,7 +184,85 @@ Para instalar ou atualizar essas dependências, você pode usar `npm install` ou
 
 ## Filas
 
+Para a parte de filas a estrutura pensada foi focada em escalabilidade, tendo uma parte para os consumers e outra parte para os producers.
+
+É necessário um arquivo inicializador para as configurações da parte de consumers, onde ficariam centralizadas as configs dessa parte que consome as filas. Do outro lado, nos producers, poderiam ter N deles dentro de um módulo, com diferentes nomes de clients utilizados.
+
+A criação de contracts é a ideia de um Contrato de envio ou recebimento com uma API externa, ao invés da ideia de DTO (Data Transfer Object).
+
 ## Deploy e recursos necessários
+
+### Recursos
+
+Dentro do deploy seriam necessários os seguintes recursos na AWS:
+
+-   **Amazon Elastic Container Registry (ECR)**: Hub de imagens Docker;
+-   **Amazon Simple Storage Service (S3)**: Repositório S3 para armazenar .env e compose que serão utilizados na EC2;
+-   **Amazon Elastic Cloud Compute (EC2)**: Instância onde estará a aplicação;
+-   **AWS Systems Manager (SSM)**: Para enviar comandos para instâncias EC2 de forma segura, ao invés de SSH;
+-   **AWS Cloud Watch**: Monitoramento por logs da aplicação.
+
+### Permissionamento
+
+Será necessário um usuário de pipeline para o deploy ao rodar o Github Actions, nesse usuário teremos as seguintes permissões:
+
+-   Permissões ECR: `ecr:GetDownloadUrlForLayer`, `ecr:BatchGetImage`, `ecr:BatchCheckLayerAvailability`, `ecr:CompleteLayerUpload`, `ecr:UploadLayerPart`, `ecr:PutImage`
+-   Permissões S3: `s3:PutObject`, `s3:GetObject`, `s3:ListBucket`
+-   Permissões SSM: `ssm:SendCommand`, `ssm:GetCommandInvocation`, `ssm:DescribeInstanceInformation`
+-   Permissões EC2: `ec2:DescribeInstances`, `ec2:DescribeInstanceStatus`
+-   Permissões Logs: `logs:CreateLogGroup`, `logs:CreateLogStream`, `logs:PutLogEvents`
+
+### Permissões necessárias para o usuário de deploy
+
+O usuário de deploy que seria criado precisaria das seguintes permissões para executar a pipeline:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:CompleteLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:PutImage"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": ["s3:ListBucket"],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": ["s3:PutObject", "s3:GetObject"],
+            "Resource": ["arn:aws:s3:::s3-pipeline/willer-bank/*"]
+        },
+        {
+            "Effect": "Allow",
+            "Action": ["ec2:DescribeInstances", "ec2:DescribeInstanceStatus"],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": ["ssm:SendCommand", "ssm:GetCommandInvocation", "ssm:DescribeInstanceInformation"],
+            "Resource": [
+                "arn:aws:ssm:::document/AWS-RunShellScript",
+                "arn:aws:ec2:::instance/${{ secrets.INSTANCE_ID }}"
+            ]
+        }
+    ]
+}
+```
 
 ## Autor
 
