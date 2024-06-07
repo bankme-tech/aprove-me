@@ -95,4 +95,4 @@ Uma forma simples para fazer o deploy do projeto o qual utiliza React com Vite �
 
 - Nome: Willer Santos
 - Local: São Paulo, SP
-- Formado: BA Chemical Engineering
+- Formado: Engenheiro Químico, Escola Politécnica da USP

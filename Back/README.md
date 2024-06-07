@@ -13,18 +13,47 @@ Para rodar e dar build do projeto localmente você precisará de algumas ferrame
 
 ## Primeiros passos
 
+### Rodando em modo de desenvolvimento
+
 Primeiro, para rodar em modo de desenvolvimento execute no terminal:
 
 ```bash
 npm i
+npm run prisma:generate
+npm run prisma:migrate
 npm run start:dev
 ```
 
 Abra [http://localhost:8000/](http://localhost:8000/) ou [http://localhost:8000/healt-check](http://localhost:8000/healt-check) no seu navagador para verificar que a api está rodando.
 
-### Deploy do projeto (Ajustar esse)
+### Build do projeto
 
-### Variáveis de ambiente (Ajustar esse)
+Primeiro, para rodar em modo de desenvolvimento execute no terminal:
+
+```bash
+npm i
+npm run prisma:generate
+npm run prisma:migrate
+npm run build
+npm run start:prod
+```
+
+Abra [http://localhost:8000/](http://localhost:8000/) ou [http://localhost:8000/healt-check](http://localhost:8000/healt-check) no seu navagador para verificar que a api está rodando.
+
+### Variáveis de ambiente
+
+-   PORT = # porta que roda o servidor (8000)
+-   NODE_ENV = # identificação de ambiente (development)
+-   FRONTEND_URL = # caso seja aplicado o CORS em produção para segurança e limitação de consumidores é possível colocar a URL do frontend
+-   DATABASE_URL = # endereço do arquivo que representa o banco de dados (file:./data/dev.db)
+-   ACCESS_TOKEN_EXPIRATION_MINUTES = # tempo de expiração do token (1)
+-   JWT_SECRET = # secredo que hasheia o token (lylVsWQiBvxWaSAPQ0Fv24ow9YuR9arA0heDclO5u1XbAvSWbA6VeCHJGq4mcayY)
+-   EXCHANGE_URL = # url utilizada para a instância que roda o Rabbit (amqps://gedxicsq:GOlDkOTUm-7RBQqDXse-pjyBHyZzACol@jackal.rmq.cloudamqp.com/gedxicsq)
+-   SES_SMTP_USERNAME = # usuário do SMTP no AWS SES (AKIAUKA64ZWWXHOAHHWL)
+-   SES_SMTP_PASSWORD = # senha do SMTP no AWS SES (BJxxSnoWPbAkIbRY/22AqjKAIvLi4j6DpTz9tUuV8BYS)
+-   SES_FROM_MAIL = # email de origem (willer.poveda.santos@usp.br)
+-   SES_HOST = # host da AWS para envio do email (email-smtp.us-east-1.amazonaws.com)
+-   SES_PORT = # porta para envio de email (465)
 
 ## Estrutura
 
@@ -61,6 +90,7 @@ Abra [http://localhost:8000/](http://localhost:8000/) ou [http://localhost:8000/
 
 -   **.eslintignore; .eslintrc.js**: Linter (regras de padronização de arquivos);
 -   **.prettierrc**: Padronização de arquivos;
+-   **.prettierrc**: Padronização de arquivos;
 
 ### Principais scripts
 
@@ -82,42 +112,71 @@ Abra [http://localhost:8000/](http://localhost:8000/) ou [http://localhost:8000/
 -   **test:debug**: Executa testes em modo de debug.
 -   **test:e2e**: Executa testes de ponta a ponta usando Jest.
 
-## Dependências (Ajustar esse)
+## Dependências do projeto
 
-## `dependencies`
+### `dependencies`
 
-| Package           | Description                                                                         |
-| ----------------- | ----------------------------------------------------------------------------------- |
-| config            | Universal configurations for your app.                                              |
-| cors              | Node.js package for providing a Express middleware that can be used to enable CORS. |
-| express           | Node.js web framework.                                                              |
-| express-validator | Easy form validation for Express.                                                   |
-| http-status-codes | HTTP status codes constants.                                                        |
-| mongoose          | MongoDB modeling tool in an async environment.                                      |
-| request           | Simplified HTTP client for Node.js.                                                 |
-| typescript        | Typed superset of JavaScript.                                                       |
+| Pacote                       | Descrição                                                    |
+| ---------------------------- | ------------------------------------------------------------ |
+| **@nestjs/common**           | Módulos e utilitários comuns para o NestJS.                  |
+| **@nestjs/config**           | Módulo de configuração para o NestJS.                        |
+| **@nestjs/schematics**       | Schematics para geração de código e arquivos no NestJS.      |
+| **@nestjs/cli**              | CLI para gerenciamento de projetos NestJS.                   |
+| **@nestjs/core**             | Núcleo do NestJS.                                            |
+| **@nestjs/platform-express** | Plataforma Express para aplicações NestJS.                   |
+| **@prisma/client**           | Cliente Prisma para interação com o banco de dados.          |
+| **bcrypt**                   | Biblioteca para hashing de senhas.                           |
+| **body-parser**              | Middleware para parsing de corpo de requisições.             |
+| **class-transformer**        | Biblioteca para transformar objetos em classes e vice-versa. |
+| **class-validator**          | Biblioteca para validação de objetos com decorators.         |
+| **helmet**                   | Middleware para segurança de aplicações Express.             |
+| **prisma**                   | Ferramenta de ORM para bancos de dados.                      |
+| **jsonwebtoken**             | Biblioteca para manipulação de JSON Web Tokens.              |
+| **prisma-multischema**       | Ferramenta para trabalhar com múltiplos schemas no Prisma.   |
+| **reflect-metadata**         | Biblioteca para adicionar suporte a metadados no TypeScript. |
+| **rxjs**                     | Biblioteca para programação reativa com Observables.         |
 
-## `devDependencies`
+### `devDependencies`
 
-Since TypeScript is used, dependencies should be accompanied by their corresponding DefinitelyTyped @types package.
+| Pacote                                | Descrição                                                                |
+| ------------------------------------- | ------------------------------------------------------------------------ |
+| **@babel/core**                       | Utilizado para os testes.                                                |
+| **@babel/plugin-proposal-decorators** | Utilizado para os testes.                                                |
+| **@babel/preset-env**                 | Utilizado para os testes.                                                |
+| **@babel/preset-typescript**          | Utilizado para os testes.                                                |
+| **@nestjs/testing**                   | Utilitários para testes no NestJS.                                       |
+| **@types/bcrypt**                     | Definições de tipos do TypeScript para o pacote `bcrypt`.                |
+| **@types/body-parser**                | Definições de tipos do TypeScript para o pacote `body-parser`.           |
+| **@types/express**                    | Definições de tipos do TypeScript para o pacote `express`.               |
+| **@types/jest**                       | Definições de tipos do TypeScript para o Jest.                           |
+| **@types/jsonwebtoken**               | Definições de tipos do TypeScript para o pacote `jsonwebtoken`.          |
+| **@types/node**                       | Definições de tipos do TypeScript para o Node.js.                        |
+| **@types/passport-local**             | Definições de tipos do TypeScript para o pacote `passport-local`.        |
+| **@types/supertest**                  | Definições de tipos do TypeScript para o Supertest.                      |
+| **@typescript-eslint/eslint-plugin**  | Suporte TypeScript para ESLint                                           |
+| **@typescript-eslint/parser**         | Parser TypeScript para o ESLint.                                         |
+| **babel-jest**                        | Preprocessador para usar Babel com o Jest.                               |
+| **eslint**                            | Linter padronizar código.                                                |
+| **eslint-config-prettier**            | Configuração do ESLint que desativa regras que conflitam com o Prettier. |
+| **eslint-import-resolver-typescript** | Resolver de importações para ESLint com suporte a TypeScript.            |
+| **eslint-plugin-import**              | Plugin do ESLint para validação de importações.                          |
+| **eslint-plugin-prettier**            | Plugin do ESLint para integrar o Prettier ao ESLint.                     |
+| **jest**                              | Framework de testes JavaScript.                                          |
+| **prettier**                          | Formatador de código.                                                    |
+| **supertest**                         | Biblioteca para testes de integração em aplicações web.                  |
+| **ts-jest**                           | Preprocessador para usar TypeScript com o Jest.                          |
+| **ts-node**                           | Compilador de arquivos TS diretamente no Node.                           |
+| **tsconfig-paths**                    | Suporte a paths no TypeScript.                                           |
+| **typescript**                        | Bliblioteca de tipos no JS.                                              |
 
-| Package                          | Description                                                              |
-| -------------------------------- | ------------------------------------------------------------------------ |
-| @types/config                    | DefinitelyTyped for config                                               |
-| @types/cors                      | DefinitelyTyped for cors                                                 |
-| @types/express                   | DefinitelyTyped for express                                              |
-| @types/mongoose                  | DefinitelyTyped for mongoose                                             |
-| @typescript-eslint/eslint-plugin | TypeScript plugin for ESLint                                             |
-| eslint                           | JavaScript linter                                                        |
-| eslint-config-prettier           | Turns off all rules that are unnecessary or might conflict with Prettier |
-| eslint-plugin-prettier           | Runs Prettier as an ESLint rule                                          |
-| prettier                         | Code formatter                                                           |
-| ts-node-dev                      | Compiles TypeScript and restarts Node.js on file changes                 |
+Para instalar ou atualizar essas dependências, você pode usar `npm install` ou `npm update`.
 
-To install or update these dependencies you can use `npm install` or `npm update`.
+## Filas
+
+## Deploy e recursos necessários
 
 ## Autor
 
 -   Nome: Willer Santos
 -   Local: São Paulo, SP
--   Formado: BA Chemical Engineering
+-   Formado: Engenheiro Químico, Escola Politécnica da USP
